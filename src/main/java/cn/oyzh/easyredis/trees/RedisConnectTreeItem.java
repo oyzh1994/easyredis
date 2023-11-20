@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.fx.ConnectManager;
+import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisInfoStore;
@@ -312,7 +312,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
     public void delete() {
         if (MessageBox.confirm("删除" + this.value.getName(), "确定删除连接？")) {
             this._disConnect();
-            if (this.getParent() instanceof ConnectManager connectManager) {
+            if (this.getParent() instanceof RedisConnectManager connectManager) {
                 if (!connectManager.delConnectItem(this)) {
                     MessageBox.warn("删除连接失败！");
                 }

@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.fx.ConnectManager;
+import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 2023/05/12
  */
 @Slf4j
-public class RedisGroupTreeItem extends BaseTreeItem implements ConnectManager {
+public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectManager {
 
     /**
      * 分组对象

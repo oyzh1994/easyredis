@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
-import cn.oyzh.easyredis.fx.ConnectManager;
+import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
@@ -26,8 +26,6 @@ import cn.oyzh.fx.plus.util.IconUtil;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.stage.FileChooser;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +43,7 @@ import java.util.Optional;
  * @since 2023/06/16
  */
 @Slf4j
-public class RedisRootTreeItem extends BaseTreeItem implements ConnectManager {
+public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManager {
 
     /**
      * redis信息储存

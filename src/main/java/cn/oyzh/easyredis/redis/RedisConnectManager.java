@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.fx;
+package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/5/12
  */
-public interface ConnectManager {
+public interface RedisConnectManager {
 
     /**
      * 添加连接
