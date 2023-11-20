@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.combobox.RedisFormatComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>

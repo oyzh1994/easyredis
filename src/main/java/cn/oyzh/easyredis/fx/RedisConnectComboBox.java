@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.fx.combobox;
+package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.store.RedisInfoStore;

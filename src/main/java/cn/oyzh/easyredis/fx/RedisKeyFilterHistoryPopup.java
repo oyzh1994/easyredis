@@ -1,7 +1,7 @@
-package cn.oyzh.easyredis.fx.popup;
+package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
+import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.fx.plus.controls.FXListView;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.util.FontUtil;
@@ -13,17 +13,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * redis搜索历史弹窗
+ * redis键过滤历史弹窗
  *
  * @author oyzh
- * @since 2023/4/24
+ * @since 2023/07/19
  */
-public class RedisSearchHistoryPopup extends Popup {
-
-    /**
-     * 类型
-     */
-    private final int type;
+public class RedisKeyFilterHistoryPopup extends Popup {
 
     /**
      * 列表视图组件
@@ -31,13 +26,9 @@ public class RedisSearchHistoryPopup extends Popup {
     private FXListView<String> listView;
 
     /**
-     * 搜索历史储存
+     * 过滤历史储存
      */
-    private final RedisSearchHistoryStore historyStore = RedisSearchHistoryStore.INSTANCE;
-
-    public RedisSearchHistoryPopup(int type) {
-        this.type = type;
-    }
+    private final RedisKeyFilterHistoryStore historyStore = RedisKeyFilterHistoryStore.INSTANCE;
 
     @Override
     public void show(Node node, double anchorX, double anchorY) {
@@ -59,11 +50,7 @@ public class RedisSearchHistoryPopup extends Popup {
             this.setAutoHide(true);
             this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    if (this.type == 1) {
-                        EventUtil.fire(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED, newValue);
-                    } else {
-                        EventUtil.fire(RedisEventTypes.REDIS_REPLACE_HISTORY_SELECTED, newValue);
-                    }
+                    EventUtil.fire(RedisEventTypes.REDIS_FILTER_HISTORY_SELECTED, newValue);
                     this.hide();
                 }
             });
@@ -75,7 +62,7 @@ public class RedisSearchHistoryPopup extends Popup {
         }
         // 清除旧数据
         this.listView.getItems().clear();
-        List<String> list = this.type == 1 ? this.historyStore.getSearchKw() : this.historyStore.getReplaceKw();
+        List<String> list = this.historyStore.getPatterns();
         // 无数据设置默认宽高
         if (list.isEmpty()) {
             this.listView.setRealWidth(50);

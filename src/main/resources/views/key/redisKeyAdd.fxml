@@ -10,7 +10,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.combobox.RedisKeyTypeComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
 <?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>

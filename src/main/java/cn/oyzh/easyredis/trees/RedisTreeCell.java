@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.fx.value.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.tree.FXTreeCell;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.drag.DragUtil;

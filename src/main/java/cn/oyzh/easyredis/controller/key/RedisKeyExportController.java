@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox;
+import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.trees.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisDBTreeItem;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;

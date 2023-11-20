@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
-import cn.oyzh.easyredis.fx.popup.RedisSearchHistoryPopup;
+import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;

@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyredis.fx.value.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
@@ -13,7 +12,6 @@ import javafx.scene.effect.Effect;
 import javafx.stage.Window;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 

@@ -13,7 +13,7 @@
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.easyredis.fx.combobox.RedisFormatComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.tabs.key.RedisListKeyTabContentController" side="RIGHT">
     <FXTab text="键数据">

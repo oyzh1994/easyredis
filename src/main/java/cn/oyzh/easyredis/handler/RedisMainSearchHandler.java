@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
-import cn.oyzh.easyredis.fx.value.RedisTreeItemValue;
+import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.BaseTreeItem;

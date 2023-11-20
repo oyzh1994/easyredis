@@ -5,7 +5,7 @@
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>

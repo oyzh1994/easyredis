@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.fx.RedisDataTextArea;
-import cn.oyzh.easyredis.fx.combobox.RedisFormatComboBox;
+import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;

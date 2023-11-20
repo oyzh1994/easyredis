@@ -5,8 +5,8 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.easyredis.fx.combobox.RedisConnectComboBox?>
-<?import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisConnectComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
