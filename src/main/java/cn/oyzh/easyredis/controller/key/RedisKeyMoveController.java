@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
@@ -103,7 +103,7 @@ public class RedisKeyMoveController extends Controller {
                     this.client.expire(targetDBIndex, key, ttl, null);
                 }
                 this.treeItem.treeView().setProp("targetDB", targetDBIndex);
-                EventUtil.fire(RedisEvents.REDIS_KEY_MOVED, this.treeItem);
+                EventUtil.fire(RedisEventTypes.REDIS_KEY_MOVED, this.treeItem);
                 MessageBox.okToast("移动键成功！");
                 this.closeStage();
             }

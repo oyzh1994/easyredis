@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.trees.RedisDBTreeItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
@@ -266,7 +266,7 @@ public class RedisKeyAddController extends Controller {
             if (ttl != -1) {
                 this.client.expire(dbIndex, key, ttl, null);
             }
-            EventUtil.fire(RedisEvents.REDIS_KEY_ADDED, this.treeItem);
+            EventUtil.fire(RedisEventTypes.REDIS_KEY_ADDED, this.treeItem);
             MessageBox.okToast("新增键成功！");
             this.closeStage();
         } catch (Exception ex) {

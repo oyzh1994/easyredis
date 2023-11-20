@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.tabs;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
+import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.trees.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisListKeyTreeItem;
@@ -9,7 +11,7 @@ import cn.oyzh.easyredis.trees.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisGEOKeyTabContentController;
 import cn.oyzh.easyredis.tabs.key.RedisHashKeyTabContentController;
@@ -23,6 +25,7 @@ import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
@@ -62,7 +65,6 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param info redis信息
      */
-    @EventReceiver(value = RedisEvents.REDIS_OPEN_TERMINAL, verbose = true, async = true, fxThread = true)
     public void initTerminalTab(RedisInfo info) {
         RedisTerminalTab terminalTab = this.getTerminalTab(info);
         if (terminalTab == null) {
@@ -74,6 +76,35 @@ public class RedisTabPane extends DynamicTabPane {
         }
         if (!terminalTab.isSelected()) {
             this.select(terminalTab);
+        }
+    }
+
+    /**
+     * 终端打开事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
+    private void openTerminal(Event<RedisTerminalOpenMsg> event) {
+        this.initTerminalTab(event.data().info());
+    }
+
+    /**
+     * 终端关闭事件
+     *
+     * @param event 事件
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
+    private void closeTerminal(Event<RedisTerminalCloseMsg> event) {
+        try {
+            // 寻找节点
+            RedisTerminalTab terminalTab = this.getTerminalTab(event.data().info());
+            // 移除节点
+            if (terminalTab != null) {
+                terminalTab.closeTab();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -99,7 +130,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param item 发布及订阅节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_OPEN_PUBSUB, verbose = true, async = true, fxThread = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_OPEN_PUBSUB, verbose = true, async = true, fxThread = true)
     public void initPubsubTab(RedisPubsubItem item) {
         RedisPubsubTab tab = this.getPubsubTab(item);
         if (tab == null) {
@@ -136,7 +167,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param client redis客户端
      */
-    @EventReceiver(value = RedisEvents.REDIS_SERVER_INFO, verbose = true, async = true, fxThread = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_SERVER_INFO, verbose = true, async = true, fxThread = true)
     public void initServerTab(RedisClient client) {
         RedisServerTab serverTab = this.getServerTab(client);
         if (serverTab == null) {
@@ -257,7 +288,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_CHANGE_ZSET_SHOW_TYPE, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_CHANGE_ZSET_SHOW_TYPE, verbose = true, async = true)
     private void changeZETShowType(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -271,7 +302,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
     private void onListRowAdded(RedisListKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -286,7 +317,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
     private void onSetMemberAdded(RedisSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -301,7 +332,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
     private void onZSetMemberAdded(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -316,7 +347,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_GEO_COORDINATE_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, verbose = true, async = true)
     private void onGEOCoordinateAdded(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -331,7 +362,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
     private void onStreamMessageAdded(RedisStreamKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -346,7 +377,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
     private void onHashFieldAdded(RedisHashKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -361,7 +392,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
     private void onHyperLogLogElementAdded(RedisKeyTreeItem<?> treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -374,7 +405,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
     private void onKeyRenamed(RedisKeyTreeItem<?> treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -387,7 +418,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param treeItem redis树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_TTL_UPDATED, verbose = true, async = true, fxThread = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_TTL_UPDATED, verbose = true, async = true, fxThread = true)
     private void onTTLUpdated(RedisKeyTreeItem<?> treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
@@ -400,7 +431,7 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @param client redis客户端
      */
-    @EventReceiver(value = RedisEvents.REDIS_CLINE_CLOSED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_CLINE_CLOSED, verbose = true, async = true)
     private void onClientClosed(RedisClient client) {
         List<Tab> closeTabs = new ArrayList<>();
         for (Tab tab : this.getTabs()) {

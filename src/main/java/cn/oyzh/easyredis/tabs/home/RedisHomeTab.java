@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.home;
 import cn.oyzh.easyredis.tabs.RedisBaseTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -13,7 +14,7 @@ import javafx.scene.Node;
  * @author oyzh
  * @since 2023/6/24
  */
-public class RedisHomeTab extends RedisBaseTab {
+public class RedisHomeTab extends DynamicTab {
 
     {
         this.setClosable(true);

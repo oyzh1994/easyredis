@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -155,7 +155,7 @@ public class RedisFilterMainController extends Controller {
                         if (!filterStore.update(filterVO)) {
                             MessageBox.warn("修改状态失败！");
                         } else {
-                            EventUtil.fire(RedisEvents.REDIS_KEY_FILTER);
+                            EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
                         }
                     });
                     return toggleSwitch;
@@ -180,7 +180,7 @@ public class RedisFilterMainController extends Controller {
                         if (!filterStore.update(filterVO)) {
                             MessageBox.warn("修改匹配方式失败！");
                         } else if (filterVO.isEnable()) {
-                            EventUtil.fire(RedisEvents.REDIS_KEY_FILTER);
+                            EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
                         }
                     });
                     return toggleSwitch;
@@ -198,7 +198,7 @@ public class RedisFilterMainController extends Controller {
     private void deleteInfo(RedisFilter info) {
         if (MessageBox.confirm("确定删除此Redis过滤配置？")) {
             if (this.filterStore.delete(info)) {
-                EventUtil.fire(RedisEvents.REDIS_KEY_FILTER);
+                EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
                 this.firstPage();
             } else {
                 MessageBox.warn("删除Redis过滤配置失败！");
@@ -260,7 +260,7 @@ public class RedisFilterMainController extends Controller {
     /**
      * 过滤新增事件
      */
-    @EventReceiver(RedisEvents.REDIS_FILTER_ADDED)
+    @EventReceiver(RedisEventTypes.REDIS_FILTER_ADDED)
     private void filterAdded() {
         this.initDataList(Integer.MAX_VALUE);
     }

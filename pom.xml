@@ -38,6 +38,16 @@
                     <groupId>org.yaml</groupId>
                     <artifactId>snakeyaml</artifactId>
                 </exclusion>
+                <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j -->
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+                <!-- https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j -->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jul-to-slf4j</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 

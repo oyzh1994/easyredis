@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.dto.Project;
@@ -217,7 +217,7 @@ public class MainController extends ParentController {
     /**
      * 应用退出
      */
-    @EventReceiver(RedisEvents.APP_EXIT)
+    @EventReceiver(RedisEventTypes.APP_EXIT)
     public void exit() {
         StageUtil.exit();
     }

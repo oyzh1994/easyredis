@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -222,7 +222,7 @@ public class RedisInfoAddController extends Controller {
             // 保存数据
             boolean result = this.infoStore.add(redisInfo);
             if (result) {
-                EventUtil.fire(RedisEvents.REDIS_INFO_ADD, redisInfo);
+                EventUtil.fire(RedisEventTypes.REDIS_INFO_ADD, redisInfo);
                 MessageBox.okToast("新增redis信息成功!");
                 this.closeStage();
             } else {

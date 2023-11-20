@@ -1,10 +1,9 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
@@ -282,9 +281,9 @@ public class RedisTreeView extends RichTreeView {
         }
     }
 
-    @EventReceiver(value = RedisEvents.REDIS_KEY_FLUSH, verbose = true, async = true)
-    @EventReceiver(value = RedisEvents.REDIS_KEY_ADDED, verbose = true, async = true)
-    @EventReceiver(value = RedisEvents.REDIS_KEY_DELETED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSH, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
     private void onKeyChanged(RedisDBTreeItem treeItem) {
         if (treeItem != null) {
             treeItem.reloadChild();
@@ -296,7 +295,7 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param treeItem key树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_KEY_COPY, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPY, verbose = true, async = true)
     private void onKeyCopied(TreeItem<?> treeItem) {
         int dbIndex = this.getProp("targetDB");
         RedisConnectTreeItem connectTreeItem = null;
@@ -318,7 +317,7 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param treeItem key树节点
      */
-    @EventReceiver(value = RedisEvents.REDIS_KEY_MOVED, verbose = true, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
     private void onKeyMoved(RedisKeyTreeItem<?> treeItem) {
         int dbIndex = this.getProp("targetDB");
         RedisConnectTreeItem connectTreeItem = treeItem.connectTreeItem();
@@ -332,7 +331,7 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索开始事件
      */
-    @EventReceiver(value = RedisEvents.REDIS_SEARCH_START, verbose = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, verbose = true)
     private void searchStart() {
         this.searching = true;
     }
@@ -340,7 +339,7 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索结束事件
      */
-    @EventReceiver(value = RedisEvents.REDIS_SEARCH_FINISH, async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, async = true, verbose = true)
     private void searchEnd() {
         this.searching = false;
     }
@@ -348,7 +347,7 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 导入开始事件
      */
-    @EventReceiver(RedisEvents.REDIS_IMPORT_START)
+    @EventReceiver(RedisEventTypes.REDIS_IMPORT_START)
     private void onImportStart() {
         this.importing = true;
         log.info("REDIS_IMPORT_START.");
@@ -357,7 +356,7 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 导入结束事件
      */
-    @EventReceiver(value = RedisEvents.REDIS_IMPORT_FINISH, async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_IMPORT_FINISH, async = true, verbose = true)
     private void onImportFinish(RedisConnectTreeItem connectTreeItem) {
         this.importing = false;
         for (RedisDBTreeItem child : connectTreeItem.getChildren()) {

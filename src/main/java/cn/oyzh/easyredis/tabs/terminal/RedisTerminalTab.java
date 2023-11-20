@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.tabs.RedisBaseTab;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -16,7 +17,7 @@ import javafx.scene.Node;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTab extends RedisBaseTab {
+public class RedisTerminalTab extends DynamicTab {
 
     {
         this.setClosable(true);

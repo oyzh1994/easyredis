@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.fx.value.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
@@ -394,7 +394,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
             // 移除此键
             this.remove();
             // 发送事件
-            EventUtil.fire(RedisEvents.REDIS_KEY_DELETED, this.parent());
+            EventUtil.fire(RedisEventTypes.REDIS_KEY_DELETED, this.parent());
             MessageBox.okToast("键已删除");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -427,7 +427,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
                 this.itemValue().nodeNameText().setText(newKey);
-                EventUtil.fire(RedisEvents.REDIS_KEY_RENAMED, this);
+                EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
             } else {
                 MessageBox.warn("更改键名称失败！");
             }

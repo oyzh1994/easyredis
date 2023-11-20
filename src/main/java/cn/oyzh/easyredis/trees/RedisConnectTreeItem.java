@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.fx.ConnectManager;
 import cn.oyzh.easyredis.fx.value.RedisConnectTreeItemValue;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -158,7 +158,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      */
     @FXML
     private void serverInfo() {
-        EventUtil.fire(RedisEvents.REDIS_SERVER_INFO, this.client);
+        EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.client);
     }
 
     /**
@@ -166,7 +166,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      */
     @FXML
     private void openTerminal() {
-        EventUtil.fire(RedisEvents.REDIS_OPEN_TERMINAL, this.value);
+        EventUtil.fire(RedisEventTypes.REDIS_OPEN_TERMINAL, this.value);
     }
 
     /**

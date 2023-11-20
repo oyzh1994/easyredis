@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
@@ -80,7 +80,7 @@ public class RedisKeyTTLController extends Controller {
             } else {
                 this.client.expire(this.treeItem.dbIndex(), this.treeItem.key(), ttlValue.longValue(), null);
             }
-            EventUtil.fire(RedisEvents.REDIS_TTL_UPDATED, this.treeItem);
+            EventUtil.fire(RedisEventTypes.REDIS_TTL_UPDATED, this.treeItem);
             MessageBox.okToast("更新TTL成功！");
             this.closeStage();
         } catch (Exception ex) {

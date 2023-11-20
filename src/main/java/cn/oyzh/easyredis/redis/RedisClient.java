@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
@@ -507,7 +508,7 @@ public class RedisClient {
 
             if (isClosed) {
                 this.connState().set(RedisConnState.CLOSED);
-                EventUtil.fire(RedisEvents.REDIS_CLINE_CLOSED, this);
+                EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
             }
 
             this.pool = null;

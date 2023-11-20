@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.trees.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
@@ -185,7 +185,7 @@ public class RedisMainController extends ParentController {
      *
      * @param info redis信息
      */
-    @EventReceiver(value = RedisEvents.REDIS_INFO_UPDATED, async = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true)
     private void onInfoUpdate(RedisInfo info) {
         if (this.info == info) {
             this.stage.appendTitle(" (" + info.getName() + ")");
@@ -223,7 +223,7 @@ public class RedisMainController extends ParentController {
             this.info = item.value();
             this.onInfoUpdate(this.info);
         }
-        EventUtil.fire(RedisEvents.CONNECTION_CHANGED, item);
+        EventUtil.fire(RedisEventTypes.CONNECTION_CHANGED, item);
     }
 
     /**
@@ -395,7 +395,7 @@ public class RedisMainController extends ParentController {
     /**
      * 键过滤
      */
-    @EventReceiver(value = RedisEvents.REDIS_KEY_FILTER, async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FILTER, async = true, verbose = true)
     private void keyFilter() {
         this.treeItemFilter.initFilters();
         this.filter();
@@ -405,7 +405,7 @@ public class RedisMainController extends ParentController {
     /**
      * 展开左侧
      */
-    @EventReceiver(value = RedisEvents.LEFT_EXTEND, async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.LEFT_EXTEND, async = true, verbose = true)
     private void leftExtend() {
         this.mainLeft.display();
         double w = this.mainLeft.getMinWidth();
@@ -418,7 +418,7 @@ public class RedisMainController extends ParentController {
     /**
      * 收缩左侧
      */
-    @EventReceiver(value = RedisEvents.LEFT_COLLAPSE, async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
     private void leftCollapse() {
         this.mainLeft.disappear();
         this.tabPane.setLayoutX(0);

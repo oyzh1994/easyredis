@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisGEOCoordinateAddController;
 import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisZSetRow;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -225,7 +225,7 @@ public class RedisGEOKeyTabContentController extends RedisRowKeyTabContentContro
             return;
         }
         this.treeItem.reverseView();
-        EventUtil.fire(RedisEvents.REDIS_CHANGE_ZSET_SHOW_TYPE, this.treeItem);
+        EventUtil.fire(RedisEventTypes.REDIS_CHANGE_ZSET_SHOW_TYPE, this.treeItem);
     }
 
     @FXML

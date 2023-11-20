@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.fx.popup.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.trees.RedisDBTreeItem;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -119,7 +119,7 @@ public class RedisKeyFilterController extends Controller {
      *
      * @param kw 点击关键词
      */
-    @EventReceiver(RedisEvents.REDIS_FILTER_HISTORY_SELECTED)
+    @EventReceiver(RedisEventTypes.REDIS_FILTER_HISTORY_SELECTED)
     private void filterHistorySelected(String kw) {
         if (!this.pattern.getTextTrim().equals(kw)) {
             this.pattern.setText(kw);

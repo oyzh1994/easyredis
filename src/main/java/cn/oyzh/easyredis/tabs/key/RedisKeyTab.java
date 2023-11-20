@@ -15,6 +15,7 @@ import cn.oyzh.easyredis.tabs.RedisBaseTab;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -28,7 +29,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/21
  */
-public class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends RedisBaseTab {
+public class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
 
     {
         this.setClosable(true);

@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.trees.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -78,7 +78,7 @@ public class RedisHyperLogLogElementsAddController extends Controller {
                 return;
             }
             // 发送事件
-            EventUtil.fire(RedisEvents.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
+            EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
             MessageBox.okToast("新增元素成功！");
             this.closeStage();
         } catch (Exception ex) {

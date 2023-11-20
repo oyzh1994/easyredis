@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -201,7 +201,7 @@ public class SearchController extends SubController {
      *
      * @param kw 点击关键词
      */
-    @EventReceiver(RedisEvents.REDIS_SEARCH_HISTORY_SELECTED)
+    @EventReceiver(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED)
     private void searchHistorySelected(String kw) {
         if (!this.searchKW.getTextTrim().equals(kw)) {
             this.searchKW.setText(kw);
@@ -224,7 +224,7 @@ public class SearchController extends SubController {
      *
      * @param kw 点击关键词
      */
-    @EventReceiver(RedisEvents.REDIS_REPLACE_HISTORY_SELECTED)
+    @EventReceiver(RedisEventTypes.REDIS_REPLACE_HISTORY_SELECTED)
     private void replaceHistorySelected(String kw) {
         if (!this.replaceKW.getTextTrim().equals(kw)) {
             this.replaceKW.setText(kw);
@@ -383,14 +383,14 @@ public class SearchController extends SubController {
                 if (!this.searchNext.isDisable()) {
                     this.searchResult.setText("搜索中...");
                     // 触发事件
-                    EventUtil.fire(RedisEvents.REDIS_SEARCH_START);
+                    EventUtil.fire(RedisEventTypes.REDIS_SEARCH_START);
                     // 执行预搜索
                     this.searchHandler.preSearch(this.getSearchParam());
                     this.searchResult.setText("");
                     // 更新搜索结果
                     this.updateSearchResult();
                 } else {// 搜索结束
-                    EventUtil.fire(RedisEvents.REDIS_SEARCH_FINISH);
+                    EventUtil.fire(RedisEventTypes.REDIS_SEARCH_FINISH);
                 }
                 this.treeView.enable();
             } catch (Exception ex) {

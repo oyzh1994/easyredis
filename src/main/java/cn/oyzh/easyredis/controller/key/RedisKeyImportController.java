@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.trees.RedisConnectTreeItem;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisHashKey;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisHyperLogLogKey;
@@ -265,7 +265,7 @@ public class RedisKeyImportController extends Controller {
         this.importTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
-                EventUtil.fire(RedisEvents.REDIS_IMPORT_START);
+                EventUtil.fire(RedisEventTypes.REDIS_IMPORT_START);
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
@@ -315,7 +315,7 @@ public class RedisKeyImportController extends Controller {
                 this.groupDisabled.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                EventUtil.fire(RedisEvents.REDIS_IMPORT_FINISH, this.treeItem);
+                EventUtil.fire(RedisEventTypes.REDIS_IMPORT_FINISH, this.treeItem);
                 SystemUtil.gcLater();
             }
         });

@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.tabs.DynamicTab;
  * @author oyzh
  * @since 2023/06/21
  */
+@Deprecated
 public class RedisBaseTab extends DynamicTab {
 
 }

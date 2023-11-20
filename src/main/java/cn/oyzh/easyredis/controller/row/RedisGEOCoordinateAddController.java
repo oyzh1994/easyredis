@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -94,7 +94,7 @@ public class RedisGEOCoordinateAddController extends Controller {
             // 添加元素
             client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), rowValue);
             // 发送事件
-            EventUtil.fire(RedisEvents.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
+            EventUtil.fire(RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
             MessageBox.okToast("新增坐标成功！");
             this.closeStage();
         } catch (Exception ex) {

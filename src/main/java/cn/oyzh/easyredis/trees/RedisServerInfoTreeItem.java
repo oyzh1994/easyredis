@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.MenuItem;
@@ -45,6 +45,6 @@ public class RedisServerInfoTreeItem extends BaseTreeItem {
      * 显示服务信息
      */
     public void showServerInfo() {
-        EventUtil.fire(RedisEvents.REDIS_SERVER_INFO, this.parent.client());
+        EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.parent.client());
     }
 }

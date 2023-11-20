@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.fx.popup;
 
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.fx.plus.controls.FXListView;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -60,9 +60,9 @@ public class RedisSearchHistoryPopup extends Popup {
             this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     if (this.type == 1) {
-                        EventUtil.fire(RedisEvents.REDIS_SEARCH_HISTORY_SELECTED, newValue);
+                        EventUtil.fire(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED, newValue);
                     } else {
-                        EventUtil.fire(RedisEvents.REDIS_REPLACE_HISTORY_SELECTED, newValue);
+                        EventUtil.fire(RedisEventTypes.REDIS_REPLACE_HISTORY_SELECTED, newValue);
                     }
                     this.hide();
                 }

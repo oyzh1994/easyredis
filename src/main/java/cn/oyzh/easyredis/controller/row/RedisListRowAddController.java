@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.trees.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -81,7 +81,7 @@ public class RedisListRowAddController extends Controller {
                 client.rpushx(dbIndex, key, rowValue);
             }
             // 发送事件
-            EventUtil.fire(RedisEvents.REDIS_LIST_ROW_ADDED, this.treeItem);
+            EventUtil.fire(RedisEventTypes.REDIS_LIST_ROW_ADDED, this.treeItem);
             MessageBox.okToast("新增行成功！");
             this.closeStage();
         } catch (Exception ex) {

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.easyredis.controller.filter.RedisFilterMainController;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
@@ -105,7 +105,7 @@ public class HeaderController extends SubController {
     @FXML
     private void quit() {
         if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
-            EventUtil.fire(RedisEvents.APP_EXIT);
+            EventUtil.fire(RedisEventTypes.APP_EXIT);
         }
     }
 
@@ -115,7 +115,7 @@ public class HeaderController extends SubController {
     @FXML
     private void collapseTree() {
         this.treeMutexes.visible(this.expandTree);
-        EventUtil.fire(RedisEvents.LEFT_COLLAPSE);
+        EventUtil.fire(RedisEventTypes.LEFT_COLLAPSE);
     }
 
     /**
@@ -124,7 +124,7 @@ public class HeaderController extends SubController {
     @FXML
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
-        EventUtil.fire(RedisEvents.LEFT_EXTEND);
+        EventUtil.fire(RedisEventTypes.LEFT_EXTEND);
     }
 
     @Override

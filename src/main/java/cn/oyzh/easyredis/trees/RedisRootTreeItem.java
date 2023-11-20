@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.fx.ConnectManager;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -200,7 +200,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements ConnectManager {
     /**
      * 添加连接
      */
-    @EventReceiver(RedisEvents.REDIS_ADD_CONNECT)
+    @EventReceiver(RedisEventTypes.REDIS_ADD_CONNECT)
     private void addConnect() {
         StageUtil.showStage(RedisInfoAddController.class, this.window());
     }
@@ -208,7 +208,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements ConnectManager {
     /**
      * 添加分组
      */
-    @EventReceiver(RedisEvents.REDIS_ADD_GROUP)
+    @EventReceiver(RedisEventTypes.REDIS_ADD_GROUP)
     private void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
 
@@ -317,7 +317,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements ConnectManager {
      *
      * @param info 连接信息
      */
-    @EventReceiver(RedisEvents.REDIS_INFO_ADD)
+    @EventReceiver(RedisEventTypes.REDIS_INFO_ADD)
     private void onConnectAdd(RedisInfo info) {
         this.addConnect(info);
     }
@@ -327,7 +327,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements ConnectManager {
      *
      * @param info 连接信息
      */
-    @EventReceiver(RedisEvents.REDIS_INFO_UPDATED)
+    @EventReceiver(RedisEventTypes.REDIS_INFO_UPDATED)
     private void onConnectUpdate(RedisInfo info) {
         ObservableList<BaseTreeItem> items = this.getChildren();
         f1:

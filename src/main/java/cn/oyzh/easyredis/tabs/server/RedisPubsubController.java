@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -101,7 +101,7 @@ public class RedisPubsubController {
      */
     private void subscribe(RedisPubsubItem pubsubItem) {
         pubsubItem.setClient(this.client);
-        EventUtil.fire(RedisEvents.REDIS_OPEN_PUBSUB, pubsubItem);
+        EventUtil.fire(RedisEventTypes.REDIS_OPEN_PUBSUB, pubsubItem);
     }
 
     /**

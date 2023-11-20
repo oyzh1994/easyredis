@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.home;
 
-import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -59,7 +60,7 @@ public class RedisHomeTabContentController implements Initializable {
      */
     @FXML
     private void addConnect() {
-        EventUtil.fire(RedisEvents.REDIS_ADD_CONNECT);
+        EventUtil.fire(RedisEventTypes.REDIS_ADD_CONNECT);
     }
 
     /**
@@ -67,7 +68,7 @@ public class RedisHomeTabContentController implements Initializable {
      */
     @FXML
     private void addGroup() {
-        EventUtil.fire(RedisEvents.REDIS_ADD_GROUP);
+        EventUtil.fire(RedisEventTypes.REDIS_ADD_GROUP);
     }
 
     /**
@@ -75,7 +76,7 @@ public class RedisHomeTabContentController implements Initializable {
      */
     @FXML
     private void openTerminal() {
-        EventUtil.fire(RedisEvents.REDIS_OPEN_TERMINAL);
+        RedisEventUtil.terminalOpen();
     }
 
 }
