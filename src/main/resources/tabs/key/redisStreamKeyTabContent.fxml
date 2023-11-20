@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.easyredis.fx.combobox.RedisFormatComboBox?>
+<FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyredis.tabs.key.RedisStreamKeyTabContentController" side="RIGHT">
+    <FXTab text="键数据">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
+        </graphic>
+        <FlexVBox fx:id="root" flexWidth="100%" flexHeight="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <SVGGlyph fx:id="collect" tipText="收藏键" size="15"
+                          onMousePrimaryClicked="#collect"
+                          url="/font/star-l.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph visible="false" managed="false" fx:id="unCollect" tipText="取消收藏键" size="15"
+                          onMousePrimaryClicked="#unCollect"
+                          url="/font/star.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新键(F5)" size="15" onMousePrimaryClicked="#reloadNode"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="重命名键" size="16"
+                          onMousePrimaryClicked="#renameNode" url="/font/edit-square.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="删除键" size="16"
+                          onMousePrimaryClicked="#deleteNode" url="/font/delete.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="复制键信息" size="16"
+                          onMousePrimaryClicked="#copyNodeInfo" url="/font/copy-path.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期" fontSize="16"
+                         onMousePrimaryClicked="#ttlUpdate">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <SVGGlyph tipText="添加消息" size="16" onMousePrimaryClicked="#addRow" url="/font/add.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25" >
+                    <FlowPane.margin>
+                        <Insets left="5" top="-5"/>
+                    </FlowPane.margin>
+                </ClearableTextField>
+                <PagePane fx:id="pagePane" iconSize="14" onFirstClicked="#firstPage" onLastClicked="#lastPage"
+                          onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                    <FlowPane.margin>
+                        <Insets left="5" top="2"/>
+                    </FlowPane.margin>
+                </PagePane>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
+                           fixedCellSize="30">
+                <columns>
+                    <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
+                    <FlexTableColumn flexWidth="25%" fx:id="id" text="消息id"/>
+                    <FlexTableColumn flexWidth="55%" fx:id="value" text="消息内容"/>
+                    <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
+                </columns>
+            </FlexTableView>
+            <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
+                <SVGGlyph tipText="删除消息" size="16"
+                          onMousePrimaryClicked="#deleteRow" url="/font/delete.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <RedisFormatComboBox prefHeight="24" fontSize="10" initIndex="1" tipText="格式" fx:id="format">
+                    <FlowPane.margin>
+                        <Insets left="5" top="-4"/>
+                    </FlowPane.margin>
+                </RedisFormatComboBox>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="12" fx:id="nodeData" flexHeight="100% - 442"
+                               flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed">
+            </RedisDataTextArea>
+            <FlexHBox flexWidth="100%" realHeight="30">
+                <FXLabel realWidth="50" text="消息id：">
+                    <HBox.margin>
+                        <Insets left="5" top="15"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 56" fx:id="streamID" tipText="消息id">
+                    <HBox.margin>
+                        <Insets top="5"/>
+                    </HBox.margin>
+                </ReadOnlyTextField>
+                <HBox.margin>
+                    <Insets top="5"/>
+                </HBox.margin>
+            </FlexHBox>
+        </FlexVBox>
+    </FXTab>
+    <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
+</FlexTabPane>

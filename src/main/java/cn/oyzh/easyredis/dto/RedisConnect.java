@@ -1,0 +1,38 @@
+package cn.oyzh.easyredis.dto;
+
+import lombok.Data;
+
+/**
+ * redis连接
+ *
+ * @author oyzh
+ * @since 2023/8/10
+ */
+@Data
+public class RedisConnect {
+
+    /**
+     * 地址
+     */
+    private String host = "127.0.0.1";
+
+    /**
+     * 端口
+     */
+    private int port = 6379;
+
+    /**
+     * 用户
+     */
+    private String user;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * db索引
+     */
+    private int db = 0;
+}

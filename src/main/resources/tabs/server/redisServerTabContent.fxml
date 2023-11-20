@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTabContentController" flexHeight="100%"
+          flexWidth="100%">
+    <FlexTableView flexWidth="100%" realHeight="70" fx:id="propTable">
+        <columns>
+            <FlexTableColumn fx:id="serverVersion" text="Redis版本" flexWidth="13%"/>
+            <FlexTableColumn fx:id="usedMemory" text="已用内存" flexWidth="13%"/>
+            <FlexTableColumn fx:id="connectedClients" text="客户端数量" flexWidth="13%"/>
+            <FlexTableColumn fx:id="totalCommandsProcessed" text="已执行命令" flexWidth="13%"/>
+            <FlexTableColumn fx:id="uptime" text="正常运行时间" flexWidth="13%"/>
+            <FlexTableColumn fx:id="keyCount" text="键总量" flexWidth="12%"/>
+            <FlexTableColumn fx:id="hitRate" text="命中率" flexWidth="12%"/>
+            <FlexTableColumn fx:id="role" text="角色" flexWidth="11% - 5"/>
+        </columns>
+    </FlexTableView>
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 70" fx:id="tabPane">
+        <fx:include fx:id="aggregation" source="redisAggregationTab.fxml"/>
+        <fx:include fx:id="serverInfo" source="redisSeverInfoTab.fxml"/>
+        <fx:include fx:id="slowlog" source="redisSlowlogTab.fxml"/>
+        <fx:include fx:id="clientInfo" source="redisClientInfoTab.fxml"/>
+        <fx:include fx:id="pubsub" source="redisPubsubTab.fxml"/>
+    </FlexTabPane>
+</FlexVBox>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.easyredis.fx.combobox.RedisFormatComboBox?>
+<FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyredis.tabs.key.RedisListKeyTabContentController" side="RIGHT">
+    <FXTab text="键数据">
+        <graphic>
+            <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
+        </graphic>
+        <FlexVBox fx:id="root" flexWidth="100%" flexHeight="100%">
+            <FlexFlowPane realHeight="32" flexWidth="100%">
+                <SVGGlyph fx:id="collect" tipText="收藏键" size="15"
+                          onMousePrimaryClicked="#collect"
+                          url="/font/star-l.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph visible="false" managed="false" fx:id="unCollect" tipText="取消收藏键" size="15"
+                          onMousePrimaryClicked="#unCollect"
+                          url="/font/star.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新键(F5)" size="15" onMousePrimaryClicked="#reloadNode"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="重命名键" size="16"
+                          onMousePrimaryClicked="#renameNode" url="/font/edit-square.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="删除键" size="16"
+                          onMousePrimaryClicked="#deleteNode" url="/font/delete.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="复制键信息" size="16"
+                          onMousePrimaryClicked="#copyNodeInfo" url="/font/copy-path.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期" fontSize="16"
+                         onMousePrimaryClicked="#ttlUpdate">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <SVGGlyph tipText="添加行" size="16" onMousePrimaryClicked="#addRow" url="/font/add.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25" >
+                    <FlowPane.margin>
+                        <Insets left="5" top="-5"/>
+                    </FlowPane.margin>
+                </ClearableTextField>
+                <PagePane fx:id="pagePane" iconSize="14" onFirstClicked="#firstPage"
+                          onLastClicked="#lastPage"
+                          onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                    <FlowPane.margin>
+                        <Insets left="5" top="2"/>
+                    </FlowPane.margin>
+                </PagePane>
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
+                           fixedCellSize="30">
+                <columns>
+                    <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
+                    <FlexTableColumn flexWidth="10%" fx:id="lineIndex" text="行号"/>
+                    <FlexTableColumn flexWidth="70%" fx:id="value" text="值"/>
+                    <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
+                </columns>
+            </FlexTableView>
+            <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
+                <SVGGlyph fx:id="saveNodeData" disable="true" tipText="保存(Ctrl+S)" size="16"
+                          onMousePrimaryClicked="#saveNodeData"
+                          url="/font/save.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph disable="true" fx:id="dataUndo" tipText="撤销(Ctrl+Z)" size="16"
+                          onMousePrimaryClicked="#dataUndo"
+                          url="/font/data_revoke.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph disable="true" fx:id="dataRedo" tipText="重做(Ctrl+Y)" size="16"
+                          onMousePrimaryClicked="#dataRedo"
+                          url="/font/data_redo.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                          tipText="粘贴(Ctrl+V)">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData" tipText="清空数据">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="复制行数据" size="16"
+                          onMousePrimaryClicked="#copyRow" url="/font/copy-path.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="删除行" size="16"
+                          onMousePrimaryClicked="#deleteRow" url="/font/delete.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <SVGGlyph tipText="刷新数据" size="15" onMousePrimaryClicked="#reloadRow"
+                          url="/font/reload.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
+                <RedisFormatComboBox prefHeight="24" fontSize="10" initIndex="0" tipText="格式" fx:id="format">
+                    <FlowPane.margin>
+                        <Insets left="5" top="-4"/>
+                    </FlowPane.margin>
+                </RedisFormatComboBox>
+<!--                <FXLabel text="字符集:" fontSize="11">-->
+<!--                    <FlowPane.margin>-->
+<!--                        <Insets left="5"/>-->
+<!--                    </FlowPane.margin>-->
+<!--                </FXLabel>-->
+                <!-- <CharsetComboBox fx:id="charset" initIndex="0" fontSize="11" prefWidth="85" style="-fx-padding: 0;"> -->
+                <!--     <FlowPane.margin> -->
+                <!--         <Insets left="2"/> -->
+                <!--     </FlowPane.margin> -->
+                <!-- </CharsetComboBox> -->
+                <padding>
+                    <Insets top="9"/>
+                </padding>
+            </FlexFlowPane>
+            <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100% - 402"
+                               flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+        </FlexVBox>
+    </FXTab>
+    <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
+</FlexTabPane>

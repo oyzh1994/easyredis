@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyMoveController" realWidth="400"
+          realHeight="210">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField editable="false" fx:id="key" realHeight="30.0" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <RedisDBComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </RedisDBComboBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="设  置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexCheckBox selected="true" fx:id="retainTTL" text="移动时保留ttl">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#moveKey" fx:id="submit" text="移动">
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

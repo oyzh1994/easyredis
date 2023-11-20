@@ -1,0 +1,133 @@
+package cn.oyzh.easyredis.tabs.key;
+
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisKey;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.fx.common.spring.ScopeType;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.util.FXUtil;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * redis键信息组件
+ *
+ * @author oyzh
+ * @since 2023/08/03
+ */
+@Lazy
+@Slf4j
+@Component
+@Scope(ScopeType.PROTOTYPE)
+public class RedisKeyInfoController implements Initializable {
+
+    /**
+     * 根节点
+     */
+    @FXML
+    private FXTab infoRoot;
+
+    /**
+     * redis客户端
+     */
+    private RedisClient client;
+
+    /**
+     * redis键
+     */
+    private RedisKey redisKey;
+
+    /**
+     * redis树节点
+     */
+    private RedisKeyTreeItem<?> treeItem;
+
+    /**
+     * 编码
+     */
+    @FXML
+    private TextField objectEncoding;
+
+    /**
+     * 空闲时间
+     */
+    @FXML
+    private TextField objectIdletime;
+
+    /**
+     * 引用数量
+     */
+    @FXML
+    private TextField objectRefcount;
+
+    /**
+     * 复制信息
+     */
+    @FXML
+    private void copy() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("键名称: ").append(this.treeItem.key()).append("\n")
+                .append("数据库: ").append(this.treeItem.dbIndex()).append("\n")
+                .append("编码类型: ").append(this.redisKey.objectedEncoding()).append("\n")
+                .append("空闲时间: ").append(this.redisKey.objectIdletime()).append("\n")
+                .append("引用数量: ").append(this.redisKey.objectRefcount());
+        if (FXUtil.clipboardCopy(builder.toString())) {
+            MessageBox.okToast("已复制键信息到剪贴板");
+        } else {
+            MessageBox.warn("复制键信息到剪贴板失败！");
+        }
+    }
+
+    /**
+     * 刷新信息
+     */
+    @FXML
+    private void refresh() {
+        this.initObject();
+    }
+
+    /**
+     * 初始化组件
+     *
+     * @param treeItem redis树键
+     */
+    public void init(RedisKeyTreeItem<?> treeItem) {
+        // 重置渲染标志位
+        this.treeItem = treeItem;
+        this.redisKey = treeItem.value();
+        this.client = treeItem.client();
+    }
+
+    /**
+     * 初始化对象
+     */
+    protected void initObject() {
+        try {
+            String key = this.treeItem.key();
+            int dbIndex = this.treeItem.dbIndex();
+            RedisKeyUtil.getNodeObject(this.redisKey, dbIndex, key, this.client);
+            this.objectIdletime.setText(this.redisKey.objectIdletimeString());
+            this.objectRefcount.setText(this.redisKey.objectRefcountString());
+            this.objectEncoding.setText(this.redisKey.objectedEncodingString());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // 选中状态监听
+        this.infoRoot.selectedProperty().addListener((observable, oldValue, newValue) -> this.initObject());
+    }
+}

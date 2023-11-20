@@ -1,0 +1,175 @@
+package cn.oyzh.easyredis.controller.key;
+
+import cn.oyzh.easyredis.RedisConst;
+import cn.oyzh.easyredis.RedisStyle;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisEvents;
+import cn.oyzh.fx.common.Const;
+import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.text.FlexLabel;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
+import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.stage.StageAttribute;
+import javafx.fxml.FXML;
+import javafx.stage.Modality;
+import javafx.stage.WindowEvent;
+import lombok.extern.slf4j.Slf4j;
+
+import java.sql.Date;
+
+
+/**
+ * redis ttl设置业务
+ *
+ * @author oyzh
+ * @since 2023/07/09
+ */
+@Slf4j
+@StageAttribute(
+        title = "Redis键TTL变更",
+        iconUrls = RedisConst.ICON_PATH,
+        modality = Modality.WINDOW_MODAL,
+        cssUrls = RedisStyle.COMMON,
+        value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
+)
+public class RedisKeyTTLController extends Controller {
+
+    /**
+     * 当前窗口显示时间
+     */
+    private Long showTime;
+
+    /**
+     * ttl
+     */
+    @FXML
+    private NumberTextField ttl;
+
+    /**
+     * redis客户端
+     */
+    private RedisClient client;
+
+    /**
+     * 到期预览
+     */
+    @FXML
+    private FlexLabel expirePreview;
+
+    /**
+     * 树键
+     */
+    private RedisKeyTreeItem<?> treeItem;
+
+    /**
+     * 添加redis键
+     */
+    @FXML
+    private void ttlSetting() {
+        // 获取键值
+        Number ttlValue = this.ttl.getValue();
+        try {
+            if (ttlValue.longValue() <= -1) {
+                this.client.persist(this.treeItem.dbIndex(), this.treeItem.key());
+            } else if (ttlValue.longValue() == 0) {
+                if (MessageBox.confirm("ttl设置为0，此key将立刻过期，确定这样设置么？")) {
+                    this.client.del(this.treeItem.dbIndex(), this.treeItem.key());
+                }
+            } else {
+                this.client.expire(this.treeItem.dbIndex(), this.treeItem.key(), ttlValue.longValue(), null);
+            }
+            EventUtil.fire(RedisEvents.REDIS_TTL_UPDATED, this.treeItem);
+            MessageBox.okToast("更新TTL成功！");
+            this.closeStage();
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
+    }
+
+    @FXML
+    private void persistKey() {
+        this.ttl.setValue(-1L);
+    }
+
+    @FXML
+    private void expireAt1D() {
+        this.ttl.setValue(24 * 3600);
+    }
+
+    @FXML
+    private void expireAt1H() {
+        this.ttl.setValue(3600);
+    }
+
+    @FXML
+    private void expireAt1M() {
+        this.ttl.setValue(60);
+    }
+
+    @FXML
+    private void appendWith1M() {
+        long ttl = this.ttl.getValue();
+        if (ttl <= -1) {
+            this.expireAt1M();
+        } else {
+            this.ttl.setValue(ttl + 60);
+        }
+    }
+
+    @FXML
+    private void appendWith1H() {
+        long ttl = this.ttl.getValue();
+        if (ttl <= -1) {
+            this.expireAt1H();
+        } else {
+            this.ttl.setValue(ttl + 3600);
+        }
+    }
+
+    @FXML
+    private void appendWith1D() {
+        long ttl = this.ttl.getValue();
+        if (ttl <= -1) {
+            this.expireAt1D();
+        } else {
+            this.ttl.setValue(ttl + 24 * 3600);
+        }
+    }
+
+    @FXML
+    private void resetTTL() {
+        this.ttl.setValue(this.treeItem.ttl());
+    }
+
+    @Override
+    protected void bindListeners() {
+        this.ttl.addTextChangeListener((observable, oldValue, newValue) -> {
+            long ttl = this.ttl.getValue();
+            if (ttl <= -1) {
+                this.expirePreview.setText("永不过期");
+            } else {
+                this.expirePreview.setText(Const.DATE_FORMAT.format(new Date(this.showTime + ttl * 1000)));
+            }
+        });
+    }
+
+    @Override
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        this.showTime = System.currentTimeMillis();
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
+        this.treeItem = this.getStageProp("treeItem");
+        this.client = this.treeItem.client();
+        Long ttl = this.treeItem.ttl();
+        if (ttl == null || ttl <= -1) {
+            this.ttl.setValue(-1);
+            this.expirePreview.setText("永不过期");
+        } else {
+            this.ttl.setValue(ttl);
+            this.expirePreview.setText(Const.DATE_FORMAT.format(new Date(System.currentTimeMillis() + ttl * 1000)));
+        }
+    }
+}

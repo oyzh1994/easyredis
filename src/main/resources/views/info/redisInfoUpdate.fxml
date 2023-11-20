@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoUpdateController" realWidth="750" realHeight="320">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
+        <FXTab text="基础设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField tipText="请输入名称" maxLen="30" require="true" fx:id="name"
+                                        realHeight="30" flexWidth="100% - 140">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true"
+                                        realHeight="30"
+                                        flexWidth="100% - 280" maxLen="1024">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <PortTextField realWidth="91" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
+                                   value="6379">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </PortTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
+                                        realHeight="30" flexWidth="50% - 145">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
+                                        require="true"
+                                        realHeight="30" flexWidth="50% - 142">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <FlexCheckBox text="这是一个哨兵服务" fx:id="showSentinel">
+                        <HBox.margin>
+                            <Insets left="5" top="20"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" visible="false">
+                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
+                                        realHeight="30" flexWidth="50% - 145">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
+                                        realHeight="30" flexWidth="50% - 142">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <FlexCheckBox fx:id="redirectMaster" text="连接重定向master" fontSize="11"
+                                  tipText="如果发现服务是哨兵，则自动重定向到master连接" selected="true">
+                        <HBox.margin>
+                            <Insets left="5" top="20"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="高级设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField flexWidth="100% - 43" min="3" max="120" fx:id="connectTimeOut"
+                                     tipText="连接超时(3-120)，单位秒，默认15秒" value="15"
+                                     require="true">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <FXLabel text="秒">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </FXLabel>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField flexWidth="100% - 43" min="3" max="120" fx:id="executeTimeOut"
+                                     tipText="网络超时(3-120)，单位秒，默认30秒" value="30"
+                                     require="true">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                    <FXLabel text="秒">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </FXLabel>
+                </FlexHBox>
+                <!-- <FlexHBox flexWidth="100%" realHeight="50"> -->
+                <!--     <FXLabel realHeight="30" realWidth="65" text="字 符 集" styleClass="label-primary"> -->
+                <!--         <HBox.margin> -->
+                <!--             <Insets left="20" top="10"/> -->
+                <!--         </HBox.margin> -->
+                <!--     </FXLabel> -->
+                <!--     <CharsetComboBox fx:id="charset" realHeight="30" flexWidth="100% - 140"> -->
+                <!--         <HBox.margin> -->
+                <!--             <Insets left="10" top="10"/> -->
+                <!--         </HBox.margin> -->
+                <!--     </CharsetComboBox> -->
+                <!-- </FlexHBox> -->
+                <FlexHBox flexWidth="100%" realHeight="100">
+                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="label-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <LimitTextArea fx:id="remark" tipText="请输入备注信息" maxLen="100"
+                                   realHeight="80" flexWidth="100% - 140">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </LimitTextArea>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+    </FlexTabPane>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <IconButton onAction="#testConnect" text="测试" styleClass="btn,btn-success" iconSizePercent="0.8">
+            <graphic>
+                <SVGGlyph url="/font/link.svg"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <SubmitButton onAction="#update" text="确定">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

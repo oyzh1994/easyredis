@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.easyredis.fx.LatitudeField?>
+<?import cn.oyzh.easyredis.fx.LongitudeField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.row.RedisGEOCoordinateAddController" realWidth="750"
+          realHeight="550">
+    <FlexHBox flexWidth="100%" flexHeight="100% - 195">
+        <FXLabel text="坐标" realHeight="30" realWidth="55" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入坐标名称"
+                      flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexTextArea>
+        <FlexVBox>
+            <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                      tipText="粘贴数据">
+                <VBox.margin>
+                    <Insets left="5" top="10"/>
+                </VBox.margin>
+            </SVGGlyph>
+            <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
+                      tipText="清空数据">
+                <VBox.margin>
+                    <Insets left="5" top="10"/>
+                </VBox.margin>
+            </SVGGlyph>
+        </FlexVBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="经度" realHeight="30" realWidth="55" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <LongitudeField flexWidth="100% - 28" fx:id="longitude" tipText="经度值" value="0" step="5">
+            <HBox.margin>
+                <Insets left="2" right="2"/>
+            </HBox.margin>
+        </LongitudeField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="纬度" realHeight="30" realWidth="55" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <LatitudeField flexWidth="100% - 28" fx:id="latitude" tipText="纬度值" value="0" step="5">
+            <HBox.margin>
+                <Insets left="2" right="2"/>
+            </HBox.margin>
+        </LatitudeField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#addRow">
+            <HBox.margin>
+                <Insets left="85" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.*?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
+    <FlexHBox realHeight="50" flexWidth="100%">
+        <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <IconButton fx:id="chooseFile" tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
+                    text="选择"
+                    styleClass="btn,btn-success" iconSizePercent="0.75">
+            <graphic>
+                <SVGGlyph url="/font/file.svg"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </IconButton>
+    </FlexHBox>
+    <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
+        <VBox.margin>
+            <Insets left="95"/>
+        </VBox.margin>
+    </FlexText>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <fx:define>
+            <FXToggleGroup fx:id="existStrategy"/>
+        </fx:define>
+        <FXRadioButton fx:id="skipForExist" toggleGroup="$existStrategy" text="键存在时跳过" selected="true"
+                       userData="0" tipText="跳过此键的导入">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton fx:id="overrideForExist" toggleGroup="$existStrategy" text="键存在时覆盖" userData="1"
+                       tipText="删除键，并重新创建键并设置值，可避免键类型不一致的问题">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton fx:id="updateForExist" toggleGroup="$existStrategy" text="键存在时更新" userData="2"
+                       tipText="string类型更新值，list、set、zset类型更新列表，stream类型添加消息，如果键类型不一致则失败">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="导入选项" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <!-- <FXLabel text="字符集:"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="10" top="20"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </FXLabel> -->
+        <!-- <CharsetComboBox prefWidth="120" initIndex="1" fx:id="charset" promptText="导入字符集" -->
+        <!--                  tipText="默认是源信息的字符集"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="5" top="12"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </CharsetComboBox> -->
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="360">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexVBox flexWidth="100% - 140" flexHeight="100%">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+            <MsgTextArea editable="false" maxLine="300" fx:id="importMsg" flexWidth="100%" flexHeight="100% - 20"/>
+            <FXLabel fx:id="importStatus"/>
+        </FlexVBox>
+    </FlexHBox>
+    <FlexHBox prefHeight="50" flexWidth="100%">
+        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="button-primary"
+                    text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
+            <graphic>
+                <SVGGlyph url="/font/Import.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <IconButton disable="true" text="结束" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
+                    styleClass="button-default"
+                    realHeight="30" iconSizePercent="0.9">
+            <graphic>
+                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <CancelButton text="关闭" iconSizePercent="0.6">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+    <FlexVBox flexWidth="100%" fontSize="12">
+        <FXLabel text="温馨提示:" textFill="#666">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FXLabel>
+        <FlexText fill="#666" text="1. 键不存在时将创建键">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </FlexText>
+        <VBox.margin>
+            <Insets left="95"/>
+        </VBox.margin>
+    </FlexVBox>
+</FlexVBox>

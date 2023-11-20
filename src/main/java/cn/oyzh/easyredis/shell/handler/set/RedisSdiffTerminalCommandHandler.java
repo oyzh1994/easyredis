@@ -1,0 +1,65 @@
+package cn.oyzh.easyredis.shell.handler.set;
+
+import cn.hutool.core.util.ArrayUtil;
+import cn.oyzh.easyredis.redis.RedisKeyType;
+import cn.oyzh.easyredis.shell.RedisShellUtil;
+import cn.oyzh.easyredis.shell.RedisTerminalTextArea;
+import cn.oyzh.easyredis.shell.command.set.RedisSdiffTerminalCommand;
+import cn.oyzh.easyredis.shell.handler.RedisKeyTerminalCommandHandler;
+import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import org.springframework.stereotype.Component;
+
+import java.util.Set;
+
+/**
+ * @author oyzh
+ * @since 2023/7/26
+ */
+@Component
+public class RedisSdiffTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisSdiffTerminalCommand> {
+
+    @Override
+    protected boolean checkArgs(String[] words) {
+        return words.length > 1;
+    }
+
+    @Override
+    protected RedisSdiffTerminalCommand parseCommand(String line, String[] words) {
+        RedisSdiffTerminalCommand command = new RedisSdiffTerminalCommand();
+        command.keys(ArrayUtil.sub(words, 1, words.length));
+        return command;
+    }
+
+    @Override
+    public TerminalExecuteResult execute(RedisSdiffTerminalCommand command, RedisTerminalTextArea terminal) {
+        TerminalExecuteResult result = new TerminalExecuteResult();
+        try {
+            Set<String> sdiff = terminal.client().sdiff(null, command.keys());
+            result.setResult(RedisShellUtil.formatOut(sdiff));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result.setException(ex);
+        }
+        return result;
+    }
+
+    @Override
+    public String commandName() {
+        return "SDIFF";
+    }
+
+    @Override
+    public String commandArg() {
+        return "key [key...]";
+    }
+
+    @Override
+    public String commandDesc() {
+        return "获取多个set的差集";
+    }
+
+    @Override
+    protected RedisKeyType getKeyType() {
+        return RedisKeyType.SET;
+    }
+}

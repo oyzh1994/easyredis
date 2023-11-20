@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyredis.fx.combobox.RedisDBComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import java.lang.String?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextField disable="true" realHeight="30" fx:id="serverName" flexWidth="100% - 180">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="数  据  库" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <RedisDBComboBox fx:id="db" realHeight="30" flexWidth="100% - 180">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </RedisDBComboBox>
+        <FlexCheckBox fx:id="filterKeys" text="过滤">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" visible="false">
+        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField fx:id="pattern" realHeight="30.0" flexWidth="100% - 275" text="*">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+        <FXButton text="显示受影响键" onAction="#showKeys">
+            <HBox.margin>
+                <Insets left="3" top="10"/>
+            </HBox.margin>
+        </FXButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="200" fx:id="keysBox2" visible="false">
+        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 10" flexWidth="100% - 180">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ReadOnlyTextArea>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="排除类型" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexCheckBox fx:id="stringType" text="STRING">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="listType" text="LIST">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="setType" text="SET">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="zsetType" text="ZSET">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="hashType" text="HASH">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="streamType" selected="true" text="STREAM">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="hyperLogLogType" selected="true" text="HYPERLOGLOG">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexComboBox prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="开启美化"/>
+                    <String fx:value="关闭美化"/>
+                </FXCollections>
+            </items>
+            <HBox.margin>
+                <Insets left="10" top="12"/>
+            </HBox.margin>
+        </FlexComboBox>
+        <!-- <CharsetComboBox prefWidth="120" fx:id="charset" promptText="导出字符集" tipText="默认是此连接的字符集"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="10" top="12"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </CharsetComboBox> -->
+        <FlexCheckBox fx:id="dictSort" selected="true" text="按字典排序" tipText="键名称按字典排序">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="适用过滤配置列表的数据">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexVBox flexWidth="100%" flexHeight="100%">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+            <MsgTextArea editable="false" maxLine="300" fx:id="exportMsg" flexWidth="100% - 180" flexHeight="100% - 20"/>
+            <FXLabel fx:id="exportStatus"/>
+        </FlexVBox>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <IconButton tipText="开始执行导出" fx:id="exportBtn" onAction="#doExport" realHeight="30"
+                    styleClass="button-primary"
+                    text="导出"
+                    iconSizePercent="0.75">
+            <graphic>
+                <SVGGlyph url="/font/export.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="95" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <IconButton disable="true" text="结束" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
+                    styleClass="button-default"
+                    realHeight="30" iconSizePercent="0.9">
+            <graphic>
+                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
+            </graphic>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </IconButton>
+        <CancelButton text="关闭" iconSizePercent="0.6">
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+    <FlexVBox flexWidth="100%" fontSize="12">
+        <FXLabel text="温馨提示:" textFill="#666">
+            <VBox.margin>
+                <Insets left="95" top="10"/>
+            </VBox.margin>
+        </FXLabel>
+        <Text fill="#666" layoutY="65.0" text="1. 不建议导出HYPERLOGLOG类型，统计值无法导出">
+            <VBox.margin>
+                <Insets left="95" top="10"/>
+            </VBox.margin>
+        </Text>
+        <Text fill="#666" layoutY="90.0" text="2. 不建议导出STREAM类型数据，消息id有可能会冲突">
+            <VBox.margin>
+                <Insets left="95" top="10"/>
+            </VBox.margin>
+        </Text>
+    </FlexVBox>
+</FlexVBox>

@@ -1,0 +1,30 @@
+package cn.oyzh.easyredis.domain;
+
+
+import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.fx.plus.domain.TreeGroup;
+
+import java.util.Objects;
+
+/**
+ * @author oyzh
+ * @since 2023/6/16
+ */
+public class RedisGroup extends TreeGroup implements ObjectComparator<RedisGroup> {
+
+    public RedisGroup() {
+
+    }
+
+    public RedisGroup(String gid, String name, boolean expand) {
+        super(gid, name, expand);
+    }
+
+    @Override
+    public boolean compare(RedisGroup t1) {
+        if (Objects.equals(this, t1)) {
+            return true;
+        }
+        return Objects.equals(t1.getName(), this.getName());
+    }
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoController" text="键信息" fx:id="infoRoot">
+    <graphic>
+        <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
+    </graphic>
+    <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FlexFlowPane realHeight="40" flexWidth="100%">
+            <SVGGlyph tipText="复制键状态" size="16" onMousePrimaryClicked="#copy"
+                      url="/font/file-copy.svg">
+                <FlowPane.margin>
+                    <Insets left="5"/>
+                </FlowPane.margin>
+            </SVGGlyph>
+            <SVGGlyph tipText="刷新键状态" size="15" onMousePrimaryClicked="#refresh"
+                      url="/font/reload.svg">
+                <FlowPane.margin>
+                    <Insets left="5"/>
+                </FlowPane.margin>
+            </SVGGlyph>
+            <padding>
+                <Insets top="9"/>
+            </padding>
+        </FlexFlowPane>
+        <FlexVBox flexHeight="100% - 40" flexWidth="100%" fontSize="11">
+            <VBox.margin>
+                <Insets left="5"/>
+            </VBox.margin>
+            <FlexHBox flexWidth="100%" realHeight="40">
+                <FXLabel text="编码类型" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextField fx:id="objectEncoding" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <HBox.margin>
+                    <Insets top="10"/>
+                </HBox.margin>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="40">
+                <FXLabel text="空闲时间" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextField fx:id="objectIdletime" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <HBox.margin>
+                    <Insets top="10"/>
+                </HBox.margin>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="40">
+                <FXLabel text="引用数量" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextField fx:id="objectRefcount" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <HBox.margin>
+                    <Insets top="10"/>
+                </HBox.margin>
+            </FlexHBox>
+        </FlexVBox>
+    </FlexVBox>
+</FXTab>

@@ -1,0 +1,134 @@
+version: "3.7"
+
+services:
+  #该容器只是执行一条命令，可以删除手动进入执行
+  redis-cluster:
+    image: redis
+    command: 'redis-cli -a 123456 --cluster create 192.168.3.4:6381 192.168.3.4:6382 192.168.3.4:6383 192.168.3.4:6384 192.168.3.4:6385 192.168.3.4:6386 --cluster-yes --cluster-replicas 1'
+    depends_on:
+      - redis1
+      - redis2
+      - redis3
+      - redis4
+      - redis5
+      - redis6
+
+  # 节点1
+  redis1:
+    image: redis
+    container_name: redis-cluster-node1
+    ports:
+      - 6381:6381
+      - 16381:16381
+    volumes:
+      - ./redis1.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 节点2
+  redis2:
+    image: redis
+    container_name: redis-cluster-node2
+    ports:
+      - 6382:6382
+      - 16382:16382
+    volumes:
+      - ./redis2.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 节点3
+  redis3:
+    image: redis
+    container_name: redis-cluster-node3
+    ports:
+      - 6383:6383
+      - 16383:16383
+    volumes:
+      - ./redis3.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 节点4
+  redis4:
+    image: redis
+    container_name: redis-cluster-node4
+    ports:
+      - 6384:6384
+      - 16384:16384
+    volumes:
+      - ./redis4.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 节点5
+  redis5:
+    image: redis
+    container_name: redis-cluster-node5
+    ports:
+      - 6385:6385
+      - 16385:16385
+    volumes:
+      - ./redis5.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 节点6
+  redis6:
+    image: redis
+    container_name: redis-cluster-node6
+    ports:
+      - 6386:6386
+      - 16386:16386
+    volumes:
+      - ./redis6.conf:/conf/redis.conf
+    command: redis-server /conf/redis.conf
+
+  # 哨兵节点1
+  sentinel1:
+    image: redis
+    container_name: redis-cluster-sentinel1
+    restart: always
+    volumes:
+      - ./redis-sentinel1.conf:/conf/redis.conf
+    ports:
+      - 6387:6387
+    depends_on:
+      - redis1
+      - redis2
+      - redis3
+      - redis4
+      - redis5
+      - redis6
+    command: redis-sentinel /conf/redis.conf
+
+  # 哨兵节点2
+  sentinel2:
+    image: redis
+    container_name: redis-cluster-sentinel2
+    restart: always
+    volumes:
+      - ./redis-sentinel2.conf:/conf/redis.conf
+    ports:
+      - 6388:6388
+    depends_on:
+      - redis1
+      - redis2
+      - redis3
+      - redis4
+      - redis5
+      - redis6
+    command: redis-sentinel /conf/redis.conf
+
+  # 哨兵节点3
+  sentinel3:
+    image: redis
+    container_name: redis-cluster-sentinel3
+    restart: always
+    volumes:
+      - ./redis-sentinel3.conf:/conf/redis.conf
+    ports:
+      - 6389:6389
+    depends_on:
+      - redis1
+      - redis2
+      - redis3
+      - redis4
+      - redis5
+      - redis6
+    command: redis-sentinel /conf/redis.conf

@@ -1,0 +1,179 @@
+package cn.oyzh.easyredis.info;
+
+import cn.hutool.core.util.StrUtil;
+import javafx.beans.property.SimpleStringProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * redis信息属性项目
+ *
+ * @author oyzh
+ * @since 2023/08/01
+ */
+public class RedisServerItem {
+
+    /**
+     * 服务角色
+     */
+    @Getter
+    private String role;
+
+    /**
+     * 服务版本
+     */
+    @Getter
+    @Setter
+    private String serverVersion;
+
+    /**
+     * 正常运行时间
+     */
+    private SimpleStringProperty uptimeProperty;
+
+    /**
+     * 命中率
+     */
+    private SimpleStringProperty hitRateProperty;
+
+    /**
+     * 键数量
+     */
+    private SimpleStringProperty keyCountProperty;
+
+    /**
+     * 已使用内存
+     */
+    private SimpleStringProperty usedMemoryProperty;
+
+    /**
+     * 已连接客户端
+     */
+    private SimpleStringProperty connectedClientsProperty;
+
+    /**
+     * 已处理命令
+     */
+    private SimpleStringProperty totalCommandsProcessedProperty;
+
+    public void update(long uptime, String useMemory, long totalCommandsProcessed, long hits, long misses, Long keyCount, int connectedClients) {
+        String hitRate = null;
+        if (hits == 0 && misses == 0) {
+            hitRate = "N/A";
+        } else if (hits != -1 && misses != -1) {
+            double d = 100.0d * hits / (hits + misses);
+            hitRate = d + "";
+            int end = hitRate.indexOf(".") + 6;
+            end = Math.min(hitRate.length(), end);
+            hitRate = hitRate.substring(0, end) + "%";
+        }
+        this.setHitRate(hitRate);
+        this.setUptime(uptime + "天");
+        this.setUsedMemory(useMemory == null ? "N/A" : useMemory);
+        this.setKeyCount(keyCount == null ? "N/A" : String.valueOf(keyCount));
+        this.setConnectedClients(String.valueOf(connectedClients));
+        this.setTotalCommandsProcessed(String.valueOf(totalCommandsProcessed));
+    }
+
+    public SimpleStringProperty uptimeProperty() {
+        if (this.uptimeProperty == null) {
+            this.uptimeProperty = new SimpleStringProperty();
+        }
+        return uptimeProperty;
+    }
+
+    public SimpleStringProperty hitRateProperty() {
+        if (this.hitRateProperty == null) {
+            this.hitRateProperty = new SimpleStringProperty();
+        }
+        return hitRateProperty;
+    }
+
+    public SimpleStringProperty usedMemoryProperty() {
+        if (this.usedMemoryProperty == null) {
+            this.usedMemoryProperty = new SimpleStringProperty();
+        }
+        return usedMemoryProperty;
+    }
+
+    public SimpleStringProperty keyCountProperty() {
+        if (this.keyCountProperty == null) {
+            this.keyCountProperty = new SimpleStringProperty();
+        }
+        return keyCountProperty;
+    }
+
+    public SimpleStringProperty totalCommandsProcessedProperty() {
+        if (this.totalCommandsProcessedProperty == null) {
+            this.totalCommandsProcessedProperty = new SimpleStringProperty();
+        }
+        return totalCommandsProcessedProperty;
+    }
+
+    public SimpleStringProperty connectedClientsProperty() {
+        if (this.connectedClientsProperty == null) {
+            this.connectedClientsProperty = new SimpleStringProperty();
+        }
+        return connectedClientsProperty;
+    }
+
+    public void setUptime(String value) {
+        this.uptimeProperty().setValue(value);
+    }
+
+    public String getUptime() {
+        return this.uptimeProperty == null ? "N/A" : this.uptimeProperty().get();
+    }
+
+    public void setUsedMemory(String value) {
+        this.usedMemoryProperty().setValue(value);
+    }
+
+    public String getUsedMemory() {
+        return this.usedMemoryProperty == null ? "N/A" : this.usedMemoryProperty().get();
+    }
+
+    public void setHitRate(String value) {
+        this.hitRateProperty().setValue(value);
+    }
+
+    public String getHitRate() {
+        return this.hitRateProperty == null ? "N/A" : this.hitRateProperty().get();
+    }
+
+    public void setKeyCount(String value) {
+        this.keyCountProperty().setValue(value);
+    }
+
+    public String getKeyCount() {
+        return this.keyCountProperty == null ? "N/A" : this.keyCountProperty().get();
+    }
+
+    public void setConnectedClients(String value) {
+        this.connectedClientsProperty().setValue(value);
+    }
+
+    public String getConnectedClients() {
+        return this.connectedClientsProperty == null ? "N/A" : this.connectedClientsProperty().get();
+    }
+
+    public void setTotalCommandsProcessed(String value) {
+        this.totalCommandsProcessedProperty().setValue(value);
+    }
+
+    public String getTotalCommandsProcessed() {
+        return this.totalCommandsProcessedProperty == null ? "N/A" : this.totalCommandsProcessedProperty().get();
+    }
+
+    public void setRole(String role) {
+        if (StrUtil.equalsIgnoreCase("master", role)) {
+            this.role = "主节点";
+        } else if (StrUtil.equalsIgnoreCase("slave", role)) {
+            this.role = "从节点";
+        } else if (StrUtil.equalsIgnoreCase("sentinel", role)) {
+            this.role = "哨兵";
+        } else {
+            this.role = "N/A";
+        }
+    }
+}

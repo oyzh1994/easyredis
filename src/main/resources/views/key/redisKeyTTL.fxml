@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyTTLController" realWidth="600" realHeight="320">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <NumberTextField fx:id="ttl" flexWidth="100%" tipText="请输入TTL值，单位秒" value="-1"
+                         require="true" min="-1" max="9223372036854775807" step="3600">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </NumberTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="追加设置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FXButton text="存活加1分钟" onMousePrimaryClicked="#appendWith1M">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+        <FXButton text="存活加1小时" onMousePrimaryClicked="#appendWith1H">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+        <FXButton text="存活加1天" onMousePrimaryClicked="#appendWith1D">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="快速设置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FXButton text="1分钟后到期" onMousePrimaryClicked="#expireAt1M">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+        <FXButton text="1小时后到期" onMousePrimaryClicked="#expireAt1H">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+        <FXButton text="1天后到期" onMousePrimaryClicked="#expireAt1D">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="其他设置" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FXButton text="恢复TTL设置" tipText="恢复TTL设置，恢复为默认设置" onMousePrimaryClicked="#resetTTL">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+        <FXButton text="清除TTL设置" tipText="清除TTL设置，即设置为持久键" onMousePrimaryClicked="#persistKey">
+            <HBox.margin>
+                <Insets left="5" top="10"/>
+            </HBox.margin>
+        </FXButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="到期预览" realHeight="30" realWidth="65" styleClass="label-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexLabel fx:id="expirePreview" realHeight="30" flexWidth="100% - 140">
+            <HBox.margin>
+                <Insets left="5" top="12"/>
+            </HBox.margin>
+        </FlexLabel>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <SubmitButton onAction="#ttlSetting">
+            <HBox.margin>
+                <Insets left="90" top="10"/>
+            </HBox.margin>
+        </SubmitButton>
+        <CancelButton>
+            <HBox.margin>
+                <Insets left="15" top="10"/>
+            </HBox.margin>
+        </CancelButton>
+    </FlexHBox>
+</FlexVBox>

@@ -1,0 +1,140 @@
+package cn.oyzh.easyredis.trees;
+
+import cn.oyzh.easyredis.domain.RedisFilter;
+import cn.oyzh.easyredis.redis.RedisKey;
+import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import javafx.scene.control.TreeItem;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 树节点过滤器
+ *
+ * @author oyzh
+ * @since 2023/06/30
+ */
+public class RedisTreeItemFilter implements RichTreeItemFilter {
+
+    /**
+     * 排除set键
+     */
+    @Setter
+    @Getter
+    private boolean excludeSetType;
+
+    /**
+     * 排除list键
+     */
+    @Setter
+    @Getter
+    private boolean excludeListType;
+
+    /**
+     * 排除zset键
+     */
+    @Setter
+    @Getter
+    private boolean excludeZSetType;
+
+    /**
+     * 排除hash键
+     */
+    @Setter
+    @Getter
+    private boolean excludeHashType;
+
+    /**
+     * 排除string键
+     */
+    @Setter
+    @Getter
+    private boolean excludeStringType;
+
+    /**
+     * 排除hyperLogLog键
+     */
+    @Setter
+    @Getter
+    private boolean excludeHyperLogLogType;
+
+    /**
+     * 排除stream键
+     */
+    @Setter
+    @Getter
+    private boolean excludeStreamType;
+
+    /**
+     * 仅看收藏键
+     */
+    @Setter
+    @Getter
+    private boolean onlyCollect;
+
+    /**
+     * 过滤内容列表
+     */
+    private final List<RedisFilter> filters = new ArrayList<>();
+
+    /**
+     * 过滤配置储存
+     */
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+
+    /**
+     * 初始化过滤配置
+     */
+    public void initFilters() {
+        this.filters.clear();
+        this.filters.addAll(this.filterStore.loadEnable());
+    }
+
+    @Override
+    public Boolean apply(RichTreeItem item) {
+        if (item instanceof RedisKeyTreeItem<?> treeItem) {
+            RedisKey node = treeItem.value();
+            // 仅看收藏
+            if (this.onlyCollect && !treeItem.isCollect()) {
+                return false;
+            }
+            // 过滤hash键
+            if (this.excludeHashType && node.isHashKey()) {
+                return false;
+            }
+            // 过滤list键
+            if (this.excludeListType && node.isListKey()) {
+                return false;
+            }
+            // 过滤set键
+            if (this.excludeSetType && node.isSetKey()) {
+                return false;
+            }
+            // 过滤zset键
+            if (this.excludeZSetType && node.isZSetKey()) {
+                return false;
+            }
+            // 过滤string键
+            if (this.excludeStringType && node.isStringKey()) {
+                return false;
+            }
+            // 过滤stream键
+            if (this.excludeStreamType && node.isStreamKey()) {
+                return false;
+            }
+            // 过滤hyperLogLog键
+            if (this.excludeHyperLogLogType && node.isHyperLogLogKey()) {
+                return false;
+            }
+            // 过滤键
+            return !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
+        }
+        return true;
+    }
+
+}

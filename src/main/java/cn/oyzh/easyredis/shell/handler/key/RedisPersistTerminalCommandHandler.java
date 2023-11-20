@@ -1,0 +1,40 @@
+package cn.oyzh.easyredis.shell.handler.key;
+
+import cn.oyzh.easyredis.shell.RedisShellUtil;
+import cn.oyzh.easyredis.shell.RedisTerminalTextArea;
+import cn.oyzh.easyredis.shell.command.RedisKeyTerminalCommand;
+import cn.oyzh.easyredis.shell.handler.RedisKeyTerminalCommandHandler;
+import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author oyzh
+ * @since 2023/7/21
+ */
+@Component
+public class RedisPersistTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisKeyTerminalCommand> {
+
+    @Override
+    public TerminalExecuteResult execute(RedisKeyTerminalCommand command, RedisTerminalTextArea terminal) {
+        TerminalExecuteResult result = new TerminalExecuteResult();
+        try {
+            long persist = terminal.client().persist(null, command.key());
+            result.setResult(RedisShellUtil.formatOut(persist));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result.setException(ex);
+        }
+        return result;
+    }
+
+    @Override
+    public String commandName() {
+        return "PERSIST";
+    }
+
+    @Override
+    public String commandDesc() {
+        return "持久化键";
+    }
+
+}

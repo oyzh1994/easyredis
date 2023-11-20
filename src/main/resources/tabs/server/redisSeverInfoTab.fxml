@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerInfoController" text="服务器">
+    <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" flexWidth="100%" flexHeight="100%"
+                     rotateGraphic="true">
+        </FlexTabPane>
+    </FlexVBox>
+</FXTab>
