@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.tabs.RedisBaseTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.tabs.DynamicTab;

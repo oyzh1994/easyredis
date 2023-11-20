@@ -1,5 +1,6 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.row;
 
+import cn.oyzh.easyredis.redis.RedisRow;
 import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import redis.clients.jedis.StreamEntryID;

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.redis.RedisHyperLogLogKey;
+import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 

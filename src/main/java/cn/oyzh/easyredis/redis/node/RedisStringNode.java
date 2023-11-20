@@ -1,5 +1,6 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.node;
 
+import cn.oyzh.easyredis.redis.RedisNode;
 import cn.oyzh.fx.common.util.TextUtil;
 import lombok.Getter;
 import lombok.experimental.Accessors;

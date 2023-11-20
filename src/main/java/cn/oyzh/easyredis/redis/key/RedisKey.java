@@ -1,6 +1,7 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.key;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

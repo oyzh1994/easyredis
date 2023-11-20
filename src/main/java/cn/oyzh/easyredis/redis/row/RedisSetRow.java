@@ -1,27 +1,22 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.row;
 
+import cn.oyzh.easyredis.redis.RedisRow;
 import javafx.beans.property.SimpleStringProperty;
-import lombok.Getter;
 
 /**
+ * redis set行
+ *
  * @author oyzh
  * @since 2023/6/16
  */
-public class RedisListRow extends RedisRow {
-
-    /**
-     * 行号
-     */
-    @Getter
-    private int lineIndex;
+public class RedisSetRow extends RedisRow {
 
     /**
      * 值
      */
     private SimpleStringProperty valueProperty;
 
-    public RedisListRow(int lineIndex, String value) {
-        this.lineIndex = lineIndex;
+    public RedisSetRow(String value) {
         this.setValue(value);
     }
 

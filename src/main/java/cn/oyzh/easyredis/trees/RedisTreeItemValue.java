@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.redis.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.plus.controls.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;

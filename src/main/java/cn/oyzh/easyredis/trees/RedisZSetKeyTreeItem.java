@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.oyzh.easyredis.redis.RedisZSetKey;
-import cn.oyzh.easyredis.redis.RedisZSetRow;
+import cn.oyzh.easyredis.redis.key.RedisZSetKey;
+import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.scene.paint.Color;

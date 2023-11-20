@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.tab.FXTab;

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
-import cn.oyzh.easyredis.redis.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.common.util.OSUtil;

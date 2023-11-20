@@ -1,6 +1,8 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.node;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.easyredis.redis.RedisHashRow;
+import cn.oyzh.easyredis.redis.RedisRowNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,19 +14,19 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/6/16
  */
-public class RedisListNode extends RedisRowNode<RedisListRow> {
+public class RedisHashNode extends RedisRowNode<RedisHashRow> {
 
     /**
      * 设置节点数据
      *
      * @param value 节点数据
      */
-    public void value(List<String> value) {
+    public void value(Map<String, String> value) {
         this.valueInitialized = true;
         this.value = new ArrayList<>();
         if (CollUtil.isNotEmpty(value)) {
-            for (int i = 0; i < value.size(); i++) {
-                this.value.add(new RedisListRow(i, value.get(i)));
+            for (Map.Entry<String, String> entry : value.entrySet()) {
+                this.value.add(new RedisHashRow(entry.getKey(), entry.getValue()));
             }
         }
     }
@@ -35,8 +37,9 @@ public class RedisListNode extends RedisRowNode<RedisListRow> {
             return Collections.emptyList();
         }
         List<Map<String, Object>> list = new ArrayList<>(this.value.size());
-        for (RedisListRow row : this.value) {
+        for (RedisHashRow row : this.value) {
             Map<String, Object> map = new HashMap<>();
+            map.put("field", row.getField());
             map.put("value", row.getValue());
             list.add(map);
         }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.key;
 
 import lombok.Getter;
 import lombok.Setter;

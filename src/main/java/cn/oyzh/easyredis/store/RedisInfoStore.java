@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import cn.oyzh.fx.common.store.FileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

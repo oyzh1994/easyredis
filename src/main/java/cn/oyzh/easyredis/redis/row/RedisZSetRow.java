@@ -1,5 +1,6 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.row;
 
+import cn.oyzh.easyredis.redis.RedisRow;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import redis.clients.jedis.GeoCoordinate;

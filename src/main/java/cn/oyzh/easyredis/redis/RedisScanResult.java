@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 

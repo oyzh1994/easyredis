@@ -1,6 +1,8 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.key;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.easyredis.redis.RedisRowKey;
+import cn.oyzh.easyredis.redis.row.RedisSetRow;
 
 import java.util.ArrayList;
 import java.util.Set;

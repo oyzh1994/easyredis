@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.redis.RedisStreamKey;
-import cn.oyzh.easyredis.redis.RedisStreamRow;
+import cn.oyzh.easyredis.redis.key.RedisStreamKey;
+import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

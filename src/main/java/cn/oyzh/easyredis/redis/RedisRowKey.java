@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.redis;
 
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 

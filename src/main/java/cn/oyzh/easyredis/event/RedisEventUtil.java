@@ -3,11 +3,9 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
-import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
-import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
 
 /**
