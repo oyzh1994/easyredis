@@ -11,16 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisHyperLogLogElementsAddController" realWidth="750"
-          realHeight="550">
+          fx:controller="cn.oyzh.easyredis.controller.row.RedisSetRowAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <FXLabel text="元素" realHeight="30" realWidth="50" styleClass="lbl,lbl-primary">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </FXLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入统计元素，多个元素请换行区分"
-                      flexWidth="100% - 100">
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入成员数据"
+                      flexWidth="100% - 80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -38,12 +32,17 @@
                     <Insets left="5" top="10"/>
                 </VBox.margin>
             </SVGGlyph>
+            <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                <VBox.margin>
+                    <Insets left="5" top="10"/>
+                </VBox.margin>
+            </SVGGlyph>
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="70" top="10"/>
+                <Insets left="10" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

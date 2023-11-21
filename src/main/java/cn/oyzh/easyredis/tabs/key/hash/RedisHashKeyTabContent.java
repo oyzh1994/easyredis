@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.hash;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
+import cn.oyzh.easyredis.controller.row.RedisHashRowAddController;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
@@ -131,7 +131,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisHashRowAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

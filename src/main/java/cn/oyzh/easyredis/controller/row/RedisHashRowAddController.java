@@ -5,10 +5,9 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -29,13 +28,19 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @StageAttribute(
-        title = "添加zset成员",
+        title = "添加hash字段",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = RedisStyle.COMMON,
-        value = RedisConst.FXML_BASE_PATH + "row/redisZSetMemberAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "row/redisHashRowAdd.fxml"
 )
-public class RedisZSetMemberAddController extends Controller {
+public class RedisHashRowAddController extends Controller {
+
+    /**
+     * 字段
+     */
+    @FXML
+    private FlexTextArea fieldValue;
 
     /**
      * 行数据
@@ -44,15 +49,9 @@ public class RedisZSetMemberAddController extends Controller {
     private FlexTextArea rowValue;
 
     /**
-     * 分数
-     */
-    @FXML
-    private DecimalTextField score;
-
-    /**
      * redis键
      */
-    private RedisZSetKeyTreeItem treeItem;
+    private RedisHashKeyTreeItem treeItem;
 
     /**
      * 添加行
@@ -60,15 +59,15 @@ public class RedisZSetMemberAddController extends Controller {
     @FXML
     private void addRow() {
         try {
+            String fieldValue = this.fieldValue.getText();
+            if (fieldValue == null) {
+               MessageBox.tipMsg("字段不能为空", this.fieldValue);
+                return;
+            }
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("行数据不能为空", this.rowValue);
-                return;
-            }
-            Number scoreValue = this.score.getValue();
-            if (scoreValue == null) {
-               MessageBox.tipMsg("分数不能为空", this.score);
+               MessageBox.tipMsg("数据不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -77,15 +76,15 @@ public class RedisZSetMemberAddController extends Controller {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            if (client.zrank(dbIndex, key, rowValue) != null) {
-                MessageBox.warn("此成员已存在！");
+            if (client.hexists(dbIndex, key, fieldValue)) {
+                MessageBox.warn("此字段已存在！");
                 return;
             }
             // 添加元素
-            client.zadd(dbIndex, key, scoreValue.doubleValue(), rowValue);
+            client.hset(dbIndex, key, fieldValue, rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, this.treeItem);
-            MessageBox.okToast("新增成员成功！");
+            EventUtil.fire(RedisEventTypes.REDIS_HASH_FIELD_ADDED, this.treeItem);
+            MessageBox.okToast("新增字段成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

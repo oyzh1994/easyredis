@@ -2,6 +2,7 @@
 
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
@@ -11,15 +12,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisSetMemberAddController" realWidth="750" realHeight="550">
-    <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入成员数据"
-                      flexWidth="100% - 80">
+          fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamRowAddController" realWidth="750"
+          realHeight="550">
+    <FlexHBox flexWidth="100%" realHeight="50">
+        <FXLabel text="消息ID" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <ClearableTextField flexWidth="100% - 140" fx:id="streamID" tipText="消息id，*代表自动生成" text="*" require="true">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </ClearableTextField>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" flexHeight="100% - 145">
+        <FXLabel text="内容" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </FXLabel>
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入消息内容，需为json键值对格式"
+                      flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </FlexTextArea>
-        <FlexVBox>
+        <FlexVBox flexHeight="100%">
             <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
                       tipText="粘贴数据">
                 <VBox.margin>
@@ -42,7 +61,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="10" top="10"/>
+                <Insets left="85" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
