@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class ClientInfoTabContent {
+public class RedisClientInfoController {
 
     /**
      * redis客户端

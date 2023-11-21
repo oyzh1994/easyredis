@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.tabs.terminal;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.shell.RedisTerminalTextArea;
-import cn.oyzh.fx.common.spring.ScopeType;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,8 +19,8 @@ import org.springframework.stereotype.Component;
  */
 @Lazy
 @Component
-@Scope(ScopeType.PROTOTYPE)
-public class TerminalTabContent {
+@Scope("prototype")
+public class RedisTerminalTabContentController {
 
     /**
      * redis客户端

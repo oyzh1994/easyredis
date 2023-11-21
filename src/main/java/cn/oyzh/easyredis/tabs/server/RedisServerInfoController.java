@@ -34,7 +34,7 @@ import java.util.Optional;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class ServerInfoTabContent {
+public class RedisServerInfoController {
 
     /**
      * tab面板

@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class AggregationTabContent {
+public class RedisAggregationController {
 
     /**
      * 客户端图表

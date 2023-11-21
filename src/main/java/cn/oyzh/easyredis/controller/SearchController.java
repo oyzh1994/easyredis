@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
-import cn.oyzh.easyredis.tabs.TabPane;
+import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -515,7 +515,7 @@ public class SearchController extends SubController {
         EventUtil.register(this);
 
         this.treeView = (RedisTreeView) this.searchMain.getParent().lookup("#tree");
-        TabPane tabPane = (TabPane) this.searchMain.getParent().getParent().lookup("#tabPane");
+        RedisTabPane tabPane = (RedisTabPane) this.searchMain.getParent().getParent().lookup("#tabPane");
 
         // 初始化搜索
         this.searchHandler.init(this.treeView, tabPane);

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
-import cn.oyzh.easyredis.tabs.TabPane;
+import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.tabs.key.KeyTab;
 import cn.oyzh.easyredis.trees.BaseTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
@@ -64,7 +64,7 @@ public class RedisMainSearchHandler {
     /**
      * tab组件
      */
-    private TabPane tabPane;
+    private RedisTabPane tabPane;
 
     /**
      * 数据组件
@@ -96,7 +96,7 @@ public class RedisMainSearchHandler {
     /**
      * 搜索开始
      */
-    public void init(@NonNull RedisTreeView treeNode, @NonNull TabPane tabPane) {
+    public void init(@NonNull RedisTreeView treeNode, @NonNull RedisTabPane tabPane) {
         this.index = 0;
         this.tabPane = tabPane;
         this.treeNode = treeNode;

@@ -16,7 +16,7 @@ import javafx.scene.Node;
  * @author oyzh
  * @since 2023/7/21
  */
-public class TerminalTab extends DynamicTab {
+public class RedisTerminalTab extends DynamicTab {
 
     {
         this.setClosable(true);
@@ -31,7 +31,7 @@ public class TerminalTab extends DynamicTab {
     /**
      * 内容controller
      */
-    private TerminalTabContent contentController;
+    private RedisTerminalTabContentController contentController;
 
     @Override
     protected void loadContent() {

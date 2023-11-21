@@ -9,7 +9,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.PubsubTabContent" text="发布&amp;订阅通道">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisPubsubController" text="发布&amp;订阅通道">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox flexWidth="100%" realHeight="40">
             <SVGLabel text="刷新" url="/font/reload.svg" onMousePrimaryClicked="#refresh">

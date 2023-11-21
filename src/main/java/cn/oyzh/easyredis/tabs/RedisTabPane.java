@@ -13,9 +13,9 @@ import cn.oyzh.easyredis.tabs.key.list.ListKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.set.SetKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.stream.StreamKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.zset.ZSetKeyTabContent;
-import cn.oyzh.easyredis.tabs.pubsub.PubsubTab;
-import cn.oyzh.easyredis.tabs.server.ServerTab;
-import cn.oyzh.easyredis.tabs.terminal.TerminalTab;
+import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
+import cn.oyzh.easyredis.tabs.server.RedisServerTab;
+import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/16
  */
-public class TabPane extends DynamicTabPane {
+public class RedisTabPane extends DynamicTabPane {
 
     {
         this.setCache(true);
@@ -65,9 +65,9 @@ public class TabPane extends DynamicTabPane {
      * @param info redis信息
      */
     public void initTerminalTab(RedisInfo info) {
-        TerminalTab terminalTab = this.getTerminalTab(info);
+        RedisTerminalTab terminalTab = this.getTerminalTab(info);
         if (terminalTab == null) {
-            terminalTab = new TerminalTab();
+            terminalTab = new RedisTerminalTab();
             terminalTab.init(info);
             super.addTab(terminalTab);
         } else {
@@ -97,7 +97,7 @@ public class TabPane extends DynamicTabPane {
     private void closeTerminal(Event<RedisTerminalCloseMsg> event) {
         try {
             // 寻找节点
-            TerminalTab terminalTab = this.getTerminalTab(event.data().info());
+            RedisTerminalTab terminalTab = this.getTerminalTab(event.data().info());
             // 移除节点
             if (terminalTab != null) {
                 terminalTab.closeTab();
@@ -113,10 +113,10 @@ public class TabPane extends DynamicTabPane {
      * @param info redis信息
      * @return 终端tab
      */
-    private TerminalTab getTerminalTab(RedisInfo info) {
+    private RedisTerminalTab getTerminalTab(RedisInfo info) {
         if (info != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof TerminalTab cmdTab && cmdTab.info() == info) {
+                if (tab instanceof RedisTerminalTab cmdTab && cmdTab.info() == info) {
                     return cmdTab;
                 }
             }
@@ -131,9 +131,9 @@ public class TabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_OPEN_PUBSUB, verbose = true, async = true, fxThread = true)
     public void initPubsubTab(RedisPubsubItem item) {
-        PubsubTab tab = this.getPubsubTab(item);
+        RedisPubsubTab tab = this.getPubsubTab(item);
         if (tab == null) {
-            tab = new PubsubTab();
+            tab = new RedisPubsubTab();
             tab.init(item);
             super.addTab(tab);
         } else {
@@ -150,10 +150,10 @@ public class TabPane extends DynamicTabPane {
      * @param item 发布及订阅节点
      * @return 发布及订阅tab
      */
-    private PubsubTab getPubsubTab(RedisPubsubItem item) {
+    private RedisPubsubTab getPubsubTab(RedisPubsubItem item) {
         if (item != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof PubsubTab cmdTab && cmdTab.item() == item) {
+                if (tab instanceof RedisPubsubTab cmdTab && cmdTab.item() == item) {
                     return cmdTab;
                 }
             }
@@ -168,9 +168,9 @@ public class TabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_SERVER_INFO, verbose = true, async = true, fxThread = true)
     public void initServerTab(RedisClient client) {
-        ServerTab serverTab = this.getServerTab(client);
+        RedisServerTab serverTab = this.getServerTab(client);
         if (serverTab == null) {
-            serverTab = new ServerTab();
+            serverTab = new RedisServerTab();
             serverTab.init(client);
             super.addTab(serverTab);
         } else {
@@ -187,10 +187,10 @@ public class TabPane extends DynamicTabPane {
      * @param client redis客户端
      * @return 服务信息tab
      */
-    private ServerTab getServerTab(RedisClient client) {
+    private RedisServerTab getServerTab(RedisClient client) {
         if (client != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof ServerTab serverTab && serverTab.info() == client.redisInfo()) {
+                if (tab instanceof RedisServerTab serverTab && serverTab.info() == client.redisInfo()) {
                     return serverTab;
                 }
             }
@@ -434,10 +434,10 @@ public class TabPane extends DynamicTabPane {
     private void onClientClosed(RedisClient client) {
         List<Tab> closeTabs = new ArrayList<>();
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof ServerTab serverTab && serverTab.client() == client) {
+            if (tab instanceof RedisServerTab serverTab && serverTab.client() == client) {
                 serverTab.closeRefreshTask();
                 closeTabs.add(tab);
-            } else if (tab instanceof PubsubTab pubsubTab && pubsubTab.client() == client) {
+            } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
                 pubsubTab.unsubscribe();
                 closeTabs.add(tab);
             } else if (tab instanceof KeyTab<?> keyTab && keyTab.client() == client) {

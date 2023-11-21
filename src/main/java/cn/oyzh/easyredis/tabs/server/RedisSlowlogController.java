@@ -28,7 +28,7 @@ import java.util.List;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class SlowlogTabContent {
+public class RedisSlowlogController {
 
     /**
      * redis客户端

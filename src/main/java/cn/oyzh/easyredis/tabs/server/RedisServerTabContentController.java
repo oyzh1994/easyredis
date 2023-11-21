@@ -33,7 +33,7 @@ import java.util.concurrent.Future;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class ServerTabContent {
+public class RedisServerTabContentController {
 
     /**
      * redis客户端
@@ -70,31 +70,31 @@ public class ServerTabContent {
      * 订阅组件
      */
     @FXML
-    private PubsubTabContent pubsubController;
+    private RedisPubsubController pubsubController;
 
     /**
      * 慢查日志组件
      */
     @FXML
-    private SlowlogTabContent slowlogController;
+    private RedisSlowlogController slowlogController;
 
     /**
      * 服务信息组件
      */
     @FXML
-    private ServerInfoTabContent serverInfoController;
+    private RedisServerInfoController serverInfoController;
 
     /**
      * 客户端信息组件
      */
     @FXML
-    private ClientInfoTabContent clientInfoController;
+    private RedisClientInfoController clientInfoController;
 
     /**
      * 汇总组件
      */
     @FXML
-    private AggregationTabContent aggregationController;
+    private RedisAggregationController aggregationController;
 
 
     /**

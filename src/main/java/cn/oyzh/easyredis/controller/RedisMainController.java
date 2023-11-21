@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.easyredis.tabs.TabPane;
+import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
@@ -141,7 +141,7 @@ public class RedisMainController extends ParentController {
      * redis切换面板
      */
     @FXML
-    private TabPane tabPane;
+    private RedisTabPane tabPane;
 
     /**
      * 页面信息
