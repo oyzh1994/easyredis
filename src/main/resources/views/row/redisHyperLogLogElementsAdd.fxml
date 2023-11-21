@@ -14,13 +14,13 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHyperLogLogElementsAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <FXLabel text="元素" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
+        <FXLabel text="元素" realHeight="30" realWidth="50" styleClass="lbl,lbl-primary">
             <HBox.margin>
-                <Insets left="20" top="10"/>
+                <Insets left="10" top="10"/>
             </HBox.margin>
         </FXLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入统计元素，多个元素请换行区分"
-                      flexWidth="100% - 140">
+                      flexWidth="100% - 100">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -43,7 +43,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="85" top="10"/>
+                <Insets left="70" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

@@ -114,6 +114,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
 
         // 键数据处理
         if (this.nodeData.isEditable()) {
+            this.nodeData.addTextChangeListener(this.getDataListener());
             this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
             this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
@@ -268,22 +269,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
         }
     }
 
-    // /**
-    //  * 键数据保存之前的事件
-    //  *
-    //  * @return 保存结果
-    //  */
-    // protected boolean beforeNodeDataSave() {
-    //     return this.treeItem.dataUnsaved();
-    // }
-    //
-    // /**
-    //  * 键数据保存之后的事件
-    //  */
-    // protected void afterNodeDataSaved() {
-    //     this.treeItem.clearData();
-    // }
-
     /**
      * 重新加载键
      */
@@ -315,21 +300,21 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
      * 格式变化事件
      */
     protected void onFormatChange() {
-        this.nodeData.removeTextChangeListener(this.getDataListener());
+        // this.nodeData.removeTextChangeListener(this.getDataListener());
         if (this.format.isRawFormat()) {
-            this.showData((byte) 0, () -> this.nodeData.addTextChangeListener(this.getDataListener()));
+            this.showData((byte) 0);
             this.nodeData.setEditable(true);
         } else if (this.format.isJsonFormat()) {
-            this.showData((byte) 1, () -> this.nodeData.addTextChangeListener(this.getDataListener()));
+            this.showData((byte) 1);
             this.nodeData.setEditable(true);
         } else if (this.format.isBinaryFormat()) {
-            this.showData((byte) 2, null);
+            this.showData((byte) 2);
             this.nodeData.setEditable(false);
         } else if (this.format.isHexFormat()) {
-            this.showData((byte) 3, null);
+            this.showData((byte) 3);
             this.nodeData.setEditable(false);
         } else if (this.format.isStringFormat()) {
-            this.showData((byte) 4, null);
+            this.showData((byte) 4);
             this.nodeData.setEditable(false);
         }
     }
@@ -338,9 +323,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
      * 显示数据
      *
      * @param showType 类型
-     * @param callback 回调函数
      */
-    protected void showData(byte showType, Runnable callback) {
+    protected void showData(byte showType) {
         this.nodeData.disable();
         this.nodeData.clear();
         this.nodeData.setPromptText("数据加载中...");
@@ -348,15 +332,13 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
             try {
                 this.nodeData.setShowType(showType);
                 this.nodeData.showData();
+                this.treeItem.clearData();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
             } finally {
                 this.nodeData.setPromptText("");
                 this.nodeData.enable();
-                if (callback != null) {
-                    callback.run();
-                }
             }
         }), 50);
     }
@@ -374,9 +356,10 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
         this.nodeData.setPromptText("数据加载中...");
         ExecutorUtil.start(() -> FXUtil.runLater(() -> {
             try {
-                this.nodeData.removeTextChangeListener(this.getDataListener());
+                // this.nodeData.removeTextChangeListener(this.getDataListener());
                 this.nodeData.setRawData(rawData);
-                this.nodeData.addTextChangeListener(this.getDataListener());
+                this.treeItem.clearData();
+                // this.nodeData.addTextChangeListener(this.getDataListener());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
@@ -391,7 +374,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
      * 清除原始数据
      */
     protected void clearRawData() {
-        this.nodeData.removeTextChangeListener(this.getDataListener());
+        // this.nodeData.removeTextChangeListener(this.getDataListener());
         this.nodeData.clear();
         this.nodeData.disable();
     }

@@ -45,11 +45,11 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @FXML
     private TableColumn<RedisListRow, Integer> index;
 
-    /**
-     * 行号列
-     */
-    @FXML
-    private TableColumn<RedisListRow, Integer> lineIndex;
+    // /**
+    //  * 行号列
+    //  */
+    // @FXML
+    // private TableColumn<RedisListRow, Integer> lineIndex;
 
     /**
      * 行值列
@@ -88,7 +88,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        this.lineIndex.setCellValueFactory(new PropertyValueFactory<>("lineIndex"));
+        // this.lineIndex.setCellValueFactory(new PropertyValueFactory<>("lineIndex"));
     }
 
     /**
@@ -121,20 +121,6 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
                     .collect(Collectors.toList());
         }
         return rows;
-    }
-
-    @FXML
-    @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此行？")) {
-            try {
-                this.treeItem.deleteRow();
-                this.firstPage();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
     }
 
     @FXML
