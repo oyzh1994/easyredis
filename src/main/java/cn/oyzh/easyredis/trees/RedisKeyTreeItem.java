@@ -162,7 +162,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
         this.root = root;
         this.treeView(root.treeView());
         RedisKeyTreeItemValue itemValue = new RedisKeyTreeItemValue(value);
-        itemValue.type(value.type().toString());
+        // itemValue.type(value.type().toString());
         this.itemValue(itemValue);
         this.value = value;
     }
@@ -427,7 +427,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
-                this.itemValue().nodeNameText().setText(newKey);
+                this.itemValue().name(newKey);
                 EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
             } else {
                 MessageBox.warn("更改键名称失败！");

@@ -11,8 +11,8 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.BaseTreeItem;
-import cn.oyzh.easyredis.trees.RedisGroupTreeItem;
-import cn.oyzh.easyredis.trees.RedisServerInfoTreeItem;
+import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
+import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
@@ -30,7 +30,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -352,7 +351,8 @@ public class RedisConnectTreeItem extends BaseTreeItem {
 
         // 修改名称
         if (this.infoStore.update(this.value)) {
-            this.itemValue(connectName);
+            this.itemValue().name(connectName);
+            // this.itemValue(connectName);
         } else {
             MessageBox.warn("修改连接名称失败！");
         }
@@ -367,7 +367,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
         this.value = value;
         this.disConnect();
         this.client = new RedisClient(value);
-        this.itemValue(new RedisConnectTreeItemValue(value.getName()));
+        this.itemValue(new RedisConnectTreeItemValue(this));
     }
 
     /**
@@ -438,20 +438,20 @@ public class RedisConnectTreeItem extends BaseTreeItem {
         }
     }
 
-    @Override
-    public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/redis.svg", "12");
-            this.itemValue().graphic(glyph);
-        }
-        if (this.isConnected() && glyph.getColor() != Color.GREEN) {
-            glyph.setColor(Color.GREEN);
-        }
-        if (!this.isConnected() && glyph.getColor() != Color.BLACK) {
-            glyph.setColor(Color.BLACK);
-        }
-    }
+    // @Override
+    // public void flushGraphic() {
+    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
+    //     if (glyph == null) {
+    //         glyph = new SVGGlyph("/font/redis.svg", "12");
+    //         this.itemValue().graphic(glyph);
+    //     }
+    //     if (this.isConnected() && glyph.getColor() != Color.GREEN) {
+    //         glyph.setColor(Color.GREEN);
+    //     }
+    //     if (!this.isConnected() && glyph.getColor() != Color.BLACK) {
+    //         glyph.setColor(Color.BLACK);
+    //     }
+    // }
 
     /**
      * 获分组键

@@ -306,7 +306,7 @@ public class RedisMainSearchHandler {
         // 取消文本选中
         if (this.currentItem != null) {
             RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(value.nodeNameText());
+            ControlUtil.deselect(value.text());
         }
         this.currentItem = item;
         // 取消文本组件的选中
@@ -368,7 +368,7 @@ public class RedisMainSearchHandler {
             this.pathIndex = 0;
             RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
             ControlUtil.deselect(this.dataNode);
-            ControlUtil.deselect(value.nodeNameText());
+            ControlUtil.deselect(value.text());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -399,8 +399,8 @@ public class RedisMainSearchHandler {
             }
             String kw = this.searchParam.getKw();
             RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
-            Text text = value.nodeNameText();
-            String path = value.nodeName();
+            Text text = value.text();
+            String path = value.name();
             // 搜索索引
             int index = TextUtil.findIndex(path, kw, this.pathIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
             if (index != -1) {
@@ -459,7 +459,7 @@ public class RedisMainSearchHandler {
         boolean m1 = false, m2 = false;
         // 路径
         if (this.searchParam.isSearchKey() && item instanceof BaseTreeItem treeItem) {
-            String value = treeItem.itemValue().nodeName();
+            String value = treeItem.itemValue().name();
             m1 = this.searchParam.isMatch(value);
         }
         // 数据

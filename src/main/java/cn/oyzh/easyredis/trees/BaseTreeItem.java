@@ -228,9 +228,9 @@ public abstract class BaseTreeItem extends RichTreeItem {
             // 执行排序
             ObservableList<BaseTreeItem> subs = this.getChildren();
             if (sortOrder) {
-                subs.sort((a, b) -> CharSequence.compare(a.itemValue().nodeName(), b.itemValue().nodeName()));
+                subs.sort((a, b) -> CharSequence.compare(a.itemValue().name(), b.itemValue().name()));
             } else {
-                subs.sort((a, b) -> CharSequence.compare(b.itemValue().nodeName(), a.itemValue().nodeName()));
+                subs.sort((a, b) -> CharSequence.compare(b.itemValue().name(), a.itemValue().name()));
             }
         }
     }
@@ -248,8 +248,8 @@ public abstract class BaseTreeItem extends RichTreeItem {
      * @return Node
      */
     public Node itemNode() {
-        RedisTreeItemValue itemValue = this.itemValue();
-        return itemValue == null ? null : itemValue.getRootNode();
+        return this.itemValue();
+        // return itemValue == null ? null : itemValue.getRootNode();
     }
 
     /**
@@ -277,37 +277,37 @@ public abstract class BaseTreeItem extends RichTreeItem {
         super.setValue(null);
     }
 
-    /**
-     * 设置节点值
-     *
-     * @param itemValue 节点值
-     */
-    public void itemValue(String itemValue) {
-        super.setValue(new RedisTreeItemValue(itemValue));
-    }
+    // /**
+    //  * 设置节点值
+    //  *
+    //  * @param itemValue 节点值
+    //  */
+    // public void itemValue(String itemValue) {
+    //     super.setValue(new RedisTreeItemValue(itemValue));
+    // }
 
-    /**
-     * 设置特效
-     *
-     * @param effect 特效
-     */
-    public void setEffect(Effect effect) {
-        if (this.itemNode() != null) {
-            this.itemNode().setEffect(effect);
-        }
-    }
-
-    /**
-     * 获取特效
-     *
-     * @return Effect
-     */
-    public Effect getEffect() {
-        if (this.itemNode() != null) {
-            return this.itemNode().getEffect();
-        }
-        return null;
-    }
+    // /**
+    //  * 设置特效
+    //  *
+    //  * @param effect 特效
+    //  */
+    // public void setEffect(Effect effect) {
+    //     if (this.itemNode() != null) {
+    //         this.itemNode().setEffect(effect);
+    //     }
+    // }
+    //
+    // /**
+    //  * 获取特效
+    //  *
+    //  * @return Effect
+    //  */
+    // public Effect getEffect() {
+    //     if (this.itemNode() != null) {
+    //         return this.itemNode().getEffect();
+    //     }
+    //     return null;
+    // }
 
 
 

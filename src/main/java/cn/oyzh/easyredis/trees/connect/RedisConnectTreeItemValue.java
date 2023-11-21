@@ -2,19 +2,19 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 
 /**
- * Redis 连接树键值
+ * Redis 连接值
  *
  * @author oyzh
  * @since 2023/08/10
@@ -46,8 +46,33 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     @Setter
     private boolean readOnly;
 
-    public RedisConnectTreeItemValue(@NonNull String nodeName) {
-        super(nodeName);
+    private RedisConnectTreeItem item;
+
+    public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
+        this.item = item;
+        this.flushGraphic();
+        this.flushGraphicColor();
+        this.name(item.value().getName());
+        this.flushText();
+    }
+
+    @Override
+    public void flushGraphic() {
+        SVGGlyph glyph = (SVGGlyph) this.graphic();
+        if (glyph == null) {
+            glyph = new SVGGlyph("/font/redis.svg", "12");
+            this.graphic(glyph);
+        }
+    }
+
+    @Override
+    public void flushGraphicColor() {
+        SVGGlyph glyph = (SVGGlyph) this.graphic();
+        if (this.item.isConnected() && glyph.getColor() != Color.GREEN) {
+            glyph.setColor(Color.GREEN);
+        } else if (!this.item.isConnected() && glyph.getColor() != Color.BLACK) {
+            glyph.setColor(Color.BLACK);
+        }
     }
 
     /**
@@ -65,6 +90,7 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
         } else {
             this.role = null;
         }
+        this.flushRole();
     }
 
     /**
@@ -72,23 +98,25 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
      */
     public void clearRole() {
         this.role = null;
-        FXUtil.runLater(this::init);
+        FXUtil.runLater(this::flushRole);
     }
 
     /**
-     * 初始化组件
+     * 刷新角色组件
      */
-    public void init() {
+    public void flushRole() {
         // 寻找组件
-        FXText text = (FXText) this.getRootNode().lookup("#text");
-        if (text != null && this.role == null) {
-            this.getRootNode().getChildren().remove(text);
-        } else if (text == null && this.role != null) {
-            text = new FXText();
-            text.setId("text");
-            text.setFill(Color.valueOf("#228B22"));
-            this.getRootNode().getChildren().add(text);
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
+        FXText role = (FXText) this.lookup("#role");
+        if (this.role == null) {
+            this.removeChild(role);
+        } else {
+            if (role == null) {
+                role = new FXText();
+                role.setId("role");
+                role.setFill(Color.valueOf("#228B22"));
+                this.addChild(role);
+                HBox.setMargin(role, new Insets(0, 0, 0, 3));
+            }
             String str = "(" + this.role;
             if (this.cluster) {
                 str += "-cluster集群";
@@ -100,16 +128,16 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
                 str += "-只读模式";
             }
             str += ")";
-            text.setText(str);
+            role.setText(str);
         }
     }
 
-    @Override
-    public HBox create() {
-        super.create();
-        // 初始化组件
-        this.init();
-        return this.getRootNode();
-    }
+    // @Override
+    // public HBox create() {
+    //     super.create();
+    //     // 初始化组件
+    //     this.init();
+    //     return this.getRootNode();
+    // }
 
 }

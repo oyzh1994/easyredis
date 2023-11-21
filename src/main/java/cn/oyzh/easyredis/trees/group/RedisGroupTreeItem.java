@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.group;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
@@ -8,6 +8,9 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -17,7 +20,6 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -56,7 +58,7 @@ public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectMana
     public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisTreeView treeView) {
         this.value = group;
         this.treeView(treeView);
-        this.itemValue(group.getName());
+        this.itemValue(new RedisGroupTreeItemValue(this));
 
         // 监听键变化
         this.getChildren().addListener((ListChangeListener<? super RedisConnectTreeItem>) c -> {
@@ -113,7 +115,8 @@ public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectMana
 
         // 修改名称
         if (this.groupStore.update(this.value)) {
-            this.itemValue(groupName);
+            this.itemValue().name(groupName);
+            // this.itemValue(groupName);
         } else {
             MessageBox.warn("修改分组名称失败！");
         }
@@ -169,19 +172,19 @@ public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectMana
         return super.getChildren();
     }
 
-    @Override
-    public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/group.svg", "12");
-            this.itemValue().graphic(glyph);
-        }
-        if (this.isChildEmpty() && glyph.getColor() != Color.BLACK) {
-            glyph.setColor(Color.BLACK);
-        } else if (!this.isChildEmpty() && glyph.getColor() != Color.DEEPSKYBLUE) {
-            glyph.setColor(Color.DARKBLUE);
-        }
-    }
+    // @Override
+    // public void flushGraphic() {
+    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
+    //     if (glyph == null) {
+    //         glyph = new SVGGlyph("/font/group.svg", "12");
+    //         this.itemValue().graphic(glyph);
+    //     }
+    //     if (this.isChildEmpty() && glyph.getColor() != Color.BLACK) {
+    //         glyph.setColor(Color.BLACK);
+    //     } else if (!this.isChildEmpty() && glyph.getColor() != Color.DEEPSKYBLUE) {
+    //         glyph.setColor(Color.DARKBLUE);
+    //     }
+    // }
 
     @Override
     public void addConnect(@NonNull RedisInfo redisInfo) {

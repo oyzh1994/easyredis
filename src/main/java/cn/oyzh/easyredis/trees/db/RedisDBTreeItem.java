@@ -19,12 +19,12 @@ import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.trees.BaseTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -121,13 +121,15 @@ public class RedisDBTreeItem extends BaseTreeItem {
     }
 
     public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent, @NonNull RedisTreeView treeView) {
-        if (dbIndex != null) {
-            this.dbIndex = dbIndex;
-            this.itemValue(new RedisDBTreeItemValue("db" + dbIndex));
-        } else {
-            this.dbIndex = 0;
-            this.itemValue(new RedisDBTreeItemValue("键列表"));
-        }
+        // if (dbIndex != null) {
+        //     this.dbIndex = dbIndex;
+        // this.itemValue(new RedisDBTreeItemValue("db" + dbIndex));
+        // } else {
+        //     this.dbIndex = 0;
+        // this.itemValue(new RedisDBTreeItemValue("键列表"));
+        // }
+        this.dbIndex = dbIndex == null ? 0 : dbIndex;
+        this.itemValue(new RedisDBTreeItemValue(this));
         this.parent = parent;
         this.treeView(treeView);
         this.flushChildNum();
@@ -216,8 +218,8 @@ public class RedisDBTreeItem extends BaseTreeItem {
         this.flushChildNum();
         this.itemValue().showChildNum(this.getChildren().size());
         this.itemValue().keyFilterPattern(this.keyFilterPattern);
-        this.itemValue().initChildNum();
-        this.itemValue().initKeyFilter();
+        // this.itemValue().initChildNum();
+        // this.itemValue().initKeyFilter();
         // 刷新ui
         this.treeView().flushLocal();
     }

@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.root;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
@@ -13,7 +13,11 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
+import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexImageView;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
@@ -58,7 +62,8 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
 
     public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
         this.treeView(treeView);
-        this.itemValue("Redis连接列表");
+        this.itemValue(new RedisRootTreeItemValue());
+        // this.itemValue("Redis连接列表");
         // 注册事件处理
         EventUtil.register(this);
         // 初始化子节点

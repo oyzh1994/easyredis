@@ -1,6 +1,8 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -25,7 +27,8 @@ public class RedisServerInfoTreeItem extends BaseTreeItem {
     public RedisServerInfoTreeItem(@NonNull RedisConnectTreeItem treeItem, @NonNull RedisTreeView treeView) {
         this.parent = treeItem;
         this.treeView(treeView);
-        this.itemValue("服务信息");
+        this.itemValue(new RedisServerInfoTreeItemValue());
+        // this.itemValue("服务信息");
     }
 
     @Override
