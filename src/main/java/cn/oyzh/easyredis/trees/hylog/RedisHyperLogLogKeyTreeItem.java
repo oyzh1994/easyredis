@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.hylog;
 
 import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ public class RedisHyperLogLogKeyTreeItem extends RedisKeyTreeItem<RedisHyperLogL
 
     public RedisHyperLogLogKeyTreeItem(@NonNull RedisHyperLogLogKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
+        this.itemValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.string;
 
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -16,6 +17,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
 
     public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
+        this.itemValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override

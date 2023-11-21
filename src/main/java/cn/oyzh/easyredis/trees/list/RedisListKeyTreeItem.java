@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.list;
 
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -19,6 +20,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
 
     public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
+        this.itemValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override

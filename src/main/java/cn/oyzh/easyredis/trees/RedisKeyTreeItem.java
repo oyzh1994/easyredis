@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
@@ -83,7 +84,8 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      */
     public void unsavedNodeData(Object unsavedNodeData) {
         this.unsavedNodeDataProperty().set(unsavedNodeData);
-        this.flushGraphicColor();
+        this.flushGraphic();
+        // this.flushGraphicColor();
     }
 
     /**
@@ -104,7 +106,8 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
     public void clearUnsavedNodeData() {
         if (this.unsavedNodeDataProperty != null) {
             this.unsavedNodeDataProperty.set(null);
-            this.flushGraphicColor();
+            this.flushGraphic();
+            // this.flushGraphicColor();
         }
     }
 
@@ -160,11 +163,11 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
 
     public RedisKeyTreeItem(@NonNull V value, @NonNull RedisConnectTreeItem root) {
         this.root = root;
-        this.treeView(root.treeView());
-        RedisKeyTreeItemValue itemValue = new RedisKeyTreeItemValue(value);
-        // itemValue.type(value.type().toString());
-        this.itemValue(itemValue);
         this.value = value;
+        this.treeView(root.treeView());
+        // RedisKeyTreeItemValue itemValue = new RedisKeyTreeItemValue(value);
+        // itemValue.type(value.type().toString());
+        // this.itemValue(new RedisKeyTreeItemValue(this));
     }
 
     /**
@@ -181,27 +184,27 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
         this.visible = filter.apply(this);
     }
 
-    @Override
-    public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/treeNode.svg", 12);
-            this.itemValue().graphic(glyph);
-        }
-    }
+    // @Override
+    // public void flushGraphic() {
+    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
+    //     if (glyph == null) {
+    //         glyph = new SVGGlyph("/font/treeNode.svg", 12);
+    //         this.itemValue().graphic(glyph);
+    //     }
+    // }
 
-    /**
-     * 刷新图标颜色
-     */
-    protected void flushGraphicColor() {
-        if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-            if (!this.hasUnsavedNodeData() && glyph.getColor() != Color.BLACK) {
-                glyph.setColor(Color.BLACK);
-            } else if (this.hasUnsavedNodeData() && glyph.getColor() != Color.ORANGERED) {
-                glyph.setColor(Color.ORANGERED);
-            }
-        }
-    }
+    // /**
+    //  * 刷新图标颜色
+    //  */
+    // protected void flushGraphicColor() {
+    //     if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
+    //         if (!this.hasUnsavedNodeData() && glyph.getColor() != Color.BLACK) {
+    //             glyph.setColor(Color.BLACK);
+    //         } else if (this.hasUnsavedNodeData() && glyph.getColor() != Color.ORANGERED) {
+    //             glyph.setColor(Color.ORANGERED);
+    //         }
+    //     }
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -475,6 +478,10 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      * @return 原始数据
      */
     public abstract Object rawValue();
+
+    public RedisKeyType type() {
+        return this.value.type();
+    }
 
     // /**
     //  * 获取json数据

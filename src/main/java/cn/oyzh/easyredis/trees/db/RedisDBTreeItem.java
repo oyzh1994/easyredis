@@ -66,11 +66,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class RedisDBTreeItem extends BaseTreeItem {
 
     /**
-     * 当前值，db索引
+     * 当前db索引
      */
     @Getter
     @Accessors(chain = true, fluent = true)
     private final int dbIndex;
+
+    /**
+     * 当前值
+     */
+    @Getter
+    @Accessors(chain = true, fluent = true)
+    private final String value;
 
     /**
      * 键加载标志位
@@ -129,6 +136,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
         // this.itemValue(new RedisDBTreeItemValue("键列表"));
         // }
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
+        this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
         this.itemValue(new RedisDBTreeItemValue(this));
         this.parent = parent;
         this.treeView(treeView);

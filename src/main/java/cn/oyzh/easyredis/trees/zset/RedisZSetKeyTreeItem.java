@@ -3,11 +3,9 @@ package cn.oyzh.easyredis.trees.zset;
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -45,22 +43,22 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     @Accessors(chain = true, fluent = true)
     private Double currentLongitude;
 
-    public RedisZSetKeyTreeItem currentScore(Double currentScore) {
+    public void currentScore(Double currentScore) {
         this.currentScore = currentScore;
-        this.flushGraphicColor();
-        return this;
+        this.flushGraphic();
+        // this.flushGraphicColor();
     }
 
-    public RedisZSetKeyTreeItem currentLatitude(Double currentLatitude) {
+    public void currentLatitude(Double currentLatitude) {
         this.currentLatitude = currentLatitude;
-        this.flushGraphicColor();
-        return this;
+        this.flushGraphic();
+        // this.flushGraphicColor();
     }
 
-    public RedisZSetKeyTreeItem currentLongitude(Double currentLongitude) {
+    public void currentLongitude(Double currentLongitude) {
         this.currentLongitude = currentLongitude;
-        this.flushGraphicColor();
-        return this;
+        this.flushGraphic();
+        // this.flushGraphicColor();
     }
 
     /**
@@ -71,14 +69,16 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     @Override
     public RedisZSetKeyTreeItem currentRow(RedisZSetRow currentRow) {
         this.currentRow = currentRow;
-        this.currentScore(null);
-        this.currentLatitude(null);
-        this.currentLongitude(null);
+        this.currentScore = null;
+        this.currentLatitude = null;
+        this.currentLongitude = null;
+        this.flushGraphic();
         return this;
     }
 
     public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
+        this.itemValue(new RedisZSetKeyTreeItemValue(this));
     }
 
     /**
@@ -215,14 +215,19 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return this.unsavedNodeData() != null || this.currentScore() != null;
     }
 
+    // @Override
+    // protected void flushGraphicColor() {
+    //     if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
+    //         if (!this.isChanged() && glyph.getColor() != Color.BLACK) {
+    //             glyph.setColor(Color.BLACK);
+    //         } else if (this.isChanged() && glyph.getColor() != Color.ORANGERED) {
+    //             glyph.setColor(Color.ORANGERED);
+    //         }
+    //     }
+    // }
+
     @Override
-    protected void flushGraphicColor() {
-        if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-            if (!this.isChanged() && glyph.getColor() != Color.BLACK) {
-                glyph.setColor(Color.BLACK);
-            } else if (this.isChanged() && glyph.getColor() != Color.ORANGERED) {
-                glyph.setColor(Color.ORANGERED);
-            }
-        }
+    public RedisZSetKeyTreeItemValue itemValue() {
+        return (RedisZSetKeyTreeItemValue) super.itemValue();
     }
 }

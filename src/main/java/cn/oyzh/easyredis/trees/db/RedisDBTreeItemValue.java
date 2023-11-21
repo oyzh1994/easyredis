@@ -36,13 +36,13 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
      */
     private String keyFilterPattern;
 
-    private RedisDBTreeItem item;
+    private final RedisDBTreeItem item;
 
     public RedisDBTreeItemValue(RedisDBTreeItem item) {
-        this.item=item;
+        this.item = item;
         this.flushGraphic();
         this.flushGraphicColor();
-        this.name(item.dbIndex() != 0 ? "db" + item.dbIndex() : "键列表");
+        this.name(item.value());
         this.flushText();
     }
 
