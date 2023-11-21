@@ -21,7 +21,7 @@
         <FXTab text="基础设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -34,7 +34,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -53,7 +53,7 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -78,7 +78,7 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" visible="false">
-                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -107,7 +107,7 @@
         <FXTab text="高级设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -126,7 +126,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -145,7 +145,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="100">
-                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="label-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

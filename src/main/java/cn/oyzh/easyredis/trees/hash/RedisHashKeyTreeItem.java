@@ -25,12 +25,12 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, Redi
 
     @Override
     public boolean saveNodeValue() {
-        String value = (String) this.unsavedNodeData();
+        String value = (String) this.data();
         try {
             if (value != null) {
                 this.setNodeValue(value);
                 this.currentRow.setValue(value);
-                this.unsavedNodeData(null);
+                this.clearData();
                 return true;
             }
         } catch (Exception ex) {
@@ -66,7 +66,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, Redi
         Map<String, String> value = this.client().hgetAll(this.dbIndex(), this.key());
         this.value.value(value);
         // 清空未保存的数据
-        this.unsavedNodeData(null);
+        this.clearData();
     }
 
     @Override

@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.tabs.key.geo.RedisGEOKeyTab;
 import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
 import cn.oyzh.easyredis.tabs.key.hylog.RedisHyperLogLogKeyTab;
 import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;

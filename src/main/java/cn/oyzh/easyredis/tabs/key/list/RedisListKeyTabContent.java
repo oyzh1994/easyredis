@@ -63,9 +63,9 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-            this.treeItem.clearUnsavedNodeData();
+            this.treeItem.clearData();
         } else {
-            this.treeItem.unsavedNodeData(newValue);
+            this.treeItem.data(newValue);
         }
     };
 
@@ -73,7 +73,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     public boolean init(RedisListKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.unsavedNodeDataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @FXML
     private void reloadRow() {
         // 放弃保存
-        if (this.treeItem.hasUnsavedNodeData() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
             return;
         }
         try {

@@ -109,7 +109,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extend
     @Override
     public void reloadNode() {
         // 放弃保存
-        if (this.treeItem.hasUnsavedNodeData() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
             return;
         }
         try {
@@ -200,7 +200,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extend
      */
     protected void initRow(R row) {
         this.treeItem.currentRow(row);
-        this.treeItem.unsavedNodeData(null);
+        this.treeItem.data(null);
         if (row == null) {
             this.clearRawData();
             this.dataAction.disable();

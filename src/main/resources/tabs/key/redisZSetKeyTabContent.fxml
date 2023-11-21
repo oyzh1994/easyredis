@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.easyredis.fx.LatitudeField?>
+<?import cn.oyzh.easyredis.fx.LongitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.PagePane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.easyredis.fx.LatitudeField?>
-<?import cn.oyzh.easyredis.fx.LongitudeField?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
@@ -77,11 +77,12 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FlexCheckBox fx:id="reverseView"  onAction="#reverseView" tipText="以地理坐标(GEO)方式显示" text="显示为地理坐标">
+                <ToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="地理坐标"
+                              unselectedText="有序集合" realWidth="90">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </FlexCheckBox>
+                </ToggleSwitch>
                 <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
@@ -168,7 +169,7 @@
                     <Insets top="5"/>
                 </HBox.margin>
             </RedisDataTextArea>
-            <FlexHBox flexWidth="100%" realHeight="30" fx:id="scoreBox"  >
+            <FlexHBox flexWidth="100%" realHeight="30" fx:id="scoreBox">
                 <FXLabel realWidth="25" text="分数">
                     <HBox.margin>
                         <Insets left="5" top="10"/>

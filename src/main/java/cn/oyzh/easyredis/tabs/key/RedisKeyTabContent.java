@@ -64,12 +64,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
     @FXML
     protected RedisFormatComboBox format;
 
-    // /**
-    //  * 字符集
-    //  */
-    // @FXML
-    // private CharsetComboBox charset;
-
     /**
      * 树节点
      */
@@ -130,19 +124,14 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
         this.collect.setVisible(!this.treeItem.isCollect());
         this.unCollect.setVisible(this.treeItem.isCollect());
 
-        // // 字符集处理
-        // if (this.charset != null) {
-        //     this.charset.select(this.treeItem.getCharset());
-        // }
-
-        // 初始化键
+        // 初始化节点
         this.initNode();
 
         // 初始化键信息
         this.keyInfoController.init(treeItem);
 
+        // 格式变化
         if (this.format != null) {
-            // 格式变化
             this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
         }
 
@@ -274,31 +263,26 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
      */
     @FXML
     protected void saveNodeData() {
-        if (this.beforeNodeDataSave()) {
-            ThreadUtil.startVirtual(() -> {
-                if (this.treeItem.saveNodeValue()) {
-                    this.afterNodeDataSaved();
-                    MessageBox.okToast("保存数据成功");
-                }
-            });
+        if (this.treeItem.dataUnsaved()) {
+            ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
         }
     }
 
-    /**
-     * 键数据保存之前的事件
-     *
-     * @return 保存结果
-     */
-    protected boolean beforeNodeDataSave() {
-        return this.treeItem.unsavedNodeData() != null;
-    }
-
-    /**
-     * 键数据保存之后的事件
-     */
-    protected void afterNodeDataSaved() {
-        this.treeItem.clearUnsavedNodeData();
-    }
+    // /**
+    //  * 键数据保存之前的事件
+    //  *
+    //  * @return 保存结果
+    //  */
+    // protected boolean beforeNodeDataSave() {
+    //     return this.treeItem.dataUnsaved();
+    // }
+    //
+    // /**
+    //  * 键数据保存之后的事件
+    //  */
+    // protected void afterNodeDataSaved() {
+    //     this.treeItem.clearData();
+    // }
 
     /**
      * 重新加载键

@@ -22,7 +22,7 @@
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
           realHeight="850">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -49,7 +49,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" visible="false">
-        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -66,7 +66,7 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" visible="false">
-        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -78,7 +78,7 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -100,7 +100,7 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -128,7 +128,7 @@
         </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -145,7 +145,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="排除类型" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="排除类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -187,7 +187,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

@@ -13,13 +13,8 @@
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisSetMemberAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <FXLabel text="成员" realHeight="30" realWidth="55" styleClass="label-primary">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </FXLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入成员数据"
-                      flexWidth="100% - 140">
+                      flexWidth="100% - 80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -47,7 +42,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="85" top="10"/>
+                <Insets left="10" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

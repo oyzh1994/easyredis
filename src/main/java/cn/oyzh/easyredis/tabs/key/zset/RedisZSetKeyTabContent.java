@@ -6,8 +6,9 @@ import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -45,13 +46,13 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private SVGGlyph saveNodeData;
 
     /**
-     * 反转视图
+     * 分数组件
      */
     @FXML
     protected FlexHBox scoreBox;
 
     /**
-     * 反转视图
+     * 地理坐标组件
      */
     @FXML
     protected FlexHBox geoBox;
@@ -60,7 +61,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
      * 反转视图
      */
     @FXML
-    protected FlexCheckBox reverseView;
+    protected ToggleSwitch reverseView;
 
     /**
      * 分数值
@@ -93,13 +94,13 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private TableColumn<RedisZSetRow, Double> score;
 
     /**
-     * 分数列
+     * 经度列
      */
     @FXML
     private TableColumn<RedisZSetRow, Double> longitude;
 
     /**
-     * 分数列
+     * 纬度列
      */
     @FXML
     private TableColumn<RedisZSetRow, Double> latitude;
@@ -116,9 +117,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-            this.treeItem.clearUnsavedNodeData();
+            this.treeItem.clearData();
         } else {
-            this.treeItem.unsavedNodeData(newValue);
+            this.treeItem.data(newValue);
         }
         this.saveNodeData.setDisable(!this.treeItem.isChanged());
     };
@@ -129,7 +130,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
         Number scoreVal = this.scoreVal.getValue();
         if (this.treeItem.currentRow() == null || Objects.equals(scoreVal.doubleValue(), this.treeItem.currentRow().getScore())) {
-            this.treeItem.clearUnsavedNodeData();
+            this.treeItem.clearData();
         } else {
             this.treeItem.currentScore(scoreVal.doubleValue());
         }
@@ -189,8 +190,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.score.setVisible(false);
             this.latitude.setVisible(true);
             this.longitude.setVisible(true);
-            this.reverseView.setText("显示为序集合");
-            this.reverseView.setTipText("显示为序集合(GEO)");
+            this.reverseView.setSelected(true);
             this.geoBox.display();
             this.scoreBox.disappear();
         } else {
@@ -201,8 +201,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.score.setVisible(true);
             this.latitude.setVisible(false);
             this.longitude.setVisible(false);
-            this.reverseView.setText("显示地理坐标");
-            this.reverseView.setTipText("显示地理坐标(GEO)");
+            this.reverseView.setSelected(false);
             this.geoBox.disappear();
             this.scoreBox.display();
         }
@@ -251,34 +250,33 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.scoreVal.disable();
             this.latitudeVal.disable();
             this.longitudeVal.disable();
-        } else if (this.isGEOView()) {
-            this.longitudeVal.setValue(row.getLongitude());
-            this.longitudeVal.enable();
-            this.latitudeVal.setValue(row.getLatitude());
-            this.latitudeVal.enable();
-            this.saveNodeData.disable();
         } else {
-            this.scoreVal.setValue(row.getScore());
-            this.scoreVal.enable();
-            this.saveNodeData.disable();
-        }
-    }
-
-    @Override
-    protected boolean beforeNodeDataSave() {
-        if (this.treeItem.isChanged()) {
-            if (this.treeItem.checkExists()) {
-                MessageBox.warn("此成员已存在！");
-                return false;
+            if (this.isGEOView()) {
+                this.longitudeVal.setValue(row.getLongitude());
+                this.longitudeVal.enable();
+                this.latitudeVal.setValue(row.getLatitude());
+                this.latitudeVal.enable();
+            } else {
+                this.scoreVal.setValue(row.getScore());
+                this.scoreVal.enable();
             }
+            this.saveNodeData.disable();
+            this.treeItem.clearData();
         }
-        return true;
     }
 
+    @FXML
     @Override
-    protected void afterNodeDataSaved() {
-        super.afterNodeDataSaved();
-        this.saveNodeData.disable();
+    protected void saveNodeData() {
+        if (this.treeItem.checkExists()) {
+            MessageBox.warn("此成员或坐标已存在！");
+        } else if (this.treeItem.isChanged()) {
+            ThreadUtil.startVirtual(() -> {
+                if (this.treeItem.saveNodeValue()) {
+                    this.saveNodeData.disable();
+                }
+            });
+        }
     }
 
     // /**
@@ -287,7 +285,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     // @FXML
     // private void showGEO() {
     // // 放弃保存
-    // if (this.treeItem.unsavedNodeData() != null && !MessageBox.confirm("放弃未保存的数据？")) {
+    // if (this.treeItem.data() != null && !MessageBox.confirm("放弃未保存的数据？")) {
     //     return;
     // }
     // this.treeItem.reverseView();

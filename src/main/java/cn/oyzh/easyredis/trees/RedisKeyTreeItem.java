@@ -22,7 +22,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -61,88 +60,65 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
     protected final RedisConnectTreeItem root;
 
     /**
-     * 未保存的键数据属性
+     * 键数据属性
      */
-    private SimpleObjectProperty<Object> unsavedNodeDataProperty;
+    private SimpleObjectProperty<Object> dataProperty;
 
     /**
      * 获取未保存的键数据属性
      *
      * @return 未保存的键数据属性
      */
-    public SimpleObjectProperty<Object> unsavedNodeDataProperty() {
-        if (this.unsavedNodeDataProperty == null) {
-            this.unsavedNodeDataProperty = new SimpleObjectProperty<>();
+    public SimpleObjectProperty<Object> dataProperty() {
+        if (this.dataProperty == null) {
+            this.dataProperty = new SimpleObjectProperty<>();
         }
-        return this.unsavedNodeDataProperty;
+        return this.dataProperty;
     }
 
     /**
-     * 设置未保存的键数据
+     * 设置键数据
      *
-     * @param unsavedNodeData 未保存的键数据
+     * @param data 未键数据
      */
-    public void unsavedNodeData(Object unsavedNodeData) {
-        this.unsavedNodeDataProperty().set(unsavedNodeData);
+    public void data(Object data) {
+        this.dataProperty().set(data);
         this.flushGraphic();
-        // this.flushGraphicColor();
     }
 
     /**
-     * 获取未保存的键数据
+     * 获取键数据
      *
-     * @return 未保存的键数据
+     * @return 键数据
      */
-    public Object unsavedNodeData() {
-        if (this.unsavedNodeDataProperty == null) {
+    public Object data() {
+        if (this.dataProperty == null) {
             return null;
         }
-        return this.unsavedNodeDataProperty.get();
+        return this.dataProperty.get();
     }
 
     /**
-     * 清除未保存的键数据
+     * 清除键数据
      */
-    public void clearUnsavedNodeData() {
-        if (this.unsavedNodeDataProperty != null) {
-            this.unsavedNodeDataProperty.set(null);
+    public void clearData() {
+        if (this.dataProperty != null) {
+            this.dataProperty.set(null);
             this.flushGraphic();
-            // this.flushGraphicColor();
         }
     }
 
     /**
-     * 是否有未保存的键数据
+     * 数据是否未保存
      *
      * @return 结果
      */
-    public boolean hasUnsavedNodeData() {
-        if (this.unsavedNodeDataProperty == null) {
+    public boolean dataUnsaved() {
+        if (this.dataProperty == null) {
             return false;
         }
-        return this.unsavedNodeDataProperty.get() != null;
+        return this.dataProperty.get() != null;
     }
-
-    // /**
-    //  * 获取字符集
-    //  *
-    //  * @return 字符集
-    //  */
-    // public String getCharset() {
-    //     return this.info().getCharset();
-    // }
-    //
-    // /**
-    //  * 设置字符集
-    //  *
-    //  * @param charset 字符集
-    //  */
-    // public void setCharset(String charset) {
-    //     if (this.unsavedNodeDataProperty != null) {
-    //         this.unsavedNodeDataProperty.set(TextUtil.changeCharset(this.unsavedNodeData(), this.getCharset(), charset));
-    //     }
-    //     this.info().setCharset(charset);
-    // }
 
     /**
      * 子节点列表，记录用，非实际展示列表
@@ -165,9 +141,6 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
         this.root = root;
         this.value = value;
         this.treeView(root.treeView());
-        // RedisKeyTreeItemValue itemValue = new RedisKeyTreeItemValue(value);
-        // itemValue.type(value.type().toString());
-        // this.itemValue(new RedisKeyTreeItemValue(this));
     }
 
     /**
@@ -183,28 +156,6 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
     public void filter(@NonNull RedisTreeItemFilter filter) {
         this.visible = filter.apply(this);
     }
-
-    // @Override
-    // public void flushGraphic() {
-    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-    //     if (glyph == null) {
-    //         glyph = new SVGGlyph("/font/treeNode.svg", 12);
-    //         this.itemValue().graphic(glyph);
-    //     }
-    // }
-
-    // /**
-    //  * 刷新图标颜色
-    //  */
-    // protected void flushGraphicColor() {
-    //     if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-    //         if (!this.hasUnsavedNodeData() && glyph.getColor() != Color.BLACK) {
-    //             glyph.setColor(Color.BLACK);
-    //         } else if (this.hasUnsavedNodeData() && glyph.getColor() != Color.ORANGERED) {
-    //             glyph.setColor(Color.ORANGERED);
-    //         }
-    //     }
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

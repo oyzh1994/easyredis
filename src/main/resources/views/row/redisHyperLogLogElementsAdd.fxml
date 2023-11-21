@@ -14,7 +14,7 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHyperLogLogElementsAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <FXLabel text="元素" realHeight="30" realWidth="55" styleClass="label-primary">
+        <FXLabel text="元素" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

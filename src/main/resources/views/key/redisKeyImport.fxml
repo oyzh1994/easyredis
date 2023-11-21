@@ -14,7 +14,7 @@
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
     <FlexHBox realHeight="50" flexWidth="100%">
-        <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -36,7 +36,7 @@
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -64,7 +64,7 @@
         </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导入选项" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="导入选项" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -87,7 +87,7 @@
         <!-- </CharsetComboBox> -->
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="label-primary">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

@@ -25,12 +25,12 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
 
     @Override
     public boolean saveNodeValue() {
-        String value = (String) this.unsavedNodeData();
+        String value = (String) this.data();
         try {
             if (value != null) {
                 this.setNodeValue(value);
                 this.currentRow.setValue(value);
-                this.unsavedNodeData(null);
+                this.clearData();
                 return true;
             }
         } catch (Exception ex) {
@@ -74,7 +74,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
     public void refreshNodeValue() {
         List<String> value = this.client().lrange(this.dbIndex(), this.key());
         this.value.value(value);
-        this.unsavedNodeData(null);
+        this.clearData();
     }
 
     @Override

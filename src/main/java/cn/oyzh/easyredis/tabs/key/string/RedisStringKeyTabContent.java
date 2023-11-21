@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -50,9 +51,9 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @Getter(AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (Objects.equals(newValue, this.treeItem.value().value())) {
-            this.treeItem.clearUnsavedNodeData();
+            this.treeItem.clearData();
         } else {
-            this.treeItem.unsavedNodeData(newValue);
+            this.treeItem.data(newValue);
         }
     };
 
@@ -63,7 +64,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
             if (this.treeItem.isRawEncoding()) {
                 this.format.selectBinary();
             }
-            this.treeItem.unsavedNodeDataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -83,7 +84,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         // 刷新二进制处理
         this.flushBinary();
         // 按钮状态处理
-        this.saveNodeData.setDisable(!this.treeItem.hasUnsavedNodeData());
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     }
 
     /**
@@ -104,7 +105,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @FXML
     private void reloadData() {
         // 放弃保存
-        if (this.treeItem.hasUnsavedNodeData() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
             return;
         }
         // 刷新数据
@@ -127,9 +128,15 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         }
     }
 
+    @FXML
     @Override
-    protected void afterNodeDataSaved() {
-        super.afterNodeDataSaved();
-        this.flushBinary();
+    protected void saveNodeData() {
+        if (this.treeItem.dataUnsaved()) {
+            ThreadUtil.startVirtual(() -> {
+                if (this.treeItem.saveNodeValue()) {
+                    this.flushBinary();
+                }
+            });
+        }
     }
 }

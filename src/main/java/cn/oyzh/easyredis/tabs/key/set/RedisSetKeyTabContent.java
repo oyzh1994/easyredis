@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -57,23 +58,17 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-            this.treeItem.unsavedNodeData(null);
+            this.treeItem.clearData();
         } else {
-            this.treeItem.unsavedNodeData(newValue);
+            this.treeItem.data(newValue);
         }
     };
 
     @Override
     public boolean init(RedisSetKeyTreeItem treeItem) {
+        this.pageData = null;
         if (super.init(treeItem)) {
-            this.pageData = null;
-            this.treeItem.unsavedNodeDataProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue == null) {
-                    this.saveNodeData.disable();
-                } else {
-                    this.saveNodeData.enable();
-                }
-            });
+            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -133,16 +128,14 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
         fxView.display();
     }
 
+    @FXML
     @Override
-    protected boolean beforeNodeDataSave() {
-        if (this.treeItem.unsavedNodeData() == null) {
-            return false;
-        }
+    protected void saveNodeData() {
         if (this.treeItem.checkExists()) {
             MessageBox.warn("此成员已存在！");
-            return false;
+        } else if (this.treeItem.dataUnsaved()) {
+            ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
         }
-        return super.beforeNodeDataSave();
     }
 
     @FXML

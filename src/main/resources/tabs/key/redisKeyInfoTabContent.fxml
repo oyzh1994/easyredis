@@ -39,7 +39,7 @@
                 <Insets left="5"/>
             </VBox.margin>
             <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="编码类型" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                <FXLabel text="编码类型" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
@@ -50,7 +50,7 @@
                 </HBox.margin>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="空闲时间" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                <FXLabel text="空闲时间" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
@@ -61,7 +61,7 @@
                 </HBox.margin>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="引用数量" realWidth="135" realHeight="36" styleClass="item-label,label-primary">
+                <FXLabel text="引用数量" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>

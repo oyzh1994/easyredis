@@ -15,7 +15,7 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="消息ID" realHeight="30" realWidth="55" styleClass="label-primary">
+        <FXLabel text="消息ID" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -27,7 +27,7 @@
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <FXLabel text="内容" realHeight="30" realWidth="55" styleClass="label-primary">
+        <FXLabel text="内容" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

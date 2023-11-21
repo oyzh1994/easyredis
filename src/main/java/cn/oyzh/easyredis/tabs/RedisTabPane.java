@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.geo.RedisGEOKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent;
 import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTabContent;
@@ -351,7 +350,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onGEOCoordinateAdded(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisGEOKeyTabContent controller = (RedisGEOKeyTabContent) tab.controller();
+            RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }

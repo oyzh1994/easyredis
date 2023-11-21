@@ -22,7 +22,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
 
     @Override
     public boolean saveNodeValue() {
-        Object value = this.unsavedNodeData();
+        Object value = this.data();
         try {
             if (value != null) {
                 this.setNodeValue(value);
@@ -61,7 +61,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
             }
             this.value.value(val);
             // 清空未保存的数据
-            this.unsavedNodeData(null);
+            this.clearData();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -70,8 +70,8 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
 
     @Override
     public Object rawValue() {
-        if (super.unsavedNodeData() != null) {
-            return super.unsavedNodeData();
+        if (super.dataUnsaved()) {
+            return super.data();
         }
         this.refreshNodeValue();
         return this.value.value();
@@ -83,7 +83,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
      * @return 结果
      */
     public boolean isDataTooLong() {
-        Object o = this.unsavedNodeData();
+        Object o = this.data();
         if (o instanceof String s) {
             return s.length() > 1024 * 1024;
         }

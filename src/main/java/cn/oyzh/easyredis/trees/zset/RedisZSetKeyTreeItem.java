@@ -99,7 +99,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
 
     @Override
     public boolean saveNodeValue() {
-        String value = (String) this.unsavedNodeData();
+        String value = (String) this.data();
         if (value == null) {
             value = this.currentRow.getValue();
         }
@@ -109,19 +109,19 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
             if (this.isGEOView()) {
                 if (this.currentLongitude != null) {
                     this.currentRow.setLongitude(this.currentLongitude);
-                    this.currentLongitude(null);
                 }
                 if (this.currentLatitude != null) {
                     this.currentRow.setLatitude(this.currentLatitude);
-                    this.currentLatitude(null);
                 }
             } else {
                 if (this.currentScore != null) {
                     this.currentRow.setScore(this.currentScore);
-                    this.currentScore(null);
                 }
             }
-            this.clearUnsavedNodeData();
+            this.currentScore = null;
+            this.currentLatitude = null;
+            this.currentLongitude = null;
+            this.clearData();
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -176,7 +176,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
                 List<Double> scores = this.client().zmscore_x(this.dbIndex(), this.key(), ArrayUtil.toArray(value, String.class));
                 this.value.valueOfScore(value, scores);
             }
-            this.unsavedNodeData(null);
+            this.clearData();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -193,12 +193,11 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
 
     @Override
     public boolean checkExists() {
-        if (this.unsavedNodeData() == null) {
-            return false;
-        }
-        if (!Objects.equals(this.currentRow.getValue(), this.unsavedNodeData())) {
-            Long zrank = this.client().zrank(this.dbIndex(), this.key(), (String) this.unsavedNodeData());
-            return zrank != null;
+        if (this.dataUnsaved()) {
+            if (!Objects.equals(this.currentRow.getValue(), this.data())) {
+                Long zrank = this.client().zrank(this.dbIndex(), this.key(), (String) this.data());
+                return zrank != null;
+            }
         }
         return false;
     }
@@ -209,22 +208,11 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @return 结果
      */
     public boolean isChanged() {
-        if (this.isGEOView()) {
-            return this.unsavedNodeData() != null || this.currentLatitude != null || this.currentLongitude != null;
+        if (this.dataUnsaved()) {
+            return true;
         }
-        return this.unsavedNodeData() != null || this.currentScore() != null;
+        return this.isGEOView() ? this.currentLatitude != null || this.currentLongitude != null : this.currentScore != null;
     }
-
-    // @Override
-    // protected void flushGraphicColor() {
-    //     if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-    //         if (!this.isChanged() && glyph.getColor() != Color.BLACK) {
-    //             glyph.setColor(Color.BLACK);
-    //         } else if (this.isChanged() && glyph.getColor() != Color.ORANGERED) {
-    //             glyph.setColor(Color.ORANGERED);
-    //         }
-    //     }
-    // }
 
     @Override
     public RedisZSetKeyTreeItemValue itemValue() {

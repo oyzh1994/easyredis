@@ -28,12 +28,12 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisS
 
     @Override
     public boolean saveNodeValue() {
-        String value = (String) this.unsavedNodeData();
+        String value = (String) this.data();
         try {
             if (value != null) {
                 this.setNodeValue(value);
                 this.currentRow.setValue(value);
-                this.unsavedNodeData(null);
+                this.clearData();
                 return true;
             }
         } catch (Exception ex) {
@@ -77,7 +77,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisS
             Set<String> value = this.client().smembers(this.dbIndex(), this.key());
             this.value.value(value);
             // 清空未保存的数据
-            this.unsavedNodeData(null);
+            this.clearData();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -94,11 +94,10 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisS
 
     @Override
     public boolean checkExists() {
-        if (this.unsavedNodeData() == null) {
-            return false;
-        }
-        if (!Objects.equals(this.currentRow.getValue(), this.unsavedNodeData())) {
-            return this.client().sismember(this.dbIndex(), this.key(), (String) this.unsavedNodeData());
+        if (this.dataUnsaved()) {
+            if (!Objects.equals(this.currentRow.getValue(), this.data())) {
+                return this.client().sismember(this.dbIndex(), this.key(), (String) this.data());
+            }
         }
         return false;
     }
