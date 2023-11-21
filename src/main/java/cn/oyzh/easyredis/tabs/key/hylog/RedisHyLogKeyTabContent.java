@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Lazy
 @Component
-public class RedisHyperLogLogKeyTabContent extends RedisKeyTabContent<RedisHyperLogLogKeyTreeItem> {
+public class RedisHyLogKeyTabContent extends RedisKeyTabContent<RedisHyperLogLogKeyTreeItem> {
 
     /**
      * 数据大小

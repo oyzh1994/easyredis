@@ -214,17 +214,12 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         if (StrUtil.isNotEmpty(filterKW)) {
             if (this.isGEOView()) {
                 rows = rows.parallelStream()
-                        .filter(r ->
-                                StrUtil.containsIgnoreCase(r.getValue(), filterKW) ||
-                                        StrUtil.containsIgnoreCase(String.valueOf(r.getLatitude()), filterKW) ||
-                                        StrUtil.containsIgnoreCase(String.valueOf(r.getLongitude()), filterKW)
-                        ).collect(Collectors.toList());
+                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLatitude()), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLongitude()), filterKW))
+                        .collect(Collectors.toList());
             } else {
                 rows = rows.parallelStream()
-                        .filter(r ->
-                                StrUtil.containsIgnoreCase(r.getValue(), filterKW) ||
-                                        StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW)
-                        ).collect(Collectors.toList());
+                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
+                        .collect(Collectors.toList());
             }
         }
         return rows;

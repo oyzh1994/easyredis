@@ -11,20 +11,20 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/11/21
  */
-public class RedisHyperLogLogKeyTab extends RedisKeyTab<RedisHyperLogLogKeyTreeItem> {
+public class RedisHyLogKeyTab extends RedisKeyTab<RedisHyperLogLogKeyTreeItem> {
 
-    public RedisHyperLogLogKeyTab(@NonNull RedisHyperLogLogKeyTreeItem treeItem) {
+    public RedisHyLogKeyTab(@NonNull RedisHyperLogLogKeyTreeItem treeItem) {
         super(treeItem);
     }
 
     @Override
     protected String url() {
-        return  "/tabs/key/redisHyperLogLogKeyTabContent.fxml";
+        return  "/tabs/key/redisHyLogKeyTabContent.fxml";
     }
 
     @Override
-    public RedisHyperLogLogKeyTabContent controller() {
-        return (RedisHyperLogLogKeyTabContent) super.controller();
+    public RedisHyLogKeyTabContent controller() {
+        return (RedisHyLogKeyTabContent) super.controller();
     }
 
     @Override

@@ -59,12 +59,6 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     private TableColumn<RedisHashRow, String> value;
 
     /**
-     * 数据操作面板
-     */
-    @FXML
-    private FlexFlowPane dataAction;
-
-    /**
      * redis数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
@@ -104,8 +98,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         String filterKW = this.filter.getText();
         if (StrUtil.isNotEmpty(filterKW)) {
             rows = rows.parallelStream()
-                    .filter(r -> StrUtil.containsIgnoreCase(r.getField(), filterKW) ||
-                            StrUtil.containsIgnoreCase(String.valueOf(r.getValue()), filterKW))
+                    .filter(r -> StrUtil.containsIgnoreCase(r.getField(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getValue()), filterKW))
                     .collect(Collectors.toList());
         }
         return rows;
