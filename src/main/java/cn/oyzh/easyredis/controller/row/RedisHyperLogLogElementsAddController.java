@@ -1,23 +1,25 @@
 package cn.oyzh.easyredis.controller.row;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,13 +30,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @StageAttribute(
-        title = "添加set成员",
+        title = "添加hyperLogLog元素",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = RedisStyle.COMMON,
-        value = RedisConst.FXML_BASE_PATH + "row/redisSetRowAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "row/redisHyperLogLogElementsAdd.fxml"
 )
-public class RedisSetRowAddController extends Controller {
+public class RedisHyperLogLogElementsAddController extends Controller {
 
     /**
      * 行数据
@@ -45,7 +47,7 @@ public class RedisSetRowAddController extends Controller {
     /**
      * redis键
      */
-    private RedisSetKeyTreeItem treeItem;
+    private RedisHyperLogLogKeyTreeItem treeItem;
 
     /**
      * 添加行
@@ -55,8 +57,14 @@ public class RedisSetRowAddController extends Controller {
         try {
             // 行数据
             String rowValue = this.rowValue.getText();
-            if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("行数据不能为空", this.rowValue);
+            if (StrUtil.isEmpty(rowValue) || StrUtil.isBlank(rowValue)) {
+               MessageBox.tipMsg("元素不能为空", this.rowValue);
+                return;
+            }
+            List<String> elements = rowValue.lines().collect(Collectors.toList());
+            elements = CollUtil.removeBlank(elements);
+            if (elements.isEmpty()) {
+               MessageBox.tipMsg("元素内容不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -65,15 +73,13 @@ public class RedisSetRowAddController extends Controller {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            if (client.sismember(dbIndex, key, rowValue)) {
-                MessageBox.warn("此成员已存在！");
+            if (client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) <= 0) {
+                MessageBox.warn("新增元素失败或元素均已存在！");
                 return;
             }
-            // 添加元素
-            client.sadd(dbIndex, key, rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_SET_MEMBER_ADDED, this.treeItem);
-            MessageBox.okToast("新增成员成功！");
+            EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
+            MessageBox.okToast("新增元素成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -96,28 +102,6 @@ public class RedisSetRowAddController extends Controller {
     private void clearData() {
         this.rowValue.clear();
         this.rowValue.requestFocus();
-    }
-
-    /**
-     * 解析为json
-     */
-    @FXML
-    private void parseToJson() {
-        String text = this.rowValue.getTextTrim();
-        try {
-            if ("json".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json);
-                this.rowValue.setText(jsonStr);
-                this.rowValue.setUserData("text");
-            } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json, true);
-                this.rowValue.setText(jsonStr);
-                this.rowValue.setUserData("json");
-            }
-        } catch (Exception ignore) {
-        }
     }
 
     @Override

@@ -5,10 +5,9 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -19,43 +18,40 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.params.XAddParams;
-
-import java.util.Map;
 
 
 /**
- * redis添加stream消息
+ * redis添加set成员
  *
  * @author oyzh
- * @since 2022/07/07
+ * @since 2022/06/27
  */
 @Slf4j
 @StageAttribute(
-        title = "添加stream消息",
+        title = "添加hash字段",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = RedisStyle.COMMON,
-        value = RedisConst.FXML_BASE_PATH + "row/redisStreamRowAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "row/redisHashFieldAdd.fxml"
 )
-public class RedisStreamRowAddController extends Controller {
+public class RedisHashFieldAddController extends Controller {
 
     /**
-     * 消息内容
+     * 字段
+     */
+    @FXML
+    private FlexTextArea fieldValue;
+
+    /**
+     * 行数据
      */
     @FXML
     private FlexTextArea rowValue;
 
     /**
-     * 消息id
-     */
-    @FXML
-    private ClearableTextField streamID;
-
-    /**
      * redis键
      */
-    private RedisStreamKeyTreeItem treeItem;
+    private RedisHashKeyTreeItem treeItem;
 
     /**
      * 添加行
@@ -63,27 +59,15 @@ public class RedisStreamRowAddController extends Controller {
     @FXML
     private void addRow() {
         try {
+            String fieldValue = this.fieldValue.getText();
+            if (fieldValue == null) {
+               MessageBox.tipMsg("字段不能为空", this.fieldValue);
+                return;
+            }
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("消息内容不能为空", this.rowValue);
-                return;
-            }
-            JSONObject fields;
-            try {
-                fields = JSON.parseObject(rowValue);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.warn("消息内容必须为json键值对");
-                return;
-            }
-            if (fields == null || fields.isEmpty()) {
-               MessageBox.tipMsg("消息内容不能为空", this.rowValue);
-                return;
-            }
-            String streamIDText = this.streamID.getText();
-            if (streamIDText == null) {
-               MessageBox.tipMsg("消息id不能为空", this.streamID);
+               MessageBox.tipMsg("数据不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -92,17 +76,17 @@ public class RedisStreamRowAddController extends Controller {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            // 流添加参数
-            XAddParams params = new XAddParams();
-            params.id(streamIDText);
-            // 添加流
-            client.xadd(dbIndex, key, (Map) fields.getInnerMap(), params);
+            if (client.hexists(dbIndex, key, fieldValue)) {
+                MessageBox.warn("此字段已存在！");
+                return;
+            }
+            // 添加元素
+            client.hset(dbIndex, key, fieldValue, rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, this.treeItem);
-            MessageBox.okToast("新增消息成功！");
+            EventUtil.fire(RedisEventTypes.REDIS_HASH_FIELD_ADDED, this.treeItem);
+            MessageBox.okToast("新增字段成功！");
             this.closeStage();
         } catch (Exception ex) {
-            ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
@@ -154,5 +138,4 @@ public class RedisStreamRowAddController extends Controller {
         this.stage.hideOnEscape();
         super.onStageShown(event);
     }
-
 }
