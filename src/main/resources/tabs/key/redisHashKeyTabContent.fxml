@@ -15,7 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent" side="RIGHT">
+             fx:controller="cn.oyzh.easyredis.tabs.key.hash.HashKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
+import cn.oyzh.easyredis.tabs.key.KeyTab;
 import cn.oyzh.easyredis.trees.BaseTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
@@ -380,7 +380,7 @@ public class RedisMainSearchHandler {
      * @return 数据节点
      */
     private FlexTextArea findDataNode() {
-        RedisKeyTab<?> itemTab = this.tabPane.getKeyTab();
+        KeyTab<?> itemTab = this.tabPane.getKeyTab();
         if (itemTab != null) {
             return itemTab.getNodeDataNode();
         }

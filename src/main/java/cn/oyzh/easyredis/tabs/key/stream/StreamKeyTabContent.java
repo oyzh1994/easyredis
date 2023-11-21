@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key.stream;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.StreamRowAddController;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  */
 @Lazy
 @Component
-public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamKeyTreeItem, RedisStreamRow> {
+public class StreamKeyTabContent extends RowKeyTabContent<RedisStreamKeyTreeItem, RedisStreamRow> {
 
     /**
      * 消息id

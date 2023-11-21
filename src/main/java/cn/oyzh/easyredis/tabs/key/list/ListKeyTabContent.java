@@ -1,11 +1,10 @@
-package cn.oyzh.easyredis.tabs.key.set;
+package cn.oyzh.easyredis.tabs.key.list;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.SetRowAddController;
-import cn.oyzh.easyredis.redis.row.RedisSetRow;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
-import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.easyredis.controller.row.ListRowAddController;
+import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.tabs.key.RowKeyTabContent;
+import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -25,17 +24,17 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * set键tab内容组件
+ * list键tab内容组件
  *
  * @author oyzh
  * @since 2023/06/21
  */
 @Lazy
 @Component
-public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTreeItem, RedisSetRow> {
+public class ListKeyTabContent extends RowKeyTabContent<RedisListKeyTreeItem, RedisListRow> {
 
     /**
-     * redis数据保存按钮
+     * 数据保存按钮
      */
     @FXML
     private SVGGlyph saveNodeData;
@@ -44,16 +43,22 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      * 编号列
      */
     @FXML
-    private TableColumn<RedisSetRow, Integer> index;
+    private TableColumn<RedisListRow, Integer> index;
+
+    // /**
+    //  * 行号列
+    //  */
+    // @FXML
+    // private TableColumn<RedisListRow, Integer> lineIndex;
 
     /**
-     * 值列
+     * 行值列
      */
     @FXML
-    private TableColumn<RedisSetRow, String> value;
+    private TableColumn<RedisListRow, String> value;
 
     /**
-     * redis数据监听器
+     * 数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
@@ -65,7 +70,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     };
 
     @Override
-    public boolean init(RedisSetKeyTreeItem treeItem) {
+    public boolean init(RedisListKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
             this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
@@ -83,11 +88,32 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+        // this.lineIndex.setCellValueFactory(new PropertyValueFactory<>("lineIndex"));
+    }
+
+    /**
+     * 刷新行
+     */
+    @FXML
+    private void reloadRow() {
+        // 放弃保存
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
+            return;
+        }
+        try {
+            // 刷新数据
+            if (this.treeItem.reloadRow()) {
+                this.initRow(this.treeItem.currentRow());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
     }
 
     @Override
-    protected List<RedisSetRow> getRows() {
-        List<RedisSetRow> rows = this.treeItem.nodeValue();
+    protected List<RedisListRow> getRows() {
+        List<RedisListRow> rows = this.treeItem.nodeValue();
         String filterKW = this.filter.getText();
         if (StrUtil.isNotEmpty(filterKW)) {
             rows = rows.parallelStream()
@@ -97,45 +123,12 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
         return rows;
     }
 
-    /**
-     * 删除行
-     */
-    @FXML
-    @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此成员？")) {
-            try {
-                if (this.treeItem.deleteRow()) {
-                    this.firstPage();
-                } else {
-                    MessageBox.warn("删除此成员失败！");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
-    }
-
-    /**
-     * 添加行
-     */
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(SetRowAddController.class, this.treeItem.window());
+        StageWrapper fxView = StageUtil.parseStage(ListRowAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
-    }
-
-    @FXML
-    @Override
-    protected void saveNodeData() {
-        if (this.treeItem.checkExists()) {
-            MessageBox.warn("此成员已存在！");
-        } else if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
-        }
     }
 
     @FXML

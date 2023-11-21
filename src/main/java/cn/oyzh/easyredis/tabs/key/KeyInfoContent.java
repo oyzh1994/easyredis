@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisKeyInfoContent implements Initializable {
+public class KeyInfoContent implements Initializable {
 
     /**
      * 根节点
