@@ -133,11 +133,11 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
         } else if (item instanceof RedisSetKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisSetKeyTab(treeItem);
         } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
-            if (treeItem.isGEOView()) {
-                tab = (RedisKeyTab<T>) new RedisGEOKeyTab(treeItem);
-            } else {
+            // if (treeItem.isGEOView()) {
+            //     tab = (RedisKeyTab<T>) new RedisGEOKeyTab(treeItem);
+            // } else {
                 tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
-            }
+            // }
         } else if (item instanceof RedisHashKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisHashKeyTab(treeItem);
         } else if (item instanceof RedisHyperLogLogKeyTreeItem treeItem) {

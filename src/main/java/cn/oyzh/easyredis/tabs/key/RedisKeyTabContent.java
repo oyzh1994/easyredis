@@ -141,8 +141,10 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
         // 初始化键信息
         this.keyInfoController.init(treeItem);
 
-        // 格式变化
-        this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
+        if (this.format != null) {
+            // 格式变化
+            this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
+        }
 
         return true;
     }

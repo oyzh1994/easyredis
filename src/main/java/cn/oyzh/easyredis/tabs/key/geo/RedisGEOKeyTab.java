@@ -11,6 +11,7 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/11/21
  */
+@Deprecated
 public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
     public RedisGEOKeyTab(@NonNull RedisZSetKeyTreeItem treeItem) {

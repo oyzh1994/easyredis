@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/21
  */
+@Deprecated
 @Lazy
 @Component
 public class RedisGEOKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {

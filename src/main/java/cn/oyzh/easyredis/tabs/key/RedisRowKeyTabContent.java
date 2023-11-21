@@ -8,10 +8,12 @@ import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
@@ -48,7 +50,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extend
      * 数据列表
      */
     @FXML
-    protected TableView<R> listTable;
+    protected FlexTableView<R> listTable;
 
     /**
      * 行操作列
@@ -124,7 +126,13 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extend
     /**
      * 删除行
      */
+    @FXML
     protected void deleteRow() {
+        if (MessageBox.confirm("确定删除此数据？")) {
+            if (this.treeItem.deleteRow()) {
+                this.firstPage();
+            }
+        }
     }
 
     /**

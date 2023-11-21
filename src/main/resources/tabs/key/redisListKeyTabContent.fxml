@@ -170,5 +170,5 @@
                                flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
+    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
 </FlexTabPane>

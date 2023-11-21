@@ -95,5 +95,5 @@
                                flexWidth="100% - 2"/>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
+    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
 </FlexTabPane>

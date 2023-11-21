@@ -17,6 +17,9 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.easyredis.fx.LatitudeField?>
+<?import cn.oyzh.easyredis.fx.LongitudeField?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
@@ -74,7 +77,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FlexCheckBox onAction="#showGEO" tipText="以地理坐标(GEO)方式显示" text="显示为地理坐标">
+                <FlexCheckBox fx:id="reverseView"  onAction="#reverseView" tipText="以地理坐标(GEO)方式显示" text="显示为地理坐标">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -99,7 +102,9 @@
                 <columns>
                     <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
                     <FlexTableColumn flexWidth="50%" fx:id="value" text="成员名称"/>
-                    <FlexTableColumn flexWidth="30%" fx:id="score" text="分数"/>
+                    <FlexTableColumn flexWidth="30%" fx:id="score" visible="false" text="分数"/>
+                    <FlexTableColumn flexWidth="25%" fx:id="longitude" visible="false" text="经度"/>
+                    <FlexTableColumn flexWidth="25%" fx:id="latitude" visible="false" text="纬度"/>
                     <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
                 </columns>
             </FlexTableView>
@@ -136,7 +141,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="复制行数据" size="16"
+                <SVGGlyph tipText="复制行" size="16"
                           onMousePrimaryClicked="#copyRow" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -163,12 +168,44 @@
                     <Insets top="5"/>
                 </HBox.margin>
             </RedisDataTextArea>
-            <DecimalTextField flexWidth="100% - 50" fx:id="scoreVal" tipText="分数(score)" value="0" disable="true">
+            <FlexHBox flexWidth="100%" realHeight="30" fx:id="scoreBox"  >
+                <FXLabel realWidth="25" text="分数">
+                    <HBox.margin>
+                        <Insets left="5" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <DecimalTextField flexWidth="100% - 32" fx:id="scoreVal" tipText="分数(score)" value="0" disable="true">
+                    <HBox.margin>
+                        <Insets top="5"/>
+                    </HBox.margin>
+                </DecimalTextField>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="30" fx:id="geoBox" visible="false" managed="false">
+                <FXLabel realWidth="25" text="经度">
+                    <HBox.margin>
+                        <Insets left="5" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <LongitudeField flexWidth="50% - 32" fx:id="longitudeVal" tipText="经度(longitude)" value="0" step="5">
+                    <HBox.margin>
+                        <Insets top="5"/>
+                    </HBox.margin>
+                </LongitudeField>
+                <FXLabel realWidth="25" text="纬度">
+                    <HBox.margin>
+                        <Insets left="5" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <LatitudeField flexWidth="50% - 32" fx:id="latitudeVal" tipText="纬度(latitude)" value="0" step="5">
+                    <HBox.margin>
+                        <Insets top="5"/>
+                    </HBox.margin>
+                </LatitudeField>
                 <HBox.margin>
                     <Insets top="5"/>
                 </HBox.margin>
-            </DecimalTextField>
+            </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
+    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
 </FlexTabPane>
