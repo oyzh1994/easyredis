@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.easyredis.trees.RedisTreeView?>
-<?import cn.oyzh.easyredis.tabs.RedisTabPane?>
+<?import cn.oyzh.easyredis.tabs.TabPane?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <FlexPane styleClass="panel,panel-primary,mainPane" xmlns:fx="http://javafx.com/fxml/1"
@@ -89,5 +89,5 @@
         <fx:include fx:id="search" source="search.fxml" prefHeight="36" flexWidth="100% - 8"/>
         <RedisTreeView fx:id="tree" flexHeight="100% - 108" flexWidth="100% - 8"/>
     </FlexVBox>
-    <RedisTabPane fx:id="tabPane" layoutX="440" flexWidth="100% - 440" tabClosingPolicy="ALL_TABS" flexHeight="100%"/>
+    <TabPane fx:id="tabPane" layoutX="440" flexWidth="100% - 440" tabClosingPolicy="ALL_TABS" flexHeight="100%"/>
 </FlexPane>

@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>
 <FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisAggregationController" text="汇总图表">
+       fx:controller="cn.oyzh.easyredis.tabs.server.AggregationTabContent" text="汇总图表">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">

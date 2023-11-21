@@ -18,7 +18,7 @@ import redis.clients.jedis.JedisPubSub;
 @Lazy
 @Component
 @Scope("prototype")
-public class RedisPubsubTabContentController {
+public class PubsubTabContent {
 
     /**
      * 订阅组件
