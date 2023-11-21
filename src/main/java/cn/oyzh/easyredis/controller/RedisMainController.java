@@ -7,7 +7,6 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
@@ -370,7 +369,7 @@ public class RedisMainController extends ParentController {
         this.tree.childChanged(() -> this.searchController.flushSearchResult());
 
         // 监听F5按键
-         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
     }
 
     /**
@@ -434,18 +433,15 @@ public class RedisMainController extends ParentController {
      *
      * @return redis树节点
      */
-    public RedisKeyTreeItem<?> activeItem() {
-        if (this.tabPane.getSelectedItem() instanceof RedisKeyTab<?> nodeTab) {
-            return nodeTab.treeItem();
-        }
-        return null;
+    public TreeItem<?> activeItem() {
+        return tree.getSelectedItem();
     }
 
     /**
      * 执行过滤
      */
     private void filter() {
-        TaskManager.startDelayTask("redis:tree:filter",() -> {
+        TaskManager.startDelayTask("redis:tree:filter", () -> {
             this.tree.disable();
             if (this.onlyCollect.isSelected()) {
                 this.treeItemFilter.setOnlyCollect(true);

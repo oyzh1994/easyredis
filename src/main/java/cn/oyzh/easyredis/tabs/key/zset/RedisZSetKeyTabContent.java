@@ -1,9 +1,10 @@
-package cn.oyzh.easyredis.tabs.key;
+package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
  */
 @Lazy
 @Component
-public class RedisZSetKeyTabContentController extends RedisRowKeyTabContentController<RedisZSetKeyTreeItem, RedisZSetRow> {
+public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
 
     /**
      * redis数据保存按钮

@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -26,6 +25,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -345,7 +345,7 @@ public class SearchController extends SubController {
                     // 找到匹配项
                     if (b) {
                         this.replaceTips.setText("");
-                        RedisKeyTreeItem<?> item = this.parent().activeItem();
+                        TreeItem<?> item = this.parent().activeItem();
                         if (item instanceof RedisStringKeyTreeItem nodeTreeItem) {
                             if (nodeTreeItem.isDataTooLong()) {
                                 MessageBox.warn("数据太大，无法替换！");

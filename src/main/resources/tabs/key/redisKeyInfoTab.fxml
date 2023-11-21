@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoController" text="键信息" fx:id="infoRoot">
+       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoContent" text="键信息" fx:id="infoRoot">
     <graphic>
         <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
     </graphic>

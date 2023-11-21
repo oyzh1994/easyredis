@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  */
 @Lazy
 @Component
-public class RedisHomeTabContentController implements Initializable {
+public class RedisHomeTabContent implements Initializable {
 
     /**
      * 软件信息

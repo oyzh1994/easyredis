@@ -7,13 +7,13 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
-import cn.oyzh.easyredis.tabs.key.RedisGEOKeyTabContentController;
-import cn.oyzh.easyredis.tabs.key.RedisHashKeyTabContentController;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisListKeyTabContentController;
-import cn.oyzh.easyredis.tabs.key.RedisSetKeyTabContentController;
-import cn.oyzh.easyredis.tabs.key.RedisStreamKeyTabContentController;
-import cn.oyzh.easyredis.tabs.key.RedisZSetKeyTabContentController;
+import cn.oyzh.easyredis.tabs.key.geo.RedisGEOKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTabContent;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
@@ -50,7 +50,7 @@ public class RedisTabPane extends DynamicTabPane {
         this.setCacheHint(CacheHint.QUALITY);
         this.initHomeTab();
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
-            TaskManager.startDelayTask("redis:tab:init",() -> {
+            TaskManager.startDelayTask("redis:tab:init", () -> {
                 if (this.tabsEmpty()) {
                     this.initHomeTab();
                 } else if (this.tabsSize() > 1) {
@@ -259,7 +259,7 @@ public class RedisTabPane extends DynamicTabPane {
                 nodeTab = null;
             }
             if (nodeTab == null) {
-                nodeTab = new RedisKeyTab<>(item);
+                nodeTab = RedisKeyTab.ofItem(item);
                 super.addTab(nodeTab);
             } else {
                 nodeTab.flushGraphic();
@@ -306,7 +306,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onListRowAdded(RedisListKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisListKeyTabContentController controller = (RedisListKeyTabContentController) tab.contentController();
+            RedisListKeyTabContent controller = (RedisListKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -321,7 +321,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onSetMemberAdded(RedisSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisSetKeyTabContentController controller = (RedisSetKeyTabContentController) tab.contentController();
+            RedisSetKeyTabContent controller = (RedisSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -336,7 +336,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onZSetMemberAdded(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisZSetKeyTabContentController controller = (RedisZSetKeyTabContentController) tab.contentController();
+            RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -351,7 +351,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onGEOCoordinateAdded(RedisZSetKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisGEOKeyTabContentController controller = (RedisGEOKeyTabContentController) tab.contentController();
+            RedisGEOKeyTabContent controller = (RedisGEOKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -366,7 +366,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onStreamMessageAdded(RedisStreamKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisStreamKeyTabContentController controller = (RedisStreamKeyTabContentController) tab.contentController();
+            RedisStreamKeyTabContent controller = (RedisStreamKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -381,7 +381,7 @@ public class RedisTabPane extends DynamicTabPane {
     private void onHashFieldAdded(RedisHashKeyTreeItem treeItem) {
         RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            RedisHashKeyTabContentController controller = (RedisHashKeyTabContentController) tab.contentController();
+            RedisHashKeyTabContent controller = (RedisHashKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }

@@ -1,8 +1,9 @@
-package cn.oyzh.easyredis.tabs.key;
+package cn.oyzh.easyredis.tabs.key.set;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
  */
 @Lazy
 @Component
-public class RedisSetKeyTabContentController extends RedisRowKeyTabContentController<RedisSetKeyTreeItem, RedisSetRow> {
+public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTreeItem, RedisSetRow> {
 
     /**
      * redis数据保存按钮

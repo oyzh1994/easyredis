@@ -26,7 +26,7 @@ import javafx.scene.input.KeyEvent;
  * @author oyzh
  * @since 2023/06/21
  */
-public class RedisBaseKeyTabContentController<T extends RedisKeyTreeItem<?>> {
+public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
 
     /**
      * 根节点
@@ -91,7 +91,7 @@ public class RedisBaseKeyTabContentController<T extends RedisKeyTreeItem<?>> {
      * 键信息
      */
     @FXML
-    private RedisKeyInfoController keyInfoController;
+    private RedisKeyInfoContent keyInfoController;
 
     /**
      * 获取数据监听器

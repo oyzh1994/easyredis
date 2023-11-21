@@ -1,9 +1,11 @@
-package cn.oyzh.easyredis.tabs.key;
+package cn.oyzh.easyredis.tabs.key.hash;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
-import cn.oyzh.easyredis.redis.row.RedisListRow;
-import cn.oyzh.easyredis.trees.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
+import cn.oyzh.easyredis.redis.RedisHashRow;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
+import cn.oyzh.easyredis.trees.RedisHashKeyTreeItem;
+import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -23,56 +25,68 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * list键tab内容组件
+ * hash键tab内容组件
  *
  * @author oyzh
  * @since 2023/06/21
  */
 @Lazy
 @Component
-public class RedisListKeyTabContentController extends RedisRowKeyTabContentController<RedisListKeyTreeItem, RedisListRow> {
+public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTreeItem, RedisHashRow> {
 
     /**
-     * 数据保存按钮
+     * redis数据保存按钮
      */
     @FXML
     private SVGGlyph saveNodeData;
 
     /**
-     * 编号列
-     */
-    @FXML
-    private TableColumn<RedisListRow, Integer> index;
-
-    /**
      * 行号列
      */
     @FXML
-    private TableColumn<RedisListRow, Integer> lineIndex;
+    private TableColumn<RedisHashRow, Integer> index;
 
     /**
      * 行值列
      */
     @FXML
-    private TableColumn<RedisListRow, String> value;
+    private TableColumn<RedisHashRow, String> field;
 
     /**
-     * 数据监听器
+     * 行值列
+     */
+    @FXML
+    private TableColumn<RedisHashRow, String> value;
+
+    /**
+     * 数据操作面板
+     */
+    @FXML
+    private FlexFlowPane dataAction;
+
+    /**
+     * redis数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-            this.treeItem.clearUnsavedNodeData();
+            this.treeItem.unsavedNodeData(null);
         } else {
             this.treeItem.unsavedNodeData(newValue);
         }
     };
 
     @Override
-    public boolean init(RedisListKeyTreeItem treeItem) {
+    public boolean init(RedisHashKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.unsavedNodeDataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.unsavedNodeDataProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    this.saveNodeData.disable();
+                } else {
+                    this.saveNodeData.enable();
+                }
+            });
             return true;
         }
         return false;
@@ -87,7 +101,45 @@ public class RedisListKeyTabContentController extends RedisRowKeyTabContentContr
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        this.lineIndex.setCellValueFactory(new PropertyValueFactory<>("lineIndex"));
+        this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
+    }
+
+    @Override
+    protected List<RedisHashRow> getRows() {
+        List<RedisHashRow> rows = this.treeItem.nodeValue();
+        String filterKW = this.filter.getText();
+        if (StrUtil.isNotEmpty(filterKW)) {
+            rows = rows.parallelStream()
+                    .filter(r -> StrUtil.containsIgnoreCase(r.getField(), filterKW) ||
+                            StrUtil.containsIgnoreCase(String.valueOf(r.getValue()), filterKW))
+                    .collect(Collectors.toList());
+        }
+        return rows;
+    }
+
+    @FXML
+    @Override
+    protected void deleteRow() {
+        if (MessageBox.confirm("确定删除此字段？")) {
+            try {
+                if (this.treeItem.deleteRow()) {
+                    this.firstPage();
+                } else {
+                    MessageBox.warn("删除此字段失败！");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        }
+    }
+
+    @FXML
+    @Override
+    protected void addRow() {
+        StageWrapper fxView = StageUtil.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
+        fxView.setProp("treeItem", this.treeItem);
+        fxView.display();
     }
 
     /**
@@ -96,7 +148,7 @@ public class RedisListKeyTabContentController extends RedisRowKeyTabContentContr
     @FXML
     private void reloadRow() {
         // 放弃保存
-        if (this.treeItem.hasUnsavedNodeData() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.unsavedNodeData() != null && !MessageBox.confirm("放弃未保存的数据？")) {
             return;
         }
         try {
@@ -110,46 +162,13 @@ public class RedisListKeyTabContentController extends RedisRowKeyTabContentContr
         }
     }
 
-    @Override
-    protected List<RedisListRow> getRows() {
-        List<RedisListRow> rows = this.treeItem.nodeValue();
-        String filterKW = this.filter.getText();
-        if (StrUtil.isNotEmpty(filterKW)) {
-            rows = rows.parallelStream()
-                    .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW))
-                    .collect(Collectors.toList());
-        }
-        return rows;
-    }
-
-    @FXML
-    @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此行？")) {
-            try {
-                this.treeItem.deleteRow();
-                this.firstPage();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
-    }
-
-    @FXML
-    @Override
-    protected void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(RedisListRowAddController.class, this.treeItem.window());
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
-    }
-
     @FXML
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
         builder.append("键名称：").append(this.treeItem.key())
-                .append("成员：").append(this.treeItem.currentRow().getValue());
+                .append("字段：").append(this.treeItem.currentRow().getField())
+                .append("数据：").append(this.treeItem.currentRow().getValue());
         if (FXUtil.clipboardCopy(builder.toString())) {
             MessageBox.okToast("已复制行信息到粘贴板");
         } else {

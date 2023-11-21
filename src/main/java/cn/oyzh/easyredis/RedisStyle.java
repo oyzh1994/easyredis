@@ -15,13 +15,11 @@ public class RedisStyle {
     /**
      * 通用样式文件
      */
-    // public final static String COMMON = FXStyle.EASY_FX;
-    public final static String COMMON = FXStyle.CONTROL_FX + ";" + FXStyle.BOOTSTRAP_FX ;
+    public final static String COMMON = FXStyle.JMETRO + ";" + FXStyle.JMETRO_LIGHT_THEME + ";" + FXStyle.BOOTSTRAP_FX;
 
     /**
      * 主页样式文件
      */
-    // public final static String MAIN = COMMON + ";/css/main.css";
-    public final static String MAIN = FXStyle.JMETRO + ";" + FXStyle.JMETRO_LIGHT_THEME + ";" + COMMON + ";/css/main.css";
+    public final static String MAIN = COMMON + ";/css/main.css";
 
 }
