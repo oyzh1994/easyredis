@@ -1,11 +1,8 @@
 package cn.oyzh.easyredis.tabs.key.set;
 
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTabContent;
-import cn.oyzh.easyredis.trees.RedisSetKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import lombok.NonNull;
 
 /**

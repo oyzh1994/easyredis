@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.trees.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import lombok.NonNull;
 
 import java.util.List;

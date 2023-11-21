@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.redis.RedisRow;
 import cn.oyzh.easyredis.redis.RedisRowKey;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
 import lombok.NonNull;

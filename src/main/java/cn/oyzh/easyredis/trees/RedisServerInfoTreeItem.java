@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.MenuItem;

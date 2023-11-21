@@ -1,21 +1,23 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.hash;
 
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.redis.RedisHashRow;
+import cn.oyzh.easyredis.redis.key.RedisHashKey;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author oyzh
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, RedisListRow> {
+public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashRow> {
 
-    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisConnectTreeItem root) {
+    public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
     }
 
@@ -38,17 +40,18 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
 
     @Override
     protected void setNodeValue(Object value) {
-        this.client().lset(this.dbIndex(), this.key(), this.currentRow.getIndex() - 1, (String) value);
+        this.client().hset(this.dbIndex(), this.key(), this.currentRow.getField(), (String) value);
     }
 
     @Override
     public boolean deleteRow() {
         try {
-            long count = this.client().lrem(this.dbIndex(), this.key(), this.currentRow.getValue());
+            long count = this.client().hdel(this.dbIndex(), this.key(), this.currentRow.getField());
             if (count > 0) {
                 this.nodeValue().remove(this.currentRow);
                 return true;
             }
+            return false;
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -57,19 +60,10 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
     }
 
     @Override
-    public boolean reloadRow() {
-        String value = this.client().lindex(this.dbIndex(), this.key(), this.currentRow.getIndex() - 1);
-        if (value != null) {
-            this.currentRow.setValue(value);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void refreshNodeValue() {
-        List<String> value = this.client().lrange(this.dbIndex(), this.key());
+        Map<String, String> value = this.client().hgetAll(this.dbIndex(), this.key());
         this.value.value(value);
+        // 清空未保存的数据
         this.unsavedNodeData(null);
     }
 
@@ -82,14 +76,12 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
     }
 
     @Override
-    public List<RedisListRow> nodeValue() {
-        try {
-            List<String> value = this.client().lrange(this.dbIndex(), this.key());
-            this.value.value(value);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
+    public boolean reloadRow() {
+        String value = this.client().hget(this.dbIndex(), this.key(), this.currentRow.getField());
+        if (value != null) {
+            this.currentRow.setValue(value);
+            return true;
         }
-        return this.value.value();
+        return false;
     }
 }

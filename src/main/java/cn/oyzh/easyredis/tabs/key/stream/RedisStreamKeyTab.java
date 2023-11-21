@@ -1,11 +1,8 @@
 package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTabContent;
-import cn.oyzh.easyredis.trees.RedisStreamKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import lombok.NonNull;
 
 /**

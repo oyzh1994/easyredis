@@ -8,6 +8,8 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -248,7 +250,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      * @return 连接节点
      */
     public RedisConnectTreeItem connectTreeItem() {
-        return this.parent().parent;
+        return this.parent().parent();
     }
 
     @Override

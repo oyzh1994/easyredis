@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.controller.row.RedisGEOCoordinateAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
-import cn.oyzh.easyredis.trees.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.event.EventUtil;

@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
-import cn.oyzh.easyredis.trees.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
