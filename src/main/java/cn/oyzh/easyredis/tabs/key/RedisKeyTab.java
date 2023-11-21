@@ -2,12 +2,12 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.tabs.key.hash.HashKeyTab;
-import cn.oyzh.easyredis.tabs.key.hylog.HyLogKeyTab;
-import cn.oyzh.easyredis.tabs.key.list.ListKeyTab;
-import cn.oyzh.easyredis.tabs.key.set.SetKeyTab;
-import cn.oyzh.easyredis.tabs.key.string.StringKeyTab;
-import cn.oyzh.easyredis.tabs.key.zset.ZSetKeyTab;
+import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
+import cn.oyzh.easyredis.tabs.key.hylog.RedisHyperLogLogKeyTab;
+import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;
+import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTab;
+import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
+import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTab;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -29,7 +29,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class KeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
+public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
 
     /**
      * redis树节点
@@ -43,7 +43,7 @@ public abstract class KeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
      *
      * @param treeItem redis树键
      */
-    public KeyTab(@NonNull T treeItem) {
+    public RedisKeyTab(@NonNull T treeItem) {
         this.setClosable(true);
         this.treeItem = treeItem;
         // 加载内容
@@ -78,8 +78,8 @@ public abstract class KeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
     }
 
     @Override
-    public KeyTabContent<T> controller() {
-        return (KeyTabContent<T>) super.controller();
+    public RedisKeyTabContent<T> controller() {
+        return (RedisKeyTabContent<T>) super.controller();
     }
 
     /**
@@ -123,26 +123,26 @@ public abstract class KeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
         return this.treeItem.value();
     }
 
-    public static <T extends RedisKeyTreeItem<?>> KeyTab<T> ofItem(T item) {
-        KeyTab<T> tab = null;
+    public static <T extends RedisKeyTreeItem<?>> RedisKeyTab<T> ofItem(T item) {
+        RedisKeyTab<T> tab = null;
         if (item instanceof RedisStringKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new StringKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisStringKeyTab(treeItem);
         } else if (item instanceof RedisListKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new ListKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisListKeyTab(treeItem);
         } else if (item instanceof RedisSetKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new SetKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisSetKeyTab(treeItem);
         } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
             // if (treeItem.isGEOView()) {
             //     tab = (RedisKeyTab<T>) new RedisGEOKeyTab(treeItem);
             // } else {
-                tab = (KeyTab<T>) new ZSetKeyTab(treeItem);
+                tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
             // }
         } else if (item instanceof RedisHashKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new HashKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisHashKeyTab(treeItem);
         } else if (item instanceof RedisHyperLogLogKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new HyLogKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisHyperLogLogKeyTab(treeItem);
         } else if (item instanceof RedisStringKeyTreeItem treeItem) {
-            tab = (KeyTab<T>) new StringKeyTab(treeItem);
+            tab = (RedisKeyTab<T>) new RedisStringKeyTab(treeItem);
         }
         return tab;
     }

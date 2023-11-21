@@ -11,7 +11,7 @@
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.hylog.HyLogKeyTabContent" side="RIGHT">
+             fx:controller="cn.oyzh.easyredis.tabs.key.hylog.RedisHyperLogLogKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>

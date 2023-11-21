@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
-import cn.oyzh.easyredis.tabs.key.KeyTab;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import lombok.NonNull;
 
@@ -11,9 +11,9 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/11/21
  */
-public class StringKeyTab extends KeyTab<RedisStringKeyTreeItem> {
+public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
-    public StringKeyTab(@NonNull RedisStringKeyTreeItem treeItem) {
+    public RedisStringKeyTab(@NonNull RedisStringKeyTreeItem treeItem) {
         super(treeItem);
     }
 
@@ -23,8 +23,8 @@ public class StringKeyTab extends KeyTab<RedisStringKeyTreeItem> {
     }
 
     @Override
-    public StringKeyTabContent controller() {
-        return (StringKeyTabContent) super.controller();
+    public RedisStringKeyTabContent controller() {
+        return (RedisStringKeyTabContent) super.controller();
     }
 
     @Override

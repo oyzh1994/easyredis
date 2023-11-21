@@ -13,7 +13,9 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 
 import java.util.Collections;
@@ -25,7 +27,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extends RedisRow> extends KeyTabContent<T> {
+public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extends RedisRow> extends RedisKeyTabContent<T> {
 
     /**
      * 分页数据

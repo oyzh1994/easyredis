@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.GEORowAddController;
 import cn.oyzh.easyredis.controller.row.ZSetRowAddController;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
-import cn.oyzh.easyredis.tabs.key.RowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  */
 @Lazy
 @Component
-public class ZSetKeyTabContent extends RowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
+public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
 
     /**
      * redis数据保存按钮

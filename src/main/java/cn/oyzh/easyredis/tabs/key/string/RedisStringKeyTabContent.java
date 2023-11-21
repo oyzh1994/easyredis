@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
-import cn.oyzh.easyredis.tabs.key.KeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 @Lazy
 @Component
-public class StringKeyTabContent extends KeyTabContent<RedisStringKeyTreeItem> {
+public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyTreeItem> {
 
     /**
      * 数据大小

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key.hash;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.HashRowAddController;
 import cn.oyzh.easyredis.redis.RedisHashRow;
-import cn.oyzh.easyredis.tabs.key.RowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Lazy
 @Component
-public class HashKeyTabContent extends RowKeyTabContent<RedisHashKeyTreeItem, RedisHashRow> {
+public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTreeItem, RedisHashRow> {
 
     /**
      * redis数据保存按钮

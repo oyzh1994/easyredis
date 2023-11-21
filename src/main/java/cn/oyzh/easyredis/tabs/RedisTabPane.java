@@ -7,12 +7,12 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
-import cn.oyzh.easyredis.tabs.key.KeyTab;
-import cn.oyzh.easyredis.tabs.key.hash.HashKeyTabContent;
-import cn.oyzh.easyredis.tabs.key.list.ListKeyTabContent;
-import cn.oyzh.easyredis.tabs.key.set.SetKeyTabContent;
-import cn.oyzh.easyredis.tabs.key.stream.StreamKeyTabContent;
-import cn.oyzh.easyredis.tabs.key.zset.ZSetKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
+import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTabContent;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
@@ -236,9 +236,9 @@ public class RedisTabPane extends DynamicTabPane {
      *
      * @return 键tab
      */
-    public KeyTab<?> getKeyTab() {
+    public RedisKeyTab<?> getKeyTab() {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof KeyTab<?> nodeTab) {
+            if (tab instanceof RedisKeyTab<?> nodeTab) {
                 return nodeTab;
             }
         }
@@ -252,13 +252,13 @@ public class RedisTabPane extends DynamicTabPane {
      */
     public void initKeyTab(RedisKeyTreeItem<?> item) {
         if (item != null) {
-            KeyTab<?> nodeTab = this.getKeyTab();
+            RedisKeyTab<?> nodeTab = this.getKeyTab();
             if (nodeTab != null && nodeTab.treeItem() != item) {
                 nodeTab.closeTab();
                 nodeTab = null;
             }
             if (nodeTab == null) {
-                nodeTab = KeyTab.ofItem(item);
+                nodeTab = RedisKeyTab.ofItem(item);
                 super.addTab(nodeTab);
             } else {
                 nodeTab.flushGraphic();
@@ -289,7 +289,7 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_CHANGE_ZSET_SHOW_TYPE, verbose = true, async = true)
     private void changeZETShowType(RedisZSetKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
             tab.closeTab();
             this.initKeyTab(treeItem);
@@ -303,9 +303,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
     private void onListRowAdded(RedisListKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            ListKeyTabContent controller = (ListKeyTabContent) tab.controller();
+            RedisListKeyTabContent controller = (RedisListKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -318,9 +318,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
     private void onSetMemberAdded(RedisSetKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            SetKeyTabContent controller = (SetKeyTabContent) tab.controller();
+            RedisSetKeyTabContent controller = (RedisSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -333,9 +333,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
     private void onZSetMemberAdded(RedisZSetKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            ZSetKeyTabContent controller = (ZSetKeyTabContent) tab.controller();
+            RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -348,9 +348,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, verbose = true, async = true)
     private void onGEOCoordinateAdded(RedisZSetKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            ZSetKeyTabContent controller = (ZSetKeyTabContent) tab.controller();
+            RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -363,9 +363,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
     private void onStreamMessageAdded(RedisStreamKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            StreamKeyTabContent controller = (StreamKeyTabContent) tab.controller();
+            RedisStreamKeyTabContent controller = (RedisStreamKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -378,9 +378,9 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
     private void onHashFieldAdded(RedisHashKeyTreeItem treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
-            HashKeyTabContent controller = (HashKeyTabContent) tab.controller();
+            RedisHashKeyTabContent controller = (RedisHashKeyTabContent) tab.controller();
             treeItem.refreshNodeValue();
             controller.firstPage();
         }
@@ -393,7 +393,7 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
     private void onHyperLogLogElementAdded(RedisKeyTreeItem<?> treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
             tab.reload();
         }
@@ -406,7 +406,7 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
     private void onKeyRenamed(RedisKeyTreeItem<?> treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
             tab.flushGraphic();
         }
@@ -419,7 +419,7 @@ public class RedisTabPane extends DynamicTabPane {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_TTL_UPDATED, verbose = true, async = true, fxThread = true)
     private void onTTLUpdated(RedisKeyTreeItem<?> treeItem) {
-        KeyTab<?> tab = this.getKeyTab();
+        RedisKeyTab<?> tab = this.getKeyTab();
         if (tab != null && tab.treeItem() == treeItem) {
             tab.flushTTL();
         }
@@ -440,7 +440,7 @@ public class RedisTabPane extends DynamicTabPane {
             } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
                 pubsubTab.unsubscribe();
                 closeTabs.add(tab);
-            } else if (tab instanceof KeyTab<?> keyTab && keyTab.client() == client) {
+            } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
                 closeTabs.add(tab);
             }
         }

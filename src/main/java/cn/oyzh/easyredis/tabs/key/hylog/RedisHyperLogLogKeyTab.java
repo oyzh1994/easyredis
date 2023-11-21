@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.hylog;
 
 import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
-import cn.oyzh.easyredis.tabs.key.KeyTab;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import lombok.NonNull;
 
@@ -11,9 +11,9 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/11/21
  */
-public class HyLogKeyTab extends KeyTab<RedisHyperLogLogKeyTreeItem> {
+public class RedisHyperLogLogKeyTab extends RedisKeyTab<RedisHyperLogLogKeyTreeItem> {
 
-    public HyLogKeyTab(@NonNull RedisHyperLogLogKeyTreeItem treeItem) {
+    public RedisHyperLogLogKeyTab(@NonNull RedisHyperLogLogKeyTreeItem treeItem) {
         super(treeItem);
     }
 
@@ -23,8 +23,8 @@ public class HyLogKeyTab extends KeyTab<RedisHyperLogLogKeyTreeItem> {
     }
 
     @Override
-    public HyLogKeyTabContent controller() {
-        return (HyLogKeyTabContent) super.controller();
+    public RedisHyperLogLogKeyTabContent controller() {
+        return (RedisHyperLogLogKeyTabContent) super.controller();
     }
 
     @Override

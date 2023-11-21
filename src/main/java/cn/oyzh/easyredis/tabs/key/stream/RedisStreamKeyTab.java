@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.tabs.key.KeyTab;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import lombok.NonNull;
 
@@ -11,9 +11,9 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/11/21
  */
-public class StreamKeyTab extends KeyTab<RedisStreamKeyTreeItem> {
+public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
 
-    public StreamKeyTab(@NonNull RedisStreamKeyTreeItem treeItem) {
+    public RedisStreamKeyTab(@NonNull RedisStreamKeyTreeItem treeItem) {
         super(treeItem);
     }
 
@@ -23,8 +23,8 @@ public class StreamKeyTab extends KeyTab<RedisStreamKeyTreeItem> {
     }
 
     @Override
-    public StreamKeyTabContent controller() {
-        return (StreamKeyTabContent) super.controller();
+    public RedisStreamKeyTabContent controller() {
+        return (RedisStreamKeyTabContent) super.controller();
     }
 
     @Override

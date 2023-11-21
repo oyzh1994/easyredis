@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.hylog;
 
 import cn.oyzh.easyredis.controller.row.HyLogRowAddController;
-import cn.oyzh.easyredis.tabs.key.KeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Lazy
 @Component
-public class HyLogKeyTabContent extends KeyTabContent<RedisHyperLogLogKeyTreeItem> {
+public class RedisHyperLogLogKeyTabContent extends RedisKeyTabContent<RedisHyperLogLogKeyTreeItem> {
 
     /**
      * 数据大小
