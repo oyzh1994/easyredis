@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.controller;
 
-import cn.oyzh.easyredis.controller.filter.FilterMainController;
-import cn.oyzh.easyredis.controller.info.InfoTransportController;
+import cn.oyzh.easyredis.controller.filter.RedisFilterMainController;
+import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
@@ -57,11 +57,11 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void filter() {
-        StageWrapper StageWrapper = StageUtil.getStage(FilterMainController.class);
+        StageWrapper StageWrapper = StageUtil.getStage(RedisFilterMainController.class);
         if (StageWrapper != null) {
             StageWrapper.toFront();
         } else {
-            StageUtil.showStage(FilterMainController.class);
+            StageUtil.showStage(RedisFilterMainController.class);
         }
     }
 
@@ -70,11 +70,11 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void transport() {
-        StageWrapper StageWrapper = StageUtil.getStage(InfoTransportController.class);
+        StageWrapper StageWrapper = StageUtil.getStage(RedisInfoTransportController.class);
         if (StageWrapper != null) {
             StageWrapper.toFront();
         } else {
-            StageUtil.showStage(InfoTransportController.class);
+            StageUtil.showStage(RedisInfoTransportController.class);
         }
     }
 

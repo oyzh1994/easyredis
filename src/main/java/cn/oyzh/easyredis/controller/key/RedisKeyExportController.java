@@ -63,7 +63,7 @@ import java.util.Set;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
 )
-public class KeyExportController extends Controller {
+public class RedisKeyExportController extends Controller {
 
     /**
      * 服务器

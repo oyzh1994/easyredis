@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.StreamRowAddController;
+import cn.oyzh.easyredis.controller.row.RedisStreamRowAddController;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -105,7 +105,7 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(StreamRowAddController.class);
+        StageWrapper fxView = StageUtil.parseStage(RedisStreamRowAddController.class);
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

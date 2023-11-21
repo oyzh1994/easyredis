@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisHyLogRowAdd.fxml"
 )
-public class HyLogRowAddController extends Controller {
+public class RedisHyLogRowAddController extends Controller {
 
     /**
      * 行数据

@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyMove.fxml"
 )
-public class KeyMoveController extends Controller {
+public class RedisKeyMoveController extends Controller {
 
     /**
      * 键

@@ -40,7 +40,7 @@ import java.util.List;
         resizeable = false,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyFilter.fxml"
 )
-public class KeyFilterController extends Controller {
+public class RedisKeyFilterController extends Controller {
 
     /**
      * 过滤模式

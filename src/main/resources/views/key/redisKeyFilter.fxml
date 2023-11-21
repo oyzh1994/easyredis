@@ -9,7 +9,7 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.KeyFilterController" realWidth="400" realHeight="110">
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyFilterController" realWidth="400" realHeight="110">
     <FlexHBox flexWidth="100%" realHeight="50">
         <SVGGlyph url="/font/history.svg" tipText="查看过滤历史" size="20" fx:id="filterHistory"
                   onMousePrimaryClicked="#filterHistory">

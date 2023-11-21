@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
 )
-public class KeyAddController extends Controller {
+public class RedisKeyAddController extends Controller {
 
     /**
      * 键

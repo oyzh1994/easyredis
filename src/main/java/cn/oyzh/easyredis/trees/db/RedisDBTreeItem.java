@@ -2,11 +2,11 @@ package cn.oyzh.easyredis.trees.db;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.info.InfoTransportController;
-import cn.oyzh.easyredis.controller.key.KeyAddController;
-import cn.oyzh.easyredis.controller.key.BatchOperationController;
-import cn.oyzh.easyredis.controller.key.KeyExportController;
-import cn.oyzh.easyredis.controller.key.KeyFilterController;
+import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
+import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
+import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
+import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisScanResult;
@@ -272,7 +272,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
      */
     @FXML
     private void batchOperation() {
-        StageWrapper fxView = StageUtil.parseStage(BatchOperationController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyBatchOperationController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.disappear();
     }
@@ -282,11 +282,11 @@ public class RedisDBTreeItem extends BaseTreeItem {
      */
     @FXML
     private void transportData() {
-        StageWrapper fxView = StageUtil.getStage(InfoTransportController.class);
+        StageWrapper fxView = StageUtil.getStage(RedisInfoTransportController.class);
         if (fxView != null) {
             fxView.disappear();
         }
-        fxView = StageUtil.parseStage(InfoTransportController.class);
+        fxView = StageUtil.parseStage(RedisInfoTransportController.class);
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -295,7 +295,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
      * 键过滤
      */
     private void keyFilter() {
-        StageWrapper fxView = StageUtil.parseStage(KeyFilterController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyFilterController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.setProp("pattern", this.keyFilterPattern);
         fxView.display();
@@ -317,7 +317,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
      * 导出键
      */
     public void exportNode() {
-        StageWrapper fxView = StageUtil.parseStage(KeyExportController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyExportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -501,7 +501,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
      * 添加键
      */
     public void addNode() {
-        StageWrapper fxView = StageUtil.parseStage(KeyAddController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyAddController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }

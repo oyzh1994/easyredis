@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.trees.group;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.info.InfoAddController;
+import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -153,7 +153,7 @@ public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectMana
      * 添加连接
      */
     private void addConnect() {
-        StageWrapper fxView = StageUtil.parseStage(InfoAddController.class, this.parent().window());
+        StageWrapper fxView = StageUtil.parseStage(RedisInfoAddController.class, this.parent().window());
         fxView.setProp("group", this.value);
         fxView.display();
     }

@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller.info;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisInfoStore;
@@ -22,35 +21,41 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 添加redis信息业务
+ * redis信息修改业务
  *
  * @author oyzh
- * @since 2023/06/16
+ * @since 2022/06/16
  */
 @Slf4j
 @StageAttribute(
-        title = "Redis连接新增",
+        title = "Redis连接修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = RedisConst.ICON_PATH,
         cssUrls = RedisStyle.COMMON,
-        value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "info/redisInfoUpdate.fxml"
 )
-public class InfoAddController extends Controller {
-    //
-    // /**
-    //  * 字符集
-    //  */
-    // @FXML
-    // private FlexComboBox<String> charset;
+public class RedisInfoUpdateController extends Controller {
 
     /**
      * tab组件
      */
     @FXML
     private FlexTabPane tabPane;
+
+    /**
+     * redis信息
+     */
+    private RedisInfo redisInfo;
+
+    // /**
+    //  * 字符集
+    //  */
+    // @FXML
+    // private CharsetComboBox charset;
 
     /**
      * 名称
@@ -71,22 +76,10 @@ public class InfoAddController extends Controller {
     private ClearableTextField password;
 
     /**
-     * 备注
-     */
-    @FXML
-    private FlexTextArea remark;
-
-    /**
      * 连接ip
      */
     @FXML
     private ClearableTextField hostIp;
-
-    /**
-     * 连接端口
-     */
-    @FXML
-    private PortTextField hostPort;
 
     /**
      * 显示哨兵配置
@@ -119,6 +112,18 @@ public class InfoAddController extends Controller {
     private FlexCheckBox redirectMaster;
 
     /**
+     * 连接端口
+     */
+    @FXML
+    private PortTextField hostPort;
+
+    /**
+     * 备注
+     */
+    @FXML
+    private FlexTextArea remark;
+
+    /**
      * 连接超时
      */
     @FXML
@@ -129,11 +134,6 @@ public class InfoAddController extends Controller {
      */
     @FXML
     private NumberTextField executeTimeOut;
-
-    /**
-     * 分组
-     */
-    private RedisGroup group;
 
     /**
      * redis连接储存对象
@@ -174,10 +174,10 @@ public class InfoAddController extends Controller {
     }
 
     /**
-     * 添加redis信息
+     * 修改redis信息
      */
     @FXML
-    private void add() {
+    private void update() {
         String host = this.getHost();
         if (host == null) {
             return;
@@ -186,57 +186,66 @@ public class InfoAddController extends Controller {
         if (StrUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
         }
-        try {
-            String name = this.name.getTextTrim();
-            RedisInfo redisInfo = new RedisInfo();
-            redisInfo.setName(name);
-            // 检查名称是否存在
-            if (this.infoStore.exist(redisInfo)) {
-                MessageBox.warn("此名称已存在！");
-                return;
-            }
+        String name = this.name.getTextTrim();
+        this.redisInfo.setName(name);
+        // 检查名称
+        if (this.infoStore.exist(this.redisInfo)) {
+            this.tabPane.select(0);
+            MessageBox.warn("此名称已存在！");
+            return;
+        }
+        // String charset = this.charset.getValue();
+        Number connectTimeOut = this.connectTimeOut.getValue();
+        Number executeTimeOut = this.executeTimeOut.getValue();
 
-            // String charset = this.charset.getValue();
-            Number connectTimeOut = this.connectTimeOut.getValue();
-            Number executeTimeOut = this.executeTimeOut.getValue();
-
-            redisInfo.setHost(host);
-            redisInfo.setUser(this.user.getText());
-            redisInfo.setRemark(this.remark.getTextTrim());
-            redisInfo.setPassword(this.password.getText());
-            redisInfo.setGroupId(this.group == null ? null : this.group.getGid());
-            // redisInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
-            redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
-            redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
-            if (this.showSentinel.isSelected()) {
-                redisInfo.setMasterUser(this.masterUser.getText());
-                redisInfo.setMasterPassword(this.masterPassword.getText());
-                redisInfo.setRedirectMaster(this.redirectMaster.isSelected());
-            } else {
-                redisInfo.setMasterUser(null);
-                redisInfo.setMasterPassword(null);
-                redisInfo.setRedirectMaster(false);
-            }
-            // 保存数据
-            boolean result = this.infoStore.add(redisInfo);
-            if (result) {
-                EventUtil.fire(RedisEventTypes.REDIS_INFO_ADD, redisInfo);
-                MessageBox.okToast("新增redis信息成功!");
-                this.closeStage();
-            } else {
-                MessageBox.warn("新增redis信息失败！");
-            }
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
+        this.redisInfo.setHost(host.trim());
+        this.redisInfo.setUser(this.user.getText());
+        this.redisInfo.setRemark(this.remark.getTextTrim());
+        this.redisInfo.setPassword(this.password.getText());
+        // this.redisInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
+        this.redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
+        this.redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
+        if (this.showSentinel.isSelected()) {
+            this.redisInfo.setMasterUser(this.masterUser.getText());
+            this.redisInfo.setMasterPassword(this.masterPassword.getText());
+            this.redisInfo.setRedirectMaster(this.redirectMaster.isSelected());
+        } else {
+            this.redisInfo.setMasterUser(null);
+            this.redisInfo.setMasterPassword(null);
+            this.redisInfo.setRedirectMaster(false);
+        }
+        // 保存数据
+        if (this.infoStore.update(this.redisInfo)) {
+            EventUtil.fire(RedisEventTypes.REDIS_INFO_UPDATED, this.redisInfo);
+            MessageBox.okToast("修改Redis信息成功!");
+            this.closeStage();
+        } else {
+            MessageBox.warn("修改失败！");
         }
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onStageShown(@NonNull WindowEvent event) {
         super.onStageShown(event);
-        this.stage.switchOnTab();
-        this.group = this.getStageProp("group");
+        this.redisInfo = this.getStageProp("redisInfo");
+        this.name.setText(this.redisInfo.getName());
+        this.user.setText(this.redisInfo.getUser());
+        this.remark.setText(this.redisInfo.getRemark());
+        this.hostIp.setText(this.redisInfo.hostIp());
+        // this.charset.select(this.redisInfo.getCharset());
+        this.hostPort.setValue(this.redisInfo.hostPort());
+        this.password.setText(this.redisInfo.getPassword());
+        this.masterUser.setText(this.redisInfo.getMasterUser());
+        this.masterPassword.setText(this.redisInfo.getMasterPassword());
+        this.connectTimeOut.setValue(this.redisInfo.getConnectTimeOut());
+        this.executeTimeOut.setValue(this.redisInfo.getExecuteTimeOut());
+        this.redirectMaster.setSelected(this.redisInfo.isRedirectMaster());
         this.sentinelBox.managedBindVisible();
+        if (this.redisInfo.isRedirectMaster()) {
+            this.sentinelBox.display();
+            this.showSentinel.setSelected(true);
+        }
+        this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }
 

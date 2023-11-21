@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.GEORowAddController;
-import cn.oyzh.easyredis.controller.row.ZSetRowAddController;
+import cn.oyzh.easyredis.controller.row.RedisGEORowAddController;
+import cn.oyzh.easyredis.controller.row.RedisZSetRowAddController;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
@@ -235,9 +235,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void addRow() {
         StageWrapper fxView;
         if (this.isGEOView()) {
-            fxView = StageUtil.parseStage(GEORowAddController.class);
+            fxView = StageUtil.parseStage(RedisGEORowAddController.class);
         } else {
-            fxView = StageUtil.parseStage(ZSetRowAddController.class);
+            fxView = StageUtil.parseStage(RedisZSetRowAddController.class);
         }
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();

@@ -16,7 +16,7 @@
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <FlexTabPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.controller.key.BatchOperationController" realWidth="750"
+             fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600">
     <FXTab text="批量删除键">
         <FlexVBox flexWidth="100%" flexHeight="100%">

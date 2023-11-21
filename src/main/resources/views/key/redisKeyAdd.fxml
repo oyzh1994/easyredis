@@ -18,7 +18,7 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.KeyAddController" realWidth="750" realHeight="680"
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="680"
           fx:id="root">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="键类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">

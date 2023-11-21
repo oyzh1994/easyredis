@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.hylog;
 
-import cn.oyzh.easyredis.controller.row.HyLogRowAddController;
+import cn.oyzh.easyredis.controller.row.RedisHyLogRowAddController;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
@@ -85,7 +85,7 @@ public class RedisHyperLogLogKeyTabContent extends RedisKeyTabContent<RedisHyper
      */
     @FXML
     private void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(HyLogRowAddController.class, this.treeItem.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisHyLogRowAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

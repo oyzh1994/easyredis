@@ -12,7 +12,7 @@
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.KeyImportController" realWidth="850" realHeight="650">
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
     <FlexHBox realHeight="50" flexWidth="100%">
         <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>

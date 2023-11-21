@@ -20,7 +20,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.KeyExportController" realWidth="850" realHeight="800">
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>

@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.key.KeyCopyController;
-import cn.oyzh.easyredis.controller.key.KeyMoveController;
+import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
+import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -175,7 +175,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      * 移动键
      */
     private void moveKey() {
-        StageWrapper fxView = StageUtil.parseStage(KeyMoveController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyMoveController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -184,7 +184,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      * 复制键
      */
     private void copyKey() {
-        StageWrapper fxView = StageUtil.parseStage(KeyCopyController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyCopyController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }

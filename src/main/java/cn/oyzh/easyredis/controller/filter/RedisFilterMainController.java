@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "filter/redisFilterMain.fxml"
 )
-public class FilterMainController extends Controller {
+public class RedisFilterMainController extends Controller {
 
     /**
      * 分页组件
@@ -211,7 +211,7 @@ public class FilterMainController extends Controller {
      */
     @FXML
     private void toAdd() {
-        StageUtil.showStage(FilterAddController.class, this.stage);
+        StageUtil.showStage(RedisFilterAddController.class, this.stage);
     }
 
     /**

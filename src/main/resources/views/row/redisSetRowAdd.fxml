@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.SetRowAddController" realWidth="750" realHeight="550">
+          fx:controller="cn.oyzh.easyredis.controller.row.RedisSetRowAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入成员数据"
                       flexWidth="100% - 80">
