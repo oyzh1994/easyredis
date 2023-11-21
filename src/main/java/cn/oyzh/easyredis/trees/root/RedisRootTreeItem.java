@@ -5,7 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
+import cn.oyzh.easyredis.controller.info.InfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
@@ -206,7 +206,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
      */
     @EventReceiver(RedisEventTypes.REDIS_ADD_CONNECT)
     private void addConnect() {
-        StageUtil.showStage(RedisInfoAddController.class, this.window());
+        StageUtil.showStage(InfoAddController.class, this.window());
     }
 
     /**

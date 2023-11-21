@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
+import cn.oyzh.easyredis.controller.key.KeyTTLController;
 import cn.oyzh.easyredis.fx.RedisDataTextArea;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -281,7 +281,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
      */
     @FXML
     protected void ttlUpdate() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyTTLController.class, this.treeItem.window());
+        StageWrapper fxView = StageUtil.parseStage(KeyTTLController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

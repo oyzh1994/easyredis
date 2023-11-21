@@ -16,7 +16,7 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
+          fx:controller="cn.oyzh.easyredis.controller.info.InfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="基础设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">

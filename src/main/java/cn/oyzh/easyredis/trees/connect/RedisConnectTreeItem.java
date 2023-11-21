@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
-import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
-import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
-import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
+import cn.oyzh.easyredis.controller.info.InfoTransportController;
+import cn.oyzh.easyredis.controller.info.InfoUpdateController;
+import cn.oyzh.easyredis.controller.key.KeyExportController;
+import cn.oyzh.easyredis.controller.key.KeyImportController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -178,11 +178,11 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      */
     @FXML
     private void transportData() {
-        StageWrapper fxView = StageUtil.getStage(RedisInfoTransportController.class);
+        StageWrapper fxView = StageUtil.getStage(InfoTransportController.class);
         if (fxView != null) {
             fxView.disappear();
         }
-        fxView = StageUtil.parseStage(RedisInfoTransportController.class);
+        fxView = StageUtil.parseStage(InfoTransportController.class);
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -191,7 +191,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      * 导入键
      */
     public void importNode() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyImportController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(KeyImportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -200,7 +200,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      * 导出键
      */
     public void exportNode() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyExportController.class, this.window());
+        StageWrapper fxView = StageUtil.parseStage(KeyExportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -279,7 +279,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
         if (this.isConnected()) {
             this._disConnect();
         }
-        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.treeView().window());
+        StageWrapper fxView = StageUtil.parseStage(InfoUpdateController.class, this.treeView().window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
     }

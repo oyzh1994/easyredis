@@ -13,7 +13,7 @@
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisListRowAddController" realWidth="750" realHeight="550">
+          fx:controller="cn.oyzh.easyredis.controller.row.ListRowAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
         <FXLabel text="数据" realHeight="30" realWidth="50" styleClass="lbl,lbl-primary">
             <HBox.margin>

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamRowAddController" realWidth="750"
+          fx:controller="cn.oyzh.easyredis.controller.row.StreamRowAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="消息ID" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">

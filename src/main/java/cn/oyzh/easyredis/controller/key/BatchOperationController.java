@@ -41,7 +41,7 @@ import java.util.Set;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )
-public class RedisKeyBatchOperationController extends Controller {
+public class BatchOperationController extends Controller {
 
     /**
      * ttl值

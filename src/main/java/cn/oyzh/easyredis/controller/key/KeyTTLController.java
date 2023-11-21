@@ -34,7 +34,7 @@ import java.sql.Date;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
 )
-public class RedisKeyTTLController extends Controller {
+public class KeyTTLController extends Controller {
 
     /**
      * 当前窗口显示时间

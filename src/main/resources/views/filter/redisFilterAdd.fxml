@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.filter.RedisFilterAddController" realWidth="750" realHeight="240">
+          fx:controller="cn.oyzh.easyredis.controller.filter.FilterAddController" realWidth="750" realHeight="240">
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="关 键 字" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>

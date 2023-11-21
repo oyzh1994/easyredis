@@ -57,7 +57,7 @@ import java.util.Set;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoTransport.fxml"
 )
-public class RedisInfoTransportController extends Controller {
+public class InfoTransportController extends Controller {
 
     /**
      * 存在时跳过

@@ -38,7 +38,7 @@ import java.util.Map;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisStreamRowAdd.fxml"
 )
-public class RedisStreamRowAddController extends Controller {
+public class StreamRowAddController extends Controller {
 
     /**
      * 消息内容

@@ -12,7 +12,7 @@
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetRowAddController" realWidth="750"
+          fx:controller="cn.oyzh.easyredis.controller.row.ZSetRowAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
         <FXLabel text="成员" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">

@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisSetRowAdd.fxml"
 )
-public class RedisSetRowAddController extends Controller {
+public class SetRowAddController extends Controller {
 
     /**
      * 行数据

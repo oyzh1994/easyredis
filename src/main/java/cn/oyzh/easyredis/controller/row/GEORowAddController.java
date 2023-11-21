@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisGEORowAdd.fxml"
 )
-public class RedisGEORowAddController extends Controller {
+public class GEORowAddController extends Controller {
 
     /**
      * 坐标名称

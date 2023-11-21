@@ -9,7 +9,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.filter.RedisFilterMainController" realWidth="750"
+          fx:controller="cn.oyzh.easyredis.controller.filter.FilterMainController" realWidth="750"
           realHeight="450">
     <FlexHBox realHeight="50" flexWidth="100%">
         <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="搜索关键字" >
