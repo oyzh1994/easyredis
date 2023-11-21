@@ -6,13 +6,15 @@ import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
 import cn.oyzh.easyredis.tabs.key.hylog.RedisHyLogKeyTab;
 import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;
 import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTab;
+import cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTab;
 import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
 import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTab;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -132,17 +134,13 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
         } else if (item instanceof RedisSetKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisSetKeyTab(treeItem);
         } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
-            // if (treeItem.isGEOView()) {
-            //     tab = (RedisKeyTab<T>) new RedisGEOKeyTab(treeItem);
-            // } else {
-                tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
-            // }
+            tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
         } else if (item instanceof RedisHashKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisHashKeyTab(treeItem);
         } else if (item instanceof RedisHyperLogLogKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisHyLogKeyTab(treeItem);
-        } else if (item instanceof RedisStringKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisStringKeyTab(treeItem);
+        } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
+            tab = (RedisKeyTab<T>) new RedisStreamKeyTab(treeItem);
         }
         return tab;
     }

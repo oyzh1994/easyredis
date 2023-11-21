@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
@@ -74,7 +75,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25" >
+                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
@@ -99,6 +100,12 @@
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
+                <SVGGlyph tipText="复制消息" size="16"
+                          onMousePrimaryClicked="#copyRow" url="/font/copy-path.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
                 <SVGGlyph tipText="删除消息" size="16"
                           onMousePrimaryClicked="#deleteRow" url="/font/delete.svg">
                     <FlowPane.margin>
@@ -114,16 +121,20 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="12" fx:id="nodeData" flexHeight="100% - 442"
-                               flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed">
-            </RedisDataTextArea>
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 432" text="消息内容" collapsible="false">
+                <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="12" fx:id="nodeData"
+                                   flexHeight="100%"
+                                   flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                </RedisDataTextArea>
+            </FlexTitledPane>
             <FlexHBox flexWidth="100%" realHeight="30">
-                <FXLabel realWidth="50" text="消息id：">
+                <FXLabel realWidth="40" realHeight="25" text="ID" styleClass="lbl,lbl-primary">
                     <HBox.margin>
-                        <Insets left="5" top="15"/>
+                        <Insets top="5"/>
                     </HBox.margin>
                 </FXLabel>
-                <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 56" fx:id="streamID" tipText="消息id">
+                <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 42" fx:id="streamID"
+                                   tipText="消息id">
                     <HBox.margin>
                         <Insets top="5"/>
                     </HBox.margin>

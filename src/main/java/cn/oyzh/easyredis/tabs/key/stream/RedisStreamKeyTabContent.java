@@ -87,23 +87,6 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
 
     @FXML
     @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此消息？")) {
-            try {
-                if (this.treeItem.deleteRow()) {
-                    this.firstPage();
-                } else {
-                    MessageBox.warn("删除消息失败！");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
-    }
-
-    @FXML
-    @Override
     protected void addRow() {
         StageWrapper fxView = StageUtil.parseStage(RedisStreamMessageAddController.class);
         fxView.setProp("treeItem", this.treeItem);
@@ -126,13 +109,13 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key())
-                .append("ID：").append(this.treeItem.currentRow().getId())
-                .append("数据：").append(this.treeItem.currentRow().getValue());
+        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
+                .append("消息ID：").append(this.treeItem.currentRow().getId()).append(System.lineSeparator())
+                .append("消息内容：").append(this.treeItem.currentRow().getValue());
         if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制行信息到粘贴板");
+            MessageBox.okToast("已复制消息到粘贴板");
         } else {
-            MessageBox.warn("复制行信息到粘贴板失败");
+            MessageBox.warn("复制消息到粘贴板失败");
         }
     }
 }
