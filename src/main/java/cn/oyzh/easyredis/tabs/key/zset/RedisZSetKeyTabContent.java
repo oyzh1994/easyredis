@@ -182,7 +182,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         if (this.isGEOView()) {
             this.value.setText("坐标名称");
-            this.value.setFlexWidth("30%");
+            this.value.setFlexWidth("26%");
             this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
             this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
@@ -195,7 +195,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.scoreBox.disappear();
         } else {
             this.value.setText("成员名称");
-            this.value.setFlexWidth("50%");
+            this.value.setFlexWidth("46%");
             this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
             this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.score.setVisible(true);

@@ -135,7 +135,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key())
+        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
                 .append("成员：").append(this.treeItem.currentRow().getValue());
         if (FXUtil.clipboardCopy(builder.toString())) {
             MessageBox.okToast("已复制行信息到粘贴板");

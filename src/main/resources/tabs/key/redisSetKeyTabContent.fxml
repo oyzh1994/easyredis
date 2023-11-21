@@ -89,9 +89,9 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
-                    <FlexTableColumn flexWidth="80%" fx:id="value" text="成员"/>
-                    <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
+                    <FlexTableColumn flexWidth="12%" fx:id="index" text="编号"/>
+                    <FlexTableColumn flexWidth="76%" fx:id="value" text="成员"/>
+                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="操作" sortable="false"/>
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
@@ -144,16 +144,6 @@
                         <Insets left="5" top="-4"/>
                     </FlowPane.margin>
                 </RedisFormatComboBox>
-<!--                <FXLabel text="字符集:" fontSize="11">-->
-<!--                    <FlowPane.margin>-->
-<!--                        <Insets left="5"/>-->
-<!--                    </FlowPane.margin>-->
-<!--                </FXLabel>-->
-                <!-- <CharsetComboBox fx:id="charset" initIndex="0" fontSize="11" prefWidth="85" style="-fx-padding: 0;"> -->
-                <!--     <FlowPane.margin> -->
-                <!--         <Insets left="2"/> -->
-                <!--     </FlowPane.margin> -->
-                <!-- </CharsetComboBox> -->
                 <padding>
                     <Insets top="9"/>
                 </padding>

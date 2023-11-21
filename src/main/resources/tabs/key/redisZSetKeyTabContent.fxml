@@ -101,12 +101,12 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
-                    <FlexTableColumn flexWidth="50%" fx:id="value" text="成员名称"/>
+                    <FlexTableColumn flexWidth="12%" fx:id="index" text="编号"/>
+                    <FlexTableColumn flexWidth="46%" fx:id="value" text="成员名称"/>
                     <FlexTableColumn flexWidth="30%" fx:id="score" visible="false" text="分数"/>
                     <FlexTableColumn flexWidth="25%" fx:id="longitude" visible="false" text="经度"/>
                     <FlexTableColumn flexWidth="25%" fx:id="latitude" visible="false" text="纬度"/>
-                    <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="操作" sortable="false"/>
+                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="操作" sortable="false"/>
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">

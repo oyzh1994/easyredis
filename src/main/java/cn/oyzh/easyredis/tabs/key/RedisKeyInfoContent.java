@@ -76,10 +76,10 @@ public class RedisKeyInfoContent implements Initializable {
     @FXML
     private void copy() {
         StringBuilder builder = new StringBuilder();
-        builder.append("键名称: ").append(this.treeItem.key()).append("\n")
-                .append("数据库: ").append(this.treeItem.dbIndex()).append("\n")
-                .append("编码类型: ").append(this.redisKey.objectedEncoding()).append("\n")
-                .append("空闲时间: ").append(this.redisKey.objectIdletime()).append("\n")
+        builder.append("键名称: ").append(this.treeItem.key()).append(System.lineSeparator())
+                .append("数据库: ").append(this.treeItem.dbIndex()).append(System.lineSeparator())
+                .append("编码类型: ").append(this.redisKey.objectedEncoding()).append(System.lineSeparator())
+                .append("空闲时间: ").append(this.redisKey.objectIdletime()).append(System.lineSeparator())
                 .append("引用数量: ").append(this.redisKey.objectRefcount());
         if (FXUtil.clipboardCopy(builder.toString())) {
             MessageBox.okToast("已复制键信息到剪贴板");

@@ -98,26 +98,6 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     }
 
     /**
-     * 删除行
-     */
-    @FXML
-    @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此成员？")) {
-            try {
-                if (this.treeItem.deleteRow()) {
-                    this.firstPage();
-                } else {
-                    MessageBox.warn("删除此成员失败！");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
-    }
-
-    /**
      * 添加行
      */
     @FXML
@@ -142,7 +122,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key())
+        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
                 .append("成员：").append(this.treeItem.currentRow().getValue());
         if (FXUtil.clipboardCopy(builder.toString())) {
             MessageBox.okToast("已复制行信息到粘贴板");

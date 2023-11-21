@@ -113,23 +113,6 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
 
     @FXML
     @Override
-    protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此字段？")) {
-            try {
-                if (this.treeItem.deleteRow()) {
-                    this.firstPage();
-                } else {
-                    MessageBox.warn("删除此字段失败！");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        }
-    }
-
-    @FXML
-    @Override
     protected void addRow() {
         StageWrapper fxView = StageUtil.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
@@ -160,8 +143,8 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key())
-                .append("字段：").append(this.treeItem.currentRow().getField())
+        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
+                .append("字段：").append(this.treeItem.currentRow().getField()).append(System.lineSeparator())
                 .append("数据：").append(this.treeItem.currentRow().getValue());
         if (FXUtil.clipboardCopy(builder.toString())) {
             MessageBox.okToast("已复制行信息到粘贴板");

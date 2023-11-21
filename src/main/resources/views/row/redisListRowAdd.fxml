@@ -57,12 +57,12 @@
         </fx:define>
         <FXRadioButton text="插入头部(lpush)" toggleGroup="$insertMode" userData="0" selected="true">
             <HBox.margin>
-                <Insets left="10" top="15"/>
+                <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
         <FXRadioButton text="插入尾部(rpush)" toggleGroup="$insertMode" userData="1">
             <HBox.margin>
-                <Insets left="10" top="15"/>
+                <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
     </FlexHBox>
