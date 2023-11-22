@@ -6,10 +6,9 @@ import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -108,14 +107,9 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @FXML
     @Override
     protected void copyRow() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
-                .append("消息ID：").append(this.treeItem.currentRow().getId()).append(System.lineSeparator())
-                .append("消息内容：").append(this.treeItem.currentRow().getValue());
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制消息到粘贴板");
-        } else {
-            MessageBox.warn("复制消息到粘贴板失败");
-        }
+        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
+                "消息ID：" + this.treeItem.currentRow().getId() + System.lineSeparator() +
+                "消息内容：" + this.treeItem.currentRow().getValue();
+        ClipboardUtil.setStringAndTip(builder, "消息");
     }
 }

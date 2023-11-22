@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -134,13 +134,8 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @FXML
     @Override
     protected void copyRow() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
-                .append("成员：").append(this.treeItem.currentRow().getValue());
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制行信息到粘贴板");
-        } else {
-            MessageBox.warn("复制行信息到粘贴板失败");
-        }
+        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
+                "成员：" + this.treeItem.currentRow().getValue();
+        ClipboardUtil.setStringAndTip(builder, "行信息");
     }
 }

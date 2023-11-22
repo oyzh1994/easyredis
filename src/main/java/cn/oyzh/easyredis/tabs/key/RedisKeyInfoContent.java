@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -75,17 +75,12 @@ public class RedisKeyInfoContent implements Initializable {
      */
     @FXML
     private void copy() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("键名称: ").append(this.treeItem.key()).append(System.lineSeparator())
-                .append("数据库: ").append(this.treeItem.dbIndex()).append(System.lineSeparator())
-                .append("编码类型: ").append(this.redisKey.objectedEncoding()).append(System.lineSeparator())
-                .append("空闲时间: ").append(this.redisKey.objectIdletime()).append(System.lineSeparator())
-                .append("引用数量: ").append(this.redisKey.objectRefcount());
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制键信息到剪贴板");
-        } else {
-            MessageBox.warn("复制键信息到剪贴板失败！");
-        }
+        String builder = "键名称: " + this.treeItem.key() + System.lineSeparator() +
+                "数据库: " + this.treeItem.dbIndex() + System.lineSeparator() +
+                "编码类型: " + this.redisKey.objectedEncoding() + System.lineSeparator() +
+                "空闲时间: " + this.redisKey.objectIdletime() + System.lineSeparator() +
+                "引用数量: " + this.redisKey.objectRefcount();
+        ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
     /**

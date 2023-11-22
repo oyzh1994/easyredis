@@ -15,7 +15,7 @@ import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -301,11 +301,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
                     .append("成员：").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
                     .append("分数：").append(this.treeItem.currentRow().getScore());
         }
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制行信息到粘贴板");
-        } else {
-            MessageBox.warn("复制行信息到粘贴板失败");
-        }
+        ClipboardUtil.setStringAndTip(builder.toString(), "成员信息");
     }
 
     private boolean isGEOView() {

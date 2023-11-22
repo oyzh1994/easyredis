@@ -13,6 +13,7 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -156,19 +157,14 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> {
     }
 
     /**
-     * 复制键数据
+     * 复制键信息
      */
     @FXML
-    protected void copyNodeInfo() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("数据库索引：").append(this.treeItem.dbIndex()).append(" ")
-                .append("键类型：").append(this.treeItem.value().type()).append(" ")
-                .append("键名称：").append(this.treeItem.key());
-        if (FXUtil.clipboardCopy(builder.toString())) {
-            MessageBox.okToast("已复制键信息到粘贴板");
-        } else {
-            MessageBox.warn("复制键信息到粘贴板失败");
-        }
+    protected void copyKeyInfo() {
+        String builder = "数据库：" + this.treeItem.dbIndex() + System.lineSeparator() +
+                "键类型：" + this.treeItem.value().type() + System.lineSeparator() +
+                "键名称：" + this.treeItem.key();
+        ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
     /**

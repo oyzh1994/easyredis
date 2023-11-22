@@ -61,7 +61,7 @@
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="复制键信息" size="16"
-                          onMousePrimaryClicked="#copyNodeInfo" url="/font/copy-path.svg">
+                          onMousePrimaryClicked="#copyKeyInfo" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -142,13 +142,13 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="复制行" size="16"
+                <SVGGlyph tipText="复制成员" size="16"
                           onMousePrimaryClicked="#copyRow" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="删除行" size="16"
+                <SVGGlyph tipText="删除成员" size="16"
                           onMousePrimaryClicked="#deleteRow" url="/font/delete.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>

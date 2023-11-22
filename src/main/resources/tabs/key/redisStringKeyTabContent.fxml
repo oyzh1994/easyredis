@@ -83,7 +83,7 @@
                     </FlowPane.margin>
                 </SVGGlyph>
                 <SVGGlyph tipText="复制键信息" size="16"
-                          onMousePrimaryClicked="#copyNodeInfo" url="/font/copy-path.svg">
+                          onMousePrimaryClicked="#copyKeyInfo" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
