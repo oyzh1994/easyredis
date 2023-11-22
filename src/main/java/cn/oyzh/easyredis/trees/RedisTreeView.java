@@ -51,10 +51,10 @@ public class RedisTreeView extends RichTreeView {
     @Setter
     private RedisTreeItemFilter itemFilter;
 
-    /**
-     * 导入中标志位
-     */
-    private volatile boolean importing;
+    // /**
+    //  * 导入中标志位
+    //  */
+    // private volatile boolean importing;
 
     /**
      * 搜索中标志位
@@ -90,10 +90,10 @@ public class RedisTreeView extends RichTreeView {
     @Getter
     private Consumer<RedisConnectTreeItem> connectConnected;
 
-    /**
-     * 配置储存对象
-     */
-    private final RedisSetting setting = RedisSettingStore.SETTING;
+    // /**
+    //  * 配置储存对象
+    //  */
+    // private final RedisSetting setting = RedisSettingStore.SETTING;
 
     /**
      * 触发子节点变化事件
@@ -171,23 +171,23 @@ public class RedisTreeView extends RichTreeView {
         }
     }
 
-    /**
-     * 获取窗口
-     *
-     * @return 窗口
-     */
-    public Window window() {
-        return this.getScene().getWindow();
-    }
+    // /**
+    //  * 获取窗口
+    //  *
+    //  * @return 窗口
+    //  */
+    // public Window window() {
+    //     return this.getScene().getWindow();
+    // }
 
-    @Override
-    public void selectAndScroll(TreeItem<?> item) {
-        if (item != null) {
-            super.selectAndScroll(item);
-        } else {
-            this.clearSelection();
-        }
-    }
+    // @Override
+    // public void selectAndScroll(TreeItem<?> item) {
+    //     if (item != null) {
+    //         super.selectAndScroll(item);
+    //     } else {
+    //         this.clearSelection();
+    //     }
+    // }
 
     /**
      * 初始化事件处理器
@@ -212,7 +212,7 @@ public class RedisTreeView extends RichTreeView {
         // 右键菜单事件
         this.setOnContextMenuRequested(e -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof RedisTreeItem treeItem) {
                 this.showContextMenu(treeItem.getMenuItems(), e.getScreenX() - 10, e.getScreenY() - 10);
             } else {
                 this.clearContextMenu();
@@ -221,14 +221,14 @@ public class RedisTreeView extends RichTreeView {
         // f2按键处理
         KeyListener.listenReleased(this, KeyCode.F2, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof RedisTreeItem treeItem) {
                 treeItem.rename();
             }
         });
         // 删除按键处理
          KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof RedisTreeItem treeItem) {
                 treeItem.delete();
             }
         });
@@ -254,7 +254,7 @@ public class RedisTreeView extends RichTreeView {
             // 获取选中键
             TreeItem<?> item = this.getSelectedItem();
             // 执行排序
-            if (item instanceof BaseTreeItem treeItem) {
+            if (item instanceof RedisTreeItem treeItem) {
                 treeItem.sort(sortOrder);
             }
             // 重新选中此键
@@ -348,24 +348,24 @@ public class RedisTreeView extends RichTreeView {
         this.searching = false;
     }
 
-    /**
-     * 导入开始事件
-     */
-    @EventReceiver(RedisEventTypes.REDIS_IMPORT_START)
-    private void onImportStart() {
-        this.importing = true;
-        log.info("REDIS_IMPORT_START.");
-    }
-
-    /**
-     * 导入结束事件
-     */
-    @EventReceiver(value = RedisEventTypes.REDIS_IMPORT_FINISH, async = true, verbose = true)
-    private void onImportFinish(RedisConnectTreeItem connectTreeItem) {
-        this.importing = false;
-        for (RedisDBTreeItem child : connectTreeItem.getChildren()) {
-            child.reloadChild();
-        }
-        log.info("REDIS_IMPORT_FINISH.");
-    }
+    // /**
+    //  * 导入开始事件
+    //  */
+    // @EventReceiver(RedisEventTypes.REDIS_IMPORT_START)
+    // private void onImportStart() {
+    //     this.importing = true;
+    //     log.info("REDIS_IMPORT_START.");
+    // }
+    //
+    // /**
+    //  * 导入结束事件
+    //  */
+    // @EventReceiver(value = RedisEventTypes.REDIS_IMPORT_FINISH, async = true, verbose = true)
+    // private void onImportFinish(RedisConnectTreeItem connectTreeItem) {
+    //     this.importing = false;
+    //     for (RedisDBTreeItem child : connectTreeItem.getChildren()) {
+    //         child.reloadChild();
+    //     }
+    //     log.info("REDIS_IMPORT_FINISH.");
+    // }
 }

@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/8/10
  */
-public class RedisServerInfoTreeItem extends BaseTreeItem {
+public class RedisServerInfoTreeItem extends RedisTreeItem {
 
     /**
      * 父节点

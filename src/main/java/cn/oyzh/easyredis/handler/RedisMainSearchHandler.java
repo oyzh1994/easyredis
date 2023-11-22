@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
@@ -458,7 +458,7 @@ public class RedisMainSearchHandler {
         }
         boolean m1 = false, m2 = false;
         // 路径
-        if (this.searchParam.isSearchKey() && item instanceof BaseTreeItem treeItem) {
+        if (this.searchParam.isSearchKey() && item instanceof RedisTreeItem treeItem) {
             String value = treeItem.itemValue().name();
             m1 = this.searchParam.isMatch(value);
         }

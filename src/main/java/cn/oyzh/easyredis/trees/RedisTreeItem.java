@@ -1,14 +1,9 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tree.FlexTreeView;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
-import javafx.scene.effect.Effect;
 import javafx.stage.Window;
 import lombok.Getter;
 import lombok.NonNull;
@@ -24,7 +19,7 @@ import java.util.List;
  * @since 2023/06/27
  */
 @Slf4j
-public abstract class BaseTreeItem extends RichTreeItem {
+public abstract class RedisTreeItem extends RichTreeItem {
 
     /**
      * redis树
@@ -47,16 +42,16 @@ public abstract class BaseTreeItem extends RichTreeItem {
         return this.treeView().window();
     }
 
-    /**
-     * 开始等待
-     *
-     * @param runnable 待执行业务
-     */
-    public void startWaiting(Runnable runnable) {
-        if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-            glyph.startWaiting(runnable);
-        }
-    }
+    // /**
+    //  * 开始等待
+    //  *
+    //  * @param runnable 待执行业务
+    //  */
+    // public void startWaiting(Runnable runnable) {
+    //     if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
+    //         glyph.startWaiting(runnable);
+    //     }
+    // }
 
     /**
      * 添加多个子节点
@@ -102,7 +97,7 @@ public abstract class BaseTreeItem extends RichTreeItem {
     public void sort(Boolean sortOrder) {
         if (sortOrder != null && !this.isChildEmpty()) {
             // 执行排序
-            ObservableList<BaseTreeItem> subs = this.getChildren();
+            ObservableList<RedisTreeItem> subs = this.getChildren();
             if (sortOrder) {
                 subs.sort((a, b) -> CharSequence.compare(a.itemValue().name(), b.itemValue().name()));
             } else {

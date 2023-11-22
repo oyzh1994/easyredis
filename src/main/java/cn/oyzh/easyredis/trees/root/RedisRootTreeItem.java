@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
@@ -48,7 +48,7 @@ import java.util.Optional;
  * @since 2023/06/16
  */
 @Slf4j
-public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManager {
+public class RedisRootTreeItem extends RedisTreeItem implements RedisConnectManager {
 
     /**
      * redis信息储存
@@ -69,7 +69,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
         // 初始化子节点
         this.initChildes();
         // 监听键变化
-        this.getChildren().addListener((ListChangeListener<? super BaseTreeItem>) c -> {
+        this.getChildren().addListener((ListChangeListener<? super RedisTreeItem>) c -> {
             this.treeView().fireChildChanged();
             this.treeView().flushLocal();
         });
@@ -236,7 +236,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
     }
 
     @Override
-    public ObservableList<BaseTreeItem> getChildren() {
+    public ObservableList<RedisTreeItem> getChildren() {
         return super.getChildren();
     }
 
@@ -278,7 +278,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
      */
     private List<RedisGroupTreeItem> getGroupItems() {
         List<RedisGroupTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem item : this.getChildren()) {
+        for (RedisTreeItem item : this.getChildren()) {
             if (item instanceof RedisGroupTreeItem groupTreeItem) {
                 items.add(groupTreeItem);
             }
@@ -333,9 +333,9 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
      */
     @EventReceiver(RedisEventTypes.REDIS_INFO_UPDATED)
     private void onConnectUpdate(RedisInfo info) {
-        ObservableList<BaseTreeItem> items = this.getChildren();
+        ObservableList<RedisTreeItem> items = this.getChildren();
         f1:
-        for (BaseTreeItem item : items) {
+        for (RedisTreeItem item : items) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -398,7 +398,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
     @Override
     public List<RedisConnectTreeItem> getConnectItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem child : this.getChildren()) {
+        for (RedisTreeItem child : this.getChildren()) {
             if (child instanceof RedisConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof RedisGroupTreeItem groupTreeItem) {
@@ -411,7 +411,7 @@ public class RedisRootTreeItem extends BaseTreeItem implements RedisConnectManag
     @Override
     public List<RedisConnectTreeItem> getConnectedItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildren().size());
-        for (BaseTreeItem item : this.getChildren()) {
+        for (RedisTreeItem item : this.getChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);

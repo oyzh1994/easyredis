@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
@@ -36,7 +36,7 @@ import java.util.Objects;
  * @since 2023/05/12
  */
 @Slf4j
-public class RedisGroupTreeItem extends BaseTreeItem implements RedisConnectManager {
+public class RedisGroupTreeItem extends RedisTreeItem implements RedisConnectManager {
 
     /**
      * 分组对象

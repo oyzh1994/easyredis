@@ -18,7 +18,7 @@ import cn.oyzh.easyredis.redis.key.RedisSetKey;
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
@@ -63,7 +63,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2023/07/12
  */
 @Slf4j
-public class RedisDBTreeItem extends BaseTreeItem {
+public class RedisDBTreeItem extends RedisTreeItem {
 
     /**
      * 当前db索引

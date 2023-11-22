@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisInfoStore;
-import cn.oyzh.easyredis.trees.BaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
@@ -44,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/22
  */
-public class RedisConnectTreeItem extends BaseTreeItem {
+public class RedisConnectTreeItem extends RedisTreeItem {
 
     /**
      * redis信息
@@ -262,10 +262,7 @@ public class RedisConnectTreeItem extends BaseTreeItem {
                         }
                     })
                     .onFinish(this::stopWaiting)
-                    .onError(ex -> {
-                        ex.printStackTrace();
-                        MessageBox.exception(ex);
-                    })
+                    .onError(MessageBox::exception)
                     .build();
             // 执行连接
             this.startWaiting(task);
@@ -289,7 +286,11 @@ public class RedisConnectTreeItem extends BaseTreeItem {
      */
     public void disConnect() {
         if (!this.isWaiting() && this.isConnected()) {
-            this.startWaiting(this::_disConnect);
+            Task task = TaskBuilder.newBuilder().onStart( this::_disConnect)
+                    .onFinish(this::stopWaiting)
+                    .onError(MessageBox::exception)
+                    .build();
+            this.startWaiting(task);
         }
     }
 

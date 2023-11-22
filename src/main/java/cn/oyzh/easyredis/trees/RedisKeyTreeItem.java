@@ -36,7 +36,7 @@ import java.util.Objects;
  * @since 2023/6/30
  */
 @Slf4j
-public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem {
+public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem {
 
     /**
      * redis键
