@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.RedisGEOCoordinateAddController;
+import cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
@@ -250,7 +250,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void addRow() {
         StageWrapper fxView;
         if (this.isGEOView()) {
-            fxView = StageUtil.parseStage(RedisGEOCoordinateAddController.class);
+            fxView = StageUtil.parseStage(RedisZsetCoordinateAddController.class);
         } else {
             fxView = StageUtil.parseStage(RedisZSetMemberAddController.class);
         }

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisGEOCoordinateAddController" realWidth="750"
+          fx:controller="cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 195">
         <FXLabel text="坐标" realHeight="30" realWidth="55" styleClass="lbl,lbl-primary">
@@ -48,9 +48,9 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <LongitudeField flexWidth="100% - 28" fx:id="longitude" tipText="经度值" value="0" step="5">
+        <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitude" tipText="经度值" value="0" step="5">
             <HBox.margin>
-                <Insets left="2" right="2"/>
+                <Insets left="10" top="10"/>
             </HBox.margin>
         </LongitudeField>
     </FlexHBox>
@@ -60,9 +60,9 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <LatitudeField flexWidth="100% - 28" fx:id="latitude" tipText="纬度值" value="0" step="5">
+        <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitude" tipText="纬度值" value="0" step="5">
             <HBox.margin>
-                <Insets left="2" right="2"/>
+                <Insets left="10" top="10"/>
             </HBox.margin>
         </LatitudeField>
     </FlexHBox>

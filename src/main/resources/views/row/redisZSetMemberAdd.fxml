@@ -52,7 +52,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <DecimalTextField flexWidth="100% - 28" scaleLen="10" fx:id="score" tipText="分数(score)" value="0" require="true">
+        <DecimalTextField realHeight="30" flexWidth="100% - 140" scaleLen="10" fx:id="score" tipText="分数(score)" value="0" require="true">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

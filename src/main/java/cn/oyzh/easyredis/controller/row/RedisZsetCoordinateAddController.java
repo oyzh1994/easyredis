@@ -26,13 +26,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @StageAttribute(
-        title = "添加geo坐标",
+        title = "添加地理坐标",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         cssUrls = RedisStyle.COMMON,
-        value = RedisConst.FXML_BASE_PATH + "row/redisGEOCoordinateAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "row/redisZSetCoordinateAdd.fxml"
 )
-public class RedisGEOCoordinateAddController extends Controller {
+public class RedisZsetCoordinateAddController extends Controller {
 
     /**
      * 坐标名称
