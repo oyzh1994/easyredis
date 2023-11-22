@@ -13,6 +13,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.property.DoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -196,8 +197,8 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         if (this.isGEOView()) {
             this.value.setText("坐标名称");
             this.value.setFlexWidth("26%");
-            this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
-            this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+            this.latitude.setCellValueFactory(new DoublePropertyValueFactory<>("latitude", 10));
+            this.longitude.setCellValueFactory(new DoublePropertyValueFactory<>("longitude", 10));
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
             this.longitudeVal.addTextChangeListener(this.longitudeValListener);
             this.score.setVisible(false);
@@ -212,7 +213,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         } else {
             this.value.setText("成员名称");
             this.value.setFlexWidth("46%");
-            this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
+            this.score.setCellValueFactory(new DoublePropertyValueFactory<>("score", 10));
             this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.score.setVisible(true);
             this.latitude.setVisible(false);

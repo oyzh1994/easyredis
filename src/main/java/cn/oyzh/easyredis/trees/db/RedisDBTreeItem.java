@@ -118,23 +118,16 @@ public class RedisDBTreeItem extends BaseTreeItem {
             this.children.addListener((ListChangeListener<RedisKeyTreeItem<?>>) c -> TaskManager.startDelayTask("redis:db:flushChildren", () -> {
                 // 应用过滤
                 this.filter(this.treeView().itemFilter());
-                // 刷新子节点
-                this.flushChild();
-                // 进行排序
-                this.sort(this.treeView().sortOrder());
+                // // 刷新子节点
+                // this.flushChild();
+                // // 进行排序
+                // this.sort(this.treeView().sortOrder());
             }, 5));
         }
         return this.children;
     }
 
     public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent, @NonNull RedisTreeView treeView) {
-        // if (dbIndex != null) {
-        //     this.dbIndex = dbIndex;
-        // this.itemValue(new RedisDBTreeItemValue("db" + dbIndex));
-        // } else {
-        //     this.dbIndex = 0;
-        // this.itemValue(new RedisDBTreeItemValue("键列表"));
-        // }
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
         this.itemValue(new RedisDBTreeItemValue(this));

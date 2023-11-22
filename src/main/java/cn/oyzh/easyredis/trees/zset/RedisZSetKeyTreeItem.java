@@ -268,8 +268,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
 
     @Override
     public boolean checkExists() {
-        if (this.dataUnsaved() && !Objects.equals(this.currentRow.getValue(), this.data())) {
-            Long zrank = this.client().zrank(this.dbIndex(), this.key(), (String) this.data());
+        String data = this.data() == null ? this.currentRow.getValue() : (String) this.data();
+        if (this.dataUnsaved() && !Objects.equals(this.currentRow.getValue(), data)) {
+            Long zrank = this.client().zrank(this.dbIndex(), this.key(), data);
             return zrank != null;
         }
         return false;

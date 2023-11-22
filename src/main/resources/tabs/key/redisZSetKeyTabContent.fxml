@@ -164,16 +164,16 @@
                 </padding>
             </FlexFlowPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="scoreBox" text="分数" collapsible="false">
-                <DecimalTextField flexHeight="100%" flexWidth="100%" fx:id="scoreVal" tipText="分数(score)" value="0"
+                <DecimalTextField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="scoreVal" tipText="分数(score)" value="0"
                                   disable="true">
                 </DecimalTextField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="longitudeBox" text="经度" visible="false" managed="false" collapsible="false">
-                <LongitudeField flexHeight="100%" flexWidth="100" fx:id="longitudeVal" tipText="经度(longitude)" value="0" step="5">
+                <LongitudeField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="longitudeVal" tipText="经度(longitude)" value="0" step="5">
                 </LongitudeField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="latitudeBox" text="纬度" visible="false" managed="false" collapsible="false">
-                <LatitudeField flexHeight="100%" flexWidth="100" fx:id="latitudeVal" tipText="纬度(latitude)" value="0" step="5">
+                <LatitudeField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="latitudeVal" tipText="纬度(latitude)" value="0" step="5">
                 </LatitudeField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" fx:id="dataBox" text="成员" collapsible="false">
