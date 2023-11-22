@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
+import cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
@@ -194,11 +194,12 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+        this.score.setCellValueFactory(new DoublePropertyValueFactory<>("score", 10));
+        this.latitude.setCellValueFactory(new DoublePropertyValueFactory<>("latitude", 10));
+        this.longitude.setCellValueFactory(new DoublePropertyValueFactory<>("longitude", 10));
         if (this.isGEOView()) {
             this.value.setText("坐标名称");
             this.value.setFlexWidth("26%");
-            this.latitude.setCellValueFactory(new DoublePropertyValueFactory<>("latitude", 10));
-            this.longitude.setCellValueFactory(new DoublePropertyValueFactory<>("longitude", 10));
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
             this.longitudeVal.addTextChangeListener(this.longitudeValListener);
             this.score.setVisible(false);
@@ -213,7 +214,6 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         } else {
             this.value.setText("成员名称");
             this.value.setFlexWidth("46%");
-            this.score.setCellValueFactory(new DoublePropertyValueFactory<>("score", 10));
             this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.score.setVisible(true);
             this.latitude.setVisible(false);
