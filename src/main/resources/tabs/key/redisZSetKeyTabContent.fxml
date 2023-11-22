@@ -5,9 +5,9 @@
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
@@ -163,49 +163,27 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100% - 435"
-                               flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed">
-                <HBox.margin>
-                    <Insets top="5"/>
-                </HBox.margin>
-            </RedisDataTextArea>
-            <FlexHBox flexWidth="100%" realHeight="30" fx:id="scoreBox">
-                <FXLabel realWidth="25" text="分数">
-                    <HBox.margin>
-                        <Insets left="5" top="10"/>
-                    </HBox.margin>
-                </FXLabel>
-                <DecimalTextField flexWidth="100% - 32" fx:id="scoreVal" tipText="分数(score)" value="0" disable="true">
-                    <HBox.margin>
-                        <Insets top="5"/>
-                    </HBox.margin>
+            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="scoreBox" text="分数" collapsible="false">
+                <DecimalTextField flexHeight="100%" flexWidth="100%" fx:id="scoreVal" tipText="分数(score)" value="0"
+                                  disable="true">
                 </DecimalTextField>
-            </FlexHBox>
-            <FlexHBox flexWidth="100%" realHeight="30" fx:id="geoBox" visible="false" managed="false">
-                <FXLabel realWidth="25" text="经度">
-                    <HBox.margin>
-                        <Insets left="5" top="10"/>
-                    </HBox.margin>
-                </FXLabel>
-                <LongitudeField flexWidth="50% - 32" fx:id="longitudeVal" tipText="经度(longitude)" value="0" step="5">
-                    <HBox.margin>
-                        <Insets top="5"/>
-                    </HBox.margin>
+            </FlexTitledPane>
+            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="longitudeBox" text="经度" visible="false" managed="false" collapsible="false">
+                <LongitudeField flexHeight="100%" flexWidth="100" fx:id="longitudeVal" tipText="经度(longitude)" value="0" step="5">
                 </LongitudeField>
-                <FXLabel realWidth="25" text="纬度">
-                    <HBox.margin>
-                        <Insets left="5" top="10"/>
-                    </HBox.margin>
-                </FXLabel>
-                <LatitudeField flexWidth="50% - 32" fx:id="latitudeVal" tipText="纬度(latitude)" value="0" step="5">
+            </FlexTitledPane>
+            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="latitudeBox" text="纬度" visible="false" managed="false" collapsible="false">
+                <LatitudeField flexHeight="100%" flexWidth="100" fx:id="latitudeVal" tipText="纬度(latitude)" value="0" step="5">
+                </LatitudeField>
+            </FlexTitledPane>
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" fx:id="dataBox" text="成员" collapsible="false">
+                <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%"
+                                   flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
                     <HBox.margin>
                         <Insets top="5"/>
                     </HBox.margin>
-                </LatitudeField>
-                <HBox.margin>
-                    <Insets top="5"/>
-                </HBox.margin>
-            </FlexHBox>
+                </RedisDataTextArea>
+            </FlexTitledPane>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

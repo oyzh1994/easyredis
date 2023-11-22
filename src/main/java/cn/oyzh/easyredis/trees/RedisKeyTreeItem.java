@@ -83,7 +83,6 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends BaseTreeItem 
      */
     public void data(Object data) {
         this.dataProperty().set(data);
-        this.flushGraphic();
     }
 
     /**

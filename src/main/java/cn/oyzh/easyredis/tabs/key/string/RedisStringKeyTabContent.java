@@ -119,15 +119,6 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         }
     }
 
-    @Override
-    public void onNodeDataKeyPressed(KeyEvent e) {
-        KeyCode code = e.getCode();
-        // 保存键数据
-        if (code == KeyCode.S && e.isControlDown()) {
-            this.saveNodeData();
-        }
-    }
-
     @FXML
     @Override
     protected void saveNodeData() {

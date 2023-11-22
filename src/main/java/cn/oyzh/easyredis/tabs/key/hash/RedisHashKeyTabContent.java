@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
+import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -46,16 +47,22 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     private TableColumn<RedisHashRow, Integer> index;
 
     /**
-     * 行值列
+     * 字段列
      */
     @FXML
     private TableColumn<RedisHashRow, String> field;
 
     /**
-     * 行值列
+     * 值列
      */
     @FXML
     private TableColumn<RedisHashRow, String> value;
+
+    /**
+     * 字段名
+     */
+    @FXML
+    private FlexTextArea hashField;
 
     /**
      * redis数据监听器
@@ -89,6 +96,18 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
+    }
+
+    @Override
+    protected void initRow(RedisHashRow row) {
+        super.initRow(row);
+        if (row == null) {
+            this.hashField.clear();
+            this.hashField.disable();
+        } else {
+            this.hashField.setText(row.getField());
+            this.hashField.enable();
+        }
     }
 
     @Override

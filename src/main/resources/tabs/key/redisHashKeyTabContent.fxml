@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.PagePane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.PagePane?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
 <FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent" side="RIGHT">
     <FXTab text="键数据">
@@ -90,8 +92,8 @@
                            fixedCellSize="30">
                 <columns>
                     <FlexTableColumn flexWidth="12%" fx:id="index" text="编号"/>
-                    <FlexTableColumn flexWidth="30%" fx:id="field" text="字段"/>
-                    <FlexTableColumn flexWidth="46%" fx:id="value" text="值"/>
+                    <FlexTableColumn flexWidth="26%" fx:id="field" text="字段"/>
+                    <FlexTableColumn flexWidth="50%" fx:id="value" text="值"/>
                     <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="操作" sortable="false"/>
                 </columns>
             </FlexTableView>
@@ -128,13 +130,13 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="复制行" size="16"
+                <SVGGlyph tipText="复制字段" size="16"
                           onMousePrimaryClicked="#copyRow" url="/font/copy-path.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph tipText="删除行" size="16"
+                <SVGGlyph tipText="删除字段" size="16"
                           onMousePrimaryClicked="#deleteRow" url="/font/delete.svg">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -155,8 +157,13 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100% - 402"
-                               flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+            <FlexTitledPane flexWidth="100%" realHeight="100" text="字段名" collapsible="false">
+                <FlexTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="hashField"/>
+            </FlexTitledPane>
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 500" text="字段值" collapsible="false">
+                <RedisDataTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData"
+                                   onKeyPressed="#onNodeDataKeyPressed"/>
+            </FlexTitledPane>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

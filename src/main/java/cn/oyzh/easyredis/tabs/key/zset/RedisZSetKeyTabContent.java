@@ -7,8 +7,8 @@ import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -46,16 +46,28 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private SVGGlyph saveNodeData;
 
     /**
+     * 数据组件
+     */
+    @FXML
+    protected FlexTitledPane dataBox;
+
+    /**
      * 分数组件
      */
     @FXML
-    protected FlexHBox scoreBox;
+    protected FlexTitledPane scoreBox;
 
     /**
      * 地理坐标组件
      */
     @FXML
-    protected FlexHBox geoBox;
+    protected FlexTitledPane longitudeBox;
+
+    /**
+     * 地理坐标组件
+     */
+    @FXML
+    protected FlexTitledPane latitudeBox;
 
     /**
      * 反转视图
@@ -166,8 +178,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @Override
     public boolean init(RedisZSetKeyTreeItem treeItem) {
         this.pageData = null;
-        this.geoBox.managedBindVisible();
         this.scoreBox.managedBindVisible();
+        this.latitudeBox.managedBindVisible();
+        this.longitudeBox.managedBindVisible();
         return super.init(treeItem);
     }
 
@@ -191,7 +204,10 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.latitude.setVisible(true);
             this.longitude.setVisible(true);
             this.reverseView.setSelected(true);
-            this.geoBox.display();
+            this.dataBox.setText("坐标");
+            this.dataBox.setFlexHeight("100% - 500");
+            this.latitudeBox.display();
+            this.longitudeBox.display();
             this.scoreBox.disappear();
         } else {
             this.value.setText("成员名称");
@@ -202,7 +218,10 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.latitude.setVisible(false);
             this.longitude.setVisible(false);
             this.reverseView.setSelected(false);
-            this.geoBox.disappear();
+            this.dataBox.setText("成员");
+            this.dataBox.setFlexHeight("100% - 450");
+            this.latitudeBox.disappear();
+            this.longitudeBox.disappear();
             this.scoreBox.display();
         }
     }
@@ -273,19 +292,6 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             });
         }
     }
-
-    // /**
-    //  * 显示为地理坐标
-    //  */
-    // @FXML
-    // private void showGEO() {
-    // // 放弃保存
-    // if (this.treeItem.data() != null && !MessageBox.confirm("放弃未保存的数据？")) {
-    //     return;
-    // }
-    // this.treeItem.reverseView();
-    // EventUtil.fire(RedisEventTypes.REDIS_CHANGE_ZSET_SHOW_TYPE, this.treeItem);
-    // }
 
     @FXML
     @Override

@@ -121,28 +121,16 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <FlexTitledPane flexWidth="100%" flexHeight="100% - 432" text="消息内容" collapsible="false">
+            <FlexTitledPane flexWidth="100%" realHeight="50" text="消息ID" collapsible="false">
+                <ReadOnlyTextField disable="true" flexHeight="100%" flexWidth="100%" fx:id="streamID">
+                </ReadOnlyTextField>
+            </FlexTitledPane>
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" text="消息内容" collapsible="false">
                 <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="12" fx:id="nodeData"
                                    flexHeight="100%"
-                                   flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                                   flexWidth="100%">
                 </RedisDataTextArea>
             </FlexTitledPane>
-            <FlexHBox flexWidth="100%" realHeight="30">
-                <FXLabel realWidth="40" realHeight="25" text="ID" styleClass="lbl,lbl-primary">
-                    <HBox.margin>
-                        <Insets top="5"/>
-                    </HBox.margin>
-                </FXLabel>
-                <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 42" fx:id="streamID"
-                                   tipText="消息id">
-                    <HBox.margin>
-                        <Insets top="5"/>
-                    </HBox.margin>
-                </ReadOnlyTextField>
-                <HBox.margin>
-                    <Insets top="5"/>
-                </HBox.margin>
-            </FlexHBox>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
