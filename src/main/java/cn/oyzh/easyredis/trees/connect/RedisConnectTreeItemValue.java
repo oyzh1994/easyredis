@@ -46,7 +46,7 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     @Setter
     private boolean readOnly;
 
-    private RedisConnectTreeItem item;
+    private final RedisConnectTreeItem item;
 
     public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
         this.item = item;

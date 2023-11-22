@@ -24,7 +24,7 @@ import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
+import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -469,7 +469,7 @@ public class RedisDBTreeItem extends BaseTreeItem {
         }
 
         if (node instanceof RedisHyperLogLogKey logLogNode) {
-            return new RedisHyperLogLogKeyTreeItem(logLogNode, this.parent());
+            return new RedisHyLogKeyTreeItem(logLogNode, this.parent());
         }
 
         if (node instanceof RedisStreamKey streamNode) {

@@ -17,7 +17,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
 
     public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
-        this.itemValue(new RedisKeyTreeItemValue(this));
+        this.itemValue(new RedisStringKeyTreeItemValue(this));
     }
 
     @Override

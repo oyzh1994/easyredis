@@ -21,7 +21,7 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, 
 
     public RedisStreamKeyTreeItem(@NonNull RedisStreamKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
-        this.itemValue(new RedisKeyTreeItemValue(this));
+        this.itemValue(new RedisStreamKeyTreeItemValue(this));
     }
 
     @Override

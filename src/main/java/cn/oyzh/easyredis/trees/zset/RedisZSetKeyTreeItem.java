@@ -6,9 +6,8 @@ import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.Getter;
+import javafx.beans.property.SimpleObjectProperty;
 import lombok.NonNull;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.GeoCoordinate;
 
@@ -23,42 +22,124 @@ import java.util.Objects;
 public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetRow> {
 
     /**
-     * 当前分数
+     * 分数属性
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private Double currentScore;
+    private SimpleObjectProperty<Double> scoreProperty;
 
     /**
-     * 当前经度
+     * 经度属性
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private Double currentLatitude;
+    private SimpleObjectProperty<Double> latitudeProperty;
 
     /**
-     * 当前纬度
+     * 纬度属性
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private Double currentLongitude;
+    private SimpleObjectProperty<Double> longitudeProperty;
 
-    public void currentScore(Double currentScore) {
-        this.currentScore = currentScore;
-        this.flushGraphic();
-        // this.flushGraphicColor();
+    @Override
+    public void clearData() {
+        this.score(null);
+        this.latitude(null);
+        this.longitude(null);
+        super.clearData();
     }
 
-    public void currentLatitude(Double currentLatitude) {
-        this.currentLatitude = currentLatitude;
-        this.flushGraphic();
-        // this.flushGraphicColor();
+    @Override
+    public boolean dataUnsaved() {
+        if (this.isGEOView()) {
+            return this.longitude() != null || this.latitude() != null || super.dataUnsaved();
+        }
+        return this.score() != null || super.dataUnsaved();
     }
 
-    public void currentLongitude(Double currentLongitude) {
-        this.currentLongitude = currentLongitude;
-        this.flushGraphic();
-        // this.flushGraphicColor();
+    /**
+     * 获取分数属性
+     *
+     * @return 分数属性
+     */
+    public SimpleObjectProperty<Double> scoreProperty() {
+        if (this.scoreProperty == null) {
+            this.scoreProperty = new SimpleObjectProperty<>();
+        }
+        return this.scoreProperty;
+    }
+
+    /**
+     * 获取纬度属性
+     *
+     * @return 纬度属性
+     */
+    public SimpleObjectProperty<Double> latitudeProperty() {
+        if (this.latitudeProperty == null) {
+            this.latitudeProperty = new SimpleObjectProperty<>();
+        }
+        return this.latitudeProperty;
+    }
+
+    /**
+     * 获取经度属性
+     *
+     * @return 经度属性
+     */
+    public SimpleObjectProperty<Double> longitudeProperty() {
+        if (this.longitudeProperty == null) {
+            this.longitudeProperty = new SimpleObjectProperty<>();
+        }
+        return this.longitudeProperty;
+    }
+
+    /**
+     * 获取分数
+     *
+     * @return 分数
+     */
+    public Double score() {
+        return this.scoreProperty == null ? null : this.scoreProperty().get();
+    }
+
+    /**
+     * 设置分数
+     *
+     * @param score 分数
+     */
+    public void score(Double score) {
+        this.scoreProperty().set(score);
+    }
+
+    /**
+     * 获取纬度
+     *
+     * @return 纬度
+     */
+    public Double latitude() {
+        return this.latitudeProperty == null ? null : this.latitudeProperty().get();
+    }
+
+    /**
+     * 设置纬度
+     *
+     * @param latitude 纬度
+     */
+    public void latitude(Double latitude) {
+        this.latitudeProperty().set(latitude);
+    }
+
+    /**
+     * 获取经度
+     *
+     * @return 经度
+     */
+    public Double longitude() {
+        return this.longitudeProperty == null ? null : this.longitudeProperty().get();
+    }
+
+    /**
+     * 设置经度
+     *
+     * @param longitude 经度
+     */
+    public void longitude(Double longitude) {
+        this.longitudeProperty().set(longitude);
     }
 
     /**
@@ -69,10 +150,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     @Override
     public RedisZSetKeyTreeItem currentRow(RedisZSetRow currentRow) {
         this.currentRow = currentRow;
-        this.currentScore = null;
-        this.currentLatitude = null;
-        this.currentLongitude = null;
-        this.flushGraphic();
+        this.clearData();
         return this;
     }
 
@@ -107,20 +185,17 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
             this.setNodeValue(value);
             this.currentRow.setValue(value);
             if (this.isGEOView()) {
-                if (this.currentLongitude != null) {
-                    this.currentRow.setLongitude(this.currentLongitude);
+                if (this.latitude() != null) {
+                    this.currentRow.setLatitude(this.latitude());
                 }
-                if (this.currentLatitude != null) {
-                    this.currentRow.setLatitude(this.currentLatitude);
+                if (this.longitude() != null) {
+                    this.currentRow.setLongitude(this.longitude());
                 }
             } else {
-                if (this.currentScore != null) {
-                    this.currentRow.setScore(this.currentScore);
+                if (this.score() != null) {
+                    this.currentRow.setScore(this.score());
                 }
             }
-            this.currentScore = null;
-            this.currentLatitude = null;
-            this.currentLongitude = null;
             this.clearData();
             return true;
         } catch (Exception ex) {
@@ -137,11 +212,11 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
                 this.client().zrem(this.dbIndex(), this.key(), this.currentRow.getValue());
             }
             if (this.isGEOView()) {
-                double latitude = this.currentLatitude != null ? this.currentLatitude : this.currentRow.getLatitude();
-                double longitude = this.currentLongitude != null ? this.currentLongitude : this.currentRow.getLongitude();
+                double latitude = this.latitude() != null ? this.latitude() : this.currentRow.getLatitude();
+                double longitude = this.longitude() != null ? this.longitude() : this.currentRow.getLongitude();
                 this.client().geoadd(this.dbIndex(), this.key(), longitude, latitude, (String) value);
             } else {
-                double score = this.currentScore != null ? this.currentScore : this.currentRow.getScore();
+                double score = this.score() != null ? this.score() : this.currentRow.getScore();
                 this.client().zadd(this.dbIndex(), this.key(), score, (String) value);
             }
         } catch (Exception ex) {
@@ -200,17 +275,17 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return false;
     }
 
-    /**
-     * 数据是否已改变
-     *
-     * @return 结果
-     */
-    public boolean isChanged() {
-        if (this.dataUnsaved()) {
-            return true;
-        }
-        return this.isGEOView() ? this.currentLatitude != null || this.currentLongitude != null : this.currentScore != null;
-    }
+    // /**
+    //  * 数据是否已改变
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isChanged() {
+    //     if (this.dataUnsaved()) {
+    //         return true;
+    //     }
+    //     return this.isGEOView() ? this.latitude() != null || this.longitude() != null : this.score() != null;
+    // }
 
     @Override
     public RedisZSetKeyTreeItemValue itemValue() {

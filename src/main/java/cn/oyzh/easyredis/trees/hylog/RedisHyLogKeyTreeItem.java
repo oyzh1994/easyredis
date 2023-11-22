@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisHyperLogLogKeyTreeItem extends RedisKeyTreeItem<RedisHyperLogLogKey> {
+public class RedisHyLogKeyTreeItem extends RedisKeyTreeItem<RedisHyperLogLogKey> {
 
-    public RedisHyperLogLogKeyTreeItem(@NonNull RedisHyperLogLogKey value, @NonNull RedisConnectTreeItem root) {
+    public RedisHyLogKeyTreeItem(@NonNull RedisHyperLogLogKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
-        this.itemValue(new RedisKeyTreeItemValue(this));
+        this.itemValue(new RedisHyLogKeyTreeItemValue(this));
     }
 
     @Override

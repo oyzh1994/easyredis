@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Accessors(chain = true, fluent = true)
 public class RedisGroupTreeItemValue extends RedisTreeItemValue {
 
-    private RedisGroupTreeItem item;
+    private final RedisGroupTreeItem item;
 
     public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
         this.item = item;

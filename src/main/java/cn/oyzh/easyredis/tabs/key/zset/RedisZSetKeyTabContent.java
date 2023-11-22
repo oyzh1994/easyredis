@@ -117,11 +117,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-            this.treeItem.clearData();
+            this.treeItem.data(null);
         } else {
             this.treeItem.data(newValue);
         }
-        this.saveNodeData.setDisable(!this.treeItem.isChanged());
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
 
     /**
@@ -130,11 +130,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
         Number scoreVal = this.scoreVal.getValue();
         if (this.treeItem.currentRow() == null || Objects.equals(scoreVal.doubleValue(), this.treeItem.currentRow().getScore())) {
-            this.treeItem.clearData();
+            this.treeItem.score(null);
         } else {
-            this.treeItem.currentScore(scoreVal.doubleValue());
+            this.treeItem.score(scoreVal.doubleValue());
         }
-        this.saveNodeData.setDisable(!this.treeItem.isChanged());
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
 
     /**
@@ -143,11 +143,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLongitude())) {
-            this.treeItem.currentLongitude(null);
+            this.treeItem.longitude(null);
         } else {
-            this.treeItem.currentLongitude(value.doubleValue());
+            this.treeItem.longitude(value.doubleValue());
         }
-        this.saveNodeData.setDisable(!this.treeItem.isChanged());
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
 
     /**
@@ -156,11 +156,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.latitudeVal.getValue();
         if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLatitude())) {
-            this.treeItem.currentLatitude(null);
+            this.treeItem.latitude(null);
         } else {
-            this.treeItem.currentLatitude(value.doubleValue());
+            this.treeItem.latitude(value.doubleValue());
         }
-        this.saveNodeData.setDisable(!this.treeItem.isChanged());
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
 
     @Override
@@ -265,7 +265,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void saveNodeData() {
         if (this.treeItem.checkExists()) {
             MessageBox.warn("此成员或坐标已存在！");
-        } else if (this.treeItem.isChanged()) {
+        } else if (this.treeItem.dataUnsaved()) {
             ThreadUtil.startVirtual(() -> {
                 if (this.treeItem.saveNodeValue()) {
                     this.saveNodeData.disable();

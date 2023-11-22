@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
 import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTab;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
+import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -137,7 +137,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
             tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
         } else if (item instanceof RedisHashKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisHashKeyTab(treeItem);
-        } else if (item instanceof RedisHyperLogLogKeyTreeItem treeItem) {
+        } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisHyLogKeyTab(treeItem);
         } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisStreamKeyTab(treeItem);

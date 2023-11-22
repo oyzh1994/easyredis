@@ -59,101 +59,6 @@ public abstract class BaseTreeItem extends RichTreeItem {
     }
 
     /**
-     * 取消等待
-     */
-    public void stopWaiting() {
-        if (this.itemValue().graphic() instanceof SVGGlyph glyph) {
-            glyph.stopWaiting();
-        }
-    }
-
-    /**
-     * 是否等待中
-     *
-     * @return 结果
-     */
-    public boolean isWaiting() {
-        if (this.itemValue() != null && this.itemValue().graphic() instanceof SVGGlyph glyph) {
-            return glyph.isWaiting();
-        }
-        return false;
-    }
-
-    /**
-     * 自由处理
-     * 如果是展开状态，则收缩节点
-     * 如果是收缩状态，则展开节点
-     */
-    public void free() {
-        if (this.isExpanded()) {
-            this.collapse();
-        } else {
-            this.extend();
-        }
-    }
-
-    /**
-     * 重新展开
-     */
-    public void reExpanded() {
-        if (this.isExpanded()) {
-            FXUtil.runLater(() -> {
-                this.setExpanded(false);
-                this.setExpanded(true);
-            });
-        }
-    }
-
-    /**
-     * 展开节点
-     */
-    public void extend() {
-        if (!this.isExpanded()) {
-            FXUtil.runWait(() -> this.setExpanded(true));
-        }
-    }
-
-    /**
-     * 收缩节点
-     */
-    public void collapse() {
-        FXUtil.runWait(() -> this.setExpanded(false));
-    }
-
-    /**
-     * 删除节点
-     */
-    public void delete() {
-    }
-
-    /**
-     * 移除节点
-     */
-    public void remove() {
-        if (this.getParent() != null) {
-            this.getParent().getChildren().remove(this);
-        } else {
-            log.warn("remove fail, this.getParent() is null.");
-        }
-    }
-
-    /**
-     * 节点更名
-     */
-    public void rename() {
-    }
-
-    /**
-     * 添加子节点
-     *
-     * @param item 节点
-     */
-    public void addChild(@NonNull TreeItem<?> item) {
-        this.getChildren().add(item);
-        this.sort(this.treeView().sortOrder());
-    }
-
-    /**
      * 添加多个子节点
      *
      * @param items 节点列表
@@ -183,39 +88,10 @@ public abstract class BaseTreeItem extends RichTreeItem {
     }
 
     /**
-     * 移除子节点
-     *
-     * @param item 节点
-     */
-    public void removeChild(@NonNull TreeItem<?> item) {
-        // 移除节点
-        this.getChildren().remove(item);
-    }
-
-    /**
-     * 移除多个子节点
-     *
-     * @param items 节点列表
-     */
-    public void removeChildes(@NonNull List<TreeItem<?>> items) {
-        // 移除节点
-        this.getChildren().removeAll(items);
-    }
-
-    /**
      * 清空子节点
      */
     public void clearChild() {
         this.getChildren().clear();
-    }
-
-    /**
-     * 子节点是否为空
-     *
-     * @return 结果
-     */
-    public boolean isChildEmpty() {
-        return CollUtil.isEmpty(this.getChildren());
     }
 
     /**
@@ -243,16 +119,6 @@ public abstract class BaseTreeItem extends RichTreeItem {
     }
 
     /**
-     * 获取节点组件
-     *
-     * @return Node
-     */
-    public Node itemNode() {
-        return this.itemValue();
-        // return itemValue == null ? null : itemValue.getRootNode();
-    }
-
-    /**
      * 获取节点值
      *
      * @return RedisTreeItemValue
@@ -269,46 +135,4 @@ public abstract class BaseTreeItem extends RichTreeItem {
     public void itemValue(RedisTreeItemValue itemValue) {
         super.setValue(itemValue);
     }
-
-    /**
-     * 清除节点值
-     */
-    public void clearItemValue() {
-        super.setValue(null);
-    }
-
-    // /**
-    //  * 设置节点值
-    //  *
-    //  * @param itemValue 节点值
-    //  */
-    // public void itemValue(String itemValue) {
-    //     super.setValue(new RedisTreeItemValue(itemValue));
-    // }
-
-    // /**
-    //  * 设置特效
-    //  *
-    //  * @param effect 特效
-    //  */
-    // public void setEffect(Effect effect) {
-    //     if (this.itemNode() != null) {
-    //         this.itemNode().setEffect(effect);
-    //     }
-    // }
-    //
-    // /**
-    //  * 获取特效
-    //  *
-    //  * @return Effect
-    //  */
-    // public Effect getEffect() {
-    //     if (this.itemNode() != null) {
-    //         return this.itemNode().getEffect();
-    //     }
-    //     return null;
-    // }
-
-
-
 }

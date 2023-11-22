@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.hylog.RedisHyperLogLogKeyTreeItem;
+import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -47,7 +47,7 @@ public class RedisHyperLogLogElementsAddController extends Controller {
     /**
      * redis键
      */
-    private RedisHyperLogLogKeyTreeItem treeItem;
+    private RedisHyLogKeyTreeItem treeItem;
 
     /**
      * 添加行

@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023/07/7
  */
 @Slf4j
-@Accessors(chain = true, fluent = true)
-public class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?>> extends RedisTreeItemValue {
+public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?>> extends RedisTreeItemValue {
 
+    @Accessors(chain = true, fluent = true)
     protected final T item;
 
     public RedisKeyTreeItemValue(T item) {

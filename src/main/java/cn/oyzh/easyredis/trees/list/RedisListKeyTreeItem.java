@@ -20,7 +20,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
 
     public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisConnectTreeItem root) {
         super(value, root);
-        this.itemValue(new RedisKeyTreeItemValue(this));
+        this.itemValue(new RedisListKeyTreeItemValue(this));
     }
 
     @Override
