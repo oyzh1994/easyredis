@@ -173,7 +173,6 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
     private void onHashFieldAdded(RedisHashFieldAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }

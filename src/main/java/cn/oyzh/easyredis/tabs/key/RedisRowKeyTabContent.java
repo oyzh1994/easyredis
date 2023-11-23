@@ -157,7 +157,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extend
      */
     protected void initPage(int pageNo) {
         List<R> rows = this.getRows();
-        this.pageData = new Paging<>(rows, 100);
+        this.pageData = new Paging<>(rows, 10);
         List<R> pageRows = this.pageData.page(pageNo);
         int index = 1;
         for (R row : pageRows) {

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
-import cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController;
+import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
@@ -260,7 +260,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void addRow() {
         StageWrapper fxView;
         if (this.isGEOView()) {
-            fxView = StageUtil.parseStage(RedisZsetCoordinateAddController.class);
+            fxView = StageUtil.parseStage(RedisZSetCoordinateAddController.class);
         } else {
             fxView = StageUtil.parseStage(RedisZSetMemberAddController.class);
         }
@@ -353,7 +353,6 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
     private void onZSetCoordinateAdded(RedisZSetCoordinateAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }
@@ -366,7 +365,6 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
     private void onZSetMemberAdded(RedisZSetMemberAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }

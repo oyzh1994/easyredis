@@ -48,8 +48,6 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
     public RedisKeyTab(@NonNull T treeItem) {
         this.setClosable(true);
         this.treeItem = treeItem;
-        // 加载内容
-        this.loadContent();
         // 初始化
         if (!this.controller().init(treeItem)) {
             this.disable();

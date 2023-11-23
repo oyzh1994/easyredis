@@ -152,7 +152,6 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
     private void onListRowAdded(RedisListRowAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }

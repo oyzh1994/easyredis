@@ -139,7 +139,6 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
     private void onSetMemberAdded(RedisSetMemberAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }

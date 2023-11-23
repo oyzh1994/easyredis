@@ -127,7 +127,6 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
     private void onStreamMessageAdded(RedisStreamMessageAddedMsg msg) {
         if (this.treeItem == msg.item()) {
-            this.treeItem.refreshNodeValue();
             this.firstPage();
         }
     }
