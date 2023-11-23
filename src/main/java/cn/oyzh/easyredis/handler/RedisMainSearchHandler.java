@@ -6,10 +6,9 @@ import cn.oyzh.easyredis.dto.RedisSearchResult;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -179,51 +178,51 @@ public class RedisMainSearchHandler {
         this.doSearch(param, "prev");
     }
 
-    /**
-     * 替换
-     *
-     * @param replaceKW 替换词
-     * @param onResult  搜索结果回调
-     */
-    public void replace(String replaceKW, Consumer<Boolean> onResult) {
-        // 如果当前键不符合分析条件，则寻找下一个键
-        if (!this.dataAnalyse()) {
-            do {
-                // 获取匹配键
-                List<TreeItemExt> matchItems = this.getMatchItems();
-                // 如果找不到任何匹配数据的键，则直接回调false
-                if (matchItems.parallelStream().noneMatch(TreeItemExt::isMatchData)) {
-                    // 更新搜索结果
-                    this.updateResult();
-                    // 函数回调
-                    onResult.accept(false);
-                    return;
-                }
-                // 搜索下一个
-                this.searchNext(this.searchParam);
-                // 如果当前键匹配数据，则执行数据分析
-                if (this.searchResult().isMatchData()) {
-                    this.dataAnalyse();
-                    break;
-                }
-            } while (true);
-        }
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> {
-                    if (this.dataNode != null) {
-                        // 记录旧的索引位置，替换数据后，这个索引值会变成0
-                        int index = this.dataIndex;
-                        // 替换选中内容
-                        this.dataNode.replaceSelection(replaceKW);
-                        // 更新数据索引，防止索引错位导致重复替换
-                        int len = replaceKW.length() - this.searchParam.getKw().length();
-                        this.dataIndex = index + len;
-                    }
-                }).onFinish(() -> onResult.accept(true))
-                .build();
-        // 延迟处理
-        ExecutorUtil.start(task, 50);
-    }
+    // /**
+    //  * 替换
+    //  *
+    //  * @param replaceKW 替换词
+    //  * @param onResult  搜索结果回调
+    //  */
+    // public void replace(String replaceKW, Consumer<Boolean> onResult) {
+    //     // 如果当前键不符合分析条件，则寻找下一个键
+    //     if (!this.dataAnalyse()) {
+    //         do {
+    //             // 获取匹配键
+    //             List<TreeItemExt> matchItems = this.getMatchItems();
+    //             // 如果找不到任何匹配数据的键，则直接回调false
+    //             if (matchItems.parallelStream().noneMatch(TreeItemExt::isMatchData)) {
+    //                 // 更新搜索结果
+    //                 this.updateResult();
+    //                 // 函数回调
+    //                 onResult.accept(false);
+    //                 return;
+    //             }
+    //             // 搜索下一个
+    //             this.searchNext(this.searchParam);
+    //             // 如果当前键匹配数据，则执行数据分析
+    //             if (this.searchResult().isMatchData()) {
+    //                 this.dataAnalyse();
+    //                 break;
+    //             }
+    //         } while (true);
+    //     }
+    //     Task task = TaskBuilder.newBuilder()
+    //             .onStart(() -> {
+    //                 if (this.dataNode != null) {
+    //                     // 记录旧的索引位置，替换数据后，这个索引值会变成0
+    //                     int index = this.dataIndex;
+    //                     // 替换选中内容
+    //                     this.dataNode.replaceSelection(replaceKW);
+    //                     // 更新数据索引，防止索引错位导致重复替换
+    //                     int len = replaceKW.length() - this.searchParam.getKw().length();
+    //                     this.dataIndex = index + len;
+    //                 }
+    //             }).onFinish(() -> onResult.accept(true))
+    //             .build();
+    //     // 延迟处理
+    //     ExecutorUtil.start(task, 50);
+    // }
 
     /**
      * 执行搜索
@@ -356,13 +355,17 @@ public class RedisMainSearchHandler {
                 return;
             }
             // 执行路径分析
-            if (this.searchParam.isSearchKey() && this.pathIndex != -100 && this.nameAnalyse()) {
+            if (this.pathIndex != -100 && this.nameAnalyse()) {
                 return;
             }
-            // 执行数据分析
-            if (this.searchParam.isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
-                return;
-            }
+            // // 执行路径分析
+            // if (this.searchParam.isSearchKey() && this.pathIndex != -100 && this.nameAnalyse()) {
+            //     return;
+            // }
+            // // 执行数据分析
+            // if (this.searchParam.isSearchData() && this.dataIndex != -100 && this.dataAnalyse()) {
+            //     return;
+            // }
             // 初始化索引及文本组件
             this.dataIndex = 0;
             this.pathIndex = 0;
@@ -417,34 +420,34 @@ public class RedisMainSearchHandler {
         this.pathIndex = -100;
         return false;
     }
-
-    /**
-     * 数据节点分析
-     *
-     * @return 结果
-     */
-    private boolean dataAnalyse() {
-        try {
-            this.dataNode = this.findDataNode();
-            if (this.dataNode == null) {
-                return false;
-            }
-            String kw = this.searchParam.getKw();
-            String text = this.dataNode.getText();
-            // 搜索索引
-            int index = TextUtil.findIndex(text, kw, this.dataIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
-            if (index != -1) {
-                int end = index + kw.length();
-                this.dataNode.selectRange(index, end);
-                this.dataIndex = end;
-                return true;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        this.dataIndex = -100;
-        return false;
-    }
+    //
+    // /**
+    //  * 数据节点分析
+    //  *
+    //  * @return 结果
+    //  */
+    // private boolean dataAnalyse() {
+    //     try {
+    //         this.dataNode = this.findDataNode();
+    //         if (this.dataNode == null) {
+    //             return false;
+    //         }
+    //         String kw = this.searchParam.getKw();
+    //         String text = this.dataNode.getText();
+    //         // 搜索索引
+    //         int index = TextUtil.findIndex(text, kw, this.dataIndex, this.searchParam.isCompareCase(), this.searchParam.isFullMatch());
+    //         if (index != -1) {
+    //             int end = index + kw.length();
+    //             this.dataNode.selectRange(index, end);
+    //             this.dataIndex = end;
+    //             return true;
+    //         }
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    //     this.dataIndex = -100;
+    //     return false;
+    // }
 
     /**
      * 是否满足参数
@@ -457,28 +460,34 @@ public class RedisMainSearchHandler {
             return null;
         }
         boolean m1 = false, m2 = false;
-        // 路径
-        if (this.searchParam.isSearchKey() && item instanceof RedisTreeItem treeItem) {
+        // // 路径
+        if (item instanceof RedisTreeItem treeItem) {
             String value = treeItem.itemValue().name();
             m1 = this.searchParam.isMatch(value);
         }
-        // 数据
-        if (this.searchParam.isSearchData() && item instanceof RedisStringKeyTreeItem treeItem) {
-            String data = (String) treeItem.rawValue();
-            m2 = this.searchParam.isMatch(data);
-        }
-        // 匹配全部
-        if (m1 && m2) {
-            return "all";
-        }
+        // if (this.searchParam.isSearchKey() && item instanceof RedisTreeItem treeItem) {
+        //     String value = treeItem.itemValue().name();
+        //     m1 = this.searchParam.isMatch(value);
+        // }
+        // // 数据
+        // if (this.searchParam.isSearchData() && item instanceof RedisStringKeyTreeItem treeItem) {
+        //     Object data = treeItem.rawValue();
+        //     if (data instanceof String string) {
+        //         m2 = this.searchParam.isMatch(string);
+        //     }
+        // }
+        // // 匹配全部
+        // if (m1 && m2) {
+        //     return "all";
+        // }
         // 匹配名称
         if (m1) {
             return "name";
         }
-        // 匹配数据
-        if (m2) {
-            return "data";
-        }
+        // // 匹配数据
+        // if (m2) {
+        //     return "data";
+        // }
         return null;
     }
 

@@ -23,15 +23,15 @@ public class RedisSearchParam {
      */
     private boolean fullMatch;
 
-    /**
-     * 搜索数据
-     */
-    private boolean searchData;
-
-    /**
-     * 搜索键
-     */
-    private boolean searchKey;
+    // /**
+    //  * 搜索数据
+    //  */
+    // private boolean searchData;
+    //
+    // /**
+    //  * 搜索键
+    //  */
+    // private boolean searchKey;
 
     /**
      * 匹配大小写
@@ -86,12 +86,12 @@ public class RedisSearchParam {
         if (!Objects.equals(this.fullMatch, param.fullMatch)) {
             return false;
         }
-        if (!Objects.equals(this.searchData, param.searchData)) {
-            return false;
-        }
-        if (!Objects.equals(this.searchKey, param.searchKey)) {
-            return false;
-        }
+        // if (!Objects.equals(this.searchData, param.searchData)) {
+        //     return false;
+        // }
+        // if (!Objects.equals(this.searchKey, param.searchKey)) {
+        //     return false;
+        // }
         return Objects.equals(this.compareCase, param.compareCase);
     }
 }

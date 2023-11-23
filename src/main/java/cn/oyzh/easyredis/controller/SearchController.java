@@ -52,11 +52,11 @@ public class SearchController extends SubController {
     @FXML
     private ClearableTextField searchKW;
 
-    /**
-     * 搜索-替换词
-     */
-    @FXML
-    private ClearableTextField replaceKW;
+    // /**
+    //  * 搜索-替换词
+    //  */
+    // @FXML
+    // private ClearableTextField replaceKW;
 
     /**
      * 搜索-主面板
@@ -64,11 +64,11 @@ public class SearchController extends SubController {
     @FXML
     private FlexVBox searchMain;
 
-    /**
-     * 搜索-更多1
-     */
-    @FXML
-    private FlexHBox searchMore1;
+    // /**
+    //  * 搜索-更多1
+    //  */
+    // @FXML
+    // private FlexHBox searchMore1;
 
     /**
      * 搜索-更多2
@@ -88,11 +88,11 @@ public class SearchController extends SubController {
     @FXML
     private SVGGlyph searchPrev;
 
-    /**
-     * 搜索-替换
-     */
-    @FXML
-    private SVGGlyph replace;
+    // /**
+    //  * 搜索-替换
+    //  */
+    // @FXML
+    // private SVGGlyph replace;
 
     /**
      * 搜索-分析
@@ -100,11 +100,11 @@ public class SearchController extends SubController {
     @FXML
     private SVGGlyph searchAnalyse;
 
-    /**
-     * 搜索-搜索值
-     */
-    @FXML
-    private FlexCheckBox searchData;
+    // /**
+    //  * 搜索-搜索值
+    //  */
+    // @FXML
+    // private FlexCheckBox searchData;
 
     /**
      * 搜索-全文匹配
@@ -118,11 +118,11 @@ public class SearchController extends SubController {
     @FXML
     private FlexCheckBox compareCase;
 
-    /**
-     * 搜索-搜索键
-     */
-    @FXML
-    private FlexCheckBox searchKey;
+    // /**
+    //  * 搜索-搜索键
+    //  */
+    // @FXML
+    // private FlexCheckBox searchKey;
 
     /**
      * 搜索-搜索结果
@@ -130,11 +130,11 @@ public class SearchController extends SubController {
     @FXML
     private FlexText searchResult;
 
-    /**
-     * 搜索-替换提示
-     */
-    @FXML
-    private FlexText replaceTips;
+    // /**
+    //  * 搜索-替换提示
+    //  */
+    // @FXML
+    // private FlexText replaceTips;
 
     /**
      * 搜索-更多
@@ -154,11 +154,11 @@ public class SearchController extends SubController {
     @FXML
     private SVGGlyph searchHistory;
 
-    /**
-     * 搜索-替换历史
-     */
-    @FXML
-    private SVGGlyph replaceHistory;
+    // /**
+    //  * 搜索-替换历史
+    //  */
+    // @FXML
+    // private SVGGlyph replaceHistory;
 
     /**
      * redis树
@@ -208,35 +208,36 @@ public class SearchController extends SubController {
         }
     }
 
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private void replaceHistory(MouseEvent event) {
-        if (this.replaceHistoryPopup == null) {
-            this.replaceHistoryPopup = new RedisSearchHistoryPopup(2);
-        }
-        this.replaceHistoryPopup.show(this.replaceHistory, event.getScreenX(), event.getScreenY());
-    }
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private void replaceHistory(MouseEvent event) {
+    //     if (this.replaceHistoryPopup == null) {
+    //         this.replaceHistoryPopup = new RedisSearchHistoryPopup(2);
+    //     }
+    //     this.replaceHistoryPopup.show(this.replaceHistory, event.getScreenX(), event.getScreenY());
+    // }
 
-    /**
-     * 替换历史点击事件
-     *
-     * @param kw 点击关键词
-     */
-    @EventReceiver(RedisEventTypes.REDIS_REPLACE_HISTORY_SELECTED)
-    private void replaceHistorySelected(String kw) {
-        if (!this.replaceKW.getTextTrim().equals(kw)) {
-            this.replaceKW.setText(kw);
-        }
-    }
+    // /**
+    //  * 替换历史点击事件
+    //  *
+    //  * @param kw 点击关键词
+    //  */
+    // @EventReceiver(RedisEventTypes.REDIS_REPLACE_HISTORY_SELECTED)
+    // private void replaceHistorySelected(String kw) {
+    //     if (!this.replaceKW.getTextTrim().equals(kw)) {
+    //         this.replaceKW.setText(kw);
+    //     }
+    // }
 
     /**
      * 搜索-更多
      */
     @FXML
     private void showSearchMore() {
-        this.searchMore1.display();
+        this.searchMore2.display();
+        // this.searchMore1.display();
         this.searchMain.setRealHeight(108);
         this.treeView.setFlexHeight("100% - 144");
         // 重新布局
@@ -250,7 +251,8 @@ public class SearchController extends SubController {
      */
     @FXML
     private void hideSearchMore() {
-        this.searchMore1.disappear();
+        // this.searchMore1.disappear();
+        this.searchMore2.disappear();
         this.searchMain.setRealHeight(36);
         this.treeView.setFlexHeight("100% - 72");
         // 重新布局
@@ -268,10 +270,10 @@ public class SearchController extends SubController {
         if (this.searchKW.isEmpty()) {
             return;
         }
-        if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn("搜索名称和值请最少勾选一项！");
-            return;
-        }
+        // if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
+        //     MessageBox.warn("搜索名称和值请最少勾选一项！");
+        //     return;
+        // }
         TaskManager.startDelayTask("redis:search:searchNext", () -> {
             try {
                 this.treeView.disable();
@@ -298,10 +300,10 @@ public class SearchController extends SubController {
         if (this.searchKW.isEmpty()) {
             return;
         }
-        if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
-            MessageBox.warn("搜索名称和值请最少勾选一项！");
-            return;
-        }
+        // if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
+        //     MessageBox.warn("搜索名称和值请最少勾选一项！");
+        //     return;
+        // }
         TaskManager.startDelayTask("redis:search:searchPrev", () -> {
             try {
                 this.treeView.disable();
@@ -319,58 +321,58 @@ public class SearchController extends SubController {
         }, 50);
     }
 
-    /**
-     * 搜索-替换
-     */
-    @FXML
-    private void replace() {
-        // 内容为空
-        if (this.searchKW.isEmpty() || this.replaceKW.isEmpty()) {
-            return;
-        }
-        // 无需替换
-        if (this.searchKW.getText().equals(this.replaceKW.getText())) {
-            this.replaceTips.setText("替换词、搜索词相同");
-            return;
-        }
-        // 检查搜索参数
-        if (this.searchHandler.searchParam() == null) {
-            this.replaceTips.setText("请初始化搜索参数");
-            return;
-        }
-        TaskManager.startDelayTask("redis:search:replace", () -> {
-            // 执行替换
-            this.searchHandler.replace(this.replaceKW.getText(), b -> {
-                try {
-                    // 找到匹配项
-                    if (b) {
-                        this.replaceTips.setText("");
-                        TreeItem<?> item = this.parent().activeItem();
-                        if (item instanceof RedisStringKeyTreeItem nodeTreeItem) {
-                            if (nodeTreeItem.isDataTooLong()) {
-                                MessageBox.warn("数据太大，无法替换！");
-                            } else if (nodeTreeItem.saveNodeValue()) {
-                                // 更新搜索结果
-                                this.updateSearchResult();
-                                // 更新搜索、替换历史
-                                this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                                this.historyStore.addReplaceHistory(this.replaceKW.getTextTrim());
-                            }
-                        } else {
-                            this.replaceTips.setText("当前非STRING键");
-                        }
-                    } else { // 未找到匹配项
-                        // 更新搜索结果
-                        this.updateSearchResult();
-                        this.replaceTips.setText("没有找到可替换项");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    MessageBox.warn("发生异常！");
-                }
-            });
-        }, 100);
-    }
+    // /**
+    //  * 搜索-替换
+    //  */
+    // @FXML
+    // private void replace() {
+    //     // 内容为空
+    //     if (this.searchKW.isEmpty() || this.replaceKW.isEmpty()) {
+    //         return;
+    //     }
+    //     // 无需替换
+    //     if (this.searchKW.getText().equals(this.replaceKW.getText())) {
+    //         this.replaceTips.setText("替换词、搜索词相同");
+    //         return;
+    //     }
+    //     // 检查搜索参数
+    //     if (this.searchHandler.searchParam() == null) {
+    //         this.replaceTips.setText("请初始化搜索参数");
+    //         return;
+    //     }
+    //     TaskManager.startDelayTask("redis:search:replace", () -> {
+    //         // 执行替换
+    //         this.searchHandler.replace(this.replaceKW.getText(), b -> {
+    //             try {
+    //                 // 找到匹配项
+    //                 if (b) {
+    //                     this.replaceTips.setText("");
+    //                     TreeItem<?> item = this.parent().activeItem();
+    //                     if (item instanceof RedisStringKeyTreeItem nodeTreeItem) {
+    //                         if (nodeTreeItem.isDataTooLong()) {
+    //                             MessageBox.warn("数据太大，无法替换！");
+    //                         } else if (nodeTreeItem.saveNodeValue()) {
+    //                             // 更新搜索结果
+    //                             this.updateSearchResult();
+    //                             // 更新搜索、替换历史
+    //                             this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+    //                             this.historyStore.addReplaceHistory(this.replaceKW.getTextTrim());
+    //                         }
+    //                     } else {
+    //                         this.replaceTips.setText("当前非STRING键");
+    //                     }
+    //                 } else { // 未找到匹配项
+    //                     // 更新搜索结果
+    //                     this.updateSearchResult();
+    //                     this.replaceTips.setText("没有找到可替换项");
+    //                 }
+    //             } catch (Exception ex) {
+    //                 ex.printStackTrace();
+    //                 MessageBox.warn("发生异常！");
+    //             }
+    //         });
+    //     }, 100);
+    // }
 
     /**
      * 预搜索
@@ -416,8 +418,8 @@ public class SearchController extends SubController {
         RedisSearchParam searchParam = new RedisSearchParam();
         searchParam.setKw(this.searchKW.getTextTrim());
         searchParam.setFullMatch(this.fullMatch.isSelected());
-        searchParam.setSearchKey(this.searchKey.isSelected());
-        searchParam.setSearchData(this.searchData.isSelected());
+        // searchParam.setSearchKey(this.searchKey.isSelected());
+        // searchParam.setSearchData(this.searchData.isSelected());
         searchParam.setCompareCase(this.compareCase.isSelected());
         return searchParam;
     }
@@ -427,18 +429,18 @@ public class SearchController extends SubController {
      */
     private void searchCheck() {
         try {
-            // 搜索值、名称均未选择
-            if (!this.searchData.isSelected() && !this.searchKey.isSelected()) {
-                this.replace.disable();
-                this.replaceKW.disable();
-                this.searchKW.disable();
-                this.searchNext.disable();
-                return;
-            }
+            // // 搜索值、名称均未选择
+            // if (!this.searchData.isSelected() && !this.searchKey.isSelected()) {
+            //     this.replace.disable();
+            //     this.replaceKW.disable();
+            //     this.searchKW.disable();
+            //     this.searchNext.disable();
+            //     return;
+            // }
 
-            // 替换相关检查
-            this.replace.setDisable(!this.searchData.isSelected() || this.replaceKW.isEmpty() || this.searchKW.isEmpty() || Objects.equals(this.searchKW.getText(), this.replaceKW.getText()));
-            this.replaceKW.setDisable(!this.searchData.isSelected());
+            // // 替换相关检查
+            // this.replace.setDisable(!this.searchData.isSelected() || this.replaceKW.isEmpty() || this.searchKW.isEmpty() || Objects.equals(this.searchKW.getText(), this.replaceKW.getText()));
+            // this.replaceKW.setDisable(!this.searchData.isSelected());
 
             // 搜索相关检查
             this.searchKW.enable();
@@ -472,22 +474,23 @@ public class SearchController extends SubController {
     @Override
     protected void bindListeners() {
         // 搜索相关处理
-        this.searchMore1.managedProperty().bind(this.searchMore1.visibleProperty());
-        this.searchMore2.managedProperty().bind(this.searchMore1.visibleProperty());
-        this.searchMore2.visibleProperty().bind(this.searchMore1.visibleProperty());
+        // this.searchMore1.managedProperty().bind(this.searchMore1.visibleProperty());
+        // this.searchMore2.managedProperty().bind(this.searchMore1.visibleProperty());
+        // this.searchMore2.visibleProperty().bind(this.searchMore1.visibleProperty());
+        this.searchMore2.managedBindVisible();
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
         this.showSearchMore.managedProperty().bind(this.showSearchMore.visibleProperty());
         this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.searchKey.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // this.searchKey.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        // this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
-        this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
-            this.replaceTips.setText("");
-            this.searchCheck();
-        });
+        // this.replaceKW.addTextChangeListener((observable, oldValue, newValue) -> {
+        //     this.replaceTips.setText("");
+        //     this.searchCheck();
+        // });
 
         // 搜索触发事件
         KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
@@ -542,10 +545,10 @@ public class SearchController extends SubController {
     private void onSearchKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             this.searchNext();
-        } else if (e.getCode() == KeyCode.TAB) {
-            if (this.searchMore1.isVisible()) {
-                this.replaceKW.requestFocus();
-            }
+        // } else if (e.getCode() == KeyCode.TAB) {
+        //     if (this.searchMore1.isVisible()) {
+        //         this.replaceKW.requestFocus();
+        //     }
         } else if (e.getCode() == KeyCode.UP) {
             String currKW = this.searchKW.getTextTrim();
             List<String> list = this.historyStore.getSearchKw();
@@ -563,33 +566,33 @@ public class SearchController extends SubController {
         }
     }
 
-    /**
-     * redis替换控件按键事件
-     *
-     * @param e 事件
-     */
-    @FXML
-    private void onReplaceKeyPressed(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            this.replace();
-        } else if (e.getCode() == KeyCode.TAB) {
-            this.searchKW.requestFocus();
-        } else if (e.getCode() == KeyCode.UP) {
-            String currKW = this.replaceKW.getTextTrim();
-            List<String> list = this.historyStore.getReplaceKw();
-            String historyKW = this.getHistoryKW(currKW, list, true);
-            if (historyKW != null) {
-                this.replaceHistorySelected(historyKW);
-            }
-        } else if (e.getCode() == KeyCode.DOWN) {
-            String currKW = this.replaceKW.getTextTrim();
-            List<String> list = this.historyStore.getReplaceKw();
-            String historyKW = this.getHistoryKW(currKW, list, false);
-            if (historyKW != null) {
-                this.replaceHistorySelected(historyKW);
-            }
-        }
-    }
+    // /**
+    //  * redis替换控件按键事件
+    //  *
+    //  * @param e 事件
+    //  */
+    // @FXML
+    // private void onReplaceKeyPressed(KeyEvent e) {
+    //     if (e.getCode() == KeyCode.ENTER) {
+    //         this.replace();
+    //     } else if (e.getCode() == KeyCode.TAB) {
+    //         this.searchKW.requestFocus();
+    //     } else if (e.getCode() == KeyCode.UP) {
+    //         String currKW = this.replaceKW.getTextTrim();
+    //         List<String> list = this.historyStore.getReplaceKw();
+    //         String historyKW = this.getHistoryKW(currKW, list, true);
+    //         if (historyKW != null) {
+    //             this.replaceHistorySelected(historyKW);
+    //         }
+    //     } else if (e.getCode() == KeyCode.DOWN) {
+    //         String currKW = this.replaceKW.getTextTrim();
+    //         List<String> list = this.historyStore.getReplaceKw();
+    //         String historyKW = this.getHistoryKW(currKW, list, false);
+    //         if (historyKW != null) {
+    //             this.replaceHistorySelected(historyKW);
+    //         }
+    //     }
+    // }
 
     /**
      * 获取历史词汇

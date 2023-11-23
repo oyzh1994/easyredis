@@ -59,44 +59,44 @@
             </HBox.margin>
         </FlexText>
     </FlexHBox>
-    <FlexHBox visible="false" managed="false" fx:id="searchMore1" realHeight="36" flexWidth="100%">
-        <SVGGlyph url="/font/history.svg" fx:id="replaceHistory" tipText="查看历史替换列表" size="12"
-                  onMousePrimaryClicked="#replaceHistory">
-            <HBox.margin>
-                <Insets top="15" left="26"/>
-            </HBox.margin>
-        </SVGGlyph>
-        <ClearableTextField fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="20"
-                            tipText="替换内容(支持STRING，↑↓切换历史)" onKeyPressed="#onReplaceKeyPressed">
-            <HBox.margin>
-                <Insets top="6" left="5"/>
-            </HBox.margin>
-        </ClearableTextField>
-        <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg"
-                  tipText="替换下一个(快捷键Enter)" size="12"
-                  onMousePrimaryClicked="#replace">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </SVGGlyph>
-        <FlexText fx:id="replaceTips" fill="tomato" fontSize="11">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </FlexText>
-    </FlexHBox>
+    <!-- <FlexHBox visible="false" managed="false" fx:id="searchMore1" realHeight="36" flexWidth="100%"> -->
+    <!--     <SVGGlyph url="/font/history.svg" fx:id="replaceHistory" tipText="查看历史替换列表" size="12" -->
+    <!--               onMousePrimaryClicked="#replaceHistory"> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets top="15" left="26"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </SVGGlyph> -->
+    <!--     <ClearableTextField fx:id="replaceKW" realHeight="24" realWidth="225" maxLen="20" -->
+    <!--                         tipText="替换内容(支持STRING，↑↓切换历史)" onKeyPressed="#onReplaceKeyPressed"> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets top="6" left="5"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </ClearableTextField> -->
+    <!--     <SVGGlyph fx:id="replace" disable="true" url="/font/financial_replace.svg" -->
+    <!--               tipText="替换下一个(快捷键Enter)" size="12" -->
+    <!--               onMousePrimaryClicked="#replace"> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets left="5" top="15"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </SVGGlyph> -->
+    <!--     <FlexText fx:id="replaceTips" fill="tomato" fontSize="11"> -->
+    <!--         <HBox.margin> -->
+    <!--             <Insets left="5" top="15"/> -->
+    <!--         </HBox.margin> -->
+    <!--     </FlexText> -->
+    <!-- </FlexHBox> -->
     <FlexHBox visible="false" managed="false" fx:id="searchMore2" realHeight="36" flexWidth="100%"
               fontSize="11">
-        <FlexCheckBox text="搜索键" selected="true" fx:id="searchKey" realWidth="70">
-            <HBox.margin>
-                <Insets left="25" top="6"/>
-            </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox text="搜索值" tipText="值搜索仅支持STRING类型" selected="true" fx:id="searchData" realWidth="60">
-            <HBox.margin>
-                <Insets left="5" top="6"/>
-            </HBox.margin>
-        </FlexCheckBox>
+        <!-- <FlexCheckBox text="搜索键" selected="true" fx:id="searchKey" realWidth="70"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="25" top="6"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </FlexCheckBox> -->
+        <!-- <FlexCheckBox text="搜索值" tipText="值搜索仅支持STRING类型" selected="true" fx:id="searchData" realWidth="60"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="5" top="6"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </FlexCheckBox> -->
         <FlexCheckBox text="匹配大小写" fx:id="compareCase" realWidth="80">
             <HBox.margin>
                 <Insets left="5" top="6"/>
