@@ -1,93 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyredis.tabs.RedisTabPane?>
+<?import cn.oyzh.easyredis.trees.RedisTreeView?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.easyredis.trees.RedisTreeView?>
-<?import cn.oyzh.easyredis.tabs.RedisTabPane?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <FlexPane styleClass="panel,panel-primary,mainPane" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100%" flexHeight="100% - 30">
-    <FlexVBox realWidth="440" flexHeight="100%" fx:id="mainLeft"
-              style="-fx-border-width: 0 1 0 0; -fx-border-color: gray">
-        <FlexHBox realHeight="36" flexWidth="100% - 8">
-            <SVGGlyph tipText="打开终端" size="15"
-                      onMousePrimaryClicked="#openTerminal" url="/font/code library.svg">
-                <HBox.margin>
-                    <Insets left="8" top="12"/>
-                </HBox.margin>
-            </SVGGlyph>
-            <SVGGlyph fx:id="sortAsc" tipText="对选中节点进行排序" size="15"
-                      onMousePrimaryClicked="#sortNodes" url="/font/sort-ascending.svg">
-                <HBox.margin>
-                    <Insets left="8" top="12"/>
-                </HBox.margin>
-            </SVGGlyph>
-            <SVGGlyph fx:id="sortDesc" tipText="对选中节点进行排序" size="15" visible="false" managed="false"
-                      onMousePrimaryClicked="#sortNodes" url="/font/sort-descending.svg">
-                <HBox.margin>
-                    <Insets left="8" top="12"/>
-                </HBox.margin>
-            </SVGGlyph>
-            <SVGGlyph tipText="定位节点" size="17" onMousePrimaryClicked="#positionNode"
-                      url="/font/positioning.svg">
-                <HBox.margin>
-                    <Insets left="5" top="12"/>
-                </HBox.margin>
-            </SVGGlyph>
-            <FlexCheckBox text="仅看收藏" fx:id="onlyCollect" fontSize="11">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-        </FlexHBox>
-        <FlexHBox realHeight="36" flexWidth="100% - 8">
-            <FXLabel text="过滤:" fontSize="11">
-                <HBox.margin>
-                    <Insets left="8" top="12"/>
-                </HBox.margin>
-            </FXLabel>
-            <FlexCheckBox text="str" fontSize="9" fx:id="excludeString">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="set" fontSize="9" fx:id="excludeSet">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="zset" fontSize="9" fx:id="excludeZSet">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="list" fontSize="9" fx:id="excludeList">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="hash" fontSize="9" fx:id="excludeHash">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="hylog" fontSize="9" fx:id="excludeHyperLogLog">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-            <FlexCheckBox text="stream" fontSize="9" fx:id="excludeStream">
-                <HBox.margin>
-                    <Insets left="5" top="10"/>
-                </HBox.margin>
-            </FlexCheckBox>
-        </FlexHBox>
-        <fx:include fx:id="search" source="search.fxml" prefHeight="36" flexWidth="100% - 8"/>
-        <RedisTreeView fx:id="tree" flexHeight="100% - 108" flexWidth="100% - 8"/>
-    </FlexVBox>
-    <RedisTabPane fx:id="tabPane" layoutX="440" flexWidth="100% - 440" tabClosingPolicy="ALL_TABS" flexHeight="100%"/>
+    <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
+        <FXTab text="连接">
+            <graphic>
+                <SVGGlyph initCursor="DEFAULT" url="/font/content.svg" size="13"/>
+            </graphic>
+            <FlexVBox flexHeight="100% " flexWidth="100% - 8"
+                      style="-fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0">
+                <FlexHBox realHeight="30" flexWidth="100%">
+                    <SVGGlyph tipText="打开终端" size="15"
+                              onMousePrimaryClicked="#openTerminal" url="/font/code library.svg">
+                        <HBox.margin>
+                            <Insets left="10" top="12"/>
+                        </HBox.margin>
+                    </SVGGlyph>
+                    <SVGGlyph fx:id="sortAsc" tipText="对选中节点进行排序" size="15"
+                              onMousePrimaryClicked="#sortNodes" url="/font/sort-ascending.svg">
+                        <HBox.margin>
+                            <Insets left="8" top="12"/>
+                        </HBox.margin>
+                    </SVGGlyph>
+                    <SVGGlyph fx:id="sortDesc" tipText="对选中节点进行排序" size="15" visible="false" managed="false"
+                              onMousePrimaryClicked="#sortNodes" url="/font/sort-descending.svg">
+                        <HBox.margin>
+                            <Insets left="8" top="12"/>
+                        </HBox.margin>
+                    </SVGGlyph>
+                    <SVGGlyph tipText="定位节点" size="17" onMousePrimaryClicked="#positionNode"
+                              url="/font/positioning.svg">
+                        <HBox.margin>
+                            <Insets left="5" top="12"/>
+                        </HBox.margin>
+                    </SVGGlyph>
+                    <FlexCheckBox text="仅看收藏" fx:id="onlyCollect" fontSize="11">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                </FlexHBox>
+                <FlexHBox realHeight="30" flexWidth="100%">
+                    <FlexCheckBox text="str" fontSize="9" fx:id="excludeString">
+                        <HBox.margin>
+                            <Insets left="10" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="set" fontSize="9" fx:id="excludeSet">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="zset" fontSize="9" fx:id="excludeZSet">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="list" fontSize="9" fx:id="excludeList">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="hash" fontSize="9" fx:id="excludeHash">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="hylog" fontSize="9" fx:id="excludeHyperLogLog">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="stream" fontSize="9" fx:id="excludeStream">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                </FlexHBox>
+                <fx:include fx:id="search" source="search.fxml" prefHeight="30" flexWidth="100%"/>
+                <RedisTreeView fx:id="tree" flexHeight="100% - 92"/>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="消息">
+            <graphic>
+                <SVGGlyph initCursor="DEFAULT" url="/font/message.svg" size="13"/>
+            </graphic>
+            <FlexVBox flexHeight="100%" flexWidth="100% - 8"
+                      style="-fx-border-width: 0 1 0 0; -fx-border-color: c0c0c0">
+                <FlexHBox realHeight="30">
+                    <SVGGlyph tipText="清空消息" size="16" onMousePrimaryClicked="#clearMsg"
+                              url="/font/clear.svg">
+                        <HBox.margin>
+                            <Insets left="10" top="9"/>
+                        </HBox.margin>
+                    </SVGGlyph>
+                </FlexHBox>
+                <MsgTextArea editable="false" fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
+                             maxLine="1000"/>
+            </FlexVBox>
+        </FXTab>
+    </FlexTabPane>
+    <RedisTabPane fx:id="tabPane" layoutX="440" flexWidth="100% - 440" tabClosingPolicy="ALL_TABS"
+                  flexHeight="100%"/>
 </FlexPane>

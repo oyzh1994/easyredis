@@ -517,12 +517,9 @@ public class SearchController extends SubController {
         super.onStageShown(event);
         // 注册事件处理
         EventUtil.register(this);
-
-        this.treeView = (RedisTreeView) this.searchMain.getParent().lookup("#tree");
-        RedisTabPane tabPane = (RedisTabPane) this.searchMain.getParent().getParent().lookup("#tabPane");
-
+        this.treeView = this.parent().tree;
         // 初始化搜索
-        this.searchHandler.init(this.treeView, tabPane);
+        this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new RedisSearchHistoryPopup());
     }
 

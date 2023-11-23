@@ -77,7 +77,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <FXLabel fx:id="size" fontSize="10" style="-fx-text-fill: gray">
+                <FXLabel fx:id="size" fontSize="10" style="-fx-text-fill: #c0c0c0">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>

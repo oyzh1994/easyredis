@@ -7,16 +7,17 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controller.SubController;
-import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -56,16 +57,16 @@ public class RedisMainController extends ParentController {
     private RedisInfo info;
 
     /**
-     * 左侧组件
-     */
-    @FXML
-    private FlexVBox mainLeft;
-
-    /**
      * 左侧redis树
      */
     @FXML
-    private RedisTreeView tree;
+    public RedisTreeView tree;
+
+    /**
+     * 左侧组件
+     */
+    @FXML
+    private FlexTabPane tabPaneLeft;
 
     /**
      * 大小调整增强
@@ -141,7 +142,7 @@ public class RedisMainController extends ParentController {
      * redis切换面板
      */
     @FXML
-    private RedisTabPane tabPane;
+    public RedisTabPane tabPane;
 
     /**
      * 页面信息
@@ -157,6 +158,12 @@ public class RedisMainController extends ParentController {
      * 树节点过滤器
      */
     private final RedisTreeItemFilter treeItemFilter = new RedisTreeItemFilter();
+
+    /**
+     * 消息文本框
+     */
+    @FXML
+    private MsgTextArea msgArea;
 
     /**
      * 搜索Controller
@@ -274,10 +281,10 @@ public class RedisMainController extends ParentController {
     private void resizeMainLeft(Double newWidth) {
         if (newWidth != null && !Double.isNaN(newWidth)) {
             // 设置组件宽
-            this.mainLeft.setRealWidth(newWidth);
+            this.tabPaneLeft.setRealWidth(newWidth);
             this.tabPane.setLayoutX(newWidth);
             this.tabPane.setFlexWidth("100% - " + newWidth);
-            this.mainLeft.parentAutosize();
+            this.tabPaneLeft.parentAutosize();
         }
     }
 
@@ -292,7 +299,7 @@ public class RedisMainController extends ParentController {
      */
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
-            this.pageInfo.setMainLeftWidth(this.mainLeft.getMinWidth());
+            this.pageInfo.setMainLeftWidth(this.tabPaneLeft.getMinWidth());
             this.pageInfoStore.update(this.pageInfo);
         }
     }
@@ -343,7 +350,7 @@ public class RedisMainController extends ParentController {
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
         // 拖动改变redis树大小处理
-        this.resizeEnhance = new ResizeEnhance(this.mainLeft, Cursor.DEFAULT);
+        this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
         this.resizeEnhance.minWidth(390d);
         this.resizeEnhance.maxWidth(800d);
         this.resizeEnhance.triggerThreshold(8d);
@@ -403,11 +410,11 @@ public class RedisMainController extends ParentController {
      */
     @EventReceiver(value = RedisEventTypes.LEFT_EXTEND, async = true, verbose = true)
     private void leftExtend() {
-        this.mainLeft.display();
-        double w = this.mainLeft.getMinWidth();
+        this.tabPaneLeft.display();
+        double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
-        this.mainLeft.parentAutosize();
+        this.tabPaneLeft.parentAutosize();
         log.info("LEFT_EXTEND.");
     }
 
@@ -416,10 +423,10 @@ public class RedisMainController extends ParentController {
      */
     @EventReceiver(value = RedisEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
     private void leftCollapse() {
-        this.mainLeft.disappear();
+        this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
-        this.mainLeft.parentAutosize();
+        this.tabPaneLeft.parentAutosize();
         log.info("LEFT_COLLAPSE.");
     }
 
@@ -465,5 +472,13 @@ public class RedisMainController extends ParentController {
             this.tree.filterItem();
             this.tree.enable();
         }, 100);
+    }
+
+    /**
+     * 清空消息
+     */
+    @FXML
+    private void clearMsg() {
+        this.msgArea.clear();
     }
 }
