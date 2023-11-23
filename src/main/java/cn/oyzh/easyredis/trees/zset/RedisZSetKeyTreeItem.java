@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.property.SimpleObjectProperty;
 import lombok.NonNull;
@@ -173,6 +174,24 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      */
     public boolean isGEOView() {
         return this.showType == 1;
+    }
+
+    /**
+     * 是否支持地理坐标
+     *
+     * @return 结果
+     */
+    public boolean isSupportGEO() {
+        return RedisVersionUtil.isCommandSupported(this.getServerVersion(), "geopos");
+    }
+
+    /**
+     * 获取服务端版本号
+     *
+     * @return 服务端版本号
+     */
+    public String getServerVersion() {
+        return this.client().getServerVersion();
     }
 
     @Override

@@ -117,6 +117,17 @@ public class RedisVersionUtil {
     }
 
     /**
+     * 判断指令是否支持
+     *
+     * @param serverVersion 服务版本
+     * @param command       指令
+     */
+    public static boolean isCommandSupported(String serverVersion, String command) {
+        String version = getSupportedVersion(command);
+        return isSupported(serverVersion, version);
+    }
+
+    /**
      * 判断是否支持
      *
      * @param serverVersion 服务版本

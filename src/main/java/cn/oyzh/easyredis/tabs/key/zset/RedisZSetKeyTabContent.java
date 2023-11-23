@@ -13,7 +13,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.property.DoublePropertyValueFactory;
+import cn.oyzh.fx.plus.property.ScaleDoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -180,6 +180,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     public boolean init(RedisZSetKeyTreeItem treeItem) {
         this.pageData = null;
         this.scoreBox.managedBindVisible();
+        this.reverseView.managedBindVisible();
         this.latitudeBox.managedBindVisible();
         this.longitudeBox.managedBindVisible();
         return super.init(treeItem);
@@ -191,13 +192,15 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         this.initTable();
         // 显示首页
         this.firstPage();
+        // 显示切换按钮
+        this.reverseView.setVisible(this.isSupportGEO());
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        this.score.setCellValueFactory(new DoublePropertyValueFactory<>("score", 10));
-        this.latitude.setCellValueFactory(new DoublePropertyValueFactory<>("latitude", 10));
-        this.longitude.setCellValueFactory(new DoublePropertyValueFactory<>("longitude", 10));
-        if (this.isGEOView()) {
+        // 判断geo视图是否支持
+        if (this.isSupportGEO() && this.isGEOView()) {
+            this.latitude.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("latitude", 10));
+            this.longitude.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("longitude", 10));
             this.value.setText("坐标名称");
             this.value.setFlexWidth("26%");
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
@@ -212,6 +215,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.longitudeBox.display();
             this.scoreBox.disappear();
         } else {
+            this.score.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("score", 10));
             this.value.setText("成员名称");
             this.value.setFlexWidth("46%");
             this.scoreVal.addTextChangeListener(this.scoreValListener);
@@ -311,8 +315,22 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         ClipboardUtil.setStringAndTip(builder.toString(), "成员信息");
     }
 
+    /**
+     * 是否地理坐标视图
+     *
+     * @return 结果
+     */
     private boolean isGEOView() {
         return this.treeItem.isGEOView();
+    }
+
+    /**
+     * 是否支持地理坐标
+     *
+     * @return 结果
+     */
+    private boolean isSupportGEO() {
+        return this.treeItem.isSupportGEO();
     }
 
     @FXML

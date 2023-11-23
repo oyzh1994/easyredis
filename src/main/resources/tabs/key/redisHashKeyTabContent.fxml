@@ -157,10 +157,10 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <FlexTitledPane flexWidth="100%" realHeight="100" text="字段名" collapsible="false">
+            <FlexTitledPane flexWidth="100%" realHeight="80" text="字段名" collapsible="false">
                 <FlexTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="hashField"/>
             </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" flexHeight="100% - 500" text="字段值" collapsible="false">
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 480" text="字段值" collapsible="false">
                 <RedisDataTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData"
                                    onKeyPressed="#onNodeDataKeyPressed"/>
             </FlexTitledPane>
