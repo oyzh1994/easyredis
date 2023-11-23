@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.PagePane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
-<FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent" side="RIGHT">
-    <FXTab text="键数据">
+<FlexTabPane styleClass="panel,panel-primary" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+             flexHeight="100%"
+             rotateGraphic="true"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent">
+    <FXTab text="数据">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>
@@ -71,7 +74,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25" >
+                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>

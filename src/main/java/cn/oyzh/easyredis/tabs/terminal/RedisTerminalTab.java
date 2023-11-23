@@ -31,7 +31,7 @@ public class RedisTerminalTab extends DynamicTab {
     /**
      * 内容controller
      */
-    private RedisTerminalTabContentController contentController;
+    private RedisTerminalTabContent contentController;
 
     @Override
     protected void loadContent() {

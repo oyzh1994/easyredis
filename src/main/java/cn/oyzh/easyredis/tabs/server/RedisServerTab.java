@@ -26,7 +26,7 @@ public class RedisServerTab extends DynamicTab {
     /**
      * 内容controller
      */
-    private RedisServerTabContentController contentController;
+    private RedisServerTabContent contentController;
 
     @Override
     protected void loadContent() {

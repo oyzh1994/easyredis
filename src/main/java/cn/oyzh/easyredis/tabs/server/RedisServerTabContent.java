@@ -10,6 +10,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,7 +34,7 @@ import java.util.concurrent.Future;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisServerTabContentController {
+public class RedisServerTabContent extends DynamicTabController {
 
     /**
      * redis客户端

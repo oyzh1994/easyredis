@@ -14,9 +14,12 @@
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTabContent" side="RIGHT">
-    <FXTab text="键数据">
+<FlexTabPane styleClass="panel,panel-primary" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+             flexHeight="100%"
+             rotateGraphic="true"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTabContent">
+    <FXTab text="数据">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>

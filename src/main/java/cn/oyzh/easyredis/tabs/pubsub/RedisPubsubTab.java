@@ -37,7 +37,7 @@ public class RedisPubsubTab extends DynamicTab {
     /**
      * 内容controller
      */
-    private RedisPubsubTabContentController contentController;
+    private RedisPubsubTabContent contentController;
 
     @Override
     protected void loadContent() {

@@ -10,9 +10,12 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<FlexTabPane styleClass="panel,panel-primary" flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.hylog.RedisHyLogKeyTabContent" side="RIGHT">
-    <FXTab text="键数据">
+<FlexTabPane styleClass="panel,panel-primary" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+             flexHeight="100%"
+             rotateGraphic="true"
+             xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="cn.oyzh.easyredis.tabs.key.hylog.RedisHyLogKeyTabContent">
+    <FXTab text="数据">
         <graphic>
             <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
         </graphic>

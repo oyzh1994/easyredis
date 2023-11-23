@@ -6,11 +6,11 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
+import cn.oyzh.fx.plus.controls.text.FlexLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -56,19 +56,19 @@ public class RedisKeyInfoContent implements Initializable {
      * 编码
      */
     @FXML
-    private TextField objectEncoding;
+    private FlexLabel objectEncoding;
 
     /**
      * 空闲时间
      */
     @FXML
-    private TextField objectIdletime;
+    private FlexLabel objectIdletime;
 
     /**
      * 引用数量
      */
     @FXML
-    private TextField objectRefcount;
+    private FlexLabel objectRefcount;
 
     /**
      * 复制信息

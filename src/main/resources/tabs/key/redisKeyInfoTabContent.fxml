@@ -2,22 +2,22 @@
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXTab styleClass="panel,panel-primary" xmlns="http://javafx.com/javafx"
+<FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoContent" text="键信息" fx:id="infoRoot">
+       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoContent" text="信息" fx:id="infoRoot">
     <graphic>
         <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
     </graphic>
     <FlexVBox flexHeight="100%" flexWidth="100%">
-        <FlexFlowPane realHeight="40" flexWidth="100%">
+        <FlexFlowPane realHeight="32" flexWidth="100%">
             <SVGGlyph tipText="复制键状态" size="16" onMousePrimaryClicked="#copy"
                       url="/font/file-copy.svg">
                 <FlowPane.margin>
@@ -34,41 +34,41 @@
                 <Insets top="9"/>
             </padding>
         </FlexFlowPane>
-        <FlexVBox flexHeight="100% - 40" flexWidth="100%" fontSize="11">
+        <FlexVBox flexHeight="100% - 32" flexWidth="100%" fontSize="11">
             <VBox.margin>
                 <Insets left="5"/>
             </VBox.margin>
-            <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="编码类型" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <FXLabel text="编码类型" realWidth="135" realHeight="30" styleClass="lbl,lbl-success">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
                 </FXLabel>
-                <ReadOnlyTextField fx:id="objectEncoding" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <FlexLabel fx:id="objectEncoding" realHeight="30" flexWidth="100% - 180" styleClass="lbl,lbl-success"/>
                 <HBox.margin>
-                    <Insets top="10"/>
+                    <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
-            <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="空闲时间" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <FXLabel text="空闲时间" realWidth="135" realHeight="30" styleClass="lbl,lbl-success">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
                 </FXLabel>
-                <ReadOnlyTextField fx:id="objectIdletime" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <FlexLabel fx:id="objectIdletime" realHeight="30" flexWidth="100% - 180" styleClass="lbl,lbl-success"/>
                 <HBox.margin>
-                    <Insets top="10"/>
+                    <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
-            <FlexHBox flexWidth="100%" realHeight="40">
-                <FXLabel text="引用数量" realWidth="135" realHeight="36" styleClass="item-label,lbl,lbl-primary">
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <FXLabel text="引用数量" realWidth="135" realHeight="30" styleClass="lbl,lbl-success">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
                 </FXLabel>
-                <ReadOnlyTextField fx:id="objectRefcount" realHeight="36" flexWidth="100% - 180" styleClass="item-text"/>
+                <FlexLabel fx:id="objectRefcount" realHeight="30" flexWidth="100% - 180" styleClass="lbl,lbl-success"/>
                 <HBox.margin>
-                    <Insets top="10"/>
+                    <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
         </FlexVBox>

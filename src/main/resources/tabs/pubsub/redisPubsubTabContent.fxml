@@ -4,5 +4,5 @@
 <ReadOnlyTextArea styleClass="panel,panel-primary" flexHeight="100%" fx:id="textArea" fontSize="12" editable="false" flexWidth="100%"
                   xmlns="http://javafx.com/javafx"
                   xmlns:fx="http://javafx.com/fxml"
-                  fx:controller="cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTabContentController">
+                  fx:controller="cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTabContent">
 </ReadOnlyTextArea>

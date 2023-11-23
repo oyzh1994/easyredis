@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.pubsub;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
+import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +19,7 @@ import redis.clients.jedis.JedisPubSub;
 @Lazy
 @Component
 @Scope("prototype")
-public class RedisPubsubTabContentController {
+public class RedisPubsubTabContent extends DynamicTabController {
 
     /**
      * 订阅组件
@@ -53,7 +54,7 @@ public class RedisPubsubTabContentController {
     public void unsubscribe() {
         try {
             this.pubSub.unsubscribe();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
