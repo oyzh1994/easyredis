@@ -71,31 +71,31 @@ public class RedisServerTabContent extends DynamicTabController {
      * 订阅组件
      */
     @FXML
-    private RedisPubsubController pubsubController;
+    private RedisPubsubContent pubsubController;
 
     /**
      * 慢查日志组件
      */
     @FXML
-    private RedisSlowlogController slowlogController;
+    private RedisSlowlogContent slowlogController;
 
     /**
      * 服务信息组件
      */
     @FXML
-    private RedisServerInfoController serverInfoController;
+    private RedisServerInfoContent serverInfoController;
 
     /**
      * 客户端信息组件
      */
     @FXML
-    private RedisClientInfoController clientInfoController;
+    private RedisClientInfoContent clientInfoController;
 
     /**
      * 汇总组件
      */
     @FXML
-    private RedisAggregationController aggregationController;
+    private RedisAggregationContent aggregationController;
 
 
     /**

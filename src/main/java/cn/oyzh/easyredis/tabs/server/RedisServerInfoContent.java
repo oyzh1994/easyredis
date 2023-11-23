@@ -34,7 +34,7 @@ import java.util.Optional;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisServerInfoController {
+public class RedisServerInfoContent {
 
     /**
      * tab面板
@@ -83,12 +83,12 @@ public class RedisServerInfoController {
 
             FlexTableColumn<RedisInfoPropItem, String> name = new FlexTableColumn<>();
             name.setText("属性名");
-            name.setFlexWidth("50%");
+            name.setFlexWidth("30%");
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             FlexTableColumn<RedisInfoPropItem, String> value = new FlexTableColumn<>();
             value.setText("属性值");
-            value.setFlexWidth("50% - 10");
+            value.setFlexWidth("70% - 20");
             value.setCellValueFactory(new PropertyValueFactory<>("value"));
 
             tableView.getColumns().add(name);

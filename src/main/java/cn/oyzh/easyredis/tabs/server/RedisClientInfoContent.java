@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisClientInfoController {
+public class RedisClientInfoContent {
 
     /**
      * redis客户端
@@ -47,7 +47,7 @@ public class RedisClientInfoController {
      * 编号
      */
     @FXML
-    private FlexTableColumn<RedisClientItem, String> index;
+    private FlexTableColumn<RedisClientItem, Integer> index;
 
     /**
      * 地址
@@ -115,7 +115,7 @@ public class RedisClientInfoController {
             item.setIndex(index.getAndIncrement());
             items.add(item);
         });
-        Collections.reverse(items);
+        // Collections.reverse(items);
         this.listTable.getItems().setAll(items);
     }
 }

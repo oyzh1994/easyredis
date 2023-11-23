@@ -33,7 +33,7 @@ import java.util.List;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisPubsubController {
+public class RedisPubsubContent {
 
     /**
      * redis客户端
