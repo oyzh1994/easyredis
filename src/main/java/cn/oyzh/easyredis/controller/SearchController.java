@@ -19,6 +19,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -50,7 +51,7 @@ public class SearchController extends SubController {
      * 搜索-搜索词
      */
     @FXML
-    private ClearableTextField searchKW;
+    private SearchTextField searchKW;
 
     // /**
     //  * 搜索-替换词
@@ -148,11 +149,11 @@ public class SearchController extends SubController {
     @FXML
     private SVGGlyph hideSearchMore;
 
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private SVGGlyph searchHistory;
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private SVGGlyph searchHistory;
 
     // /**
     //  * 搜索-替换历史
@@ -174,27 +175,27 @@ public class SearchController extends SubController {
      * 搜索历史储存
      */
     private final RedisSearchHistoryStore historyStore = RedisSearchHistoryStore.INSTANCE;
+    //
+    // /**
+    //  * 搜索历史弹窗
+    //  */
+    // private RedisSearchHistoryPopup searchHistoryPopup;
+    //
+    // /**
+    //  * 替换历史弹窗
+    //  */
+    // private RedisSearchHistoryPopup replaceHistoryPopup;
 
-    /**
-     * 搜索历史弹窗
-     */
-    private RedisSearchHistoryPopup searchHistoryPopup;
-
-    /**
-     * 替换历史弹窗
-     */
-    private RedisSearchHistoryPopup replaceHistoryPopup;
-
-    /**
-     * 搜索-搜索历史
-     */
-    @FXML
-    private void searchHistory(MouseEvent event) {
-        if (this.searchHistoryPopup == null) {
-            this.searchHistoryPopup = new RedisSearchHistoryPopup(1);
-        }
-        this.searchHistoryPopup.show(this.searchHistory, event.getScreenX(), event.getScreenY());
-    }
+    // /**
+    //  * 搜索-搜索历史
+    //  */
+    // @FXML
+    // private void searchHistory(MouseEvent event) {
+    //     if (this.searchHistoryPopup == null) {
+    //         this.searchHistoryPopup = new RedisSearchHistoryPopup(1);
+    //     }
+    //     this.searchHistoryPopup.show(this.searchHistory, event.getScreenX(), event.getScreenY());
+    // }
 
     /**
      * 搜索历史点击事件
@@ -238,8 +239,8 @@ public class SearchController extends SubController {
     private void showSearchMore() {
         this.searchMore2.display();
         // this.searchMore1.display();
-        this.searchMain.setRealHeight(108);
-        this.treeView.setFlexHeight("100% - 144");
+        this.searchMain.setRealHeight(60);
+        this.treeView.setFlexHeight("100% - 132");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.display();
@@ -251,10 +252,10 @@ public class SearchController extends SubController {
      */
     @FXML
     private void hideSearchMore() {
-        // this.searchMore1.disappear();
         this.searchMore2.disappear();
-        this.searchMain.setRealHeight(36);
-        this.treeView.setFlexHeight("100% - 72");
+        // this.searchMore1.disappear();
+        this.searchMain.setRealHeight(30);
+        this.treeView.setFlexHeight("100% - 92");
         // 重新布局
         this.searchMain.autosize();
         this.hideSearchMore.disappear();
@@ -522,6 +523,7 @@ public class SearchController extends SubController {
 
         // 初始化搜索
         this.searchHandler.init(this.treeView, tabPane);
+        this.searchKW.setHistoryPopup(new RedisSearchHistoryPopup());
     }
 
     @Override
