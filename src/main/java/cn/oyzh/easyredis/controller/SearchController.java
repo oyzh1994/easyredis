@@ -5,11 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.dto.RedisSearchResult;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
-import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
@@ -18,7 +17,6 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -26,16 +24,13 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * redis搜索子组件
@@ -106,6 +101,12 @@ public class SearchController extends SubController {
     //  */
     // @FXML
     // private FlexCheckBox searchData;
+
+    /**
+     * 搜索-搜索模式
+     */
+    @FXML
+    private FlexCheckBox searchMode;
 
     /**
      * 搜索-全文匹配
@@ -383,17 +384,22 @@ public class SearchController extends SubController {
             try {
                 this.searchCheck();
                 this.treeView.disable();
+                RedisSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
                     this.searchResult.setText("搜索中...");
                     // 触发事件
-                    EventUtil.fire(RedisEventTypes.REDIS_SEARCH_START);
+                    // EventUtil.fire(RedisEventTypes.REDIS_SEARCH_START);
+                    RedisEventUtil.searchStart(param);
                     // 执行预搜索
                     this.searchHandler.preSearch(this.getSearchParam());
                     this.searchResult.setText("");
                     // 更新搜索结果
                     this.updateSearchResult();
+                    // 搜索结束
+                    RedisEventUtil.searchFinish(param);
                 } else {// 搜索结束
-                    EventUtil.fire(RedisEventTypes.REDIS_SEARCH_FINISH);
+                    // EventUtil.fire(RedisEventTypes.REDIS_SEARCH_FINISH);
+                    RedisEventUtil.searchFinish(param);
                 }
                 this.treeView.enable();
             } catch (Exception ex) {
@@ -419,6 +425,7 @@ public class SearchController extends SubController {
         RedisSearchParam searchParam = new RedisSearchParam();
         searchParam.setKw(this.searchKW.getTextTrim());
         searchParam.setFullMatch(this.fullMatch.isSelected());
+        searchParam.setSearchMode(!this.searchMode.isSelected());
         // searchParam.setSearchKey(this.searchKey.isSelected());
         // searchParam.setSearchData(this.searchData.isSelected());
         searchParam.setCompareCase(this.compareCase.isSelected());
@@ -544,10 +551,10 @@ public class SearchController extends SubController {
     private void onSearchKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             this.searchNext();
-        // } else if (e.getCode() == KeyCode.TAB) {
-        //     if (this.searchMore1.isVisible()) {
-        //         this.replaceKW.requestFocus();
-        //     }
+            // } else if (e.getCode() == KeyCode.TAB) {
+            //     if (this.searchMore1.isVisible()) {
+            //         this.replaceKW.requestFocus();
+            //     }
         } else if (e.getCode() == KeyCode.UP) {
             String currKW = this.searchKW.getTextTrim();
             List<String> list = this.historyStore.getSearchKw();

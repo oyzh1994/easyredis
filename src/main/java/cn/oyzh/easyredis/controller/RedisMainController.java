@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
@@ -500,5 +501,34 @@ public class RedisMainController extends ParentController {
     @FXML
     private void clearMsg() {
         this.msgArea.clear();
+    }
+
+    /**
+     * 树节点过滤
+     */
+    @EventReceiver(value = RedisEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    private void onTreeChildFilter() {
+        this.tree.itemFilter().initFilters();
+        this.filter();
+    }
+
+    /**
+     * 搜索开始事件
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, verbose = true)
+    private void onSearchStart() {
+        this.tree.itemFilter().setSearchParam(null);
+        this.filter();
+    }
+
+    /**
+     * 搜索结束事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, verbose = true)
+    private void onSearchFinish(RedisSearchFinishMsg msg) {
+        this.tree.itemFilter().setSearchParam(msg.searchParam());
+        this.filter();
     }
 }

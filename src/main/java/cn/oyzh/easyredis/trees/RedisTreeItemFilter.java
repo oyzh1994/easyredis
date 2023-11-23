@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
+import cn.oyzh.easyredis.dto.RedisSearchParam;
+import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -8,6 +10,7 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -81,6 +84,20 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     private boolean onlyCollect;
 
     /**
+     * 搜索参数
+     */
+    @Setter
+    @Getter
+    private RedisSearchParam searchParam;
+
+
+    /**
+     * zk主页搜索处理
+     */
+    @Autowired
+    private RedisMainSearchHandler searchHandler;
+
+    /**
      * 过滤内容列表
      */
     private final List<RedisFilter> filters = new ArrayList<>();
@@ -135,9 +152,17 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤键
-            return !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
+            boolean unFiltered = !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
+            if (!unFiltered) {
+                return false;
+            }
         }
-        return true;
+        // 如果不需要处理搜索参数，则直接返回true
+        if (this.searchParam == null || this.searchParam.isSearchMode() || this.searchParam.isEmpty()) {
+            return true;
+        }
+        // 判断是否满足搜索要求
+        return this.searchHandler.isMatchParam(item) != null;
     }
 
 }

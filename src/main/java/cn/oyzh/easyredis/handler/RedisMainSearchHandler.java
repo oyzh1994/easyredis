@@ -23,6 +23,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +39,8 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2023/06/22
  */
+@Lazy
+@Component
 @Accessors(chain = true, fluent = true)
 public class RedisMainSearchHandler {
 
@@ -455,7 +459,7 @@ public class RedisMainSearchHandler {
      * @param item 键
      * @return 匹配类型
      */
-    private String isMatchParam(TreeItem<?> item) {
+    public String isMatchParam(TreeItem<?> item) {
         if (item == null || item instanceof RedisDBTreeItem || this.searchParam == null) {
             return null;
         }

@@ -1,9 +1,12 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisListRowAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
+import cn.oyzh.easyredis.event.msg.RedisSearchStartMsg;
 import cn.oyzh.easyredis.event.msg.RedisSetMemberAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisStreamMessageAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
@@ -17,6 +20,7 @@ import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
 import lombok.experimental.UtilityClass;
@@ -133,6 +137,24 @@ public class RedisEventUtil {
     public static void hyLogElementsAddedMsg(RedisHyLogKeyTreeItem item) {
         RedisHyLogElementsAddedMsg msg = new RedisHyLogElementsAddedMsg();
         msg.item(item);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 搜索开始事件
+     */
+    public static void searchStart(RedisSearchParam searchParam) {
+        RedisSearchStartMsg msg = new RedisSearchStartMsg();
+        msg.searchParam(searchParam);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 搜索结束事件
+     */
+    public static void searchFinish(RedisSearchParam searchParam) {
+        RedisSearchFinishMsg msg = new RedisSearchFinishMsg();
+        msg.searchParam(searchParam);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }
