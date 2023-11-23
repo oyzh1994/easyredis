@@ -28,15 +28,15 @@
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph fx:id="sortAsc" tipText="对选中节点进行排序" size="15"
-                              onMousePrimaryClicked="#sortNodes" url="/font/sort-ascending.svg">
+                              onMousePrimaryClicked="#sortAsc" url="/font/sort-ascending.svg">
                         <HBox.margin>
-                            <Insets left="8" top="12"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph fx:id="sortDesc" tipText="对选中节点进行排序" size="15" visible="false" managed="false"
-                              onMousePrimaryClicked="#sortNodes" url="/font/sort-descending.svg">
+                              onMousePrimaryClicked="#sortDesc" url="/font/sort-descending.svg">
                         <HBox.margin>
-                            <Insets left="8" top="12"/>
+                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </SVGGlyph>
                     <SVGGlyph tipText="定位节点" size="17" onMousePrimaryClicked="#positionNode"
@@ -52,37 +52,37 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox realHeight="30" flexWidth="100%">
-                    <FlexCheckBox text="str" fontSize="9" fx:id="excludeString">
+                    <FlexCheckBox text="str" fontSize="9" fx:id="showString" selected="true">
                         <HBox.margin>
                             <Insets left="10" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="set" fontSize="9" fx:id="excludeSet">
+                    <FlexCheckBox text="set" fontSize="9" fx:id="showSet" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="zset" fontSize="9" fx:id="excludeZSet">
+                    <FlexCheckBox text="zset" fontSize="9" fx:id="showZSet" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="list" fontSize="9" fx:id="excludeList">
+                    <FlexCheckBox text="list" fontSize="9" fx:id="showList" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="hash" fontSize="9" fx:id="excludeHash">
+                    <FlexCheckBox text="hash" fontSize="9" fx:id="showHash" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="hylog" fontSize="9" fx:id="excludeHyperLogLog">
+                    <FlexCheckBox text="hylog" fontSize="9" fx:id="showHyLog" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="stream" fontSize="9" fx:id="excludeStream">
+                    <FlexCheckBox text="stream" fontSize="9" fx:id="showStream" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>

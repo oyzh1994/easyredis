@@ -137,7 +137,7 @@ public class RedisKey implements Comparable<RedisKey> {
      *
      * @return 结果
      */
-    public boolean isHyperLogLogKey() {
+    public boolean isHyLogKey() {
         return RedisKeyType.HYPERLOGLOG == this.type;
     }
 

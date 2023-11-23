@@ -469,7 +469,7 @@ public class RedisKeyExportController extends Controller {
         if (this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-        if (this.hyperLogLogType.isSelected() && node.isHyperLogLogKey()) {
+        if (this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
             return true;
         }
         if (this.streamType.isSelected() && node.isStreamKey()) {

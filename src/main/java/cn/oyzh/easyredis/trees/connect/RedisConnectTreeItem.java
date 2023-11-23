@@ -11,11 +11,10 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
-import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
+import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
@@ -26,6 +25,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,6 +35,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -286,7 +287,7 @@ public class RedisConnectTreeItem extends RedisTreeItem {
      */
     public void disConnect() {
         if (!this.isWaiting() && this.isConnected()) {
-            Task task = TaskBuilder.newBuilder().onStart( this::_disConnect)
+            Task task = TaskBuilder.newBuilder().onStart(this::_disConnect)
                     .onFinish(this::stopWaiting)
                     .onError(MessageBox::exception)
                     .build();
@@ -431,10 +432,10 @@ public class RedisConnectTreeItem extends RedisTreeItem {
     }
 
     @Override
-    public void filter(@NonNull RedisTreeItemFilter filter) {
+    public void doFilter(@NonNull RichTreeItemFilter filter) {
         if (this.isConnected()) {
             for (RedisDBTreeItem dbTreeItem : this.getChildren()) {
-                dbTreeItem.filter(filter);
+                dbTreeItem.doFilter(filter);
             }
         }
     }
@@ -464,5 +465,25 @@ public class RedisConnectTreeItem extends RedisTreeItem {
             return groupItem;
         }
         return null;
+    }
+
+    @Override
+    public void sortAsc() {
+        this.sortType = 0;
+        if (!this.isChildEmpty()) {
+            // 执行排序
+            List<RedisDBTreeItem> childes = this.getChildren();
+            childes.sort(Comparator.comparingInt(RedisDBTreeItem::dbIndex));
+        }
+    }
+
+    @Override
+    public void sortDesc() {
+        this.sortType = 1;
+        if (!this.isChildEmpty()) {
+            // 执行排序
+            List<RedisDBTreeItem> childes = this.getChildren();
+            childes.sort((a, b) -> Integer.compare(b.dbIndex(), a.dbIndex()));
+        }
     }
 }

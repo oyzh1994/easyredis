@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -152,7 +153,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
     }
 
     @Override
-    public void filter(@NonNull RedisTreeItemFilter filter) {
+    public void doFilter(@NonNull RichTreeItemFilter filter) {
         this.visible = filter.apply(this);
     }
 
@@ -331,7 +332,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
     public void unCollect(boolean tips) {
         if (this.info().removeCollect(this.dbIndex(), this.key())) {
             RedisInfoStore.INSTANCE.update(this.info());
-            this.treeView().filterItem();
+            this.treeView().filter();
             if (tips) {
                 MessageBox.okToast("键已取消收藏");
             }

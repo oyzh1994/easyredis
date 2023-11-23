@@ -1,12 +1,11 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
+import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -17,7 +16,6 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Window;
 import javafx.util.Callback;
 import lombok.Getter;
 import lombok.NonNull;
@@ -37,19 +35,19 @@ import java.util.function.Consumer;
 @Accessors(chain = true, fluent = true)
 public class RedisTreeView extends RichTreeView {
 
-    /**
-     * 排序方式
-     */
-    @Getter
-    @Setter
-    private Boolean sortOrder;
+    // /**
+    //  * 排序方式
+    //  */
+    // @Getter
+    // @Setter
+    // private Boolean sortOrder;
 
-    /**
-     * 键过滤器
-     */
-    @Getter
-    @Setter
-    private RedisTreeItemFilter itemFilter;
+    // /**
+    //  * 键过滤器
+    //  */
+    // @Getter
+    // @Setter
+    // private RedisTreeItemFilter itemFilter;
 
     // /**
     //  * 导入中标志位
@@ -94,6 +92,17 @@ public class RedisTreeView extends RichTreeView {
     //  * 配置储存对象
     //  */
     // private final RedisSetting setting = RedisSettingStore.SETTING;
+
+    @Override
+    public RedisTreeItemFilter itemFilter() {
+        // 初始化过滤器
+        if (this.itemFilter == null) {
+            RedisTreeItemFilter filter = SpringUtil.getBean(RedisTreeItemFilter.class);
+            filter.initFilters();
+            this.itemFilter = filter;
+        }
+        return (RedisTreeItemFilter) this.itemFilter;
+    }
 
     /**
      * 触发子节点变化事件
@@ -243,38 +252,38 @@ public class RedisTreeView extends RichTreeView {
         });
     }
 
-    /**
-     * 对键排序
-     *
-     * @param sortOrder 排序方式
-     */
-    public void sortItem(Boolean sortOrder) {
-        this.sortOrder = sortOrder;
-        if (sortOrder != null) {
-            // 获取选中键
-            TreeItem<?> item = this.getSelectedItem();
-            // 执行排序
-            if (item instanceof RedisTreeItem treeItem) {
-                treeItem.sort(sortOrder);
-            }
-            // 重新选中此键
-            this.select(item);
-        }
-    }
+    // /**
+    //  * 对键排序
+    //  *
+    //  * @param sortOrder 排序方式
+    //  */
+    // public void sortItem(Boolean sortOrder) {
+    //     this.sortOrder = sortOrder;
+    //     if (sortOrder != null) {
+    //         // 获取选中键
+    //         TreeItem<?> item = this.getSelectedItem();
+    //         // 执行排序
+    //         if (item instanceof RedisTreeItem treeItem) {
+    //             treeItem.sort(sortOrder);
+    //         }
+    //         // 重新选中此键
+    //         this.select(item);
+    //     }
+    // }
 
-    /**
-     * 过滤键
-     */
-    public void filterItem() {
-        // 获取选中键
-        TreeItem<?> item = this.getSelectedItem();
-        // 清除选中键
-        this.clearSelection();
-        // 执行过滤
-        this.root().filter(this.itemFilter);
-        // 选中并滚动键
-        this.selectAndScroll(item);
-    }
+    // /**
+    //  * 过滤键
+    //  */
+    // public void filterItem() {
+    //     // 获取选中键
+    //     TreeItem<?> item = this.getSelectedItem();
+    //     // 清除选中键
+    //     this.clearSelection();
+    //     // 执行过滤
+    //     this.root().filter(this.itemFilter);
+    //     // 选中并滚动键
+    //     this.selectAndScroll(item);
+    // }
 
     /**
      * 重新载入

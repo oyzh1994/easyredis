@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.IconUtil;
 import javafx.collections.ListChangeListener;
@@ -253,7 +254,7 @@ public class RedisRootTreeItem extends RedisTreeItem implements RedisConnectMana
                 list.add(groupTreeItem);
             }
             this.getChildren().addAll(list);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
         }
     }
 
@@ -297,12 +298,12 @@ public class RedisRootTreeItem extends RedisTreeItem implements RedisConnectMana
     }
 
     @Override
-    public void filter(@NonNull RedisTreeItemFilter filter) {
+    public void doFilter(@NonNull RichTreeItemFilter filter) {
         List<RedisConnectTreeItem> connectedItems = this.getConnectedItems();
         if (CollUtil.isNotEmpty(connectedItems)) {
             List<Runnable> tasks = new ArrayList<>(connectedItems.size());
             for (RedisConnectTreeItem connectedItem : connectedItems) {
-                tasks.add(() -> connectedItem.filter(filter));
+                tasks.add(() -> connectedItem.doFilter(filter));
             }
             // 提交任务
             ThreadUtil.submit(tasks);
@@ -381,7 +382,7 @@ public class RedisRootTreeItem extends RedisTreeItem implements RedisConnectMana
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.getChildren().addAll(items);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
         }
     }
 

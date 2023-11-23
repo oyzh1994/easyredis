@@ -18,9 +18,8 @@ import cn.oyzh.easyredis.redis.key.RedisSetKey;
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
@@ -33,12 +32,12 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -115,14 +114,26 @@ public class RedisDBTreeItem extends RedisTreeItem {
                 this.children = FXCollections.observableArrayList();
             }
             // 监听子节点变化
-            this.children.addListener((ListChangeListener<RedisKeyTreeItem<?>>) c -> TaskManager.startDelayTask("redis:db:flushChildren", () -> {
-                // 应用过滤
-                this.filter(this.treeView().itemFilter());
-                // // 刷新子节点
-                // this.flushChild();
-                // // 进行排序
-                // this.sort(this.treeView().sortOrder());
-            }, 5));
+            this.children.addListener((ListChangeListener<RedisKeyTreeItem<?>>) c -> {
+                try {
+                    c.next();
+                    // 添加、替换，执行过滤
+                    if (c.wasAdded() || c.wasReplaced()) {
+                        this.doFilter(this.treeView().itemFilter());
+                    }
+                    // 添加、移除、替换
+                    if (c.wasAdded() || c.wasRemoved() || c.wasReplaced()) {
+                        // 刷新子节点
+                        this.flushChildren();
+                    }
+                    // 添加、替换，执行排序
+                    if (c.wasAdded() || c.wasReplaced()) {
+                        this.sort();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
         }
         return this.children;
     }
@@ -137,19 +148,19 @@ public class RedisDBTreeItem extends RedisTreeItem {
     }
 
     @Override
-    public void filter(@NonNull RedisTreeItemFilter filter) {
+    public void doFilter(@NonNull RichTreeItemFilter filter) {
         if (!this.isChildEmpty()) {
             for (RedisKeyTreeItem<?> child : this.children) {
-                child.filter(filter);
+                child.doFilter(filter);
             }
-            this.flushChild();
+            this.flushChildren();
         }
     }
 
     /**
      * 刷新子节点列表
      */
-    public void flushChild() {
+    public void flushChildren() {
         if (this.isChildEmpty()) {
             this.getChildren().clear();
             // 刷新树键值
@@ -540,20 +551,20 @@ public class RedisDBTreeItem extends RedisTreeItem {
     public void addChild(@NonNull TreeItem<?> item) {
         if (item instanceof RedisKeyTreeItem<?> treeItem) {
             this.children().add(treeItem);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
         }
     }
 
     @Override
     public void addChildes(@NonNull List items) {
         this.children().addAll(items);
-        this.sort(this.treeView().sortOrder());
+        this.sort();
     }
 
     @Override
     public void replaceChildes(@NonNull List items) {
         super.getChildren().clear();
         this.children().setAll(items);
-        this.sort(this.treeView().sortOrder());
+        this.sort();
     }
 }

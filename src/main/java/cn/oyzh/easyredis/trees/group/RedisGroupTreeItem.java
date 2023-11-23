@@ -210,7 +210,7 @@ public class RedisGroupTreeItem extends RedisTreeItem implements RedisConnectMan
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.getChildren().addAll(items);
-            this.sort(this.treeView().sortOrder());
+            this.sort();
         }
     }
 

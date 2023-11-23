@@ -60,7 +60,7 @@ public abstract class RedisTreeItem extends RichTreeItem {
      */
     public void addChildes(@NonNull List<? extends TreeItem> items) {
         this.getChildren().addAll(items);
-        this.sort(this.treeView().sortOrder());
+        this.sort();
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class RedisTreeItem extends RichTreeItem {
      */
     public void replaceChildes(@NonNull List<? extends TreeItem> items) {
         this.getChildren().setAll(items);
-        this.sort(this.treeView().sortOrder());
+        this.sort();
     }
 
     /**
@@ -106,12 +106,12 @@ public abstract class RedisTreeItem extends RichTreeItem {
         }
     }
 
-    /**
-     * 过滤
-     */
-    public void filter(@NonNull RedisTreeItemFilter filter) {
-
-    }
+    // /**
+    //  * 过滤
+    //  */
+    // public void filter(@NonNull RedisTreeItemFilter filter) {
+    //
+    // }
 
     /**
      * 获取节点值

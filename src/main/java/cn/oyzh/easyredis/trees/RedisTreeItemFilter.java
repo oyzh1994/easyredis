@@ -8,6 +8,8 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
+@Lazy
+@Component
 public class RedisTreeItemFilter implements RichTreeItemFilter {
 
     /**
@@ -60,7 +64,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
      */
     @Setter
     @Getter
-    private boolean excludeHyperLogLogType;
+    private boolean excludeHyLogType;
 
     /**
      * 排除stream键
@@ -127,7 +131,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤hyperLogLog键
-            if (this.excludeHyperLogLogType && node.isHyperLogLogKey()) {
+            if (this.excludeHyLogType && node.isHyLogKey()) {
                 return false;
             }
             // 过滤键

@@ -73,10 +73,10 @@ public class RedisMainController extends ParentController {
      */
     private ResizeEnhance resizeEnhance;
 
-    /**
-     * 倒序排序
-     */
-    private boolean ascSort;
+    // /**
+    //  * 倒序排序
+    //  */
+    // private boolean ascSort;
 
     /**
      * 节点排序(正序)
@@ -100,43 +100,43 @@ public class RedisMainController extends ParentController {
      * 过滤hash键
      */
     @FXML
-    private FlexCheckBox excludeHash;
+    private FlexCheckBox showHash;
 
     /**
      * 过滤hyperLogLog键
      */
     @FXML
-    private FlexCheckBox excludeHyperLogLog;
+    private FlexCheckBox showHyLog;
 
     /**
      * 过滤stream键
      */
     @FXML
-    private FlexCheckBox excludeStream;
+    private FlexCheckBox showStream;
 
     /**
      * 过滤string键
      */
     @FXML
-    private FlexCheckBox excludeString;
+    private FlexCheckBox showString;
 
     /**
      * 过滤set键
      */
     @FXML
-    private FlexCheckBox excludeSet;
+    private FlexCheckBox showSet;
 
     /**
      * 过滤zset键
      */
     @FXML
-    private FlexCheckBox excludeZSet;
+    private FlexCheckBox showZSet;
 
     /**
      * 过滤list键
      */
     @FXML
-    private FlexCheckBox excludeList;
+    private FlexCheckBox showList;
 
     /**
      * redis切换面板
@@ -154,10 +154,10 @@ public class RedisMainController extends ParentController {
      */
     private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
 
-    /**
-     * 树节点过滤器
-     */
-    private final RedisTreeItemFilter treeItemFilter = new RedisTreeItemFilter();
+    // /**
+    //  * 树节点过滤器
+    //  */
+    // private final RedisTreeItemFilter treeItemFilter = new RedisTreeItemFilter();
 
     /**
      * 消息文本框
@@ -171,16 +171,36 @@ public class RedisMainController extends ParentController {
     @FXML
     private SearchController searchController;
 
+    // /**
+    //  * 对子节点排序
+    //  */
+    // @FXML
+    // private void sortNodes() {
+    //     // 设置排序方式
+    //     this.ascSort = !this.ascSort;
+    //     this.sortAsc.setVisible(!this.ascSort);
+    //     this.sortDesc.setVisible(this.ascSort);
+    //     this.tree.sortItem(this.ascSort);
+    // }
+
     /**
-     * 对子节点排序
+     * 对子节点排序，正序
      */
     @FXML
-    private void sortNodes() {
-        // 设置排序方式
-        this.ascSort = !this.ascSort;
-        this.sortAsc.setVisible(!this.ascSort);
-        this.sortDesc.setVisible(this.ascSort);
-        this.tree.sortItem(this.ascSort);
+    private void sortAsc() {
+        this.sortAsc.disappear();
+        this.sortDesc.display();
+        this.tree.sortAsc();
+    }
+
+    /**
+     * 对子节点排序，倒序
+     */
+    @FXML
+    private void sortDesc() {
+        this.sortDesc.disappear();
+        this.sortAsc.display();
+        this.tree.sortDesc();
     }
 
     /**
@@ -247,8 +267,8 @@ public class RedisMainController extends ParentController {
         EventUtil.register(this.tabPane);
 
         // 初始化过滤
-        this.tree.itemFilter(this.treeItemFilter);
-        this.treeItemFilter.initFilters();
+        // this.tree.itemFilter(this.treeItemFilter);
+        // this.treeItemFilter.initFilters();
         this.filter();
 
         // 设置上次保存的页面拉伸
@@ -309,34 +329,34 @@ public class RedisMainController extends ParentController {
         // 左侧栏业务
         this.onlyCollect.selectedChanged((obs, o, n) -> {
             if (n) {
-                this.excludeSet.disable();
-                this.excludeZSet.disable();
-                this.excludeHash.disable();
-                this.excludeList.disable();
-                this.excludeString.disable();
-                this.excludeStream.disable();
-                this.excludeHyperLogLog.disable();
+                this.showSet.disable();
+                this.showZSet.disable();
+                this.showHash.disable();
+                this.showList.disable();
+                this.showString.disable();
+                this.showStream.disable();
+                this.showHyLog.disable();
             } else {
-                this.excludeSet.enable();
-                this.excludeZSet.enable();
-                this.excludeHash.enable();
-                this.excludeList.enable();
-                this.excludeString.enable();
-                this.excludeStream.enable();
-                this.excludeHyperLogLog.enable();
+                this.showSet.enable();
+                this.showZSet.enable();
+                this.showHash.enable();
+                this.showList.enable();
+                this.showString.enable();
+                this.showStream.enable();
+                this.showHyLog.enable();
             }
             this.filter();
         });
-        this.excludeSet.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeHash.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeList.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeZSet.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeString.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeStream.selectedChanged((obs, o, n) -> this.filter());
-        this.excludeHyperLogLog.selectedChanged((obs, o, n) -> this.filter());
+        this.showSet.selectedChanged((obs, o, n) -> this.filter());
+        this.showHash.selectedChanged((obs, o, n) -> this.filter());
+        this.showList.selectedChanged((obs, o, n) -> this.filter());
+        this.showZSet.selectedChanged((obs, o, n) -> this.filter());
+        this.showString.selectedChanged((obs, o, n) -> this.filter());
+        this.showStream.selectedChanged((obs, o, n) -> this.filter());
+        this.showHyLog.selectedChanged((obs, o, n) -> this.filter());
 
-        this.sortAsc.managedProperty().bind(this.sortAsc.visibleProperty());
-        this.sortDesc.managedProperty().bind(this.sortDesc.visibleProperty());
+        this.sortAsc.managedBindVisible();
+        this.sortDesc.managedBindVisible();
         this.tabPane.selectedTabChanged((abs, o, n) -> {
             if (o != null) {
                 o.getStyleClass().remove("tab-active");
@@ -400,7 +420,7 @@ public class RedisMainController extends ParentController {
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_FILTER, async = true, verbose = true)
     private void keyFilter() {
-        this.treeItemFilter.initFilters();
+        this.tree.itemFilter().initFilters();
         this.filter();
         log.info("REDIS_NODE_FILTER.");
     }
@@ -451,25 +471,25 @@ public class RedisMainController extends ParentController {
         TaskManager.startDelayTask("redis:tree:filter", () -> {
             this.tree.disable();
             if (this.onlyCollect.isSelected()) {
-                this.treeItemFilter.setOnlyCollect(true);
-                this.treeItemFilter.setExcludeSetType(false);
-                this.treeItemFilter.setExcludeHashType(false);
-                this.treeItemFilter.setExcludeListType(false);
-                this.treeItemFilter.setExcludeZSetType(false);
-                this.treeItemFilter.setExcludeStringType(false);
-                this.treeItemFilter.setExcludeStreamType(false);
-                this.treeItemFilter.setExcludeHyperLogLogType(false);
+                this.tree.itemFilter().setOnlyCollect(true);
+                this.tree.itemFilter().setExcludeSetType(false);
+                this.tree.itemFilter().setExcludeHashType(false);
+                this.tree.itemFilter().setExcludeListType(false);
+                this.tree.itemFilter().setExcludeZSetType(false);
+                this.tree.itemFilter().setExcludeHyLogType(false);
+                this.tree.itemFilter().setExcludeStringType(false);
+                this.tree.itemFilter().setExcludeStreamType(false);
             } else {
-                this.treeItemFilter.setOnlyCollect(false);
-                this.treeItemFilter.setExcludeSetType(this.excludeSet.isSelected());
-                this.treeItemFilter.setExcludeListType(this.excludeList.isSelected());
-                this.treeItemFilter.setExcludeHashType(this.excludeHash.isSelected());
-                this.treeItemFilter.setExcludeZSetType(this.excludeZSet.isSelected());
-                this.treeItemFilter.setExcludeStringType(this.excludeString.isSelected());
-                this.treeItemFilter.setExcludeStreamType(this.excludeStream.isSelected());
-                this.treeItemFilter.setExcludeHyperLogLogType(this.excludeHyperLogLog.isSelected());
+                this.tree.itemFilter().setOnlyCollect(false);
+                this.tree.itemFilter().setExcludeSetType(!this.showSet.isSelected());
+                this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
+                this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
+                this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
+                this.tree.itemFilter().setExcludeHyLogType(!this.showHyLog.isSelected());
+                this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
+                this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
             }
-            this.tree.filterItem();
+            this.tree.filter();
             this.tree.enable();
         }, 100);
     }
