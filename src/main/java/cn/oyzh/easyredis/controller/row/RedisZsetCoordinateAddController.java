@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -92,7 +93,8 @@ public class RedisZsetCoordinateAddController extends Controller {
             // 添加元素
             client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
+            RedisEventUtil.zSetCoordinateAdded(this.treeItem);
             MessageBox.okToast("新增坐标成功！");
             this.closeStage();
         } catch (Exception ex) {

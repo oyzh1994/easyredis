@@ -1,8 +1,11 @@
 package cn.oyzh.easyredis.tabs.key.set;
 
+import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisSetMemberAddedMsg;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
+import cn.oyzh.fx.plus.event.EventReceiver;
 import lombok.NonNull;
 
 /**

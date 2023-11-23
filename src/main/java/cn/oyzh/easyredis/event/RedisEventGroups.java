@@ -41,4 +41,9 @@ public class RedisEventGroups {
      */
     public static final String FILTER_ACTION = "FILTER_ACTION";
 
+    /**
+     * 键操作
+     */
+    public static final String KEY_ACTION = "KEY_ACTION";
+
 }

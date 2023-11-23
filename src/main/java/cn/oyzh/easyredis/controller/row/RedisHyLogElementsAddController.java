@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
         cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisHyperLogLogElementsAdd.fxml"
 )
-public class RedisHyperLogLogElementsAddController extends Controller {
+public class RedisHyLogElementsAddController extends Controller {
 
     /**
      * 行数据
@@ -78,7 +79,8 @@ public class RedisHyperLogLogElementsAddController extends Controller {
                 return;
             }
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
+            RedisEventUtil.hyLogElementsAddedMsg(this.treeItem);
             MessageBox.okToast("新增元素成功！");
             this.closeStage();
         } catch (Exception ex) {

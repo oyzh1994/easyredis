@@ -1,12 +1,19 @@
 package cn.oyzh.easyredis.tabs.key.hylog;
 
-import cn.oyzh.easyredis.controller.row.RedisHyperLogLogElementsAddController;
+import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
+import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import org.springframework.context.annotation.Lazy;
@@ -85,8 +92,30 @@ public class RedisHyLogKeyTabContent extends RedisKeyTabContent<RedisHyLogKeyTre
      */
     @FXML
     private void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(RedisHyperLogLogElementsAddController.class, this.treeItem.window());
+        StageWrapper fxView = StageUtil.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
+    }
+
+    /**
+     * hylog元素添加事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_HYLOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
+    private void onHyLogElementAdded(RedisHyLogElementsAddedMsg msg) {
+        if (this.treeItem == msg.item()) {
+            this.reloadNode();
+        }
+    }
+
+    @Override
+    public void onTabInit() {
+        EventUtil.register(this);
+    }
+
+    @Override
+    public void onTabClose(Event event) {
+        EventUtil.unregister(this);
     }
 }

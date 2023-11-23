@@ -3,6 +3,9 @@ package cn.oyzh.easyredis.tabs.key.zset;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.controller.row.RedisZsetCoordinateAddController;
+import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
@@ -12,12 +15,15 @@ import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.property.ScaleDoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -339,4 +345,39 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         this.initNode();
     }
 
+    /**
+     * zset坐标添加事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
+    private void onZSetCoordinateAdded(RedisZSetCoordinateAddedMsg msg) {
+        if (this.treeItem == msg.item()) {
+            this.treeItem.refreshNodeValue();
+            this.firstPage();
+        }
+    }
+
+    /**
+     * zset成员添加事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
+    private void onZSetMemberAdded(RedisZSetMemberAddedMsg msg) {
+        if (this.treeItem == msg.item()) {
+            this.treeItem.refreshNodeValue();
+            this.firstPage();
+        }
+    }
+
+    @Override
+    public void onTabInit() {
+        EventUtil.register(this);
+    }
+
+    @Override
+    public void onTabClose(Event event) {
+        EventUtil.unregister(this);
+    }
 }

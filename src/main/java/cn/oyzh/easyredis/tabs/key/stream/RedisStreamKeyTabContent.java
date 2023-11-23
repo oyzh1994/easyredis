@@ -2,13 +2,19 @@ package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
+import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisSetMemberAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisStreamMessageAddedMsg;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -111,5 +117,28 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
                 "消息ID：" + this.treeItem.currentRow().getId() + System.lineSeparator() +
                 "消息内容：" + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "消息");
+    }
+
+    /**
+     * stream消息添加事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
+    private void onStreamMessageAdded(RedisStreamMessageAddedMsg msg) {
+        if (this.treeItem == msg.item()) {
+            this.treeItem.refreshNodeValue();
+            this.firstPage();
+        }
+    }
+
+    @Override
+    public void onTabInit() {
+        EventUtil.register(this);
+    }
+
+    @Override
+    public void onTabClose(Event event) {
+        EventUtil.unregister(this);
     }
 }

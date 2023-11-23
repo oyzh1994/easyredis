@@ -3,13 +3,12 @@ package cn.oyzh.easyredis.controller.row;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.alibaba.fastjson.JSON;
@@ -63,7 +62,7 @@ public class RedisListRowAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg("行数据不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -79,7 +78,8 @@ public class RedisListRowAddController extends Controller {
                 client.rpushx(dbIndex, key, rowValue);
             }
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_LIST_ROW_ADDED, this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_LIST_ROW_ADDED, this.treeItem);
+            RedisEventUtil.listRowAdded(this.treeItem);
             MessageBox.okToast("新增行成功！");
             this.closeStage();
         } catch (Exception ex) {

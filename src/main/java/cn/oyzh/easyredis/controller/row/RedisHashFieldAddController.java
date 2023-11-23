@@ -3,12 +3,11 @@ package cn.oyzh.easyredis.controller.row;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.alibaba.fastjson.JSON;
@@ -61,13 +60,13 @@ public class RedisHashFieldAddController extends Controller {
         try {
             String fieldValue = this.fieldValue.getText();
             if (fieldValue == null) {
-               MessageBox.tipMsg("字段不能为空", this.fieldValue);
+                MessageBox.tipMsg("字段不能为空", this.fieldValue);
                 return;
             }
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("数据不能为空", this.rowValue);
+                MessageBox.tipMsg("数据不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -83,7 +82,8 @@ public class RedisHashFieldAddController extends Controller {
             // 添加元素
             client.hset(dbIndex, key, fieldValue, rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_HASH_FIELD_ADDED, this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_HASH_FIELD_ADDED, this.treeItem);
+            RedisEventUtil.hashFieldAddedMsg(this.treeItem);
             MessageBox.okToast("新增字段成功！");
             this.closeStage();
         } catch (Exception ex) {

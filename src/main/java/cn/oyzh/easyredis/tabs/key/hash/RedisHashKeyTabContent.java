@@ -2,16 +2,22 @@ package cn.oyzh.easyredis.tabs.key.hash;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
+import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisListRowAddedMsg;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -157,5 +163,28 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
                 "字段：" + this.treeItem.currentRow().getField() + System.lineSeparator() +
                 "数据：" + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "行信息");
+    }
+
+    /**
+     * hash字段添加事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
+    private void onHashFieldAdded(RedisHashFieldAddedMsg msg) {
+        if (this.treeItem == msg.item()) {
+            this.treeItem.refreshNodeValue();
+            this.firstPage();
+        }
+    }
+
+    @Override
+    public void onTabInit() {
+        EventUtil.register(this);
+    }
+
+    @Override
+    public void onTabClose(Event event) {
+        EventUtil.unregister(this);
     }
 }

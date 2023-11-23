@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -72,7 +73,8 @@ public class RedisSetMemberAddController extends Controller {
             // 添加元素
             client.sadd(dbIndex, key, rowValue);
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_SET_MEMBER_ADDED, this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_SET_MEMBER_ADDED, this.treeItem);
+            RedisEventUtil.setMemberAdded(this.treeItem);
             MessageBox.okToast("新增成员成功！");
             this.closeStage();
         } catch (Exception ex) {

@@ -172,10 +172,10 @@ public class RedisEventTypes {
      */
     public static final String REDIS_SET_MEMBER_ADDED = "REDIS_SET_MEMBER_ADDED";
 
-    /**
-     * redis变更zset的显示方式
-     */
-    public static final String REDIS_CHANGE_ZSET_SHOW_TYPE = "REDIS_CHANGE_ZSET_SHOW_TYPE";
+    // /**
+    //  * redis变更zset的显示方式
+    //  */
+    // public static final String REDIS_CHANGE_ZSET_SHOW_TYPE = "REDIS_CHANGE_ZSET_SHOW_TYPE";
 
     /**
      * redis新增zset成员
@@ -183,9 +183,9 @@ public class RedisEventTypes {
     public static final String REDIS_ZSET_MEMBER_ADDED = "REDIS_ZSET_MEMBER_ADDED";
 
     /**
-     * redis新增地理坐标
+     * redis新增zset地理坐标
      */
-    public static final String REDIS_GEO_COORDINATE_ADDED = "REDIS_GEO_COORDINATE_ADDED";
+    public static final String REDIS_ZSET_COORDINATE_ADDED = "REDIS_ZSET_COORDINATE_ADDED";
 
     /**
      * redis新增stream消息
@@ -200,7 +200,7 @@ public class RedisEventTypes {
     /**
      * redis新增hyperLogLog元素
      */
-    public static final String REDIS_HYPER_LOG_LOG_ELEMENT_ADDED = "REDIS_HYPER_LOG_LOG_ELEMENT_ADDED";
+    public static final String REDIS_HYLOG_ELEMENT_ADDED = "REDIS_HYLOG_ELEMENT_ADDED";
 
     /**
      * redis过滤配置新增
