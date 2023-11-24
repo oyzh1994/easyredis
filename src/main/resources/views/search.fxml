@@ -99,7 +99,7 @@
         <!--         <Insets left="5" top="6"/> -->
         <!--     </HBox.margin> -->
         <!-- </FlexCheckBox> -->
-        <FlexCheckBox selected="true" fx:id="searchMode" text="过滤模式" realWidth="65">
+        <FlexCheckBox selected="true" fx:id="mode" text="过滤模式" realWidth="65">
             <HBox.margin>
                 <Insets left="21" top="3"/>
             </HBox.margin>

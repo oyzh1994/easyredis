@@ -27,6 +27,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.WindowEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -106,7 +107,7 @@ public class SearchController extends SubController {
      * 搜索-搜索模式
      */
     @FXML
-    private FlexCheckBox searchMode;
+    private FlexCheckBox mode;
 
     /**
      * 搜索-全文匹配
@@ -170,7 +171,9 @@ public class SearchController extends SubController {
     /**
      * redis主页搜索处理
      */
-    private final RedisMainSearchHandler searchHandler = new RedisMainSearchHandler();
+    @Autowired
+    private RedisMainSearchHandler searchHandler;
+    // private final RedisMainSearchHandler searchHandler = new RedisMainSearchHandler();
 
     /**
      * 搜索历史储存
@@ -386,19 +389,17 @@ public class SearchController extends SubController {
                 this.treeView.disable();
                 RedisSearchParam param = this.getSearchParam();
                 if (!this.searchNext.isDisable()) {
-                    this.searchResult.setText("搜索中...");
-                    // 触发事件
-                    // EventUtil.fire(RedisEventTypes.REDIS_SEARCH_START);
-                    RedisEventUtil.searchStart(param);
                     // 执行预搜索
-                    this.searchHandler.preSearch(this.getSearchParam());
-                    this.searchResult.setText("");
+                    this.searchResult.setText("搜索中...");
+                    this.searchHandler.preSearch(param);
+                    // 触发事件
+                    RedisEventUtil.searchStart(param);
                     // 更新搜索结果
+                    this.searchResult.setText("");
                     this.updateSearchResult();
                     // 搜索结束
                     RedisEventUtil.searchFinish(param);
                 } else {// 搜索结束
-                    // EventUtil.fire(RedisEventTypes.REDIS_SEARCH_FINISH);
                     RedisEventUtil.searchFinish(param);
                 }
                 this.treeView.enable();
@@ -425,7 +426,7 @@ public class SearchController extends SubController {
         RedisSearchParam searchParam = new RedisSearchParam();
         searchParam.setKw(this.searchKW.getTextTrim());
         searchParam.setFullMatch(this.fullMatch.isSelected());
-        searchParam.setSearchMode(!this.searchMode.isSelected());
+        searchParam.setMode(this.mode.isSelected() ? 1 : 0);
         // searchParam.setSearchKey(this.searchKey.isSelected());
         // searchParam.setSearchData(this.searchData.isSelected());
         searchParam.setCompareCase(this.compareCase.isSelected());
@@ -470,12 +471,12 @@ public class SearchController extends SubController {
     private void updateSearchResult() {
         RedisSearchResult result = this.searchHandler.searchResult();
         if (result != null) {
-            String matchType = result.getMatchTypeText();
-            if (matchType.isEmpty()) {
+            // String matchType = result.getMatchTypeText();
+            // if (matchType.isEmpty()) {
                 this.searchResult.setText(result.getIndex() + "/" + result.getCount());
-            } else {
-                this.searchResult.setText(result.getIndex() + "/" + result.getCount() + "[" + result.getMatchTypeText() + "]");
-            }
+            // } else {
+            //     this.searchResult.setText(result.getIndex() + "/" + result.getCount() + "[" + result.getMatchTypeText() + "]");
+            // }
         }
     }
 

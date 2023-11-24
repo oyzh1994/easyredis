@@ -59,20 +59,20 @@ public class RedisMainSearchHandler {
      */
     private Integer pathIndex;
 
-    /**
-     * 数据索引
-     */
-    private Integer dataIndex;
+    // /**
+    //  * 数据索引
+    //  */
+    // private Integer dataIndex;
 
     /**
      * tab组件
      */
     private RedisTabPane tabPane;
 
-    /**
-     * 数据组件
-     */
-    private FlexTextArea dataNode;
+    // /**
+    //  * 数据组件
+    //  */
+    // private FlexTextArea dataNode;
 
     /**
      * 当前搜索键
@@ -122,7 +122,7 @@ public class RedisMainSearchHandler {
         this.index = 0;
         this.updateCurrentItem(null);
         this.pathIndex = null;
-        this.dataIndex = null;
+        // this.dataIndex = null;
         this.lastAction = null;
     }
 
@@ -305,15 +305,15 @@ public class RedisMainSearchHandler {
      */
     private void updateCurrentItem(TreeItem<?> item) {
         this.pathIndex = 0;
-        this.dataIndex = 0;
+        // this.dataIndex = 0;
         // 取消文本选中
         if (this.currentItem != null) {
             RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
             ControlUtil.deselect(value.text());
         }
         this.currentItem = item;
-        // 取消文本组件的选中
-        ControlUtil.deselect(this.dataNode);
+        // // 取消文本组件的选中
+        // ControlUtil.deselect(this.dataNode);
         // 清除索引信息
         if (item == null) {
             this.index = 0;
@@ -371,10 +371,10 @@ public class RedisMainSearchHandler {
             //     return;
             // }
             // 初始化索引及文本组件
-            this.dataIndex = 0;
+            // this.dataIndex = 0;
             this.pathIndex = 0;
             RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(this.dataNode);
+            // ControlUtil.deselect(this.dataNode);
             ControlUtil.deselect(value.text());
         } catch (Exception ex) {
             ex.printStackTrace();

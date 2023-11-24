@@ -344,17 +344,28 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索开始事件
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, verbose = true)
-    private void searchStart() {
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START,async = true, verbose = true)
+    private void onSearchStart() {
         this.searching = true;
+        this.filter();
     }
 
     /**
      * 搜索结束事件
      */
     @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, async = true, verbose = true)
-    private void searchEnd() {
+    private void onSearchFinish() {
         this.searching = false;
+        this.filter();
+    }
+
+    /**
+     * 树节点过滤
+     */
+    @EventReceiver(value = RedisEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    private void onTreeChildFilter() {
+        this.itemFilter().initFilters();
+        this.filter();
     }
 
     // /**

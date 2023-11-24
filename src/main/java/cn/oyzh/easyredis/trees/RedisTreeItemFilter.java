@@ -83,13 +83,12 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean onlyCollect;
 
-    /**
-     * 搜索参数
-     */
-    @Setter
-    @Getter
-    private RedisSearchParam searchParam;
-
+    // /**
+    //  * 搜索参数
+    //  */
+    // @Setter
+    // @Getter
+    // private RedisSearchParam searchParam;
 
     /**
      * zk主页搜索处理
@@ -118,6 +117,11 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Override
     public Boolean apply(RichTreeItem item) {
         if (item instanceof RedisKeyTreeItem<?> treeItem) {
+            // 判断是否满足搜索要求
+            RedisSearchParam param = this.searchHandler.searchParam();
+            if (param != null && param.isFilterMode() && !param.isEmpty()) {
+                return this.searchHandler.isMatchParam(item) != null;
+            }
             RedisKey node = treeItem.value();
             // 仅看收藏
             if (this.onlyCollect && !treeItem.isCollect()) {
@@ -152,17 +156,9 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤键
-            boolean unFiltered = !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
-            if (!unFiltered) {
-                return false;
-            }
+            return !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
         }
-        // 如果不需要处理搜索参数，则直接返回true
-        if (this.searchParam == null || this.searchParam.isSearchMode() || this.searchParam.isEmpty()) {
-            return true;
-        }
-        // 判断是否满足搜索要求
-        return this.searchHandler.isMatchParam(item) != null;
+        return true;
     }
 
 }

@@ -35,10 +35,10 @@ public class RedisSearchParam {
 
     /**
      * 搜索模式
-     * true 搜索模式
-     * false 过滤模式
+     * 0 搜索模式
+     * 1 过滤模式
      */
-    private boolean searchMode;
+    private Integer mode;
 
     /**
      * 匹配大小写
@@ -90,10 +90,10 @@ public class RedisSearchParam {
         if (!Objects.equals(this.kw, param.kw)) {
             return false;
         }
-        if (!Objects.equals(this.fullMatch, param.fullMatch)) {
+        if (!Objects.equals(this.mode, param.mode)) {
             return false;
         }
-        if (!Objects.equals(this.searchMode, param.searchMode)) {
+        if (!Objects.equals(this.fullMatch, param.fullMatch)) {
             return false;
         }
         // if (!Objects.equals(this.searchData, param.searchData)) {
@@ -107,5 +107,9 @@ public class RedisSearchParam {
 
     public boolean isEmpty() {
         return this.kw == null || this.kw.isEmpty();
+    }
+
+    public boolean isFilterMode() {
+        return this.mode == 1;
     }
 }
