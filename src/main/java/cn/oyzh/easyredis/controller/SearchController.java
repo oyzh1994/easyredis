@@ -491,6 +491,7 @@ public class SearchController extends SubController {
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
         this.showSearchMore.managedProperty().bind(this.showSearchMore.visibleProperty());
         this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
+        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // this.searchKey.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         // this.searchData.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
