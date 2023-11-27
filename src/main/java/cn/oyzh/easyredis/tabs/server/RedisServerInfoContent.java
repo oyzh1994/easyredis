@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisInfoPropItem;
 import cn.oyzh.fx.common.spring.ScopeType;
@@ -9,7 +10,6 @@ import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.util.TableViewUtil;
-import com.alibaba.fastjson.JSONObject;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -102,7 +102,7 @@ public class RedisServerInfoContent {
             tableView = (FlexTableView<RedisInfoPropItem>) tabOptional.get().getContent();
         }
         for (String key : object.keySet()) {
-            this.initPropItem(tableView, key, object.getString(key));
+            this.initPropItem(tableView, key, object.getStr(key));
         }
     }
 

@@ -3,6 +3,9 @@ package cn.oyzh.easyredis.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -21,9 +24,6 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
@@ -107,7 +107,7 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONArray.toJSONString(list);
+            return JSONUtil.toJsonStr(list);
         }
 
         // set
@@ -121,7 +121,7 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONArray.toJSONString(list);
+            return JSONUtil.toJsonStr(list);
         }
 
         // zset
@@ -136,7 +136,7 @@ public class RedisKeyUtil {
                 map.put("score", row.getScore());
                 list.add(map);
             }
-            return JSONArray.toJSONString(list);
+            return JSONUtil.toJsonStr(list);
         }
 
         // stream
@@ -151,7 +151,7 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONArray.toJSONString(list);
+            return JSONUtil.toJsonStr(list);
         }
 
         // hash
@@ -166,7 +166,7 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONArray.toJSONString(list);
+            return JSONUtil.toJsonStr(list);
         }
         return null;
     }
@@ -198,9 +198,9 @@ public class RedisKeyUtil {
             RedisListKey node = new RedisListKey();
             List<String> list = new ArrayList<>();
             if (StrUtil.isNotBlank(value)) {
-                JSONArray array = JSON.parseArray(value);
+                JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
-                    list.add(array.getJSONObject(i).getString("value"));
+                    list.add(array.getJSONObject(i).getStr("value"));
                 }
             }
             node.value(list);
@@ -212,9 +212,9 @@ public class RedisKeyUtil {
             RedisSetKey node = new RedisSetKey();
             Set<String> list = new HashSet<>();
             if (StrUtil.isNotBlank(value)) {
-                JSONArray array = JSON.parseArray(value);
+                JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
-                    list.add(array.getJSONObject(i).getString("value"));
+                    list.add(array.getJSONObject(i).getStr("value"));
                 }
             }
             node.value(list);
@@ -227,10 +227,10 @@ public class RedisKeyUtil {
             List<String> list1 = new ArrayList<>();
             List<Double> list2 = new ArrayList<>();
             if (StrUtil.isNotBlank(value)) {
-                JSONArray array = JSON.parseArray(value);
+                JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = array.getJSONObject(i);
-                    list1.add(object.getString("value"));
+                    list1.add(object.getStr("value"));
                     list2.add(object.getDouble("score"));
                 }
             }
@@ -243,10 +243,10 @@ public class RedisKeyUtil {
             RedisHashKey node = new RedisHashKey();
             Map<String, String> map = new HashMap<>();
             if (StrUtil.isNotBlank(value)) {
-                JSONArray array = JSON.parseArray(value);
+                JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = array.getJSONObject(i);
-                    map.put(object.getString("field"), object.getString("value"));
+                    map.put(object.getStr("field"), object.getStr("value"));
                 }
             }
             node.value(map);
@@ -258,16 +258,16 @@ public class RedisKeyUtil {
             RedisStreamKey node = new RedisStreamKey();
             List<StreamEntry> list = new ArrayList<>();
             if (StrUtil.isNotBlank(value)) {
-                JSONArray array = JSON.parseArray(value);
+                JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = array.getJSONObject(i);
-                    StreamEntryID id = new StreamEntryID(object.getString("id"));
-                    String fields = object.getString("value");
+                    StreamEntryID id = new StreamEntryID(object.getStr("id"));
+                    String fields = object.getStr("value");
                     Map<String, String> fieldMap;
                     if (StrUtil.isNotBlank(fields)) {
                         fieldMap = new HashMap<>();
                     } else {
-                        fieldMap = JSONObject.parseObject(fields, Map.class);
+                        fieldMap = JSONUtil.toBean(fields, HashMap.class);
                     }
                     StreamEntry entry = new StreamEntry(id, fieldMap);
                     list.add(entry);

@@ -2,11 +2,11 @@ package cn.oyzh.easyredis.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 
@@ -40,7 +40,7 @@ public class RedisSettingStore extends ObjectFileStore<RedisSetting> {
         String text = FileUtil.readString(this.storeFile(), this.charset());
         if (StrUtil.isNotBlank(text)) {
             try {
-                setting = JSON.parseObject(text, RedisSetting.class);
+                setting = JSONUtil.toBean(text, RedisSetting.class);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

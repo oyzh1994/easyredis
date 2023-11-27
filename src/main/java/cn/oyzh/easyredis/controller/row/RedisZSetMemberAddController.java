@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.controller.row;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -11,9 +12,6 @@ import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -117,13 +115,11 @@ public class RedisZSetMemberAddController extends Controller {
         String text = this.rowValue.getTextTrim();
         try {
             if ("json".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json);
+                String jsonStr = JSONUtil.toJsonStr(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json, true);
+                String jsonStr = JSONUtil.toJsonPrettyStr(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("json");
             }

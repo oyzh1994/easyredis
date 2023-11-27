@@ -18,12 +18,12 @@
     </properties>
 
     <dependencies>
-        <!-- json类库 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <scope>compile</scope>
-        </dependency>
+        <!-- &lt;!&ndash; json类库 &ndash;&gt; -->
+        <!-- <dependency> -->
+        <!--     <groupId>com.alibaba</groupId> -->
+        <!--     <artifactId>fastjson</artifactId> -->
+        <!--     <scope>compile</scope> -->
+        <!-- </dependency> -->
 
         <!-- Spring boot -->
         <dependency>
@@ -49,25 +49,6 @@
                     <artifactId>jul-to-slf4j</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <!-- java 辅助工具包 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- 自定义类库，通用 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>fx-common</artifactId>
-        </dependency>
-
-        <!-- 自定义类库，fx相关 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>fx-plus</artifactId>
         </dependency>
 
         <!-- 自定义类库，shell相关 -->

@@ -1,12 +1,12 @@
 package cn.oyzh.easyredis.shell.handler.server;
 
+import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.shell.RedisShellUtil;
 import cn.oyzh.easyredis.shell.RedisTerminalTextArea;
 import cn.oyzh.easyredis.shell.command.server.RedisCommandInfoTerminalCommand;
 import cn.oyzh.easyredis.shell.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.common.util.ArrUtil;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.resps.CommandInfo;
 
@@ -36,7 +36,7 @@ public class RedisCommandInfoTerminalCommandHandler extends RedisTerminalCommand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Map<String, CommandInfo> info = terminal.client().commandInfo(command.commands());
-            result.setResult(RedisShellUtil.formatOut(JSON.toJSONString(info)));
+            result.setResult(RedisShellUtil.formatOut(JSONUtil.toJsonStr(info)));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

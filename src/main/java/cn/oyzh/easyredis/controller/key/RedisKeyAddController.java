@@ -2,6 +2,8 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
@@ -19,9 +21,6 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -235,7 +234,7 @@ public class RedisKeyAddController extends Controller {
                 return;
             }
             if (key.isEmpty()) {
-               MessageBox.tipMsg("键名称不能为空！", this.key);
+                MessageBox.tipMsg("键名称不能为空！", this.key);
                 return;
             }
             if (this.client.exists(dbIndex, key)) {
@@ -316,7 +315,7 @@ public class RedisKeyAddController extends Controller {
     private void addZSetNode(int dbIndex, String key) {
         Number score = this.scoreValue.getValue();
         if (score == null) {
-           MessageBox.tipMsg("请填写分数！", this.scoreValue);
+            MessageBox.tipMsg("请填写分数！", this.scoreValue);
             return;
         }
         String nodeValue = this.valueText();
@@ -332,7 +331,7 @@ public class RedisKeyAddController extends Controller {
     private void addHashNode(int dbIndex, String key) {
         String field = this.fieldValue.getText();
         if (field == null) {
-           MessageBox.tipMsg("请填写字段名称！", this.fieldValue);
+            MessageBox.tipMsg("请填写字段名称！", this.fieldValue);
             return;
         }
         String nodeValue = this.valueText();
@@ -351,7 +350,7 @@ public class RedisKeyAddController extends Controller {
         List<String> elements = nodeValue.lines().collect(Collectors.toList());
         elements = CollUtil.removeBlank(elements);
         if (elements.isEmpty()) {
-           MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
             return;
         }
         this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class));
@@ -367,17 +366,17 @@ public class RedisKeyAddController extends Controller {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
-           MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
             return;
         }
         Number latitudeValue = this.latitudeValue.getValue();
         if (latitudeValue == null) {
-           MessageBox.tipMsg("请输入纬度！", this.latitudeValue);
+            MessageBox.tipMsg("请输入纬度！", this.latitudeValue);
             return;
         }
         Number longitudeValue = this.longitudeValue.getValue();
         if (longitudeValue == null) {
-           MessageBox.tipMsg("请输入经度！", this.longitudeValue);
+            MessageBox.tipMsg("请输入经度！", this.longitudeValue);
             return;
         }
         this.client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), nodeValue);
@@ -393,31 +392,31 @@ public class RedisKeyAddController extends Controller {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
-           MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
             return;
         }
         String streamID = this.streamIDValue.getText();
         if (streamID == null) {
-           MessageBox.tipMsg("消息id不能为空", this.streamIDValue);
+            MessageBox.tipMsg("消息id不能为空", this.streamIDValue);
             return;
         }
         JSONObject fields;
         try {
-            fields = JSON.parseObject(nodeValue);
+            fields = JSONUtil.parseObj(nodeValue);
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.warn("内容必须为json键值对");
             return;
         }
-        if (fields == null || fields.isEmpty()) {
-           MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
+        if (fields.isEmpty()) {
+            MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
             return;
         }
         // 流添加参数
         XAddParams params = new XAddParams();
         params.id(streamID);
         // 添加流
-        this.client.xadd(dbIndex, key, (Map) fields.getInnerMap(), params);
+        this.client.xadd(dbIndex, key, (Map) fields, params);
     }
 
     /**
@@ -458,13 +457,11 @@ public class RedisKeyAddController extends Controller {
         String text = this.valueTextArea().getTextTrim();
         try {
             if ("json".equals(this.valueTextArea().getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json);
+                String jsonStr = JSONUtil.toJsonStr(text);
                 this.valueTextArea().setText(jsonStr);
                 this.valueTextArea().setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.valueTextArea().getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json, true);
+                String jsonStr = JSONUtil.toJsonPrettyStr(text);
                 this.valueTextArea().setText(jsonStr);
                 this.valueTextArea().setUserData("json");
             }

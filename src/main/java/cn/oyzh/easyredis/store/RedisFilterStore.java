@@ -3,12 +3,12 @@ package cn.oyzh.easyredis.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        List<RedisFilter> filters = JSON.parseArray(text, RedisFilter.class);
+        List<RedisFilter> filters = JSONUtil.toList(text, RedisFilter.class);
         if (CollUtil.isNotEmpty(filters)) {
             filters = filters.parallelStream().filter(Objects::nonNull).sorted((o1, o2) -> o1.getKw().compareToIgnoreCase(o2.getKw())).collect(Collectors.toList());
         }

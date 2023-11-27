@@ -3,13 +3,14 @@ package cn.oyzh.easyredis.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.common.util.OSUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -85,20 +86,20 @@ public class RedisExportUtil {
      */
     public static RedisNodeExport fromJSON(@NonNull String json) {
         StaticLog.info("json: {}", json);
-        JSONObject object = JSONObject.parseObject(json);
+        JSONObject object = JSONUtil.parseObj(json);
         RedisNodeExport export = new RedisNodeExport();
         export.setNodes(new ArrayList<>());
-        export.setVersion(object.getString("version"));
-        export.setPlatform(object.getString("platform"));
+        export.setVersion(object.getStr("version"));
+        export.setPlatform(object.getStr("platform"));
         JSONArray nodes = object.getJSONArray("nodes");
         for (Object n : nodes) {
             JSONObject o = (JSONObject) n;
             Map<String, Object> node = new HashMap<>();
             node.put("ttl", o.getLong("ttl"));
-            node.put("key", o.getString("key"));
-            node.put("type", o.getString("type"));
-            node.put("value", o.getString("value"));
-            node.put("dbIndex", o.getInteger("dbIndex"));
+            node.put("key", o.getStr("key"));
+            node.put("type", o.getStr("type"));
+            node.put("value", o.getStr("value"));
+            node.put("dbIndex", o.getInt("dbIndex"));
             export.getNodes().add(node);
         }
         return export;

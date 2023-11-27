@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.info;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -86,8 +86,8 @@ public class RedisInfoProp {
     public String getProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
-                return object.getString(propName);
+            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+                return object.getStr(propName);
             }
         }
         return null;
@@ -103,8 +103,8 @@ public class RedisInfoProp {
     public int getIntProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
-                return object.getIntValue(propName);
+            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+                return object.getInt(propName);
             }
         }
         return -1;
@@ -120,8 +120,8 @@ public class RedisInfoProp {
     public Integer getIntegerProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
-                return object.getInteger(propName);
+            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+                return object.getInt(propName);
             }
         }
         return null;
@@ -137,8 +137,8 @@ public class RedisInfoProp {
     public long getLongProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
-                return object.getLongValue(propName);
+            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+                return object.getInt(propName);
             }
         }
         return -1L;
@@ -154,8 +154,8 @@ public class RedisInfoProp {
     public double getDoubleProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
-                return object.getDoubleValue(propName);
+            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+                return object.getDouble(propName);
             }
         }
         return -1d;

@@ -1,11 +1,11 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.common.dto.Project;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -62,12 +62,11 @@ public class RedisInfoExport {
      */
     public static RedisInfoExport fromJSON(@NonNull String json) {
         StaticLog.info("json: {}", json);
-        JSONObject object = JSONObject.parseObject(json);
+        JSONObject object = JSONUtil.parseObj(json);
         RedisInfoExport export = new RedisInfoExport();
         export.connects = new ArrayList<>();
-        export.version = object.getString("version");
-        JSONArray nodes = object.getJSONArray("connects");
-        export.connects = nodes.toJavaList(RedisInfo.class);
+        export.version = object.getStr("version");
+        export.connects = object.getBeanList("connects", RedisInfo.class);
         return export;
     }
 
@@ -77,6 +76,6 @@ public class RedisInfoExport {
      * @return json字符串
      */
     public String toJSONString() {
-        return JSONObject.toJSONString(this);
+        return JSONUtil.toJsonStr(this);
     }
 }

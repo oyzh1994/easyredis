@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,7 +54,10 @@ public class RedisNodeExport {
      * @return json字符串
      */
     public String toJSONString(boolean prettyFormat) {
-        return JSONObject.toJSONString(this, prettyFormat);
+        if (prettyFormat) {
+            return JSONUtil.toJsonPrettyStr(this);
+        }
+        return JSONUtil.toJsonStr(this);
     }
 
     /**

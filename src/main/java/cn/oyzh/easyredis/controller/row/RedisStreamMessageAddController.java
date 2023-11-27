@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.controller.row;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -11,9 +13,6 @@ import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -69,7 +68,7 @@ public class RedisStreamMessageAddController extends Controller {
             }
             JSONObject fields;
             try {
-                fields = JSON.parseObject(rowValue);
+                fields = JSONUtil.parseObj(rowValue);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.warn("消息内容必须为json键值对");
@@ -94,7 +93,7 @@ public class RedisStreamMessageAddController extends Controller {
             XAddParams params = new XAddParams();
             params.id(streamIDText);
             // 添加流
-            client.xadd(dbIndex, key, (Map) fields.getInnerMap(), params);
+            client.xadd(dbIndex, key, (Map) fields, params);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, this.treeItem);
             RedisEventUtil.streamMessageAdded(this.treeItem);
@@ -132,13 +131,11 @@ public class RedisStreamMessageAddController extends Controller {
         String text = this.rowValue.getTextTrim();
         try {
             if ("json".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json);
+                String jsonStr = JSONUtil.toJsonStr(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
-                JSONObject json = JSON.parseObject(text, Feature.OrderedField);
-                String jsonStr = JSONObject.toJSONString(json, true);
+                String jsonStr = JSONUtil.toJsonPrettyStr(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("json");
             }

@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
             if (StrUtil.isBlank(text)) {
                 return new ArrayList<>();
             }
-            List<RedisGroup> redisGroups = JSON.parseArray(text, RedisGroup.class);
+            List<RedisGroup> redisGroups = JSONUtil.toList(text, RedisGroup.class);
             if (CollUtil.isNotEmpty(redisGroups)) {
                 redisGroups = redisGroups.parallelStream().sorted().collect(Collectors.toList());
             }

@@ -3,12 +3,12 @@ package cn.oyzh.easyredis.store;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSearchHistory;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
-import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class RedisSearchHistoryStore extends ArrayFileStore<RedisSearchHistory> 
         if (StrUtil.isBlank(text)) {
             return new ArrayList<>();
         }
-        return JSON.parseArray(text, RedisSearchHistory.class);
+        return JSONUtil.toList(text, RedisSearchHistory.class);
     }
 
     /**
