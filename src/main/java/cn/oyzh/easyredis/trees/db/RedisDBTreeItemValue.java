@@ -65,6 +65,20 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     }
 
     /**
+     * 设置节点数量
+     *
+     * @param childNum     子节点总数量
+     * @param showChildNum 子节点显示数量
+     */
+    public void num(Long childNum, Integer showChildNum) {
+        if (childNum != null) {
+            this.childNum = childNum;
+        }
+        this.showChildNum = showChildNum;
+        this.flushChildNum();
+    }
+
+    /**
      * 设置子节点总数量
      *
      * @param childNum 子节点总数量

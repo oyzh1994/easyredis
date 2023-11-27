@@ -89,7 +89,7 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <fx:include fx:id="search" source="search.fxml" prefHeight="30" flexWidth="100%"/>
-                <RedisTreeView fx:id="tree" flexHeight="100% - 92"/>
+                <RedisTreeView fx:id="tree" flexHeight="100% - 92" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>
         <FXTab text="消息">

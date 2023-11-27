@@ -356,14 +356,14 @@ public class RedisMainController extends ParentController {
 
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
-        this.tabPane.selectedTabChanged((abs, o, n) -> {
-            if (o != null) {
-                o.getStyleClass().remove("tab-active");
-            }
-            if (n != null) {
-                n.getStyleClass().add("tab-active");
-            }
-        });
+        // this.tabPane.selectedTabChanged((abs, o, n) -> {
+        //     if (o != null) {
+        //         o.getStyleClass().remove("tab-active");
+        //     }
+        //     if (n != null) {
+        //         n.getStyleClass().add("tab-active");
+        //     }
+        // });
         // redis树键变化事件
         this.tree.selectItemChanged(this::treeItemChanged);
         // 文件拖拽初始化
@@ -396,6 +396,7 @@ public class RedisMainController extends ParentController {
 
         // 监听F5按键
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
     /**
