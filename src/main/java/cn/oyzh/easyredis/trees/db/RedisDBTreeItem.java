@@ -217,7 +217,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 ex.printStackTrace();
             }
         }
-        this.getValue().showChildNum(this.getChildrenSize());
+        this.getValue().showChildNum(this.getChildren().size());
         this.getValue().keyFilterPattern(this.keyFilterPattern);
     }
 

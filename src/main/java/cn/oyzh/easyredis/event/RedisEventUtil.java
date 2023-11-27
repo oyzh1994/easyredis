@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
+import cn.oyzh.easyredis.event.msg.RedisFilterMainMsg;
 import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
@@ -17,6 +18,7 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
+import cn.oyzh.easyredis.event.msg.TreeChildFilterMsg;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
@@ -202,4 +204,19 @@ public class RedisEventUtil {
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 
+    /**
+     * 树节点过滤事件
+     */
+    public static void treeChildFilter() {
+        TreeChildFilterMsg msg = new TreeChildFilterMsg();
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 过滤主页事件
+     */
+    public static void filterMain() {
+        RedisFilterMainMsg msg = new RedisFilterMainMsg();
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
 }

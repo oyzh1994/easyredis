@@ -26,11 +26,6 @@
             <Insets left="10" top="8" bottom="5"/>
         </FlowPane.margin>
     </SVGLabel>
-    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="13">
-        <FlowPane.margin>
-            <Insets left="10" top="8" bottom="5"/>
-        </FlowPane.margin>
-    </SVGLabel>
     <SVGLabel text="收缩" fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" tipText="收缩redis树"
               url="/font/left-arrow-to-left.svg" size="12">
         <FlowPane.margin>
@@ -40,6 +35,11 @@
     <SVGLabel visible="false" managed="false" fx:id="expandTree" text="展开" onMousePrimaryClicked="#expandTree"
               url="/font/arrow-to-right.svg" size="12"
               tipText="展开redis树">
+        <FlowPane.margin>
+            <Insets left="10" top="8" bottom="5"/>
+        </FlowPane.margin>
+    </SVGLabel>
+    <SVGLabel text="退出" onMousePrimaryClicked="#quit" tipText="退出程序" url="/font/poweroff.svg" size="13">
         <FlowPane.margin>
             <Insets left="10" top="8" bottom="5"/>
         </FlowPane.margin>

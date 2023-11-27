@@ -364,18 +364,15 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public void rename() {
         String newKey = MessageBox.prompt("请输入新的键名称", this.value.key());
-
         // 名称为空或者跟当前名称相同，则忽略
         if (StrUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
             return;
         }
-
         // 键已存在
         if (this.client().exists(this.dbIndex(), newKey)) {
             MessageBox.warn("键名称[" + newKey + "]已经存在！");
             return;
         }
-
         try {
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StrUtil.equalsIgnoreCase(result, "OK")) {

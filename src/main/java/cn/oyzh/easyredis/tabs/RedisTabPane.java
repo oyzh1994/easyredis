@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
@@ -437,6 +438,31 @@ public class RedisTabPane extends DynamicTabPane {
         }
         if (!closeTabs.isEmpty()) {
             FXUtil.runLater(() -> this.getTabs().removeAll(closeTabs));
+        }
+    }
+
+    /**
+     * 获取过滤tab
+     *
+     * @return 过滤tab
+     */
+    public RedisFilterTab getFilterTab() {
+        return super.getTab(RedisFilterTab.class);
+    }
+
+    /**
+     * 初始化过滤tab
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_FILTER_MAIN, async = true, verbose = true)
+    public void initFilterTab() {
+        RedisFilterTab tab = this.getFilterTab();
+        if (tab == null) {
+            tab = new RedisFilterTab();
+            tab.init();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
         }
     }
 }
