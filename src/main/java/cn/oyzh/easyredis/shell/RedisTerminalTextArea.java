@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.shell;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.dto.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
@@ -11,7 +12,6 @@ import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * redis终端
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/7/21
  */
-@Slf4j
+//@Slf4j
 public class RedisTerminalTextArea extends TerminalTextArea {
 
     {
@@ -179,7 +179,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                     this.outputLine(host + " 连接失败.");
                     this.flushCaret();
                 }
-                log.info("connState={}", t1);
+                StaticLog.info("connState={}", t1);
             };
         }
         this.client().addConnStateListener(this.connStateChangeListener);

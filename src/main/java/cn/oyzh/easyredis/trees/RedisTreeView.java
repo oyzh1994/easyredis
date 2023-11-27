@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;
 
@@ -31,7 +30,7 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2023/1/29
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisTreeView extends RichTreeView {
 
@@ -374,7 +373,7 @@ public class RedisTreeView extends RichTreeView {
     // @EventReceiver(RedisEventTypes.REDIS_IMPORT_START)
     // private void onImportStart() {
     //     this.importing = true;
-    //     log.info("REDIS_IMPORT_START.");
+    //     StaticLog.info("REDIS_IMPORT_START.");
     // }
     //
     // /**
@@ -386,6 +385,6 @@ public class RedisTreeView extends RichTreeView {
     //     for (RedisDBTreeItem child : connectTreeItem.getChildren()) {
     //         child.reloadChild();
     //     }
-    //     log.info("REDIS_IMPORT_FINISH.");
+    //     StaticLog.info("REDIS_IMPORT_FINISH.");
     // }
 }

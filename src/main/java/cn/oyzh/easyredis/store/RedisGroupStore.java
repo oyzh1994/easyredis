@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/6/22
  */
-@Slf4j
+//@Slf4j
 public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
 
     /**
@@ -37,7 +37,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_group.json");
-        log.info("RedisGroupStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("RedisGroupStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.redisGroups = this.load();
     }
 
@@ -81,7 +81,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -94,7 +94,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            log.warn("update error,err:{}", e.getMessage());
+            StaticLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -107,7 +107,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
+            StaticLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

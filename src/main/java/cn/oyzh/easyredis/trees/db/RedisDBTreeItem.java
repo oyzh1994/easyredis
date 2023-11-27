@@ -40,11 +40,9 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/07/12
  */
-@Slf4j
+//@Slf4j
 public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     /**

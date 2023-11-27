@@ -6,7 +6,6 @@ import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -14,7 +13,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashKeyTreeItemValue, RedisHashRow> {
 
     public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisDBTreeItem parent) {

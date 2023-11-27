@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -30,7 +29,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/08/01
  */
-@Slf4j
+//@Slf4j
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)

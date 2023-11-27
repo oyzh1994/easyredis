@@ -4,13 +4,12 @@ import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 public class RedisHyLogKeyTreeItem extends RedisKeyTreeItem<RedisHyperLogLogKey,RedisHyLogKeyTreeItemValue> {
 
     public RedisHyLogKeyTreeItem(@NonNull RedisHyperLogLogKey value, @NonNull RedisDBTreeItem parent) {

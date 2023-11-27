@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -17,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/06/22
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisDBTreeItemValue extends RedisTreeItemValue {
 

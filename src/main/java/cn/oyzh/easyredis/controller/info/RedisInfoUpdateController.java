@@ -22,7 +22,6 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * redis信息修改业务
@@ -30,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2022/06/16
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis连接修改",
         modality = Modality.WINDOW_MODAL,

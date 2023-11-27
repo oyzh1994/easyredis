@@ -4,13 +4,11 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.property.SimpleObjectProperty;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.GeoCoordinate;
 
 import java.util.List;
@@ -20,7 +18,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetKeyTreeItemValue, RedisZSetRow> {
 
     /**

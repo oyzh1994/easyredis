@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -17,7 +18,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ import java.util.concurrent.Future;
  * @author oyzh
  * @since 2023/08/01
  */
-@Slf4j
+//@Slf4j
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
@@ -198,7 +198,7 @@ public class RedisServerTabContent extends DynamicTabController {
      */
     private void initRefreshTask() {
         this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
-        log.debug("RefreshTask started.");
+        StaticLog.debug("RefreshTask started.");
     }
 
     /**
@@ -207,7 +207,7 @@ public class RedisServerTabContent extends DynamicTabController {
     public void closeRefreshTask() {
         try {
             ExecutorUtil.cancel(this.refreshTask);
-            log.debug("RefreshTask closed.");
+            StaticLog.debug("RefreshTask closed.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

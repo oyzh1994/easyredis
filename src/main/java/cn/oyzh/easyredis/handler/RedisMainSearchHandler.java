@@ -9,9 +9,6 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.util.ControlUtil;
@@ -31,7 +28,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * redis主页搜索处理器

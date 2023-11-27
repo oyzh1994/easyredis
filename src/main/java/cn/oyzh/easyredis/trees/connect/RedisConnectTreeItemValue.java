@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -19,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/08/10
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisConnectTreeItemValue extends RedisTreeItemValue {
 

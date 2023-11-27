@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.shell;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * redis终端命令历史
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/7/21
  */
-@Slf4j
+//@Slf4j
 public class RedisTerminalHistoryStore extends TerminalHistoryStore {
 
     /**
@@ -20,7 +20,7 @@ public class RedisTerminalHistoryStore extends TerminalHistoryStore {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_shell_history.json");
-        log.info("RedisShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("RedisShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
 }

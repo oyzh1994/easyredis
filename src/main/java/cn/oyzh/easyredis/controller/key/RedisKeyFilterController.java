@@ -20,7 +20,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/07/19
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis键过滤",
         iconUrls = RedisConst.ICON_PATH,

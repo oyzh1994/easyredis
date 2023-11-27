@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -15,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/07/7
  */
-@Slf4j
+//@Slf4j
 public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?,?>> extends RedisTreeItemValue {
 
     @Accessors(chain = true, fluent = true)

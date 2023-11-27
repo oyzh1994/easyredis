@@ -2,13 +2,10 @@ package cn.oyzh.easyredis.trees.list;
 
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.row.RedisListRow;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey,RedisListKeyTreeItemValue, RedisListRow> {
 
     public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisDBTreeItem parent) {

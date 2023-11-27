@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
@@ -49,7 +50,6 @@ import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/07/19
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis数据导入",
         iconUrls = RedisConst.ICON_PATH,
@@ -269,7 +269,7 @@ public class RedisKeyImportController extends Controller {
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
-                        log.warn("import cancel!");
+                        StaticLog.warn("import cancel!");
                         break;
                     }
                     // 获取数据

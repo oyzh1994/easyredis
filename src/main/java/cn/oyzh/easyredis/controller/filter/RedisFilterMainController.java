@@ -28,7 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -37,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "过滤配置列表",
         modality = Modality.WINDOW_MODAL,

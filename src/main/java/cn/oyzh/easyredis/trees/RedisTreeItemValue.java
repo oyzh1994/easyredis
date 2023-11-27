@@ -1,21 +1,7 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.fx.plus.controls.FXHBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.trees.RichTreeItemValue;
-import cn.oyzh.fx.plus.util.FXUtil;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
-import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -24,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/07/7
  */
-@Slf4j
+//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisTreeItemValue extends RichTreeItemValue {
 
@@ -82,7 +68,7 @@ public class RedisTreeItemValue extends RichTreeItemValue {
     //     if (!(this.getRootNode().getChildren().get(0) instanceof FXText)) {
     //         this.getRootNode().getChildren().remove(0);
     //         if (log.isDebugEnabled()) {
-    //             log.debug("remove graphic.");
+    //             StaticLog.debug("remove graphic.");
     //         }
     //     }
     // }
@@ -100,7 +86,7 @@ public class RedisTreeItemValue extends RichTreeItemValue {
     //     if (this.graphic == null && !(node instanceof FXText)) {
     //         this.getRootNode().getChildren().remove(0);
     //         if (log.isDebugEnabled()) {
-    //             log.debug("remove graphic.");
+    //             StaticLog.debug("remove graphic.");
     //         }
     //         return;
     //     }
@@ -199,7 +185,7 @@ public class RedisTreeItemValue extends RichTreeItemValue {
     //             this.setRootNode(new FXHBox());
     //             this.getRootNode().setCursor(Cursor.HAND);
     //             if (log.isDebugEnabled()) {
-    //                 log.debug("create rootNode:{}", this.name());
+    //                 StaticLog.debug("create rootNode:{}", this.name());
     //             }
     //         }
     //         // 初始化键名称组件
@@ -220,7 +206,7 @@ public class RedisTreeItemValue extends RichTreeItemValue {
     //         if (this.getRootNode() != null) {
     //             this.setRootNode(null);
     //             if (log.isDebugEnabled()) {
-    //                 log.debug("destroy rootNode:{}", this.name());
+    //                 StaticLog.debug("destroy rootNode:{}", this.name());
     //             }
     //         }
     //     } catch (Exception ex) {

@@ -4,7 +4,6 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.beans.value.WeakChangeListener;
 import javafx.scene.paint.Color;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/11/21
  */
-@Slf4j
+//@Slf4j
 public class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKeyTreeItem> {
 
     public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {

@@ -25,7 +25,6 @@ import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.params.XAddParams;
 
 import java.util.List;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/22
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis键添加",
         iconUrls = RedisConst.ICON_PATH,

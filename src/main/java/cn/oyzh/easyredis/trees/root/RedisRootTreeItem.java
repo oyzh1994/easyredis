@@ -29,7 +29,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-@Slf4j
+//@Slf4j
 public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**

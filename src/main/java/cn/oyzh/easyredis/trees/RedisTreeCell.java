@@ -1,14 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.fx.plus.controls.tree.FXTreeCell;
-import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.drag.DragUtil;
-import cn.oyzh.fx.plus.drag.DrapNodeHandler;
 import cn.oyzh.fx.plus.trees.RichTreeCell;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.TreeItem;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * redis树节点工厂
@@ -16,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/06/31
  */
-@Slf4j
+//@Slf4j
 public class RedisTreeCell extends RichTreeCell<RedisTreeItemValue> {
 
     // public static final String DRAG_CONTENT = "redis_drag";

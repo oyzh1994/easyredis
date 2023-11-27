@@ -17,14 +17,12 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/30
  */
-@Slf4j
+//@Slf4j
 public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTreeItemValue> extends RedisTreeItem<V> {
 
     /**

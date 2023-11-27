@@ -15,7 +15,6 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Date;
 
@@ -26,7 +25,7 @@ import java.sql.Date;
  * @author oyzh
  * @since 2023/07/09
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis键TTL变更",
         iconUrls = RedisConst.ICON_PATH,

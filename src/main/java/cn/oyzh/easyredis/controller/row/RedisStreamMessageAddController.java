@@ -3,14 +3,12 @@ package cn.oyzh.easyredis.controller.row;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.alibaba.fastjson.JSON;
@@ -19,7 +17,6 @@ import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.params.XAddParams;
 
 import java.util.Map;
@@ -31,7 +28,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2022/07/07
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "添加stream消息",
         iconUrls = RedisConst.ICON_PATH,

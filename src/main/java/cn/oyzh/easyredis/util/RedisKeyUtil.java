@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisHashRow;
@@ -25,7 +26,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.params.ScanParams;
 import redis.clients.jedis.resps.ScanResult;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class RedisKeyUtil {
 
@@ -506,7 +506,7 @@ public class RedisKeyUtil {
         } else if ("stream".equals(type)) {
             node = new RedisStreamKey();
         } else {
-            log.warn("type:{} is not support!", type);
+            StaticLog.warn("type:{} is not support!", type);
         }
         if (node != null) {
             node.key(key);

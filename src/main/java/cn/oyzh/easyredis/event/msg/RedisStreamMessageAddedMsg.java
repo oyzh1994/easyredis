@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.event.msg;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
-import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventMsg;
 import lombok.Getter;
 import lombok.Setter;

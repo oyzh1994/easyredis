@@ -19,7 +19,6 @@ import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +32,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2020/10/09
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis键批量操作",
         iconUrls = RedisConst.ICON_PATH,

@@ -6,7 +6,6 @@ import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.resps.StreamEntry;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-@Slf4j
+//@Slf4j
 public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamKeyTreeItemValue, RedisStreamRow> {
 
     public RedisStreamKeyTreeItem(@NonNull RedisStreamKey value, @NonNull RedisDBTreeItem parent) {

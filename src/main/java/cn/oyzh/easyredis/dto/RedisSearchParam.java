@@ -4,8 +4,6 @@ import cn.oyzh.fx.plus.search.SearchParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Objects;
-
 /**
  * redis搜索参数
  *

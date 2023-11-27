@@ -24,7 +24,6 @@ import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-@Slf4j
+//@Slf4j
 public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> implements RedisConnectManager {
 
     /**

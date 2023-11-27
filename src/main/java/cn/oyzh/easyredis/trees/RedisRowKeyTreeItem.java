@@ -2,14 +2,12 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.redis.RedisRow;
 import cn.oyzh.easyredis.redis.RedisRowKey;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, V extends RedisKeyTreeItemValue, R extends RedisRow> extends RedisKeyTreeItem<K, V> {
 
     /**

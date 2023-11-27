@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis;
 
 import cn.hutool.extra.spring.EnableSpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -9,7 +10,6 @@ import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,7 +39,7 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
                 SqlInitializationAutoConfiguration.class,
         }
 )
-@Slf4j
+//@Slf4j
 @EnableSpringUtil
 public class EasyRedisApp extends SpringApplication implements CommandLineRunner, DisposableBean {
 
@@ -66,11 +66,11 @@ public class EasyRedisApp extends SpringApplication implements CommandLineRunner
 
     @Override
     public void destroy() {
-        log.info("EasyRedisApp destroyed.");
+        StaticLog.info("EasyRedisApp destroyed.");
     }
 
     @Override
     public void run(String... args) {
-        log.info("EasyRedisApp started.");
+        StaticLog.info("EasyRedisApp started.");
     }
 }

@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.util;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/07/31
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class RedisVersionUtil {
 

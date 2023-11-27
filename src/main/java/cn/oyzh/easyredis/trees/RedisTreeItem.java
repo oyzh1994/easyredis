@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeView;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 基础的树节点
@@ -10,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/06/27
  */
-@Slf4j
+//@Slf4j
 public abstract class RedisTreeItem<V extends RedisTreeItemValue> extends RichTreeItem<V> {
 
     public RedisTreeItem(RichTreeView treeView) {

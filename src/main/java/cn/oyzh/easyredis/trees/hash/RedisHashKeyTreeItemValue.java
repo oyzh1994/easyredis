@@ -1,9 +1,7 @@
 package cn.oyzh.easyredis.trees.hash;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import javafx.beans.value.WeakChangeListener;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -12,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2023/11/21
  */
-@Slf4j
+//@Slf4j
 public class RedisHashKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHashKeyTreeItem> {
 
     public RedisHashKeyTreeItemValue(RedisHashKeyTreeItem item) {

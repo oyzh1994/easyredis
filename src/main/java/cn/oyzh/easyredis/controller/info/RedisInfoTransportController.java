@@ -36,7 +36,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/07/20
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis数据传输",
         iconUrls = RedisConst.ICON_PATH,

@@ -8,8 +8,6 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.context.annotation.Lazy;

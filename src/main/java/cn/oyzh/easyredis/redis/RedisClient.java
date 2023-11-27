@@ -16,7 +16,6 @@ import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.BuilderFactory;
 import redis.clients.jedis.CommandObjects;
@@ -70,7 +69,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/6/16
  */
-@Slf4j
+//@Slf4j
 public class RedisClient {
 
     /**

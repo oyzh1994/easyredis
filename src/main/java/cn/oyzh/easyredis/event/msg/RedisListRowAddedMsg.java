@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.event.msg;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;

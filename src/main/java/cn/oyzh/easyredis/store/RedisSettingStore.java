@@ -2,12 +2,12 @@ package cn.oyzh.easyredis.store;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.fx.common.store.ObjectFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2026/06/26
  */
-@Slf4j
+//@Slf4j
 public class RedisSettingStore extends ObjectFileStore<RedisSetting> {
 
     /**
@@ -31,7 +31,7 @@ public class RedisSettingStore extends ObjectFileStore<RedisSetting> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_setting.json");
-        log.info("RedisSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("RedisSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

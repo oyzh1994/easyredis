@@ -1,17 +1,9 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
-import cn.oyzh.fx.plus.controls.FXListView;
 import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
-import cn.oyzh.fx.plus.event.EventUtil;
-import cn.oyzh.fx.plus.util.FontUtil;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.stage.Popup;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

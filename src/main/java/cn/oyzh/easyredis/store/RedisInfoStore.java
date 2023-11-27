@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.store.ArrayFileStore;
 import com.alibaba.fastjson.JSON;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/6/23
  */
-@Slf4j
+//@Slf4j
 public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
 
     /**
@@ -38,7 +38,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_info.json");
-        log.info("RedisInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        StaticLog.info("RedisInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.redisInfos = this.load();
         for (RedisInfo RedisInfo : this.redisInfos) {
             if (StrUtil.isBlank(RedisInfo.getId())) {
@@ -75,7 +75,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            log.warn("add error,err:{}", e.getMessage());
+            StaticLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -88,7 +88,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            log.warn("update error,err:{}", e.getMessage());
+            StaticLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -101,7 +101,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            log.warn("delete error,err:{}", e.getMessage());
+            StaticLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

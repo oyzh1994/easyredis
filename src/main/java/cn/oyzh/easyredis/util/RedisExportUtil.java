@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.common.dto.Project;
@@ -11,7 +12,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/07/07
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class RedisExportUtil {
 
@@ -84,7 +84,7 @@ public class RedisExportUtil {
      * @return RedisNodeExport
      */
     public static RedisNodeExport fromJSON(@NonNull String json) {
-        log.info("json: {}", json);
+        StaticLog.info("json: {}", json);
         JSONObject object = JSONObject.parseObject(json);
         RedisNodeExport export = new RedisNodeExport();
         export.setNodes(new ArrayList<>());

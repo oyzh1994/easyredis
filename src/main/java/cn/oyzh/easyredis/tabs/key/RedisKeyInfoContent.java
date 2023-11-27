@@ -11,7 +11,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,7 +25,7 @@ import java.util.ResourceBundle;
  * @since 2023/08/03
  */
 @Lazy
-@Slf4j
+//@Slf4j
 @Component
 @Scope(ScopeType.PROTOTYPE)
 public class RedisKeyInfoContent implements Initializable {

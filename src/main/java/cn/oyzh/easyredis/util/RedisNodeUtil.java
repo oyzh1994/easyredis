@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-@Slf4j
+//@Slf4j
 @UtilityClass
 public class RedisNodeUtil {
 

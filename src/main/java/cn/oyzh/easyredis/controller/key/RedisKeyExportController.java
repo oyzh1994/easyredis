@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.controller.key;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
@@ -38,7 +39,6 @@ import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -55,7 +55,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/07/07
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "Redis数据导出",
         iconUrls = RedisConst.ICON_PATH,
@@ -288,7 +288,7 @@ public class RedisKeyExportController extends Controller {
                 }
                 // 取消操作
                 if (ThreadUtil.isInterrupted(this.exportTask)) {
-                    log.warn("export cancel!");
+                    StaticLog.warn("export cancel!");
                     return;
                 }
                 // 键按词典顺序排序

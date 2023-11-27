@@ -16,7 +16,6 @@ import com.alibaba.fastjson.parser.Feature;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -25,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author oyzh
  * @since 2022/06/27
  */
-@Slf4j
+//@Slf4j
 @StageAttribute(
         title = "添加hash字段",
         iconUrls = RedisConst.ICON_PATH,

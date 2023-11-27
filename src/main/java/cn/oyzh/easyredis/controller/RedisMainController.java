@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.controller;
 
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
@@ -26,7 +27,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ import java.util.List;
  * @since 2023/06/22
  */
 @Lazy
-@Slf4j
+//@Slf4j
 @Component
 public class RedisMainController extends ParentController {
 
@@ -421,7 +421,7 @@ public class RedisMainController extends ParentController {
     private void keyFilter() {
         this.tree.itemFilter().initFilters();
         this.filter();
-        log.info("REDIS_NODE_FILTER.");
+        StaticLog.info("REDIS_NODE_FILTER.");
     }
 
     /**
@@ -434,7 +434,7 @@ public class RedisMainController extends ParentController {
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
-        log.info("LEFT_EXTEND.");
+        StaticLog.info("LEFT_EXTEND.");
     }
 
     /**
@@ -446,7 +446,7 @@ public class RedisMainController extends ParentController {
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
         this.tabPaneLeft.parentAutosize();
-        log.info("LEFT_COLLAPSE.");
+        StaticLog.info("LEFT_COLLAPSE.");
     }
 
     @Override

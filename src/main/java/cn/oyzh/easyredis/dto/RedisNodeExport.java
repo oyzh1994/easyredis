@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/06/20
  */
-@Slf4j
+//@Slf4j
 public class RedisNodeExport {
 
     /**
