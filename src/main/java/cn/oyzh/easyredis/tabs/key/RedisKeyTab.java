@@ -31,7 +31,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
+public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends DynamicTab {
 
     /**
      * redis树节点
@@ -56,8 +56,8 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
         this.flushGraphic();
         this.setOnCloseRequest(event -> {
             // 取消当前键的选中
-            if (this.treeItem.treeView().getSelectedItem() == this.treeItem) {
-                this.treeItem.treeView().select(this.treeItem.root());
+            if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
+                this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
             }
         });
     }
@@ -123,7 +123,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
         return this.treeItem.value();
     }
 
-    public static <T extends RedisKeyTreeItem<?>> RedisKeyTab<T> ofItem(T item) {
+    public static <T extends RedisKeyTreeItem<?, ?>> RedisKeyTab<T> ofItem(T item) {
         RedisKeyTab<T> tab = null;
         if (item instanceof RedisStringKeyTreeItem treeItem) {
             tab = (RedisKeyTab<T>) new RedisStringKeyTab(treeItem);

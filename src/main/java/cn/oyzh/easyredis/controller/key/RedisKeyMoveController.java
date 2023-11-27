@@ -67,7 +67,7 @@ public class RedisKeyMoveController extends Controller {
     /**
      * 树节点
      */
-    private RedisKeyTreeItem<?> treeItem;
+    private RedisKeyTreeItem<?, ?> treeItem;
 
     /**
      * 转移键
@@ -102,7 +102,7 @@ public class RedisKeyMoveController extends Controller {
                 if (ttl > 0) {
                     this.client.expire(targetDBIndex, key, ttl, null);
                 }
-                this.treeItem.treeView().setProp("targetDB", targetDBIndex);
+                this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
                 EventUtil.fire(RedisEventTypes.REDIS_KEY_MOVED, this.treeItem);
                 MessageBox.okToast("移动键成功！");
                 this.closeStage();

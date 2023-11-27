@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.property.SimpleObjectProperty;
@@ -20,7 +21,7 @@ import java.util.Objects;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetRow> {
+public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetKeyTreeItemValue, RedisZSetRow> {
 
     /**
      * 分数属性
@@ -155,9 +156,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
-        this.itemValue(new RedisZSetKeyTreeItemValue(this));
+    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
+        this.setValue(new RedisZSetKeyTreeItemValue(this));
     }
 
     /**
@@ -307,8 +308,8 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     //     return this.isGEOView() ? this.latitude() != null || this.longitude() != null : this.score() != null;
     // }
 
-    @Override
-    public RedisZSetKeyTreeItemValue itemValue() {
-        return (RedisZSetKeyTreeItemValue) super.itemValue();
-    }
+    // @Override
+    // public RedisZSetKeyTreeItemValue itemValue() {
+    //     return (RedisZSetKeyTreeItemValue) super.itemValue();
+    // }
 }

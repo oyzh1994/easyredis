@@ -2,9 +2,8 @@ package cn.oyzh.easyredis.trees.hash;
 
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +15,11 @@ import java.util.Map;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashRow> {
+public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashKeyTreeItemValue, RedisHashRow> {
 
-    public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
-        this.itemValue(new RedisHashKeyTreeItemValue(this));
+    public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
+        this.setValue(new RedisHashKeyTreeItemValue(this));
     }
 
     @Override

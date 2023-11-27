@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.dto;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;

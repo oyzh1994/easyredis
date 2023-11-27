@@ -17,7 +17,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/8/10
  */
-public class RedisServerInfoTreeItem extends RedisTreeItem {
+public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeItemValue> {
 
     /**
      * 父节点
@@ -25,20 +25,20 @@ public class RedisServerInfoTreeItem extends RedisTreeItem {
     private final RedisConnectTreeItem parent;
 
     public RedisServerInfoTreeItem(@NonNull RedisConnectTreeItem treeItem, @NonNull RedisTreeView treeView) {
+        super(treeView);
         this.parent = treeItem;
-        this.treeView(treeView);
-        this.itemValue(new RedisServerInfoTreeItemValue());
+        this.setValue(new RedisServerInfoTreeItemValue());
         // this.itemValue("服务信息");
     }
 
-    @Override
-    public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/info-circle.svg", "12");
-            this.itemValue().graphic(glyph);
-        }
-    }
+    // @Override
+    // public void flushGraphic() {
+    //     SVGGlyph glyph = (SVGGlyph) this.getValue().graphic();
+    //     if (glyph == null) {
+    //         glyph = new SVGGlyph("/font/info-circle.svg", "12");
+    //         this.getValue().graphic(glyph);
+    //     }
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

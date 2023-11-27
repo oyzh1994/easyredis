@@ -512,6 +512,7 @@ public class SearchController extends SubController {
     /**
      * 刷新搜索结果
      */
+    @EventReceiver(value = RedisEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     public void flushSearchResult() {
         if (this.treeView.searching()) {
             TaskManager.startDelayTask("redis:search:flushSearchResult", () -> {

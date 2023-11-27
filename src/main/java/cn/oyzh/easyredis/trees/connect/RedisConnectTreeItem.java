@@ -7,13 +7,13 @@ import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -25,11 +25,10 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -45,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/22
  */
-public class RedisConnectTreeItem extends RedisTreeItem {
+public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValue> {
 
     /**
      * redis信息
@@ -72,12 +71,12 @@ public class RedisConnectTreeItem extends RedisTreeItem {
     private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
 
     public RedisConnectTreeItem(@NonNull RedisInfo value, @NonNull RedisTreeView treeView) {
-        this.treeView(treeView);
+        super(treeView);
         this.value(value);
         // 监听键变化
-        this.getChildren().addListener((ListChangeListener<? super RedisDBTreeItem>) c -> {
-            this.treeView().fireChildChanged();
-            this.treeView().flushLocal();
+        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+            RedisEventUtil.treeChildChanged();
+            this.flushLocal();
         });
     }
 
@@ -88,23 +87,23 @@ public class RedisConnectTreeItem extends RedisTreeItem {
      */
     private boolean initConnect() {
         try {
-            this.itemValue().role(this.client.getRole());
-            this.itemValue().master(this.client.isMasterMode());
-            this.itemValue().readOnly(this.client.isReadOnly());
-            this.itemValue().cluster(this.client.isClusterMode());
+            this.getValue().role(this.client.getRole());
+            this.getValue().master(this.client.isMasterMode());
+            this.getValue().readOnly(this.client.isReadOnly());
+            this.getValue().cluster(this.client.isClusterMode());
             if (this.client.isSentinelMode()) {
-                this.addChild(new RedisServerInfoTreeItem(this, this.treeView()));
+                this.addChild(new RedisServerInfoTreeItem(this, this.getTreeView()));
             } else if (this.client.isClusterMode()) {
-                List<RedisDBTreeItem> dbTreeItems = new ArrayList<>();
-                dbTreeItems.add(new RedisDBTreeItem(null, this, this.treeView()));
-                this.replaceChildes(dbTreeItems);
+                List<TreeItem<?>> dbTreeItems = new ArrayList<>();
+                dbTreeItems.add(new RedisDBTreeItem(null, this, this.getTreeView()));
+                this.setChild(dbTreeItems);
             } else {
                 int databases = this.client().databases();
-                List<RedisDBTreeItem> dbTreeItems = new ArrayList<>(databases);
+                List<TreeItem<?>> dbTreeItems = new ArrayList<>(databases);
                 for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-                    dbTreeItems.add(new RedisDBTreeItem(dbIndex, this, this.treeView()));
+                    dbTreeItems.add(new RedisDBTreeItem(dbIndex, this, this.getTreeView()));
                 }
-                this.replaceChildes(dbTreeItems);
+                this.setChild(dbTreeItems);
             }
             return true;
         } catch (Exception ex) {
@@ -114,10 +113,10 @@ public class RedisConnectTreeItem extends RedisTreeItem {
         return false;
     }
 
-    @Override
-    public RedisConnectTreeItemValue itemValue() {
-        return (RedisConnectTreeItemValue) super.itemValue();
-    }
+    // @Override
+    // public RedisConnectTreeItemValue itemValue() {
+    //     return (RedisConnectTreeItemValue) super.itemValue();
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -222,9 +221,11 @@ public class RedisConnectTreeItem extends RedisTreeItem {
         try {
             // 清空数据
             this.client().flushAll();
-            for (RedisDBTreeItem child : this.getChildren()) {
-                child.clearChild();
-                child.flushItemValue();
+            for (TreeItem<?> child : this.getShowChildren()) {
+                if (child instanceof RedisDBTreeItem treeItem) {
+                    treeItem.clearChild();
+                    treeItem.flushItemValue();
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -277,7 +278,7 @@ public class RedisConnectTreeItem extends RedisTreeItem {
         if (this.isConnected()) {
             this._disConnect();
         }
-        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.treeView().window());
+        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
     }
@@ -299,9 +300,9 @@ public class RedisConnectTreeItem extends RedisTreeItem {
      * 断开连接实际业务
      */
     private void _disConnect() {
-        this.itemValue().clearRole();
+        this.getValue().clearRole();
         this.client.close();
-        this.clearChildren();
+        this.clearChild();
         this.flushGraphic();
         SystemUtil.gcLater();
     }
@@ -353,7 +354,7 @@ public class RedisConnectTreeItem extends RedisTreeItem {
 
         // 修改名称
         if (this.infoStore.update(this.value)) {
-            this.itemValue().name(connectName);
+            this.getValue().name(connectName);
             // this.itemValue(connectName);
         } else {
             MessageBox.warn("修改连接名称失败！");
@@ -369,7 +370,7 @@ public class RedisConnectTreeItem extends RedisTreeItem {
         this.value = value;
         this.disConnect();
         this.client = new RedisClient(value);
-        this.itemValue(new RedisConnectTreeItemValue(this));
+        this.setValue(new RedisConnectTreeItemValue(this));
     }
 
     /**
@@ -399,11 +400,6 @@ public class RedisConnectTreeItem extends RedisTreeItem {
         return this.client != null && this.client.isClosed();
     }
 
-    @Override
-    public ObservableList<RedisDBTreeItem> getChildren() {
-        return super.getChildren();
-    }
-
     /**
      * 获取数据库节点
      *
@@ -411,34 +407,34 @@ public class RedisConnectTreeItem extends RedisTreeItem {
      * @return 数据库节点
      */
     public RedisDBTreeItem getDatabaseItem(int index) {
-        for (RedisDBTreeItem child : this.getChildren()) {
-            if (child.dbIndex() == index) {
-                return child;
+        for (TreeItem<?> child : this.getShowChildren()) {
+            if (child instanceof RedisDBTreeItem treeItem && treeItem.dbIndex() == index) {
+                return treeItem;
             }
         }
         return null;
     }
 
-    /**
-     * 清理子节点
-     */
-    public void clearChildren() {
-        try {
-            this.setExpanded(false);
-            this.getChildren().clear();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    // /**
+    //  * 清理子节点
+    //  */
+    // public void clearChildren() {
+    //     try {
+    //         this.setExpanded(false);
+    //         this.getChildren().clear();
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
 
-    @Override
-    public void doFilter(@NonNull RichTreeItemFilter filter) {
-        if (this.isConnected()) {
-            for (RedisDBTreeItem dbTreeItem : this.getChildren()) {
-                dbTreeItem.doFilter(filter);
-            }
-        }
-    }
+    // @Override
+    // public void doFilter(@NonNull RichTreeItemFilter filter) {
+    //     if (this.isConnected()) {
+    //         for (RedisDBTreeItem dbTreeItem : this.getChildren()) {
+    //             dbTreeItem.doFilter(filter);
+    //         }
+    //     }
+    // }
 
     // @Override
     // public void flushGraphic() {
@@ -455,17 +451,17 @@ public class RedisConnectTreeItem extends RedisTreeItem {
     //     }
     // }
 
-    /**
-     * 获分组键
-     *
-     * @return 分组键
-     */
-    public RedisGroupTreeItem getGroupItem() {
-        if (this.getParent() instanceof RedisGroupTreeItem groupItem) {
-            return groupItem;
-        }
-        return null;
-    }
+    // /**
+    //  * 获分组键
+    //  *
+    //  * @return 分组键
+    //  */
+    // public RedisGroupTreeItem getGroupItem() {
+    //     if (this.getParent() instanceof RedisGroupTreeItem groupItem) {
+    //         return groupItem;
+    //     }
+    //     return null;
+    // }
 
     @Override
     public void sortAsc() {

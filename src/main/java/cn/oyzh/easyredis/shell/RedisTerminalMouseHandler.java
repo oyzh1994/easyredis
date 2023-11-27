@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.shell;
 
 
-import cn.oyzh.fx.terminal.mouse.BaseTerminalMouseHandler;
+import cn.oyzh.fx.terminal.mouse.TerminalMouseHandler;
 
 /**
  * @author oyzh
  * @since 2023/8/28
  */
-public class RedisTerminalMouseHandler extends BaseTerminalMouseHandler {
+public class RedisTerminalMouseHandler implements TerminalMouseHandler<RedisTerminalTextArea> {
 
     /**
      * 当前实例

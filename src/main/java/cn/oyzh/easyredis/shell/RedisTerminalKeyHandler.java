@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.shell;
 
 
-import cn.oyzh.fx.terminal.key.BaseTerminalKeyHandler;
+import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
 
 /**
  * @author oyzh
  * @since 2023/8/28
  */
-public class RedisTerminalKeyHandler extends BaseTerminalKeyHandler<RedisTerminalTextArea> {
+public class RedisTerminalKeyHandler implements TerminalKeyHandler<RedisTerminalTextArea> {
 
     /**
      * 当前实例
@@ -21,7 +21,7 @@ public class RedisTerminalKeyHandler extends BaseTerminalKeyHandler<RedisTermina
             terminal.connect(input);
             terminal.saveHistory(input);
         } else if (!terminal.isConnecting()) {
-            super.onEnterKeyPressed(terminal);
+            TerminalKeyHandler.super.onEnterKeyPressed(terminal);
         }
         return false;
     }

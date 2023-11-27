@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
+public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey,RedisKeyTreeItemValue> {
 
-    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
-        this.itemValue(new RedisStringKeyTreeItemValue(this));
+    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
+        this.setValue(new RedisStringKeyTreeItemValue(this));
     }
 
     @Override

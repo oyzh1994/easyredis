@@ -4,12 +4,10 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -222,9 +220,9 @@ public class RedisMainController extends ParentController {
      * @param item 节点
      */
     private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof RedisKeyTreeItem<?> treeItem) {
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
             this.nodeTreeItemChanged(treeItem);
-            this.connectTreeItemChanged(treeItem.root());
+            this.connectTreeItemChanged(treeItem.connectTreeItem());
         } else if (item instanceof RedisConnectTreeItem treeItem) {
             this.nodeTreeItemChanged(null);
             this.connectTreeItemChanged(treeItem);
@@ -255,7 +253,7 @@ public class RedisMainController extends ParentController {
      *
      * @param item 树节点
      */
-    private void nodeTreeItemChanged(RedisKeyTreeItem<?> item) {
+    private void nodeTreeItemChanged(RedisKeyTreeItem<?, ?> item) {
         this.tabPane.initKeyTab(item);
     }
 
@@ -393,8 +391,8 @@ public class RedisMainController extends ParentController {
         //     }
         // });
 
-        // 监听节点变化
-        this.tree.childChanged(() -> this.searchController.flushSearchResult());
+        // // 监听节点变化
+        // this.tree.childChanged(() -> this.searchController.flushSearchResult());
 
         // 监听F5按键
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());

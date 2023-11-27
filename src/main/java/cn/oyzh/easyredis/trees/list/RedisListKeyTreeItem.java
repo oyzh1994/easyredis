@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +17,11 @@ import java.util.List;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, RedisListRow> {
+public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey,RedisListKeyTreeItemValue, RedisListRow> {
 
-    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
-        this.itemValue(new RedisListKeyTreeItemValue(this));
+    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
+        this.setValue(new RedisListKeyTreeItemValue(this));
     }
 
     @Override

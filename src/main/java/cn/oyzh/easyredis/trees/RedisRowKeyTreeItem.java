@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees;
 import cn.oyzh.easyredis.redis.RedisRow;
 import cn.oyzh.easyredis.redis.RedisRowKey;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -19,7 +20,7 @@ import java.util.List;
  * @since 2023/06/30
  */
 @Slf4j
-public abstract class RedisRowKeyTreeItem<V extends RedisRowKey<R>, R extends RedisRow> extends RedisKeyTreeItem<V> {
+public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, V extends RedisKeyTreeItemValue, R extends RedisRow> extends RedisKeyTreeItem<K, V> {
 
     /**
      * 当前行
@@ -29,8 +30,8 @@ public abstract class RedisRowKeyTreeItem<V extends RedisRowKey<R>, R extends Re
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull V value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
+    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
     }
 
     /**

@@ -465,8 +465,8 @@ public class RedisMainSearchHandler {
         }
         boolean m1 = false, m2 = false;
         // // 路径
-        if (item instanceof RedisTreeItem treeItem) {
-            String value = treeItem.itemValue().name();
+        if (item instanceof RedisTreeItem<?> treeItem) {
+            String value = treeItem.getValue().name();
             m1 = this.searchParam.isMatch(value);
         }
         // if (this.searchParam.isSearchKey() && item instanceof RedisTreeItem treeItem) {

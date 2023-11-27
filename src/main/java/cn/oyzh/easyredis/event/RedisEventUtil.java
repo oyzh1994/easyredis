@@ -13,6 +13,7 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
+import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
@@ -155,6 +156,14 @@ public class RedisEventUtil {
     public static void searchFinish(RedisSearchParam searchParam) {
         RedisSearchFinishMsg msg = new RedisSearchFinishMsg();
         msg.searchParam(searchParam);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 树节点变化事件
+     */
+    public static void treeChildChanged() {
+        TreeChildChangedMsg msg = new TreeChildChangedMsg();
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

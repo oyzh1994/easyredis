@@ -303,7 +303,7 @@ public class RedisKeyBatchOperationController extends Controller {
                         this.client.move(moveKey, this.dbIndex, targetDBIndex);
                     }
                     this.showKeys(this.moveKeys, this.keys4);
-                    this.treeItem.treeView().setProp("targetDB", targetDBIndex);
+                    this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
                     EventUtil.fire(RedisEventTypes.REDIS_KEY_MOVED, this.treeItem);
                     MessageBox.okToast("移动键成功");
                 } finally {
@@ -350,7 +350,7 @@ public class RedisKeyBatchOperationController extends Controller {
                         }
                     }
                     this.showKeys(keys, this.keys5);
-                    this.treeItem.treeView().setProp("targetDB", targetDBIndex);
+                    this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
                     EventUtil.fire(RedisEventTypes.REDIS_KEY_COPY, this.treeItem);
                     MessageBox.okToast("复制键成功");
                 } finally {

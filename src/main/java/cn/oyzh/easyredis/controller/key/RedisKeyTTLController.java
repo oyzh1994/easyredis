@@ -61,7 +61,7 @@ public class RedisKeyTTLController extends Controller {
     /**
      * 树键
      */
-    private RedisKeyTreeItem<?> treeItem;
+    private RedisKeyTreeItem<?, ?> treeItem;
 
     /**
      * 添加redis键

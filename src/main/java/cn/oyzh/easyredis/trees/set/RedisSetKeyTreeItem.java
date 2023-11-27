@@ -2,9 +2,8 @@ package cn.oyzh.easyredis.trees.set;
 
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +18,11 @@ import java.util.Set;
  * @since 2023/06/30
  */
 @Slf4j
-public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetRow> {
+public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetKeyTreeItemValue, RedisSetRow> {
 
-    public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisConnectTreeItem root) {
-        super(value, root);
-        this.itemValue(new RedisSetKeyTreeItemValue(this));
+    public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisDBTreeItem parent) {
+        super(value, parent);
+        this.setValue(new RedisSetKeyTreeItemValue(this));
     }
 
     @Override

@@ -67,7 +67,7 @@ public class RedisKeyCopyController extends Controller {
     /**
      * 树节点
      */
-    private RedisKeyTreeItem<?> treeItem;
+    private RedisKeyTreeItem<?, ?> treeItem;
 
     /**
      * 转移键
@@ -92,7 +92,7 @@ public class RedisKeyCopyController extends Controller {
             if (!result) {
                 MessageBox.warn("复制键失败！");
             } else {
-                this.treeItem.treeView().setProp("targetDB", targetDBIndex);
+                this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
                 EventUtil.fire(RedisEventTypes.REDIS_KEY_COPY, this.treeItem);
                 MessageBox.okToast("复制键成功！");
             }

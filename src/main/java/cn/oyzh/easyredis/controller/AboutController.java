@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.controller;
 
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.stage.StageAttribute;

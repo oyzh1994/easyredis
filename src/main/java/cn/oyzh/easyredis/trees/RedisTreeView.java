@@ -1,11 +1,11 @@
 package cn.oyzh.easyredis.trees;
 
+import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
-import cn.oyzh.fx.common.spring.SpringUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -60,12 +60,12 @@ public class RedisTreeView extends RichTreeView {
     @Getter
     private volatile boolean searching;
 
-    /**
-     * 子节点变化处理
-     */
-    @Setter
-    @Getter
-    private Runnable childChanged;
+    // /**
+    //  * 子节点变化处理
+    //  */
+    // @Setter
+    // @Getter
+    // private Runnable childChanged;
 
     // /**
     //  * 图标变化处理
@@ -104,18 +104,18 @@ public class RedisTreeView extends RichTreeView {
         return (RedisTreeItemFilter) this.itemFilter;
     }
 
-    /**
-     * 触发子节点变化事件
-     */
-    public void fireChildChanged() {
-        if (this.childChanged != null) {
-            try {
-                this.childChanged.run();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+    // /**
+    //  * 触发子节点变化事件
+    //  */
+    // public void fireChildChanged() {
+    //     if (this.childChanged != null) {
+    //         try {
+    //             this.childChanged.run();
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     }
+    // }
 
     // /**
     //  * 触发图标变化事件
@@ -235,19 +235,19 @@ public class RedisTreeView extends RichTreeView {
             }
         });
         // 删除按键处理
-         KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
+        KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
             TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof RedisTreeItem treeItem) {
+            if (item instanceof RedisTreeItem<?> treeItem) {
                 treeItem.delete();
             }
         });
         // 暂停按键处理
-         KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
+        KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof RedisConnectTreeItem treeItem) {
                 treeItem.disConnect();
-            } else if (item instanceof RedisKeyTreeItem nodeTreeItem) {
-                nodeTreeItem.root().disConnect();
+            } else if (item instanceof RedisKeyTreeItem<?, ?> nodeTreeItem) {
+                nodeTreeItem.connectTreeItem().disConnect();
             }
         });
     }
@@ -314,7 +314,7 @@ public class RedisTreeView extends RichTreeView {
         RedisConnectTreeItem connectTreeItem = null;
         if (treeItem instanceof RedisDBTreeItem dbTeeItem) {
             connectTreeItem = dbTeeItem.parent();
-        } else if (treeItem instanceof RedisKeyTreeItem<?> keyTreeItem) {
+        } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
             connectTreeItem = keyTreeItem.connectTreeItem();
         }
         if (connectTreeItem != null) {
@@ -331,7 +331,7 @@ public class RedisTreeView extends RichTreeView {
      * @param treeItem key树节点
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
-    private void onKeyMoved(RedisKeyTreeItem<?> treeItem) {
+    private void onKeyMoved(RedisKeyTreeItem<?, ?> treeItem) {
         int dbIndex = this.getProp("targetDB");
         RedisConnectTreeItem connectTreeItem = treeItem.connectTreeItem();
         treeItem.remove();
@@ -344,7 +344,7 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索开始事件
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START,async = true, verbose = true)
+    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, async = true, verbose = true)
     private void onSearchStart() {
         this.searching = true;
         this.filter();

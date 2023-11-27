@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 连接管理
@@ -65,10 +66,12 @@ public interface RedisConnectManager {
     List<RedisConnectTreeItem> getConnectItems();
 
     /**
-     * 获取已连接的连接键
+     * 获取已连接的连接节点
      *
-     * @return 已连接的连接键
+     * @return 已连接的连接节点
      */
-    List<RedisConnectTreeItem> getConnectedItems();
+    default List<RedisConnectTreeItem> getConnectedItems() {
+        return this.getConnectItems().parallelStream().filter(RedisConnectTreeItem::isConnected).collect(Collectors.toList());
+    }
 
 }

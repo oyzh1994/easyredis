@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis;
 
+import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -39,6 +40,7 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
         }
 )
 @Slf4j
+@EnableSpringUtil
 public class EasyRedisApp extends SpringApplication implements CommandLineRunner, DisposableBean {
 
     public static void main(String[] args) {

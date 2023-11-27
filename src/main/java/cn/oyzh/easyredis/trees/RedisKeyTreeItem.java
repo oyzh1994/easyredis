@@ -19,8 +19,6 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -37,28 +35,28 @@ import java.util.Objects;
  * @since 2023/6/30
  */
 @Slf4j
-public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem {
+public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTreeItemValue> extends RedisTreeItem<V> {
 
     /**
      * redis键
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    protected V value;
+    protected K value;
 
-    /**
-     * 可见标志位
-     */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    private volatile boolean visible;
+    // /**
+    //  * 可见标志位
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // private volatile boolean visible;
 
-    /**
-     * 连接键
-     */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    protected final RedisConnectTreeItem root;
+    // /**
+    //  * 连接键
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // protected final RedisConnectTreeItem root;
 
     /**
      * 键数据属性
@@ -120,42 +118,42 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
         return this.dataProperty.get() != null;
     }
 
-    /**
-     * 子节点列表，记录用，非实际展示列表
-     */
-    private ObservableList<RedisKeyTreeItem<?>> children;
+    // /**
+    //  * 子节点列表，记录用，非实际展示列表
+    //  */
+    // private ObservableList<RedisKeyTreeItem<?>> children;
+    //
+    // /**
+    //  * 获取子节点列表
+    //  *
+    //  * @return 子节点列表
+    //  */
+    // public ObservableList<RedisKeyTreeItem<?>> children() {
+    //     if (this.children == null) {
+    //         this.children = FXCollections.observableArrayList();
+    //     }
+    //     return this.children;
+    // }
 
-    /**
-     * 获取子节点列表
-     *
-     * @return 子节点列表
-     */
-    public ObservableList<RedisKeyTreeItem<?>> children() {
-        if (this.children == null) {
-            this.children = FXCollections.observableArrayList();
-        }
-        return this.children;
-    }
-
-    public RedisKeyTreeItem(@NonNull V value, @NonNull RedisConnectTreeItem root) {
-        this.root = root;
+    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem parent) {
+        super(parent.getTreeView());
+        // this.root = root;
         this.value = value;
-        this.treeView(root.treeView());
     }
 
-    /**
-     * 父键是否展开
-     *
-     * @return 结果
-     */
-    public boolean isParentExpanded() {
-        return this.getParent() != null && this.getParent().isExpanded();
-    }
+    // /**
+    //  * 父键是否展开
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isParentExpanded() {
+    //     return this.getParent() != null && this.getParent().isExpanded();
+    // }
 
-    @Override
-    public void doFilter(@NonNull RichTreeItemFilter filter) {
-        this.visible = filter.apply(this);
-    }
+    // @Override
+    // public void doFilter(@NonNull RichTreeItemFilter filter) {
+    //     this.visible = filter.apply(this);
+    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -195,7 +193,8 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
      * @return db节点
      */
     public RedisDBTreeItem parent() {
-        return (RedisDBTreeItem) this.getParent();
+        TreeItem<?> treeItem = this.getParent();
+        return (RedisDBTreeItem) treeItem;
     }
 
     /**
@@ -207,29 +206,29 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
         return this.parent().parent();
     }
 
-    @Override
-    public void removeChild(@NonNull TreeItem<?> item) {
-        if (!this.isChildEmpty()) {
-            super.removeChild(item);
-            this.children.remove(item);
-        }
-    }
-
-    @Override
-    public void removeChildes(@NonNull List<TreeItem<?>> items) {
-        if (!this.isChildEmpty()) {
-            super.removeChildes(items);
-            this.children.removeAll(items);
-        }
-    }
-
-    @Override
-    public boolean isChildEmpty() {
-        if (this.children != null) {
-            return this.children.isEmpty();
-        }
-        return true;
-    }
+    // @Override
+    // public void removeChild(@NonNull TreeItem<?> item) {
+    //     if (!this.isChildEmpty()) {
+    //         super.removeChild(item);
+    //         this.children.remove(item);
+    //     }
+    // }
+    //
+    // @Override
+    // public void removeChildes(@NonNull List<TreeItem<?>> items) {
+    //     if (!this.isChildEmpty()) {
+    //         super.removeChildes(items);
+    //         this.children.removeAll(items);
+    //     }
+    // }
+    //
+    // @Override
+    // public boolean isChildEmpty() {
+    //     if (this.children != null) {
+    //         return this.children.isEmpty();
+    //     }
+    //     return true;
+    // }
 
     /**
      * redis信息
@@ -237,7 +236,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
      * @return redis信息
      */
     public RedisInfo info() {
-        return this.root().value();
+        return this.parent().info();
     }
 
     /**
@@ -282,7 +281,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.root.client();
+        return this.parent().client();
     }
 
     /**
@@ -332,7 +331,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
     public void unCollect(boolean tips) {
         if (this.info().removeCollect(this.dbIndex(), this.key())) {
             RedisInfoStore.INSTANCE.update(this.info());
-            this.treeView().filter();
+            this.doFilter();
             if (tips) {
                 MessageBox.okToast("键已取消收藏");
             }
@@ -357,10 +356,10 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
         }
     }
 
-    @Override
-    public RedisKeyTreeItemValue itemValue() {
-        return (RedisKeyTreeItemValue) super.itemValue();
-    }
+    // @Override
+    // public RedisKeyTreeItemValue itemValue() {
+    //     return (RedisKeyTreeItemValue) super.itemValue();
+    // }
 
     @Override
     public void rename() {
@@ -381,7 +380,7 @@ public abstract class RedisKeyTreeItem<V extends RedisKey> extends RedisTreeItem
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
-                this.itemValue().name(newKey);
+                this.getValue().name(newKey);
                 EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
             } else {
                 MessageBox.warn("更改键名称失败！");

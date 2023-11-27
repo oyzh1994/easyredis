@@ -116,7 +116,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
 
     @Override
     public Boolean apply(RichTreeItem item) {
-        if (item instanceof RedisKeyTreeItem<?> treeItem) {
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
             // 判断是否满足搜索要求
             RedisSearchParam param = this.searchHandler.searchParam();
             if (param != null && param.isFilterMode() && !param.isEmpty()) {
