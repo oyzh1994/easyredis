@@ -37,6 +37,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -138,7 +139,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
         this.setValue(new RedisDBTreeItemValue(this));
-        this.flushChildNum();
+        this.flushValue();
     }
 
     // @Override
@@ -205,9 +206,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     // }
 
     /**
-     * 刷新子节点数量
+     * 刷新值
      */
-    private void flushChildNum() {
+    private void flushValue() {
         if (!this.client().isSentinelMode()) {
             try {
                 this.getValue().childNum(this.client().dbSize(this.dbIndex));
@@ -216,23 +217,25 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 ex.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 刷新树节点值
-     */
-    public void flushItemValue() {
-        this.flushChildNum();
         this.getValue().showChildNum(this.getChildrenSize());
         this.getValue().keyFilterPattern(this.keyFilterPattern);
-        // 刷新ui
-        this.getTreeView().flushLocal();
-        // this.itemValue().showChildNum(this.getChildren().size());
-        // this.itemValue().keyFilterPattern(this.keyFilterPattern);
-        // this.itemValue().initChildNum();
-        // this.itemValue().initKeyFilter();
-        // this.treeView().flushLocal();
     }
+
+    // /**
+    //  * 刷新树节点值
+    //  */
+    // public void flushItemValue() {
+    //     this.flushChildNum();
+    //     this.getValue().showChildNum(this.getChildrenSize());
+    //     this.getValue().keyFilterPattern(this.keyFilterPattern);
+    //     // 刷新ui
+    //     this.getTreeView().flushLocal();
+    //     // this.itemValue().showChildNum(this.getChildren().size());
+    //     // this.itemValue().keyFilterPattern(this.keyFilterPattern);
+    //     // this.itemValue().initChildNum();
+    //     // this.itemValue().initKeyFilter();
+    //     // this.treeView().flushLocal();
+    // }
 
     // @Override
     // public void flushGraphic() {
@@ -276,7 +279,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     private void batchOperation() {
         StageWrapper fxView = StageUtil.parseStage(RedisKeyBatchOperationController.class, this.window());
         fxView.setProp("treeItem", this);
-        fxView.disappear();
+        fxView.display();
     }
 
     /**
@@ -337,7 +340,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         try {
             this.client().flushDB(this.dbIndex);
             this.clearChild();
-            this.flushItemValue();
+            // this.flushItemValue();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -348,7 +351,13 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     public void reloadChild() {
         this.nodeLoaded = false;
         this._loadChild();
-        this.flushItemValue();
+        // this.flushItemValue();
+    }
+
+    @Override
+    public synchronized void doFilter(RichTreeItemFilter itemFilter) {
+        super.doFilter(itemFilter);
+        this.flushValue();
     }
 
     /**
@@ -397,7 +406,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     empty = false;
                     this.clearChild();
                 }
-                this.addChild(treeItems);
+                this.setChild(treeItems);
                 this.extend();
             }
             if (result.isFinish()) {

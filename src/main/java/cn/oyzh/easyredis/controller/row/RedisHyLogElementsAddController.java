@@ -77,7 +77,7 @@ public class RedisHyLogElementsAddController extends Controller {
             }
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
-            RedisEventUtil.hyLogElementsAddedMsg(this.treeItem);
+            RedisEventUtil.hyLogElementsAdded(this.treeItem);
             MessageBox.okToast("新增元素成功！");
             this.closeStage();
         } catch (Exception ex) {

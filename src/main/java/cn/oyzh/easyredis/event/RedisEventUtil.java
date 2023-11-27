@@ -4,6 +4,9 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisSearchParam;
 import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
 import cn.oyzh.easyredis.event.msg.RedisListRowAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
 import cn.oyzh.easyredis.event.msg.RedisSearchStartMsg;
@@ -14,6 +17,7 @@ import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
+import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
@@ -122,7 +126,7 @@ public class RedisEventUtil {
      *
      * @param item redis树节点
      */
-    public static void hashFieldAddedMsg(RedisHashKeyTreeItem item) {
+    public static void hashFieldAdded(RedisHashKeyTreeItem item) {
         RedisHashFieldAddedMsg msg = new RedisHashFieldAddedMsg();
         msg.item(item);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
@@ -133,7 +137,7 @@ public class RedisEventUtil {
      *
      * @param item redis树节点
      */
-    public static void hyLogElementsAddedMsg(RedisHyLogKeyTreeItem item) {
+    public static void hyLogElementsAdded(RedisHyLogKeyTreeItem item) {
         RedisHyLogElementsAddedMsg msg = new RedisHyLogElementsAddedMsg();
         msg.item(item);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
@@ -164,4 +168,38 @@ public class RedisEventUtil {
         TreeChildChangedMsg msg = new TreeChildChangedMsg();
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
+
+    /**
+     * 键添加事件
+     *
+     * @param item redis树节点
+     */
+    public static void keyAdded(RedisDBTreeItem item) {
+        RedisKeyAddedMsg msg = new RedisKeyAddedMsg();
+        msg.item(item);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键删除事件
+     *
+     * @param item redis树节点
+     */
+    public static void keyDeleted(RedisDBTreeItem item) {
+        RedisKeyDeletedMsg msg = new RedisKeyDeletedMsg();
+        msg.item(item);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键刷新事件
+     *
+     * @param item redis树节点
+     */
+    public static void keyFlushed(RedisDBTreeItem item) {
+        RedisKeyFlushedMsg msg = new RedisKeyFlushedMsg();
+        msg.item(item);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
 }

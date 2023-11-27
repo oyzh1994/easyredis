@@ -224,7 +224,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             for (TreeItem<?> child : this.getShowChildren()) {
                 if (child instanceof RedisDBTreeItem treeItem) {
                     treeItem.clearChild();
-                    treeItem.flushItemValue();
+                    // treeItem.flushValue();
                 }
             }
         } catch (Exception ex) {

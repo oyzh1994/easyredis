@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
 import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
@@ -346,7 +347,8 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             // 移除此键
             this.remove();
             // 发送事件
-            EventUtil.fire(RedisEventTypes.REDIS_KEY_DELETED, this.parent());
+            // EventUtil.fire(RedisEventTypes.REDIS_KEY_DELETED, this.parent());
+            RedisEventUtil.keyDeleted(this.parent());
             MessageBox.okToast("键已删除");
         } catch (Exception ex) {
             ex.printStackTrace();

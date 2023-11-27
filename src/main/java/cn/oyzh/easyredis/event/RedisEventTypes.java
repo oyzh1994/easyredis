@@ -17,21 +17,6 @@ public class RedisEventTypes {
     public static final String APP_EXIT = "APP_EXIT";
 
     /**
-     * redis节点新增事件(来源于操作)
-     */
-    public static final String REDIS_NODE_ADD = "REDIS_NODE_ADD";
-
-    /**
-     * redis节点已新增事件
-     */
-    public static final String REDIS_NODE_ADDED = "REDIS_NODE_ADDED";
-
-    /**
-     * redis节点修改事件(来源于操作)
-     */
-    public static final String REDIS_NODE_UPDATE = "REDIS_NODE_UPDATE";
-
-    /**
      * redis节点已修改事件(来源于消息)
      */
     public static final String REDIS_NODE_UPDATED = "REDIS_NODE_UPDATED";
@@ -155,7 +140,7 @@ public class RedisEventTypes {
     /**
      * redis键刷新
      */
-    public static final String REDIS_KEY_FLUSH = "REDIS_KEY_FLUSH";
+    public static final String REDIS_KEY_FLUSHED = "REDIS_KEY_FLUSHED";
 
     /**
      * redis键复制

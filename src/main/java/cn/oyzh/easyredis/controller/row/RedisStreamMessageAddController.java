@@ -148,6 +148,7 @@ public class RedisStreamMessageAddController extends Controller {
         this.treeItem = this.getStageProp("treeItem");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
+        this.rowValue.requestFocus();
         super.onStageShown(event);
     }
 

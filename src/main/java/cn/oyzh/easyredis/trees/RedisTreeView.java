@@ -2,6 +2,9 @@ package cn.oyzh.easyredis.trees;
 
 import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
@@ -293,12 +296,39 @@ public class RedisTreeView extends RichTreeView {
         }
     }
 
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSH, verbose = true, async = true)
+    /**
+     * 键添加事件
+     *
+     * @param msg 消息
+     */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
+    private void onKeyAdded(RedisKeyAddedMsg msg) {
+        if (msg != null && msg.item() != null) {
+            msg.item().reloadChild();
+        }
+    }
+
+    /**
+     * 键删除事件
+     *
+     * @param msg 消息
+     */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
-    private void onKeyChanged(RedisDBTreeItem treeItem) {
-        if (treeItem != null) {
-            treeItem.reloadChild();
+    private void onKeyDeleted(RedisKeyDeletedMsg msg) {
+        if (msg != null && msg.item() != null) {
+            msg.item().reloadChild();
+        }
+    }
+
+    /**
+     * 键刷新事件
+     *
+     * @param msg 消息
+     */
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSHED, verbose = true, async = true)
+    private void onKeyFlushed(RedisKeyFlushedMsg msg) {
+        if (msg != null && msg.item() != null) {
+            msg.item().reloadChild();
         }
     }
 

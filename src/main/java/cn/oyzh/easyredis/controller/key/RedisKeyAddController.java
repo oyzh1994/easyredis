@@ -6,7 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -17,7 +17,6 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupManage;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -264,7 +263,8 @@ public class RedisKeyAddController extends Controller {
             if (ttl != -1) {
                 this.client.expire(dbIndex, key, ttl, null);
             }
-            EventUtil.fire(RedisEventTypes.REDIS_KEY_ADDED, this.treeItem);
+            RedisEventUtil.keyAdded(this.treeItem);
+            // EventUtil.fire(RedisEventTypes.REDIS_KEY_ADDED, this.treeItem);
             MessageBox.okToast("新增键成功！");
             this.closeStage();
         } catch (Exception ex) {

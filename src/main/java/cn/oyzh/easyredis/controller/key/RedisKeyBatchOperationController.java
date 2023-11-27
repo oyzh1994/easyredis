@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
@@ -27,7 +28,7 @@ import java.util.Set;
 
 
 /**
- * reids键批量操作业务
+ * redis键批量操作业务
  *
  * @author oyzh
  * @since 2020/10/09
@@ -180,7 +181,8 @@ public class RedisKeyBatchOperationController extends Controller {
                     this.stage.appendTitle("操作中...");
                     this.client.del(this.dbIndex, this.delKeys);
                     this.showKeys(this.delKeys, this.keys1);
-                    EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    // EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    RedisEventUtil.keyFlushed(this.treeItem);
                     MessageBox.okToast("删除键成功");
                 } finally {
                     this.stage.enable();
@@ -215,7 +217,8 @@ public class RedisKeyBatchOperationController extends Controller {
                     if (MessageBox.confirm("ttl为0时，这些键将被删除，确定么？")) {
                         this.client.del(this.dbIndex, this.ttlKeys);
                         this.showKeys(this.ttlKeys, this.keys2);
-                        EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                        // EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                        RedisEventUtil.keyFlushed(this.treeItem);
                         MessageBox.okToast("操作成功");
                     }
                 } else if (ttl == -1) {
@@ -224,7 +227,8 @@ public class RedisKeyBatchOperationController extends Controller {
                             this.client.persist(this.dbIndex, ttlKey);
                         }
                         this.showKeys(this.ttlKeys, this.keys2);
-                        EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                        // EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                        RedisEventUtil.keyFlushed(this.treeItem);
                         MessageBox.okToast("操作成功");
                     }
                 } else {
@@ -232,7 +236,8 @@ public class RedisKeyBatchOperationController extends Controller {
                         this.client.expire(this.dbIndex, ttlKey, ttl, null);
                     }
                     this.showKeys(this.ttlKeys, this.keys2);
-                    EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    // EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    RedisEventUtil.keyFlushed(this.treeItem);
                     MessageBox.okToast("设置ttl成功");
                 }
             } finally {
@@ -261,7 +266,8 @@ public class RedisKeyBatchOperationController extends Controller {
                     this.stage.appendTitle("操作中...");
                     this.client.flushDB(this.dbIndex);
                     this.showKeys(this.ttlKeys, this.keys3);
-                    EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    // EventUtil.fire(RedisEventTypes.REDIS_KEY_FLUSH, this.treeItem);
+                    RedisEventUtil.keyFlushed(this.treeItem);
                     MessageBox.okToast("清空数据库成功");
                 } finally {
                     this.stage.enable();
@@ -375,7 +381,7 @@ public class RedisKeyBatchOperationController extends Controller {
             List<String> texts = new ArrayList<>(keys.size());
             int index = 0;
             for (String key : keys) {
-                texts.add(++index + ". " + key);
+                texts.add(++index + ") " + key);
             }
             area.appendLines(texts);
         }
