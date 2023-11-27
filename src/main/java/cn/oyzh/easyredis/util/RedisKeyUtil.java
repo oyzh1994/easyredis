@@ -24,6 +24,7 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
@@ -38,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 /**
@@ -429,16 +431,17 @@ public class RedisKeyUtil {
             return scanResult;
         }
         scanResult.setCursor(result.getCursor());
-        List<RedisKey> nodes = new ArrayList<>(result.getResult().size());
+        List<Callable<RedisKey>> tasks = new ArrayList<>(result.getResult().size());
         for (String key : result.getResult()) {
-            RedisKey node = getNode(dbIndex, key, client);
-            if (loadValue) {
-                getNodeValue(node, dbIndex, key, client);
-            }
-            if (node != null) {
-                nodes.add(node);
-            }
+            tasks.add(() -> {
+                RedisKey node = getNode(dbIndex, key, client);
+                if (loadValue) {
+                    getNodeValue(node, dbIndex, key, client);
+                }
+                return node;
+            });
         }
+        List<RedisKey> nodes = ThreadUtil.invokeVirtual(tasks);
         scanResult.setKeys(nodes);
         return scanResult;
     }
@@ -491,22 +494,15 @@ public class RedisKeyUtil {
     public static RedisKey getNode(int dbIndex, @NonNull String key, boolean ttl, RedisClient client) {
         String type = getKeyType(dbIndex, key, client);
         RedisKey node = null;
-        if ("string".equals(type)) {
-            node = new RedisStringKey();
-        } else if ("hyperLogLog".equals(type)) {
-            node = new RedisHyperLogLogKey();
-        } else if ("list".equals(type)) {
-            node = new RedisListKey();
-        } else if ("set".equals(type)) {
-            node = new RedisSetKey();
-        } else if ("zset".equals(type)) {
-            node = new RedisZSetKey();
-        } else if ("hash".equals(type)) {
-            node = new RedisHashKey();
-        } else if ("stream".equals(type)) {
-            node = new RedisStreamKey();
-        } else {
-            StaticLog.warn("type:{} is not support!", type);
+        switch (type) {
+            case "string" -> node = new RedisStringKey();
+            case "hyperLogLog" -> node = new RedisHyperLogLogKey();
+            case "list" -> node = new RedisListKey();
+            case "set" -> node = new RedisSetKey();
+            case "zset" -> node = new RedisZSetKey();
+            case "hash" -> node = new RedisHashKey();
+            case "stream" -> node = new RedisStreamKey();
+            case null, default -> StaticLog.warn("type:{} is not support!", type);
         }
         if (node != null) {
             node.key(key);

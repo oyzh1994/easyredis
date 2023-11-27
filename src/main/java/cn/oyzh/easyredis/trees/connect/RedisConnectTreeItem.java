@@ -170,7 +170,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     @FXML
     private void openTerminal() {
-        EventUtil.fire(RedisEventTypes.REDIS_OPEN_TERMINAL, this.value);
+//        EventUtil.fire(RedisEventTypes.REDIS_OPEN_TERMINAL, this.value);
+        RedisEventUtil.terminalOpen(this.value);
     }
 
     /**

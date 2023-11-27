@@ -72,11 +72,11 @@ public class RedisTabPane extends DynamicTabPane {
     /**
      * 终端打开事件
      *
-     * @param event 事件
+     * @param msg 消息
      */
     @EventReceiver(value = RedisEventTypes.REDIS_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
-    private void openTerminal(Event<RedisTerminalOpenMsg> event) {
-        this.initTerminalTab(event.data().info());
+    private void openTerminal(RedisTerminalOpenMsg msg) {
+        this.initTerminalTab(msg.info());
     }
 
     /**
