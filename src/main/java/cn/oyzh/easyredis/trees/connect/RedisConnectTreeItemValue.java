@@ -118,25 +118,16 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
             }
             String str = "(" + this.role;
             if (this.cluster) {
-                str += "-cluster集群";
+                str += "/cluster集群";
             }
             if (this.master) {
-                str += "-主从集群";
+                str += "/主从集群";
             }
             if (this.readOnly) {
-                str += "-只读模式";
+                str += "/只读模式";
             }
             str += ")";
             role.setText(str);
         }
     }
-
-    // @Override
-    // public HBox create() {
-    //     super.create();
-    //     // 初始化组件
-    //     this.init();
-    //     return this.getRootNode();
-    // }
-
 }

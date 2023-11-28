@@ -34,6 +34,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -132,9 +133,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入redis数据", this::importNode);
             MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
             MenuItemExt flushAll = MenuItemExt.newItem("清空数据", new SVGGlyph("/font/clear.svg", "12"), "清空所有数据库", this::flushAll);
+            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
 
             items.add(disConnect);
             items.add(editConnect);
+            items.add(repeatConnect);
             items.add(serverInfo);
             items.add(exportData);
             items.add(importData);
@@ -145,10 +148,12 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
             MenuItemExt renameConnect = MenuItemExt.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
             MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除连接(快捷键delete)", this::delete);
+            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此zk连接为新连接", this::repeatConnect);
 
             items.add(connect);
             items.add(editConnect);
             items.add(renameConnect);
+            items.add(repeatConnect);
             items.add(deleteConnect);
         }
 
@@ -282,6 +287,21 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
+    }
+
+    /**
+     * 复制连接
+     */
+    private void repeatConnect() {
+        RedisInfo redisInfo = new RedisInfo();
+        redisInfo.copy(this.value);
+        redisInfo.setName(this.value.getName() + "-复制");
+        redisInfo.setCollects(Collections.emptyList());
+        if (this.infoStore.add(redisInfo)) {
+            this.parent().addConnect(redisInfo);
+        } else {
+            MessageBox.warn("复制连接失败！");
+        }
     }
 
     /**
@@ -482,5 +502,23 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             List<RedisDBTreeItem> childes = this.getChildren();
             childes.sort((a, b) -> Integer.compare(b.dbIndex(), a.dbIndex()));
         }
+    }
+
+    /**
+     * 获取当前父节点
+     *
+     * @return 父节点
+     */
+    public RedisConnectManager parent() {
+        Object object = this.getParent();
+        if (object instanceof RedisConnectManager connectManager) {
+            return connectManager;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean allowDrag() {
+        return true;
     }
 }
