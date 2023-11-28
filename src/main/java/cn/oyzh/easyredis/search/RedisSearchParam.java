@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.dto;
+package cn.oyzh.easyredis.search;
 
 import cn.oyzh.fx.plus.search.SearchParam;
 import lombok.Data;

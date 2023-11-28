@@ -2,14 +2,16 @@ package cn.oyzh.easyredis.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.dto.RedisSearchParam;
-import cn.oyzh.easyredis.dto.RedisSearchResult;
+import cn.oyzh.easyredis.search.RedisSearchParam;
+import cn.oyzh.easyredis.search.RedisSearchResult;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
-import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
+import cn.oyzh.easyredis.search.RedisMainSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
+import cn.oyzh.fx.common.thread.Task;
+import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -23,6 +25,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.util.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -48,6 +51,11 @@ public class SearchController extends SubController {
      */
     @FXML
     private SearchTextField searchKW;
+
+    /**
+     * 搜索中标志位
+     */
+    private boolean searching;
 
     // /**
     //  * 搜索-替换词
@@ -272,28 +280,27 @@ public class SearchController extends SubController {
     @FXML
     private void searchNext() {
         // 内容为空
-        if (this.searchKW.isEmpty()) {
+        if (this.searchKW.isEmpty() || this.searching) {
             return;
         }
+        this.searching = true;
         // if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
         //     MessageBox.warn("搜索名称和值请最少勾选一项！");
         //     return;
         // }
-        TaskManager.startDelayTask("redis:search:searchNext", () -> {
-            try {
-                this.treeView.disable();
-                // 执行搜索下一个
-                this.searchHandler.searchNext(this.getSearchParam());
-                // 更新搜索结果
-                this.updateSearchResult();
-                // 更新搜索历史
-                this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                this.treeView.enable();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.warn("发生异常！");
-            }
-        }, 50);
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    // 执行搜索下一个
+                    this.searchHandler.searchNext(this.getSearchParam());
+                    // 更新搜索结果
+                    this.updateSearchResult();
+                    // 更新搜索历史
+                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                })
+                .onFinish(() -> this.searching = false)
+                .onError(MessageBox::exception)
+                .build();
+        RenderService.submit(task);
     }
 
     /**
@@ -302,28 +309,23 @@ public class SearchController extends SubController {
     @FXML
     private void searchPrev() {
         // 内容为空
-        if (this.searchKW.isEmpty()) {
+        if (this.searchKW.isEmpty() || this.searching) {
             return;
         }
-        // if (!this.searchKey.isSelected() && !this.searchData.isSelected()) {
-        //     MessageBox.warn("搜索名称和值请最少勾选一项！");
-        //     return;
-        // }
-        TaskManager.startDelayTask("redis:search:searchPrev", () -> {
-            try {
-                this.treeView.disable();
-                // 执行搜索上一个
-                this.searchHandler.searchPrev(this.getSearchParam());
-                // 更新搜索结果
-                this.updateSearchResult();
-                // 更新搜索历史
-                this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
-                this.treeView.enable();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.warn("发生异常！");
-            }
-        }, 50);
+        this.searching = true;
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> {
+                    // 执行搜索上一个
+                    this.searchHandler.searchPrev(this.getSearchParam());
+                    // 更新搜索结果
+                    this.updateSearchResult();
+                    // 更新搜索历史
+                    this.historyStore.addSearchHistory(this.searchKW.getTextTrim());
+                })
+                .onFinish(() -> this.searching = false)
+                .onError(MessageBox::exception)
+                .build();
+        RenderService.submit(task);
     }
 
     // /**
@@ -473,7 +475,7 @@ public class SearchController extends SubController {
         if (result != null) {
             // String matchType = result.getMatchTypeText();
             // if (matchType.isEmpty()) {
-                this.searchResult.setText(result.getIndex() + "/" + result.getCount());
+            this.searchResult.setText(result.getIndex() + "/" + result.getCount());
             // } else {
             //     this.searchResult.setText(result.getIndex() + "/" + result.getCount() + "[" + result.getMatchTypeText() + "]");
             // }

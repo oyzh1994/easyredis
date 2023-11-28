@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.dto.RedisSearchParam;
+import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.msg.RedisFilterMainMsg;
 import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;

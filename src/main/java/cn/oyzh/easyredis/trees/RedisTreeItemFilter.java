@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.dto.RedisSearchParam;
-import cn.oyzh.easyredis.handler.RedisMainSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchParam;
+import cn.oyzh.easyredis.search.RedisMainSearchHandler;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -117,11 +117,6 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Override
     public Boolean apply(RichTreeItem item) {
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            // 判断是否满足搜索要求
-            RedisSearchParam param = this.searchHandler.searchParam();
-            if (param != null && param.isFilterMode() && !param.isEmpty()) {
-                return this.searchHandler.isMatchParam(item) != null;
-            }
             RedisKey node = treeItem.value();
             // 仅看收藏
             if (this.onlyCollect && !treeItem.isCollect()) {
@@ -156,7 +151,14 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤键
-            return !RedisKeyUtil.isFiltered(treeItem.key(), this.filters);
+            if (RedisKeyUtil.isFiltered(treeItem.key(), this.filters)) {
+                return false;
+            }
+        }
+        // 判断是否满足搜索要求
+        RedisSearchParam param = this.searchHandler.searchParam();
+        if (param != null && param.isFilterMode() && !param.isEmpty()) {
+            return this.searchHandler.isMatchParam(item) != null;
         }
         return true;
     }

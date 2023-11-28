@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event.msg;
 
-import cn.oyzh.easyredis.dto.RedisSearchParam;
+import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.event.EventMsg;
