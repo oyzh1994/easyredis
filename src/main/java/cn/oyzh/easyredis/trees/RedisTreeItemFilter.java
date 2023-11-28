@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.search.RedisSearchParam;
-import cn.oyzh.easyredis.search.RedisMainSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -94,7 +94,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
      * zk主页搜索处理
      */
     @Autowired
-    private RedisMainSearchHandler searchHandler;
+    private RedisSearchHandler searchHandler;
 
     /**
      * 过滤内容列表

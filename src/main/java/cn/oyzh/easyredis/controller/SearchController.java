@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.search.RedisSearchResult;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
-import cn.oyzh.easyredis.search.RedisMainSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.Task;
@@ -180,7 +180,7 @@ public class SearchController extends SubController {
      * redis主页搜索处理
      */
     @Autowired
-    private RedisMainSearchHandler searchHandler;
+    private RedisSearchHandler searchHandler;
     // private final RedisMainSearchHandler searchHandler = new RedisMainSearchHandler();
 
     /**

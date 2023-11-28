@@ -36,7 +36,7 @@ import java.util.Objects;
 @Lazy
 @Component
 @Accessors(chain = true, fluent = true)
-public class RedisMainSearchHandler {
+public class RedisSearchHandler {
 
     /**
      * 键索引
