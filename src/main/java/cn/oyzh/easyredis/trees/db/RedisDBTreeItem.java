@@ -558,7 +558,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * @return redis信息
      */
     public RedisInfo info() {
-        return this.parent.client().redisInfo();
+        return this.parent.value();
     }
 
     /**

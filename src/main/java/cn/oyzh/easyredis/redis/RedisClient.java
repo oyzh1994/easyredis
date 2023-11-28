@@ -5,10 +5,12 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -128,15 +130,24 @@ public class RedisClient {
     /**
      * 连接状态
      */
-    private ReadOnlyObjectWrapper<RedisConnState> connState;
+    private ReadOnlyObjectWrapper<RedisConnState> state;
 
     /**
      * 连接状态监听器列表
      */
-    private final List<ChangeListener<RedisConnState>> connStateListeners = new ArrayList<>();
+    private final List<ChangeListener<RedisConnState>> stateListeners = new ArrayList<>();
 
     public RedisClient(@NonNull RedisInfo redisInfo) {
         this.redisInfo = redisInfo;
+        this.stateProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case CLOSED -> RedisEventUtil.connectionClosed(this);
+                case CONNECTED -> RedisEventUtil.connectionConnected(this);
+                default -> {
+
+                }
+            }
+        });
     }
 
     /**
@@ -144,11 +155,11 @@ public class RedisClient {
      *
      * @return 连接状态属性
      */
-    private ReadOnlyObjectWrapper<RedisConnState> connState() {
-        if (this.connState == null) {
-            this.connState = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
+    private ReadOnlyObjectWrapper<RedisConnState> state() {
+        if (this.state == null) {
+            this.state = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
         }
-        return this.connState;
+        return this.state;
     }
 
     /**
@@ -156,8 +167,8 @@ public class RedisClient {
      *
      * @return 连接状态属性
      */
-    private ReadOnlyObjectProperty<RedisConnState> connStateProperty() {
-        return this.connState().getReadOnlyProperty();
+    private ReadOnlyObjectProperty<RedisConnState> stateProperty() {
+        return this.state().getReadOnlyProperty();
     }
 
     /**
@@ -165,10 +176,10 @@ public class RedisClient {
      *
      * @param listener 监听器
      */
-    public void addConnStateListener(@NonNull ChangeListener<RedisConnState> listener) {
-        if (!this.connStateListeners.contains(listener)) {
-            this.connStateListeners.add(listener);
-            this.connStateProperty().addListener(listener);
+    public void addStateListener(@NonNull ChangeListener<RedisConnState> listener) {
+        if (!this.stateListeners.contains(listener)) {
+            this.stateListeners.add(listener);
+            this.stateProperty().addListener(listener);
         }
     }
 
@@ -177,10 +188,10 @@ public class RedisClient {
      *
      * @param listener 监听器
      */
-    public void removeConnStateListener(ChangeListener<RedisConnState> listener) {
+    public void removeStateListener(ChangeListener<RedisConnState> listener) {
         if (listener != null) {
-            this.connStateListeners.remove(listener);
-            this.connStateProperty().removeListener(listener);
+            this.stateListeners.remove(listener);
+            this.stateProperty().removeListener(listener);
         }
     }
 
@@ -506,7 +517,7 @@ public class RedisClient {
             }
 
             if (isClosed) {
-                this.connState().set(RedisConnState.CLOSED);
+                this.state().set(RedisConnState.CLOSED);
                 EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
             }
 
@@ -528,14 +539,14 @@ public class RedisClient {
      */
     public void reset() {
         // 移除监听器
-        if (!this.connStateListeners.isEmpty()) {
-            for (ChangeListener<RedisConnState> listener : connStateListeners) {
-                this.connStateProperty().removeListener(listener);
+        if (!this.stateListeners.isEmpty()) {
+            for (ChangeListener<RedisConnState> listener : this.stateListeners) {
+                this.stateProperty().removeListener(listener);
             }
-            this.connStateListeners.clear();
+            this.stateListeners.clear();
         }
         this.close();
-        this.connState().set(RedisConnState.NOT_INITIALIZED);
+        this.state().set(RedisConnState.NOT_INITIALIZED);
     }
 
     /**
@@ -558,17 +569,17 @@ public class RedisClient {
             // 关闭旧连接
             this.close();
             // 初始化连接池
-            this.connState().set(RedisConnState.CONNECTING);
+            this.state().set(RedisConnState.CONNECTING);
             // 初始化客户端
             this.initClient();
             // 初始化数据库
             if (!this.isClusterMode() && !this.isSentinelMode()) {
                 this.select(dbIndex);
             }
-            this.connState().set(RedisConnState.CONNECTED);
+            this.state().set(RedisConnState.CONNECTED);
         } catch (Exception ex) {
             ex.printStackTrace();
-            this.connState().set(RedisConnState.FAILED);
+            this.state().set(RedisConnState.FAILED);
             throw ex;
         }
     }
@@ -594,7 +605,7 @@ public class RedisClient {
      */
     public boolean isConnecting() {
         if (!this.isClosed()) {
-            return this.connState().get() == RedisConnState.CONNECTING;
+            return this.state().get() == RedisConnState.CONNECTING;
         }
         return false;
     }
@@ -606,7 +617,7 @@ public class RedisClient {
      */
     public boolean isConnected() {
         if (!this.isClosed()) {
-            return this.connState().get().isConnected();
+            return this.state().get().isConnected();
         }
         return false;
     }
@@ -620,7 +631,7 @@ public class RedisClient {
         if (this.getPool() == null || this.getPool().isClosed()) {
             return true;
         }
-        return !this.connState().get().isConnected();
+        return !this.state().get().isConnected();
     }
 
     /**

@@ -76,19 +76,19 @@ public class RedisTreeView extends RichTreeView {
     // @Getter
     // private Consumer<TreeItem<?>> graphicChanged;
 
-    /**
-     * 连接关闭处理
-     */
-    @Setter
-    @Getter
-    private Consumer<RedisConnectTreeItem> connectClosed;
-
-    /**
-     * 连接完成处理
-     */
-    @Setter
-    @Getter
-    private Consumer<RedisConnectTreeItem> connectConnected;
+    // /**
+    //  * 连接关闭处理
+    //  */
+    // @Setter
+    // @Getter
+    // private Consumer<RedisConnectTreeItem> connectClosed;
+    //
+    // /**
+    //  * 连接完成处理
+    //  */
+    // @Setter
+    // @Getter
+    // private Consumer<RedisConnectTreeItem> connectConnected;
 
     // /**
     //  * 配置储存对象
@@ -132,31 +132,31 @@ public class RedisTreeView extends RichTreeView {
     //     }
     // }
 
-    /**
-     * 触发连接关闭事件
-     */
-    public void fireConnectClosed(@NonNull RedisConnectTreeItem item) {
-        if (this.connectClosed != null) {
-            try {
-                this.connectClosed.accept(item);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 触发连接完成事件
-     */
-    public void fireConnectConnected(@NonNull RedisConnectTreeItem item) {
-        if (this.connectConnected != null) {
-            try {
-                this.connectConnected.accept(item);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+    // /**
+    //  * 触发连接关闭事件
+    //  */
+    // public void fireConnectClosed(@NonNull RedisConnectTreeItem item) {
+    //     if (this.connectClosed != null) {
+    //         try {
+    //             this.connectClosed.accept(item);
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     }
+    // }
+    //
+    // /**
+    //  * 触发连接完成事件
+    //  */
+    // public void fireConnectConnected(@NonNull RedisConnectTreeItem item) {
+    //     if (this.connectConnected != null) {
+    //         try {
+    //             this.connectConnected.accept(item);
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     }
+    // }
 
     public RedisTreeView() {
         this.dragContent = "redis_tree_drag";

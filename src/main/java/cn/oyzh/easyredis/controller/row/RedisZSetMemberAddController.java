@@ -59,12 +59,12 @@ public class RedisZSetMemberAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg("行数据不能为空", this.rowValue);
                 return;
             }
             Number scoreValue = this.score.getValue();
             if (scoreValue == null) {
-               MessageBox.tipMsg("分数不能为空", this.score);
+                MessageBox.tipMsg("分数不能为空", this.score);
                 return;
             }
             // redis键
@@ -77,12 +77,13 @@ public class RedisZSetMemberAddController extends Controller {
                 MessageBox.warn("此成员已存在！");
                 return;
             }
+            double score = scoreValue.doubleValue();
             // 添加元素
-            client.zadd(dbIndex, key, scoreValue.doubleValue(), rowValue);
+            client.zadd(dbIndex, key, score, rowValue);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, this.treeItem);
-            RedisEventUtil.zSetMemberAdded(this.treeItem);
-            MessageBox.okToast("新增成员成功！");
+            RedisEventUtil.zSetMemberAdded(this.treeItem, key, rowValue, score);
+            // MessageBox.okToast("新增成员成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);
