@@ -44,7 +44,7 @@ public class RedisInfoProp {
                     int index = l.indexOf(":");
                     String propName = l.substring(0, index);
                     String propValue = l.substring(index + 1);
-                    props.get(currGroup.get()).put(propName, propValue);
+                    props.get(currGroup.get()).putOpt(propName, propValue);
                 }
             });
         }
@@ -138,7 +138,7 @@ public class RedisInfoProp {
         if (propName != null) {
             JSONObject object = this.getProps(group);
             if (CollUtil.isNotEmpty((Iterable<?>) object)) {
-                return object.getInt(propName);
+                return object.getLong(propName);
             }
         }
         return -1L;

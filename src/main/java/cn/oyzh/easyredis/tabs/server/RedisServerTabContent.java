@@ -189,7 +189,6 @@ public class RedisServerTabContent extends DynamicTabController {
         this.serverVersion.setCellValueFactory(new PropertyValueFactory<>("serverVersion"));
         this.connectedClients.setCellValueFactory(new PropertyValueFactory<>("connectedClients"));
         this.totalCommandsProcessed.setCellValueFactory(new PropertyValueFactory<>("totalCommandsProcessed"));
-
         this.initRefreshTask();
     }
 
