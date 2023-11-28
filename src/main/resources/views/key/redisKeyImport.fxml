@@ -101,7 +101,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="button-primary"
+        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="btn,btn-primary"
                     text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/Import.svg" color="white"/>
@@ -111,7 +111,7 @@
             </HBox.margin>
         </IconButton>
         <IconButton disable="true" text="结束" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
-                    styleClass="button-default"
+                    styleClass="btn,btn-default"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

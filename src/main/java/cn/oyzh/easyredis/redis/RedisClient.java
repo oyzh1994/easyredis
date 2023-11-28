@@ -1311,14 +1311,14 @@ public class RedisClient {
     }
 
     /**
-     * 获取zset多个成员分数，兼容老版本
+     * 获取zset多个成员分数，扩展功能，兼容老版本
      *
      * @param dbIndex db索引
      * @param key     键
      * @param members 成员
      * @return 分数
      */
-    public List<Double> zmscore_x(Integer dbIndex, String key, String... members) {
+    public List<Double> zmscore_ext(Integer dbIndex, String key, String... members) {
         if (RedisVersionUtil.isSupported(this.getServerVersion(), RedisVersionUtil.getSupportedVersion("zmscore"))) {
             return this.zmscore(dbIndex, key, members);
         }
