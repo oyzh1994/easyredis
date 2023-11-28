@@ -1,9 +1,12 @@
 package cn.oyzh.easyredis.info;
 
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 /**
  * redis信息属性项目
@@ -62,16 +65,14 @@ public class RedisServerItem {
             hitRate = "N/A";
         } else if (hits != -1 && misses != -1) {
             double d = 100.0d * hits / (hits + misses);
-            hitRate = d + "";
-            int end = hitRate.indexOf(".") + 6;
-            end = Math.min(hitRate.length(), end);
-            hitRate = hitRate.substring(0, end) + "%";
+            BigDecimal decimal = NumberUtil.round(d, 4);
+            hitRate = decimal.doubleValue() + "%";
         }
         this.setHitRate(hitRate);
         this.setUptime(uptime + "天");
         this.setUsedMemory(useMemory == null ? "N/A" : useMemory);
-        this.setKeyCount(keyCount == null ? "N/A" : String.valueOf(keyCount));
         this.setConnectedClients(String.valueOf(connectedClients));
+        this.setKeyCount(keyCount == null ? "N/A" : String.valueOf(keyCount));
         this.setTotalCommandsProcessed(String.valueOf(totalCommandsProcessed));
     }
 
@@ -117,16 +118,16 @@ public class RedisServerItem {
         return connectedClientsProperty;
     }
 
-    public void setUptime(String value) {
-        this.uptimeProperty().setValue(value);
+    public void setUptime(String uptime) {
+        this.uptimeProperty().setValue(uptime);
     }
 
     public String getUptime() {
         return this.uptimeProperty == null ? "N/A" : this.uptimeProperty().get();
     }
 
-    public void setUsedMemory(String value) {
-        this.usedMemoryProperty().setValue(value);
+    public void setUsedMemory(String usedMemory) {
+        this.usedMemoryProperty().setValue(usedMemory);
     }
 
     public String getUsedMemory() {
@@ -141,24 +142,24 @@ public class RedisServerItem {
         return this.hitRateProperty == null ? "N/A" : this.hitRateProperty().get();
     }
 
-    public void setKeyCount(String value) {
-        this.keyCountProperty().setValue(value);
+    public void setKeyCount(String keyCount) {
+        this.keyCountProperty().setValue(keyCount);
     }
 
     public String getKeyCount() {
         return this.keyCountProperty == null ? "N/A" : this.keyCountProperty().get();
     }
 
-    public void setConnectedClients(String value) {
-        this.connectedClientsProperty().setValue(value);
+    public void setConnectedClients(String connectedClients) {
+        this.connectedClientsProperty().setValue(connectedClients);
     }
 
     public String getConnectedClients() {
         return this.connectedClientsProperty == null ? "N/A" : this.connectedClientsProperty().get();
     }
 
-    public void setTotalCommandsProcessed(String value) {
-        this.totalCommandsProcessedProperty().setValue(value);
+    public void setTotalCommandsProcessed(String totalCommandsProcessed) {
+        this.totalCommandsProcessedProperty().setValue(totalCommandsProcessed);
     }
 
     public String getTotalCommandsProcessed() {

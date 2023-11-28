@@ -76,8 +76,8 @@ public class RedisListRowAddController extends Controller {
             }
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_LIST_ROW_ADDED, this.treeItem);
-            RedisEventUtil.listRowAdded(this.treeItem);
-            MessageBox.okToast("新增行成功！");
+            RedisEventUtil.listRowAdded(this.treeItem, key, rowValue);
+            // MessageBox.okToast("新增行成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

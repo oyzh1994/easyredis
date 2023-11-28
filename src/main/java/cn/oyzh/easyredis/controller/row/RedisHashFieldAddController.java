@@ -80,8 +80,8 @@ public class RedisHashFieldAddController extends Controller {
             client.hset(dbIndex, key, fieldValue, rowValue);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_HASH_FIELD_ADDED, this.treeItem);
-            RedisEventUtil.hashFieldAdded(this.treeItem);
-            MessageBox.okToast("新增字段成功！");
+            RedisEventUtil.hashFieldAdded(this.treeItem, key, fieldValue, rowValue);
+            // MessageBox.okToast("新增字段成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
-<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -169,13 +169,14 @@
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-            <MsgTextArea editable="false" maxLine="300" fx:id="exportMsg" flexWidth="100% - 180" flexHeight="100% - 20"/>
+            <MsgTextArea editable="false" maxLine="300" fx:id="exportMsg" flexWidth="100% - 180"
+                         flexHeight="100% - 20"/>
             <FXLabel fx:id="exportStatus"/>
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <IconButton tipText="开始执行导出" fx:id="exportBtn" onAction="#doExport" realHeight="30"
-                    styleClass="button-primary"
+                    styleClass="btn,btn-primary"
                     text="导出"
                     iconSizePercent="0.75">
             <graphic>
@@ -186,7 +187,7 @@
             </HBox.margin>
         </IconButton>
         <IconButton disable="true" text="结束" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
-                    styleClass="button-default"
+                    styleClass="btn,btn-default"
                     realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

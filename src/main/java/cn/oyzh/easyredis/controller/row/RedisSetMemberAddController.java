@@ -52,7 +52,7 @@ public class RedisSetMemberAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg("行数据不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -69,8 +69,8 @@ public class RedisSetMemberAddController extends Controller {
             client.sadd(dbIndex, key, rowValue);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_SET_MEMBER_ADDED, this.treeItem);
-            RedisEventUtil.setMemberAdded(this.treeItem);
-            MessageBox.okToast("新增成员成功！");
+            RedisEventUtil.setMemberAdded(this.treeItem, key, rowValue);
+            // MessageBox.okToast("新增成员成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

@@ -266,7 +266,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
                 List<GeoCoordinate> coordinates = this.client().geopos(this.dbIndex(), this.key(), ArrayUtil.toArray(value, String.class));
                 this.value.valueOfCoordinate(value, coordinates);
             } else {
-                List<Double> scores = this.client().zmscore_x(this.dbIndex(), this.key(), ArrayUtil.toArray(value, String.class));
+                List<Double> scores = this.client().zmscore_ext(this.dbIndex(), this.key(), ArrayUtil.toArray(value, String.class));
                 this.value.valueOfScore(value, scores);
             }
             this.clearData();

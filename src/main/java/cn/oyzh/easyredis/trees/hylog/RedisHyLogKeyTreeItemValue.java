@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees.hylog;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import javafx.beans.value.WeakChangeListener;
 
 
 /**
@@ -15,6 +14,6 @@ public class RedisHyLogKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHyLog
 
     public RedisHyLogKeyTreeItemValue(RedisHyLogKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener(new WeakChangeListener<>((observableValue, o, t1) -> this.flushGraphicColor()));
+        item.dataProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
     }
 }

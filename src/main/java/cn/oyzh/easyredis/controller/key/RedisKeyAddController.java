@@ -240,30 +240,44 @@ public class RedisKeyAddController extends Controller {
                 MessageBox.warn("key:" + key + "已经存在！");
                 return;
             }
+            boolean result = false;
+            String keyType = "";
             if (type == 0) {
-                this.addStringNode(dbIndex, key);
+                result = this.addStringNode(dbIndex, key);
+                keyType = "STRING";
             } else if (type == 1) {
-                this.addListNode(dbIndex, key);
+                result = this.addListNode(dbIndex, key);
+                keyType = "LIST";
             } else if (type == 2) {
-                this.addSetNode(dbIndex, key);
+                result = this.addSetNode(dbIndex, key);
+                keyType = "SET";
             } else if (type == 3) {
-                this.addZSetNode(dbIndex, key);
+                result = this.addZSetNode(dbIndex, key);
+                keyType = "ZSET";
             } else if (type == 4) {
-                this.addHashNode(dbIndex, key);
+                result = this.addHashNode(dbIndex, key);
+                keyType = "HASH";
             } else if (type == 5) {
-                this.addHyperLogLogNode(dbIndex, key);
+                result = this.addHyLogNode(dbIndex, key);
+                keyType = "HYPERLOGLOG/STRING";
             } else if (type == 6) {
-                this.addGEONode(dbIndex, key);
+                result = this.addGEONode(dbIndex, key);
+                keyType = "GEO/ZSET";
             } else if (type == 7) {
-                this.addStreamNode(dbIndex, key);
+                result = this.addStreamNode(dbIndex, key);
+                keyType = "STREAM";
             } else if (type == 8) {
-                this.addBitNode(dbIndex, key);
+                result = this.addBitNode(dbIndex, key);
+                keyType = "BITMAP/STRING";
+            }
+            if (!result) {
+                return;
             }
             // 设置ttl
             if (ttl != -1) {
                 this.client.expire(dbIndex, key, ttl, null);
             }
-            RedisEventUtil.keyAdded(this.treeItem);
+            RedisEventUtil.keyAdded(this.treeItem, keyType, key);
             // EventUtil.fire(RedisEventTypes.REDIS_KEY_ADDED, this.treeItem);
             MessageBox.okToast("新增键成功！");
             this.closeStage();
@@ -278,10 +292,11 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addStringNode(int dbIndex, String key) {
+    private boolean addStringNode(int dbIndex, String key) {
         String nodeValue = this.valueText();
-        this.client.set(dbIndex, key, nodeValue);
+        return this.client.set(dbIndex, key, nodeValue) != null;
     }
 
     /**
@@ -289,10 +304,11 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addListNode(int dbIndex, String key) {
+    private boolean addListNode(int dbIndex, String key) {
         String nodeValue = this.valueText();
-        this.client.lpush(dbIndex, key, nodeValue);
+        return this.client.lpush(dbIndex, key, nodeValue) > 0;
     }
 
     /**
@@ -300,10 +316,11 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addSetNode(int dbIndex, String key) {
+    private boolean addSetNode(int dbIndex, String key) {
         String nodeValue = this.valueText();
-        this.client.sadd(dbIndex, key, nodeValue);
+        return this.client.sadd(dbIndex, key, nodeValue) > 0;
     }
 
     /**
@@ -311,15 +328,16 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addZSetNode(int dbIndex, String key) {
+    private boolean addZSetNode(int dbIndex, String key) {
         Number score = this.scoreValue.getValue();
         if (score == null) {
             MessageBox.tipMsg("请填写分数！", this.scoreValue);
-            return;
+            return false;
         }
         String nodeValue = this.valueText();
-        this.client.zadd(dbIndex, key, score.doubleValue(), nodeValue);
+        return this.client.zadd(dbIndex, key, score.doubleValue(), nodeValue) > 0;
     }
 
     /**
@@ -327,15 +345,16 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addHashNode(int dbIndex, String key) {
+    private boolean addHashNode(int dbIndex, String key) {
         String field = this.fieldValue.getText();
         if (field == null) {
             MessageBox.tipMsg("请填写字段名称！", this.fieldValue);
-            return;
+            return false;
         }
         String nodeValue = this.valueText();
-        this.client.hset(dbIndex, key, field, nodeValue);
+        return this.client.hset(dbIndex, key, field, nodeValue) > 0;
     }
 
     /**
@@ -343,17 +362,18 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addHyperLogLogNode(int dbIndex, String key) {
+    private boolean addHyLogNode(int dbIndex, String key) {
         String nodeValue = this.valueText();
         // 行数据
         List<String> elements = nodeValue.lines().collect(Collectors.toList());
         elements = CollUtil.removeBlank(elements);
         if (elements.isEmpty()) {
             MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
-            return;
+            return false;
         }
-        this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class));
+        return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) > 0;
     }
 
     /**
@@ -361,25 +381,26 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addGEONode(int dbIndex, String key) {
+    private boolean addGEONode(int dbIndex, String key) {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
-            MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
-            return;
+            MessageBox.tipMsg("坐标名称不能为空", this.valueTextArea());
+            return false;
         }
         Number latitudeValue = this.latitudeValue.getValue();
         if (latitudeValue == null) {
             MessageBox.tipMsg("请输入纬度！", this.latitudeValue);
-            return;
+            return false;
         }
         Number longitudeValue = this.longitudeValue.getValue();
         if (longitudeValue == null) {
             MessageBox.tipMsg("请输入经度！", this.longitudeValue);
-            return;
+            return false;
         }
-        this.client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), nodeValue);
+        return this.client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), nodeValue) > 0;
     }
 
     /**
@@ -387,36 +408,34 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addStreamNode(int dbIndex, String key) {
+    private boolean addStreamNode(int dbIndex, String key) {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
             MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
-            return;
+            return false;
+        }
+        if (!JSONUtil.isTypeJSON(nodeValue)) {
+            MessageBox.warn("内容必须为json键值对");
+            return false;
         }
         String streamID = this.streamIDValue.getText();
         if (streamID == null) {
             MessageBox.tipMsg("消息id不能为空", this.streamIDValue);
-            return;
+            return false;
         }
-        JSONObject fields;
-        try {
-            fields = JSONUtil.parseObj(nodeValue);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.warn("内容必须为json键值对");
-            return;
-        }
-        if (fields.isEmpty()) {
+        JSONObject object = JSONUtil.parseObj(nodeValue);
+        if (object.isEmpty()) {
             MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
-            return;
+            return false;
         }
         // 流添加参数
         XAddParams params = new XAddParams();
         params.id(streamID);
         // 添加流
-        this.client.xadd(dbIndex, key, (Map) fields, params);
+        return this.client.xadd(dbIndex, key, (Map) object, params) != null;
     }
 
     /**
@@ -424,11 +443,12 @@ public class RedisKeyAddController extends Controller {
      *
      * @param dbIndex 数据库索引
      * @param key     键名称
+     * @return 结果
      */
-    private void addBitNode(int dbIndex, String key) {
+    private boolean addBitNode(int dbIndex, String key) {
         Number bitIndex = this.bitIndex.getValue();
         // 设置bit值
-        this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
+        return this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
     }
 
     /**

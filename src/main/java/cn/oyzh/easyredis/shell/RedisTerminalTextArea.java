@@ -39,7 +39,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     /**
      * redis客户端连接状态监听器
      */
-    private ChangeListener<RedisConnState> connStateChangeListener;
+    private ChangeListener<RedisConnState> stateChangeListener;
 
     @Override
     public void flushPrompt() {
@@ -157,8 +157,8 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      * 初始化连接状态处理
      */
     private void intConnStat() {
-        if (this.connStateChangeListener == null) {
-            this.connStateChangeListener = (observableValue, state, t1) -> {
+        if (this.stateChangeListener == null) {
+            this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
                 String host = this.client.redisInfo().getHost();
@@ -182,7 +182,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                 StaticLog.info("connState={}", t1);
             };
         }
-        this.client().addConnStateListener(this.connStateChangeListener);
+        this.client().addStateListener(this.stateChangeListener);
     }
 
     @Override

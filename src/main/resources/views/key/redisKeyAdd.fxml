@@ -52,7 +52,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <DecimalTextField flexWidth="100%" fx:id="scoreValue" tipText="请输入分数(score)"
+            <DecimalTextField realHeight="30" flexWidth="100% - 140" fx:id="scoreValue" tipText="请输入分数(score)"
                               value="0">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -99,7 +99,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <NumberTextField flexWidth="100%" fx:id="bitIndex" tipText="请输入下标"
+            <NumberTextField realHeight="30" flexWidth="100% - 140" fx:id="bitIndex" tipText="请输入下标"
                              value="0" min="0">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -112,7 +112,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ToggleSwitch fx:id="bitValue" selected="true" selectedText="1(真)" unselectedText="0(假)">
+            <ToggleSwitch realWidth="90" realHeight="26" fx:id="bitValue" selected="true" selectedText="真/1" unselectedText="假/0">
                 <HBox.margin>
                     <Insets left="10" top="12"/>
                 </HBox.margin>
@@ -126,7 +126,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <LongitudeField flexWidth="100%" fx:id="longitudeValue" tipText="请输入经度值"
+            <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitudeValue" tipText="请输入经度值"
                             value="0" step="5">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -139,7 +139,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <LatitudeField flexWidth="100%" fx:id="latitudeValue" tipText="请输入纬度值"
+            <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitudeValue" tipText="请输入纬度值"
                            value="0" step="5">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -231,7 +231,7 @@
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ClearableTextField flexWidth="100%" fx:id="streamIDValue" tipText="请输入消息id，*代表自动生成" text="*">
+            <ClearableTextField realHeight="30" flexWidth="100% - 140" fx:id="streamIDValue" tipText="请输入消息id，*代表自动生成" text="*">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>

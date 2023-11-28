@@ -4,6 +4,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.PageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -11,6 +12,7 @@ import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controller.SubController;
@@ -18,6 +20,10 @@ import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventGroup;
+import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.EventMsgFormatter;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -500,5 +506,20 @@ public class RedisMainController extends ParentController {
     @FXML
     private void clearMsg() {
         this.msgArea.clear();
+    }
+
+    /**
+     * 处理操作消息
+     */
+    @EventGroup(value = RedisEventGroups.KEY_ACTION, async = true, verbose = true)
+    @EventGroup(value = RedisEventGroups.INFO_ACTION, async = true, verbose = true)
+    @EventGroup(value = RedisEventGroups.CONNECTION_ACTION, async = true, verbose = true)
+    private void onActionMsg(Event<EventMsg> event) {
+        if (event.data() instanceof EventMsgFormatter formatter) {
+            String formatMsg = formatter.formatMsg();
+            if (formatMsg != null) {
+                this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
+            }
+        }
     }
 }

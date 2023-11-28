@@ -348,8 +348,8 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             this.remove();
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_KEY_DELETED, this.parent());
-            RedisEventUtil.keyDeleted(this.parent());
-            MessageBox.okToast("键已删除");
+            RedisEventUtil.keyDeleted(this.parent(), this.key());
+            // MessageBox.okToast("键已删除");
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

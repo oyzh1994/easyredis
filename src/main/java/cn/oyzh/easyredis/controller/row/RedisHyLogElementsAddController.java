@@ -56,13 +56,13 @@ public class RedisHyLogElementsAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue) || StrUtil.isBlank(rowValue)) {
-               MessageBox.tipMsg("元素不能为空", this.rowValue);
+                MessageBox.tipMsg("元素不能为空", this.rowValue);
                 return;
             }
             List<String> elements = rowValue.lines().collect(Collectors.toList());
             elements = CollUtil.removeBlank(elements);
             if (elements.isEmpty()) {
-               MessageBox.tipMsg("元素内容不能为空", this.rowValue);
+                MessageBox.tipMsg("元素内容不能为空", this.rowValue);
                 return;
             }
             // redis键
@@ -71,14 +71,15 @@ public class RedisHyLogElementsAddController extends Controller {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            if (client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) <= 0) {
+            String[] array = ArrayUtil.toArray(elements, String.class);
+            if (client.pfadd(dbIndex, key, array) <= 0) {
                 MessageBox.warn("新增元素失败或元素均已存在！");
                 return;
             }
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, this.treeItem);
-            RedisEventUtil.hyLogElementsAdded(this.treeItem);
-            MessageBox.okToast("新增元素成功！");
+            RedisEventUtil.hyLogElementsAdded(this.treeItem, key, array);
+            // MessageBox.okToast("新增元素成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

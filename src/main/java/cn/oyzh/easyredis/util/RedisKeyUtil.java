@@ -372,7 +372,7 @@ public class RedisKeyUtil {
             setNode.value(value);
         } else if (node instanceof RedisZSetKey zSetNode) { // zset
             List<String> value = client.zrange(dbIndex, key);
-            List<Double> scores = client.zmscore(dbIndex, key, ArrayUtil.toArray(value, String.class));
+            List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value, String.class));
             zSetNode.valueOfScore(value, scores);
         } else if (node instanceof RedisHyperLogLogKey logLogNode) {// hylog
             Long pfcount = client.pfcount(dbIndex, key);

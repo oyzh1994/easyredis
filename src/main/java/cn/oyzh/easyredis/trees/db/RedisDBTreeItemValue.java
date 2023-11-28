@@ -95,11 +95,8 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
      * @param showChildNum 子节点显示数量
      */
     public void showChildNum(Integer showChildNum) {
-        // if (!Objects.equals(showChildNum, this.showChildNum)) {
         this.showChildNum = showChildNum;
-        // this.needChildNumRender = true;
         this.flushChildNum();
-        // }
     }
 
     /**
@@ -108,11 +105,8 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
      * @param keyFilterPattern 键过滤模式
      */
     public void keyFilterPattern(String keyFilterPattern) {
-        // if (!Objects.equals(keyFilterPattern, this.keyFilterPattern)) {
         this.keyFilterPattern = keyFilterPattern;
-        // this.needKeyFilterRender = true;
         this.flushKeyFilter();
-        // }
     }
 
     /**
@@ -153,15 +147,4 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
             this.removeChild(text);
         }
     }
-
-    // @Override
-    // public HBox create() {
-    //     super.create();
-    //     // 初始化键数量组件
-    //     this.initChildNum();
-    //     // 初始化键过滤组件
-    //     this.initKeyFilter();
-    //     return this.getRootNode();
-    // }
-
 }

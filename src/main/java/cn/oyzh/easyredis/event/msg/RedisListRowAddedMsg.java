@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.EventMsgFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisListRowAddedMsg implements EventMsg {
+public class RedisListRowAddedMsg implements EventMsg, EventMsgFormatter {
 
     private final String name = RedisEventTypes.REDIS_LIST_ROW_ADDED;
 
@@ -23,4 +24,17 @@ public class RedisListRowAddedMsg implements EventMsg {
     @Setter
     private RedisListKeyTreeItem item;
 
+    @Setter
+    private String key;
+
+    @Setter
+    private String member;
+
+    @Override
+    public String formatMsg() {
+        return String.format(
+                "[%s] 键:%s(db%s) 新增行:%s",
+                this.item.infoName(), this.key, this.item.dbIndex(), this.member
+        );
+    }
 }

@@ -64,17 +64,17 @@ public class RedisZSetCoordinateAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("坐标不能为空", this.rowValue);
+                MessageBox.tipMsg("坐标不能为空", this.rowValue);
                 return;
             }
             Number longitudeValue = this.longitude.getValue();
             if (longitudeValue == null) {
-               MessageBox.tipMsg("经度不能为空", this.latitude);
+                MessageBox.tipMsg("经度不能为空", this.latitude);
                 return;
             }
             Number latitudeValue = this.latitude.getValue();
             if (latitudeValue == null) {
-               MessageBox.tipMsg("纬度不能为空", this.latitude);
+                MessageBox.tipMsg("纬度不能为空", this.latitude);
                 return;
             }
             // redis键
@@ -87,12 +87,14 @@ public class RedisZSetCoordinateAddController extends Controller {
                 MessageBox.warn("此坐标已存在！");
                 return;
             }
+            double longitude = longitudeValue.doubleValue();
+            double latitude = latitudeValue.doubleValue();
             // 添加元素
-            client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), rowValue);
+            client.geoadd(dbIndex, key, longitude, latitude, rowValue);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
-            RedisEventUtil.zSetCoordinateAdded(this.treeItem);
-            MessageBox.okToast("新增坐标成功！");
+            RedisEventUtil.zSetCoordinateAdded(this.treeItem, key, rowValue, longitude, latitude);
+            // MessageBox.okToast("新增坐标成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

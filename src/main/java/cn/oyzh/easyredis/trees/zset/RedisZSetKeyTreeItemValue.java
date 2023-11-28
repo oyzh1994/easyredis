@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.zset;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import javafx.beans.value.WeakChangeListener;
 import javafx.scene.paint.Color;
 
 
@@ -17,9 +16,9 @@ public class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKe
 
     public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {
         super(item);
-        item.scoreProperty().addListener(new WeakChangeListener<>((observableValue, aDouble, t1) -> this.flushGraphicColor()));
-        item.longitudeProperty().addListener(new WeakChangeListener<>((observableValue, aDouble, t1) -> this.flushGraphicColor()));
-        item.latitudeProperty().addListener(new WeakChangeListener<>((observableValue, aDouble, t1) -> this.flushGraphicColor()));
+        item.scoreProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
+        item.latitudeProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
+        item.longitudeProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
     }
 
     @Override

@@ -63,24 +63,21 @@ public class RedisStreamMessageAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-               MessageBox.tipMsg("消息内容不能为空", this.rowValue);
+                MessageBox.tipMsg("消息内容不能为空", this.rowValue);
                 return;
             }
-            JSONObject fields;
-            try {
-                fields = JSONUtil.parseObj(rowValue);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            if (!JSONUtil.isTypeJSON(rowValue)) {
                 MessageBox.warn("消息内容必须为json键值对");
                 return;
             }
-            if (fields == null || fields.isEmpty()) {
-               MessageBox.tipMsg("消息内容不能为空", this.rowValue);
+            JSONObject fields = JSONUtil.parseObj(rowValue);
+            if (fields.isEmpty()) {
+                MessageBox.tipMsg("消息内容不能为空", this.rowValue);
                 return;
             }
             String streamIDText = this.streamID.getText();
             if (streamIDText == null) {
-               MessageBox.tipMsg("消息id不能为空", this.streamID);
+                MessageBox.tipMsg("消息id不能为空", this.streamID);
                 return;
             }
             // redis键
@@ -96,8 +93,8 @@ public class RedisStreamMessageAddController extends Controller {
             client.xadd(dbIndex, key, (Map) fields, params);
             // 发送事件
             // EventUtil.fire(RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, this.treeItem);
-            RedisEventUtil.streamMessageAdded(this.treeItem);
-            MessageBox.okToast("新增消息成功！");
+            RedisEventUtil.streamMessageAdded(this.treeItem, key, rowValue);
+            // MessageBox.okToast("新增消息成功！");
             this.closeStage();
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees.hash;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import javafx.beans.value.WeakChangeListener;
 
 
 /**
@@ -15,6 +14,6 @@ public class RedisHashKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHashKe
 
     public RedisHashKeyTreeItemValue(RedisHashKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener(new WeakChangeListener<>((observableValue, o, t1) -> this.flushGraphicColor()));
+        item.dataProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
     }
 }
