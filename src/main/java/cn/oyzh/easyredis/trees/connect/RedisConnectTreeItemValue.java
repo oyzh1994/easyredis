@@ -52,7 +52,6 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
         this.flushGraphic();
         this.flushGraphicColor();
         this.name(item.value().getName());
-        this.flushText();
     }
 
     @Override
@@ -89,7 +88,7 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
         } else {
             this.role = null;
         }
-        this.flushRole();
+        FXUtil.runLater(this::flushRole);
     }
 
     /**
@@ -130,13 +129,4 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
             role.setText(str);
         }
     }
-
-    // @Override
-    // public HBox create() {
-    //     super.create();
-    //     // 初始化组件
-    //     this.init();
-    //     return this.getRootNode();
-    // }
-
 }

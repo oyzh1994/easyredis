@@ -42,7 +42,6 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
         this.flushGraphic();
         this.flushGraphicColor();
         this.name(item.value());
-        this.flushText();
     }
 
     @Override

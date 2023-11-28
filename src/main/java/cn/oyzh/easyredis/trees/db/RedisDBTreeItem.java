@@ -39,8 +39,9 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
-import javafx.collections.ObservableList;
+import cn.oyzh.fx.plus.util.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -369,17 +370,44 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * cluster模式加载子节点
      */
     private void loadChildByCluster() {
+        // 获取已有子节点
+        List<RedisKeyTreeItem<?, ?>> items = new ArrayList<>(this.getChildrenSize());
+        for (RichTreeItem<?> item : this.getRichChildren()) {
+            if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+                items.add(treeItem);
+            }
+        }
+        // 查询数据
         String pattern = StrUtil.isBlank(this.keyFilterPattern) ? "*" : this.keyFilterPattern;
-        List<RedisKey> nodes = RedisKeyUtil.allNodes(this.dbIndex, pattern, false, this.client());
-        if (CollUtil.isNotEmpty(nodes)) {
-            List<TreeItem<?>> treeItems = new ArrayList<>(nodes.size());
-            for (RedisKey redisNode : nodes) {
-                RedisKeyTreeItem<?, ?> item = this.initItemByNode(redisNode);
-                if (item != null) {
-                    treeItems.add(item);
+        List<RedisKey> dbKeys = RedisKeyUtil.allNodes(this.dbIndex, pattern, false, this.client());
+        if (CollUtil.isNotEmpty(dbKeys)) {
+            List<TreeItem<?>> shows = new ArrayList<>(dbKeys.size());
+            List<TreeItem<?>> hides = new ArrayList<>(dbKeys.size());
+            for (RedisKey key : dbKeys) {
+                // 数据不存在，则添加到集合
+                Optional<RedisKeyTreeItem<?, ?>> optional = items.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
+                if (optional.isEmpty()) {
+                    RedisKeyTreeItem<?, ?> item = this.initItemByNode(key);
+                    if (item != null) {
+                        shows.add(item);
+                    }
                 }
             }
-            this.setChild(treeItems);
+            // 寻找在树，但是不在库的数据
+            for (RedisKeyTreeItem<?, ?> item : items) {
+                Optional<RedisKey> optional = dbKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
+                if (optional.isEmpty()) {
+                    hides.add(item);
+                }
+            }
+            // 添加不在树的数据
+            if (!shows.isEmpty()) {
+                this.addChild(shows);
+            }
+            // 删除不在库的数据
+            if (!hides.isEmpty()) {
+                this.removeChild(hides);
+            }
             this.extend();
         } else {
             this.clearChild();
@@ -391,13 +419,14 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void loadChildByNormal() {
         // 获取已有子节点
-        ObservableList<TreeItem<?>> showChildren = this.getShowChildren();
-        List<RedisKeyTreeItem<?, ?>> items = new ArrayList<>(showChildren.size());
-        for (TreeItem<?> item : showChildren) {
+        List<RedisKeyTreeItem<?, ?>> items = new ArrayList<>(this.getChildrenSize());
+        for (RichTreeItem<?> item : this.getRichChildren()) {
             if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
                 items.add(treeItem);
             }
         }
+        // 禁用排序
+        this.disableSort();
         // 是否为空
         String cursor = null;
         String pattern = StrUtil.isBlank(this.keyFilterPattern) ? "*" : this.keyFilterPattern;
@@ -409,49 +438,47 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 统计工具
         StopWatch scanWatch = new StopWatch();
         // 渲染线程池
-        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
-            while (true) {
-                scanWatch.start("scan nodes");
-                RedisScanResult result = RedisKeyUtil.scanNodes(this.dbIndex, cursor, params, this.client());
-                // 数据为空
-                List<RedisKey> keys = result.getKeys();
-                scanWatch.stop();
-                StaticLog.info(scanWatch.prettyPrint(TimeUnit.MILLISECONDS));
-                // 处理键
-                if (CollUtil.isNotEmpty(keys)) {
-                    StopWatch renderWatch = new StopWatch();
-                    // 提交渲染任务
-                    service.submit(() -> {
-                        renderWatch.start("render nodes");
-                        // 单次查询数据
-                        List<TreeItem<?>> singleItems = new ArrayList<>(keys.size());
-                        for (RedisKey key : keys) {
-                            // 数据不存在，则添加到集合
-                            Optional<RedisKeyTreeItem<?, ?>> optional = items.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
-                            if (optional.isEmpty()) {
-                                RedisKeyTreeItem<?, ?> item = this.initItemByNode(key);
-                                if (item != null) {
-                                    singleItems.add(item);
-                                }
+        while (true) {
+            scanWatch.start("scan nodes");
+            RedisScanResult result = RedisKeyUtil.scanNodes(this.dbIndex, cursor, params, this.client());
+            // 数据为空
+            List<RedisKey> keys = result.getKeys();
+            scanWatch.stop();
+            StaticLog.info(scanWatch.prettyPrint(TimeUnit.MILLISECONDS));
+            // 处理键
+            if (CollUtil.isNotEmpty(keys)) {
+                StopWatch renderWatch = new StopWatch();
+                // 提交渲染任务
+                RenderService.submit(() -> {
+                    renderWatch.start("render nodes");
+                    // 单次查询数据
+                    List<TreeItem<?>> shows = new ArrayList<>(keys.size());
+                    for (RedisKey key : keys) {
+                        // 数据不存在，则添加到集合
+                        Optional<RedisKeyTreeItem<?, ?>> optional = items.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
+                        if (optional.isEmpty()) {
+                            RedisKeyTreeItem<?, ?> item = this.initItemByNode(key);
+                            if (item != null) {
+                                shows.add(item);
                             }
                         }
-                        // 添加单次数据
-                        if (!singleItems.isEmpty()) {
-                            this.addChild(singleItems);
-                        }
-                        // 展开节点
-                        this.extend();
-                        // 添加到集合
-                        dbKeys.addAll(keys);
-                        renderWatch.stop();
-                        StaticLog.info(renderWatch.prettyPrint(TimeUnit.MILLISECONDS));
-                    });
-                }
-                cursor = result.getCursor();
-                // 查询结束
-                if (result.isFinish()) {
-                    break;
-                }
+                    }
+                    // 添加不在树的数据
+                    if (!shows.isEmpty()) {
+                        this.addChild(shows);
+                    }
+                    // 展开节点
+                    this.extend();
+                    // 添加到集合
+                    dbKeys.addAll(keys);
+                    renderWatch.stop();
+                    StaticLog.info(renderWatch.prettyPrint(TimeUnit.MILLISECONDS));
+                });
+            }
+            cursor = result.getCursor();
+            // 查询结束
+            if (result.isFinish()) {
+                break;
             }
         }
         // 无数据
@@ -471,6 +498,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 this.removeChild(hides);
             }
         }
+        this.enableSort();
+        this.sort();
     }
 
     /**

@@ -23,7 +23,6 @@ public class RedisGroupTreeItemValue extends RedisTreeItemValue {
         this.flushGraphic();
         this.flushGraphicColor();
         this.name(item.value().getName());
-        this.flushText();
     }
 
     @Override

@@ -25,7 +25,6 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?,?>> ext
         this.flushGraphic();
         this.flushGraphicColor();
         this.name(item.key());
-        this.flushText();
         this.flushType();
     }
 

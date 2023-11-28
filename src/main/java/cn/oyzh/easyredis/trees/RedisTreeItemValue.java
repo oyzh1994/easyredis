@@ -127,16 +127,6 @@ public class RedisTreeItemValue extends RichTreeItemValue {
     //     }
     // }
 
-    @Override
-    public void flushGraphic() {
-
-    }
-
-    @Override
-    public void flushGraphicColor() {
-
-    }
-
     // /**
     //  * 初始化键名称组件
     //  */

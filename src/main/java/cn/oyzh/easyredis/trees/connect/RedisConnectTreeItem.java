@@ -91,13 +91,14 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             this.getValue().master(this.client.isMasterMode());
             this.getValue().readOnly(this.client.isReadOnly());
             this.getValue().cluster(this.client.isClusterMode());
+            // 哨兵模式
             if (this.client.isSentinelMode()) {
-                this.addChild(new RedisServerInfoTreeItem(this, this.getTreeView()));
-            } else if (this.client.isClusterMode()) {
+                this.setChild(new RedisServerInfoTreeItem(this, this.getTreeView()));
+            } else if (this.client.isClusterMode()) {// cluster集群模式
                 List<TreeItem<?>> dbTreeItems = new ArrayList<>();
                 dbTreeItems.add(new RedisDBTreeItem(null, this, this.getTreeView()));
                 this.setChild(dbTreeItems);
-            } else {
+            } else {// 其他模式
                 int databases = this.client().databases();
                 List<TreeItem<?>> dbTreeItems = new ArrayList<>(databases);
                 for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
@@ -250,7 +251,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     public void connect() {
         if (!this.isWaiting() && !this.isConnected() && !this.isConnecting()) {
-            Task task = TaskBuilder.newBuilder().onStart(() -> {
+            Task task = TaskBuilder.newBuilder()
+                    .onStart(() -> {
                         this.client.start();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
@@ -466,21 +468,25 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
 
     @Override
     public void sortAsc() {
-        this.sortType = 0;
-        if (!this.isChildEmpty()) {
+        if (this.isSortEnable()) {
+            this.sortType = 0;
             // 执行排序
             List<RedisDBTreeItem> childes = this.getChildren();
-            childes.sort(Comparator.comparingInt(RedisDBTreeItem::dbIndex));
+            if (!childes.isEmpty()) {
+                childes.sort(Comparator.comparingInt(RedisDBTreeItem::dbIndex));
+            }
         }
     }
 
     @Override
     public void sortDesc() {
-        this.sortType = 1;
-        if (!this.isChildEmpty()) {
+        if (this.isSortEnable()) {
+            this.sortType = 1;
             // 执行排序
             List<RedisDBTreeItem> childes = this.getChildren();
-            childes.sort((a, b) -> Integer.compare(b.dbIndex(), a.dbIndex()));
+            if (!childes.isEmpty()) {
+                childes.sort((a, b) -> Integer.compare(b.dbIndex(), a.dbIndex()));
+            }
         }
     }
 }
