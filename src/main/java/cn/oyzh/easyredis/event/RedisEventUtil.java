@@ -225,11 +225,19 @@ public class RedisEventUtil {
     }
 
     /**
+     * 树节点过滤事件
+     */
+    public static void treeChildFilter() {
+        TreeChildFilterMsg msg = new TreeChildFilterMsg();
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
      * 树节点变化事件
      */
     public static void treeChildChanged() {
         TreeChildChangedMsg msg = new TreeChildChangedMsg();
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 100);
     }
 
     /**
@@ -268,14 +276,6 @@ public class RedisEventUtil {
     public static void keyFlushed(RedisDBTreeItem item) {
         RedisKeyFlushedMsg msg = new RedisKeyFlushedMsg();
         msg.item(item);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
-    }
-
-    /**
-     * 树节点过滤事件
-     */
-    public static void treeChildFilter() {
-        TreeChildFilterMsg msg = new TreeChildFilterMsg();
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 

@@ -474,7 +474,7 @@ public class RedisMainController extends ParentController {
      * 执行过滤
      */
     private void filter() {
-        TaskManager.startDelayTask("redis:tree:filter", () -> {
+        TaskManager.startDelay("redis:tree:filter", () -> {
             this.tree.disable();
             if (this.onlyCollect.isSelected()) {
                 this.tree.itemFilter().setOnlyCollect(true);

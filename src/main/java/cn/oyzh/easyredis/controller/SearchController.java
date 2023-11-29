@@ -385,7 +385,7 @@ public class SearchController extends SubController {
      * 预搜索
      */
     private void preSearch() {
-        TaskManager.startDelayTask("redis:search:preSearch", () -> {
+        TaskManager.startDelay("redis:search:preSearch", () -> {
             try {
                 this.searchCheck();
                 this.treeView.disable();
@@ -516,12 +516,10 @@ public class SearchController extends SubController {
      */
     @EventReceiver(value = RedisEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     public void flushSearchResult() {
-        if (this.treeView.searching()) {
-            TaskManager.startDelayTask("redis:search:flushSearchResult", () -> {
-                this.searchHandler.updateResult();
-                this.updateSearchResult();
-            }, 300);
-        }
+        TaskManager.startDelay("redis:search:flushSearchResult", () -> {
+            this.searchHandler.updateResult();
+            this.updateSearchResult();
+        }, 300);
     }
 
     @Override
