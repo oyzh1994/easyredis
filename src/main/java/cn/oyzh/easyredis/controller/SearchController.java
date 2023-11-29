@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.search.RedisSearchParam;
-import cn.oyzh.easyredis.search.RedisSearchResult;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
@@ -25,6 +24,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.search.SearchResult;
 import cn.oyzh.fx.plus.util.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
@@ -471,7 +471,7 @@ public class SearchController extends SubController {
      * 更新搜索结果
      */
     private void updateSearchResult() {
-        RedisSearchResult result = this.searchHandler.searchResult();
+        SearchResult result = this.searchHandler.searchResult();
         if (result != null) {
             // String matchType = result.getMatchTypeText();
             // if (matchType.isEmpty()) {
@@ -531,7 +531,8 @@ public class SearchController extends SubController {
         EventUtil.register(this);
         this.treeView = this.parent().tree;
         // 初始化搜索
-        this.searchHandler.init(this.treeView, this.parent().tabPane);
+        this.searchHandler.init(this.treeView);
+        // this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new RedisSearchHistoryPopup());
     }
 

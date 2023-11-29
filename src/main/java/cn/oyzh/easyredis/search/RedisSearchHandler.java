@@ -9,6 +9,9 @@ import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.search.SearchHandler;
+import cn.oyzh.fx.plus.search.SearchParam;
+import cn.oyzh.fx.plus.search.SearchValue;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.TreeViewUtil;
 import javafx.scene.control.TreeItem;
@@ -36,17 +39,7 @@ import java.util.Objects;
 @Lazy
 @Component
 @Accessors(chain = true, fluent = true)
-public class RedisSearchHandler {
-
-    /**
-     * 键索引
-     */
-    private Integer index;
-
-    /**
-     * 最后操作
-     */
-    private String lastAction;
+public class RedisSearchHandler extends SearchHandler {
 
     /**
      * 路径索引
@@ -58,10 +51,10 @@ public class RedisSearchHandler {
     //  */
     // private Integer dataIndex;
 
-    /**
-     * tab组件
-     */
-    private RedisTabPane tabPane;
+    // /**
+    //  * tab组件
+    //  */
+    // private RedisTabPane tabPane;
 
     // /**
     //  * 数据组件
@@ -69,111 +62,43 @@ public class RedisSearchHandler {
     // private FlexTextArea dataNode;
 
     /**
-     * 当前搜索键
-     */
-    @Getter
-    private TreeItem<?> currentItem;
-
-    /**
-     * 当前搜索参数
-     */
-    @Getter
-    private RedisSearchParam searchParam;
-
-    /**
      * 树组件
      */
     private RedisTreeView treeNode;
 
     /**
-     * 当前搜索结果
-     */
-    private RedisSearchResult searchResult;
-
-    /**
      * 搜索开始
      */
-    public void init(@NonNull RedisTreeView treeNode, @NonNull RedisTabPane tabPane) {
+    public void init(@NonNull RedisTreeView treeNode) {
         this.index = 0;
-        this.tabPane = tabPane;
         this.treeNode = treeNode;
     }
 
-    /**
-     * 清除搜索
-     */
-    public void clear() {
-        this.resetSearch();
-        this.currentItem = null;
-        this.searchParam = null;
-        this.searchResult = null;
+    // /**
+    //  * 搜索开始
+    //  */
+    // public void init(@NonNull RedisTreeView treeNode, @NonNull RedisTabPane tabPane) {
+    //     this.index = 0;
+    //     this.tabPane = tabPane;
+    //     this.treeNode = treeNode;
+    // }
+
+    @Override
+    public RedisSearchParam searchParam() {
+        return (RedisSearchParam) super.searchParam();
     }
 
-    /**
-     * 重置搜索
-     */
-    private void resetSearch() {
-        this.index = 0;
-        this.updateCurrentItem(null);
+    @Override
+    protected void resetSearch() {
+        super.resetSearch();
         this.pathIndex = null;
-        // this.dataIndex = null;
-        this.lastAction = null;
     }
 
-    /**
-     * 预搜索
-     *
-     * @param param 搜索参数
-     */
-    public void preSearch(RedisSearchParam param) {
+    @Override
+    public void preSearch(SearchParam param) {
         this.treeNode.disable();
-        // 初始化搜索参数
-        if (this.searchParam == null || !this.searchParam.equalsTo(param)) {
-            this.searchParam = param;
-            this.resetSearch();
-        }
-        // 获取匹配键
-        List<TreeItemExt> matchItems = this.getMatchItems();
-        // 更新搜索信息
-        this.searchResult().setIndex(0);
-        this.searchResult().setMatchType(null);
-        this.searchResult().setCount(matchItems.size());
+        super.preSearch(param);
         this.treeNode.enable();
-    }
-
-    /**
-     * 更新搜索结果
-     */
-    public void updateResult() {
-        // 初始化搜索参数
-        if (this.searchParam != null) {
-            // 获取匹配键
-            List<TreeItemExt> matchItems = this.getMatchItems();
-            // 更新搜索信息
-            this.searchResult().setCount(matchItems.size());
-            if (matchItems.isEmpty()) {
-                this.searchResult().setIndex(0);
-                this.searchResult().setMatchType(null);
-            }
-        }
-    }
-
-    /**
-     * 搜索下一个
-     *
-     * @param param 搜索参数
-     */
-    public void searchNext(RedisSearchParam param) {
-        this.doSearch(param, "next");
-    }
-
-    /**
-     * 搜索上一个
-     *
-     * @param param 搜索参数
-     */
-    public void searchPrev(RedisSearchParam param) {
-        this.doSearch(param, "prev");
     }
 
     // /**
@@ -222,130 +147,33 @@ public class RedisSearchHandler {
     //     ExecutorUtil.start(task, 50);
     // }
 
-    /**
-     * 执行搜索
-     *
-     * @param param  搜索参数
-     * @param action 操作
-     */
-    private void doSearch(RedisSearchParam param, String action) {
-        // 禁用树
+    @Override
+    protected void doSearch(SearchParam param, String action) {
         this.treeNode.disable();
-        try {
-            // 初始化搜索参数
-            if (this.searchParam == null || !this.searchParam.equalsTo(param)) {
-                this.searchParam = param;
-                this.resetSearch();
-            }
-            // 获取匹配键
-            List<TreeItemExt> matchItems = this.getMatchItems();
-            // 更新搜索信息
-            this.searchResult().setCount(matchItems.size());
-            // 内容为空
-            if (matchItems.isEmpty()) {
-                // 更新键
-                this.updateCurrentItem(null);
-                return;
-            }
-            // 操作不一致，更新索引
-            if (this.lastAction != null && !Objects.equals(action, this.lastAction)) {
-                this.index = "next".equals(this.lastAction) ? this.index - 2 : this.index + 2;
-            }
-            // 重置索引位置
-            if (this.index >= matchItems.size()) {
-                this.index = 0;
-            } else if (this.index < 0) {
-                this.index = matchItems.size() - 1;
-            }
-            // 数据排序
-            matchItems.sort(Comparator.comparing(TreeItemExt::level));
-            // 获取索引数据
-            TreeItemExt itemExt = matchItems.get("next".equals(action) ? this.index++ : this.index--);
-            // 获取键
-            TreeItem<?> item = itemExt.item;
-            // 更新键
-            this.updateCurrentItem(item);
-            // 展开其父键
-            TreeViewUtil.expandAll(item.getParent());
-            // 选中并滚动到此键
-            this.treeNode.selectAndScroll(item);
-            // 更新搜索结果及参数
-            this.searchResult().setMatchType(itemExt.matchType);
-            this.searchResult().setIndex("next".equals(action) ? this.index : this.index + 2);
-            this.lastAction = action;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            this.treeNode.enable();
-        }
+        super.doSearch(param, action);
+        this.treeNode.enable();
     }
 
-    /**
-     * 获取当前搜索结果
-     *
-     * @return 搜索结果
-     */
-    public RedisSearchResult searchResult() {
-        if (this.searchResult == null) {
-            this.searchResult = new RedisSearchResult();
-        }
-        return this.searchResult;
+    @Override
+    protected void applyValue(SearchValue value, String action) {
+        super.applyValue(value, action);
+        // 选中并滚动到此节点
+        this.treeNode.selectAndScroll(value.getItem());
     }
 
-    /**
-     * 更新当前键
-     *
-     * @param item 键
-     */
-    private void updateCurrentItem(TreeItem<?> item) {
+    @Override
+    protected void updateCurrentItem(TreeItem<?> item) {
+        // 取消文本组件的选中
         this.pathIndex = 0;
-        // this.dataIndex = 0;
-        // 取消文本选中
-        if (this.currentItem != null) {
-            RedisTreeItemValue value = (RedisTreeItemValue) this.currentItem.getValue();
-            ControlUtil.deselect(value.text());
-        }
-        this.currentItem = item;
-        // // 取消文本组件的选中
-        // ControlUtil.deselect(this.dataNode);
-        // 清除索引信息
-        if (item == null) {
-            this.index = 0;
-            this.searchResult().setIndex(0);
-            this.searchResult().setMatchType(null);
-        }
+        super.updateCurrentItem(item);
     }
 
-    /**
-     * 获取匹配的节点列表
-     *
-     * @return 匹配的节点列表，扩展了属性
-     */
-    private List<TreeItemExt> getMatchItems() {
-        // 全部节点
-        List<TreeItem<?>> allItem = TreeViewUtil.getAllItem(this.treeNode);
-        if (CollUtil.isEmpty(allItem)) {
-            return Collections.emptyList();
-        }
-        List<TreeItemExt> items = new ArrayList<>(allItem.size());
-        for (TreeItem<?> item : allItem) {
-            // 获取匹配类型
-            String matchType = this.isMatchParam(item);
-            if (matchType != null) {
-                // 生成对象
-                TreeItemExt itemExt = new TreeItemExt();
-                itemExt.item(item);
-                itemExt.matchType(matchType);
-                itemExt.level(this.treeNode.getTreeItemLevel(item));
-                items.add(itemExt);
-            }
-        }
-        return items;
+    @Override
+    protected List<SearchValue> getMatchValues() {
+        return super.getMatchValues(this.treeNode.root());
     }
 
-    /**
-     * 执行分析
-     */
+    @Override
     public void doAnalyse() {
         try {
             // 判断节点是否存在
@@ -375,18 +203,18 @@ public class RedisSearchHandler {
         }
     }
 
-    /**
-     * 寻找数据节点
-     *
-     * @return 数据节点
-     */
-    private FlexTextArea findDataNode() {
-        RedisKeyTab<?> itemTab = this.tabPane.getKeyTab();
-        if (itemTab != null) {
-            return itemTab.getNodeDataNode();
-        }
-        return null;
-    }
+    // /**
+    //  * 寻找数据节点
+    //  *
+    //  * @return 数据节点
+    //  */
+    // private FlexTextArea findDataNode() {
+    //     RedisKeyTab<?> itemTab = this.tabPane.getKeyTab();
+    //     if (itemTab != null) {
+    //         return itemTab.getNodeDataNode();
+    //     }
+    //     return null;
+    // }
 
     /**
      * 名称节点分析
@@ -447,13 +275,8 @@ public class RedisSearchHandler {
     //     return false;
     // }
 
-    /**
-     * 是否满足参数
-     *
-     * @param item 键
-     * @return 匹配类型
-     */
-    public String isMatchParam(TreeItem<?> item) {
+    @Override
+    public String getMatchType(TreeItem<?> item) {
         if (item == null || item instanceof RedisDBTreeItem || this.searchParam == null) {
             return null;
         }
@@ -487,31 +310,5 @@ public class RedisSearchHandler {
         //     return "data";
         // }
         return null;
-    }
-
-    /**
-     * 键扩展
-     */
-    @Data
-    private static class TreeItemExt {
-
-        /**
-         * 键等级
-         */
-        private Integer level;
-
-        /**
-         * 键
-         */
-        private TreeItem<?> item;
-
-        /**
-         * 匹配类型
-         */
-        private String matchType;
-
-        public boolean isMatchData() {
-            return Objects.equals(this.matchType, "data") || Objects.equals(this.matchType, "all");
-        }
     }
 }
