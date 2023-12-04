@@ -114,7 +114,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         if (!this.isSentinelMode()) {
             this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
         }
-        this.getValue().keyFilterPattern(this.keyFilterPattern);
+        this.getValue().filterPattern(this.keyFilterPattern);
     }
 
     @Override
@@ -383,7 +383,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     this.nodeLoaded = false;
                     MessageBox.exception(ex);
                 })
-                .onSuccess(this::flushValue)
+                // .onSuccess(this::flushValue)
                 .onFinish(this::stopWaiting)
                 .build();
         // 执行业务

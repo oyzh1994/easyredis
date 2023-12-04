@@ -338,10 +338,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public void delete() {
         if (MessageBox.confirm("删除" + this.value.getName(), "确定删除连接？")) {
             this.closConnect();
-            if (this.getParent() instanceof RedisConnectManager connectManager) {
-                if (!connectManager.delConnectItem(this)) {
-                    MessageBox.warn("删除连接失败！");
-                }
+            if (!this.parent().delConnectItem(this)) {
+                MessageBox.warn("删除连接失败！");
             }
         }
     }
@@ -349,18 +347,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     @Override
     public void rename() {
         String connectName = MessageBox.prompt("请输入新的连接名称", this.value.getName());
-
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
             return;
         }
-
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
             // MessageBox.warn("连接名称不能为空！");
             return;
         }
-
         // 检查是否存在
         String name = this.value.getName();
         this.value.setName(connectName);
@@ -369,11 +364,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             MessageBox.warn("此连接名称已存在！");
             return;
         }
-
         // 修改名称
         if (this.infoStore.update(this.value)) {
             this.getValue().name(connectName);
-            // this.itemValue(connectName);
         } else {
             MessageBox.warn("修改连接名称失败！");
         }

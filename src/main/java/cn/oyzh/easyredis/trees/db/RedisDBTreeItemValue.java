@@ -21,21 +21,6 @@ import lombok.experimental.Accessors;
 public class RedisDBTreeItemValue extends RedisTreeItemValue {
 
     /**
-     * 子节点总数量
-     */
-    private Long totalNum;
-
-    /**
-     * 子节点显示数量
-     */
-    private Integer showNum;
-
-    /**
-     * 键过滤模式
-     */
-    private String keyFilterPattern;
-
-    /**
      * redis树db节点
      */
     private final RedisDBTreeItem item;
@@ -74,10 +59,6 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
      */
     public void flushNum(Long totalNum, Integer showNum) {
         try {
-            if (totalNum != null) {
-                this.totalNum = totalNum;
-            }
-            this.showNum = showNum;
             // 寻找组件
             FXText text = (FXText) this.lookup("#num");
             if (text == null) {
@@ -87,12 +68,12 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
                 text.setFill(Color.valueOf("#228B22"));
                 HBox.setMargin(text, new Insets(0, 0, 0, 3));
             }
-            if (this.totalNum == null || this.totalNum == 0) {
+            if (totalNum == null || totalNum == 0) {
                 text.setText("");
-            } else if (this.showNum == null || this.showNum.intValue() == this.totalNum.intValue()) {
-                text.setText("(" + this.totalNum + ")");
+            } else if (showNum == null || showNum == totalNum.intValue()) {
+                text.setText("(" + totalNum + ")");
             } else {
-                text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+                text.setText("(" + showNum + "/" + totalNum + ")");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -102,27 +83,19 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     /**
      * 设置键过滤模式
      *
-     * @param keyFilterPattern 键过滤模式
+     * @param filterPattern 键过滤模式
      */
-    public void keyFilterPattern(String keyFilterPattern) {
-        this.keyFilterPattern = keyFilterPattern;
-        this.flushKeyFilter();
-    }
-
-    /**
-     * 初始化键过滤组件
-     */
-    public void flushKeyFilter() {
+    public void filterPattern(String filterPattern) {
         // 寻找组件
         FXText text = (FXText) this.lookup("#filter");
-        if (StrUtil.isNotBlank(this.keyFilterPattern)) {
+        if (StrUtil.isNotBlank(filterPattern)) {
             if (text == null) {
                 text = new FXText();
                 text.setId("filter");
                 this.addChild(text);
                 HBox.setMargin(text, new Insets(0, 0, 0, 3));
             }
-            text.setText("[过滤:" + this.keyFilterPattern + "]");
+            text.setText("[键过滤:" + filterPattern + "]");
         } else if (text != null) {
             this.removeChild(text);
         }
