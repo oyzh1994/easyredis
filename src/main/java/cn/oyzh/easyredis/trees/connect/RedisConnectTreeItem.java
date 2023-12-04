@@ -262,7 +262,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                             this.extend();
                             this.flushGraphic();
                         } else {
-                            this._disConnect();
+                            this.closConnect();
                         }
                     })
                     .onFinish(this::stopWaiting)
@@ -277,8 +277,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 编辑连接
      */
     private void editConnect() {
-        if (this.isConnected()) {
-            this._disConnect();
+        if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
+            this.closConnect();
         }
         StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
         fxView.setProp("redisInfo", this.value());
@@ -305,7 +305,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     public void disConnect() {
         if (!this.isWaiting() && this.isConnected()) {
-            Task task = TaskBuilder.newBuilder().onStart(this::_disConnect)
+            Task task = TaskBuilder.newBuilder()
+                    .onStart(this::closConnect)
                     .onFinish(this::stopWaiting)
                     .onError(MessageBox::exception)
                     .build();
@@ -316,7 +317,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     /**
      * 断开连接实际业务
      */
-    private void _disConnect() {
+    public void closConnect() {
         this.getValue().clearRole();
         this.client.close();
         this.clearChild();
@@ -336,7 +337,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     @Override
     public void delete() {
         if (MessageBox.confirm("删除" + this.value.getName(), "确定删除连接？")) {
-            this._disConnect();
+            this.closConnect();
             if (this.getParent() instanceof RedisConnectManager connectManager) {
                 if (!connectManager.delConnectItem(this)) {
                     MessageBox.warn("删除连接失败！");
