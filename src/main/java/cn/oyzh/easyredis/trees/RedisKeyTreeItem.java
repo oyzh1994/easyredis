@@ -317,6 +317,9 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public void delete() {
         try {
+            if (!MessageBox.confirm("确定删除键:" + this.key())) {
+                return;
+            }
             // 删除此键
             this.client().del(this.dbIndex(), this.key());
             // 取消此键的收藏
@@ -324,19 +327,12 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             // 移除此键
             this.remove();
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_KEY_DELETED, this.parent());
             RedisEventUtil.keyDeleted(this.parent(), this.key());
-            // MessageBox.okToast("键已删除");
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
-
-    // @Override
-    // public RedisKeyTreeItemValue itemValue() {
-    //     return (RedisKeyTreeItemValue) super.itemValue();
-    // }
 
     @Override
     public void rename() {
