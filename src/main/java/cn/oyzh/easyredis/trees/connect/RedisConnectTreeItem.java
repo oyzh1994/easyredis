@@ -279,10 +279,10 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     private void editConnect() {
         if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
             this.closConnect();
+            StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
+            fxView.setProp("redisInfo", this.value());
+            fxView.display();
         }
-        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
-        fxView.setProp("redisInfo", this.value());
-        fxView.display();
     }
 
     /**
