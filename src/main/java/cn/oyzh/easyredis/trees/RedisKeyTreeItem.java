@@ -43,20 +43,6 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Accessors(fluent = true, chain = true)
     protected K value;
 
-    // /**
-    //  * 可见标志位
-    //  */
-    // @Getter
-    // @Accessors(fluent = true, chain = true)
-    // private volatile boolean visible;
-
-    // /**
-    //  * 连接键
-    //  */
-    // @Getter
-    // @Accessors(fluent = true, chain = true)
-    // protected final RedisConnectTreeItem root;
-
     /**
      * 键数据属性
      */
@@ -202,32 +188,11 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return 连接节点
      */
     public RedisConnectTreeItem connectTreeItem() {
+        if (this.parent() == null) {
+            return null;
+        }
         return this.parent().parent();
     }
-
-    // @Override
-    // public void removeChild(@NonNull TreeItem<?> item) {
-    //     if (!this.isChildEmpty()) {
-    //         super.removeChild(item);
-    //         this.children.remove(item);
-    //     }
-    // }
-    //
-    // @Override
-    // public void removeChildes(@NonNull List<TreeItem<?>> items) {
-    //     if (!this.isChildEmpty()) {
-    //         super.removeChildes(items);
-    //         this.children.removeAll(items);
-    //     }
-    // }
-    //
-    // @Override
-    // public boolean isChildEmpty() {
-    //     if (this.children != null) {
-    //         return this.children.isEmpty();
-    //     }
-    //     return true;
-    // }
 
     /**
      * redis信息
@@ -235,6 +200,9 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis信息
      */
     public RedisInfo info() {
+        if (this.parent() == null) {
+            return null;
+        }
         return this.parent().info();
     }
 
@@ -244,7 +212,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis连接名称
      */
     public String infoName() {
-        return this.info().getName();
+        if (this.parent() == null) {
+            return null;
+        }
+        return this.parent().info().getName();
     }
 
     /**
@@ -253,6 +224,9 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return db索引值
      */
     public int dbIndex() {
+        if (this.parent() == null) {
+            return -1;
+        }
         return this.parent().dbIndex();
     }
 
@@ -280,6 +254,9 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis客户端
      */
     public RedisClient client() {
+        if (this.parent() == null) {
+            return null;
+        }
         return this.parent().client();
     }
 
