@@ -52,7 +52,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#delKeys" text="删除">
                     <HBox.margin>
-                        <Insets left="90" top="10"/>
+                        <Insets left="95" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -71,7 +71,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </FXLabel>
-                <NumberTextField fx:id="ttl" flexWidth="100%" tipText="请输入TTL值，单位秒" value="-1"
+                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="请输入TTL值，单位秒" value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -110,7 +110,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#expireKeys" text="设置">
                     <HBox.margin>
-                        <Insets left="90" top="10"/>
+                        <Insets left="95" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -150,7 +150,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#flushDB" text="清空">
                     <HBox.margin>
-                        <Insets left="90" top="10"/>
+                        <Insets left="95" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -207,7 +207,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#moveKeys" text="移动">
                     <HBox.margin>
-                        <Insets left="90" top="10"/>
+                        <Insets left="95" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -269,7 +269,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#copyKeys" text="复制">
                     <HBox.margin>
-                        <Insets left="90" top="10"/>
+                        <Insets left="95" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
