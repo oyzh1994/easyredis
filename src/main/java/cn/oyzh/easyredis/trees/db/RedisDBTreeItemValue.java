@@ -23,18 +23,21 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     /**
      * 子节点总数量
      */
-    private Long childNum;
+    private Long totalNum;
 
     /**
      * 子节点显示数量
      */
-    private Integer showChildNum;
+    private Integer showNum;
 
     /**
      * 键过滤模式
      */
     private String keyFilterPattern;
 
+    /**
+     * redis树db节点
+     */
     private final RedisDBTreeItem item;
 
     public RedisDBTreeItemValue(RedisDBTreeItem item) {
@@ -66,37 +69,28 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     /**
      * 设置节点数量
      *
-     * @param childNum     子节点总数量
-     * @param showChildNum 子节点显示数量
+     * @param totalNum     子节点总数量
+     * @param showNum 子节点显示数量
      */
-    public void num(Long childNum, Integer showChildNum) {
-        if (childNum != null) {
-            this.childNum = childNum;
+    public void num(Long totalNum, Integer showNum) {
+        if (totalNum != null) {
+            this.totalNum = totalNum;
         }
-        this.showChildNum = showChildNum;
-        this.flushChildNum();
-    }
-
-    /**
-     * 设置子节点总数量
-     *
-     * @param childNum 子节点总数量
-     */
-    public void childNum(Long childNum) {
-        if (childNum != null) {
-            this.childNum = childNum;
-            this.flushChildNum();
+        this.showNum = showNum;
+        // 寻找组件
+        FXText text = (FXText) this.lookup("#num");
+        if (text == null) {
+            text = new FXText();
+            text.setId("num");
+            text.setFill(Color.valueOf("#228B22"));
+            this.addChild(text);
+            HBox.setMargin(text, new Insets(0, 0, 0, 3));
         }
-    }
-
-    /**
-     * 设置子节点显示数量
-     *
-     * @param showChildNum 子节点显示数量
-     */
-    public void showChildNum(Integer showChildNum) {
-        this.showChildNum = showChildNum;
-        this.flushChildNum();
+        if (this.showNum == null || this.showNum.longValue() == this.totalNum) {
+            text.setText("(" + this.totalNum + ")");
+        } else {
+            text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+        }
     }
 
     /**
@@ -107,26 +101,6 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     public void keyFilterPattern(String keyFilterPattern) {
         this.keyFilterPattern = keyFilterPattern;
         this.flushKeyFilter();
-    }
-
-    /**
-     * 刷新子节点数量组件
-     */
-    public void flushChildNum() {
-        // 寻找组件
-        FXText text = (FXText) this.lookup("#num");
-        if (text == null) {
-            text = new FXText();
-            text.setId("num");
-            text.setFill(Color.valueOf("#228B22"));
-            this.addChild(text);
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
-        }
-        if (this.showChildNum == null || this.showChildNum == this.childNum.intValue()) {
-            text.setText("(" + this.childNum + ")");
-        } else {
-            text.setText("(" + this.showChildNum + "/" + this.childNum + ")");
-        }
     }
 
     /**

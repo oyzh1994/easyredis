@@ -115,11 +115,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         return false;
     }
 
-    // @Override
-    // public RedisConnectTreeItemValue itemValue() {
-    //     return (RedisConnectTreeItemValue) super.itemValue();
-    // }
-
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
@@ -176,7 +171,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     @FXML
     private void openTerminal() {
-//        EventUtil.fire(RedisEventTypes.REDIS_OPEN_TERMINAL, this.value);
         RedisEventUtil.terminalOpen(this.value);
     }
 

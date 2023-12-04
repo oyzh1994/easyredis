@@ -36,12 +36,11 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
-import cn.oyzh.fx.plus.util.RenderService;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -53,8 +52,7 @@ import redis.clients.jedis.params.ScanParams;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -99,47 +97,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Accessors(chain = true, fluent = true)
     protected RedisConnectTreeItem parent;
 
-    // /**
-    //  * 子节点列表，记录用，非实际展示列表
-    //  */
-    // @Accessors(fluent = true, chain = true)
-    // private ObservableList<RedisKeyTreeItem<?>> children;
-    //
-    // /**
-    //  * 获取子节点列表
-    //  *
-    //  * @return 子节点列表
-    //  */
-    // public ObservableList<RedisKeyTreeItem<?>> children() {
-    //     if (this.children == null) {
-    //         synchronized (this) {
-    //             this.children = FXCollections.observableArrayList();
-    //         }
-    //         // 监听子节点变化
-    //         this.children.addListener((ListChangeListener<RedisKeyTreeItem<?>>) c -> {
-    //             try {
-    //                 c.next();
-    //                 // 添加、替换，执行过滤
-    //                 if (c.wasAdded() || c.wasReplaced()) {
-    //                     this.doFilter(this.treeView().itemFilter());
-    //                 }
-    //                 // 添加、移除、替换
-    //                 if (c.wasAdded() || c.wasRemoved() || c.wasReplaced()) {
-    //                     // 刷新子节点
-    //                     this.flushChildren();
-    //                 }
-    //                 // 添加、替换，执行排序
-    //                 if (c.wasAdded() || c.wasReplaced()) {
-    //                     this.sort();
-    //                 }
-    //             } catch (Exception ex) {
-    //                 ex.printStackTrace();
-    //             }
-    //         });
-    //     }
-    //     return this.children;
-    // }
-
     public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.setFilterable(true);
@@ -149,69 +106,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         this.setValue(new RedisDBTreeItemValue(this));
         this.flushValue();
     }
-
-    // @Override
-    // public void doFilter(@NonNull RichTreeItemFilter filter) {
-    //     if (!this.isChildEmpty()) {
-    //         for (RedisKeyTreeItem<?> child : this.children) {
-    //             child.doFilter(filter);
-    //         }
-    //         this.flushChildren();
-    //     }
-    // }
-
-    // /**
-    //  * 刷新子节点列表
-    //  */
-    // public void flushChildren() {
-    //     if (this.isChildEmpty()) {
-    //         this.getChildren().clear();
-    //         // 刷新树键值
-    //         this.flushItemValue();
-    //         // 触发键变化事件
-    //         this.treeView().fireChildChanged();
-    //         return;
-    //     }
-    //     // 添加列表
-    //     List<TreeItem<?>> addList = null;
-    //     // 移除列表
-    //     List<TreeItem<?>> removeList = null;
-    //     // 显示列表
-    //     ObservableList<TreeItem<?>> thatChildren = super.getChildren();
-    //     // 键列表
-    //     List<RedisKeyTreeItem<?>> children = new CopyOnWriteArrayList<>(this.children);
-    //     // 遍历键并处理
-    //     for (RedisKeyTreeItem<?> child : children) {
-    //         if (child.visible()) {
-    //             if (!thatChildren.contains(child)) {
-    //                 if (addList == null) {
-    //                     addList = new ArrayList<>();
-    //                 }
-    //                 addList.add(child);
-    //             }
-    //         } else {
-    //             if (removeList == null) {
-    //                 removeList = new ArrayList<>();
-    //             }
-    //             removeList.add(child);
-    //         }
-    //     }
-    //
-    //     // 移除和添加键
-    //     if (removeList != null && addList != null) {
-    //         thatChildren.removeAll(removeList);
-    //         thatChildren.addAll(addList);
-    //     } else if (removeList != null) { // 移除键
-    //         thatChildren.removeAll(removeList);
-    //     } else if (addList != null) {// 添加键
-    //         thatChildren.addAll(addList);
-    //     }
-    //
-    //     // 刷新树键值
-    //     this.flushItemValue();
-    //     // 触发键变化事件
-    //     this.treeView().fireChildChanged();
-    // }
 
     /**
      * 刷新值
@@ -226,36 +120,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         }
         this.getValue().keyFilterPattern(this.keyFilterPattern);
     }
-
-    // /**
-    //  * 刷新树节点值
-    //  */
-    // public void flushItemValue() {
-    //     this.flushChildNum();
-    //     this.getValue().showChildNum(this.getChildrenSize());
-    //     this.getValue().keyFilterPattern(this.keyFilterPattern);
-    //     // 刷新ui
-    //     this.getTreeView().flushLocal();
-    //     // this.itemValue().showChildNum(this.getChildren().size());
-    //     // this.itemValue().keyFilterPattern(this.keyFilterPattern);
-    //     // this.itemValue().initChildNum();
-    //     // this.itemValue().initKeyFilter();
-    //     // this.treeView().flushLocal();
-    // }
-
-    // @Override
-    // public void flushGraphic() {
-    //     SVGGlyph glyph = (SVGGlyph) this.getValue().graphic();
-    //     if (glyph == null) {
-    //         glyph = new SVGGlyph("/font/database-2-line.svg", "12");
-    //         this.getValue().graphic(glyph);
-    //     }
-    //     if (this.isChildEmpty() && glyph.getColor() != Color.BLACK) {
-    //         glyph.setColor(Color.BLACK);
-    //     } else if (!this.isChildEmpty() && glyph.getColor() != Color.DARKGREEN) {
-    //         glyph.setColor(Color.DARKGREEN);
-    //     }
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -333,25 +197,25 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         fxView.display();
     }
 
-    /**
-     * 清空数据库
-     */
-    private void flushDB() {
-        if (!MessageBox.confirm("第1次确认，共2次", "确定清空此数据库所有数据？")) {
-            return;
-        }
-        if (!MessageBox.confirm("第2次确认，共2次", "请慎重操作，确定清空此数据库所有数据？")) {
-            return;
-        }
-        try {
-            this.client().flushDB(this.dbIndex);
-            this.clearChild();
-            // this.flushItemValue();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
-    }
+    // /**
+    //  * 清空数据库
+    //  */
+    // private void flushDB() {
+    //     if (!MessageBox.confirm("第1次确认，共2次", "确定清空此数据库所有数据？")) {
+    //         return;
+    //     }
+    //     if (!MessageBox.confirm("第2次确认，共2次", "请慎重操作，确定清空此数据库所有数据？")) {
+    //         return;
+    //     }
+    //     try {
+    //         this.client().flushDB(this.dbIndex);
+    //         this.clearChild();
+    //         // this.flushItemValue();
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //         MessageBox.exception(ex);
+    //     }
+    // }
 
     @Override
     public void reloadChild() {
@@ -419,7 +283,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void loadChildByNormal() {
         // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> items = new ArrayList<>(this.getChildrenSize());
+        List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
         for (RichTreeItem<?> item : this.getRichChildren()) {
             if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
                 items.add(treeItem);
@@ -434,7 +298,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         params.count(20);
         params.match(pattern);
         // 库表节点
-        List<RedisKey> dbKeys = new ArrayList<>();
+        List<RedisKey> dbKeys = new CopyOnWriteArrayList<>();
         // 统计工具
         StopWatch scanWatch = new StopWatch();
         // 渲染线程池
