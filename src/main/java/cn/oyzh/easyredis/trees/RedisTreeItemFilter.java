@@ -157,7 +157,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
         }
         // 判断是否满足搜索要求
         RedisSearchParam param = this.searchHandler.searchParam();
-        if (param != null && param.isFilterMode() && !param.isEmpty()) {
+        if (param != null&& !param.isEmpty() && param.isFilterMode() ) {
             return this.searchHandler.getMatchType(item) != null;
         }
         return true;

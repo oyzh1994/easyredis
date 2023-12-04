@@ -67,29 +67,35 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     }
 
     /**
-     * 设置节点数量
+     * 刷新节点数量
      *
-     * @param totalNum     子节点总数量
-     * @param showNum 子节点显示数量
+     * @param totalNum 子节点总数量
+     * @param showNum  子节点显示数量
      */
-    public void num(Long totalNum, Integer showNum) {
-        if (totalNum != null) {
-            this.totalNum = totalNum;
-        }
-        this.showNum = showNum;
-        // 寻找组件
-        FXText text = (FXText) this.lookup("#num");
-        if (text == null) {
-            text = new FXText();
-            text.setId("num");
-            text.setFill(Color.valueOf("#228B22"));
-            this.addChild(text);
-            HBox.setMargin(text, new Insets(0, 0, 0, 3));
-        }
-        if (this.showNum == null || this.showNum.longValue() == this.totalNum) {
-            text.setText("(" + this.totalNum + ")");
-        } else {
-            text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+    public void flushNum(Long totalNum, Integer showNum) {
+        try {
+            if (totalNum != null) {
+                this.totalNum = totalNum;
+            }
+            this.showNum = showNum;
+            // 寻找组件
+            FXText text = (FXText) this.lookup("#num");
+            if (text == null) {
+                text = new FXText();
+                this.addChild(text);
+                text.setId("num");
+                text.setFill(Color.valueOf("#228B22"));
+                HBox.setMargin(text, new Insets(0, 0, 0, 3));
+            }
+            if (this.totalNum == null || this.totalNum == 0) {
+                text.setText("");
+            } else if (this.showNum == null || this.showNum.intValue() == this.totalNum.intValue()) {
+                text.setText("(" + this.totalNum + ")");
+            } else {
+                text.setText("(" + this.showNum + "/" + this.totalNum + ")");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
