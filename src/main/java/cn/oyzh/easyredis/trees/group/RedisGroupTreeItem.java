@@ -15,6 +15,7 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -165,25 +166,6 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         return (RedisRootTreeItem) treeItem;
     }
 
-    // @Override
-    // public ObservableList<RedisConnectTreeItem> getChildren() {
-    //     return super.getChildren();
-    // }
-
-    // @Override
-    // public void flushGraphic() {
-    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-    //     if (glyph == null) {
-    //         glyph = new SVGGlyph("/font/group.svg", "12");
-    //         this.itemValue().graphic(glyph);
-    //     }
-    //     if (this.isChildEmpty() && glyph.getColor() != Color.BLACK) {
-    //         glyph.setColor(Color.BLACK);
-    //     } else if (!this.isChildEmpty() && glyph.getColor() != Color.DEEPSKYBLUE) {
-    //         glyph.setColor(Color.DARKBLUE);
-    //     }
-    // }
-
     @Override
     public void addConnect(@NonNull RedisInfo redisInfo) {
         this.addConnectItem(new RedisConnectTreeItem(redisInfo, this.getTreeView()));
@@ -205,7 +187,6 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
-            // this.sort();
         }
     }
 
@@ -230,14 +211,24 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         return items;
     }
 
-    // @Override
-    // public List<RedisConnectTreeItem> getConnectedItems() {
-    //     List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-    //     for (RedisConnectTreeItem item : this.getChildren()) {
-    //         if (item.isConnected()) {
-    //             items.add(item);
-    //         }
-    //     }
-    //     return items;
-    // }
+    @Override
+    public boolean allowDrop() {
+        return true;
+    }
+
+    @Override
+    public boolean allowDropNode(DragNodeItem item) {
+        if (item instanceof RedisConnectTreeItem connectTreeItem) {
+            return !Objects.equals(connectTreeItem.value().getGroupId(), this.value.getGid());
+        }
+        return false;
+    }
+
+    @Override
+    public void onDropNode(DragNodeItem item) {
+        if (item instanceof RedisConnectTreeItem connectTreeItem) {
+            connectTreeItem.remove();
+            this.addConnectItem(connectTreeItem);
+        }
+    }
 }

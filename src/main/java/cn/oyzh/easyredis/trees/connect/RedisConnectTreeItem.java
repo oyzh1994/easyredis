@@ -432,54 +432,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         return null;
     }
 
-    // /**
-    //  * 清理子节点
-    //  */
-    // public void clearChildren() {
-    //     try {
-    //         this.setExpanded(false);
-    //         this.getChildren().clear();
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    // }
-
-    // @Override
-    // public void doFilter(@NonNull RichTreeItemFilter filter) {
-    //     if (this.isConnected()) {
-    //         for (RedisDBTreeItem dbTreeItem : this.getChildren()) {
-    //             dbTreeItem.doFilter(filter);
-    //         }
-    //     }
-    // }
-
-    // @Override
-    // public void flushGraphic() {
-    //     SVGGlyph glyph = (SVGGlyph) this.itemValue().graphic();
-    //     if (glyph == null) {
-    //         glyph = new SVGGlyph("/font/redis.svg", "12");
-    //         this.itemValue().graphic(glyph);
-    //     }
-    //     if (this.isConnected() && glyph.getColor() != Color.GREEN) {
-    //         glyph.setColor(Color.GREEN);
-    //     }
-    //     if (!this.isConnected() && glyph.getColor() != Color.BLACK) {
-    //         glyph.setColor(Color.BLACK);
-    //     }
-    // }
-
-    // /**
-    //  * 获分组键
-    //  *
-    //  * @return 分组键
-    //  */
-    // public RedisGroupTreeItem getGroupItem() {
-    //     if (this.getParent() instanceof RedisGroupTreeItem groupItem) {
-    //         return groupItem;
-    //     }
-    //     return null;
-    // }
-
     @Override
     public void sortAsc() {
         if (this.isSortEnable()) {

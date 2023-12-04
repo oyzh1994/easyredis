@@ -19,6 +19,7 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -418,5 +419,23 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             }
         }
         return items;
+    }
+
+    @Override
+    public boolean allowDrop() {
+        return true;
+    }
+
+    @Override
+    public boolean allowDropNode(DragNodeItem item) {
+        return item instanceof RedisConnectTreeItem;
+    }
+
+    @Override
+    public void onDropNode(DragNodeItem item) {
+        if (item instanceof RedisConnectTreeItem connectTreeItem) {
+            connectTreeItem.remove();
+            this.addConnectItem(connectTreeItem);
+        }
     }
 }
