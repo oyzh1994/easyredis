@@ -13,6 +13,7 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -21,6 +22,9 @@
 <?import java.lang.String?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
@@ -44,7 +48,7 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="过滤">
+        <FlexCheckBox fx:id="filterKeys" text="过滤键" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -56,12 +60,13 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField fx:id="pattern" realHeight="30.0" flexWidth="100% - 275" text="*">
+        <ClearableTextField stateManager="$stateManager" fx:id="pattern" realHeight="30.0" flexWidth="100% - 275"
+                            text="*">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <FXButton text="显示受影响键" onAction="#showKeys">
+        <FXButton text="显示受影响键" onAction="#showKeys" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="3" top="10"/>
             </HBox.margin>
@@ -80,42 +85,42 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="排除类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="stringType" text="STRING">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="listType" text="LIST">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="listType" text="LIST">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="setType" text="SET">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="setType" text="SET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="zsetType" text="ZSET">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="zsetType" text="ZSET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="hashType" text="HASH">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="hashType" text="HASH">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="streamType" selected="true" text="STREAM">
+        <FlexCheckBox stateManager="$stateManager" fx:id="streamType" text="STREAM">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="hyperLogLogType" selected="true" text="HYPERLOGLOG">
+        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -127,7 +132,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexComboBox prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
+        <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="开启美化"/>
@@ -143,17 +148,20 @@
         <!--         <Insets left="10" top="12"/> -->
         <!--     </HBox.margin> -->
         <!-- </CharsetComboBox> -->
-        <FlexCheckBox fx:id="dictSort" selected="true" text="按字典排序" tipText="键名称按字典排序">
+        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
+                      tipText="键名称按字典排序">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值"
+                      selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="适用过滤配置列表的数据">
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
+                      tipText="适用过滤配置列表的数据">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

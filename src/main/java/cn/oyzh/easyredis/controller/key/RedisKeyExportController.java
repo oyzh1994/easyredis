@@ -29,8 +29,8 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.FlexTextField;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupDisable;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -64,6 +64,12 @@ import java.util.Set;
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
 )
 public class RedisKeyExportController extends Controller {
+
+    /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
 
     /**
      * 服务器
@@ -235,11 +241,6 @@ public class RedisKeyExportController extends Controller {
     private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
-     * 分组禁用组件
-     */
-    private final NodeGroupDisable groupDisabled = new NodeGroupDisable();
-
-    /**
      * 当前db键列表
      */
     private Set<String> allKeys;
@@ -260,7 +261,11 @@ public class RedisKeyExportController extends Controller {
         boolean dictSort = this.dictSort.isSelected();
         // 开始处理
         this.exportMsg.clear();
-        this.groupDisabled.disable();
+        this.exportBtn.disable();
+        this.stateManager.disable();
+        if (this.db.hasProp("canDisable")) {
+            this.db.disable();
+        }
         this.stage.appendTitle("===导出执行中===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
@@ -331,8 +336,12 @@ public class RedisKeyExportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.groupDisabled.enable();
+                this.exportBtn.enable();
+                this.stateManager.enable();
                 this.stopExportBtn.disable();
+                if (this.db.hasProp("canDisable")) {
+                    this.db.enable();
+                }
                 this.stage.restoreTitle();
                 SystemUtil.gcLater();
             }
@@ -390,22 +399,22 @@ public class RedisKeyExportController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        this.groupDisabled.addNodes(this.pretty, this.dictSort, this.exportBtn, this.retainTTL, this.applyFilter, this.stringType, this.streamType, this.setType, this.hashType, this.zsetType, this.listType, this.hyperLogLogType);
         TreeItem<?> treeItem = this.getStageProp("treeItem");
         if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
             this.client = connectTreeItem.client();
             this.db.addItem("所有数据库");
             this.db.setDbCount(this.client.databases());
+            this.db.setProp("canDisable", true);
             this.serverName.setText(connectTreeItem.value().getName());
         } else if (treeItem instanceof RedisDBTreeItem dbTreeItem) {
             this.client = dbTreeItem.client();
             this.db.addDB(dbTreeItem.dbIndex());
             this.db.disable();
+            this.db.removeProp("canDisable");
             this.serverName.setText(dbTreeItem.info().getName());
         }
         this.db.selectFirst();
         this.stage.hideOnEscape();
-
     }
 
     @Override
@@ -457,25 +466,25 @@ public class RedisKeyExportController extends Controller {
      * @return 结果
      */
     private boolean isExclude(RedisKey node) {
-        if (this.listType.isSelected() && node.isListKey()) {
+        if (!this.listType.isSelected() && node.isListKey()) {
             return true;
         }
-        if (this.setType.isSelected() && node.isSetKey()) {
+        if (!this.setType.isSelected() && node.isSetKey()) {
             return true;
         }
-        if (this.zsetType.isSelected() && node.isZSetKey()) {
+        if (!this.zsetType.isSelected() && node.isZSetKey()) {
             return true;
         }
-        if (this.hashType.isSelected() && node.isHashKey()) {
+        if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-        if (this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
+        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
             return true;
         }
-        if (this.streamType.isSelected() && node.isStreamKey()) {
+        if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }
-        return this.stringType.isSelected() && node.isStringKey();
+        return !this.stringType.isSelected() && node.isStringKey();
     }
 
     /**
@@ -489,16 +498,16 @@ public class RedisKeyExportController extends Controller {
         key = URLDecoder.decode(key, StandardCharsets.UTF_8);
         String msg;
         if (status == 1) {
-            msg = "导出键：[" + key + "(db" + dbIndex + ")] 成功";
+            msg = "导出键：" + key + " [db" + dbIndex + "] 成功";
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "导出键：[" + key + "(db" + dbIndex + ")] 已忽略，此键适用过滤配置";
+            msg = "导出键：" + key + " [db" + dbIndex + "] 已忽略，此键适用过滤配置";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "导出键：[" + key + "(db" + dbIndex + ")] 已忽略，此键类型被排除";
+            msg = "导出键：" + key + " [db" + dbIndex + "] 已忽略，此键类型被排除";
             this.counter.updateIgnore();
         } else {
-            msg = "导出键：[" + key + "(db" + dbIndex + ")] 失败";
+            msg = "导出键：" + key + " [db" + dbIndex + "] 失败";
             if (ex != null) {
                 msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
             }
@@ -534,7 +543,8 @@ public class RedisKeyExportController extends Controller {
                 for (Map.Entry<Integer, Set<String>> entry : this.fullKeys.entrySet()) {
                     texts.add("db" + entry.getKey() + "  ========================>");
                     for (String key : entry.getValue()) {
-                        texts.add(++index + ". " + key);
+                        ++index;
+                        texts.add("(" + index + " " + key);
                     }
                     texts.add("\n");
                 }
@@ -546,7 +556,8 @@ public class RedisKeyExportController extends Controller {
                 List<String> texts = new ArrayList<>(this.allKeys.size());
                 int index = 0;
                 for (String key : this.allKeys) {
-                    texts.add(++index + ". " + key);
+                    ++index;
+                    texts.add("(" + index + " " + key);
                 }
                 this.keys.appendLines(texts);
             }
