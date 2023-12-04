@@ -38,8 +38,8 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupDisable;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -74,6 +74,12 @@ import java.util.stream.Collectors;
 public class RedisKeyImportController extends Controller {
 
     /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
+
+    /**
      * redis树键
      */
     private RedisConnectTreeItem treeItem;
@@ -88,12 +94,6 @@ public class RedisKeyImportController extends Controller {
      */
     @FXML
     private FlexText scriptInfo;
-
-    /**
-     * 选择文件
-     */
-    @FXML
-    private FlexButton chooseFile;
 
     /**
      * 存在时跳过
@@ -163,11 +163,6 @@ public class RedisKeyImportController extends Controller {
      * 计数器
      */
     private final Counter counter = new Counter();
-
-    /**
-     * 节点分组禁用组件
-     */
-    private final NodeGroupDisable groupDisabled = new NodeGroupDisable();
 
     /**
      * 拖拽文件
@@ -259,7 +254,8 @@ public class RedisKeyImportController extends Controller {
         this.counter.reset();
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
-        this.groupDisabled.disable();
+        this.importBtn.disable();
+        this.stateManager.disable();
         this.stage.appendTitle("===导入执行中===");
         // 执行导入
         this.importTask = ThreadUtil.start(() -> {
@@ -312,7 +308,8 @@ public class RedisKeyImportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.groupDisabled.enable();
+                this.importBtn.enable();
+                this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
                 EventUtil.fire(RedisEventTypes.REDIS_IMPORT_FINISH, this.treeItem);
@@ -429,7 +426,6 @@ public class RedisKeyImportController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.groupDisabled.addNodes(this.importBtn, this.retainTTL, this.chooseFile, this.skipForExist, this.updateForExist, this.overrideForExist);
         this.treeItem = this.getStageProp("treeItem");
         this.client = treeItem.client();
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
@@ -470,22 +466,22 @@ public class RedisKeyImportController extends Controller {
     private void updateStatus(String key, int dbIndex, int status, Exception ex) {
         String msg;
         if (status == 1) {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 成功";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 成功";
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 跳过，此键已存在";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 跳过，此键已存在";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 成功，此键已更新";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 成功，此键已更新";
             this.counter.updateSuccess();
         } else if (status == 4) {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 成功，此键已覆盖";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 成功，此键已覆盖";
             this.counter.updateSuccess();
         } else if (status == 5) {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 失败，此键已存在，且类型不一致";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 失败，此键已存在，且类型不一致";
             this.counter.updateFail();
         } else {
-            msg = "导入键：[" + key + "(db" + dbIndex + ")] 失败";
+            msg = "导入键：" + key + " [db" + dbIndex + "] 失败";
             if (ex != null) {
                 msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
             }

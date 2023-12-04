@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.*?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox realHeight="50" flexWidth="100%">
         <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <IconButton fx:id="chooseFile" tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
+        <IconButton stateManager="$stateManager"
+                    tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
                     text="选择"
                     styleClass="btn,btn-success" iconSizePercent="0.75">
             <graphic>
@@ -44,19 +52,22 @@
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
-        <FXRadioButton fx:id="skipForExist" toggleGroup="$existStrategy" text="键存在时跳过" selected="true"
+        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+                       text="键存在时跳过" selected="true"
                        userData="0" tipText="跳过此键的导入">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton fx:id="overrideForExist" toggleGroup="$existStrategy" text="键存在时覆盖" userData="1"
+        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+                       text="键存在时覆盖" userData="1"
                        tipText="删除键，并重新创建键并设置值，可避免键类型不一致的问题">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton fx:id="updateForExist" toggleGroup="$existStrategy" text="键存在时更新" userData="2"
+        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+                       text="键存在时更新" userData="2"
                        tipText="string类型更新值，list、set、zset类型更新列表，stream类型添加消息，如果键类型不一致则失败">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -69,7 +80,8 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值"
+                      selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -132,7 +144,7 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="1. 键不存在时将创建键">
+        <FlexText fill="#666" text="1. 键不存在时将创建">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

@@ -309,9 +309,9 @@ public class RedisKeyExportController extends Controller {
                 // 处理名称
                 String fileName;
                 if (StrUtil.equals("所有数据库", this.db.getValue())) {
-                    fileName = "Redis连接(" + this.client.infoName() + ")导出数据.json";
+                    fileName = "Redis连接-" + this.client.infoName() + "-导出数据.json";
                 } else {
-                    fileName = "Redis连接(" + this.client.infoName() + "-" + this.db.getValue() + ")导出数据.json";
+                    fileName = "Redis连接-" + this.client.infoName() + "-db" + this.db.getValue() + "-导出数据.json";
                 }
                 // 收尾工作
                 this.updateStatus("处理文件中...");
