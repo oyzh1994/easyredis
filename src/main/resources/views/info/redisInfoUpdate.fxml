@@ -41,7 +41,7 @@
                     </FXLabel>
                     <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true"
                                         realHeight="30"
-                                        flexWidth="100% - 280" maxLen="1024">
+                                        flexWidth="100% - 237" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -113,7 +113,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField flexWidth="100% - 43" min="3" max="120" fx:id="connectTimeOut"
+                    <NumberTextField flexWidth="100% - 140" realHeight="30" min="3" max="120" fx:id="connectTimeOut"
                                      tipText="连接超时(3-120)，单位秒，默认15秒" value="15"
                                      require="true">
                         <HBox.margin>
@@ -132,7 +132,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <NumberTextField flexWidth="100% - 43" min="3" max="120" fx:id="executeTimeOut"
+                    <NumberTextField flexWidth="100% - 140" realHeight="30" min="3" max="120" fx:id="executeTimeOut"
                                      tipText="网络超时(3-120)，单位秒，默认30秒" value="30"
                                      require="true">
                         <HBox.margin>
