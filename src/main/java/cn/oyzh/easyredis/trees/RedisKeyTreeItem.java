@@ -287,7 +287,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * 键是否被收藏
      */
     public boolean isCollect() {
-        return this.info().isCollect(this.dbIndex(), this.key());
+        if (this.info() != null) {
+            return this.info().isCollect(this.dbIndex(), this.key());
+        }
+        return false;
     }
 
     /**
