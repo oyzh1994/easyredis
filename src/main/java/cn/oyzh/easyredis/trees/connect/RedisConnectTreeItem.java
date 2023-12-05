@@ -25,6 +25,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.thread.BackgroundService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -82,31 +83,61 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     }
 
     /**
+     * 当前连接角色
+     */
+    public String role(){
+        return this.client.getRole();
+    }
+
+    /**
+     * 是否master集群模式
+     *
+     * @return 结果
+     */
+    public boolean isMasterMode(){
+        return this.client.isMasterMode();
+    }
+
+    /**
+     * 是否只读模式
+     *
+     * @return 结果
+     */
+    public boolean isReadOnly(){
+        return this.client.isReadOnly();
+    }
+
+    /**
+     * 是否cluster集群模式
+     *
+     * @return 结果
+     */
+    public boolean isClusterMode(){
+        return this.client.isClusterMode();
+    }
+
+    /**
      * 初始化连接
      *
      * @return 结果
      */
     private boolean initConnect() {
         try {
-            this.getValue().role(this.client.getRole());
-            this.getValue().master(this.client.isMasterMode());
-            this.getValue().readOnly(this.client.isReadOnly());
-            this.getValue().cluster(this.client.isClusterMode());
             // 哨兵模式
             if (this.client.isSentinelMode()) {
-                this.setChild(new RedisServerInfoTreeItem(this, this.getTreeView()));
+                this.setChild(new RedisServerInfoTreeItem(this));
             } else if (this.client.isClusterMode()) {// cluster集群模式
-                List<TreeItem<?>> dbTreeItems = new ArrayList<>();
-                dbTreeItems.add(new RedisDBTreeItem(null, this, this.getTreeView()));
-                this.setChild(dbTreeItems);
+                this.setChild(new RedisDBTreeItem(null, this));
             } else {// 其他模式
                 int databases = this.client().databases();
-                List<TreeItem<?>> dbTreeItems = new ArrayList<>(databases);
+                List<TreeItem<?>> items = new ArrayList<>(databases);
                 for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-                    dbTreeItems.add(new RedisDBTreeItem(dbIndex, this, this.getTreeView()));
+                    items.add(new RedisDBTreeItem(dbIndex, this));
                 }
-                this.setChild(dbTreeItems);
+                this.setChild(items);
             }
+            // 刷新角色
+            BackgroundService.submitFXLater(()-> this.getValue().flushRole());
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -225,7 +256,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             for (TreeItem<?> child : this.getShowChildren()) {
                 if (child instanceof RedisDBTreeItem treeItem) {
                     treeItem.clearChild();
-                    // treeItem.flushValue();
                 }
             }
         } catch (Exception ex) {

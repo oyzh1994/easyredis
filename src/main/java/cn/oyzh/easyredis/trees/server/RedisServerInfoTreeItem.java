@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.MenuItem;
@@ -23,21 +22,11 @@ public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeIt
      */
     private final RedisConnectTreeItem parent;
 
-    public RedisServerInfoTreeItem(@NonNull RedisConnectTreeItem treeItem, @NonNull RedisTreeView treeView) {
-        super(treeView);
-        this.parent = treeItem;
+    public RedisServerInfoTreeItem(@NonNull RedisConnectTreeItem parent ) {
+        super(parent.getTreeView());
+        this.parent = parent;
         this.setValue(new RedisServerInfoTreeItemValue());
-        // this.itemValue("服务信息");
     }
-
-    // @Override
-    // public void flushGraphic() {
-    //     SVGGlyph glyph = (SVGGlyph) this.getValue().graphic();
-    //     if (glyph == null) {
-    //         glyph = new SVGGlyph("/font/info-circle.svg", "12");
-    //         this.getValue().graphic(glyph);
-    //     }
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

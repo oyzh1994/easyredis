@@ -15,7 +15,7 @@
             <FlexTableColumn sortable="false" fx:id="uptime" text="正常运行时间" flexWidth="14%"/>
             <FlexTableColumn sortable="false" fx:id="keyCount" text="键总量" flexWidth="11%"/>
             <FlexTableColumn sortable="false" fx:id="hitRate" text="命中率" flexWidth="11%"/>
-            <FlexTableColumn sortable="false" fx:id="role" text="角色" flexWidth="11% - 5"/>
+            <FlexTableColumn sortable="false" fx:id="role" text="角色" flexWidth="11% - 10"/>
         </columns>
     </FlexTableView>
     <FlexTabPane flexWidth="100%" flexHeight="100% - 70" fx:id="tabPane">

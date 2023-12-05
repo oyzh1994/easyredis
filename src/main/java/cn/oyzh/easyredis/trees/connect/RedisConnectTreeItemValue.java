@@ -1,14 +1,11 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 
@@ -23,28 +20,8 @@ import lombok.experimental.Accessors;
 public class RedisConnectTreeItemValue extends RedisTreeItemValue {
 
     /**
-     * 当前角色
+     * 节点
      */
-    private String role;
-
-    /**
-     * 是否cluster集群
-     */
-    @Setter
-    private boolean cluster;
-
-    /**
-     * 是否master集群
-     */
-    @Setter
-    private boolean master;
-
-    /**
-     * 是否只读
-     */
-    @Setter
-    private boolean readOnly;
-
     private final RedisConnectTreeItem item;
 
     public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
@@ -74,38 +51,27 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     }
 
     /**
-     * 设置角色类型
-     *
-     * @param role 当前角色
-     */
-    public void role(String role) {
-        if (StrUtil.equalsIgnoreCase("sentinel", role)) {
-            this.role = "哨兵";
-        } else if (StrUtil.equalsIgnoreCase("master", role)) {
-            this.role = "主节点";
-        } else if (StrUtil.equalsIgnoreCase("slave", role)) {
-            this.role = "从节点";
-        } else {
-            this.role = null;
-        }
-        FXUtil.runLater(this::flushRole);
-    }
-
-    /**
      * 清除角色组件
      */
     public void clearRole() {
-        this.role = null;
-        FXUtil.runLater(this::flushRole);
+        FXText role = (FXText) this.lookup("#role");
+        this.removeChild(role);
     }
 
     /**
      * 刷新角色组件
      */
     public void flushRole() {
+        // 角色名称
+        String roleName = switch (item.role().toLowerCase()) {
+            case "sentinel" -> "哨兵节点";
+            case "master" -> "主节点";
+            case "slave" -> "从节点";
+            default -> null;
+        };
         // 寻找组件
         FXText role = (FXText) this.lookup("#role");
-        if (this.role == null) {
+        if (roleName == null) {
             this.removeChild(role);
         } else {
             if (role == null) {
@@ -115,14 +81,13 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
                 this.addChild(role);
                 HBox.setMargin(role, new Insets(0, 0, 0, 3));
             }
-            String str = "(" + this.role;
-            if (this.cluster) {
+            String str = "(" + roleName;
+            if (this.item.isClusterMode()) {
                 str += "/cluster集群";
-            }
-            if (this.master) {
+            } else if (this.item.isMasterMode()) {
                 str += "/主从集群";
             }
-            if (this.readOnly) {
+            if (this.item.isReadOnly()) {
                 str += "/只读模式";
             }
             str += ")";

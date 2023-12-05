@@ -22,7 +22,6 @@ import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
@@ -39,13 +38,13 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import redis.clients.jedis.params.ScanParams;
 
@@ -97,8 +96,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Accessors(chain = true, fluent = true)
     protected RedisConnectTreeItem parent;
 
-    public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent, @NonNull RedisTreeView treeView) {
-        super(treeView);
+    public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent) {
+        super(parent.getTreeView());
         this.setFilterable(true);
         this.parent = parent;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
@@ -111,10 +110,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 刷新值
      */
     private void flushValue() {
-        if (!this.isSentinelMode()) {
-            this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
-        }
-        this.getValue().filterPattern(this.keyFilterPattern);
+        BackgroundService.submitFXLater(() -> {
+            if (!this.isSentinelMode()) {
+                this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
+            }
+            this.getValue().filterPattern(this.keyFilterPattern);
+        });
     }
 
     @Override
