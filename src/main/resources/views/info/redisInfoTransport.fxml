@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.easyredis.fx.RedisConnectComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
+<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
           realHeight="850">
+    <fx:define>
+        <StateManager fx:id="stateManager" managedBindVisible="true"/>
+    </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
@@ -42,7 +46,7 @@
                 <Insets left="5" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="过滤">
+        <FlexCheckBox fx:id="filterKeys" text="过滤键" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -54,12 +58,13 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*">
+        <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*"
+                            stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <FXButton text="显示受影响键" onAction="#showKeys">
+        <FXButton text="显示受影响键" onAction="#showKeys" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="3" top="10"/>
             </HBox.margin>
@@ -108,19 +113,22 @@
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
-        <FXRadioButton fx:id="skipForExist" toggleGroup="$existStrategy" text="键存在时跳过" selected="true"
+        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+                       text="键存在时跳过" selected="true"
                        userData="0" tipText="跳过此键的导入">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton fx:id="overrideForExist" toggleGroup="$existStrategy" text="键存在时覆盖" userData="1"
+        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+                       text="键存在时覆盖" userData="1"
                        tipText="删除键，并重新创建键并设置值，可避免键类型不一致的问题">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton fx:id="updateForExist" toggleGroup="$existStrategy" text="键存在时更新" userData="2"
+        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+                       text="键存在时更新" userData="2"
                        tipText="string类型更新值，list、set、zset类型更新列表，stream类型添加消息，如果键类型不一致则失败">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -133,54 +141,56 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true">
+        <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true"
+                      stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="仅传输适用过滤配置列表的键">
+        <FlexCheckBox fx:id="applyFilter" text="适用过滤配置" tipText="仅传输适用过滤配置列表的键"
+                      stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="排除类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <FlexCheckBox fx:id="stringType" text="STRING">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="listType" text="LIST">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="listType" text="LIST">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="setType" text="SET">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="setType" text="SET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="zsetType" text="ZSET">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="zsetType" text="ZSET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="hashType" text="HASH">
+        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="hashType" text="HASH">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="streamType" selected="true" text="STREAM">
+        <FlexCheckBox stateManager="$stateManager" fx:id="streamType" text="STREAM">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="hyperLogLogType" selected="true" text="HYPERLOGLOG">
+        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -202,7 +212,7 @@
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <IconButton disable="true" tipText="开始执行传输" fx:id="transportBtn" onAction="#doTransport"
-                    styleClass="button-primary"
+                    styleClass="btn,btn-primary"
                     text="传输"
                     iconSizePercent="0.75">
             <graphic>
@@ -213,7 +223,7 @@
             </HBox.margin>
         </IconButton>
         <IconButton disable="true" text="结束" fx:id="stopTransportBtn" tipText="结束传输" onAction="#stopTransport"
-                    styleClass="button-default"
+                    styleClass="btn,btn-default"
                     iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>

@@ -28,8 +28,8 @@ import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupDisable;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
@@ -57,6 +57,12 @@ import java.util.Set;
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoTransport.fxml"
 )
 public class RedisInfoTransportController extends Controller {
+
+    /**
+     * 状态管理器
+     */
+    @FXML
+    private StateManager stateManager;
 
     /**
      * 存在时跳过
@@ -268,11 +274,6 @@ public class RedisInfoTransportController extends Controller {
     private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
-     * 节点分组禁用组件
-     */
-    private final NodeGroupDisable groupDisabled = new NodeGroupDisable();
-
-    /**
      * 执行传输
      */
     @FXML
@@ -294,7 +295,6 @@ public class RedisInfoTransportController extends Controller {
            MessageBox.tipMsg("传输目标不能是自己", this.fromConnect);
             return;
         }
-
         // 开始传输
         this.transportStart();
         // 检查传输连接
@@ -364,8 +364,11 @@ public class RedisInfoTransportController extends Controller {
     private void transportStart() {
         this.fromDB.disable();
         this.fromConnect.disable();
+        this.targetDB.disable();
+        this.targetConnect.disable();
         this.transportMsg.clear();
-        this.groupDisabled.disable();
+        this.transportBtn.disable();
+        this.stateManager.disable();
     }
 
     /**
@@ -382,8 +385,11 @@ public class RedisInfoTransportController extends Controller {
             this.fromDB.disable();
             this.fromConnect.disable();
         }
-        this.groupDisabled.enable();
+        this.targetDB.enable();
+        this.targetConnect.enable();
+        this.transportBtn.enable();
         this.stopTransportBtn.disable();
+        this.stateManager.enable();
         this.stage.restoreTitle();
         SystemUtil.gcLater();
     }
@@ -529,11 +535,6 @@ public class RedisInfoTransportController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        // 分组禁用
-        this.groupDisabled.addNodes(this.setType, this.listType, this.zsetType, this.streamType, this.stringType,
-                this.hashType, this.hyperLogLogType, this.applyFilter, this.targetConnect, this.targetDB,
-                this.retainTTL, this.skipForExist, this.updateForExist, this.overrideForExist, this.transportBtn,
-                this.filterKeys, this.keysBox1, this.keysBox2);
         TreeItem<?> treeItem = this.stage.getProp("treeItem");
         // db节点
         if (treeItem instanceof RedisDBTreeItem dbTreeItem) {
@@ -672,25 +673,25 @@ public class RedisInfoTransportController extends Controller {
      * @return 结果
      */
     private boolean isExclude(RedisKey node) {
-        if (this.listType.isSelected() && node.isListKey()) {
+        if (!this.listType.isSelected() && node.isListKey()) {
             return true;
         }
-        if (this.setType.isSelected() && node.isSetKey()) {
+        if (!this.setType.isSelected() && node.isSetKey()) {
             return true;
         }
-        if (this.zsetType.isSelected() && node.isZSetKey()) {
+        if (!this.zsetType.isSelected() && node.isZSetKey()) {
             return true;
         }
-        if (this.hashType.isSelected() && node.isHashKey()) {
+        if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-        if (this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
+        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
             return true;
         }
-        if (this.streamType.isSelected() && node.isStreamKey()) {
+        if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }
-        return this.stringType.isSelected() && node.isStringKey();
+        return !this.stringType.isSelected() && node.isStringKey();
     }
 
     /**
@@ -703,28 +704,28 @@ public class RedisInfoTransportController extends Controller {
     private void updateStatus(String key, int status, Exception ex) {
         String msg;
         if (status == 1) {
-            msg = "传输键：[" + key + "] 成功";
+            msg = "传输键：" + key + " 成功";
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "传输键：[" + key + "] 跳过，此键被过滤";
+            msg = "传输键：" + key + " 跳过，此键被过滤";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "传输键：[" + key + "] 跳过，此键被排除";
+            msg = "传输键：" + key + " 跳过，此键被排除";
             this.counter.updateIgnore();
         } else if (status == 4) {
-            msg = "传输键：[" + key + "] 跳过，此键已存在";
+            msg = "传输键：" + key + " 跳过，此键已存在";
             this.counter.updateIgnore();
         } else if (status == 5) {
-            msg = "传输键：[" + key + "] 成功，此键已更新";
+            msg = "传输键：" + key + " 成功，此键已更新";
             this.counter.updateSuccess();
         } else if (status == 6) {
-            msg = "传输键：[" + key + "] 成功，此键已覆盖";
+            msg = "传输键：" + key + " 成功，此键已覆盖";
             this.counter.updateSuccess();
         } else if (status == 7) {
-            msg = "传输键：[" + key + "] 失败，此键已存在，且类型不一致";
+            msg = "传输键：" + key + " 失败，此键已存在，且类型不一致";
             this.counter.updateFail();
         } else {
-            msg = "传输键：[" + key + "] 失败";
+            msg = "传输键：" + key + " 失败";
             if (ex != null) {
                 msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
             }
