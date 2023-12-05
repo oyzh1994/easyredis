@@ -280,11 +280,11 @@ public class RedisInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.fromConnect.getValue() == null) {
-           MessageBox.tipMsg("请选择一个传输连接", this.fromConnect);
+            MessageBox.tipMsg("请选择一个传输连接", this.fromConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-           MessageBox.tipMsg("请选择一个目标连接", this.fromConnect);
+            MessageBox.tipMsg("请选择一个目标连接", this.fromConnect);
             return;
         }
         RedisInfo fromInfo = this.fromConnect.getValue();
@@ -292,7 +292,7 @@ public class RedisInfoTransportController extends Controller {
         int fIndex = this.fromDB.getDB();
         int tIndex = this.targetDB.getDB();
         if (fromInfo == targetInfo && fIndex == tIndex) {
-           MessageBox.tipMsg("传输目标不能是自己", this.fromConnect);
+            MessageBox.tipMsg("传输目标不能是自己", this.fromConnect);
             return;
         }
         // 开始传输
@@ -661,7 +661,11 @@ public class RedisInfoTransportController extends Controller {
             String key = node.key();
             Long ttl = node.ttl();
             if (ttl != null && this.retainTTL.isSelected()) {
-                this.targetClient.expire(targetDBIndex, key, ttl, null);
+                if (ttl >= 0) {
+                    this.targetClient.expire(targetDBIndex, key, ttl, null);
+                } else if (ttl == -1) {
+                    this.targetClient.persist(targetDBIndex, key);
+                }
             }
         }
     }
