@@ -97,7 +97,7 @@ public class RedisFilterTabContent extends DynamicTabController {
     private Paging<RedisFilter> pageData;
 
     /**
-     * zk过滤配置储存
+     * redis过滤配置储存
      */
     private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
@@ -187,9 +187,9 @@ public class RedisFilterTabContent extends DynamicTabController {
     }
 
     /**
-     * 删除zk信息
+     * 删除redis信息
      *
-     * @param info zk信息
+     * @param info redis信息
      */
     private void deleteInfo(RedisFilter info) {
         if (MessageBox.confirm("确定删除此过滤配置？")) {
@@ -203,7 +203,7 @@ public class RedisFilterTabContent extends DynamicTabController {
     }
 
     /**
-     * 添加zk信息
+     * 添加redis信息
      */
     @FXML
     private void toAdd() {

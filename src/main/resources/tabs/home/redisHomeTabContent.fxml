@@ -10,7 +10,7 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyredis.tabs.home.RedisHomeTabContent">
     <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="110">
-        <Image url="/image/redis.png"/>
+        <Image url="/image/redis_clip.png"/>
     </ImageView>
     <FXText text="欢迎使用EasyRedis！" layoutX="260" layoutY="150" fontSize="30"/>
     <FXLabel fx:id="softInfo" layoutX="260" layoutY="180"/>

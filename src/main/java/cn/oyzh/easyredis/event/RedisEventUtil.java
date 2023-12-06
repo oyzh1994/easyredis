@@ -34,7 +34,7 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import lombok.experimental.UtilityClass;
 
 /**
- * zk事件工具
+ * redis事件工具
  *
  * @author oyzh
  * @since 2023/11/20

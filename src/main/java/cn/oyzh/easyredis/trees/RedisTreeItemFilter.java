@@ -91,7 +91,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     // private RedisSearchParam searchParam;
 
     /**
-     * zk主页搜索处理
+     * redis主页搜索处理
      */
     @Autowired
     private RedisSearchHandler searchHandler;
