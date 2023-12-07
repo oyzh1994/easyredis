@@ -280,43 +280,13 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      */
     private List<RedisGroupTreeItem> getGroupItems() {
         List<RedisGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisGroupTreeItem treeItem) {
                 items.add(treeItem);
             }
         }
         return items;
     }
-
-    // @Override
-    // public void sort(Boolean sortOrder) {
-    //     if (sortOrder != null) {
-    //         super.sort(sortOrder);
-    //         for (RedisGroupTreeItem groupItem : this.getGroupItems()) {
-    //             groupItem.sort(sortOrder);
-    //         }
-    //     }
-    // }
-    //
-    // @Override
-    // public void doFilter(@NonNull RichTreeItemFilter filter) {
-    //     List<RedisConnectTreeItem> connectedItems = this.getConnectedItems();
-    //     if (CollUtil.isNotEmpty(connectedItems)) {
-    //         List<Runnable> tasks = new ArrayList<>(connectedItems.size());
-    //         for (RedisConnectTreeItem connectedItem : connectedItems) {
-    //             tasks.add(() -> connectedItem.doFilter(filter));
-    //         }
-    //         // 提交任务
-    //         ThreadUtil.submit(tasks);
-    //     }
-    // }
-
-    // @Override
-    // public void flushGraphic() {
-    //     if (this.itemValue().graphic() == null) {
-    //         this.itemValue().graphic(new FlexImageView(IconUtil.getIcon(RedisConst.ICON_PATH), 16));
-    //     }
-    // }
 
     /**
      * 连接新增事件
@@ -336,7 +306,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @EventReceiver(RedisEventTypes.REDIS_INFO_UPDATED)
     private void onConnectUpdate(RedisInfo info) {
         f1:
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -396,7 +366,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<RedisConnectTreeItem> getConnectItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> child : this.getShowChildren()) {
+        for (TreeItem<?> child : this.getRealChildren()) {
             if (child instanceof RedisConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof RedisGroupTreeItem groupTreeItem) {
@@ -409,7 +379,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<RedisConnectTreeItem> getConnectedItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (Object item : this.getShowChildren()) {
+        for (Object item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);

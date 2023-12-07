@@ -5,7 +5,7 @@
     <parent>
         <groupId>cn.oyzh</groupId>
         <artifactId>fx-base</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -18,13 +18,6 @@
     </properties>
 
     <dependencies>
-        <!-- &lt;!&ndash; json类库 &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>com.alibaba</groupId> -->
-        <!--     <artifactId>fastjson</artifactId> -->
-        <!--     <scope>compile</scope> -->
-        <!-- </dependency> -->
-
         <!-- Spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -57,25 +50,11 @@
             <artifactId>fx-terminal</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
-        <dependency>
-            <groupId>org.dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>${dom4j.version}</version>
-        </dependency>
-
         <!-- 加密工具类库 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
             <version>${hutool.version}</version>
-        </dependency>
-
-        <!-- 二维码工具 -->
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-            <version>${zxing.version}</version>
         </dependency>
 
         <!-- redis客户端 -->

@@ -203,7 +203,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     @Override
     public List<RedisConnectTreeItem> getConnectItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getShowChildren()) {
+        for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem treeItem) {
                 items.add(treeItem);
             }

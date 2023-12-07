@@ -83,13 +83,6 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean onlyCollect;
 
-    // /**
-    //  * 搜索参数
-    //  */
-    // @Setter
-    // @Getter
-    // private RedisSearchParam searchParam;
-
     /**
      * redis主页搜索处理
      */
@@ -115,7 +108,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     }
 
     @Override
-    public Boolean apply(RichTreeItem item) {
+    public boolean  test(RichTreeItem<?> item) {
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
             RedisKey node = treeItem.value();
             // 仅看收藏

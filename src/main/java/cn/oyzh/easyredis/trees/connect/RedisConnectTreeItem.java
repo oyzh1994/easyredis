@@ -253,7 +253,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         try {
             // 清空数据
             this.client().flushAll();
-            for (TreeItem<?> child : this.getShowChildren()) {
+            for (TreeItem<?> child : this.getRealChildren()) {
                 if (child instanceof RedisDBTreeItem treeItem) {
                     treeItem.clearChild();
                 }
@@ -448,7 +448,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * @return 数据库节点
      */
     public RedisDBTreeItem getDatabaseItem(int index) {
-        for (TreeItem<?> child : this.getShowChildren()) {
+        for (TreeItem<?> child : this.getRealChildren()) {
             if (child instanceof RedisDBTreeItem treeItem && treeItem.dbIndex() == index) {
                 return treeItem;
             }
