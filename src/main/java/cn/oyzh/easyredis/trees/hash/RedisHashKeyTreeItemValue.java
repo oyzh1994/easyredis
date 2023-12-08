@@ -15,5 +15,6 @@ public class RedisHashKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHashKe
     public RedisHashKeyTreeItemValue(RedisHashKeyTreeItem item) {
         super(item);
         item.dataProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
+        item.fieldProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
     }
 }

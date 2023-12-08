@@ -161,7 +161,8 @@
                 </padding>
             </FlexFlowPane>
             <FlexTitledPane flexWidth="100%" realHeight="80" text="字段名" collapsible="false">
-                <FlexTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="hashField"/>
+                <FlexTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="hashField"
+                              onKeyPressed="#onNodeDataKeyPressed"/>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 480" text="字段值" collapsible="false">
                 <RedisDataTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData"

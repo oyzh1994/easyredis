@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.event.EventReceiver;
@@ -81,6 +82,19 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         }
     };
 
+    /**
+     * 字段值监听器
+     */
+    private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
+        String value = this.hashField.getText();
+        if (this.treeItem.currentRow() == null || Objects.equals(value, this.treeItem.currentRow().getField())) {
+            this.treeItem.field(null);
+        } else {
+            this.treeItem.field(value);
+        }
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+    };
+
     @Override
     public boolean init(RedisHashKeyTreeItem treeItem) {
         this.pageData = null;
@@ -101,6 +115,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
+        this.hashField.addTextChangeListener(this.fieldValListener);
     }
 
     @Override
@@ -173,6 +188,20 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     private void onHashFieldAdded(RedisHashFieldAddedMsg msg) {
         if (this.treeItem == msg.item()) {
             this.firstPage();
+        }
+    }
+
+    @FXML
+    @Override
+    protected void saveNodeData() {
+        if (this.treeItem.checkExists()) {
+            MessageBox.warn("此字段已存在！");
+        } else if (this.treeItem.dataUnsaved()) {
+            ThreadUtil.startVirtual(() -> {
+                if (this.treeItem.saveNodeValue()) {
+                    this.saveNodeData.disable();
+                }
+            });
         }
     }
 

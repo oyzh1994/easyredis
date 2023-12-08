@@ -293,21 +293,4 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         }
         return false;
     }
-
-    // /**
-    //  * 数据是否已改变
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isChanged() {
-    //     if (this.dataUnsaved()) {
-    //         return true;
-    //     }
-    //     return this.isGEOView() ? this.latitude() != null || this.longitude() != null : this.score() != null;
-    // }
-
-    // @Override
-    // public RedisZSetKeyTreeItemValue itemValue() {
-    //     return (RedisZSetKeyTreeItemValue) super.itemValue();
-    // }
 }

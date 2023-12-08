@@ -247,14 +247,14 @@ public class RedisKeyAddController extends Controller {
                 result = this.addStringNode(dbIndex, key);
                 keyType = "STRING";
             } else if (type == 1) {
-                result = this.addListNode(dbIndex, key);
-                keyType = "LIST";
-            } else if (type == 2) {
                 result = this.addSetNode(dbIndex, key);
                 keyType = "SET";
-            } else if (type == 3) {
+            } else if (type == 2) {
                 result = this.addZSetNode(dbIndex, key);
                 keyType = "ZSET";
+            } else if (type == 3) {
+                result = this.addListNode(dbIndex, key);
+                keyType = "LIST";
             } else if (type == 4) {
                 result = this.addHashNode(dbIndex, key);
                 keyType = "HASH";
@@ -262,11 +262,11 @@ public class RedisKeyAddController extends Controller {
                 result = this.addHyLogNode(dbIndex, key);
                 keyType = "HYPERLOGLOG/STRING";
             } else if (type == 6) {
-                result = this.addGEONode(dbIndex, key);
-                keyType = "GEO/ZSET";
-            } else if (type == 7) {
                 result = this.addStreamNode(dbIndex, key);
                 keyType = "STREAM";
+            } else if (type == 7) {
+                result = this.addGEONode(dbIndex, key);
+                keyType = "GEO/ZSET";
             } else if (type == 8) {
                 result = this.addBitNode(dbIndex, key);
                 keyType = "BITMAP/STRING";
@@ -496,19 +496,19 @@ public class RedisKeyAddController extends Controller {
             if (newValue.intValue() == 0) {
                 this.mutexes.visible(this.stringBox);
             } else if (newValue.intValue() == 1) {
-                this.mutexes.visible(this.listBox);
-            } else if (newValue.intValue() == 2) {
                 this.mutexes.visible(this.setBox);
             } else if (newValue.intValue() == 3) {
                 this.mutexes.visible(this.zSetBox);
             } else if (newValue.intValue() == 4) {
+                this.mutexes.visible(this.listBox);
+            } else if (newValue.intValue() == 2) {
                 this.mutexes.visible(this.hashBox);
             } else if (newValue.intValue() == 5) {
                 this.mutexes.visible(this.hylogBox);
             } else if (newValue.intValue() == 6) {
-                this.mutexes.visible(this.geoBox);
-            } else if (newValue.intValue() == 7) {
                 this.mutexes.visible(this.streamBox);
+            } else if (newValue.intValue() == 7) {
+                this.mutexes.visible(this.geoBox);
             } else if (newValue.intValue() == 8) {
                 this.mutexes.visible(this.bitBox);
             }
