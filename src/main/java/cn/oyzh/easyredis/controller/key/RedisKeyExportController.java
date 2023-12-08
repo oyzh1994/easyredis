@@ -437,15 +437,15 @@ public class RedisKeyExportController extends Controller {
                     this.updateStatus(dbIndex, key, 2, null);
                     continue;
                 }
-                RedisKey node = RedisKeyUtil.getNode(dbIndex, key, this.retainTTL.isSelected(), this.client);
+                // 获取键
+                RedisKey redisKey = RedisKeyUtil.getNode(dbIndex, key, this.retainTTL.isSelected(), true, this.client);
                 // 失败
-                if (node == null) {
+                if (redisKey == null) {
                     this.updateStatus(dbIndex, key, 0, null);
-                } else if (this.isExclude(node)) { // 被排除
+                } else if (this.isExclude(redisKey)) { // 被排除
                     this.updateStatus(dbIndex, key, 3, null);
                 } else {// 添加到集合
-                    RedisKeyUtil.getNodeValue(node, dbIndex, key, this.client);
-                    allNodes.add(node);
+                    allNodes.add(redisKey);
                     this.updateStatus(dbIndex, key, 1, null);
                 }
                 // 取消操作

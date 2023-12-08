@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.hylog;
 
-import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
+import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import lombok.NonNull;
@@ -28,7 +28,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisHyLogKeyTreeItem> {
     }
 
     @Override
-    public RedisHyperLogLogKey key() {
-        return (RedisHyperLogLogKey) super.key();
+    public RedisHyLogKey key() {
+        return (RedisHyLogKey) super.key();
     }
 }

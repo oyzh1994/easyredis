@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
+import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
@@ -361,7 +361,7 @@ public class RedisKeyImportController extends Controller {
         RedisKey redisKey = RedisKeyUtil.deserializeNode(type, value);
         if (redisKey instanceof RedisStringKey stringNode) {
             this.client.set(dbIndex, key, (String) stringNode.value());
-        } else if (redisKey instanceof RedisHyperLogLogKey) {
+        } else if (redisKey instanceof RedisHyLogKey) {
             this.client.pfadd(dbIndex, key, "");
         } else if (redisKey instanceof RedisListKey listNode) {
             String[] arr;

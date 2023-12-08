@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
+import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -94,7 +95,7 @@ public class RedisKeyUtil {
         }
 
         // hylog
-        if (redisKey instanceof RedisHyperLogLogKey) {
+        if (redisKey instanceof RedisHyLogKey) {
             return "";
         }
 
@@ -190,7 +191,7 @@ public class RedisKeyUtil {
 
         // hylog
         if (StrUtil.equalsIgnoreCase(type, RedisKeyType.HYPERLOGLOG.toString())) {
-            RedisHyperLogLogKey node = new RedisHyperLogLogKey();
+            RedisHyLogKey node = new RedisHyLogKey();
             node.value(new byte[]{});
             return node;
         }
@@ -296,7 +297,7 @@ public class RedisKeyUtil {
         // string
         if (node instanceof RedisStringKey stringNode) {
             client.set(dbIndex, key, (String) stringNode.value());
-        } else if (node instanceof RedisHyperLogLogKey) {// hylog
+        } else if (node instanceof RedisHyLogKey) {// hylog
             client.pfadd(dbIndex, key, "");
         } else if (node instanceof RedisListKey listNode) {// list
             String[] arr;
@@ -374,7 +375,7 @@ public class RedisKeyUtil {
             List<String> value = client.zrange(dbIndex, key);
             List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value, String.class));
             zSetNode.valueOfScore(value, scores);
-        } else if (node instanceof RedisHyperLogLogKey logLogNode) {// hylog
+        } else if (node instanceof RedisHyLogKey logLogNode) {// hylog
             Long pfcount = client.pfcount(dbIndex, key);
             byte[] value = client.get(dbIndex, key.getBytes());
             logLogNode.value(value);
@@ -433,15 +434,9 @@ public class RedisKeyUtil {
         scanResult.setCursor(result.getCursor());
         List<Callable<RedisKey>> tasks = new ArrayList<>(result.getResult().size());
         for (String key : result.getResult()) {
-            tasks.add(() -> {
-                RedisKey node = getNode(dbIndex, key, client);
-                if (loadValue) {
-                    getNodeValue(node, dbIndex, key, client);
-                }
-                return node;
-            });
+            tasks.add(() -> getNode(dbIndex, key, false, loadValue, client));
         }
-        List<RedisKey> nodes = ThreadUtil.invokeVirtual(tasks);
+        List<RedisKey> nodes = ThreadUtil.invoke(tasks);
         scanResult.setKeys(nodes);
         return scanResult;
     }
@@ -459,12 +454,9 @@ public class RedisKeyUtil {
         Set<String> keys = client.keys(dbIndex, pattern);
         List<RedisKey> nodes = new ArrayList<>(keys.size());
         for (String key : keys) {
-            RedisKey node = getNode(dbIndex, key, client);
+            RedisKey node = getNode(dbIndex, key, false, loadValue, client);
             if (node != null) {
                 nodes.add(node);
-            }
-            if (loadValue) {
-                getNodeValue(node, dbIndex, key, client);
             }
         }
         return nodes;
@@ -479,44 +471,71 @@ public class RedisKeyUtil {
      * @return redis节点
      */
     public static RedisKey getNode(int dbIndex, @NonNull String key, RedisClient client) {
-        return getNode(dbIndex, key, false, client);
+        return getNode(dbIndex, key, false, false, client);
     }
 
     /**
      * 获取节点
      *
-     * @param dbIndex db索引
-     * @param key     键
-     * @param ttl     是否获取ttl
-     * @param client  redis客户端
+     * @param dbIndex   db索引
+     * @param key       键
+     * @param ttl       是否获取ttl
+     * @param loadValue 加载值
+     * @param client    redis客户端
      * @return redis节点
      */
-    public static RedisKey getNode(int dbIndex, @NonNull String key, boolean ttl, RedisClient client) {
+    public static RedisKey getNode(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
         long start = System.currentTimeMillis();
-        String type = getKeyType(dbIndex, key, client);
-        RedisKey node = null;
-        switch (type) {
-            case "string" -> node = new RedisStringKey();
-            case "hyperLogLog" -> node = new RedisHyperLogLogKey();
-            case "list" -> node = new RedisListKey();
-            case "set" -> node = new RedisSetKey();
-            case "zset" -> node = new RedisZSetKey();
-            case "hash" -> node = new RedisHashKey();
-            case "stream" -> node = new RedisStreamKey();
-            case null, default -> StaticLog.warn("type:{} is not support!", type);
+        // 任务
+        List<Runnable> tasks = new ArrayList<>(2);
+        // ttl
+        AtomicReference<Long> ttlRef;
+        // 类型
+        AtomicReference<String> typeRef = new AtomicReference<>();
+        // 类型任务
+        tasks.add(() -> typeRef.set(getKeyType(dbIndex, key, client)));
+        // ttl任务
+        if (ttl) {
+            ttlRef = new AtomicReference<>();
+            tasks.add(() -> ttlRef.set(client.ttl(dbIndex, key)));
+        } else {
+            ttlRef = null;
         }
-        if (node != null) {
-            node.key(key);
-            node.type(type);
-            node.dbIndex(dbIndex);
-            if (ttl) {
-                node.ttl(client.ttl(dbIndex, key));
+        // 执行任务
+        if (tasks.size() == 1) {
+            tasks.getFirst().run();
+        } else {
+            ThreadUtil.submitVirtual(tasks);
+        }
+        // 创建键
+        RedisKey redisKey = null;
+        switch (typeRef.get()) {
+            case "string" -> redisKey = new RedisStringKey();
+            case "hyLog" -> redisKey = new RedisHyLogKey();
+            case "list" -> redisKey = new RedisListKey();
+            case "set" -> redisKey = new RedisSetKey();
+            case "zset" -> redisKey = new RedisZSetKey();
+            case "hash" -> redisKey = new RedisHashKey();
+            case "stream" -> redisKey = new RedisStreamKey();
+            case null, default -> StaticLog.warn("type:{} is not support!", typeRef.get());
+        }
+        // 处理键
+        if (redisKey != null) {
+            redisKey.key(key);
+            redisKey.dbIndex(dbIndex);
+            redisKey.type(typeRef.get());
+            if (ttlRef != null) {
+                redisKey.ttl(ttlRef.get());
+            }
+            // 加载值
+            if (loadValue) {
+                getNodeValue(redisKey, dbIndex, key, client);
             }
             long end = System.currentTimeMillis();
             long loadTime = end - start;
-            node.loadTime((short) loadTime);
+            redisKey.loadTime((short) loadTime);
         }
-        return node;
+        return redisKey;
     }
 
     /**
@@ -533,7 +552,7 @@ public class RedisKeyUtil {
             if ("string".equals(type)) {
                 try {
                     if (client.pfcount(dbIndex, key) > 0) {
-                        return "hyperLogLog";
+                        return "hyLog";
                     }
                 } catch (Exception ex) {
                     if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {

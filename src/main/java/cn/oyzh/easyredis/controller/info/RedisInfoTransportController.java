@@ -591,20 +591,19 @@ public class RedisInfoTransportController extends Controller {
                     continue;
                 }
                 int status;
-                RedisKey node = RedisKeyUtil.getNode(fromDBIndex, key, this.retainTTL.isSelected(), this.fromClient);
+                // 获取键
+                RedisKey redisKey = RedisKeyUtil.getNode(fromDBIndex, key, this.retainTTL.isSelected(), true, this.fromClient);
                 // 获取键失败
-                if (node == null) {
+                if (redisKey == null) {
                     status = 0;
-                } else if (this.isExclude(node)) { // 键被排除
+                } else if (this.isExclude(redisKey)) { // 键被排除
                     status = 3;
                 } else {
-                    // 获取键值
-                    RedisKeyUtil.getNodeValue(node, fromDBIndex, key, this.fromClient);
                     // 键存在时，处理键
                     if (this.targetClient.exists(targetDBIndex, key)) {
-                        status = this.handleExist(node, targetDBIndex);
+                        status = this.handleExist(redisKey, targetDBIndex);
                     } else {// 键不存在，创建键
-                        this.createNode(node, targetDBIndex);
+                        this.createNode(redisKey, targetDBIndex);
                         status = 1;
                     }
                 }
