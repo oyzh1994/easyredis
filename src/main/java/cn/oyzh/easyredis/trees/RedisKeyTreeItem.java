@@ -374,4 +374,13 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     public RedisKeyType type() {
         return this.value.type();
     }
+
+    /**
+     * 获取加载耗时
+     *
+     * @return 加载耗时
+     */
+    public short loadTime() {
+        return this.value.loadTime() == 0 ? 1 : this.value.loadTime();
+    }
 }

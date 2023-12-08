@@ -94,7 +94,7 @@
         </FXLabel>
         <FlexLabel fx:id="expirePreview" realHeight="30" flexWidth="100% - 140">
             <HBox.margin>
-                <Insets left="5" top="12"/>
+                <Insets left="5" top="18"/>
             </HBox.margin>
         </FlexLabel>
     </FlexHBox>

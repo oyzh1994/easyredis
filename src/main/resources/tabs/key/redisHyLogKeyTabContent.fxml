@@ -59,8 +59,14 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期" fontSize="16"
+                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="16"
                          onMousePrimaryClicked="#ttlUpdate">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
+                <FXLabel tipText="键加载时间" fx:id="loadTime"
+                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>

@@ -293,7 +293,7 @@ public class RedisEventUtil {
     /**
      * 连接已新增事件
      *
-     * @param info zk信息
+     * @param info redis信息
      */
     public static void infoAdded(RedisInfo info) {
         RedisInfoAddedMsg msg = new RedisInfoAddedMsg();

@@ -492,6 +492,7 @@ public class RedisKeyUtil {
      * @return redis节点
      */
     public static RedisKey getNode(int dbIndex, @NonNull String key, boolean ttl, RedisClient client) {
+        long start = System.currentTimeMillis();
         String type = getKeyType(dbIndex, key, client);
         RedisKey node = null;
         switch (type) {
@@ -511,6 +512,9 @@ public class RedisKeyUtil {
             if (ttl) {
                 node.ttl(client.ttl(dbIndex, key));
             }
+            long end = System.currentTimeMillis();
+            long loadTime = end - start;
+            node.loadTime((short) loadTime);
         }
         return node;
     }

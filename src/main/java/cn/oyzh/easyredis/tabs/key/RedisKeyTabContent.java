@@ -78,6 +78,12 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     protected FXLabel ttl;
 
     /**
+     * 加载耗时
+     */
+    @FXML
+    protected FXLabel loadTime;
+
+    /**
      * 数据组件
      */
     @FXML
@@ -138,6 +144,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
             this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
         }
 
+        // 加载耗时处理
+        FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
         return true;
     }
 

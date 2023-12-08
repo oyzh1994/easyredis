@@ -12,61 +12,55 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/6/16
  */
+@Getter
+@Accessors(chain = true, fluent = true)
 public class RedisKey implements Comparable<RedisKey> {
 
     /**
      * db索引
      */
     @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private int dbIndex;
+
+    /**
+     * 加载耗时
+     */
+    @Setter
+    private short loadTime;
 
     /**
      * ttl值
      */
     @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private Long ttl;
 
     /**
      * key名称
      */
     @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private String key;
 
     /**
      * 键类型
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisKeyType type;
 
     /**
      * 空闲时间
      */
-    @Getter
     @Setter
-    @Accessors(chain = true, fluent = true)
     private Long objectIdletime;
 
     /**
      * 引用数量
      */
-    @Getter
     @Setter
-    @Accessors(chain = true, fluent = true)
     private Long objectRefcount;
 
     /**
      * 编码值
      */
-    @Getter
     @Setter
-    @Accessors(chain = true, fluent = true)
     private String objectedEncoding;
 
     /**
