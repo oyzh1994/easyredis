@@ -31,7 +31,7 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?,?>> ext
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new SVGGlyph("/font/treeNode.svg", 12));
+            this.graphic(new SVGGlyph("/font/key.svg", 12));
         }
     }
 
