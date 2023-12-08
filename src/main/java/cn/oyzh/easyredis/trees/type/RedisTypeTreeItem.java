@@ -18,11 +18,14 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
     @Accessors(fluent = true, chain = false)
     private RedisKeyType value;
 
-
+    /**
+     * 父节点
+     */
     private final RedisDBTreeItem parent;
 
     public RedisTypeTreeItem(RedisDBTreeItem parent, RedisKeyType type) {
         super(parent.getTreeView());
+        super.setFilterable(true);
         this.parent = parent;
         this.value = type;
         this.setValue(new RedisTypeTreeItemValue(this));

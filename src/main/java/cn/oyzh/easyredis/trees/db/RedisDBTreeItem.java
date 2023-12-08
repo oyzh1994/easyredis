@@ -41,7 +41,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -90,7 +89,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     /**
      * 键过滤模式
      */
-    private String keyFilterPattern;
+    @Getter
+    private String filterPattern;
 
     /**
      * 连接树节点
@@ -101,7 +101,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent) {
         super(parent.getTreeView());
-        this.setFilterable(true);
         this.parent = parent;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
@@ -131,11 +130,21 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void flushValue() {
         BackgroundService.submitFXLater(() -> {
-            // if (!this.isSentinelMode()) {
-            //     this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
-            // }
-            this.getValue().filterPattern(this.keyFilterPattern);
+            this.getValue().flushNum();
+            this.getValue().flushFilterPattern();
         });
+    }
+
+    /**
+     * 获取当前键数量
+     *
+     * @return 当前键数量
+     */
+    public Long dbSize() {
+        if (!this.isSentinelMode()) {
+            return this.client().dbSize(this.dbIndex);
+        }
+        return null;
     }
 
     @Override
@@ -189,7 +198,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     private void keyFilter() {
         StageWrapper fxView = StageUtil.parseStage(RedisKeyFilterController.class, this.window());
         fxView.setProp("treeItem", this);
-        fxView.setProp("pattern", this.keyFilterPattern);
+        fxView.setProp("pattern", this.filterPattern);
         fxView.display();
     }
 
@@ -199,8 +208,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * @param pattern 模式
      */
     public void doKeyFilter(String pattern) {
-        if (!StrUtil.equals(this.keyFilterPattern, pattern)) {
-            this.keyFilterPattern = pattern;
+        if (!StrUtil.equals(this.filterPattern, pattern)) {
+            this.filterPattern = pattern;
             this.reloadChild();
         }
     }
@@ -251,9 +260,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void loadChildByCluster() {
         // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> items = this.keyItems();
+        List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
         // 查询数据
-        String pattern = StrUtil.isBlank(this.keyFilterPattern) ? "*" : this.keyFilterPattern;
+        String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
         List<RedisKey> dbKeys = RedisKeyUtil.allNodes(this.dbIndex, pattern, false, this.client());
         if (CollUtil.isNotEmpty(dbKeys)) {
             List<TreeItem<?>> shows = new ArrayList<>(dbKeys.size());
@@ -296,12 +305,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void loadChildByNormal() {
         // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> items = this.keyItems();
+        List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
         // 禁用排序
         this.disableSort();
         // 是否为空
         String cursor = null;
-        String pattern = StrUtil.isBlank(this.keyFilterPattern) ? "*" : this.keyFilterPattern;
+        String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
         ScanParams params = new ScanParams();
         params.count(20);
         params.match(pattern);
@@ -469,22 +478,25 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         }
     }
 
+    /**
+     * 获取当前子节点
+     *
+     * @return 当前子节点
+     */
     public List<RedisTypeTreeItem> children() {
         return super.getChildren();
     }
 
     /**
-     * 获取键节点
+     * 获取当前键节点
      *
-     * @return 键节点列表
+     * @return 当前键节点
      */
-    public List<RedisKeyTreeItem<?, ?>> keyItems() {
+    public List<RedisKeyTreeItem<?, ?>> keyChildren() {
         // 获取已有子节点
         List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
-        for (RichTreeItem<?> item : this.getRichChildren()) {
-            if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-                items.add(treeItem);
-            }
+        for (RedisTypeTreeItem item : this.children()) {
+            items.addAll((List) item.getRealChildren());
         }
         return items;
     }
@@ -505,7 +517,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     this.nodeLoaded = false;
                     MessageBox.exception(ex);
                 })
-                // .onSuccess(this::flushValue)
+                .onSuccess(this::flushValue)
                 .onFinish(this::stopWaiting)
                 .build();
         // 执行业务
