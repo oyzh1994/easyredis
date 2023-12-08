@@ -724,6 +724,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         try {
             RedisKey redisKey = RedisKeyUtil.getNode(this.dbIndex, key, this.client());
             this.addChild(this.initItemByNode(redisKey));
+            this.flushValue();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -743,6 +744,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     break;
                 }
             }
+            this.flushValue();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
