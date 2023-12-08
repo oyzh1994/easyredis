@@ -43,4 +43,68 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         super.doFilter(itemFilter);
         this.flushValue();
     }
+
+    /**
+     * 是否流类型
+     *
+     * @return 结果
+     */
+    public boolean isStreamType() {
+        return this.value == RedisKeyType.STREAM;
+    }
+
+    /**
+     * 是否统计值类型
+     *
+     * @return 结果
+     */
+    public boolean isHyLogType() {
+        return this.value == RedisKeyType.HYPERLOGLOG;
+    }
+
+    /**
+     * 是否字符串类型
+     *
+     * @return 结果
+     */
+    public boolean isStringType() {
+        return this.value == RedisKeyType.STRING;
+    }
+
+    /**
+     * 是否有序集合类型
+     * @return 结果
+     */
+    public boolean isZSetType() {
+        return this.value == RedisKeyType.ZSET;
+    }
+
+    /**
+     * 是否集合类型
+     * @return 结果
+     */
+    public boolean isSetType() {
+        return this.value == RedisKeyType.SET;
+    }
+
+    /**
+     * 是否列表类型
+     * @return 结果
+     */
+    public boolean isListType() {
+        return this.value == RedisKeyType.LIST;
+    }
+
+    /**
+     * 是否哈希表类型
+     * @return 结果
+     */
+    public boolean isHashType() {
+        return this.value == RedisKeyType.HASH;
+    }
+
+    @Override
+    public boolean itemVisible() {
+        return this.isVisible();
+    }
 }

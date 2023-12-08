@@ -101,6 +101,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent) {
         super(parent.getTreeView());
+        super.setFilterable(true);
         this.parent = parent;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
@@ -422,7 +423,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 hyLog.add(treeItem);
             }
         }
-        for (RedisTypeTreeItem child : this.children()) {
+        for (RedisTypeTreeItem child : this.realChildren()) {
             if (child.value() == RedisKeyType.STRING) {
                 if (CollUtil.isNotEmpty(string)) {
                     child.addChild(string);
@@ -496,7 +497,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 hyLog.add(treeItem);
             }
         }
-        for (RedisTypeTreeItem child : this.children()) {
+        for (RedisTypeTreeItem child : this.realChildren()) {
             if (child.value() == RedisKeyType.STRING) {
                 if (CollUtil.isNotEmpty(string)) {
                     child.removeChild(string);
@@ -531,18 +532,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     @Override
     public void clearChild() {
-        for (RedisTypeTreeItem child : this.children()) {
+        for (RedisTypeTreeItem child : this.realChildren()) {
             child.clearChild();
         }
     }
 
     /**
-     * 获取当前子节点
+     * 获取真实子节点
      *
-     * @return 当前子节点
+     * @return 真实子节点
      */
-    public List<RedisTypeTreeItem> children() {
-        return super.getChildren();
+    public List<RedisTypeTreeItem> realChildren() {
+        return (List) super.getRealChildren();
     }
 
     /**
@@ -553,7 +554,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     public List<RedisKeyTreeItem<?, ?>> keyChildren() {
         // 获取已有子节点
         List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
-        for (RedisTypeTreeItem item : this.children()) {
+        for (RedisTypeTreeItem item : this.realChildren()) {
             items.addAll((List) item.getRealChildren());
         }
         return items;
@@ -565,7 +566,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * @return 结果
      */
     public boolean isKeyEmpty() {
-        return this.keyChildren().isEmpty();
+        for (RedisTypeTreeItem item : this.realChildren()) {
+            if (!item.getRealChildren().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

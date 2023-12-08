@@ -1,10 +1,11 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.search.RedisSearchParam;
-import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.search.RedisSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
@@ -108,39 +109,42 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     }
 
     @Override
-    public boolean  test(RichTreeItem<?> item) {
-        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            RedisKey node = treeItem.value();
-            // 仅看收藏
-            if (this.onlyCollect && !treeItem.isCollect()) {
-                return false;
-            }
+    public boolean test(RichTreeItem<?> item) {
+        if (item instanceof RedisTypeTreeItem treeItem) {
             // 过滤hash键
-            if (this.excludeHashType && node.isHashKey()) {
+            if (this.excludeHashType && treeItem.isHashType()) {
                 return false;
             }
             // 过滤list键
-            if (this.excludeListType && node.isListKey()) {
+            if (this.excludeListType && treeItem.isListType()) {
                 return false;
             }
             // 过滤set键
-            if (this.excludeSetType && node.isSetKey()) {
+            if (this.excludeSetType && treeItem.isSetType()) {
                 return false;
             }
             // 过滤zset键
-            if (this.excludeZSetType && node.isZSetKey()) {
+            if (this.excludeZSetType && treeItem.isZSetType()) {
                 return false;
             }
             // 过滤string键
-            if (this.excludeStringType && node.isStringKey()) {
+            if (this.excludeStringType && treeItem.isStringType()) {
                 return false;
             }
             // 过滤stream键
-            if (this.excludeStreamType && node.isStreamKey()) {
+            if (this.excludeStreamType && treeItem.isStreamType()) {
                 return false;
             }
             // 过滤hyperLogLog键
-            if (this.excludeHyLogType && node.isHyLogKey()) {
+            if (this.excludeHyLogType && treeItem.isHyLogType()) {
+                return false;
+            }
+            return true;
+        }
+
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+            // 仅看收藏
+            if (this.onlyCollect && !treeItem.isCollect()) {
                 return false;
             }
             // 过滤键
@@ -150,7 +154,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
         }
         // 判断是否满足搜索要求
         RedisSearchParam param = this.searchHandler.searchParam();
-        if (param != null&& !param.isEmpty() && param.isFilterMode() ) {
+        if (param != null && !param.isEmpty() && param.isFilterMode()) {
             return this.searchHandler.getMatchType(item) != null;
         }
         return true;
