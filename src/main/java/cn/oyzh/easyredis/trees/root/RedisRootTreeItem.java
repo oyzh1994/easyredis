@@ -43,7 +43,6 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-//@Slf4j
 public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
@@ -59,7 +58,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
-        // this.itemValue("Redis连接列表");
         // 注册事件处理
         EventUtil.register(this);
         // 初始化子节点
@@ -94,9 +92,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         MenuItem addGroup = MenuItemExt.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
         MenuItem exportConnect = MenuItemExt.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出redis连接", this::exportConnect);
         MenuItem importConnect = MenuItemExt.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入redis连接，也可拖拽文件到窗口进行导入", this::importConnect);
-
         exportConnect.setDisable(this.isChildEmpty());
-
         items.add(addConnect);
         items.add(addGroup);
         items.add(exportConnect);
@@ -217,12 +213,10 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @EventReceiver(RedisEventTypes.REDIS_ADD_GROUP)
     private void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
-
         // 名称为空，则忽略
         if (StrUtil.isBlank(groupName)) {
             return;
         }
-
         RedisGroup group = new RedisGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
@@ -236,28 +230,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             MessageBox.warn("添加分组失败！");
         }
     }
-
-    // @Override
-    // public ObservableList<RedisTreeItem> getChildren() {
-    //     return super.getChildren();
-    // }
-
-    // /**
-    //  * 添加多个分组
-    //  *
-    //  * @param redisGroups redis分组列表
-    //  */
-    // private void addGroups(List<RedisGroup> redisGroups) {
-    //     if (CollUtil.isNotEmpty(redisGroups)) {
-    //         List<RedisGroupTreeItem> list = new ArrayList<>();
-    //         for (RedisGroup group : redisGroups) {
-    //             RedisGroupTreeItem groupTreeItem = new RedisGroupTreeItem(group, this.getTreeView());
-    //             list.add(groupTreeItem);
-    //         }
-    //         this.getChildren().addAll(list);
-    //         this.sort();
-    //     }
-    // }
 
     /**
      * 获取分组键
@@ -296,6 +268,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @EventReceiver(RedisEventTypes.REDIS_INFO_ADD)
     private void onConnectAdd(RedisInfo info) {
         this.addConnect(info);
+        this.extend();
     }
 
     /**
@@ -349,7 +322,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List)items);
-            // this.sort();
         }
     }
 

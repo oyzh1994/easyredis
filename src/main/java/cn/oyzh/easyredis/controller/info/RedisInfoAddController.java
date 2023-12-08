@@ -38,12 +38,6 @@ import javafx.stage.WindowEvent;
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
 )
 public class RedisInfoAddController extends Controller {
-    //
-    // /**
-    //  * 字符集
-    //  */
-    // @FXML
-    // private FlexComboBox<String> charset;
 
     /**
      * tab组件
