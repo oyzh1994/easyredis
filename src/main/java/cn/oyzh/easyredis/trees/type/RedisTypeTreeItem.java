@@ -1,12 +1,21 @@
 package cn.oyzh.easyredis.trees.type;
 
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import javafx.scene.control.MenuItem;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author oyzh
@@ -106,5 +115,23 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
     @Override
     public boolean itemVisible() {
         return this.isVisible();
+    }
+
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        MenuItemExt add = MenuItemExt.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addKey);
+        items.add(add);
+        return items;
+    }
+
+    /**
+     * 添加键
+     */
+    public void addKey() {
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyAddController.class, this.window());
+        fxView.setProp("type", this.value);
+        fxView.setProp("dbItem", this.parent);
+        fxView.display();
     }
 }

@@ -30,9 +30,9 @@ public enum RedisKeyType {
     public static RedisKeyType valueOfType(String type) {
         if (StrUtil.isNotBlank(type)) {
             return switch (type.toLowerCase()) {
-                case "string" -> STRING;
+                case "string", "bitmap" -> STRING;
                 case "set" -> SET;
-                case "zset" -> ZSET;
+                case "zset", "geo" -> ZSET;
                 case "list" -> LIST;
                 case "hash" -> HASH;
                 case "hyperloglog" -> HYPERLOGLOG;
@@ -43,11 +43,22 @@ public enum RedisKeyType {
         return null;
     }
 
+    /**
+     * 跟字符串比较
+     *
+     * @param type 字符串类型
+     * @return 结果
+     */
     public boolean equalsString(String type) {
         return StrUtil.equalsIgnoreCase(type, this.name());
     }
 
-    public static int length(){
+    /**
+     * 枚举长度
+     *
+     * @return 长度
+     */
+    public static int length() {
         return RedisKeyType.values().length;
     }
 }

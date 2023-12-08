@@ -7,13 +7,14 @@ import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
@@ -164,7 +165,7 @@ public class RedisKeyAddController extends Controller {
      * 键类型
      */
     @FXML
-    private FlexComboBox<String> type;
+    private RedisKeyTypeComboBox type;
 
     /**
      * redis客户端
@@ -174,7 +175,7 @@ public class RedisKeyAddController extends Controller {
     /**
      * 树键
      */
-    private RedisDBTreeItem treeItem;
+    private RedisDBTreeItem dbItem;
 
     /**
      * 节点互斥组件
@@ -225,7 +226,7 @@ public class RedisKeyAddController extends Controller {
         // 获取键值
         int type = this.type.getSelectedIndex();
         String key = this.key.getTextTrim();
-        int dbIndex = this.treeItem.dbIndex();
+        int dbIndex = this.dbItem.dbIndex();
         try {
             long ttl = this.ttlValue.getValue();
             if (ttl == 0) {
@@ -277,8 +278,7 @@ public class RedisKeyAddController extends Controller {
             if (ttl != -1) {
                 this.client.expire(dbIndex, key, ttl, null);
             }
-            RedisEventUtil.keyAdded(this.treeItem, keyType, key);
-            // EventUtil.fire(RedisEventTypes.REDIS_KEY_ADDED, this.treeItem);
+            RedisEventUtil.keyAdded(this.dbItem, keyType, key);
             MessageBox.okToast("新增键成功！");
             this.closeStage();
         } catch (Exception ex) {
@@ -523,8 +523,10 @@ public class RedisKeyAddController extends Controller {
         this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.geoBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
         this.stage.hideOnEscape();
         super.onStageShown(event);
-        this.treeItem = this.getStageProp("treeItem");
-        this.client = this.treeItem.client();
+        this.dbItem = this.getStageProp("dbItem");
+        RedisKeyType type = this.getStageProp("type");
+        this.type.select(type);
+        this.client = this.dbItem.client();
         this.key.requestFocus();
     }
 

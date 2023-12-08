@@ -151,7 +151,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItemExt add = MenuItemExt.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addNode);
+        MenuItemExt add = MenuItemExt.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addKey);
         MenuItemExt keyFilter = MenuItemExt.newItem("键过滤器", new SVGGlyph("/font/filter.svg", "12"), "过滤redis键", this::keyFilter);
         MenuItemExt reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载redis键", this::reloadChild);
         MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
@@ -684,9 +684,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     /**
      * 添加键
      */
-    public void addNode() {
+    public void addKey() {
         StageWrapper fxView = StageUtil.parseStage(RedisKeyAddController.class, this.window());
-        fxView.setProp("treeItem", this);
+        fxView.setProp("dbItem", this);
         fxView.display();
     }
 }
