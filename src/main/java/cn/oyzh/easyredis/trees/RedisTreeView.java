@@ -21,11 +21,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.function.Consumer;
 
 /**
  * redis树
@@ -215,8 +211,6 @@ public class RedisTreeView extends RichTreeView {
             } else {
                 if (item instanceof RedisConnectTreeItem treeItem) {
                     treeItem.connect();
-                } else if (item instanceof RedisDBTreeItem treeItem) {
-                    treeItem.loadChild();
                 }
             }
         });

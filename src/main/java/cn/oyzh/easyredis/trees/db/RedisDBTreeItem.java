@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisHyperLogLogKey;
@@ -29,6 +30,7 @@ import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.Task;
@@ -41,10 +43,12 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
 import redis.clients.jedis.params.ScanParams;
 
@@ -60,7 +64,6 @@ import java.util.concurrent.TimeUnit;
  * @author oyzh
  * @since 2023/07/12
  */
-//@Slf4j
 public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     /**
@@ -103,7 +106,24 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? "键列表" : "db" + dbIndex;
         this.setValue(new RedisDBTreeItemValue(this));
+        this.initTypes();
         this.flushValue();
+        // 监听展开
+        super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+            this.loadChild();
+            this.flushLocal();
+        });
+    }
+
+    /**
+     * 初始化类型
+     */
+    private void initTypes() {
+        List<TreeItem<?>> typeItems = new ArrayList<>();
+        for (RedisKeyType keyType : RedisKeyType.values()) {
+            typeItems.add(new RedisTypeTreeItem(this, keyType));
+        }
+        super.setChild(typeItems);
     }
 
     /**
@@ -111,9 +131,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void flushValue() {
         BackgroundService.submitFXLater(() -> {
-            if (!this.isSentinelMode()) {
-                this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
-            }
+            // if (!this.isSentinelMode()) {
+            //     this.getValue().flushNum(this.client().dbSize(this.dbIndex), this.getChildren().size());
+            // }
             this.getValue().filterPattern(this.keyFilterPattern);
         });
     }
@@ -352,6 +372,107 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         this.sort();
     }
 
+    @Override
+    public synchronized void addChild(@NonNull List<TreeItem<?>> items) {
+        List<TreeItem<?>> list = new ArrayList<>();
+        List<TreeItem<?>> hash = new ArrayList<>();
+        List<TreeItem<?>> set = new ArrayList<>();
+        List<TreeItem<?>> zset = new ArrayList<>();
+        List<TreeItem<?>> string = new ArrayList<>();
+        List<TreeItem<?>> stream = new ArrayList<>();
+        List<TreeItem<?>> hyLog = new ArrayList<>();
+        for (TreeItem<?> item : items) {
+            if (item instanceof RedisStringKeyTreeItem treeItem) {
+                string.add(treeItem);
+            } else if (item instanceof RedisListKeyTreeItem treeItem) {
+                list.add(treeItem);
+            } else if (item instanceof RedisSetKeyTreeItem treeItem) {
+                set.add(treeItem);
+            } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
+                zset.add(treeItem);
+            } else if (item instanceof RedisHashKeyTreeItem treeItem) {
+                hash.add(treeItem);
+            } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
+                stream.add(treeItem);
+            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+                hyLog.add(treeItem);
+            }
+        }
+        for (RedisTypeTreeItem child : this.children()) {
+            if (child.value() == RedisKeyType.STRING) {
+                child.addChild(string);
+            } else if (child.value() == RedisKeyType.HASH) {
+                child.addChild(hash);
+            } else if (child.value() == RedisKeyType.LIST) {
+                child.addChild(list);
+            } else if (child.value() == RedisKeyType.SET) {
+                child.addChild(set);
+            } else if (child.value() == RedisKeyType.ZSET) {
+                child.addChild(zset);
+            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
+                child.addChild(hyLog);
+            } else if (child.value() == RedisKeyType.STREAM) {
+                child.addChild(stream);
+            }
+        }
+    }
+
+    @Override
+    public synchronized void removeChild(@NonNull List<TreeItem<?>> items) {
+        List<TreeItem<?>> list = new ArrayList<>();
+        List<TreeItem<?>> hash = new ArrayList<>();
+        List<TreeItem<?>> set = new ArrayList<>();
+        List<TreeItem<?>> zset = new ArrayList<>();
+        List<TreeItem<?>> string = new ArrayList<>();
+        List<TreeItem<?>> stream = new ArrayList<>();
+        List<TreeItem<?>> hyLog = new ArrayList<>();
+        for (TreeItem<?> item : items) {
+            if (item instanceof RedisStringKeyTreeItem treeItem) {
+                string.add(treeItem);
+            } else if (item instanceof RedisListKeyTreeItem treeItem) {
+                list.add(treeItem);
+            } else if (item instanceof RedisSetKeyTreeItem treeItem) {
+                set.add(treeItem);
+            } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
+                zset.add(treeItem);
+            } else if (item instanceof RedisHashKeyTreeItem treeItem) {
+                hash.add(treeItem);
+            } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
+                stream.add(treeItem);
+            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+                hyLog.add(treeItem);
+            }
+        }
+        for (RedisTypeTreeItem child : this.children()) {
+            if (child.value() == RedisKeyType.STRING) {
+                child.removeChild(string);
+            } else if (child.value() == RedisKeyType.HASH) {
+                child.removeChild(hash);
+            } else if (child.value() == RedisKeyType.LIST) {
+                child.removeChild(list);
+            } else if (child.value() == RedisKeyType.SET) {
+                child.removeChild(set);
+            } else if (child.value() == RedisKeyType.ZSET) {
+                child.removeChild(zset);
+            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
+                child.removeChild(hyLog);
+            } else if (child.value() == RedisKeyType.STREAM) {
+                child.removeChild(stream);
+            }
+        }
+    }
+
+    @Override
+    public void clearChild() {
+        for (RedisTypeTreeItem child : this.children()) {
+            child.clearChild();
+        }
+    }
+
+    public List<RedisTypeTreeItem> children() {
+        return super.getChildren();
+    }
+
     /**
      * 获取键节点
      *
@@ -413,7 +534,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 加载子节点
      */
     public void loadChild() {
-        if (!this.isWaiting() && (!this.nodeLoaded || this.isChildEmpty())) {
+        if (!this.isWaiting() && (!this.nodeLoaded)) {
             this.nodeLoaded = true;
             this._loadChild();
         }
@@ -483,62 +604,4 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         fxView.setProp("treeItem", this);
         fxView.display();
     }
-
-    // @Override
-    // public RedisDBTreeItemValue itemValue() {
-    //     return (RedisDBTreeItemValue) super.itemValue();
-    // }
-
-    // @Override
-    // public void removeChild(@NonNull TreeItem<?> item) {
-    //     if (!this.isChildEmpty()) {
-    //         super.removeChild(item);
-    //         this.children.remove(item);
-    //     }
-    // }
-    //
-    // @Override
-    // public void removeChildes(@NonNull List<TreeItem<?>> items) {
-    //     if (!this.isChildEmpty()) {
-    //         super.removeChildes(items);
-    //         this.children.removeAll(items);
-    //     }
-    // }
-
-    // @Override
-    // public void clearChild() {
-    //     if (!this.isChildEmpty()) {
-    //         this.children.clear();
-    //     }
-    //     super.clearChild();
-    // }
-    //
-    // @Override
-    // public boolean isChildEmpty() {
-    //     if (this.children != null) {
-    //         return this.children.isEmpty();
-    //     }
-    //     return true;
-    // }
-
-    // @Override
-    // public void addChild(@NonNull TreeItem<?> item) {
-    //     if (item instanceof RedisKeyTreeItem<?> treeItem) {
-    //         this.children().add(treeItem);
-    //         this.sort();
-    //     }
-    // }
-    //
-    // @Override
-    // public void addChildes(@NonNull List items) {
-    //     this.children().addAll(items);
-    //     this.sort();
-    // }
-    //
-    // @Override
-    // public void replaceChildes(@NonNull List items) {
-    //     super.getChildren().clear();
-    //     this.children().setAll(items);
-    //     this.sort();
-    // }
 }

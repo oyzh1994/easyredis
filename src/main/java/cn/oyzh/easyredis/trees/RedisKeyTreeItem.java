@@ -103,42 +103,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
         return this.dataProperty.get() != null;
     }
 
-    // /**
-    //  * 子节点列表，记录用，非实际展示列表
-    //  */
-    // private ObservableList<RedisKeyTreeItem<?>> children;
-    //
-    // /**
-    //  * 获取子节点列表
-    //  *
-    //  * @return 子节点列表
-    //  */
-    // public ObservableList<RedisKeyTreeItem<?>> children() {
-    //     if (this.children == null) {
-    //         this.children = FXCollections.observableArrayList();
-    //     }
-    //     return this.children;
-    // }
-
     public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem parent) {
         super(parent.getTreeView());
-        // this.root = root;
         this.value = value;
     }
-
-    // /**
-    //  * 父键是否展开
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isParentExpanded() {
-    //     return this.getParent() != null && this.getParent().isExpanded();
-    // }
-
-    // @Override
-    // public void doFilter(@NonNull RichTreeItemFilter filter) {
-    //     this.visible = filter.apply(this);
-    // }
 
     @Override
     public List<MenuItem> getMenuItems() {

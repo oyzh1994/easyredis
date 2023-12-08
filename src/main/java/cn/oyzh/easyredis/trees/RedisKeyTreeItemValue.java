@@ -25,7 +25,7 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?,?>> ext
         this.flushGraphic();
         this.flushGraphicColor();
         this.name(item.key());
-        this.flushType();
+        // this.flushType();
     }
 
     @Override
@@ -46,14 +46,14 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?,?>> ext
         }
     }
 
-    /**
-     * 初始化类型数量组件
-     */
-    protected void flushType() {
-        // 创建组件
-        FXText text = new FXText("(" + this.item.type() + ")");
-        text.setFill(Color.valueOf("#228B22"));
-        this.addChild(text);
-        HBox.setMargin(text, new Insets(0, 0, 0, 3));
-    }
+    // /**
+    //  * 初始化类型数量组件
+    //  */
+    // protected void flushType() {
+    //     // 创建组件
+    //     FXText text = new FXText("(" + this.item.type() + ")");
+    //     text.setFill(Color.valueOf("#228B22"));
+    //     this.addChild(text);
+    //     HBox.setMargin(text, new Insets(0, 0, 0, 3));
+    // }
 }

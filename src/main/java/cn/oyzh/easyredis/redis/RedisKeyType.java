@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 /**
  * redis键类型
@@ -9,13 +11,21 @@ import cn.hutool.core.util.StrUtil;
  * @since 2023/07/01
  */
 public enum RedisKeyType {
-    STRING,
-    SET,
-    ZSET,
-    LIST,
-    HASH,
-    HYPERLOGLOG,
-    STREAM;
+    STRING("字符串"),
+    SET("集合"),
+    ZSET("有序集合"),
+    LIST("列表"),
+    HASH("哈希表"),
+    HYPERLOGLOG("统计值"),
+    STREAM("流");
+
+    @Getter
+    @Accessors(fluent = true, chain = false)
+    private final String desc;
+
+    RedisKeyType(String desc) {
+        this.desc = desc;
+    }
 
     public static RedisKeyType valueOfType(String type) {
         if (StrUtil.isNotBlank(type)) {
@@ -35,5 +45,9 @@ public enum RedisKeyType {
 
     public boolean equalsString(String type) {
         return StrUtil.equalsIgnoreCase(type, this.name());
+    }
+
+    public static int length(){
+        return RedisKeyType.values().length;
     }
 }
