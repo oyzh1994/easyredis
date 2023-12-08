@@ -189,7 +189,6 @@ public class RedisInfoAddController extends Controller {
                 return;
             }
 
-            // String charset = this.charset.getValue();
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number executeTimeOut = this.executeTimeOut.getValue();
 
@@ -198,7 +197,6 @@ public class RedisInfoAddController extends Controller {
             redisInfo.setRemark(this.remark.getTextTrim());
             redisInfo.setPassword(this.password.getText());
             redisInfo.setGroupId(this.group == null ? null : this.group.getGid());
-            // redisInfo.setCharset("跟随系统".equals(charset) ? null : charset.toLowerCase());
             redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
             if (this.showSentinel.isSelected()) {

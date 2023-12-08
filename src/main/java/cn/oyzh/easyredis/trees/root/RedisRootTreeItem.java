@@ -270,7 +270,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @EventReceiver(RedisEventTypes.REDIS_INFO_ADDED)
     private void onInfoAdded(RedisInfoAddedMsg msg) {
         this.addConnect(msg.info());
-        this.extend();
     }
 
     /**
@@ -300,11 +299,13 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
 
     @Override
     public void addConnect(@NonNull RedisInfo redisInfo) {
-        RedisGroupTreeItem groupTreeItem = this.getGroupItem(redisInfo.getGroupId());
-        if (groupTreeItem == null) {
+        RedisGroupTreeItem groupItem = this.getGroupItem(redisInfo.getGroupId());
+        if (groupItem == null) {
             super.addChild(new RedisConnectTreeItem(redisInfo, this.getTreeView()));
+            this.extend();
         } else {
-            groupTreeItem.addConnect(redisInfo);
+            groupItem.addConnect(redisInfo);
+            groupItem.extend();
         }
     }
 
