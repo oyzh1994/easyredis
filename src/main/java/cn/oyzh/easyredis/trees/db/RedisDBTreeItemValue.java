@@ -44,9 +44,9 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (this.item.isChildEmpty() && glyph.getColor() != Color.BLACK) {
+        if (this.item.isKeyEmpty() && glyph.getColor() != Color.BLACK) {
             glyph.setColor(Color.BLACK);
-        } else if (!this.item.isChildEmpty() && glyph.getColor() != Color.DARKGREEN) {
+        } else if (!this.item.isKeyEmpty() && glyph.getColor() != Color.DARKGREEN) {
             glyph.setColor(Color.DARKGREEN);
         }
     }

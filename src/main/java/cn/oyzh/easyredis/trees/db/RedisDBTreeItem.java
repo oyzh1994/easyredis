@@ -312,7 +312,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         String cursor = null;
         String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
         ScanParams params = new ScanParams();
-        params.count(20);
+        params.count(30);
         params.match(pattern);
         // 库表节点
         List<RedisKey> dbKeys = new CopyOnWriteArrayList<>();
@@ -383,90 +383,148 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     @Override
     public synchronized void addChild(@NonNull List<TreeItem<?>> items) {
-        List<TreeItem<?>> list = new ArrayList<>();
-        List<TreeItem<?>> hash = new ArrayList<>();
-        List<TreeItem<?>> set = new ArrayList<>();
-        List<TreeItem<?>> zset = new ArrayList<>();
-        List<TreeItem<?>> string = new ArrayList<>();
-        List<TreeItem<?>> stream = new ArrayList<>();
-        List<TreeItem<?>> hyLog = new ArrayList<>();
+        List<TreeItem<?>> list = null, string = null, hash = null, set = null, zset = null, stream = null, hyLog = null;
         for (TreeItem<?> item : items) {
             if (item instanceof RedisStringKeyTreeItem treeItem) {
+                if (string == null) {
+                    string = new ArrayList<>();
+                }
                 string.add(treeItem);
             } else if (item instanceof RedisListKeyTreeItem treeItem) {
+                if (list == null) {
+                    list = new ArrayList<>();
+                }
                 list.add(treeItem);
             } else if (item instanceof RedisSetKeyTreeItem treeItem) {
+                if (set == null) {
+                    set = new ArrayList<>();
+                }
                 set.add(treeItem);
             } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
+                if (zset == null) {
+                    zset = new ArrayList<>();
+                }
                 zset.add(treeItem);
             } else if (item instanceof RedisHashKeyTreeItem treeItem) {
+                if (hash == null) {
+                    hash = new ArrayList<>();
+                }
                 hash.add(treeItem);
             } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
+                if (stream == null) {
+                    stream = new ArrayList<>();
+                }
                 stream.add(treeItem);
             } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+                if (hyLog == null) {
+                    hyLog = new ArrayList<>();
+                }
                 hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.children()) {
             if (child.value() == RedisKeyType.STRING) {
-                child.addChild(string);
+                if (CollUtil.isNotEmpty(string)) {
+                    child.addChild(string);
+                }
             } else if (child.value() == RedisKeyType.HASH) {
-                child.addChild(hash);
+                if (CollUtil.isNotEmpty(hash)) {
+                    child.addChild(hash);
+                }
             } else if (child.value() == RedisKeyType.LIST) {
-                child.addChild(list);
+                if (CollUtil.isNotEmpty(list)) {
+                    child.addChild(list);
+                }
             } else if (child.value() == RedisKeyType.SET) {
-                child.addChild(set);
+                if (CollUtil.isNotEmpty(set)) {
+                    child.addChild(set);
+                }
             } else if (child.value() == RedisKeyType.ZSET) {
-                child.addChild(zset);
+                if (CollUtil.isNotEmpty(zset)) {
+                    child.addChild(zset);
+                }
             } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-                child.addChild(hyLog);
+                if (CollUtil.isNotEmpty(hyLog)) {
+                    child.addChild(hyLog);
+                }
             } else if (child.value() == RedisKeyType.STREAM) {
-                child.addChild(stream);
+                if (CollUtil.isNotEmpty(stream)) {
+                    child.addChild(stream);
+                }
             }
         }
     }
 
     @Override
     public synchronized void removeChild(@NonNull List<TreeItem<?>> items) {
-        List<TreeItem<?>> list = new ArrayList<>();
-        List<TreeItem<?>> hash = new ArrayList<>();
-        List<TreeItem<?>> set = new ArrayList<>();
-        List<TreeItem<?>> zset = new ArrayList<>();
-        List<TreeItem<?>> string = new ArrayList<>();
-        List<TreeItem<?>> stream = new ArrayList<>();
-        List<TreeItem<?>> hyLog = new ArrayList<>();
+        List<TreeItem<?>> list = null, string = null, hash = null, set = null, zset = null, stream = null, hyLog = null;
         for (TreeItem<?> item : items) {
             if (item instanceof RedisStringKeyTreeItem treeItem) {
+                if (string == null) {
+                    string = new ArrayList<>();
+                }
                 string.add(treeItem);
             } else if (item instanceof RedisListKeyTreeItem treeItem) {
+                if (list == null) {
+                    list = new ArrayList<>();
+                }
                 list.add(treeItem);
             } else if (item instanceof RedisSetKeyTreeItem treeItem) {
+                if (set == null) {
+                    set = new ArrayList<>();
+                }
                 set.add(treeItem);
             } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
+                if (zset == null) {
+                    zset = new ArrayList<>();
+                }
                 zset.add(treeItem);
             } else if (item instanceof RedisHashKeyTreeItem treeItem) {
+                if (hash == null) {
+                    hash = new ArrayList<>();
+                }
                 hash.add(treeItem);
             } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
+                if (stream == null) {
+                    stream = new ArrayList<>();
+                }
                 stream.add(treeItem);
             } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+                if (hyLog == null) {
+                    hyLog = new ArrayList<>();
+                }
                 hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.children()) {
             if (child.value() == RedisKeyType.STRING) {
-                child.removeChild(string);
+                if (CollUtil.isNotEmpty(string)) {
+                    child.removeChild(string);
+                }
             } else if (child.value() == RedisKeyType.HASH) {
-                child.removeChild(hash);
+                if (CollUtil.isNotEmpty(hash)) {
+                    child.removeChild(hash);
+                }
             } else if (child.value() == RedisKeyType.LIST) {
-                child.removeChild(list);
+                if (CollUtil.isNotEmpty(list)) {
+                    child.removeChild(list);
+                }
             } else if (child.value() == RedisKeyType.SET) {
-                child.removeChild(set);
+                if (CollUtil.isNotEmpty(set)) {
+                    child.removeChild(set);
+                }
             } else if (child.value() == RedisKeyType.ZSET) {
-                child.removeChild(zset);
+                if (CollUtil.isNotEmpty(zset)) {
+                    child.removeChild(zset);
+                }
             } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-                child.removeChild(hyLog);
+                if (CollUtil.isNotEmpty(hyLog)) {
+                    child.removeChild(hyLog);
+                }
             } else if (child.value() == RedisKeyType.STREAM) {
-                child.removeChild(stream);
+                if (CollUtil.isNotEmpty(stream)) {
+                    child.removeChild(stream);
+                }
             }
         }
     }
@@ -499,6 +557,15 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             items.addAll((List) item.getRealChildren());
         }
         return items;
+    }
+
+    /**
+     * 键节点是否为空
+     *
+     * @return 结果
+     */
+    public boolean isKeyEmpty() {
+        return this.keyChildren().isEmpty();
     }
 
     /**

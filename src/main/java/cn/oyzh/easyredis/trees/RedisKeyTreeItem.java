@@ -20,7 +20,6 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -33,7 +32,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/30
  */
-//@Slf4j
 public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTreeItemValue> extends RedisTreeItem<V> {
 
     /**
@@ -42,6 +40,13 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Getter
     @Accessors(fluent = true, chain = true)
     protected K value;
+
+    /**
+     * db树组件
+     */
+    @Getter
+    @Accessors(fluent = true, chain = true)
+    protected RedisDBTreeItem dbItem;
 
     /**
      * 键数据属性
@@ -103,8 +108,9 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
         return this.dataProperty.get() != null;
     }
 
-    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem parent) {
-        super(parent.getTreeView());
+    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem dbItem) {
+        super(dbItem.getTreeView());
+        this.dbItem = dbItem;
         this.value = value;
     }
 
@@ -141,25 +147,15 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     }
 
     /**
-     * 当前节点的db节点
-     *
-     * @return db节点
-     */
-    public RedisDBTreeItem parent() {
-        TreeItem<?> treeItem = this.getParent();
-        return (RedisDBTreeItem) treeItem;
-    }
-
-    /**
      * 当前节点的连接节点
      *
      * @return 连接节点
      */
     public RedisConnectTreeItem connectTreeItem() {
-        if (this.parent() == null) {
-            return null;
+        if (this.dbItem != null) {
+            return this.dbItem.parent();
         }
-        return this.parent().parent();
+        return null;
     }
 
     /**
@@ -168,10 +164,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis信息
      */
     public RedisInfo info() {
-        if (this.parent() == null) {
-            return null;
+        if (this.dbItem != null) {
+            return this.dbItem.info();
         }
-        return this.parent().info();
+        return null;
     }
 
     /**
@@ -180,10 +176,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis连接名称
      */
     public String infoName() {
-        if (this.parent() == null) {
-            return null;
+        if (this.dbItem != null) {
+            return this.info().getName();
         }
-        return this.parent().info().getName();
+        return null;
     }
 
     /**
@@ -192,10 +188,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return db索引值
      */
     public int dbIndex() {
-        if (this.parent() == null) {
-            return -1;
+        if (this.dbItem != null) {
+            return this.dbItem.dbIndex();
         }
-        return this.parent().dbIndex();
+        return -1;
     }
 
     /**
@@ -222,10 +218,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * @return redis客户端
      */
     public RedisClient client() {
-        if (this.parent() == null) {
-            return null;
+        if (this.dbItem != null) {
+            return this.dbItem.client();
         }
-        return this.parent().client();
+        return null;
     }
 
     /**
@@ -298,7 +294,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             // 移除此键
             this.remove();
             // 发送事件
-            RedisEventUtil.keyDeleted(this.parent(), this.key());
+            RedisEventUtil.keyDeleted(this.dbItem, this.key());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -370,38 +366,12 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      */
     public abstract Object rawValue();
 
+    /**
+     * 获取键类型
+     *
+     * @return 键类型
+     */
     public RedisKeyType type() {
         return this.value.type();
     }
-
-    // /**
-    //  * 获取json数据
-    //  *
-    //  * @return json数据
-    //  */
-    // public String jsonValue() {
-    //     String rawValue = this.rawValue();
-    //     if (!rawValue.contains("{") && !rawValue.contains("[")) {
-    //         return rawValue;
-    //     }
-    //     try {
-    //         JSONObject json = JSON.parseObject(rawValue, Feature.OrderedField);
-    //         if (json != null) {
-    //            return JSONObject.toJSONString(json, true);
-    //         }
-    //     } catch (JSONException ignore) {
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //     }
-    //     return rawValue;
-    // }
-    //
-    // /**
-    //  * 获取二进制数据
-    //  *
-    //  * @return 二进制数据
-    //  */
-    // public String binaryValue() {
-    //     return StringUtil.toBinary(this.rawValue());
-    // }
 }
