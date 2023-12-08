@@ -1,6 +1,9 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoDeletedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.msg.RedisConnectionClosedMsg;
 import cn.oyzh.easyredis.event.msg.RedisConnectionConnectedMsg;
@@ -284,6 +287,39 @@ public class RedisEventUtil {
      */
     public static void filterMain() {
         RedisFilterMainMsg msg = new RedisFilterMainMsg();
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 连接已新增事件
+     *
+     * @param info zk信息
+     */
+    public static void infoAdded(RedisInfo info) {
+        RedisInfoAddedMsg msg = new RedisInfoAddedMsg();
+        msg.info(info);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 连接已修改事件
+     *
+     * @param info Redis信息
+     */
+    public static void infoUpdated(RedisInfo info) {
+        RedisInfoUpdatedMsg msg = new RedisInfoUpdatedMsg();
+        msg.info(info);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 连接已删除事件
+     *
+     * @param info Redis信息
+     */
+    public static void infoDeleted(RedisInfo info) {
+        RedisInfoDeletedMsg msg = new RedisInfoDeletedMsg();
+        msg.info(info);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

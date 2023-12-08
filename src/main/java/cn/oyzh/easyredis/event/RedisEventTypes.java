@@ -17,16 +17,6 @@ public class RedisEventTypes {
     public static final String APP_EXIT = "APP_EXIT";
 
     /**
-     * redis节点已修改事件(来源于消息)
-     */
-    public static final String REDIS_NODE_UPDATED = "REDIS_NODE_UPDATED";
-
-    /**
-     * redis节点删除事件(来源于操作)
-     */
-    public static final String REDIS_NODE_DELETE = "REDIS_NODE_DELETE";
-
-    /**
      * redis连接成功事件
      */
     public static final String REDIS_CONNECTION_CONNECTED = "REDIS_CONNECTION_CONNECTED";
@@ -82,30 +72,14 @@ public class RedisEventTypes {
     public static final String LEFT_COLLAPSE = "LEFT_COLLAPSE";
 
     /**
-     * redis认证
-     */
-    public static final String REDIS_AUTH = "REDIS_AUTH";
-
-    /**
-     * redis认证列表
-     */
-    public static final String REDIS_AUTH_MAIN = "REDIS_AUTH_MAIN";
-
-    /**
      * redis过滤列表
      */
     public static final String REDIS_FILTER_MAIN = "REDIS_FILTER_MAIN";
-
 
     /**
      * 连接变更事件
      */
     public static final String CONNECTION_CHANGED = "CONNECTION_CHANGED";
-
-    /**
-     * redis信息新增
-     */
-    public static final String REDIS_INFO_ADD = "REDIS_INFO_ADD";
 
     /**
      * redis键过滤
@@ -156,11 +130,6 @@ public class RedisEventTypes {
      * redis新增set成员
      */
     public static final String REDIS_SET_MEMBER_ADDED = "REDIS_SET_MEMBER_ADDED";
-
-    // /**
-    //  * redis变更zset的显示方式
-    //  */
-    // public static final String REDIS_CHANGE_ZSET_SHOW_TYPE = "REDIS_CHANGE_ZSET_SHOW_TYPE";
 
     /**
      * redis新增zset成员

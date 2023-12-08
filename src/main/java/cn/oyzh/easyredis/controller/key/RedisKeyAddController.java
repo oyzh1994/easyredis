@@ -497,11 +497,11 @@ public class RedisKeyAddController extends Controller {
                 this.mutexes.visible(this.stringBox);
             } else if (newValue.intValue() == 1) {
                 this.mutexes.visible(this.setBox);
-            } else if (newValue.intValue() == 3) {
-                this.mutexes.visible(this.zSetBox);
-            } else if (newValue.intValue() == 4) {
-                this.mutexes.visible(this.listBox);
             } else if (newValue.intValue() == 2) {
+                this.mutexes.visible(this.zSetBox);
+            } else if (newValue.intValue() == 3) {
+                this.mutexes.visible(this.listBox);
+            } else if (newValue.intValue() == 4) {
                 this.mutexes.visible(this.hashBox);
             } else if (newValue.intValue() == 5) {
                 this.mutexes.visible(this.hylogBox);

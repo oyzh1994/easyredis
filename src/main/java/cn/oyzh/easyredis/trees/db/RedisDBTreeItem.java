@@ -53,6 +53,7 @@ import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
@@ -383,6 +384,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     }
 
     @Override
+    public synchronized void addChild(TreeItem<?> item) {
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+            for (RedisTypeTreeItem child : this.realChildren()) {
+                if (child.value() == treeItem.type()) {
+                    child.addChild(treeItem);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
     public synchronized void addChild(@NonNull List<TreeItem<?>> items) {
         List<TreeItem<?>> list = null, string = null, hash = null, set = null, zset = null, stream = null, hyLog = null;
         for (TreeItem<?> item : items) {
@@ -451,6 +464,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             } else if (child.value() == RedisKeyType.STREAM) {
                 if (CollUtil.isNotEmpty(stream)) {
                     child.addChild(stream);
+                }
+            }
+        }
+    }
+
+    @Override
+    public synchronized void removeChild(TreeItem<?> item) {
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+            for (RedisTypeTreeItem child : this.realChildren()) {
+                if (child.value() == treeItem.type()) {
+                    child.removeChild(treeItem);
+                    break;
                 }
             }
         }
@@ -688,5 +713,38 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         StageWrapper fxView = StageUtil.parseStage(RedisKeyAddController.class, this.window());
         fxView.setProp("dbItem", this);
         fxView.display();
+    }
+
+    /**
+     * 键添加事件
+     *
+     * @param key 键
+     */
+    public void onKeyAdded(String key) {
+        try {
+            RedisKey redisKey = RedisKeyUtil.getNode(this.dbIndex, key, this.client());
+            this.addChild(this.initItemByNode(redisKey));
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 键删除事件
+     *
+     * @param key 键
+     */
+    public void onKeyDeleted(String key) {
+        try {
+            List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
+            for (RedisKeyTreeItem<?, ?> item : items) {
+                if (Objects.equals(key, item.key())) {
+                    item.removeChild(item);
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        }
     }
 }

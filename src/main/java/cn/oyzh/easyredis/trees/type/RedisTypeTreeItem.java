@@ -23,6 +23,9 @@ import java.util.List;
  */
 public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
 
+    /**
+     * 键类型
+     */
     @Getter
     @Accessors(fluent = true, chain = false)
     private RedisKeyType value;

@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -215,7 +215,7 @@ public class RedisInfoUpdateController extends Controller {
         }
         // 保存数据
         if (this.infoStore.update(this.redisInfo)) {
-            EventUtil.fire(RedisEventTypes.REDIS_INFO_UPDATED, this.redisInfo);
+            RedisEventUtil.infoUpdated(this.redisInfo);
             MessageBox.okToast("修改Redis信息成功!");
             this.closeStage();
         } else {

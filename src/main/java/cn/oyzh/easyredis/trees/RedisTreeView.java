@@ -298,7 +298,7 @@ public class RedisTreeView extends RichTreeView {
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
     private void onKeyAdded(RedisKeyAddedMsg msg) {
         if (msg != null && msg.item() != null) {
-            msg.item().reloadChild();
+            msg.item().onKeyAdded(msg.key());
         }
     }
 
@@ -310,7 +310,7 @@ public class RedisTreeView extends RichTreeView {
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
     private void onKeyDeleted(RedisKeyDeletedMsg msg) {
         if (msg != null && msg.item() != null) {
-            msg.item().reloadChild();
+            msg.item().onKeyDeleted(msg.key());
         }
     }
 

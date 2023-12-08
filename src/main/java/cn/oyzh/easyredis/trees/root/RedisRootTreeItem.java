@@ -10,6 +10,8 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.easyredis.store.RedisInfoStore;
@@ -263,32 +265,32 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 连接新增事件
      *
-     * @param info 连接信息
+     * @param msg 消息
      */
-    @EventReceiver(RedisEventTypes.REDIS_INFO_ADD)
-    private void onConnectAdd(RedisInfo info) {
-        this.addConnect(info);
+    @EventReceiver(RedisEventTypes.REDIS_INFO_ADDED)
+    private void onInfoAdded(RedisInfoAddedMsg msg) {
+        this.addConnect(msg.info());
         this.extend();
     }
 
     /**
      * 连接变更事件
      *
-     * @param info 连接信息
+     * @param msg 消息
      */
     @EventReceiver(RedisEventTypes.REDIS_INFO_UPDATED)
-    private void onConnectUpdate(RedisInfo info) {
+    private void onInfoUpdate(RedisInfoUpdatedMsg msg) {
         f1:
         for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.value() == info) {
-                    connectTreeItem.value(info);
+                if (connectTreeItem.value() == msg.info()) {
+                    connectTreeItem.value(msg.info());
                     break;
                 }
             } else if (item instanceof RedisGroupTreeItem groupTreeItem) {
                 for (RedisConnectTreeItem connectTreeItem : groupTreeItem.getConnectedItems()) {
-                    if (connectTreeItem.value() == info) {
-                        connectTreeItem.value(info);
+                    if (connectTreeItem.value() == msg.info()) {
+                        connectTreeItem.value(msg.info());
                         break f1;
                     }
                 }

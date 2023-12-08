@@ -85,7 +85,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     /**
      * 当前连接角色
      */
-    public String role(){
+    public String role() {
         return this.client.getRole();
     }
 
@@ -94,7 +94,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @return 结果
      */
-    public boolean isMasterMode(){
+    public boolean isMasterMode() {
         return this.client.isMasterMode();
     }
 
@@ -103,7 +103,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @return 结果
      */
-    public boolean isReadOnly(){
+    public boolean isReadOnly() {
         return this.client.isReadOnly();
     }
 
@@ -112,7 +112,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @return 结果
      */
-    public boolean isClusterMode(){
+    public boolean isClusterMode() {
         return this.client.isClusterMode();
     }
 
@@ -137,7 +137,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                 this.setChild(items);
             }
             // 刷新角色
-            BackgroundService.submitFXLater(()-> this.getValue().flushRole());
+            BackgroundService.submitFXLater(() -> this.getValue().flushRole());
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -307,12 +307,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 编辑连接
      */
     private void editConnect() {
-        if (this.isConnected() && MessageBox.confirm("需要关闭连接，继续么？")) {
+        if (this.isConnected()) {
+            if (!MessageBox.confirm("需要关闭连接，继续么？")) {
+                return;
+            }
             this.closConnect();
-            StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
-            fxView.setProp("redisInfo", this.value());
-            fxView.display();
         }
+        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
+        fxView.setProp("redisInfo", this.value());
+        fxView.display();
     }
 
     /**
@@ -368,7 +371,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public void delete() {
         if (MessageBox.confirm("删除" + this.value.getName(), "确定删除连接？")) {
             this.closConnect();
-            if (!this.parent().delConnectItem(this)) {
+            if (this.parent().delConnectItem(this)) {
+                RedisEventUtil.infoDeleted(this.value);
+            } else {
                 MessageBox.warn("删除连接失败！");
             }
         }
