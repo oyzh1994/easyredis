@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -320,19 +321,19 @@ public class RedisClient {
      */
     private void intPoolConfig(GenericObjectPoolConfig<?> poolConfig) {
         // 最小空闲
-        poolConfig.setMinIdle(1);
+        poolConfig.setMinIdle(3);
         // 最大空闲
-        poolConfig.setMaxIdle(20);
+        poolConfig.setMaxIdle(15);
         // 最大连接
-        poolConfig.setMaxTotal(100);
+        poolConfig.setMaxTotal(50);
         // 最大超时
         poolConfig.setMaxWait(Duration.ofSeconds(30));
         // 创建时测试
         poolConfig.setTestOnCreate(true);
         // 空闲时测试
         poolConfig.setTestWhileIdle(true);
-        // 获取时测试
-        poolConfig.setTestOnBorrow(true);
+//        // 获取时测试
+//        poolConfig.setTestOnBorrow(true);
         // 归还时测试
         poolConfig.setTestOnReturn(true);
     }
@@ -491,11 +492,13 @@ public class RedisClient {
      * @param jedis 连接
      */
     private void returnResource(Jedis jedis) {
-        if (this.sentinelPool != null) {
-            this.sentinelPool.returnResource(jedis);
-        } else {
-            this.pool.returnResource(jedis);
-        }
+        ThreadUtil.startVirtual(() -> {
+            if (this.sentinelPool != null) {
+                this.sentinelPool.returnResource(jedis);
+            } else {
+                this.pool.returnResource(jedis);
+            }
+        });
     }
 
     /**
