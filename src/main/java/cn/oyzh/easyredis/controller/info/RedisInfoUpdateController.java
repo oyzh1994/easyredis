@@ -193,12 +193,6 @@ public class RedisInfoUpdateController extends Controller {
         }
         String name = this.name.getTextTrim();
         this.redisInfo.setName(name);
-//        // 检查名称
-//        if (this.infoStore.exist(this.redisInfo)) {
-//            this.tabPane.select(0);
-//            MessageBox.warn("此名称已存在！");
-//            return;
-//        }
         Number connectTimeOut = this.connectTimeOut.getValue();
         Number executeTimeOut = this.executeTimeOut.getValue();
 

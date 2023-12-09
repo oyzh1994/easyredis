@@ -1,11 +1,7 @@
 package cn.oyzh.easyredis.parser;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.exception.ClusterOperationException;
-import cn.oyzh.easyredis.exception.DataTooBigException;
-import cn.oyzh.easyredis.exception.ReadonlyOperationException;
-import cn.oyzh.easyredis.exception.UnsupportedCommandException;
-import lombok.NonNull;
+import cn.oyzh.easyredis.exception.RedisException;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 
@@ -25,7 +21,10 @@ public class RedisExceptionParser implements Function<Throwable, String> {
     public final static RedisExceptionParser INSTANCE = new RedisExceptionParser();
 
     @Override
-    public String apply(@NonNull Throwable e) {
+    public String apply(Throwable e) {
+        if (e == null) {
+            return null;
+        }
         String message = e.getMessage();
         if (e instanceof JedisDataException) {
             if (StrUtil.contains(message, "NOAUTH Authentication required")) {
@@ -58,23 +57,11 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             }
         }
 
-        if (e instanceof DataTooBigException) {
+        if (e instanceof RedisException) {
             return message;
         }
 
         if (e instanceof UnsupportedOperationException) {
-            return message;
-        }
-
-        if (e instanceof UnsupportedCommandException) {
-            return message;
-        }
-
-        if (e instanceof ClusterOperationException) {
-            return message;
-        }
-
-        if (e instanceof ReadonlyOperationException) {
             return message;
         }
 

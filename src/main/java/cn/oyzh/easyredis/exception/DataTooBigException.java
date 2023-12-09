@@ -4,7 +4,7 @@ package cn.oyzh.easyredis.exception;
  * @author oyzh
  * @since 2023/8/14
  */
-public class DataTooBigException extends RuntimeException {
+public class DataTooBigException extends RedisException {
 
     public DataTooBigException() {
         this("数据太大");
