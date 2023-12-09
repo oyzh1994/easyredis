@@ -37,15 +37,10 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, Red
 
     @Override
     protected void setNodeValue(Object value) {
-        try {
-            if (value instanceof String string) {
-                this.client().set(this.dbIndex(), this.key(), string);
-            } else if (value instanceof byte[] bytes) {
-                this.client().set(this.dbIndex(), this.keyBinary(), bytes);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
+        if (value instanceof String string) {
+            this.client().set(this.dbIndex(), this.key(), string);
+        } else if (value instanceof byte[] bytes) {
+            this.client().set(this.dbIndex(), this.keyBinary(), bytes);
         }
     }
 

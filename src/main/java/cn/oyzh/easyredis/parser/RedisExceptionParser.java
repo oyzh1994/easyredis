@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.parser;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.DataTooBigException;
+import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import lombok.NonNull;
 import redis.clients.jedis.exceptions.JedisConnectionException;
@@ -70,6 +71,10 @@ public class RedisExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof ClusterOperationException) {
+            return message;
+        }
+
+        if (e instanceof ReadonlyOperationException) {
             return message;
         }
 

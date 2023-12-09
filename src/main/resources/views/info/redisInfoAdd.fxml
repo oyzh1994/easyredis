@@ -15,6 +15,9 @@
 <?import cn.oyzh.fx.plus.controls.button.IconButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
@@ -40,65 +43,27 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true" realHeight="30"
-                                        flexWidth="100% - 237" maxLen="1024">
+                                        flexWidth="100% - 140" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <PortTextField realWidth="91" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
-                               value="6379">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="lbl,lbl-primary">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
-                                        realHeight="30" flexWidth="50% - 145">
+                    <PortTextField flexWidth="100% - 220" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
+                               value="6379">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </ClearableTextField>
-                    <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
-                                        require="true"
-                                        realHeight="30" flexWidth="50% - 142">
+                    </PortTextField>
+                    <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
                         <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                    <FlexCheckBox text="这是一个哨兵服务" fx:id="showSentinel">
-                        <HBox.margin>
-                            <Insets left="5" top="20"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" visible="false">
-                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="lbl,lbl-primary">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </FXLabel>
-                    <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 145">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                    <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 142">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                    <FlexCheckBox fx:id="redirectMaster" text="连接重定向master" fontSize="11"
-                                  tipText="如果发现服务是哨兵，则自动重定向到master连接" selected="true">
-                        <HBox.margin>
-                            <Insets left="5" top="20"/>
+                            <Insets left="10" top="20"/>
                         </HBox.margin>
                     </FlexCheckBox>
                 </FlexHBox>
@@ -156,6 +121,75 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </LimitTextArea>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="认证设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="认证方式" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0"
+                                        realHeight="30" flexWidth="100% - 282">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="无需认证"/>
+                                <String fx:value="密码认证"/>
+                                <String fx:value="用户名及密码认证(redis6.0或以上)"/>
+                            </FXCollections>
+                        </items>
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexComboBox>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox">
+                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
+                                        realHeight="30" flexWidth="50% - 145">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
+                                        require="true"
+                                        realHeight="30" flexWidth="50% - 142">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <FlexCheckBox fx:id="redirectMaster" text="重定向哨兵" fontSize="11"
+                                  tipText="发现redis连接是哨兵角色，则重定向到master连接">
+                        <HBox.margin>
+                            <Insets left="5" top="20"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true">
+                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
+                                        realHeight="30" flexWidth="50% - 145">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
+                                        realHeight="30" flexWidth="50% - 142">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>

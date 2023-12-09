@@ -103,8 +103,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @return 结果
      */
-    public boolean isReadOnly() {
-        return this.client.isReadOnly();
+    public boolean isReadonly() {
+        return this.client.isReadonly();
     }
 
     /**

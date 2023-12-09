@@ -12,11 +12,11 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.PortTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -82,10 +82,10 @@ public class RedisInfoAddController extends Controller {
     private PortTextField hostPort;
 
     /**
-     * 显示哨兵配置
+     * 认证配置组件
      */
     @FXML
-    private FlexCheckBox showSentinel;
+    private FlexHBox authInfoBox;
 
     /**
      * 哨兵配置组件
@@ -112,6 +112,12 @@ public class RedisInfoAddController extends Controller {
     private FlexCheckBox redirectMaster;
 
     /**
+     * 只读模式
+     */
+    @FXML
+    private FlexCheckBox readonly;
+
+    /**
      * 连接超时
      */
     @FXML
@@ -122,6 +128,12 @@ public class RedisInfoAddController extends Controller {
      */
     @FXML
     private NumberTextField executeTimeOut;
+
+    /**
+     * 认证方式
+     */
+    @FXML
+    private FlexComboBox<String> authType;
 
     /**
      * 分组
@@ -183,11 +195,11 @@ public class RedisInfoAddController extends Controller {
             String name = this.name.getTextTrim();
             RedisInfo redisInfo = new RedisInfo();
             redisInfo.setName(name);
-            // 检查名称是否存在
-            if (this.infoStore.exist(redisInfo)) {
-                MessageBox.warn("此名称已存在！");
-                return;
-            }
+//            // 检查名称是否存在
+//            if (this.infoStore.exist(redisInfo)) {
+//                MessageBox.warn("此名称已存在！");
+//                return;
+//            }
 
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number executeTimeOut = this.executeTimeOut.getValue();
@@ -196,10 +208,12 @@ public class RedisInfoAddController extends Controller {
             redisInfo.setUser(this.user.getText());
             redisInfo.setRemark(this.remark.getTextTrim());
             redisInfo.setPassword(this.password.getText());
+            redisInfo.setReadonly(this.readonly.isSelected());
             redisInfo.setGroupId(this.group == null ? null : this.group.getGid());
             redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
-            if (this.showSentinel.isSelected()) {
+            // 哨兵配置
+            if (this.redirectMaster.isSelected()) {
                 redisInfo.setMasterUser(this.masterUser.getText());
                 redisInfo.setMasterPassword(this.masterPassword.getText());
                 redisInfo.setRedirectMaster(this.redirectMaster.isSelected());
@@ -207,6 +221,17 @@ public class RedisInfoAddController extends Controller {
                 redisInfo.setMasterUser(null);
                 redisInfo.setMasterPassword(null);
                 redisInfo.setRedirectMaster(false);
+            }
+            // 无需认证
+            if (this.authType.getSelectedIndex() == 0) {
+                redisInfo.setUser(null);
+                redisInfo.setPassword(null);
+                redisInfo.setMasterUser(null);
+                redisInfo.setMasterPassword(null);
+                redisInfo.setRedirectMaster(false);
+            } else if (this.authType.getSelectedIndex() == 1) {// 密码认证
+                redisInfo.setUser(null);
+                redisInfo.setMasterUser(null);
             }
             // 保存数据
             boolean result = this.infoStore.add(redisInfo);
@@ -227,26 +252,53 @@ public class RedisInfoAddController extends Controller {
         super.onStageShown(event);
         this.stage.switchOnTab();
         this.group = this.getStageProp("group");
-        this.sentinelBox.managedBindVisible();
         this.stage.hideOnEscape();
     }
 
     @Override
     protected void bindListeners() {
+        // 重定向到master
         this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {
-                this.masterUser.enable();
+                if (this.authType.getSelectedIndex() == 2) {
+                    this.masterUser.enable();
+                }
                 this.masterPassword.enable();
             } else {
-                this.masterUser.disable();
+                if (this.authType.getSelectedIndex() == 2) {
+                    this.masterUser.disable();
+                }
                 this.masterPassword.disable();
             }
         });
-        this.showSentinel.selectedChanged((observable, oldValue, newValue) -> {
-            if (newValue) {
-                this.sentinelBox.display();
+        // 开启哨兵配置
+        this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
+            if (!this.authInfoBox.isDisable()) {
+                if (newValue) {
+                    this.sentinelBox.enable();
+                } else {
+                    this.sentinelBox.disable();
+                }
+            }
+        });
+        // 认证方式配置
+        this.authType.selectedIndexChanged((observable, oldValue, newValue) -> {
+            if (newValue.intValue() == 0) {
+                this.authInfoBox.disable();
+                this.sentinelBox.disable();
+            } else if (newValue.intValue() == 1) {
+                this.user.disable();
+                this.masterUser.disable();
+                this.authInfoBox.enable();
+                if (this.redirectMaster.isSelected()) {
+                    this.sentinelBox.enable();
+                }
             } else {
-                this.sentinelBox.disappear();
+                this.user.enable();
+                this.authInfoBox.enable();
+                if (this.redirectMaster.isSelected()) {
+                    this.masterUser.enable();
+                }
             }
         });
     }

@@ -87,7 +87,7 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
             } else if (this.item.isMasterMode()) {
                 str += "/主从集群";
             }
-            if (this.item.isReadOnly()) {
+            if (this.item.isReadonly()) {
                 str += "/只读模式";
             }
             str += ")";

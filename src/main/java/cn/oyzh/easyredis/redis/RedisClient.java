@@ -7,10 +7,10 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
+import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -71,7 +71,6 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/6/16
  */
-//@Slf4j
 public class RedisClient {
 
     /**
@@ -411,6 +410,15 @@ public class RedisClient {
     }
 
     /**
+     * 如果只读模式不支持操作，则抛出异常
+     */
+    public void throwReadonlyException() {
+        if (this.isReadonly()) {
+            throw new ReadonlyOperationException();
+        }
+    }
+
+    /**
      * 如果指令不支持操作，则抛出异常
      *
      * @param command 指令
@@ -433,8 +441,8 @@ public class RedisClient {
      *
      * @return 结果
      */
-    public boolean isReadOnly() {
-        return this.isMasterMode() && this.isSlave();
+    public boolean isReadonly() {
+        return this.redisInfo.isReadonly() || (this.isMasterMode() && this.isSlave());
     }
 
     /**
@@ -495,32 +503,28 @@ public class RedisClient {
      */
     public void close() {
         try {
-
             boolean isClosed = false;
-
             // 关闭集群
             if (this.cluster != null) {
                 this.cluster.close();
                 isClosed = true;
             }
-
             // 关闭连接池
             if (this.pool != null && !this.pool.isClosed()) {
                 this.pool.close();
                 isClosed = true;
             }
-
             // 关闭哨兵连接池
             if (this.sentinelPool != null && !this.sentinelPool.isClosed()) {
                 this.sentinelPool.close();
                 isClosed = true;
             }
-
+            // 已关闭
             if (isClosed) {
                 this.state().set(RedisConnState.CLOSED);
                 EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
             }
-
+            // 重置变量
             this.pool = null;
             this.role = null;
             this.databases = 1;
@@ -668,9 +672,7 @@ public class RedisClient {
      * @return 结果
      */
     public String echo(String string) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "echo");
         Jedis jedis = this.getResource();
         try {
@@ -688,9 +690,7 @@ public class RedisClient {
      * @return hash字段
      */
     public String hrandfield(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hrandfield");
         if (this.isClusterMode()) {
             return this.getCluster().hrandfield(key);
@@ -713,9 +713,7 @@ public class RedisClient {
      * @return hash字段
      */
     public List<String> hrandfield(Integer dbIndex, String key, long count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hrandfield");
         if (this.isClusterMode()) {
             return this.getCluster().hrandfield(key, count);
@@ -738,17 +736,15 @@ public class RedisClient {
      * @return hash字段及值
      */
     public Map<String, String> hrandfieldWithValues(Integer dbIndex, String key, long count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hrandfield");
         if (this.isClusterMode()) {
-            return (Map<String, String>) this.getCluster().hrandfieldWithValues(key, count);
+            return this.getCluster().hrandfieldWithValues(key, count);
         }
         Jedis jedis = this.getResource();
         try {
             this.dbIndex(jedis, dbIndex);
-            return (Map<String, String>) jedis.hrandfieldWithValues(key, count);
+            return jedis.hrandfieldWithValues(key, count);
         } finally {
             this.returnResource(jedis);
         }
@@ -762,9 +758,7 @@ public class RedisClient {
      * @return hash字段列表
      */
     public Set<String> hkeys(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hkeys");
         if (this.isClusterMode()) {
             return this.getCluster().hkeys(key);
@@ -786,9 +780,7 @@ public class RedisClient {
      * @return hash值列表
      */
     public List<String> hvals(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hvals");
         if (this.isClusterMode()) {
             return this.getCluster().hvals(key);
@@ -810,9 +802,7 @@ public class RedisClient {
      * @return hash数据个数
      */
     public long hlen(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hlen");
         if (this.isClusterMode()) {
             return this.getCluster().hlen(key);
@@ -835,9 +825,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long hdel(Integer dbIndex, String key, String... fields) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hdel");
         if (this.isClusterMode()) {
             return this.getCluster().hdel(key);
@@ -864,9 +853,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long hset(Integer dbIndex, String key, String field, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hset");
         if (this.isClusterMode()) {
             return this.getCluster().hset(key, field, value);
@@ -889,9 +877,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long hset(Integer dbIndex, String key, Map<String, String> hash) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hset");
         if (this.isClusterMode()) {
             return this.getCluster().hset(key, hash);
@@ -915,9 +902,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long hsetnx(Integer dbIndex, String key, String field, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hsetnx");
         if (this.isClusterMode()) {
             return this.getCluster().hsetnx(key, field, value);
@@ -940,9 +926,7 @@ public class RedisClient {
      * @return 字段值长度
      */
     public long hstrlen(Integer dbIndex, String key, String field) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hstrlen");
         if (this.isClusterMode()) {
             return this.getCluster().hstrlen(key, field);
@@ -965,9 +949,8 @@ public class RedisClient {
      * @return 结果
      */
     public String hmset(Integer dbIndex, String key, Map<String, String> hash) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hmset");
         if (this.isClusterMode()) {
             return this.getCluster().hmset(key, hash);
@@ -990,9 +973,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean hexists(Integer dbIndex, String key, String field) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hexists");
         if (this.isClusterMode()) {
             return this.getCluster().hexists(key, field);
@@ -1015,9 +996,7 @@ public class RedisClient {
      * @return 值
      */
     public String hget(Integer dbIndex, String key, String field) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hget");
         if (this.isClusterMode()) {
             return this.getCluster().hget(key, field);
@@ -1041,9 +1020,8 @@ public class RedisClient {
      * @return 新值
      */
     public long hincrBy(Integer dbIndex, String key, String field, long increment) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hincrBy");
         if (this.isClusterMode()) {
             return this.getCluster().hincrBy(key, field, increment);
@@ -1067,9 +1045,8 @@ public class RedisClient {
      * @return 新值
      */
     public double hincrByFloat(Integer dbIndex, String key, String field, double increment) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hincrByFloat");
         if (this.isClusterMode()) {
             return this.getCluster().hincrByFloat(key, field, increment);
@@ -1095,9 +1072,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(fields)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hmget");
         if (this.isClusterMode()) {
             return this.getCluster().hmget(key, fields);
@@ -1109,7 +1084,6 @@ public class RedisClient {
         } finally {
             this.returnResource(jedis);
         }
-
     }
 
     /**
@@ -1120,9 +1094,7 @@ public class RedisClient {
      * @return 所有字段及值
      */
     public Map<String, String> hgetAll(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hgetAll");
         if (this.isClusterMode()) {
             return this.getCluster().hgetAll(key);
@@ -1144,9 +1116,7 @@ public class RedisClient {
      * @return zset成员数量
      */
     public long zcard(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zcard");
         if (this.isClusterMode()) {
             return this.getCluster().zcard(key);
@@ -1170,9 +1140,7 @@ public class RedisClient {
      * @return 指定分数区间成员数量
      */
     public long zcount(Integer dbIndex, String key, double min, double max) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zcount");
         if (this.isClusterMode()) {
             return this.getCluster().zcount(key, min, max);
@@ -1197,17 +1165,15 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptySet();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zdiff");
         if (this.isClusterMode()) {
-            return (Set<String>) this.getCluster().zdiff(keys);
+            return this.getCluster().zdiff(keys);
         }
         Jedis jedis = this.getResource();
         try {
             this.dbIndex(jedis, dbIndex);
-            return (Set<String>) jedis.zdiff(keys);
+            return jedis.zdiff(keys);
         } finally {
             this.returnResource(jedis);
         }
@@ -1224,17 +1190,15 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptySet();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zdiff");
         if (this.isClusterMode()) {
-            return (Set<Tuple>) this.getCluster().zdiffWithScores(keys);
+            return this.getCluster().zdiffWithScores(keys);
         }
         Jedis jedis = this.getResource();
         try {
             this.dbIndex(jedis, dbIndex);
-            return (Set<Tuple>) jedis.zdiffWithScores(keys);
+            return jedis.zdiffWithScores(keys);
         } finally {
             this.returnResource(jedis);
         }
@@ -1252,9 +1216,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zdiffStore");
         if (this.isClusterMode()) {
             return this.getCluster().zdiffStore(destkey, keys);
@@ -1277,9 +1240,7 @@ public class RedisClient {
      * @return 分数
      */
     public Double zscore(Integer dbIndex, String key, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zscore");
         if (this.isClusterMode()) {
             return this.getCluster().zscore(key, member);
@@ -1305,9 +1266,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(members)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zmscore");
         if (this.isClusterMode()) {
             return this.getCluster().zmscore(key, members);
@@ -1364,9 +1323,7 @@ public class RedisClient {
      * @return zset成员
      */
     public String zrandmember(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrandmember");
         if (this.isClusterMode()) {
             return this.getCluster().zrandmember(key);
@@ -1389,9 +1346,7 @@ public class RedisClient {
      * @return zset成员
      */
     public List<String> zrandmember(Integer dbIndex, String key, int count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrandmember");
         if (this.isClusterMode()) {
             return this.getCluster().zrandmember(key, count);
@@ -1426,9 +1381,7 @@ public class RedisClient {
      * @return 成员
      */
     public List<String> zrange(Integer dbIndex, String key, long start, long end) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrange");
         if (this.isClusterMode()) {
             return this.getCluster().zrange(key, start, end);
@@ -1454,9 +1407,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(members)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrem");
         if (this.isClusterMode()) {
             return this.getCluster().zrem(key, members);
@@ -1479,9 +1431,7 @@ public class RedisClient {
      * @return 排名
      */
     public Long zrank(Integer dbIndex, String key, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrank");
         if (this.isClusterMode()) {
             return this.getCluster().zrank(key, member);
@@ -1504,9 +1454,7 @@ public class RedisClient {
      * @return 排名
      */
     public Long zrevrank(Integer dbIndex, String key, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zrevrank");
         if (this.isClusterMode()) {
             return this.getCluster().zrevrank(key, member);
@@ -1530,9 +1478,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long zadd(Integer dbIndex, String key, double score, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zadd");
         if (this.isClusterMode()) {
             return this.getCluster().zadd(key, score, member);
@@ -1555,9 +1502,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long zadd(Integer dbIndex, String key, Map<String, Double> scoreMembers) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zadd");
         if (this.isClusterMode()) {
             return this.getCluster().zadd(key, scoreMembers);
@@ -1572,7 +1518,7 @@ public class RedisClient {
     }
 
     /**
-     * 添加zset成员分数
+     * 增加zset成员分数
      *
      * @param dbIndex   db索引
      * @param key       键
@@ -1581,9 +1527,8 @@ public class RedisClient {
      * @return 成员新分数
      */
     public double zincrby(Integer dbIndex, String key, double increment, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zincrby");
         if (this.isClusterMode()) {
             return this.getCluster().zincrby(key, increment, member);
@@ -1606,9 +1551,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean sismember(Integer dbIndex, String key, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sismember");
         if (this.isClusterMode()) {
             return this.getCluster().sismember(key, member);
@@ -1630,9 +1573,7 @@ public class RedisClient {
      * @return set成员
      */
     public String srandmember(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "srandmember");
         if (this.isClusterMode()) {
             return this.getCluster().srandmember(key);
@@ -1655,9 +1596,7 @@ public class RedisClient {
      * @return set成员
      */
     public List<String> srandmember(Integer dbIndex, String key, int count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "srandmember");
         if (this.isClusterMode()) {
             return this.getCluster().srandmember(key, count);
@@ -1679,9 +1618,7 @@ public class RedisClient {
      * @return set成员数量
      */
     public long scard(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "scard");
         if (this.isClusterMode()) {
             return this.getCluster().scard(key);
@@ -1704,9 +1641,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long sadd(Integer dbIndex, String key, String... members) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sadd");
         if (this.isClusterMode()) {
             return this.getCluster().sadd(key, members);
@@ -1731,9 +1667,8 @@ public class RedisClient {
      * @return 成员
      */
     public String spop(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "spop");
         if (this.isClusterMode()) {
             return this.getCluster().spop(key);
@@ -1758,9 +1693,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptySet();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sdiff");
         if (this.isClusterMode()) {
             return this.getCluster().sdiff(keys);
@@ -1786,9 +1719,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sdiffstore");
         if (this.isClusterMode()) {
             return this.getCluster().sdiffstore(destkey, keys);
@@ -1813,9 +1745,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptySet();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sunion");
         if (this.isClusterMode()) {
             return this.getCluster().sunion(keys);
@@ -1841,9 +1771,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sunionstore");
         if (this.isClusterMode()) {
             return this.getCluster().sunionstore(destkey, keys);
@@ -1868,9 +1797,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptySet();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sinter");
         if (this.isClusterMode()) {
             return this.getCluster().sinter(keys);
@@ -1896,9 +1823,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "sinterstore");
         if (this.isClusterMode()) {
             return this.getCluster().sinterstore(destkey, keys);
@@ -1921,9 +1847,8 @@ public class RedisClient {
      * @return 成员
      */
     public Set<String> spop(Integer dbIndex, String key, long count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "spop");
         if (this.isClusterMode()) {
             return this.getCluster().spop(key, count);
@@ -1949,9 +1874,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(members)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "srem");
         if (this.isClusterMode()) {
             return this.getCluster().srem(key, members);
@@ -1973,9 +1897,7 @@ public class RedisClient {
      * @return set成员
      */
     public Set<String> smembers(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "smembers");
         if (this.isClusterMode()) {
             return this.getCluster().smembers(key);
@@ -2001,9 +1923,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(values)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rpush");
         if (this.isClusterMode()) {
             return this.getCluster().rpush(key, values);
@@ -2029,9 +1950,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(values)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rpushx");
         if (this.isClusterMode()) {
             return this.getCluster().rpushx(key, values);
@@ -2057,9 +1977,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(values)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lpush");
         if (this.isClusterMode()) {
             return this.getCluster().lpush(key, values);
@@ -2085,9 +2004,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(values)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lpushx");
         if (this.isClusterMode()) {
             return this.getCluster().lpushx(key, values);
@@ -2111,9 +2029,8 @@ public class RedisClient {
      * @return 结果
      */
     public String lset(Integer dbIndex, String key, int index, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lset");
         if (this.isClusterMode()) {
             return this.getCluster().lset(key, index, value);
@@ -2138,9 +2055,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long linsert(Integer dbIndex, String key, ListPosition where, String pivot, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "linsert");
         if (this.isClusterMode()) {
             return this.getCluster().linsert(key, where, pivot, value);
@@ -2166,9 +2082,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "blpop");
         if (this.isClusterMode()) {
             return this.getCluster().blpop(timeout, keys);
@@ -2194,9 +2109,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "brpop");
         if (this.isClusterMode()) {
             return this.getCluster().brpop(timeout, keys);
@@ -2232,9 +2146,8 @@ public class RedisClient {
      * @return 受影响的值数量
      */
     public long lrem(Integer dbIndex, String key, long count, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lrem");
         if (this.isClusterMode()) {
             return this.getCluster().lrem(key, count, value);
@@ -2269,9 +2182,7 @@ public class RedisClient {
      * @return 值
      */
     public List<String> lrange(Integer dbIndex, String key, long start, long end) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lrange");
         if (this.isClusterMode()) {
             return this.getCluster().lrange(key, start, end);
@@ -2294,9 +2205,7 @@ public class RedisClient {
      * @return 值
      */
     public String lindex(Integer dbIndex, String key, long index) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lindex");
         if (this.isClusterMode()) {
             return this.getCluster().lindex(key, index);
@@ -2318,9 +2227,8 @@ public class RedisClient {
      * @return 值
      */
     public String lpop(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lpop");
         if (this.isClusterMode()) {
             return this.getCluster().lpop(key);
@@ -2343,9 +2251,8 @@ public class RedisClient {
      * @return 值
      */
     public List<String> lpop(Integer dbIndex, String key, int count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lpop");
         if (this.isClusterMode()) {
             return this.getCluster().lpop(key, count);
@@ -2367,9 +2274,8 @@ public class RedisClient {
      * @return 值
      */
     public String rpop(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rpop");
         if (this.isClusterMode()) {
             return this.getCluster().rpop(key);
@@ -2392,9 +2298,8 @@ public class RedisClient {
      * @return 值
      */
     public List<String> rpop(Integer dbIndex, String key, int count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rpop");
         if (this.isClusterMode()) {
             return this.getCluster().rpop(key, count);
@@ -2418,9 +2323,8 @@ public class RedisClient {
      * @return 结果
      */
     public String ltrim(Integer dbIndex, String key, long start, long stop) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "ltrim");
         if (this.isClusterMode()) {
             return this.getCluster().ltrim(key, start, stop);
@@ -2442,9 +2346,7 @@ public class RedisClient {
      * @return 数据个数
      */
     public long llen(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "llen");
         if (this.isClusterMode()) {
             return this.getCluster().llen(key);
@@ -2470,9 +2372,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(elements)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pfadd");
         if (this.isClusterMode()) {
             return this.getCluster().pfadd(key, elements);
@@ -2497,9 +2398,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pfcount");
         if (this.isClusterMode()) {
             return this.getCluster().pfcount(keys);
@@ -2525,9 +2424,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(sourceKeys)) {
             return null;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pfmerge");
         if (this.isClusterMode()) {
             return this.getCluster().pfmerge(destKey, sourceKeys);
@@ -2552,9 +2450,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long geoadd(Integer dbIndex, String key, double longitude, double latitude, String member) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "geoadd");
         if (this.isClusterMode()) {
             return this.getCluster().geoadd(key, longitude, latitude, member);
@@ -2578,9 +2475,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long geoadd(Integer dbIndex, String key, GeoAddParams params, Map<String, GeoCoordinate> memberCoordinate) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "geoadd");
         if (this.isClusterMode()) {
             return this.getCluster().geoadd(key, params, memberCoordinate);
@@ -2609,9 +2505,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(members)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "geohash");
         if (this.isClusterMode()) {
             return this.getCluster().geohash(key, members);
@@ -2636,9 +2530,7 @@ public class RedisClient {
      * @return 距离
      */
     public Double geodist(Integer dbIndex, String key, String member1, String member2, GeoUnit unit) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "geodist");
         if (this.isClusterMode()) {
             if (unit == null) {
@@ -2671,9 +2563,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(members)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "geopos");
         if (this.isClusterMode()) {
             return this.getCluster().geopos(key, members);
@@ -2695,9 +2585,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean exists(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "exists");
         if (this.isClusterMode()) {
             return this.getCluster().exists(key);
@@ -2722,9 +2610,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "exists");
         if (this.isClusterMode()) {
             return this.getCluster().exists(keys);
@@ -2747,9 +2633,8 @@ public class RedisClient {
      * @return 结果
      */
     public String set(Integer dbIndex, String key, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "set");
         if (this.isClusterMode()) {
             return this.getCluster().set(key, value);
@@ -2772,9 +2657,8 @@ public class RedisClient {
      * @return 结果
      */
     public String set(Integer dbIndex, byte[] key, byte[] value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "set");
         if (this.isClusterMode()) {
             return this.getCluster().set(key, value);
@@ -2798,9 +2682,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long setrange(Integer dbIndex, String key, long offset, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "setrange");
         if (this.isClusterMode()) {
             return this.getCluster().setrange(key, offset, value);
@@ -2823,9 +2706,8 @@ public class RedisClient {
      * @return 结果
      */
     public long setnx(Integer dbIndex, String key, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "setnx");
         if (this.isClusterMode()) {
             return this.getCluster().setnx(key, value);
@@ -2849,9 +2731,8 @@ public class RedisClient {
      * @return 结果
      */
     public String setex(Integer dbIndex, String key, long seconds, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "setex");
         if (this.isClusterMode()) {
             return this.getCluster().setex(key, seconds, value);
@@ -2876,9 +2757,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keyValues)) {
             return null;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "mset");
         if (this.isClusterMode()) {
             return this.getCluster().mset(keyValues);
@@ -2903,9 +2783,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keyValues)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "msetnx");
         if (this.isClusterMode()) {
             return this.getCluster().msetnx(keyValues);
@@ -2927,9 +2806,7 @@ public class RedisClient {
      * @return 值
      */
     public String get(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "get");
         if (this.isClusterMode()) {
             return this.getCluster().get(key);
@@ -2951,9 +2828,7 @@ public class RedisClient {
      * @return 值
      */
     public byte[] get(Integer dbIndex, byte[] key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "get");
         if (this.isClusterMode()) {
             return this.getCluster().get(key);
@@ -2977,9 +2852,7 @@ public class RedisClient {
      * @return 值
      */
     public String getrange(Integer dbIndex, String key, long startOffset, long endOffset) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "getrange");
         if (this.isClusterMode()) {
             return this.getCluster().getrange(key, startOffset, endOffset);
@@ -3004,9 +2877,7 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return Collections.emptyList();
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "mget");
         if (this.isClusterMode()) {
             return this.getCluster().mget(keys);
@@ -3029,9 +2900,8 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public long append(Integer dbIndex, String key, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "append");
         if (this.isClusterMode()) {
             return this.getCluster().append(key, value);
@@ -3053,9 +2923,7 @@ public class RedisClient {
      * @return 值长度
      */
     public long strlen(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "strlen");
         if (this.isClusterMode()) {
             return this.getCluster().strlen(key);
@@ -3078,9 +2946,8 @@ public class RedisClient {
      * @return 旧值
      */
     public String getSet(Integer dbIndex, String key, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "getSet");
         if (this.isClusterMode()) {
             return this.getCluster().getSet(key, value);
@@ -3102,9 +2969,8 @@ public class RedisClient {
      * @return 当前值
      */
     public long decr(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "decr");
         if (this.isClusterMode()) {
             return this.getCluster().decr(key);
@@ -3127,9 +2993,8 @@ public class RedisClient {
      * @return 当前值
      */
     public long decrBy(Integer dbIndex, String key, long decrement) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "decrBy");
         if (this.isClusterMode()) {
             return this.getCluster().decrBy(key, decrement);
@@ -3151,9 +3016,8 @@ public class RedisClient {
      * @return 当前值
      */
     public long incr(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "incr");
         if (this.isClusterMode()) {
             return this.getCluster().incr(key);
@@ -3176,9 +3040,8 @@ public class RedisClient {
      * @return 当前值
      */
     public long incrBy(Integer dbIndex, String key, long increment) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "incrBy");
         if (this.isClusterMode()) {
             return this.getCluster().incrBy(key, increment);
@@ -3201,9 +3064,8 @@ public class RedisClient {
      * @return 当前值
      */
     public double incrByFloat(Integer dbIndex, String key, double increment) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "incrByFloat");
         if (this.isClusterMode()) {
             return this.getCluster().incrByFloat(key, increment);
@@ -3227,9 +3089,8 @@ public class RedisClient {
      * @return 当前值
      */
     public boolean setbit(Integer dbIndex, String key, long offset, boolean value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "setbit");
         if (this.isClusterMode()) {
             return this.getCluster().setbit(key, offset, value);
@@ -3252,9 +3113,7 @@ public class RedisClient {
      * @return 当前值
      */
     public boolean getbit(Integer dbIndex, String key, long offset) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "getbit");
         if (this.isClusterMode()) {
             return this.getCluster().getbit(key, offset);
@@ -3279,9 +3138,7 @@ public class RedisClient {
      * @return 值为true的数量
      */
     public long bitcount(Integer dbIndex, String key, Long start, Long end, BitCountOption option) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bitcount");
         if (this.isClusterMode()) {
             if (start == null || end == null) {
@@ -3317,9 +3174,7 @@ public class RedisClient {
      * @return 值首次出现的位置
      */
     public long bitpos(Integer dbIndex, String key, boolean value, BitPosParams params) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bitpos");
         if (this.isClusterMode()) {
             if (params == null) {
@@ -3350,9 +3205,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "del");
         if (this.isClusterMode()) {
             return this.getCluster().del(keys);
@@ -3390,9 +3244,8 @@ public class RedisClient {
      * @return 流id
      */
     public StreamEntryID xadd(Integer dbIndex, String key, StreamEntryID id, Map<String, String> hash) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xadd");
         if (this.isClusterMode()) {
             return this.getCluster().xadd(key, id, hash);
@@ -3416,9 +3269,8 @@ public class RedisClient {
      * @return 流id
      */
     public StreamEntryID xadd(Integer dbIndex, String key, Map<String, String> hash, XAddParams params) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xadd");
         if (this.isClusterMode()) {
             return this.getCluster().xadd(key, hash, params);
@@ -3444,9 +3296,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(ids)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xdel");
         if (this.isClusterMode()) {
             return this.getCluster().xdel(key, ids);
@@ -3468,9 +3319,7 @@ public class RedisClient {
      * @return 受影响的数据数量
      */
     public StreamInfo xinfoStream(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xinfoStream");
         if (this.isClusterMode()) {
             return this.getCluster().xinfoStream(key);
@@ -3492,9 +3341,7 @@ public class RedisClient {
      * @return stream信息
      */
     public StreamFullInfo xinfoStreamFull(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xinfoStreamFull");
         if (this.isClusterMode()) {
             return this.getCluster().xinfoStreamFull(key);
@@ -3542,9 +3389,7 @@ public class RedisClient {
      * @return 消息
      */
     public List<StreamEntry> xrange(Integer dbIndex, String key, StreamEntryID start, StreamEntryID end, Integer count) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "xrange");
         if (this.isClusterMode()) {
             if (count == null) {
@@ -3571,9 +3416,7 @@ public class RedisClient {
      * @return 结果
      */
     public String randomKey(Integer dbIndex) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "randomKey");
         if (this.isClusterMode()) {
             return this.getCluster().randomKey();
@@ -3596,9 +3439,8 @@ public class RedisClient {
      * @return 结果
      */
     public long move(String key, Integer formDBIndex, int targetDBIndex) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "move");
         if (this.isClusterMode()) {
             throw new ClusterOperationException();
@@ -3620,9 +3462,7 @@ public class RedisClient {
      * @return 键类型
      */
     public String type(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "type");
         if (this.isClusterMode()) {
             return this.getCluster().type(key);
@@ -3643,9 +3483,7 @@ public class RedisClient {
      * @return 键数量
      */
     public long dbSize(Integer dbIndex) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "dbSize");
         long dbsize = 0;
         // 集群模式
@@ -3690,12 +3528,7 @@ public class RedisClient {
      * @return 扫描结果
      */
     public ScanResult<String> scan(int dbIndex, String cursor, ScanParams params) {
-//        if (this.isClusterMode()) {
-//            throw new ClusterOperationException();
-//        }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "scan");
         if (cursor == null) {
             cursor = ScanParams.SCAN_POINTER_START;
@@ -3746,9 +3579,7 @@ public class RedisClient {
      * @return 键列表
      */
     public Set<String> keys(Integer dbIndex, @NonNull String pattern, RedisKeyType type) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "keys");
         Set<String> keys;
         // 集群模式
@@ -3788,9 +3619,8 @@ public class RedisClient {
      * @return 结果
      */
     public String rename(Integer dbIndex, @NonNull String key, @NonNull String newKey) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rename");
         if (this.isClusterMode()) {
             return this.getCluster().rename(key, newKey);
@@ -3812,9 +3642,7 @@ public class RedisClient {
      * @return 剩余存活时间
      */
     public long ttl(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "ttl");
         if (this.isClusterMode()) {
             return this.getCluster().ttl(key);
@@ -3836,9 +3664,7 @@ public class RedisClient {
      * @return 剩余存活时间毫秒值
      */
     public long pttl(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pttl");
         if (this.isClusterMode()) {
             return this.getCluster().pttl(key);
@@ -3862,9 +3688,8 @@ public class RedisClient {
      * @return 受影响的键数量
      */
     public long expire(Integer dbIndex, String key, long seconds, ExpiryOption option) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "expire");
         if (this.isClusterMode()) {
             if (option == null) {
@@ -3894,9 +3719,8 @@ public class RedisClient {
      * @return 受影响的键数量
      */
     public long pexpire(Integer dbIndex, String key, long milliseconds, ExpiryOption option) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pexpire");
         if (this.isClusterMode()) {
             return this.getCluster().pexpire(key, milliseconds, option);
@@ -3923,9 +3747,8 @@ public class RedisClient {
      * @return 受影响的键数量
      */
     public long expireAt(Integer dbIndex, String key, long unixTime, ExpiryOption option) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "expireAt");
         if (this.isClusterMode()) {
             return this.getCluster().expireAt(key, unixTime, option);
@@ -3952,9 +3775,8 @@ public class RedisClient {
      * @return 受影响的键数量
      */
     public long pexpireAt(Integer dbIndex, String key, long millisecondsTimestamp, ExpiryOption option) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pexpireAt");
         if (this.isClusterMode()) {
             return this.getCluster().expireAt(key, millisecondsTimestamp, option);
@@ -3979,9 +3801,8 @@ public class RedisClient {
      * @return 受影响的键数量
      */
     public long persist(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "persist");
         if (this.isClusterMode()) {
             return this.getCluster().persist(key);
@@ -4006,9 +3827,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(keys)) {
             return -1L;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "touch");
         if (this.isClusterMode()) {
             return this.getCluster().touch(keys);
@@ -4030,9 +3850,8 @@ public class RedisClient {
      * @return 完成的键数量
      */
     public long waitReplicas(int replicas, long timeout) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "wait");
         if (this.isClusterMode()) {
             return this.getCluster().waitReplicas((String) null, replicas, timeout);
@@ -4054,9 +3873,8 @@ public class RedisClient {
      * @return 完成的键数量
      */
     public KeyValue<Long, Long> waitAOF(long numLocal, int replicas, long timeout) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "waitAOF");
         if (this.isClusterMode()) {
             return this.getCluster().waitAOF((String) null, numLocal, replicas, timeout);
@@ -4077,9 +3895,7 @@ public class RedisClient {
      * @return 键编码信息
      */
     public String objectEncoding(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "object encoding");
         if (this.isClusterMode()) {
             return this.getCluster().objectEncoding(key);
@@ -4101,9 +3917,7 @@ public class RedisClient {
      * @return 键访问频率
      */
     public Long objectFreq(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "object freq");
         if (this.isClusterMode()) {
             return this.getCluster().objectFreq(key);
@@ -4125,9 +3939,7 @@ public class RedisClient {
      * @return 键访问频率
      */
     public Long objectIdletime(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "object idletime");
         if (this.isClusterMode()) {
             return this.getCluster().objectIdletime(key);
@@ -4149,9 +3961,7 @@ public class RedisClient {
      * @return 键访问频率
      */
     public Long objectRefcount(Integer dbIndex, String key) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "object refcount");
         if (this.isClusterMode()) {
             return this.getCluster().objectRefcount(key);
@@ -4176,9 +3986,8 @@ public class RedisClient {
      * @return 结果
      */
     public boolean copy(Integer dbIndex, String srcKey, String dstKey, Integer db, boolean replace) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "copy");
         if (this.isClusterMode()) {
             return this.getCluster().copy(srcKey, dstKey, replace);
@@ -4202,9 +4011,8 @@ public class RedisClient {
      * @return 结果
      */
     public String flushDB(Integer dbIndex) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "flushDB");
         if (this.isClusterMode()) {
             return this.getCluster().flushDB();
@@ -4224,9 +4032,8 @@ public class RedisClient {
      * @return 结果
      */
     public String flushAll() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "flushAll");
         if (this.isClusterMode()) {
             return this.getCluster().flushAll();
@@ -4246,16 +4053,11 @@ public class RedisClient {
      * @return 配置列表
      */
     public List<String> configGet(String pattern) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
-//        if (this.isClusterMode()) {
-//            throw new ClusterOperationException();
-//        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config get");
         Jedis jedis = this.getResource();
         try {
-            return (List<String>) jedis.configGet(pattern);
+            return jedis.configGet(pattern);
         } finally {
             this.returnResource(jedis);
         }
@@ -4269,12 +4071,8 @@ public class RedisClient {
      * @return 结果
      */
     public String configSet(String parameter, String value) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
-//        if (this.isClusterMode()) {
-//            return this.getCluster().configSet(parameter, value);
-//        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config set");
         Jedis jedis = this.getResource();
         try {
@@ -4291,12 +4089,8 @@ public class RedisClient {
      * @return 结果
      */
     public String configSet(String... parameterValues) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
-//        if (this.isClusterMode()) {
-//            throw new ClusterOperationException();
-//        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config set");
         Jedis jedis = this.getResource();
         try {
@@ -4312,12 +4106,8 @@ public class RedisClient {
      * @return 结果
      */
     public String configRewrite() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
-//        if (this.isClusterMode()) {
-//            throw new ClusterOperationException();
-//        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config rewrite");
         Jedis jedis = this.getResource();
         try {
@@ -4333,12 +4123,8 @@ public class RedisClient {
      * @return 结果
      */
     public String configResetStat() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
-//        if (this.isClusterMode()) {
-//            throw new ClusterOperationException();
-//        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config resetStat");
         Jedis jedis = this.getResource();
         try {
@@ -4412,9 +4198,7 @@ public class RedisClient {
      * @return 结果
      */
     public String select(Integer dbIndex) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         if (this.isClusterMode()) {
             throw new ClusterOperationException();
         }
@@ -4435,9 +4219,8 @@ public class RedisClient {
      * @return 结果
      */
     public long publish(String channel, String message) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "publish");
         if (this.isClusterMode()) {
             return this.getCluster().publish(channel, message);
@@ -4457,9 +4240,7 @@ public class RedisClient {
      * @return 结果
      */
     public Map<String, Long> pubsubNumSub(String... channels) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub numSub");
         Jedis jedis = this.getResource();
         try {
@@ -4475,9 +4256,7 @@ public class RedisClient {
      * @return 活跃通道数量
      */
     public Long pubsubNumPat() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub numPat");
         Jedis jedis = this.getResource();
         try {
@@ -4497,9 +4276,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(channels)) {
             return;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "subscribe");
         if (this.isClusterMode()) {
             this.getCluster().subscribe(pubSub, channels);
@@ -4519,9 +4297,8 @@ public class RedisClient {
         if (ArrayUtil.isEmpty(patterns)) {
             return;
         }
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "psubscribe");
         if (this.isClusterMode()) {
             this.getCluster().subscribe(pubSub, patterns);
@@ -4538,9 +4315,7 @@ public class RedisClient {
      * @return 发布列表
      */
     public List<String> pubsubChannels(String pattern) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub channels");
         Jedis jedis = this.getResource();
         try {
@@ -4601,7 +4376,6 @@ public class RedisClient {
      * @return 结果
      */
     public String info(String section) {
-//        RedisVersionUtil.checkSupported(this.getServerVersion(), "info");
         Jedis jedis = this.getResource();
         try {
             if (section == null) {
@@ -4628,9 +4402,7 @@ public class RedisClient {
      * @return 结果
      */
     public List<String> time() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "time");
         Jedis jedis = this.getResource();
         try {
@@ -4646,9 +4418,8 @@ public class RedisClient {
      * @return 结果
      */
     public String save() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "save");
         Jedis jedis = this.getResource();
         try {
@@ -4664,9 +4435,7 @@ public class RedisClient {
      * @return 结果
      */
     public long lastsave() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lastsave");
         Jedis jedis = this.getResource();
         try {
@@ -4682,9 +4451,8 @@ public class RedisClient {
      * @return 结果
      */
     public String bgsave() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bgsave");
         Jedis jedis = this.getResource();
         try {
@@ -4700,9 +4468,8 @@ public class RedisClient {
      * @return 结果
      */
     public String bgrewriteaof() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bgrewriteaof");
         Jedis jedis = this.getResource();
         try {
@@ -4718,9 +4485,7 @@ public class RedisClient {
      * @return 结果
      */
     public String clientList() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client list");
         Jedis jedis = this.getResource();
         try {
@@ -4736,9 +4501,7 @@ public class RedisClient {
      * @return 结果
      */
     public String clientGetname() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client getname");
         Jedis jedis = this.getResource();
         try {
@@ -4755,9 +4518,8 @@ public class RedisClient {
      * @return 结果
      */
     public String clientSetname(String name) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client setname");
         Jedis jedis = this.getResource();
         try {
@@ -4773,9 +4535,7 @@ public class RedisClient {
      * @return 慢查日志数量
      */
     public long slowlogLen() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog len");
         Jedis jedis = this.getResource();
         try {
@@ -4791,9 +4551,8 @@ public class RedisClient {
      * @return 结果
      */
     public String slowlogReset() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
+        this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog reset");
         Jedis jedis = this.getResource();
         try {
@@ -4809,9 +4568,7 @@ public class RedisClient {
      * @return 慢查日志
      */
     public List<Slowlog> slowlogGet() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog get");
         Jedis jedis = this.getResource();
         try {
@@ -4828,9 +4585,7 @@ public class RedisClient {
      * @return 慢查日志
      */
     public List<Slowlog> slowlogGet(long entries) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog get");
         Jedis jedis = this.getResource();
         try {
@@ -4877,9 +4632,7 @@ public class RedisClient {
      * @return 获取命令总数
      */
     public long commandCount() {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "command count");
         Jedis jedis = this.getResource();
         try {
@@ -4896,9 +4649,7 @@ public class RedisClient {
      * @return 命令信息
      */
     public Map<String, CommandInfo> commandInfo(String... commands) {
-        if (this.isSentinelMode()) {
-            throw new SentinelOperationException();
-        }
+        this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "command info");
         Jedis jedis = this.getResource();
         try {

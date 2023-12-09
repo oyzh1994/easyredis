@@ -46,13 +46,6 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     @Setter
     private String remark;
 
-    // /**
-    //  * 字符集
-    //  */
-    // @Getter
-    // @Setter
-    // private String charset;
-
     /**
      * 分组id
      */
@@ -96,6 +89,13 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     private Boolean redirectMaster;
 
     /**
+     * 只读模式
+     */
+    @Setter
+    @Getter
+    private Boolean readonly;
+
+    /**
      * 收藏的键
      */
     @Getter
@@ -127,7 +127,7 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
         this.user = info.user;
         this.remark = info.remark;
         this.groupId = info.groupId;
-        // this.charset = info.charset;
+        this.readonly = info.readonly;
         this.collects = info.collects;
         this.password = info.password;
         this.masterUser = info.masterUser;
@@ -195,7 +195,16 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
      * @return 结果
      */
     public boolean isRedirectMaster() {
-        return this.redirectMaster == null || BooleanUtil.isTrue(this.redirectMaster);
+        return BooleanUtil.isTrue(this.redirectMaster);
+    }
+
+    /**
+     * 是否只读模式
+     *
+     * @return 结果
+     */
+    public boolean isReadonly() {
+        return BooleanUtil.isTrue(this.readonly);
     }
 
     /**
@@ -277,5 +286,20 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
             return true;
         }
         return Objects.equals(t1.name, this.name);
+    }
+
+    /**
+     * 获取认证方式
+     *
+     * @return 0:无需认证 1:密码认证 2:用户密码认证
+     */
+    public int getAuthType() {
+        if (StrUtil.isNotBlank(this.user) && StrUtil.isNotBlank(this.password)) {
+            return 2;
+        }
+        if (StrUtil.isNotBlank(this.password)) {
+            return 1;
+        }
+        return 0;
     }
 }
