@@ -26,6 +26,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
+import cn.oyzh.fx.plus.trees.RichTreeItem;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -462,27 +463,19 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     }
 
     @Override
-    public void sortAsc() {
-        if (this.isSortEnable()) {
-            this.sortType = 0;
-            // 执行排序
-            List<RedisDBTreeItem> childes = this.getChildren();
-            if (!childes.isEmpty()) {
-                childes.sort(Comparator.comparingInt(RedisDBTreeItem::dbIndex));
-            }
+    protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+        if (item1 instanceof RedisDBTreeItem db1 && item2 instanceof RedisDBTreeItem db2) {
+            return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(db1, db2);
         }
+        return super.sortAsc(item1, item2);
     }
 
     @Override
-    public void sortDesc() {
-        if (this.isSortEnable()) {
-            this.sortType = 1;
-            // 执行排序
-            List<RedisDBTreeItem> childes = this.getChildren();
-            if (!childes.isEmpty()) {
-                childes.sort((a, b) -> Integer.compare(b.dbIndex(), a.dbIndex()));
-            }
+    protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
+        if (item1 instanceof RedisDBTreeItem db1 && item2 instanceof RedisDBTreeItem db2) {
+            return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(db2, db1);
         }
+        return super.sortDesc(item1, item2);
     }
 
     /**

@@ -310,7 +310,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 获取已有子节点
         List<RedisKeyTreeItem<?, ?>> keyItems = this.keyChildren();
         // 禁用排序
-        this.disableSort();
+        this.setSortable(false);
         // 是否为空
         String cursor = null;
         String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
@@ -392,7 +392,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             }
             // 启用排序并执行排序
             allKeys.clear();
-            this.enableSort();
+            this.setSortable(true);
             this.sort();
         }
     }
