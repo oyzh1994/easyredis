@@ -314,11 +314,13 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             return;
         }
         try {
+            String oldKey = this.key();
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
                 this.getValue().name(newKey);
-                EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
+                // EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
+                RedisEventUtil.keyRenamed(this, oldKey);
             } else {
                 MessageBox.warn("更改键名称失败！");
             }

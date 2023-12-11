@@ -1,18 +1,19 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
-import cn.oyzh.easyredis.event.msg.RedisInfoDeletedMsg;
-import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
-import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.msg.RedisConnectionClosedMsg;
 import cn.oyzh.easyredis.event.msg.RedisConnectionConnectedMsg;
 import cn.oyzh.easyredis.event.msg.RedisFilterMainMsg;
 import cn.oyzh.easyredis.event.msg.RedisHashFieldAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoDeletedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyRenamedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyTTLUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisListRowAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
 import cn.oyzh.easyredis.event.msg.RedisSearchStartMsg;
@@ -25,6 +26,8 @@ import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildFilterMsg;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.search.RedisSearchParam;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
@@ -320,6 +323,32 @@ public class RedisEventUtil {
     public static void infoDeleted(RedisInfo info) {
         RedisInfoDeletedMsg msg = new RedisInfoDeletedMsg();
         msg.info(info);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键ttl更新事件
+     *
+     * @param item redis树节点
+     * @param ttl  ttl值
+     */
+    public static void keyTTLUpdated(RedisKeyTreeItem<?, ?> item, Long ttl) {
+        RedisKeyTTLUpdatedMsg msg = new RedisKeyTTLUpdatedMsg();
+        msg.item(item);
+        msg.ttl(ttl);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键更名事件
+     *
+     * @param item    redis树节点
+     * @param oldKey 旧名称
+     */
+    public static void keyRenamed(RedisKeyTreeItem<?, ?> item, String oldKey) {
+        RedisKeyRenamedMsg msg = new RedisKeyRenamedMsg();
+        msg.item(item);
+        msg.oldKey(oldKey);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

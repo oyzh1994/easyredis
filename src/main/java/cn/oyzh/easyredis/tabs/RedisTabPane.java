@@ -3,6 +3,8 @@ package cn.oyzh.easyredis.tabs;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.msg.RedisKeyRenamedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyTTLUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
@@ -345,12 +347,12 @@ public class RedisTabPane extends DynamicTabPane {
     /**
      * 键更名事件
      *
-     * @param item redis树节点
+     * @param msg 消息
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
-    private void onKeyRenamed(RedisKeyTreeItem<?, ?> item) {
-        RedisKeyTab<?> tab = this.getKeyTab(item);
-        if (tab != null && tab.treeItem() == item) {
+    private void onKeyRenamed(RedisKeyRenamedMsg msg) {
+        RedisKeyTab<?> tab = this.getKeyTab(msg.item());
+        if (tab != null && tab.treeItem() == msg.item()) {
             tab.flushGraphic();
             tab.flushTitle();
         }
@@ -359,11 +361,11 @@ public class RedisTabPane extends DynamicTabPane {
     /**
      * ttl更新事件
      *
-     * @param item redis树节点
+     * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_TTL_UPDATED, verbose = true, async = true, fxThread = true)
-    private void onTTLUpdated(RedisKeyTreeItem<?, ?> item) {
-        RedisKeyTab<?> tab = this.getKeyTab(item);
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_TTL_UPDATED, verbose = true, async = true, fxThread = true)
+    private void onTTLUpdated(RedisKeyTTLUpdatedMsg msg) {
+        RedisKeyTab<?> tab = this.getKeyTab(msg.item());
         if (tab != null) {
             tab.flushTTL();
         }

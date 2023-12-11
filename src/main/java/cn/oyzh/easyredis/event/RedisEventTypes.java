@@ -89,7 +89,7 @@ public class RedisEventTypes {
     /**
      * redisTTL更新
      */
-    public static final String REDIS_TTL_UPDATED = "REDIS_TTL_UPDATED";
+    public static final String REDIS_KEY_TTL_UPDATED = "REDIS_KEY_TTL_UPDATED";
 
     /**
      * redis键添加
