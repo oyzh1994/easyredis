@@ -1,11 +1,13 @@
 package cn.oyzh.easyredis.tabs;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.msg.RedisTerminalCloseMsg;
 import cn.oyzh.easyredis.event.msg.RedisTerminalOpenMsg;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
@@ -13,19 +15,22 @@ import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventReceiver;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.ToLongFunction;
 
 /**
  * redis切换面板
@@ -35,19 +40,80 @@ import java.util.List;
  */
 public class RedisTabPane extends DynamicTabPane {
 
-    {
-        this.setCache(true);
-        this.setCacheHint(CacheHint.QUALITY);
+    @Override
+    protected void initTabPane() {
+        super.initTabPane();
         this.initHomeTab();
+        // 监听tab
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
-            TaskManager.startDelay("redis:tab:init", () -> {
-                if (this.tabsEmpty()) {
-                    this.initHomeTab();
-                } else if (this.tabsSize() > 1) {
-                    this.closeHomeTab();
+            while (c.next()) {
+                if (c.wasAdded() || c.wasRemoved()) {
+                    TaskManager.startDelay("redis:homeTab:flush", this::flushHomeTab, 100);
+                    if (c.wasAdded()) {
+                        TaskManager.startDelay("redis:nodeTab:flush", this::flushNodeTab, 100);
+                    }
                 }
-            }, 100);
+            }
         });
+    }
+
+    /**
+     * 刷新主页标签
+     */
+    private void flushHomeTab() {
+        if (this.tabsEmpty()) {
+            this.initHomeTab();
+        } else if (this.tabsSize() > 1) {
+            this.closeHomeTab();
+        }
+    }
+
+    /**
+     * 刷新节点标签
+     */
+    private void flushNodeTab() {
+        // 获取设置
+        RedisSetting setting = RedisSettingStore.SETTING;
+        // 判断是否需要处理tab限制
+        if (setting.isTabUnLimit()) {
+            return;
+        }
+        // 获取全部节点tab
+        List<RedisKeyTab<?>> tabs = this.getKeyTabs();
+        // 数据不满足限制要求，则直接忽略
+        if (tabs.size() <= setting.getTabLimit()) {
+            return;
+        }
+        // tab处理函数
+        Consumer<List<RedisKeyTab<?>>> func = tabList -> {
+            // 数据满足限制要求才处理
+            if (tabList.size() > setting.getTabLimit()) {
+                // 进行排序
+                tabList.sort((o1, o2) -> Comparator.comparingLong((ToLongFunction<RedisKeyTab<?>>) RedisKeyTab::getOpenedTime).compare(o2, o1));
+                // 跳过指定数量
+                List<RedisKeyTab<?>> list = tabList.stream().skip(setting.getTabLimit()).toList();
+                // 移除tab
+                if (!list.isEmpty()) {
+                    FXUtil.runLater(() -> this.getTabs().removeAll(list));
+                }
+            }
+        };
+        // 限制全部连接
+        if (setting.isAllTabLimitStrategy()) {
+            func.accept(tabs);
+        } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
+            // 分组处理
+            Map<RedisClient, List<RedisKeyTab<?>>> map = new HashMap<>();
+            // 按分组添加到map
+            for (RedisKeyTab<?> tab : tabs) {
+                List<RedisKeyTab<?>> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
+                list.add(tab);
+            }
+            // 处理值
+            for (List<RedisKeyTab<?>> tabList : map.values()) {
+                func.accept(tabList);
+            }
+        }
     }
 
     /**
@@ -225,15 +291,31 @@ public class RedisTabPane extends DynamicTabPane {
     /**
      * 获取键tab
      *
+     * @param item 树节点
      * @return 键tab
      */
-    public RedisKeyTab<?> getKeyTab() {
+    public RedisKeyTab<?> getKeyTab(TreeItem<?> item) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof RedisKeyTab<?> nodeTab) {
+            if (tab instanceof RedisKeyTab<?> nodeTab && nodeTab.treeItem() == item) {
                 return nodeTab;
             }
         }
         return null;
+    }
+
+    /**
+     * 获取键tab列表
+     *
+     * @return 键tab列表
+     */
+    public List<RedisKeyTab<?>> getKeyTabs() {
+        List<RedisKeyTab<?>> list = new ArrayList<>();
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof RedisKeyTab<?> nodeTab) {
+                list.add(nodeTab);
+            }
+        }
+        return list;
     }
 
     /**
@@ -243,7 +325,7 @@ public class RedisTabPane extends DynamicTabPane {
      */
     public void initKeyTab(RedisKeyTreeItem<?, ?> item) {
         if (item != null) {
-            RedisKeyTab<?> nodeTab = this.getKeyTab();
+            RedisKeyTab<?> nodeTab = this.getKeyTab(item);
             if (nodeTab != null && nodeTab.treeItem() != item) {
                 nodeTab.closeTab();
                 nodeTab = null;
@@ -257,162 +339,32 @@ public class RedisTabPane extends DynamicTabPane {
             if (!nodeTab.isSelected()) {
                 this.select(nodeTab);
             }
-            // 延迟判断下，这个key是否到期
-            ExecutorUtil.start(() -> {
-                if (item.isExpire()) {
-                    FXUtil.runLater(() -> {
-                        if (MessageBox.confirm("键[" + item.key() + "]已过期，是否删除？")) {
-                            item.delete();
-                        }
-                    });
-                }
-            }, 1);
         }
     }
-
-    // public void flushGraphic() {
-    // }
-
-    // /**
-    //  * 键更名事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_CHANGE_ZSET_SHOW_TYPE, verbose = true, async = true)
-    // private void changeZETShowType(RedisZSetKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         tab.closeTab();
-    //         this.initKeyTab(treeItem);
-    //     }
-    // }
-
-
-    // /**
-    //  * list行添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
-    // private void onListRowAdded(RedisListKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisListKeyTabContent controller = (RedisListKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-    //
-    // /**
-    //  * set成员添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
-    // private void onSetMemberAdded(RedisSetKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisSetKeyTabContent controller = (RedisSetKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-    //
-    // /**
-    //  * zset成员添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
-    // private void onZSetMemberAdded(RedisZSetKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-
-    // /**
-    //  * geo坐标添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, verbose = true, async = true)
-    // private void onGEOCoordinateAdded(RedisZSetKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisZSetKeyTabContent controller = (RedisZSetKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-
-    // /**
-    //  * stream消息添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
-    // private void onStreamMessageAdded(RedisStreamKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisStreamKeyTabContent controller = (RedisStreamKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-
-    // /**
-    //  * hash字段添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
-    // private void onHashFieldAdded(RedisHashKeyTreeItem treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         RedisHashKeyTabContent controller = (RedisHashKeyTabContent) tab.controller();
-    //         treeItem.refreshNodeValue();
-    //         controller.firstPage();
-    //     }
-    // }
-
-    // /**
-    //  * hylog元素添加事件
-    //  *
-    //  * @param treeItem redis树节点
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_HYPER_LOG_LOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
-    // private void onHyperLogLogElementAdded(RedisKeyTreeItem<?> treeItem) {
-    //     RedisKeyTab<?> tab = this.getKeyTab();
-    //     if (tab != null && tab.treeItem() == treeItem) {
-    //         tab.reload();
-    //     }
-    // }
 
     /**
      * 键更名事件
      *
-     * @param treeItem redis树节点
+     * @param item redis树节点
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
-    private void onKeyRenamed(RedisKeyTreeItem<?, ?> treeItem) {
-        RedisKeyTab<?> tab = this.getKeyTab();
-        if (tab != null && tab.treeItem() == treeItem) {
+    private void onKeyRenamed(RedisKeyTreeItem<?, ?> item) {
+        RedisKeyTab<?> tab = this.getKeyTab(item);
+        if (tab != null && tab.treeItem() == item) {
             tab.flushGraphic();
+            tab.flushTitle();
         }
     }
 
     /**
      * ttl更新事件
      *
-     * @param treeItem redis树节点
+     * @param item redis树节点
      */
     @EventReceiver(value = RedisEventTypes.REDIS_TTL_UPDATED, verbose = true, async = true, fxThread = true)
-    private void onTTLUpdated(RedisKeyTreeItem<?, ?> treeItem) {
-        RedisKeyTab<?> tab = this.getKeyTab();
-        if (tab != null && tab.treeItem() == treeItem) {
+    private void onTTLUpdated(RedisKeyTreeItem<?, ?> item) {
+        RedisKeyTab<?> tab = this.getKeyTab(item);
+        if (tab != null) {
             tab.flushTTL();
         }
     }

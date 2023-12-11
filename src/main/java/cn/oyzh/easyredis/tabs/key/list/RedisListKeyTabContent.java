@@ -21,8 +21,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,8 +32,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/21
  */
-@Lazy
-@Component
 public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTreeItem, RedisListRow> {
 
     /**
@@ -49,12 +45,6 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      */
     @FXML
     private TableColumn<RedisListRow, Integer> index;
-
-    // /**
-    //  * 行号列
-    //  */
-    // @FXML
-    // private TableColumn<RedisListRow, Integer> lineIndex;
 
     /**
      * 行值列

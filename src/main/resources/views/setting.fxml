@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.FXToggleGroup?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="280">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -69,6 +71,42 @@
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FlexCheckBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="标签设置">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <DynamicTabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
+                                                fx:id="tabStrategy">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </DynamicTabStrategyComboBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel text="限制数量" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField fx:id="tabLimit" value="1" step="10" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
+                                     tipText="0代表无限制，最大值1000">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </NumberTextField>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>

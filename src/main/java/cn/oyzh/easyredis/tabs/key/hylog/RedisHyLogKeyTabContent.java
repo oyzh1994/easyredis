@@ -14,8 +14,6 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 /**
  * hyperLogLog键tab内容组件
@@ -23,8 +21,6 @@ import org.springframework.stereotype.Component;
  * @author oyzh
  * @since 2023/06/21
  */
-@Lazy
-@Component
 public class RedisHyLogKeyTabContent extends RedisKeyTabContent<RedisHyLogKeyTreeItem> {
 
     /**

@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.fx.RedisDataTextArea;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexVBox;
@@ -17,10 +18,14 @@ import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * redis键tab内容组件
@@ -28,6 +33,9 @@ import javafx.scene.input.KeyEvent;
  * @author oyzh
  * @since 2023/06/21
  */
+@Lazy
+@Component
+@Scope(ScopeType.PROTOTYPE)
 public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends DynamicTabController {
 
     /**
@@ -379,9 +387,16 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 清除原始数据
      */
     protected void clearRawData() {
-        // this.nodeData.removeTextChangeListener(this.getDataListener());
         this.nodeData.clear();
         this.nodeData.disable();
     }
 
+    @Override
+    public void onTabClose(Event event) {
+        super.onTabClose(event);
+        // 取消当前键的选中
+        if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
+            this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
+        }
+    }
 }

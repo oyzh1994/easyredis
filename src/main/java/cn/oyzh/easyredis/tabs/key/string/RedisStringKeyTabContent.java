@@ -10,8 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -21,8 +19,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/31
  */
-@Lazy
-@Component
 public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyTreeItem> {
 
     /**

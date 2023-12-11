@@ -18,12 +18,23 @@ import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
+import cn.oyzh.fx.plus.thread.BackgroundService;
+import cn.oyzh.fx.plus.util.FXUtil;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * redis 键tab
@@ -32,6 +43,12 @@ import lombok.experimental.Accessors;
  * @since 2023/06/21
  */
 public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends DynamicTab {
+
+    /**
+     * 标签打开时间
+     */
+    @Getter
+    private final long openedTime = System.currentTimeMillis();
 
     /**
      * redis树节点
@@ -54,12 +71,29 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
         }
         // 刷新图标
         this.flushGraphic();
-        this.setOnCloseRequest(event -> {
-            // 取消当前键的选中
-            if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
-                this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
-            }
-        });
+        // 刷新标题
+        this.flushTitle();
+        // 判断这个key是否到期
+        if (treeItem.isExpire()) {
+            BackgroundService.submitFXLater(() -> {
+                if (MessageBox.confirm("键[" + treeItem.key() + "]已过期，是否删除？")) {
+                    treeItem.delete();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void setOnCloseRequest(EventHandler<Event> value) {
+        super.setOnCloseRequest(value);
+    }
+
+    @Override
+    public void flushTitle() {
+        // 设置文本
+        this.setText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
+        // 设置提示文本
+        this.setTipText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
     }
 
     @Override
@@ -71,10 +105,6 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
         if (graphic.getCursor() != Cursor.DEFAULT) {
             graphic.setCursor(Cursor.DEFAULT);
         }
-        // 设置文本
-        this.setText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
-        // 设置提示文本
-        this.setTipText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
     }
 
     @Override
@@ -141,5 +171,45 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
             tab = (RedisKeyTab<T>) new RedisStreamKeyTab(treeItem);
         }
         return tab;
+    }
+
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = super.getMenuItems();
+        MenuItem closeConnectTab = MenuItemExt.newItem("关闭当前连接", "关闭当前连接标签页", this::closeConnectTab);
+        MenuItem closeOtherConnectTab = MenuItemExt.newItem("关闭其他连接", "关闭其他连接标签页", this::closeOtherConnectTab);
+        items.add(4, closeConnectTab);
+        items.add(5, closeOtherConnectTab);
+        return items;
+    }
+
+    /**
+     * 关闭当前连接tab
+     */
+    private void closeConnectTab() {
+        FXUtil.runLater(() -> {
+            List<Tab> list = new ArrayList<>();
+            for (Tab tab : this.tabs()) {
+                if (tab instanceof RedisKeyTab<?> keyType && keyType.client() == this.treeItem.client()) {
+                    list.add(tab);
+                }
+            }
+            this.tabs().removeAll(list);
+        });
+    }
+
+    /**
+     * 关闭其他连接tab
+     */
+    private void closeOtherConnectTab() {
+        FXUtil.runLater(() -> {
+            List<Tab> list = new ArrayList<>();
+            for (Tab tab : this.tabs()) {
+                if (tab instanceof RedisKeyTab<?> keyType && keyType.client() == this.treeItem.client()) {
+                    list.add(tab);
+                }
+            }
+            this.tabs().removeAll(list);
+        });
     }
 }

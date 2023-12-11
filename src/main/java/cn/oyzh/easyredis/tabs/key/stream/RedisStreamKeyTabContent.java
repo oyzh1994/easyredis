@@ -17,8 +17,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +27,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/07/07
  */
-@Lazy
-@Component
 public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamKeyTreeItem, RedisStreamRow> {
 
     /**

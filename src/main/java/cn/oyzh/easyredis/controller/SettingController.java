@@ -8,8 +8,10 @@ import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -73,6 +75,18 @@ public class SettingController extends Controller {
     private FlexCheckBox pageLocation;
 
     /**
+     * 标签数量限制
+     */
+    @FXML
+    private NumberTextField tabLimit;
+
+    /**
+     * 标签策略
+     */
+    @FXML
+    private DynamicTabStrategyComboBox tabStrategy;
+
+    /**
      * 配置对象
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
@@ -93,21 +107,21 @@ public class SettingController extends Controller {
                 case 2 -> this.exitMode2.setSelected(true);
             }
         }
-
         // 记住页面大小处理
         if (this.setting.getPageInfo() != null) {
             this.pageSize.setSelected(this.setting.isRememberPageSize());
         }
-
         // 记住页面拉伸处理
         if (this.setting.getRememberPageResize() != null) {
             this.pageResize.setSelected(this.setting.isRememberPageResize());
         }
-
         // 记住页面位置处理
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
+        // 标签相关处理
+        this.tabLimit.setValue(this.setting.getTabLimit());
+        this.tabStrategy.select(this.setting.getTabStrategy());
     }
 
     /**
@@ -117,6 +131,8 @@ public class SettingController extends Controller {
     private void saveSetting() {
         String tips = "";
         // 设置参数
+        this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+        this.setting.setTabLimit(this.tabLimit.getValue().intValue());
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
         this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
