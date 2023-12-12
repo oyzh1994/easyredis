@@ -3,9 +3,10 @@ package cn.oyzh.easyredis.trees;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
-import cn.oyzh.easyredis.event.msg.RedisKeyCopyMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyCopiedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyMovedMsg;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
@@ -332,37 +333,41 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPY, verbose = true, async = true)
-    private void onKeyCopied(RedisKeyCopyMsg msg) {
+    @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPIED, verbose = true, async = true)
+    private void onKeyCopied(RedisKeyCopiedMsg msg) {
         int dbIndex = msg.targetDB();
         TreeItem<?> treeItem = msg.item();
-        RedisConnectTreeItem connectTreeItem = null;
-        if (treeItem instanceof RedisDBTreeItem dbTeeItem) {
-            connectTreeItem = dbTeeItem.parent();
+        RedisDBTreeItem targetDBItem = null;
+        if (treeItem instanceof RedisDBTreeItem dbItem) {
+            dbItem.reloadChild();
+            targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
         } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
-            connectTreeItem = keyTreeItem.connectTreeItem();
+            targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
         }
-        if (connectTreeItem != null) {
-            RedisDBTreeItem dbTreeItem = connectTreeItem.getDatabaseItem(dbIndex);
-            if (dbTreeItem != null) {
-                dbTreeItem.reloadChild();
-            }
+        if (targetDBItem != null) {
+            targetDBItem.reloadChild();
         }
     }
 
     /**
      * 键移动事件
      *
-     * @param treeItem key树节点
+     * @param msg 消息
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
-    private void onKeyMoved(RedisKeyTreeItem<?, ?> treeItem) {
-        int dbIndex = this.getProp("targetDB");
-        RedisConnectTreeItem connectTreeItem = treeItem.connectTreeItem();
-        treeItem.remove();
-        RedisDBTreeItem dbTreeItem = connectTreeItem.getDatabaseItem(dbIndex);
-        if (dbTreeItem != null) {
-            dbTreeItem.reloadChild();
+    private void onKeyMoved(RedisKeyMovedMsg msg) {
+        int dbIndex = msg.targetDB();
+        TreeItem<?> treeItem = msg.item();
+        RedisDBTreeItem targetDBItem = null;
+        if (treeItem instanceof RedisDBTreeItem dbItem) {
+            dbItem.reloadChild();
+            targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
+        } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
+            keyTreeItem.remove();
+            targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
+        }
+        if (targetDBItem != null) {
+            targetDBItem.reloadChild();
         }
     }
 

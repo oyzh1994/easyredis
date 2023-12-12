@@ -10,9 +10,10 @@ import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisInfoDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
-import cn.oyzh.easyredis.event.msg.RedisKeyCopyMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyCopiedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyMovedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyRenamedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyTTLUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisListRowAddedMsg;
@@ -360,8 +361,21 @@ public class RedisEventUtil {
      * @param item     redis树节点
      * @param targetDB 目标库
      */
-    public static void keyCopy(TreeItem<?> item, int targetDB) {
-        RedisKeyCopyMsg msg = new RedisKeyCopyMsg();
+    public static void keyCopied(TreeItem<?> item, int targetDB) {
+        RedisKeyCopiedMsg msg = new RedisKeyCopiedMsg();
+        msg.item(item);
+        msg.targetDB(targetDB);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键移动事件
+     *
+     * @param item     redis树节点
+     * @param targetDB 目标库
+     */
+    public static void keyMoved(TreeItem<?> item, int targetDB) {
+        RedisKeyMovedMsg msg = new RedisKeyMovedMsg();
         msg.item(item);
         msg.targetDB(targetDB);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());

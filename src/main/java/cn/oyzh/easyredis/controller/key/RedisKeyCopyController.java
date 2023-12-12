@@ -10,6 +10,7 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.textfield.DisabledTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -37,7 +38,7 @@ public class RedisKeyCopyController extends Controller {
      * 键
      */
     @FXML
-    private ClearableTextField key;
+    private DisabledTextField key;
 
     /**
      * 存在时替换
@@ -86,7 +87,7 @@ public class RedisKeyCopyController extends Controller {
             // 移动键
             boolean result = this.client.copy(fromDBIndex, key, key, targetDBIndex, this.replace.isSelected());
             if (result) {
-                RedisEventUtil.keyCopy(this.treeItem, targetDBIndex);
+                RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);
                 MessageBox.okToast("复制键成功！");
                 this.closeStage();
             } else {

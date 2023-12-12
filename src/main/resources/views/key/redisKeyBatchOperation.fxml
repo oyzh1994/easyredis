@@ -71,7 +71,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </FXLabel>
-                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="请输入TTL值，单位秒" value="-1"
+                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="请输入TTL值，单位秒，-1代表永不过期" value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
                         <Insets left="10" top="10"/>

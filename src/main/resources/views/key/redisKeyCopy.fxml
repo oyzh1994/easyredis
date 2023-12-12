@@ -10,6 +10,7 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyCopyController" realWidth="400"
           realHeight="210">
@@ -19,11 +20,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </FXLabel>
-        <ClearableTextField editable="false" fx:id="key" realHeight="30.0" flexWidth="100% - 140">
+        <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </ClearableTextField>
+        </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">

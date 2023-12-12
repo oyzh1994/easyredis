@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.controller.key;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -10,6 +11,7 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.textfield.DisabledTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -38,7 +40,7 @@ public class RedisKeyMoveController extends Controller {
      * 键
      */
     @FXML
-    private ClearableTextField key;
+    private DisabledTextField key;
 
     /**
      * 保留ttl
@@ -101,8 +103,7 @@ public class RedisKeyMoveController extends Controller {
                 if (ttl > 0) {
                     this.client.expire(targetDBIndex, key, ttl, null);
                 }
-                this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
-                EventUtil.fire(RedisEventTypes.REDIS_KEY_MOVED, this.treeItem);
+                RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
                 MessageBox.okToast("移动键成功！");
                 this.closeStage();
             }
@@ -134,6 +135,7 @@ public class RedisKeyMoveController extends Controller {
         this.key.setText(this.treeItem.key() + "（db" + this.treeItem.dbIndex() + "）");
         this.targetDB.setDbCount(this.client.databases());
         this.targetDB.selectFirst();
+        this.targetDB.requestFocus();
     }
 
     @Override

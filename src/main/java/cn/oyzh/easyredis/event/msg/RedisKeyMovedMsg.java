@@ -16,9 +16,9 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyCopyMsg implements EventMsg, EventMsgFormatter {
+public class RedisKeyMovedMsg implements EventMsg, EventMsgFormatter {
 
-    private final String name = RedisEventTypes.REDIS_KEY_COPY;
+    private final String name = RedisEventTypes.REDIS_KEY_MOVED;
 
     private final String group = RedisEventGroups.KEY_ACTION;
 
@@ -32,7 +32,7 @@ public class RedisKeyCopyMsg implements EventMsg, EventMsgFormatter {
     public String formatMsg() {
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
             return String.format(
-                    "[%s] 键复制[%s-db%s] 目标库:%s",
+                    "[%s] 键移动[%s-db%s] 目标库:%s",
                     treeItem.info().getName(), treeItem.key(), treeItem.dbIndex(), this.targetDB
             );
         }

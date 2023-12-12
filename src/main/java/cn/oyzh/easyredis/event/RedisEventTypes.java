@@ -97,29 +97,29 @@ public class RedisEventTypes {
     public static final String REDIS_KEY_ADDED = "REDIS_KEY_ADDED";
 
     /**
-     * redis键移动
+     * redis键已移动
      */
     public static final String REDIS_KEY_MOVED = "REDIS_KEY_MOVED";
 
     /**
-     * redis键更名
+     * redis键已更名
      */
     public static final String REDIS_KEY_RENAMED = "REDIS_KEY_RENAMED";
 
     /**
-     * redis键删除
+     * redis键已删除
      */
     public static final String REDIS_KEY_DELETED = "REDIS_KEY_DELETED";
 
     /**
-     * redis键刷新
+     * redis键已刷新
      */
     public static final String REDIS_KEY_FLUSHED = "REDIS_KEY_FLUSHED";
 
     /**
-     * redis键复制
+     * redis键已复制
      */
-    public static final String REDIS_KEY_COPY = "REDIS_KEY_COPY";
+    public static final String REDIS_KEY_COPIED = "REDIS_KEY_COPIED";
 
     /**
      * redis新增list行
