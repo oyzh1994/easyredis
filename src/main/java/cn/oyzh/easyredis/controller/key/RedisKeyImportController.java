@@ -119,12 +119,6 @@ public class RedisKeyImportController extends Controller {
     @FXML
     private FlexCheckBox retainTTL;
 
-    // /**
-    //  * 导入字符集
-    //  */
-    // @FXML
-    // private CharsetComboBox charset;
-
     /**
      * 导入按钮
      */
@@ -235,7 +229,6 @@ public class RedisKeyImportController extends Controller {
                     "源平台：" + this.nodeExport.platform() + "，" +
                     "字符集：" + this.nodeExport.charset();
             this.scriptInfo.setText(info);
-            // this.charset.select(this.nodeExport.getCharset());
         } catch (Exception ex) {
             ex.printStackTrace();
             this.nodeExport = null;
@@ -329,14 +322,17 @@ public class RedisKeyImportController extends Controller {
      * @return 处理方式
      */
     private int handleExist(String key, int dbIndex, String type, String value, Long ttl) {
+        // 跳过
         if (this.skipForExist.isSelected()) {
             return 2;
         }
+        // 覆盖
         if (this.overrideForExist.isSelected()) {
             this.client.del(dbIndex, key);
             this.createNode(key, dbIndex, type, value, ttl);
             return 4;
         }
+        // 更新
         if (this.updateForExist.isSelected()) {
             String keyType = RedisKeyUtil.getKeyType(dbIndex, key, this.client);
             if (!StrUtil.equalsIgnoreCase(keyType, type)) {
@@ -410,8 +406,14 @@ public class RedisKeyImportController extends Controller {
                 }
             }
         }
+        // 处理ttl
         if (redisKey != null && ttl != null && this.retainTTL.isSelected()) {
-            this.client.expire(dbIndex, key, ttl, null);
+            // 持久化
+            if (ttl == -1) {
+                this.client.persist(dbIndex, key);
+            } else {// 设置ttl
+                this.client.expire(dbIndex, key, ttl, null);
+            }
         }
     }
 
