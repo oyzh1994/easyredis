@@ -16,7 +16,7 @@ public enum RedisKeyType {
     ZSET("有序集合"),
     LIST("列表"),
     HASH("哈希表"),
-    HYPERLOGLOG("统计值"),
+    //    HYPERLOGLOG("统计值"),
     STREAM("流");
 
     @Getter
@@ -30,12 +30,12 @@ public enum RedisKeyType {
     public static RedisKeyType valueOfType(String type) {
         if (StrUtil.isNotBlank(type)) {
             return switch (type.toLowerCase()) {
-                case "string", "bitmap" -> STRING;
+                case "string", "bitmap", "hyperloglog", "hylog" -> STRING;
                 case "set" -> SET;
                 case "zset", "geo" -> ZSET;
                 case "list" -> LIST;
                 case "hash" -> HASH;
-                case "hyperloglog" -> HYPERLOGLOG;
+//                case "hyperloglog" -> HYPERLOGLOG;
                 case "stream" -> STREAM;
                 default -> null;
             };

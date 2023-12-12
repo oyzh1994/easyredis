@@ -32,10 +32,10 @@ import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -207,7 +207,7 @@ public class RedisEventUtil {
      * @param key      键名称
      * @param elements 统计元素
      */
-    public static void hyLogElementsAdded(RedisHyLogKeyTreeItem item, String key, String[] elements) {
+    public static void hyLogElementsAdded(RedisStringKeyTreeItem item, String key, String[] elements) {
         RedisHyLogElementsAddedMsg msg = new RedisHyLogElementsAddedMsg();
         msg.item(item);
         msg.key(key);

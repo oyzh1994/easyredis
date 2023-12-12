@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.event.msg;
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
+import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventMsg;
 import cn.oyzh.fx.plus.event.EventMsgFormatter;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class RedisHyLogElementsAddedMsg implements EventMsg, EventMsgFormatter {
     private final String group = RedisEventGroups.KEY_ACTION;
 
     @Setter
-    private RedisHyLogKeyTreeItem item;
+    private RedisStringKeyTreeItem item;
 
     @Setter
     private String key;

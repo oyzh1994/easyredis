@@ -63,12 +63,12 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean excludeStringType;
 
-    /**
-     * 排除hyperLogLog键
-     */
-    @Setter
-    @Getter
-    private boolean excludeHyLogType;
+//    /**
+//     * 排除hyperLogLog键
+//     */
+//    @Setter
+//    @Getter
+//    private boolean excludeHyLogType;
 
     /**
      * 排除stream键
@@ -135,10 +135,10 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
             if (this.excludeStreamType && treeItem.isStreamType()) {
                 return false;
             }
-            // 过滤hyperLogLog键
-            if (this.excludeHyLogType && treeItem.isHyLogType()) {
-                return false;
-            }
+//            // 过滤hyperLogLog键
+//            if (this.excludeHyLogType && treeItem.isHyLogType()) {
+//                return false;
+//            }
             return true;
         }
 

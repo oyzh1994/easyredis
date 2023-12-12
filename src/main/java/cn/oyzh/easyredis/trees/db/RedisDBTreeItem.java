@@ -14,7 +14,6 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
@@ -25,7 +24,6 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -411,7 +409,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     @Override
     public synchronized void addChild(@NonNull List<TreeItem<?>> items) {
-        List<TreeItem<?>> list = null, string = null, hash = null, set = null, zset = null, stream = null, hyLog = null;
+        List<TreeItem<?>> list = null, string = null, hash = null, set = null, zset = null, stream = null;
         for (TreeItem<?> item : items) {
             if (item instanceof RedisStringKeyTreeItem treeItem) {
                 if (string == null) {
@@ -443,11 +441,11 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     stream = new ArrayList<>();
                 }
                 stream.add(treeItem);
-            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
-                if (hyLog == null) {
-                    hyLog = new ArrayList<>();
-                }
-                hyLog.add(treeItem);
+//            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+//                if (hyLog == null) {
+//                    hyLog = new ArrayList<>();
+//                }
+//                hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.realChildren()) {
@@ -471,10 +469,10 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 if (CollUtil.isNotEmpty(zset)) {
                     child.addChild(zset);
                 }
-            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-                if (CollUtil.isNotEmpty(hyLog)) {
-                    child.addChild(hyLog);
-                }
+//            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
+//                if (CollUtil.isNotEmpty(hyLog)) {
+//                    child.addChild(hyLog);
+//                }
             } else if (child.value() == RedisKeyType.STREAM) {
                 if (CollUtil.isNotEmpty(stream)) {
                     child.addChild(stream);
@@ -529,11 +527,11 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     stream = new ArrayList<>();
                 }
                 stream.add(treeItem);
-            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
-                if (hyLog == null) {
-                    hyLog = new ArrayList<>();
-                }
-                hyLog.add(treeItem);
+//            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
+//                if (hyLog == null) {
+//                    hyLog = new ArrayList<>();
+//                }
+//                hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.realChildren()) {
@@ -557,10 +555,10 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 if (CollUtil.isNotEmpty(zset)) {
                     child.removeChild(zset);
                 }
-            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-                if (CollUtil.isNotEmpty(hyLog)) {
-                    child.removeChild(hyLog);
-                }
+//            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
+//                if (CollUtil.isNotEmpty(hyLog)) {
+//                    child.removeChild(hyLog);
+//                }
             } else if (child.value() == RedisKeyType.STREAM) {
                 if (CollUtil.isNotEmpty(stream)) {
                     child.removeChild(stream);
@@ -691,9 +689,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             return new RedisHashKeyTreeItem(hashNode, this);
         }
 
-        if (node instanceof RedisHyLogKey logLogNode) {
-            return new RedisHyLogKeyTreeItem(logLogNode, this);
-        }
+//        if (node instanceof RedisHyLogKey logLogNode) {
+//            return new RedisHyLogKeyTreeItem(logLogNode, this);
+//        }
 
         if (node instanceof RedisStreamKey streamNode) {
             return new RedisStreamKeyTreeItem(streamNode, this);

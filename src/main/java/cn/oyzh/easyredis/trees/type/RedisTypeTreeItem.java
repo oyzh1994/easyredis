@@ -65,14 +65,14 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         return this.value == RedisKeyType.STREAM;
     }
 
-    /**
-     * 是否统计值类型
-     *
-     * @return 结果
-     */
-    public boolean isHyLogType() {
-        return this.value == RedisKeyType.HYPERLOGLOG;
-    }
+//    /**
+//     * 是否统计值类型
+//     *
+//     * @return 结果
+//     */
+//    public boolean isHyLogType() {
+//        return this.value == RedisKeyType.HYPERLOGLOG;
+//    }
 
     /**
      * 是否字符串类型

@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.hylog.RedisHyLogKeyTreeItem;
+import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -45,7 +45,7 @@ public class RedisHyLogElementsAddController extends Controller {
     /**
      * redis键
      */
-    private RedisHyLogKeyTreeItem treeItem;
+    private RedisStringKeyTreeItem treeItem;
 
     /**
      * 添加行

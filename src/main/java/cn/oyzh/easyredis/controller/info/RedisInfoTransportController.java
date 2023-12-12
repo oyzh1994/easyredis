@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.fx.RedisConnectComboBox;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
@@ -183,11 +184,11 @@ public class RedisInfoTransportController extends Controller {
     @FXML
     private FlexCheckBox hashType;
 
-    /**
-     * 排除hyperLogLog类型
-     */
-    @FXML
-    private FlexCheckBox hyperLogLogType;
+//    /**
+//     * 排除hyperLogLog类型
+//     */
+//    @FXML
+//    private FlexCheckBox hyperLogLogType;
 
     /**
      * 当前传输redis对象
@@ -629,7 +630,7 @@ public class RedisInfoTransportController extends Controller {
             return 4;
         }
         String key = node.key();
-        String type = node.type().toString();
+        RedisKeyType type = node.type();
         // 覆盖
         if (this.overrideForExist.isSelected()) {
             this.targetClient.del(targetDBIndex, key);
@@ -638,8 +639,8 @@ public class RedisInfoTransportController extends Controller {
         }
         // 更新
         if (this.updateForExist.isSelected()) {
-            String keyType = RedisKeyUtil.getKeyType(targetDBIndex, key, this.targetClient);
-            if (!StrUtil.equalsIgnoreCase(keyType, type)) {
+            RedisKeyType keyType = RedisKeyUtil.getKeyType(targetDBIndex, key, this.targetClient);
+            if (keyType != type) {
                 return 7;
             }
             this.createNode(node, targetDBIndex);
@@ -688,9 +689,9 @@ public class RedisInfoTransportController extends Controller {
         if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
-            return true;
-        }
+//        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
+//            return true;
+//        }
         if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }

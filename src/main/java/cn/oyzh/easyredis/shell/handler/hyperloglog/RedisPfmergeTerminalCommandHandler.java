@@ -59,6 +59,6 @@ public class RedisPfmergeTerminalCommandHandler extends RedisKeyTerminalCommandH
 
     @Override
     protected RedisKeyType getKeyType() {
-        return RedisKeyType.HYPERLOGLOG;
+        return RedisKeyType.STRING;
     }
 }

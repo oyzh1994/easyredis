@@ -71,15 +71,15 @@ public class RedisKey implements Comparable<RedisKey> {
     public void type(RedisKeyType type) {
         this.type = type;
     }
-
-    /**
-     * 设置键类型
-     *
-     * @param type 键类型
-     */
-    public void type(String type) {
-        this.type = RedisKeyType.valueOfType(type);
-    }
+//
+//    /**
+//     * 设置键类型
+//     *
+//     * @param type 键类型
+//     */
+//    public void type(String type) {
+//        this.type = RedisKeyType.valueOfType(type);
+//    }
 
     /**
      * 是否string键
@@ -126,14 +126,14 @@ public class RedisKey implements Comparable<RedisKey> {
         return RedisKeyType.HASH == this.type;
     }
 
-    /**
-     * 是否hyperLogLog键
-     *
-     * @return 结果
-     */
-    public boolean isHyLogKey() {
-        return RedisKeyType.HYPERLOGLOG == this.type;
-    }
+//    /**
+//     * 是否hyperLogLog键
+//     *
+//     * @return 结果
+//     */
+//    public boolean isHyLogKey() {
+//        return RedisKeyType.HYPERLOGLOG == this.type;
+//    }
 
     /**
      * 是否stream键

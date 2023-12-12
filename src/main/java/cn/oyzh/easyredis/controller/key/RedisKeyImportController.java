@@ -12,8 +12,8 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisHashRow;
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
@@ -267,6 +267,7 @@ public class RedisKeyImportController extends Controller {
                     String type = (String) node.get("type");
                     String value = (String) node.get("value");
                     Integer dbIndex = (Integer) node.get("dbIndex");
+                    RedisKeyType keyType = RedisKeyType.valueOfType(type);
                     // 状态
                     int status = 1;
                     // 异常
@@ -274,9 +275,9 @@ public class RedisKeyImportController extends Controller {
                     try {
                         // 设置数据
                         if (this.client.exists(dbIndex, key)) {
-                            status = this.handleExist(key, dbIndex, type, value, ttl);
+                            status = this.handleExist(key, dbIndex, keyType, value, ttl);
                         } else {// 创建键
-                            this.createNode(key, dbIndex, type, value, ttl);
+                            this.createNode(key, dbIndex, keyType, value, ttl);
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -321,7 +322,7 @@ public class RedisKeyImportController extends Controller {
      * @param ttl     到期时间
      * @return 处理方式
      */
-    private int handleExist(String key, int dbIndex, String type, String value, Long ttl) {
+    private int handleExist(String key, int dbIndex, RedisKeyType type, String value, Long ttl) {
         // 跳过
         if (this.skipForExist.isSelected()) {
             return 2;
@@ -334,8 +335,8 @@ public class RedisKeyImportController extends Controller {
         }
         // 更新
         if (this.updateForExist.isSelected()) {
-            String keyType = RedisKeyUtil.getKeyType(dbIndex, key, this.client);
-            if (!StrUtil.equalsIgnoreCase(keyType, type)) {
+            RedisKeyType keyType = RedisKeyUtil.getKeyType(dbIndex, key, this.client);
+            if (keyType != type) {
                 return 5;
             }
             this.createNode(key, dbIndex, type, value, ttl);
@@ -353,12 +354,12 @@ public class RedisKeyImportController extends Controller {
      * @param value   值
      * @param ttl     到期时间
      */
-    private void createNode(String key, int dbIndex, String type, String value, Long ttl) {
+    private void createNode(String key, int dbIndex, RedisKeyType type, String value, Long ttl) {
         RedisKey redisKey = RedisKeyUtil.deserializeNode(type, value);
         if (redisKey instanceof RedisStringKey stringNode) {
             this.client.set(dbIndex, key, (String) stringNode.value());
-        } else if (redisKey instanceof RedisHyLogKey) {
-            this.client.pfadd(dbIndex, key, "");
+//        } else if (redisKey instanceof RedisHyLogKey) {
+//            this.client.pfadd(dbIndex, key, "");
         } else if (redisKey instanceof RedisListKey listNode) {
             String[] arr;
             if (CollUtil.isEmpty(listNode.value())) {

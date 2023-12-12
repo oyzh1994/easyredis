@@ -214,11 +214,11 @@ public class RedisKeyExportController extends Controller {
     @FXML
     private FlexCheckBox hashType;
 
-    /**
-     * 排除hyperLogLog类型
-     */
-    @FXML
-    private FlexCheckBox hyperLogLogType;
+//    /**
+//     * 排除hyperLogLog类型
+//     */
+//    @FXML
+//    private FlexCheckBox hyperLogLogType;
 
     /**
      * 导出操作任务
@@ -478,9 +478,9 @@ public class RedisKeyExportController extends Controller {
         if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
-            return true;
-        }
+//        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
+//            return true;
+//        }
         if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }

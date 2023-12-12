@@ -13,7 +13,6 @@ import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisHyLogKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
@@ -94,10 +93,10 @@ public class RedisKeyUtil {
             return (String) stringNode.value();
         }
 
-        // hylog
-        if (redisKey instanceof RedisHyLogKey) {
-            return "";
-        }
+//        // hylog
+//        if (redisKey instanceof RedisHyLogKey) {
+//            return "";
+//        }
 
         // list
         if (redisKey instanceof RedisListKey listNode) {
@@ -181,23 +180,23 @@ public class RedisKeyUtil {
      * @param value 值
      * @return redis键
      */
-    public static RedisKey deserializeNode(String type, String value) {
+    public static RedisKey deserializeNode(RedisKeyType type, String value) {
         // string
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.STRING.toString())) {
+        if (type == RedisKeyType.STRING) {
             RedisStringKey node = new RedisStringKey();
             node.value(value == null ? "" : value);
             return node;
         }
 
-        // hylog
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.HYPERLOGLOG.toString())) {
-            RedisHyLogKey node = new RedisHyLogKey();
-            node.value(new byte[]{});
-            return node;
-        }
+//        // hylog
+//        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.HYPERLOGLOG.toString())) {
+//            RedisHyLogKey node = new RedisHyLogKey();
+//            node.value(new byte[]{});
+//            return node;
+//        }
 
         // list
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.LIST.toString())) {
+        if (type == RedisKeyType.LIST) {
             RedisListKey node = new RedisListKey();
             List<String> list = new ArrayList<>();
             if (StrUtil.isNotBlank(value)) {
@@ -211,7 +210,7 @@ public class RedisKeyUtil {
         }
 
         // set
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.SET.toString())) {
+        if (type == RedisKeyType.SET) {
             RedisSetKey node = new RedisSetKey();
             Set<String> list = new HashSet<>();
             if (StrUtil.isNotBlank(value)) {
@@ -225,7 +224,7 @@ public class RedisKeyUtil {
         }
 
         // zset
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.ZSET.toString())) {
+        if (type == RedisKeyType.ZSET) {
             RedisZSetKey node = new RedisZSetKey();
             List<String> list1 = new ArrayList<>();
             List<Double> list2 = new ArrayList<>();
@@ -242,7 +241,7 @@ public class RedisKeyUtil {
         }
 
         // hash
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.HASH.toString())) {
+        if (type == RedisKeyType.HASH) {
             RedisHashKey node = new RedisHashKey();
             Map<String, String> map = new HashMap<>();
             if (StrUtil.isNotBlank(value)) {
@@ -257,7 +256,7 @@ public class RedisKeyUtil {
         }
 
         // stream
-        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.STREAM.toString())) {
+        if (type == RedisKeyType.STREAM) {
             RedisStreamKey node = new RedisStreamKey();
             List<StreamEntry> list = new ArrayList<>();
             if (StrUtil.isNotBlank(value)) {
@@ -297,8 +296,8 @@ public class RedisKeyUtil {
         // string
         if (node instanceof RedisStringKey stringNode) {
             client.set(dbIndex, key, (String) stringNode.value());
-        } else if (node instanceof RedisHyLogKey) {// hylog
-            client.pfadd(dbIndex, key, "");
+//        } else if (node instanceof RedisHyLogKey) {// hylog
+//            client.pfadd(dbIndex, key, "");
         } else if (node instanceof RedisListKey listNode) {// list
             String[] arr;
             if (CollUtil.isEmpty(listNode.value())) {
@@ -375,11 +374,11 @@ public class RedisKeyUtil {
             List<String> value = client.zrange(dbIndex, key);
             List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value, String.class));
             zSetNode.valueOfScore(value, scores);
-        } else if (node instanceof RedisHyLogKey logLogNode) {// hylog
-            Long pfcount = client.pfcount(dbIndex, key);
-            byte[] value = client.get(dbIndex, key.getBytes());
-            logLogNode.value(value);
-            logLogNode.count(pfcount);
+//        } else if (node instanceof RedisHyLogKey logLogNode) {// hylog
+//            Long pfcount = client.pfcount(dbIndex, key);
+//            byte[] value = client.get(dbIndex, key.getBytes());
+//            logLogNode.value(value);
+//            logLogNode.count(pfcount);
         } else if (node instanceof RedisStreamKey streamNode) {// stream
             streamNode.value(client.xrange(dbIndex, key));
         }
@@ -491,7 +490,7 @@ public class RedisKeyUtil {
         // ttl
         AtomicReference<Long> ttlRef;
         // 类型
-        AtomicReference<String> typeRef = new AtomicReference<>();
+        AtomicReference<RedisKeyType> typeRef = new AtomicReference<>();
         // 类型任务
         tasks.add(() -> typeRef.set(getKeyType(dbIndex, key, client)));
         // ttl任务
@@ -510,13 +509,13 @@ public class RedisKeyUtil {
         // 创建键
         RedisKey redisKey = null;
         switch (typeRef.get()) {
-            case "string" -> redisKey = new RedisStringKey();
-            case "hyLog" -> redisKey = new RedisHyLogKey();
-            case "list" -> redisKey = new RedisListKey();
-            case "set" -> redisKey = new RedisSetKey();
-            case "zset" -> redisKey = new RedisZSetKey();
-            case "hash" -> redisKey = new RedisHashKey();
-            case "stream" -> redisKey = new RedisStreamKey();
+            case RedisKeyType.STRING -> redisKey = new RedisStringKey();
+//            case "hyLog" -> redisKey = new RedisHyLogKey();
+            case RedisKeyType.LIST -> redisKey = new RedisListKey();
+            case RedisKeyType.SET -> redisKey = new RedisSetKey();
+            case RedisKeyType.ZSET -> redisKey = new RedisZSetKey();
+            case RedisKeyType.HASH -> redisKey = new RedisHashKey();
+            case RedisKeyType.STREAM -> redisKey = new RedisStreamKey();
             case null, default -> StaticLog.warn("type:{} is not support!", typeRef.get());
         }
         // 处理键
@@ -546,22 +545,23 @@ public class RedisKeyUtil {
      * @param client  redis客户端
      * @return 结果
      */
-    public static String getKeyType(Integer dbIndex, String key, RedisClient client) {
+    public static RedisKeyType getKeyType(Integer dbIndex, String key, RedisClient client) {
         try {
             String type = client.type(dbIndex, key);
-            if ("string".equals(type)) {
-                try {
-                    if (client.pfcount(dbIndex, key) > 0) {
-                        return "hyLog";
-                    }
-                } catch (Exception ex) {
-                    if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
-                        return "string";
-                    }
-                    ex.printStackTrace();
-                }
-            }
-            return type;
+            return RedisKeyType.valueOfType(type);
+//            if ("string".equals(type)) {
+//                try {
+//                    if (client.pfcount(dbIndex, key) > 0) {
+//                        return "hyLog";
+//                    }
+//                } catch (Exception ex) {
+//                    if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
+//                        return "string";
+//                    }
+//                    ex.printStackTrace();
+//                }
+//            }
+//            return type;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

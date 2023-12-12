@@ -77,11 +77,11 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="hylog" fontSize="9" fx:id="showHyLog" selected="true">
-                        <HBox.margin>
-                            <Insets left="5" top="5"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
+<!--                    <FlexCheckBox text="hylog" fontSize="9" fx:id="showHyLog" selected="true">-->
+<!--                        <HBox.margin>-->
+<!--                            <Insets left="5" top="5"/>-->
+<!--                        </HBox.margin>-->
+<!--                    </FlexCheckBox>-->
                     <FlexCheckBox text="stream" fontSize="9" fx:id="showStream" selected="true">
                         <HBox.margin>
                             <Insets left="5" top="5"/>

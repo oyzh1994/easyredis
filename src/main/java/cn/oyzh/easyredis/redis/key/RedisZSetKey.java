@@ -25,8 +25,7 @@ public class RedisZSetKey extends RedisRowKey<RedisZSetRow> {
     public void valueOfScore(List<String> value, List<Double> scores) {
         if (this.value == null) {
             this.value = new ArrayList<>();
-        }
-        if (!this.value.isEmpty()) {
+        } else if (!this.value.isEmpty()) {
             this.value.clear();
         }
         if (CollUtil.isNotEmpty(value)) {
@@ -46,8 +45,7 @@ public class RedisZSetKey extends RedisRowKey<RedisZSetRow> {
     public void valueOfCoordinate(List<String> value, List<GeoCoordinate> coordinates) {
         if (this.value == null) {
             this.value = new ArrayList<>();
-        }
-        if (!this.value.isEmpty()) {
+        } else if (!this.value.isEmpty()) {
             this.value.clear();
         }
         if (CollUtil.isNotEmpty(value)) {

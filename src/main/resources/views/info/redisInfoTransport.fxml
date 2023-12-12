@@ -190,11 +190,11 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FlexCheckBox>
+<!--        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">-->
+<!--            <HBox.margin>-->
+<!--                <Insets left="10" top="18"/>-->
+<!--            </HBox.margin>-->
+<!--        </FlexCheckBox>-->
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
         <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">

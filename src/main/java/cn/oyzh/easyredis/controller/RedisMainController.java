@@ -107,11 +107,11 @@ public class RedisMainController extends ParentController {
     @FXML
     private FlexCheckBox showHash;
 
-    /**
-     * 过滤hyperLogLog键
-     */
-    @FXML
-    private FlexCheckBox showHyLog;
+//    /**
+//     * 过滤hyperLogLog键
+//     */
+//    @FXML
+//    private FlexCheckBox showHyLog;
 
     /**
      * 过滤stream键
@@ -340,7 +340,7 @@ public class RedisMainController extends ParentController {
                 this.showList.disable();
                 this.showString.disable();
                 this.showStream.disable();
-                this.showHyLog.disable();
+//                this.showHyLog.disable();
             } else {
                 this.showSet.enable();
                 this.showZSet.enable();
@@ -348,7 +348,7 @@ public class RedisMainController extends ParentController {
                 this.showList.enable();
                 this.showString.enable();
                 this.showStream.enable();
-                this.showHyLog.enable();
+//                this.showHyLog.enable();
             }
             this.filter();
         });
@@ -358,7 +358,7 @@ public class RedisMainController extends ParentController {
         this.showZSet.selectedChanged((obs, o, n) -> this.filter());
         this.showString.selectedChanged((obs, o, n) -> this.filter());
         this.showStream.selectedChanged((obs, o, n) -> this.filter());
-        this.showHyLog.selectedChanged((obs, o, n) -> this.filter());
+//        this.showHyLog.selectedChanged((obs, o, n) -> this.filter());
 
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
@@ -482,7 +482,7 @@ public class RedisMainController extends ParentController {
                 this.tree.itemFilter().setExcludeHashType(false);
                 this.tree.itemFilter().setExcludeListType(false);
                 this.tree.itemFilter().setExcludeZSetType(false);
-                this.tree.itemFilter().setExcludeHyLogType(false);
+//                this.tree.itemFilter().setExcludeHyLogType(false);
                 this.tree.itemFilter().setExcludeStringType(false);
                 this.tree.itemFilter().setExcludeStreamType(false);
             } else {
@@ -491,7 +491,7 @@ public class RedisMainController extends ParentController {
                 this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
                 this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
                 this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
-                this.tree.itemFilter().setExcludeHyLogType(!this.showHyLog.isSelected());
+//                this.tree.itemFilter().setExcludeHyLogType(!this.showHyLog.isSelected());
                 this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
                 this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
             }
