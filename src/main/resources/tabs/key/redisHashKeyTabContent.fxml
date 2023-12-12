@@ -72,7 +72,7 @@
                     </FlowPane.margin>
                 </FXLabel>
                 <FXLabel tipText="键加载时间" fx:id="loadTime"
-                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
+                         style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>

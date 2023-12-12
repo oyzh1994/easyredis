@@ -60,13 +60,25 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 数据撤销
      */
     @FXML
-    private SVGGlyph dataUndo;
+    protected SVGGlyph dataUndo;
 
     /**
      * 数据重做
      */
     @FXML
-    private SVGGlyph dataRedo;
+    protected SVGGlyph dataRedo;
+
+    /**
+     * 清除数据
+     */
+    @FXML
+    protected SVGGlyph clearData;
+
+    /**
+     * 粘贴数据
+     */
+    @FXML
+    protected SVGGlyph pasteData;
 
     /**
      * 格式
@@ -369,10 +381,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.nodeData.setPromptText("数据加载中...");
         ExecutorUtil.start(() -> FXUtil.runLater(() -> {
             try {
-                // this.nodeData.removeTextChangeListener(this.getDataListener());
                 this.nodeData.setRawData(rawData);
                 this.treeItem.clearData();
-                // this.nodeData.addTextChangeListener(this.getDataListener());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);

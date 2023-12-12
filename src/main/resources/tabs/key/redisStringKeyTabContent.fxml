@@ -42,13 +42,15 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
+                <SVGGlyph url="/font/file-paste.svg" fx:id="pasteData" sizeStr="14,16"
+                          onMousePrimaryClicked="#pasteData"
                           tipText="粘贴(Ctrl+V)">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData" tipText="清空数据">
+                <SVGGlyph url="/font/clear.svg" size="16" fx:id="clearData" onMousePrimaryClicked="#clearData"
+                          tipText="清空数据">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -91,11 +93,22 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
+                <SVGGlyph tipText="添加元素" managed="false" visible="false" size="15" fx:id="addRow" onMousePrimaryClicked="#addRow"
+                          url="/font/add.svg">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </SVGGlyph>
                 <RedisFormatComboBox prefHeight="24" fontSize="10" initIndex="0" tipText="格式" fx:id="format">
                     <FlowPane.margin>
                         <Insets left="5" top="-4"/>
                     </FlowPane.margin>
                 </RedisFormatComboBox>
+                <FXLabel fx:id="count" tipText="元素统计值" fontSize="16">-->
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXLabel>
                 <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="16"
                          onMousePrimaryClicked="#ttlUpdate">
                     <FlowPane.margin>
@@ -103,7 +116,7 @@
                     </FlowPane.margin>
                 </FXLabel>
                 <FXLabel tipText="键加载时间" fx:id="loadTime"
-                         style="-fx-cursor: HAND;-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
+                         style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -119,16 +132,6 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <!--                <FXLabel text="字符集:" fontSize="11">-->
-                <!--                    <FlowPane.margin>-->
-                <!--                        <Insets left="5"/>-->
-                <!--                    </FlowPane.margin>-->
-                <!--                </FXLabel>-->
-                <!-- <CharsetComboBox fx:id="charset" initIndex="0" fontSize="11" prefWidth="85" style="-fx-padding: 0;"> -->
-                <!--     <FlowPane.margin> -->
-                <!--         <Insets left="2"/> -->
-                <!--     </FlowPane.margin> -->
-                <!-- </CharsetComboBox> -->
                 <padding>
                     <Insets top="9"/>
                 </padding>

@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.string;
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
@@ -54,6 +55,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, Red
                 val = this.client().get(this.dbIndex(), this.key());
             }
             this.value.value(val);
+            this.flushCount();
             // 清空未保存的数据
             this.clearData();
         } catch (Exception ex) {
@@ -116,5 +118,45 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, Red
      */
     public Integer size() {
         return this.value.size();
+    }
+
+    /**
+     * 获取统计值大小
+     *
+     * @return 统计值大小
+     */
+    public boolean isHyLog() {
+        if (this.value.hyLog() == null) {
+            this.flushCount();
+        }
+        return this.value.isHyLog();
+    }
+
+    /**
+     * 获取统计值
+     *
+     * @return 统计值
+     */
+    public Long count() {
+        if (this.value.count() == null) {
+            this.flushCount();
+        }
+        return this.value.count();
+    }
+
+    /**
+     * 刷新统计值
+     */
+    public void flushCount() {
+        try {
+            this.value.count(this.client().pfcount(this.dbIndex(), this.key()));
+            this.value.hyLog(true);
+        } catch (Exception ex) {
+            if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
+                this.value.hyLog(false);
+            } else {
+                ex.printStackTrace();
+            }
+        }
     }
 }

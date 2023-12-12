@@ -319,7 +319,6 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
                 this.getValue().name(newKey);
-                // EventUtil.fire(RedisEventTypes.REDIS_KEY_RENAMED, this);
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {
                 MessageBox.warn("更改键名称失败！");

@@ -259,11 +259,11 @@ public class RedisKeyAddController extends Controller {
                 result = this.addHashNode(dbIndex, key);
                 keyType = "HASH";
             } else if (type == 5) {
-                result = this.addHyLogNode(dbIndex, key);
-                keyType = "HYPERLOGLOG/STRING";
-            } else if (type == 6) {
                 result = this.addStreamNode(dbIndex, key);
                 keyType = "STREAM";
+            } else if (type == 6) {
+                result = this.addHyLogNode(dbIndex, key);
+                keyType = "HYPERLOGLOG/STRING";
             } else if (type == 7) {
                 result = this.addGEONode(dbIndex, key);
                 keyType = "GEO/ZSET";
@@ -504,9 +504,9 @@ public class RedisKeyAddController extends Controller {
             } else if (newValue.intValue() == 4) {
                 this.mutexes.visible(this.hashBox);
             } else if (newValue.intValue() == 5) {
-                this.mutexes.visible(this.hylogBox);
-            } else if (newValue.intValue() == 6) {
                 this.mutexes.visible(this.streamBox);
+            } else if (newValue.intValue() == 6) {
+                this.mutexes.visible(this.hylogBox);
             } else if (newValue.intValue() == 7) {
                 this.mutexes.visible(this.geoBox);
             } else if (newValue.intValue() == 8) {

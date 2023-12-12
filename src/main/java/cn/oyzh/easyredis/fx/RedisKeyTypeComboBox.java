@@ -16,6 +16,7 @@ public class RedisKeyTypeComboBox extends FlexComboBox<String> {
         for (RedisKeyType value : RedisKeyType.values()) {
             this.getItems().add(value.name() + "(" + value.desc() + ")");
         }
+        this.getItems().add("HYPERLOGLOG(统计值)");
         this.getItems().add("GEO(地理坐标)");
         this.getItems().add("BITMAP(位图)");
     }
