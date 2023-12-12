@@ -153,9 +153,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.collect.setVisible(!this.treeItem.isCollect());
         this.unCollect.setVisible(this.treeItem.isCollect());
 
-        // 初始化节点
-        this.initNode();
-
         // 初始化键信息
         this.keyInfoController.init(treeItem);
 
@@ -163,6 +160,9 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         if (this.format != null) {
             this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
         }
+
+        // 初始化节点
+        this.initNode();
 
         // 加载耗时处理
         FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
@@ -325,7 +325,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 格式变化事件
      */
     protected void onFormatChange() {
-        // this.nodeData.removeTextChangeListener(this.getDataListener());
         if (this.format.isRawFormat()) {
             this.showData((byte) 0);
             this.nodeData.setEditable(true);

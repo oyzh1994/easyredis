@@ -74,10 +74,6 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @Override
     public boolean init(RedisStringKeyTreeItem treeItem) {
         if (super.init(treeItem)) {
-            // 如果是raw格式，则选择binary
-            if (this.treeItem.isRawEncoding()) {
-                this.format.selectBinary();
-            }
             this.addRow.managedBindVisible();
             // hyLog格式
             if (this.treeItem.isHyLog()) {
@@ -127,6 +123,10 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         this.saveNodeData.display();
         // 按钮状态处理
         this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+        // 如果是raw格式，则选择binary
+        if (this.treeItem.isRawEncoding()) {
+            this.format.selectBinary();
+        }
     }
 
     /**
@@ -144,6 +144,8 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         this.pasteData.disappear();
         this.clearData.disappear();
         this.saveNodeData.disappear();
+        // 统计值默认选择字符串
+        this.format.selectString();
     }
 
     /**
