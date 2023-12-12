@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyCopyMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
@@ -329,11 +330,12 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 键复制事件
      *
-     * @param treeItem key树节点
+     * @param msg 消息
      */
     @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPY, verbose = true, async = true)
-    private void onKeyCopied(TreeItem<?> treeItem) {
-        int dbIndex = this.getProp("targetDB");
+    private void onKeyCopied(RedisKeyCopyMsg msg) {
+        int dbIndex = msg.targetDB();
+        TreeItem<?> treeItem = msg.item();
         RedisConnectTreeItem connectTreeItem = null;
         if (treeItem instanceof RedisDBTreeItem dbTeeItem) {
             connectTreeItem = dbTeeItem.parent();

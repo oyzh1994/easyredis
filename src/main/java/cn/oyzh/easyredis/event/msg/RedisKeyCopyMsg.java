@@ -5,33 +5,37 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventMsg;
 import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import javafx.scene.control.TreeItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/12/11
+ * @since 2023/12/12
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyRenamedMsg implements EventMsg, EventMsgFormatter {
+public class RedisKeyCopyMsg implements EventMsg, EventMsgFormatter {
 
-    private final String name = RedisEventTypes.REDIS_KEY_RENAMED;
+    private final String name = RedisEventTypes.REDIS_KEY_COPY;
 
     private final String group = RedisEventGroups.KEY_ACTION;
 
     @Setter
-    private RedisKeyTreeItem<?, ?> item;
+    private TreeItem<?> item;
 
     @Setter
-    private String oldKey;
+    private int targetDB;
 
     @Override
     public String formatMsg() {
-        return String.format(
-                "[%s] 键更名[%s-db%s] 新名称:%s",
-                this.item.info().getName(), this.oldKey, this.item.dbIndex(), this.item.key()
-        );
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+            return String.format(
+                    "[%s] 键复制[%s-db%s] 目标库:%s",
+                    treeItem.info().getName(), treeItem.key(), treeItem.dbIndex(), this.targetDB
+            );
+        }
+        return null;
     }
 }

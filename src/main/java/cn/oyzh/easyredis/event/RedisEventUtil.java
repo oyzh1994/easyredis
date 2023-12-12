@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisInfoDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisKeyCopyMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyRenamedMsg;
@@ -37,6 +38,7 @@ import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
+import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -342,13 +344,26 @@ public class RedisEventUtil {
     /**
      * 键更名事件
      *
-     * @param item    redis树节点
+     * @param item   redis树节点
      * @param oldKey 旧名称
      */
     public static void keyRenamed(RedisKeyTreeItem<?, ?> item, String oldKey) {
         RedisKeyRenamedMsg msg = new RedisKeyRenamedMsg();
         msg.item(item);
         msg.oldKey(oldKey);
+        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+    }
+
+    /**
+     * 键复制事件
+     *
+     * @param item     redis树节点
+     * @param targetDB 目标库
+     */
+    public static void keyCopy(TreeItem<?> item, int targetDB) {
+        RedisKeyCopyMsg msg = new RedisKeyCopyMsg();
+        msg.item(item);
+        msg.targetDB(targetDB);
         EventUtil.fire(EventBuilder.newBuilder(msg).build());
     }
 }

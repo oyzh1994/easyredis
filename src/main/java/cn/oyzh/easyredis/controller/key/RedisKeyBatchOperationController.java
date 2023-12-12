@@ -355,8 +355,7 @@ public class RedisKeyBatchOperationController extends Controller {
                         }
                     }
                     this.showKeys(keys, this.keys5);
-                    this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
-                    EventUtil.fire(RedisEventTypes.REDIS_KEY_COPY, this.treeItem);
+                    RedisEventUtil.keyCopy(this.treeItem, targetDBIndex);
                     MessageBox.okToast("复制键成功");
                 } finally {
                     this.stage.enable();

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -10,7 +10,6 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -84,18 +83,15 @@ public class RedisKeyCopyController extends Controller {
                 MessageBox.warn("目标库和来源库不能是同一个！");
                 return;
             }
-            // 保留ttl
-            long ttl = -3;
             // 移动键
             boolean result = this.client.copy(fromDBIndex, key, key, targetDBIndex, this.replace.isSelected());
-            if (!result) {
-                MessageBox.warn("复制键失败！");
-            } else {
-                this.treeItem.getTreeView().setProp("targetDB", targetDBIndex);
-                EventUtil.fire(RedisEventTypes.REDIS_KEY_COPY, this.treeItem);
+            if (result) {
+                RedisEventUtil.keyCopy(this.treeItem, targetDBIndex);
                 MessageBox.okToast("复制键成功！");
+                this.closeStage();
+            } else {
+                MessageBox.warn("复制键失败，键可能已经存在！");
             }
-            this.closeStage();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -124,5 +120,6 @@ public class RedisKeyCopyController extends Controller {
         this.key.setText(this.treeItem.key() + "（db" + this.treeItem.dbIndex() + "）");
         this.targetDB.setDbCount(this.client.databases());
         this.targetDB.selectFirst();
+        this.targetDB.requestFocus();
     }
 }
