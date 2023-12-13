@@ -51,6 +51,7 @@ import lombok.experimental.Accessors;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -762,5 +763,13 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof RedisDBTreeItem item) {
+            return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(this, item);
+        }
+        return super.compareTo(o);
     }
 }

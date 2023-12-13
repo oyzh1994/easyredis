@@ -26,9 +26,9 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             return null;
         }
 
-        if (e instanceof RedisException e1) {
-            if (e1.getCause() != null) {
-                e = e1.getCause();
+        if (e instanceof RuntimeException) {
+            if (e.getCause() != null) {
+                e = e.getCause();
             }
         }
 
