@@ -1,7 +1,6 @@
-package cn.oyzh.easyredis.parser;
+package cn.oyzh.easyredis.exception;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.exception.RedisException;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
@@ -26,6 +25,13 @@ public class RedisExceptionParser implements Function<Throwable, String> {
         if (e == null) {
             return null;
         }
+
+        if (e instanceof RedisException e1) {
+            if (e1.getCause() != null) {
+                e = e1.getCause();
+            }
+        }
+
         String message = e.getMessage();
         if (e instanceof JedisDataException) {
             if (StrUtil.contains(message, "NOAUTH Authentication required")) {

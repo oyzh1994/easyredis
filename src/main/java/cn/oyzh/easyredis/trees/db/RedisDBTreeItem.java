@@ -264,7 +264,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
         // 查询数据
         String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
-        List<RedisKey> dbKeys = RedisKeyUtil.allNodes(this.dbIndex, pattern, false, this.client());
+        List<RedisKey> dbKeys = RedisKeyUtil.allKeys(this.dbIndex, pattern, this.client());
         if (CollUtil.isNotEmpty(dbKeys)) {
             List<TreeItem<?>> shows = new ArrayList<>(dbKeys.size());
             List<TreeItem<?>> hides = new ArrayList<>(dbKeys.size());
@@ -309,11 +309,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         List<RedisKeyTreeItem<?, ?>> keyItems = this.keyChildren();
         // 禁用排序
         this.setSortable(false);
-        // 是否为空
+        // 当前光标
         String cursor = null;
+        // 扫描参数
         String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
         ScanParams params = new ScanParams();
-        params.count(50);
+        params.count(1000);
         params.match(pattern);
         // 全部节点
         List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
@@ -323,10 +324,11 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 扫描数据
         while (true) {
             scanWatch.start("scan nodes");
-            RedisScanResult result = RedisKeyUtil.scanNodes(this.dbIndex, cursor, params, this.client());
+            // 扫描数据
+            RedisScanResult result = RedisKeyUtil.scanKeys(this.dbIndex, cursor, params, this.client());
             scanWatch.stop();
             StaticLog.info(scanWatch.prettyPrint(TimeUnit.MILLISECONDS));
-            // 渲染节点
+            // 渲染数据
             RenderService.submit(() -> this.renderChild(renderWatch, keyItems, result.getKeys(), allKeys, result.isFinish()));
             // 查询结束
             if (result.isFinish()) {
@@ -734,7 +736,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     public void onKeyAdded(String key) {
         try {
-            RedisKey redisKey = RedisKeyUtil.getNode(this.dbIndex, key, this.client());
+            RedisKey redisKey = RedisKeyUtil.getKey(this.dbIndex, key, false, false, this.client());
             this.addChild(this.initItemByNode(redisKey));
             this.flushValue();
         } catch (Exception ex) {

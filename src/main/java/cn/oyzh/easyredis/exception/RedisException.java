@@ -16,4 +16,7 @@ public class RedisException extends RuntimeException {
         super(message);
     }
 
+    public RedisException(Exception ex) {
+        super(ex);
+    }
 }

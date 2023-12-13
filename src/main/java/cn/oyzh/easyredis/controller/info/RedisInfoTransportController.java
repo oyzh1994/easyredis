@@ -1,14 +1,13 @@
 package cn.oyzh.easyredis.controller.info;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.fx.RedisConnectComboBox;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
-import cn.oyzh.easyredis.parser.RedisExceptionParser;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
@@ -593,7 +592,7 @@ public class RedisInfoTransportController extends Controller {
                 }
                 int status;
                 // 获取键
-                RedisKey redisKey = RedisKeyUtil.getNode(fromDBIndex, key, this.retainTTL.isSelected(), true, this.fromClient);
+                RedisKey redisKey = RedisKeyUtil.getKey(fromDBIndex, key, this.retainTTL.isSelected(), true, this.fromClient);
                 // 获取键失败
                 if (redisKey == null) {
                     status = 0;
@@ -639,7 +638,7 @@ public class RedisInfoTransportController extends Controller {
         }
         // 更新
         if (this.updateForExist.isSelected()) {
-            RedisKeyType keyType = RedisKeyUtil.getKeyType(targetDBIndex, key, this.targetClient);
+            RedisKeyType keyType = RedisKeyUtil.keyType(targetDBIndex, key, this.targetClient);
             if (keyType != type) {
                 return 7;
             }

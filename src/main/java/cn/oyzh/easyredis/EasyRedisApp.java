@@ -3,7 +3,7 @@ package cn.oyzh.easyredis;
 import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.controller.MainController;
-import cn.oyzh.easyredis.parser.RedisExceptionParser;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;

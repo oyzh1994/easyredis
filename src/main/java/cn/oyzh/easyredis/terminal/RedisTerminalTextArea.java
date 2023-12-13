@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.terminal;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisConnect;
-import cn.oyzh.easyredis.parser.RedisExceptionParser;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.util.RedisConnectUtil;

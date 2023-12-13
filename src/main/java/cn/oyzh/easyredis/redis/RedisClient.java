@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
+import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
@@ -22,6 +23,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.BuilderFactory;
+import redis.clients.jedis.ClusterPipeline;
 import redis.clients.jedis.CommandObjects;
 import redis.clients.jedis.Connection;
 import redis.clients.jedis.ConnectionPool;
@@ -35,7 +37,9 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 import redis.clients.jedis.JedisSentinelPool;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Protocol;
+import redis.clients.jedis.Response;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.args.BitCountOption;
 import redis.clients.jedis.args.ExpiryOption;
@@ -561,7 +565,7 @@ public class RedisClient {
         } catch (Exception ex) {
             this.state.set(RedisConnState.FAILED);
             StaticLog.warn("redisClient start error", ex);
-            throw new RuntimeException(ex);
+            throw new RedisException(ex);
         }
     }
 
@@ -3451,6 +3455,48 @@ public class RedisClient {
         } finally {
             this.returnResource(jedis);
         }
+    }
+
+    /**
+     * 获取键类型，支持多个
+     *
+     * @param dbIndex db索引
+     * @param keys    键列表
+     * @return 键类型列表
+     */
+    public List<String> typeMulti(Integer dbIndex, Collection<String> keys) {
+        if (CollUtil.isEmpty(keys)) {
+            return Collections.emptyList();
+        }
+        this.throwSentinelException();
+        RedisVersionUtil.checkSupported(this.getServerVersion(), "type");
+        // 类型集合
+        List<String> types = new ArrayList<>(keys.size());
+        // cluster集群处理
+        if (this.isClusterMode()) {
+            try (ClusterPipeline pipeline = this.getCluster().pipelined()) {
+                List<Response<String>> list = new ArrayList<>(keys.size());
+                for (String key : keys) {
+                    list.add(pipeline.type(key));
+                }
+                pipeline.sync();
+                for (Response<String> response : list) {
+                    types.add(response.get());
+                }
+            }
+        } else {// 一般连接处理
+            Jedis jedis = this.getResource();
+            try (Pipeline pipeline = jedis.pipelined()) {
+                this.dbIndex(jedis, dbIndex);
+                for (String key : keys) {
+                    pipeline.type(key);
+                }
+                types = (List) pipeline.syncAndReturnAll();
+            } finally {
+                this.returnResource(jedis);
+            }
+        }
+        return types;
     }
 
     /**

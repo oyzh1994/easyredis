@@ -109,7 +109,7 @@ public class RedisKeyInfoContent implements Initializable {
         try {
             String key = this.treeItem.key();
             int dbIndex = this.treeItem.dbIndex();
-            RedisKeyUtil.getNodeObject(this.redisKey, dbIndex, key, this.client);
+            RedisKeyUtil.keyObject(this.redisKey, dbIndex, key, this.client);
             this.objectIdletime.setText(this.redisKey.objectIdletimeString());
             this.objectRefcount.setText(this.redisKey.objectRefcountString());
             this.objectEncoding.setText(this.redisKey.objectedEncodingString());

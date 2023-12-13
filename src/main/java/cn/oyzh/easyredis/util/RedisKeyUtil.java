@@ -23,7 +23,6 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
@@ -32,14 +31,13 @@ import redis.clients.jedis.resps.ScanResult;
 import redis.clients.jedis.resps.StreamEntry;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -355,7 +353,7 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void getNodeValue(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyValue(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
         // string
         if (node instanceof RedisStringKey stringNode) {
             String value = client.get(dbIndex, key);
@@ -368,7 +366,6 @@ public class RedisKeyUtil {
             hashNode.value(value);
         } else if (node instanceof RedisSetKey setNode) {// set
             Set<String> value = client.smembers(dbIndex, key);
-            setNode.value(value);
             setNode.value(value);
         } else if (node instanceof RedisZSetKey zSetNode) { // zset
             List<String> value = client.zrange(dbIndex, key);
@@ -392,7 +389,7 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void getNodeObject(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyObject(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
         Long objectRefcount = client.objectRefcount(dbIndex, key);
         Long objectIdletime = client.objectIdletime(dbIndex, key);
         String objectEncoding = client.objectEncoding(dbIndex, key);
@@ -410,129 +407,130 @@ public class RedisKeyUtil {
      * @param client  redis客户端
      * @return 扫描结果
      */
-    public static RedisScanResult scanNodes(Integer dbIndex, String cursor, ScanParams params, RedisClient client) {
-        return scanNodes(dbIndex, cursor, params, false, client);
-    }
-
-    /**
-     * 扫描节点
-     *
-     * @param dbIndex   都不索引
-     * @param cursor    光标
-     * @param params    参数
-     * @param loadValue 是否加载值
-     * @param client    redis客户端
-     * @return 扫描结果
-     */
-    public static RedisScanResult scanNodes(Integer dbIndex, String cursor, ScanParams params, boolean loadValue, RedisClient client) {
+    public static RedisScanResult scanKeys(Integer dbIndex, String cursor, ScanParams params, RedisClient client) {
+        // 开始时间
+        long start = System.currentTimeMillis();
+        // 扫描
         ScanResult<String> result = client.scan(dbIndex, cursor, params);
         RedisScanResult scanResult = new RedisScanResult();
         if (result == null) {
             return scanResult;
         }
+        // 设置游标
         scanResult.setCursor(result.getCursor());
-        List<Callable<RedisKey>> tasks = new ArrayList<>(result.getResult().size());
-        for (String key : result.getResult()) {
-            tasks.add(() -> getNode(dbIndex, key, false, loadValue, client));
+        // 获取游标结果
+        List<String> keys = result.getResult();
+        // 批量获取键类型
+        List<RedisKeyType> types = keyType(dbIndex, keys, client);
+        if (types == null) {
+            throw new RuntimeException("获取键类型失败！");
         }
-        List<RedisKey> nodes = ThreadUtil.invoke(tasks);
-        scanResult.setKeys(nodes);
+        // 结束时间
+        long end = System.currentTimeMillis();
+        // 加载耗时
+        short loadTime = (short) (end - start);
+        // 处理键
+        List<RedisKey> redisKeys = new ArrayList<>(keys.size());
+        for (int i = 0; i < keys.size(); i++) {
+            RedisKey redisKey = initKey(dbIndex, keys.get(i), types.get(i));
+            redisKey.loadTime(loadTime);
+            redisKeys.add(redisKey);
+        }
+        scanResult.setKeys(redisKeys);
         return scanResult;
     }
 
     /**
      * 获取所有节点
      *
-     * @param dbIndex   db索引
-     * @param pattern   键模式
-     * @param loadValue 是否加载值
-     * @param client    redis客户端
+     * @param dbIndex db索引
+     * @param pattern 键模式
+     * @param client  redis客户端
      * @return 节点列表
      */
-    public static List<RedisKey> allNodes(Integer dbIndex, String pattern, boolean loadValue, RedisClient client) {
+    public static List<RedisKey> allKeys(Integer dbIndex, String pattern, RedisClient client) {
+        // 开始时间
+        long start = System.currentTimeMillis();
+        // 获取键列表
         Set<String> keys = client.keys(dbIndex, pattern);
-        List<RedisKey> nodes = new ArrayList<>(keys.size());
-        for (String key : keys) {
-            RedisKey node = getNode(dbIndex, key, false, loadValue, client);
-            if (node != null) {
-                nodes.add(node);
-            }
+        // 批量获取键类型
+        List<RedisKeyType> types = keyType(dbIndex, keys, client);
+        if (types == null) {
+            throw new RuntimeException("获取键类型失败！");
         }
-        return nodes;
+        // 结束时间
+        long end = System.currentTimeMillis();
+        // 加载耗时
+        short loadTime = (short) (end - start);
+        // 处理键
+        List<RedisKey> redisKeys = new ArrayList<>(keys.size());
+        for (int i = 0; i < keys.size(); i++) {
+            RedisKey redisKey = initKey(dbIndex, CollUtil.get(keys, i), types.get(i));
+            redisKey.loadTime(loadTime);
+            redisKeys.add(redisKey);
+        }
+        return redisKeys;
     }
 
     /**
-     * 获取节点
-     *
-     * @param dbIndex db索引
-     * @param key     键
-     * @param client  redis客户端
-     * @return redis节点
-     */
-    public static RedisKey getNode(int dbIndex, @NonNull String key, RedisClient client) {
-        return getNode(dbIndex, key, false, false, client);
-    }
-
-    /**
-     * 获取节点
+     * 获取键
      *
      * @param dbIndex   db索引
      * @param key       键
      * @param ttl       是否获取ttl
-     * @param loadValue 加载值
+     * @param loadValue 是否加载值
      * @param client    redis客户端
      * @return redis节点
      */
-    public static RedisKey getNode(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
+    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
+        // 开始时间
         long start = System.currentTimeMillis();
-        // 任务
-        List<Runnable> tasks = new ArrayList<>(2);
+        // 初始化键
+        RedisKey redisKey = initKey(dbIndex, key, keyType(dbIndex, key, client));
+        if (redisKey == null) {
+            return null;
+        }
         // ttl
-        AtomicReference<Long> ttlRef;
-        // 类型
-        AtomicReference<RedisKeyType> typeRef = new AtomicReference<>();
-        // 类型任务
-        tasks.add(() -> typeRef.set(getKeyType(dbIndex, key, client)));
-        // ttl任务
         if (ttl) {
-            ttlRef = new AtomicReference<>();
-            tasks.add(() -> ttlRef.set(client.ttl(dbIndex, key)));
-        } else {
-            ttlRef = null;
+            redisKey.ttl(client.ttl(dbIndex, key));
         }
-        // 执行任务
-        if (tasks.size() == 1) {
-            tasks.getFirst().run();
-        } else {
-            ThreadUtil.submitVirtual(tasks);
+        // 值
+        if (loadValue) {
+            keyValue(redisKey, dbIndex, key, client);
         }
+        // 结束时间
+        long end = System.currentTimeMillis();
+        // 加载耗时
+        long loadTime = end - start;
+        redisKey.loadTime((short) loadTime);
+        return redisKey;
+    }
+
+    /**
+     * 初始化键
+     *
+     * @param dbIndex db索引
+     * @param key     键名称
+     * @param type    键类型
+     * @return redis键
+     */
+    public static RedisKey initKey(int dbIndex, @NonNull String key, RedisKeyType type) {
         // 创建键
         RedisKey redisKey = null;
-        switch (typeRef.get()) {
+        switch (type) {
             case RedisKeyType.STRING -> redisKey = new RedisStringKey();
-//            case "hyLog" -> redisKey = new RedisHyLogKey();
             case RedisKeyType.LIST -> redisKey = new RedisListKey();
             case RedisKeyType.SET -> redisKey = new RedisSetKey();
             case RedisKeyType.ZSET -> redisKey = new RedisZSetKey();
             case RedisKeyType.HASH -> redisKey = new RedisHashKey();
             case RedisKeyType.STREAM -> redisKey = new RedisStreamKey();
-            case null, default -> StaticLog.warn("type:{} is not support!", typeRef.get());
+            case null, default -> StaticLog.warn("type:{} is not support!", type);
         }
         // 处理键
         if (redisKey != null) {
             redisKey.key(key);
+            redisKey.type(type);
             redisKey.dbIndex(dbIndex);
-            redisKey.type(typeRef.get());
-            if (ttlRef != null) {
-                redisKey.ttl(ttlRef.get());
-            }
-            // 加载值
-            if (loadValue) {
-                getNodeValue(redisKey, dbIndex, key, client);
-            }
-            long end = System.currentTimeMillis();
-            long loadTime = end - start;
-            redisKey.loadTime((short) loadTime);
         }
         return redisKey;
     }
@@ -545,23 +543,34 @@ public class RedisKeyUtil {
      * @param client  redis客户端
      * @return 结果
      */
-    public static RedisKeyType getKeyType(Integer dbIndex, String key, RedisClient client) {
+    public static RedisKeyType keyType(Integer dbIndex, String key, RedisClient client) {
         try {
             String type = client.type(dbIndex, key);
             return RedisKeyType.valueOfType(type);
-//            if ("string".equals(type)) {
-//                try {
-//                    if (client.pfcount(dbIndex, key) > 0) {
-//                        return "hyLog";
-//                    }
-//                } catch (Exception ex) {
-//                    if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
-//                        return "string";
-//                    }
-//                    ex.printStackTrace();
-//                }
-//            }
-//            return type;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取键类型
+     *
+     * @param dbIndex 数据库索引
+     * @param keys    键
+     * @param client  redis客户端
+     * @return 结果
+     */
+    public static List<RedisKeyType> keyType(Integer dbIndex, Collection<String> keys, RedisClient client) {
+        try {
+            List<String> types = client.typeMulti(dbIndex, keys);
+            if (types.size() == keys.size()) {
+                List<RedisKeyType> list = new ArrayList<>();
+                for (String type : types) {
+                    list.add(RedisKeyType.valueOfType(type));
+                }
+                return list;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

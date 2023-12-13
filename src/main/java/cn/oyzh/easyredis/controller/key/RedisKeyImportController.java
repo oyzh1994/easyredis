@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.parser.RedisExceptionParser;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
@@ -335,7 +335,7 @@ public class RedisKeyImportController extends Controller {
         }
         // 更新
         if (this.updateForExist.isSelected()) {
-            RedisKeyType keyType = RedisKeyUtil.getKeyType(dbIndex, key, this.client);
+            RedisKeyType keyType = RedisKeyUtil.keyType(dbIndex, key, this.client);
             if (keyType != type) {
                 return 5;
             }

@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
-import cn.oyzh.easyredis.parser.RedisExceptionParser;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterStore;
@@ -438,7 +438,7 @@ public class RedisKeyExportController extends Controller {
                     continue;
                 }
                 // 获取键
-                RedisKey redisKey = RedisKeyUtil.getNode(dbIndex, key, this.retainTTL.isSelected(), true, this.client);
+                RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL.isSelected(), true, this.client);
                 // 失败
                 if (redisKey == null) {
                     this.updateStatus(dbIndex, key, 0, null);
