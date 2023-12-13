@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
 import cn.hutool.json.JSONUtil;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.server.RedisCommandInfoTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
@@ -36,7 +36,7 @@ public class RedisCommandInfoTerminalCommandHandler extends RedisTerminalCommand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Map<String, CommandInfo> info = terminal.client().commandInfo(command.commands());
-            result.setResult(RedisShellUtil.formatOut(JSONUtil.toJsonStr(info)));
+            result.setResult(RedisTerminalUtil.formatOut(JSONUtil.toJsonStr(info)));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

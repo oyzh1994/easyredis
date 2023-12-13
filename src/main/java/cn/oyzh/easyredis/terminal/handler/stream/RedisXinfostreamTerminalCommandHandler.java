@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.stream;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.stream.RedisXinfostreamTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -56,7 +56,7 @@ public class RedisXinfostreamTerminalCommandHandler extends RedisKeyTerminalComm
                 list.add(s);
                 list.add(infoMap.get(s));
             }
-            result.setResult(RedisShellUtil.formatOut(list));
+            result.setResult(RedisTerminalUtil.formatOut(list));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

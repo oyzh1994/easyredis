@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -19,7 +19,7 @@ public class RedisRandomkeyTerminalCommandHandler extends RedisTerminalCommandHa
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String randomKey = terminal.client().randomKey(null);
-            result.setResult(RedisShellUtil.formatOut(randomKey));
+            result.setResult(RedisTerminalUtil.formatOut(randomKey));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

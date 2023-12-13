@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -31,7 +31,7 @@ public class RedisObjectRefcountTerminalCommandHandler extends RedisKeyTerminalC
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Long objectIdletime = terminal.client().objectRefcount(null, command.key());
-            result.setResult(RedisShellUtil.formatOut(objectIdletime));
+            result.setResult(RedisTerminalUtil.formatOut(objectIdletime));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

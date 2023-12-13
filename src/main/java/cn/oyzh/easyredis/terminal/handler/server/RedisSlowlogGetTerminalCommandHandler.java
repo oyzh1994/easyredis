@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.server.RedisSlowlogGetTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
@@ -41,7 +41,7 @@ public class RedisSlowlogGetTerminalCommandHandler extends RedisTerminalCommandH
             } else {
                 slowlogList = terminal.client().slowlogGet(command.entries());
             }
-            result.setResult(RedisShellUtil.formatOut(slowlogList));
+            result.setResult(RedisTerminalUtil.formatOut(slowlogList));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

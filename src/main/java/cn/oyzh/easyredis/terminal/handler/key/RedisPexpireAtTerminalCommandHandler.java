@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.key.RedisExpireTerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -18,7 +18,7 @@ public class RedisPexpireAtTerminalCommandHandler extends RedisExpireTerminalCom
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long count = terminal.client().pexpireAt(null, command.key(), command.time(), command.option());
-            result.setResult(RedisShellUtil.formatOut(count));
+            result.setResult(RedisTerminalUtil.formatOut(count));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

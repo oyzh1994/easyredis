@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.pubsub;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.fx.terminal.command.BaseTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -24,7 +24,7 @@ public class RedisPubsubNumPatTerminalCommandHandler extends BaseTerminalCommand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Long pubsubNumPat = terminal.client().pubsubNumPat();
-            result.setResult(RedisShellUtil.formatOut(pubsubNumPat));
+            result.setResult(RedisTerminalUtil.formatOut(pubsubNumPat));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

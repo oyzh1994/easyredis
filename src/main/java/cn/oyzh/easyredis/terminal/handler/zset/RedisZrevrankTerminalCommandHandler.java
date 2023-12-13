@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.zset;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.zset.RedisZrevrankTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -34,7 +34,7 @@ public class RedisZrevrankTerminalCommandHandler extends RedisKeyTerminalCommand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Long zrevrank = terminal.client().zrevrank(null, command.key(), command.member());
-            result.setResult(RedisShellUtil.formatOut(zrevrank));
+            result.setResult(RedisTerminalUtil.formatOut(zrevrank));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

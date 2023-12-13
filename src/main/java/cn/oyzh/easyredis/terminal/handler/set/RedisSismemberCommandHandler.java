@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.set;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.set.RedisSismemberTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -33,7 +33,7 @@ public class RedisSismemberCommandHandler extends RedisKeyTerminalCommandHandler
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             boolean sismember = terminal.client().sismember(null, command.key(), command.member());
-            result.setResult(RedisShellUtil.formatOut(sismember));
+            result.setResult(RedisTerminalUtil.formatOut(sismember));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

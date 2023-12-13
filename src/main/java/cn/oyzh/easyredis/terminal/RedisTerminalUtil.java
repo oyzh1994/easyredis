@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 2023/7/26
  */
 @UtilityClass
-public class RedisShellUtil {
+public class RedisTerminalUtil {
 
     /**
      * 格式化输出

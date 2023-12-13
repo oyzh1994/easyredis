@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.list.RedisLrangeTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -36,7 +36,7 @@ public class RedisLrangeTerminalCommandHandler extends RedisKeyTerminalCommandHa
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             List<String> values = terminal.client().lrange(null, command.key(), command.start(), command.end());
-            result.setResult(RedisShellUtil.formatOut(values));
+            result.setResult(RedisTerminalUtil.formatOut(values));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

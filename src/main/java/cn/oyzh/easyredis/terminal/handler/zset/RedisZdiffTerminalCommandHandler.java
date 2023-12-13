@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.zset;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.zset.RedisZdiffTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -51,10 +51,10 @@ public class RedisZdiffTerminalCommandHandler extends RedisKeyTerminalCommandHan
                     list.add(tuple.getElement());
                     list.add(tuple.getScore());
                 }
-                result.setResult(RedisShellUtil.formatOut(list));
+                result.setResult(RedisTerminalUtil.formatOut(list));
             } else {
                 Set<String> zdiff = terminal.client().zdiff(null, command.keys());
-                result.setResult(RedisShellUtil.formatOut(zdiff));
+                result.setResult(RedisTerminalUtil.formatOut(zdiff));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

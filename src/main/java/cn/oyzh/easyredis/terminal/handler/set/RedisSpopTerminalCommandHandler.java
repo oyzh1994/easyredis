@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.set;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.set.RedisSpopTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -38,10 +38,10 @@ public class RedisSpopTerminalCommandHandler extends RedisKeyTerminalCommandHand
         try {
             if (command.count() != null) {
                 Set<String> spop = terminal.client().spop(null, command.key(), command.count());
-                result.setResult(RedisShellUtil.formatOut(spop));
+                result.setResult(RedisTerminalUtil.formatOut(spop));
             } else {
                 String spop = terminal.client().spop(null, command.key());
-                result.setResult(RedisShellUtil.formatOut(spop));
+                result.setResult(RedisTerminalUtil.formatOut(spop));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.pubsub;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.pubsub.RedisPublishTerminalCommand;
 import cn.oyzh.fx.common.util.ArrUtil;
@@ -34,7 +34,7 @@ public class RedisPublishTerminalCommandHandler extends BaseTerminalCommandHandl
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long publish = terminal.client().publish(command.channel(), command.message());
-            result.setResult(RedisShellUtil.formatOut(publish));
+            result.setResult(RedisTerminalUtil.formatOut(publish));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

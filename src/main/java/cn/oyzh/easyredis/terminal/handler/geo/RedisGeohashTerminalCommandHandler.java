@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.geo;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.geo.RedisGeohashTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -36,7 +36,7 @@ public class RedisGeohashTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             List<String> hash = terminal.client().geohash(null, command.key(), command.members());
-            result.setResult(RedisShellUtil.formatOut(hash));
+            result.setResult(RedisTerminalUtil.formatOut(hash));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

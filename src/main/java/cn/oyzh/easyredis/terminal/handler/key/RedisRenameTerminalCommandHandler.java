@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.key.RedisRenameTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -32,7 +32,7 @@ public class RedisRenameTerminalCommandHandler extends RedisKeyTerminalCommandHa
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String msg = terminal.client().rename(null, command.key(), command.newKey());
-            result.setResult(RedisShellUtil.formatOut(msg));
+            result.setResult(RedisTerminalUtil.formatOut(msg));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

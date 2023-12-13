@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.hash;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.hash.RedisHincrbyCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -34,7 +34,7 @@ public class RedisHincrbyTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long value = terminal.client().hincrBy(null, command.key(), command.field(), command.increment());
-            result.setResult(RedisShellUtil.formatOut(value));
+            result.setResult(RedisTerminalUtil.formatOut(value));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

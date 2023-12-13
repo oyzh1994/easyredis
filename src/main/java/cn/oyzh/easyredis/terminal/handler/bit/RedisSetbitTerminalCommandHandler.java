@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.bit;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.bit.RedisSetbitCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -33,7 +33,7 @@ public class RedisSetbitTerminalCommandHandler extends RedisKeyTerminalCommandHa
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             boolean setbit = terminal.client().setbit(null, command.key(), command.offset(), command.value());
-            result.setResult(RedisShellUtil.formatOut(setbit));
+            result.setResult(RedisTerminalUtil.formatOut(setbit));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

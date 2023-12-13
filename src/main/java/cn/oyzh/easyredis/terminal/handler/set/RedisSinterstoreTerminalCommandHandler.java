@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.set;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.set.RedisSinterstoreTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -34,7 +34,7 @@ public class RedisSinterstoreTerminalCommandHandler extends RedisKeyTerminalComm
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long sinterstore = terminal.client().sinterstore(null, command.key(), command.keys());
-            result.setResult(RedisShellUtil.formatOut(sinterstore));
+            result.setResult(RedisTerminalUtil.formatOut(sinterstore));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

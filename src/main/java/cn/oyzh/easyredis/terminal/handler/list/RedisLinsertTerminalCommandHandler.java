@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.list.RedisLinsertTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -35,7 +35,7 @@ public class RedisLinsertTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long count = terminal.client().linsert(null, command.key(), command.where(), command.pivot(), command.value());
-            result.setResult(RedisShellUtil.formatOut(count));
+            result.setResult(RedisTerminalUtil.formatOut(count));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

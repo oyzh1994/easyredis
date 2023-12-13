@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.bit;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.bit.RedisBitposCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -38,7 +38,7 @@ public class RedisBitposTerminalCommandHandler extends RedisKeyTerminalCommandHa
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long bitpos = terminal.client().bitpos(null, command.key(), command.value(), command.params());
-            result.setResult(RedisShellUtil.formatOut(bitpos));
+            result.setResult(RedisTerminalUtil.formatOut(bitpos));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -19,7 +19,7 @@ public class RedisPersistTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long persist = terminal.client().persist(null, command.key());
-            result.setResult(RedisShellUtil.formatOut(persist));
+            result.setResult(RedisTerminalUtil.formatOut(persist));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

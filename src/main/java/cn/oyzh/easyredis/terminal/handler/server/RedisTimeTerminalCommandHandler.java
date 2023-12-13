@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -21,7 +21,7 @@ public class RedisTimeTerminalCommandHandler extends RedisTerminalCommandHandler
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             List<String> time = terminal.client().time();
-            result.setResult(RedisShellUtil.formatOut(time));
+            result.setResult(RedisTerminalUtil.formatOut(time));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

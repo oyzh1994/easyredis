@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -19,7 +19,7 @@ public class RedisLastsaveTerminalCommandHandler extends RedisTerminalCommandHan
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long lastsave = terminal.client().lastsave();
-            result.setResult(RedisShellUtil.formatOut(lastsave));
+            result.setResult(RedisTerminalUtil.formatOut(lastsave));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

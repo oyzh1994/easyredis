@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.key.RedisCopyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -40,7 +40,7 @@ public class RedisCopyTerminalCommandHandler extends RedisKeyTerminalCommandHand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             boolean copy = terminal.client().copy(null, command.key(), command.dstKey(), command.db(), command.replace());
-            result.setResult(RedisShellUtil.formatOut(copy));
+            result.setResult(RedisTerminalUtil.formatOut(copy));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

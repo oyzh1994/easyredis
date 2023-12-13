@@ -92,17 +92,10 @@ public class RedisConnectUtil {
         try {
             String[] words = input.split(" ");
             RedisConnect connect = new RedisConnect();
+            connect.setInput(input);
             int type = -1;
-            for (String word : words) {
-                if (type == 0) {
-                    connect.setHost(word.trim());
-                } else if (type == 1) {
-                    connect.setPort(Integer.parseInt(word.trim()));
-                } else if (type == 2) {
-                    connect.setPassword(word.trim());
-                } else if (type == 3) {
-                    connect.setDb(Integer.parseInt(word.trim()));
-                }
+            for (int i = 0; i < words.length; i++) {
+                String word = words[i];
                 if (word.equalsIgnoreCase("-h")) {
                     type = 0;
                 } else if (word.equalsIgnoreCase("-p")) {
@@ -111,8 +104,29 @@ public class RedisConnectUtil {
                     type = 2;
                 } else if (word.equalsIgnoreCase("-n")) {
                     type = 3;
+                } else if (word.equalsIgnoreCase("-r")) {
+                    type = 4;
+                } else if (word.equalsIgnoreCase("-u")) {
+                    type = 5;
+                } else if (word.equalsIgnoreCase("-timeout")) {
+                    type = 6;
                 } else {
                     type = -1;
+                }
+                if (type == 0) {
+                    connect.setHost(words[i + 1].trim());
+                } else if (type == 1) {
+                    connect.setPort(Integer.parseInt(words[i + 1].trim()));
+                } else if (type == 2) {
+                    connect.setPassword(words[i + 1].trim());
+                } else if (type == 3) {
+                    connect.setDb(Integer.parseInt(words[i + 1].trim()));
+                } else if (type == 4) {
+                    connect.setReadonly(true);
+                } else if (type == 5) {
+                    connect.setUser(words[i + 1].trim());
+                } else if (type == 6) {
+                    connect.setTimeout(Integer.parseInt(words[i + 1].trim()) / 1000);
                 }
             }
             return connect;
@@ -120,5 +134,22 @@ public class RedisConnectUtil {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 复制连接
+     *
+     * @param connect 连接对象
+     * @param info    zk对象
+     */
+    public static void copyConnect(RedisConnect connect, RedisInfo info) {
+        if (connect != null && info != null) {
+            info.setUser(connect.getUser());
+            info.setReadonly(connect.isReadonly());
+            info.setPassword(connect.getPassword());
+            info.setConnectTimeOut(connect.getTimeout());
+            info.setExecuteTimeOut(connect.getTimeout());
+            info.setHost(connect.getHost() + ":" + connect.getPort());
+        }
     }
 }

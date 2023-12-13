@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.exception.RedisException;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
+import redis.clients.jedis.exceptions.JedisException;
 
 import java.util.function.Function;
 
@@ -53,8 +54,12 @@ public class RedisExceptionParser implements Function<Throwable, String> {
                 return "连接已中断！";
             }
             if (StrUtil.contains(message, "Failed to connect to")) {
-                return "连接失败，请检查Redis服务是否启动或者网络是否可用！";
+                return "连接失败，请检查Redis服务是否启动、网络是否可用、认证信息是否正确";
             }
+        }
+
+        if (e instanceof JedisException) {
+            return message;
         }
 
         if (e instanceof RedisException) {

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -20,7 +20,7 @@ public class RedisDbSizeTerminalCommandHandler extends RedisTerminalCommandHandl
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long dbSize = terminal.client().dbSize((Integer) null);
-            result.setResult(RedisShellUtil.formatOut(dbSize));
+            result.setResult(RedisTerminalUtil.formatOut(dbSize));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

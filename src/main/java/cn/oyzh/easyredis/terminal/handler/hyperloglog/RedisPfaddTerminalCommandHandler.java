@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.hyperloglog;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.hyperloglog.RedisPfaddTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -34,7 +34,7 @@ public class RedisPfaddTerminalCommandHandler extends RedisKeyTerminalCommandHan
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long count = terminal.client().pfadd(null, command.key(), command.elements());
-            result.setResult(RedisShellUtil.formatOut(count));
+            result.setResult(RedisTerminalUtil.formatOut(count));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -31,7 +31,7 @@ public class RedisObjectEncodingTerminalCommandHandler extends RedisKeyTerminalC
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String objectEncoding = terminal.client().objectEncoding(null, command.key());
-            result.setResult(RedisShellUtil.formatOut(objectEncoding));
+            result.setResult(RedisTerminalUtil.formatOut(objectEncoding));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

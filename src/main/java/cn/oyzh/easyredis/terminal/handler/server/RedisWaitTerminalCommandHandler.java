@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.server.RedisWaitTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
@@ -32,7 +32,7 @@ public class RedisWaitTerminalCommandHandler extends RedisTerminalCommandHandler
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long waitReplicas = terminal.client().waitReplicas(command.replicas(), command.timeout());
-            result.setResult(RedisShellUtil.formatOut(waitReplicas));
+            result.setResult(RedisTerminalUtil.formatOut(waitReplicas));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

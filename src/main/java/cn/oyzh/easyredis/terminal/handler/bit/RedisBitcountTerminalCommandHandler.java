@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.bit;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.bit.RedisBitcountCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -41,7 +41,7 @@ public class RedisBitcountTerminalCommandHandler extends RedisKeyTerminalCommand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             long bitcount = terminal.client().bitcount(null, command.key(), command.start(), command.end(), command.option());
-            result.setResult(RedisShellUtil.formatOut(bitcount));
+            result.setResult(RedisTerminalUtil.formatOut(bitcount));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

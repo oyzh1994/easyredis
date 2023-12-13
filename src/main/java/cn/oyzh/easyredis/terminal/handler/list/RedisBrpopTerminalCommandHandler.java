@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.list.RedisBrpopTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -36,7 +36,7 @@ public class RedisBrpopTerminalCommandHandler extends RedisKeyTerminalCommandHan
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             List<String> blpop = terminal.client().brpop(null, command.timeout(), command.keys());
-            result.setResult(RedisShellUtil.formatOut(blpop));
+            result.setResult(RedisTerminalUtil.formatOut(blpop));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

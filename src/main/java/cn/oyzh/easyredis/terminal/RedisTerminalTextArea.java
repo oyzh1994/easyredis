@@ -1,12 +1,13 @@
 package cn.oyzh.easyredis.terminal;
 
 import cn.hutool.log.StaticLog;
+import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisConnect;
+import cn.oyzh.easyredis.parser.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.terminal.TerminalTextArea;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
@@ -37,17 +38,38 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     private RedisClient client;
 
     /**
+     * redis连接
+     */
+    private RedisConnect connect;
+
+    /**
      * redis客户端连接状态监听器
      */
     private ChangeListener<RedisConnState> stateChangeListener;
 
     @Override
     public void flushPrompt() {
-        if (!this.client.isConnected()) {
-            this.prompt("redis连接@" + this.client.infoName() + "> ");
+        String str;
+        if (this.isTemporary()) {
+            str = "redis连接";
         } else {
-            this.prompt("redis连接@" + this.client.infoName() + "（已连接）> ");
+            str = this.client.infoName();
         }
+        if (this.info().getHost() != null) {
+            str += "@" + this.info().getHost();
+        }
+        if (this.isConnecting()) {
+            str += "（连接中）> ";
+        } else if (this.isConnected()) {
+            if (this.client.isReadonly()) {
+                str += "（已连接/只读模式）> ";
+            } else {
+                str += "（已连接）> ";
+            }
+        } else {
+            str += "> ";
+        }
+        this.prompt(str);
     }
 
     /**
@@ -60,6 +82,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
         this.disableInput();
         this.appendLine("欢迎使用EasyRedis!");
         this.appendLine("Powered By oyzh(2023-2023).");
+        this.flushPrompt();
         if (this.isTemporary()) {
             this.initByTemporary();
         } else {
@@ -117,14 +140,20 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      */
     public void connect(String input) {
         this.client.reset();
-        RedisConnect connect = RedisConnectUtil.parse(input);
-        if (connect != null) {
-            this.client.redisInfo().setHost(connect.getHost() + ":" + connect.getPort());
-            this.client.redisInfo().setPassword(connect.getPassword());
-            this.intConnStat();
+        this.connect = RedisConnectUtil.parse(input);
+        if (this.connect != null) {
             this.disable();
-            this.client.start(connect.getDb());
-            this.enable();
+            RedisConnectUtil.copyConnect(this.connect, this.info());
+            ExecutorUtil.start(() -> {
+                try {
+                    this.intStatListener();
+                    this.client.start(this.connect.getDb());
+                } catch (Exception ex) {
+                    this.onError(RedisExceptionParser.INSTANCE.apply(ex));
+                } finally {
+                    this.enable();
+                }
+            }, 10);
         }
     }
 
@@ -132,14 +161,18 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      * 临时连接处理
      */
     private void initByTemporary() {
-        this.appendLine("请输入连接地址然后回车，格式-h host [-p port] [-a password] [-n db]");
-        this.appendText("-h 127.0.0.1");
-        ExecutorUtil.start(() -> {
-            FXUtil.runLater(this::requestFocus);
-            this.enableInput();
-            this.flushCaret();
-            this.moveCaretEnd();
-        }, 10);
+        this.outputLine("请输入信息然后回车");
+        this.outputLine("connect [-timeout timeout] -h host [-p port] [-u user] [-a password] [-n db] [-r]");
+        this.outputLine("-timeout 超时时间，单位毫秒");
+        this.outputLine("-h 地址");
+        this.outputLine("-p 端口");
+        this.outputLine("-u 用户名");
+        this.outputLine("-a 密码");
+        this.outputLine("-n 数据库");
+        this.outputLine("-r 只读模式");
+        this.appendByPrompt("connect -timeout 3000 -h 127.0.0.1 -p 6379 -n 0");
+        this.enableInput();
+        this.flushAndMoveCaretAnd();
     }
 
     /**
@@ -148,15 +181,25 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     private void initByPermanent() {
         this.appendLine(this.client.redisInfo().getHost() + " 连接开始.");
         ExecutorUtil.start(() -> {
-            this.intConnStat();
+            this.intStatListener();
             this.client.start();
         }, 10);
     }
 
     /**
+     * 刷新光标并移动到尾部
+     */
+    private void flushAndMoveCaretAnd() {
+        ExecutorUtil.start(() -> {
+            this.flushCaret();
+            this.moveCaretEnd();
+        }, 50);
+    }
+
+    /**
      * 初始化连接状态处理
      */
-    private void intConnStat() {
+    private void intStatListener() {
         if (this.stateChangeListener == null) {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
@@ -164,25 +207,32 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                 String host = this.client.redisInfo().getHost();
                 if (t1 == RedisConnState.CONNECTED) {
                     this.outputLine(host + " 连接成功.");
-                    this.outputLine("输入help可查看支持的命令列表.");
+                    this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
+                    this.outputLine("输入\"命令 -?\"可查看此命令详情.");
                     this.outputPrompt();
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == RedisConnState.CLOSED) {
-                    this.disableInput();
                     this.outputLine(host + " 连接关闭.");
+                    this.enableInput();
+                } else if (t1 == RedisConnState.CONNECTING) {
+                    this.outputLine(host + " 开始连接.");
+                    this.disableInput();
                 } else if (t1 == RedisConnState.BROKEN) {
-                    this.disableInput();
                     this.outputLine(host + " 连接中断.");
+                    this.enableInput();
                 } else if (t1 == RedisConnState.FAILED) {
-                    this.disableInput();
                     this.outputLine(host + " 连接失败.");
-                    this.flushCaret();
+                    if (this.connect != null) {
+                        this.appendByPrompt(this.connect.getInput());
+                    }
+                    this.flushAndMoveCaretAnd();
+                    this.enableInput();
                 }
                 StaticLog.info("connState={}", t1);
             };
+            this.client().addStateListener(this.stateChangeListener);
         }
-        this.client().addStateListener(this.stateChangeListener);
     }
 
     @Override
@@ -190,5 +240,9 @@ public class RedisTerminalTextArea extends TerminalTextArea {
         if (this.isConnected() || this.isTemporary()) {
             super.enableInput();
         }
+    }
+
+    public RedisInfo info() {
+        return this.client().redisInfo();
     }
 }

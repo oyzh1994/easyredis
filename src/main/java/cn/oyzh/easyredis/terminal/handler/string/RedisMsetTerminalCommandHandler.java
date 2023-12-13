@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.string;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.string.RedisMsetTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -33,7 +33,7 @@ public class RedisMsetTerminalCommandHandler extends RedisKeyTerminalCommandHand
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String msg = terminal.client().mset(null, command.keyValues());
-            result.setResult(RedisShellUtil.formatOut(msg));
+            result.setResult(RedisTerminalUtil.formatOut(msg));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

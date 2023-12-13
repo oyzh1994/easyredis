@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal.handler.zset;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.zset.RedisZmscoreTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -36,7 +36,7 @@ public class RedisZmscoreTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             List<Double> zmscore = terminal.client().zmscore(null, command.key(), command.members());
-            result.setResult(RedisShellUtil.formatOut(zmscore));
+            result.setResult(RedisTerminalUtil.formatOut(zmscore));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.connect;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -19,7 +19,7 @@ public class RedisPingTerminalCommandHandler extends RedisTerminalCommandHandler
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String pong = terminal.client().ping();
-            result.setResult(RedisShellUtil.formatOut(pong));
+            result.setResult(RedisTerminalUtil.formatOut(pong));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

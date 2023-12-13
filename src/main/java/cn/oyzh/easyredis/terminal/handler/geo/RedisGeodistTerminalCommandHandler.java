@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.geo;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.geo.RedisGeodistTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -37,7 +37,7 @@ public class RedisGeodistTerminalCommandHandler extends RedisKeyTerminalCommandH
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             Double dist = terminal.client().geodist(null, command.key(), command.member1(), command.member2(), command.unit());
-            result.setResult(RedisShellUtil.formatOut(dist));
+            result.setResult(RedisTerminalUtil.formatOut(dist));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

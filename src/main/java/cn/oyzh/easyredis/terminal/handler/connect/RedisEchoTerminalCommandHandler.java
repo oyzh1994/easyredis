@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.handler.connect;
 
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.connect.RedisEchoTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
@@ -31,7 +31,7 @@ public class RedisEchoTerminalCommandHandler extends RedisTerminalCommandHandler
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             String echo = terminal.client().echo(command.echoMsg());
-            result.setResult(RedisShellUtil.formatOut(echo));
+            result.setResult(RedisTerminalUtil.formatOut(echo));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

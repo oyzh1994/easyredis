@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.hash;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.hash.RedisHexistsTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -33,7 +33,7 @@ public class RedisHexistsCommandHandler extends RedisKeyTerminalCommandHandler<R
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             boolean hexists = terminal.client().hexists(null, command.key(), command.field());
-            result.setResult(RedisShellUtil.formatOut(hexists));
+            result.setResult(RedisTerminalUtil.formatOut(hexists));
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setException(ex);

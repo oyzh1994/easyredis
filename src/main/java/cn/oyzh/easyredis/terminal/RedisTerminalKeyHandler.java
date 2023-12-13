@@ -14,15 +14,15 @@ public class RedisTerminalKeyHandler implements TerminalKeyHandler<RedisTerminal
      */
     public static final RedisTerminalKeyHandler INSTANCE = new RedisTerminalKeyHandler();
 
-    @Override
-    public boolean onEnterKeyPressed(RedisTerminalTextArea terminal) throws Exception {
-        if (terminal.isTemporary() && !terminal.isConnected()) {
-            String input = terminal.getInput();
-            terminal.connect(input);
-            terminal.saveHistory(input);
-        } else if (!terminal.isConnecting()) {
-            TerminalKeyHandler.super.onEnterKeyPressed(terminal);
-        }
-        return false;
-    }
+    // @Override
+    // public boolean onEnterKeyPressed(RedisTerminalTextArea terminal) throws Exception {
+    //     if (terminal.isTemporary() && !terminal.isConnected()) {
+    //         String input = terminal.getInput();
+    //         terminal.connect(input);
+    //         terminal.saveHistory(input);
+    //     } else if (!terminal.isConnecting()) {
+    //         TerminalKeyHandler.super.onEnterKeyPressed(terminal);
+    //     }
+    //     return false;
+    // }
 }

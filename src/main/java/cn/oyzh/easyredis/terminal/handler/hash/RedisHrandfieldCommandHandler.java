@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.hash;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisShellUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.command.hash.RedisHrandfieldTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
@@ -42,13 +42,13 @@ public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandle
         try {
             if (command.count() == null) {
                 String hrandfield = terminal.client().hrandfield(null, command.key());
-                result.setResult(RedisShellUtil.formatOut(hrandfield));
+                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
             } else if (command.withValues() == null) {
                 List<String> hrandfield = terminal.client().hrandfield(null, command.key(), command.count());
-                result.setResult(RedisShellUtil.formatOut(hrandfield));
+                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
             } else {
                 Map<String, String> hrandfield = terminal.client().hrandfieldWithValues(null, command.key(), command.count());
-                result.setResult(RedisShellUtil.formatOut(hrandfield));
+                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

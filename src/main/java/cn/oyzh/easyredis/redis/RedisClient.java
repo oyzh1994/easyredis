@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.redis;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -130,12 +131,16 @@ public class RedisClient {
     /**
      * 连接状态
      */
-    private ReadOnlyObjectWrapper<RedisConnState> state;
+    private final ReadOnlyObjectWrapper<RedisConnState> state = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
 
     /**
-     * 连接状态监听器列表
+     * 获取连接状态
+     *
+     * @return 连接状态
      */
-    private final List<ChangeListener<RedisConnState>> stateListeners = new ArrayList<>();
+    public RedisConnState state() {
+        return this.stateProperty().get();
+    }
 
     public RedisClient(@NonNull RedisInfo redisInfo) {
         this.redisInfo = redisInfo;
@@ -155,43 +160,18 @@ public class RedisClient {
      *
      * @return 连接状态属性
      */
-    private ReadOnlyObjectWrapper<RedisConnState> state() {
-        if (this.state == null) {
-            this.state = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
-        }
-        return this.state;
-    }
-
-    /**
-     * 连接状态属性
-     *
-     * @return 连接状态属性
-     */
     private ReadOnlyObjectProperty<RedisConnState> stateProperty() {
-        return this.state().getReadOnlyProperty();
+        return this.state.getReadOnlyProperty();
     }
 
     /**
      * 添加连接状态监听器
      *
-     * @param listener 监听器
+     * @param stateListener 监听器
      */
-    public void addStateListener(@NonNull ChangeListener<RedisConnState> listener) {
-        if (!this.stateListeners.contains(listener)) {
-            this.stateListeners.add(listener);
-            this.stateProperty().addListener(listener);
-        }
-    }
-
-    /**
-     * 移除连接状态监听器
-     *
-     * @param listener 监听器
-     */
-    public void removeStateListener(ChangeListener<RedisConnState> listener) {
-        if (listener != null) {
-            this.stateListeners.remove(listener);
-            this.stateProperty().removeListener(listener);
+    public void addStateListener(ChangeListener<RedisConnState> stateListener) {
+        if (stateListener != null) {
+            this.state.addListener(stateListener);
         }
     }
 
@@ -211,7 +191,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             // 初始化cluster集群
             this.initCluster(host, clientConfig);
-        } else if (this._isSentinelMode() && this.isRedirectMaster()) {
+        } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到matser
             // 初始化哨兵
             this.initSentinel(host, clientConfig);
             // 获取当前角色
@@ -524,7 +504,7 @@ public class RedisClient {
             }
             // 已关闭
             if (isClosed) {
-                this.state().set(RedisConnState.CLOSED);
+                this.state.set(RedisConnState.CLOSED);
                 EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
             }
             // 重置变量
@@ -546,14 +526,8 @@ public class RedisClient {
      */
     public void reset() {
         // 移除监听器
-        if (!this.stateListeners.isEmpty()) {
-            for (ChangeListener<RedisConnState> listener : this.stateListeners) {
-                this.stateProperty().removeListener(listener);
-            }
-            this.stateListeners.clear();
-        }
         this.close();
-        this.state().set(RedisConnState.NOT_INITIALIZED);
+        this.state.set(RedisConnState.NOT_INITIALIZED);
     }
 
     /**
@@ -573,20 +547,20 @@ public class RedisClient {
             return;
         }
         try {
-            // 关闭旧连接
-            this.close();
+            // // 关闭旧连接
+            // this.close();
             // 初始化连接池
-            this.state().set(RedisConnState.CONNECTING);
+            this.state.set(RedisConnState.CONNECTING);
             // 初始化客户端
             this.initClient();
             // 初始化数据库
             if (!this.isClusterMode() && !this.isSentinelMode()) {
                 this.select(dbIndex);
             }
-            this.state().set(RedisConnState.CONNECTED);
+            this.state.set(RedisConnState.CONNECTED);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            this.state().set(RedisConnState.FAILED);
+            this.state.set(RedisConnState.FAILED);
+            StaticLog.warn("redisClient start error", ex);
             throw ex;
         }
     }
@@ -612,7 +586,7 @@ public class RedisClient {
      */
     public boolean isConnecting() {
         if (!this.isClosed()) {
-            return this.state().get() == RedisConnState.CONNECTING;
+            return this.state.get() == RedisConnState.CONNECTING;
         }
         return false;
     }
@@ -624,7 +598,7 @@ public class RedisClient {
      */
     public boolean isConnected() {
         if (!this.isClosed()) {
-            return this.state().get().isConnected();
+            return this.state.get().isConnected();
         }
         return false;
     }
@@ -638,7 +612,7 @@ public class RedisClient {
         if (this.getPool() == null || this.getPool().isClosed()) {
             return true;
         }
-        return !this.state().get().isConnected();
+        return !this.state.get().isConnected();
     }
 
     /**
