@@ -712,7 +712,7 @@ public class RedisClient {
      * @param count   数量
      * @return hash字段及值
      */
-    public Map<String, String> hrandfieldWithValues(Integer dbIndex, String key, long count) {
+    public List<Map.Entry<String, String>> hrandfieldWithValues(Integer dbIndex, String key, long count) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "hrandfield");
         if (this.isClusterMode()) {
@@ -1138,9 +1138,9 @@ public class RedisClient {
      * @param keys    键
      * @return zset差集
      */
-    public Set<String> zdiff(Integer dbIndex, String... keys) {
+    public List<String> zdiff(Integer dbIndex, String... keys) {
         if (ArrayUtil.isEmpty(keys)) {
-            return Collections.emptySet();
+            return Collections.emptyList();
         }
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zdiff");
@@ -1163,9 +1163,9 @@ public class RedisClient {
      * @param keys    键
      * @return zset差集及分数
      */
-    public Set<Tuple> zdiffWithScores(Integer dbIndex, String... keys) {
+    public List<Tuple> zdiffWithScores(Integer dbIndex, String... keys) {
         if (ArrayUtil.isEmpty(keys)) {
-            return Collections.emptySet();
+            return Collections.emptyList();
         }
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "zdiff");
@@ -4029,7 +4029,7 @@ public class RedisClient {
      * @param pattern 查找模板
      * @return 配置列表
      */
-    public List<String> configGet(String pattern) {
+    public Map<String, String> configGet(String pattern) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config get");
         Jedis jedis = this.getResource();
@@ -4312,11 +4312,11 @@ public class RedisClient {
      */
     public int databases() {
         if (!this.isClusterMode() && !this.isSentinelMode()) {
-            List<String> config = this.configGet("databases");
-            if (config == null || config.size() != 2 || !"databases".equals(config.get(0))) {
+            Map<String, String> config = this.configGet("databases");
+            if (CollUtil.isEmpty(config)) {
                 this.databases = 16;
             } else {
-                this.databases = Integer.parseInt(config.get(1));
+                this.databases = Integer.parseInt(CollUtil.getFirst(config.values()));
             }
         }
         return this.databases;

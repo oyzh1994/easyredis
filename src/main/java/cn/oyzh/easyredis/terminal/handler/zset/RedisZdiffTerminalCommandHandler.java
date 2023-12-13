@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.terminal.handler.zset;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.command.zset.RedisZdiffTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.common.util.ArrUtil;
@@ -13,7 +13,6 @@ import redis.clients.jedis.resps.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author oyzh
@@ -45,7 +44,7 @@ public class RedisZdiffTerminalCommandHandler extends RedisKeyTerminalCommandHan
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             if (command.withScores()) {
-                Set<Tuple> zdiffWithScores = terminal.client().zdiffWithScores(null, command.keys());
+                List<Tuple> zdiffWithScores = terminal.client().zdiffWithScores(null, command.keys());
                 List<Object> list = new ArrayList<>();
                 for (Tuple tuple : zdiffWithScores) {
                     list.add(tuple.getElement());
@@ -53,7 +52,7 @@ public class RedisZdiffTerminalCommandHandler extends RedisKeyTerminalCommandHan
                 }
                 result.setResult(RedisTerminalUtil.formatOut(list));
             } else {
-                Set<String> zdiff = terminal.client().zdiff(null, command.keys());
+                List<String> zdiff = terminal.client().zdiff(null, command.keys());
                 result.setResult(RedisTerminalUtil.formatOut(zdiff));
             }
         } catch (Exception ex) {

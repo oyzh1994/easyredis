@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.command.server.RedisConfigGetTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author oyzh
@@ -32,7 +32,7 @@ public class RedisConfigGetTerminalCommandHandler extends RedisTerminalCommandHa
     public TerminalExecuteResult execute(RedisConfigGetTerminalCommand command, RedisTerminalTextArea terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
-            List<String> configs = terminal.client().configGet(command.pattern());
+            Map<String, String> configs = terminal.client().configGet(command.pattern());
             result.setResult(RedisTerminalUtil.formatOut(configs));
         } catch (Exception ex) {
             ex.printStackTrace();

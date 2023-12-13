@@ -47,7 +47,7 @@ public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandle
                 List<String> hrandfield = terminal.client().hrandfield(null, command.key(), command.count());
                 result.setResult(RedisTerminalUtil.formatOut(hrandfield));
             } else {
-                Map<String, String> hrandfield = terminal.client().hrandfieldWithValues(null, command.key(), command.count());
+                List<Map.Entry<String, String>> hrandfield = terminal.client().hrandfieldWithValues(null, command.key(), command.count());
                 result.setResult(RedisTerminalUtil.formatOut(hrandfield));
             }
         } catch (Exception ex) {

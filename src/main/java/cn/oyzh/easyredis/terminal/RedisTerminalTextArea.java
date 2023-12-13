@@ -144,7 +144,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
         if (this.connect != null) {
             this.disable();
             RedisConnectUtil.copyConnect(this.connect, this.info());
-            this.start();
+            this.start(this.connect.getDb());
         }
     }
 
@@ -170,17 +170,17 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
-        this.start();
+        this.start(0);
     }
 
     /**
      * 开始连接
      */
-    private void start() {
+    private void start(int db) {
         ExecutorUtil.start(() -> {
             try {
                 this.intStatListener();
-                this.client.start(this.connect.getDb());
+                this.client.start(db);
             } catch (Exception ex) {
                 this.onError(RedisExceptionParser.INSTANCE.apply(ex));
             } finally {
