@@ -561,7 +561,7 @@ public class RedisClient {
         } catch (Exception ex) {
             this.state.set(RedisConnState.FAILED);
             StaticLog.warn("redisClient start error", ex);
-            throw ex;
+            throw new RuntimeException(ex);
         }
     }
 

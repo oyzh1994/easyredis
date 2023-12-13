@@ -144,16 +144,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
         if (this.connect != null) {
             this.disable();
             RedisConnectUtil.copyConnect(this.connect, this.info());
-            ExecutorUtil.start(() -> {
-                try {
-                    this.intStatListener();
-                    this.client.start(this.connect.getDb());
-                } catch (Exception ex) {
-                    this.onError(RedisExceptionParser.INSTANCE.apply(ex));
-                } finally {
-                    this.enable();
-                }
-            }, 10);
+            this.start();
         }
     }
 
@@ -179,10 +170,22 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
-        this.appendLine(this.client.redisInfo().getHost() + " 连接开始.");
+        this.start();
+    }
+
+    /**
+     * 开始连接
+     */
+    private void start() {
         ExecutorUtil.start(() -> {
-            this.intStatListener();
-            this.client.start();
+            try {
+                this.intStatListener();
+                this.client.start(this.connect.getDb());
+            } catch (Exception ex) {
+                this.onError(RedisExceptionParser.INSTANCE.apply(ex));
+            } finally {
+                this.enable();
+            }
         }, 10);
     }
 
