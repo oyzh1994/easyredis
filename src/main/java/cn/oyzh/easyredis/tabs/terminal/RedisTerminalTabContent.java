@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.shell.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import lombok.Getter;
