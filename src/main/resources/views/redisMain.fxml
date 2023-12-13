@@ -45,11 +45,6 @@
                             <Insets left="5" top="12"/>
                         </HBox.margin>
                     </SVGGlyph>
-                    <FlexCheckBox text="仅看收藏" fx:id="onlyCollect" fontSize="11">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox realHeight="30" flexWidth="100%">
                     <FlexCheckBox text="str" fontSize="9" fx:id="showString" selected="true">
@@ -83,6 +78,11 @@
 <!--                        </HBox.margin>-->
 <!--                    </FlexCheckBox>-->
                     <FlexCheckBox text="stream" fontSize="9" fx:id="showStream" selected="true">
+                        <HBox.margin>
+                            <Insets left="5" top="5"/>
+                        </HBox.margin>
+                    </FlexCheckBox>
+                    <FlexCheckBox text="仅收藏" fx:id="onlyCollect" fontSize="9">
                         <HBox.margin>
                             <Insets left="5" top="5"/>
                         </HBox.margin>
