@@ -17,12 +17,12 @@ import lombok.NonNull;
  * @since 2023/06/17
  */
 //@Slf4j
-public class PageInfoStore extends ObjectFileStore<RedisPageInfo> {
+public class RedisPageInfoStore extends ObjectFileStore<RedisPageInfo> {
 
     /**
      * 当前实例
      */
-    public static final PageInfoStore INSTANCE = new PageInfoStore();
+    public static final RedisPageInfoStore INSTANCE = new RedisPageInfoStore();
 
     /**
      * 当前设置

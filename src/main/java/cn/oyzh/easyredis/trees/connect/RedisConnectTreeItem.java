@@ -389,7 +389,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         }
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
-            // MessageBox.warn("连接名称不能为空！");
             return;
         }
         // 检查是否存在
@@ -461,22 +460,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         }
         return null;
     }
-
-    // @Override
-    // protected int sortAsc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-    //     if (item1 instanceof RedisDBTreeItem db1 && item2 instanceof RedisDBTreeItem db2) {
-    //         return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(db1, db2);
-    //     }
-    //     return super.sortAsc(item1, item2);
-    // }
-    //
-    // @Override
-    // protected int sortDesc(RichTreeItem<?> item1, RichTreeItem<?> item2) {
-    //     if (item1 instanceof RedisDBTreeItem db1 && item2 instanceof RedisDBTreeItem db2) {
-    //         return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(db2, db1);
-    //     }
-    //     return super.sortDesc(item1, item2);
-    // }
 
     /**
      * 获取当前父节点

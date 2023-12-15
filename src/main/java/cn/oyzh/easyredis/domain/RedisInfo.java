@@ -142,9 +142,11 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
         this.user = info.user;
         this.remark = info.remark;
         this.groupId = info.groupId;
+        this.sshInfo = info.sshInfo;
         this.readonly = info.readonly;
         this.collects = info.collects;
         this.password = info.password;
+        this.sshForward = info.sshForward;
         this.masterUser = info.masterUser;
         this.redirectMaster = info.redirectMaster;
         this.masterPassword = info.masterPassword;

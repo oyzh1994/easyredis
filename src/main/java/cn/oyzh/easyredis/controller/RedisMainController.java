@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.store.PageInfoStore;
+import cn.oyzh.easyredis.store.RedisPageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -152,12 +152,12 @@ public class RedisMainController extends ParentController {
     /**
      * 页面信息
      */
-    private final RedisPageInfo pageInfo = PageInfoStore.PAGE_INFO;
+    private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
 
     /**
      * 页面信息储存
      */
-    private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
+    private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
     // /**
     //  * 树节点过滤器

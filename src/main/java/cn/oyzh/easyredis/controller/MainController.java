@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.store.PageInfoStore;
+import cn.oyzh.easyredis.store.RedisPageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -70,7 +70,7 @@ public class MainController extends ParentController {
     /**
      * 页面信息
      */
-    private final RedisPageInfo pageInfo = PageInfoStore.PAGE_INFO;
+    private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
 
     /**
      * redis相关配置
@@ -80,7 +80,7 @@ public class MainController extends ParentController {
     /**
      * 页面信息储存
      */
-    private final PageInfoStore pageInfoStore = PageInfoStore.INSTANCE;
+    private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
     /**
      * 初始化系统托盘
