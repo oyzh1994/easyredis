@@ -156,7 +156,7 @@ public class RedisClient {
     public RedisClient(@NonNull RedisInfo redisInfo) {
         this.redisInfo = redisInfo;
         if (redisInfo.isSSHForward()) {
-            this.sshForwarder = new SSHForwarder(this.redisInfo.getSshInfo());
+            this.sshForwarder = new SSHForwarder(redisInfo.getSshInfo());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {

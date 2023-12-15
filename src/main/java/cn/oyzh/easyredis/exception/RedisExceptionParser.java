@@ -27,14 +27,17 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             return null;
         }
 
-        if (e instanceof SSHException e1) {
-            return e1.getMessage();
-        }
-
         if (e instanceof RuntimeException) {
             if (e.getCause() != null) {
                 e = e.getCause();
             }
+        }
+
+        if (e instanceof SSHException e1) {
+            if (StrUtil.contains(e.getMessage(), "Auth fail")) {
+                return "ssh认证失败，请检查ssh用户名、密码是否正确";
+            }
+            return e1.getMessage();
         }
 
         String message = e.getMessage();

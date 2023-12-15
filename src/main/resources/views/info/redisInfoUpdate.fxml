@@ -57,15 +57,22 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <PortTextField flexWidth="100% - 220" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
+                    <PortTextField flexWidth="100% - 140" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
                                    value="6379">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </PortTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="节点设置" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
                     <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
                         <HBox.margin>
-                            <Insets left="10" top="20"/>
+                            <Insets left="10" top="16"/>
                         </HBox.margin>
                     </FlexCheckBox>
                 </FlexHBox>

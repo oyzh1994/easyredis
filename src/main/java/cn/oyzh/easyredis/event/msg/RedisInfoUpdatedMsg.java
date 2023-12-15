@@ -18,10 +18,10 @@ import lombok.experimental.Accessors;
 public class RedisInfoUpdatedMsg implements EventMsg, EventMsgFormatter {
 
     @Getter
-    private String name = RedisEventTypes.REDIS_INFO_UPDATED;
+    private final String name = RedisEventTypes.REDIS_INFO_UPDATED;
 
     @Getter
-    private String group = RedisEventGroups.INFO_ACTION;
+    private final String group = RedisEventGroups.INFO_ACTION;
 
     @Setter
     private RedisInfo info;

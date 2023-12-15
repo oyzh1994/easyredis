@@ -267,7 +267,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      *
      * @param msg 消息
      */
-    @EventReceiver(RedisEventTypes.REDIS_INFO_ADDED)
+    @EventReceiver(value = RedisEventTypes.REDIS_INFO_ADDED, async = true, verbose = true)
     private void onInfoAdded(RedisInfoAddedMsg msg) {
         this.addConnect(msg.info());
     }
@@ -277,7 +277,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      *
      * @param msg 消息
      */
-    @EventReceiver(RedisEventTypes.REDIS_INFO_UPDATED)
+    @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true, verbose = true)
     private void onInfoUpdate(RedisInfoUpdatedMsg msg) {
         f1:
         for (TreeItem<?> item : this.getRealChildren()) {
@@ -287,7 +287,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
                     break;
                 }
             } else if (item instanceof RedisGroupTreeItem groupTreeItem) {
-                for (RedisConnectTreeItem connectTreeItem : groupTreeItem.getConnectedItems()) {
+                for (RedisConnectTreeItem connectTreeItem : groupTreeItem.getConnectItems()) {
                     if (connectTreeItem.value() == msg.info()) {
                         connectTreeItem.value(msg.info());
                         break f1;
@@ -324,7 +324,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
-            this.addChild((List)items);
+            this.addChild((List) items);
         }
     }
 

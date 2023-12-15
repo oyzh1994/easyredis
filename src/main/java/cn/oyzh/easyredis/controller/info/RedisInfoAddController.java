@@ -244,7 +244,9 @@ public class RedisInfoAddController extends Controller {
     private void testConnect() {
         // 检查连接地址
         String host = this.getHost();
-        if (StrUtil.isNotBlank(host)) {
+        if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
+            MessageBox.warn("请填写地址");
+        }else {
             RedisInfo redisInfo = new RedisInfo();
             redisInfo.setHost(host);
             redisInfo.setExecuteTimeOut(3);
