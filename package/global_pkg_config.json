@@ -1,11 +1,11 @@
 {
     "destPath": "D:\\Package\\EasyRedis",
     "jdkPath": "D:\\Libraries\\JDKs\\openjdk-21_windows-x64_bin\\jdk-21",
-    "jarPath": "D:\\Workspaces\\OYZH\\easyredis\\target\\easyredis-1.0.jar",
+    "jarPath": "D:\\Workspaces\\OYZH\\easyredis\\target\\easyredis-1.1.0.jar",
     "retainDuringDir": false,
     "package": {
         "vendor": "oyzh",
-        "version": "v1.1",
+        "version": "v1.1.0",
         "appName": "EasyRedis",
         "executable": "EasyRedis",
         "desc": "这是一个Redis管理工具，简化提供导入导出、传输、控制台、可视化操作等高级功能."
