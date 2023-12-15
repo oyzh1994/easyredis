@@ -315,7 +315,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 扫描参数
         String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
         ScanParams params = new ScanParams();
-        params.count(1000);
+        params.count(500);
         params.match(pattern);
         // 全部节点
         List<RedisKey> allKeys = new CopyOnWriteArrayList<>();

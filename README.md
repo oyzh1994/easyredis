@@ -20,6 +20,7 @@ jlink --verbose --compress=2 --no-header-files --no-man-pages --strip-debug --st
 
 ###### docker启动redis(单个)
 docker run -itd -p 6379:6379 redis
+docker run -itd -p 6379:6379 redis --requirepass 123456
 
 ###### docker启动redis(集群)
 docker-compose -f .\redis-cluster-compose.yml up -d

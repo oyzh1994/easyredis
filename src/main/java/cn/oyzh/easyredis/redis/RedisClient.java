@@ -13,6 +13,8 @@ import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
+import cn.oyzh.fx.common.ssh.SSHForwardInfo;
+import cn.oyzh.fx.common.ssh.SSHForwarder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -121,6 +123,11 @@ public class RedisClient {
     private RedisInfoProp infoProp;
 
     /**
+     * ssh端口转发器
+     */
+    private SSHForwarder sshForwarder;
+
+    /**
      * redis信息
      */
     @Getter
@@ -148,6 +155,9 @@ public class RedisClient {
 
     public RedisClient(@NonNull RedisInfo redisInfo) {
         this.redisInfo = redisInfo;
+        if (redisInfo.isSSHForward()) {
+            this.sshForwarder = new SSHForwarder(this.redisInfo.getSshInfo());
+        }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
                 case CLOSED -> RedisEventUtil.connectionClosed(this);
@@ -183,10 +193,21 @@ public class RedisClient {
      * 初始化客户端
      */
     private void initClient() {
+        HostAndPort host;
+        // ssh端口转发
+        if (this.redisInfo.isSSHForward()) {
+            SSHForwardInfo forwardInfo = new SSHForwardInfo();
+            forwardInfo.setHost(this.redisInfo.hostIp());
+            forwardInfo.setPort(this.redisInfo.hostPort());
+            int localPort = this.sshForwarder.forward(forwardInfo);
+            // 连接信息
+            host = new HostAndPort("127.0.0.1", localPort);
+        } else {// 直连
+            // 连接信息
+            host = new HostAndPort(this.redisInfo.hostIp(), this.redisInfo.hostPort());
+        }
         // 客户端配置
         DefaultJedisClientConfig clientConfig = this.intClientConfig(this.redisInfo.getUser(), this.redisInfo.getPassword());
-        // 连接信息
-        HostAndPort host = new HostAndPort(this.redisInfo.hostIp(), this.redisInfo.hostPort());
         // 初始化连接池
         this.initPool(host, clientConfig);
         // 获取当前角色
@@ -505,6 +526,10 @@ public class RedisClient {
             if (this.sentinelPool != null && !this.sentinelPool.isClosed()) {
                 this.sentinelPool.close();
                 isClosed = true;
+            }
+            // 销毁端口转发
+            if (this.redisInfo.isSSHForward()) {
+                this.sshForwarder.destroy();
             }
             // 已关闭
             if (isClosed) {

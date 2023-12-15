@@ -2,6 +2,9 @@ package cn.oyzh.easyredis.test;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
+import cn.oyzh.fx.common.ssh.SSHForwardInfo;
+import cn.oyzh.fx.common.ssh.SSHForwarder;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.junit.Test;
@@ -41,16 +44,38 @@ public class SSHTest {
 
     @Test
     public void test() {
-        goSSH(26371, "192.168.189.130", 22, "root", "123456", "192.168.189.128", 6379);
-
+        goSSH(26371, "192.168.189.130", 22, "root", "123456", "192.168.189.134", 6379);
         RedisInfo info = new RedisInfo();
         info.setHost("localhost:26371");
         info.setConnectTimeOut(3000);
         info.setExecuteTimeOut(3000);
         RedisClient client = new RedisClient(info);
-
         client.start();
+        System.out.println(client.set(0, "key1", "val1"));
+        System.out.println(client.get(0, "key1"));
 
+    }
+
+    @Test
+    public void test1() {
+        SSHConnectInfo connectInfo = new SSHConnectInfo();
+        connectInfo.setHost("192.168.189.130");
+        connectInfo.setUser("root");
+        connectInfo.setPassword("123456");
+
+        SSHForwardInfo forwardInfo = new SSHForwardInfo();
+        forwardInfo.setPort(6379);
+        forwardInfo.setHost("192.168.189.134");
+
+        SSHForwarder forwarder = new SSHForwarder(connectInfo);
+        int localPort = forwarder.forward(forwardInfo);
+
+        RedisInfo info = new RedisInfo();
+        info.setHost("127.0.0.1:" + localPort);
+        info.setConnectTimeOut(3000);
+        info.setExecuteTimeOut(3000);
+        RedisClient client = new RedisClient(info);
+        client.start();
         System.out.println(client.set(0, "key1", "val1"));
         System.out.println(client.get(0, "key1"));
 

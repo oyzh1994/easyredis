@@ -44,7 +44,7 @@
             </exclusions>
         </dependency>
 
-        <!-- 自定义类库，shell相关 -->
+        <!-- 自定义类库，终端相关 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-terminal</artifactId>
@@ -65,6 +65,14 @@
             <version>${jedis.version}</version>
         </dependency>
 
+        <!-- ssh类库 -->
+        <!-- https://mvnrepository.com/artifact/com.github.mwiede/jsch -->
+        <dependency>
+            <groupId>com.github.mwiede</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.2.13</version>
+        </dependency>
+
         <!-- fx打包 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
@@ -75,13 +83,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.55</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

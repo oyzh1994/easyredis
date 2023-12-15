@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.common.util.ObjectComparator;
 import lombok.Getter;
 import lombok.NonNull;
@@ -115,6 +116,20 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     private Integer executeTimeOut;
 
     /**
+     * 是否开启ssh转发
+     */
+    @Setter
+    @Getter
+    private Boolean sshForward;
+
+    /**
+     * ssh信息
+     */
+    @Setter
+    @Getter
+    private SSHConnectInfo sshInfo;
+
+    /**
      * 复制对象
      *
      * @param info redis信息
@@ -205,6 +220,15 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
      */
     public boolean isReadonly() {
         return BooleanUtil.isTrue(this.readonly);
+    }
+
+    /**
+     * 是否ssh转发
+     *
+     * @return 结果
+     */
+    public boolean isSSHForward() {
+        return BooleanUtil.isTrue(this.sshForward);
     }
 
     /**

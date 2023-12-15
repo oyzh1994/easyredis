@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.IconButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
+<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
 <FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
@@ -42,7 +43,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true" realHeight="30"
+                    <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true"
+                                        realHeight="30"
                                         flexWidth="100% - 140" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -56,7 +58,7 @@
                         </HBox.margin>
                     </FXLabel>
                     <PortTextField flexWidth="100% - 220" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
-                               value="6379">
+                                   value="6379">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -133,7 +135,7 @@
                         </HBox.margin>
                     </FXLabel>
                     <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0"
-                                        realHeight="30" flexWidth="100% - 282">
+                                  realHeight="30" flexWidth="100% - 140">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="无需认证"/>
@@ -153,14 +155,14 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
-                                        realHeight="30" flexWidth="50% - 145">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
                                         require="true"
-                                        realHeight="30" flexWidth="50% - 142">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
@@ -179,13 +181,90 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 145">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 142">
+                                        realHeight="30" flexWidth="50% - 120">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="SSH通道">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭"
+                                  realHeight="20">
+                        <HBox.margin>
+                            <Insets left="10" top="15"/>
+                        </HBox.margin>
+                    </ToggleSwitch>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
+                    <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="sshHost"
+                                        tipText="主机地址，例如192.168.2.100"
+                                        require="true"
+                                        realHeight="30"
+                                        flexWidth="100% - 245" maxLen="1024">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <PortTextField realWidth="100" fx:id="sshPort"
+                                   tipText="ssh连接端口"
+                                   realHeight="30"
+                                   value="22">
+                        <HBox.margin>
+                            <Insets left="5" top="10"/>
+                        </HBox.margin>
+                    </PortTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
+                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout"
+                                     tipText="ssh连接超时，单位毫秒"
+                                     realHeight="30"
+                                     value="3000">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </NumberTextField>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
+                    <FXLabel realHeight="30" realWidth="65" text="用户信息" styleClass="lbl,lbl-primary">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </FXLabel>
+                    <ClearableTextField fx:id="sshUser" tipText="主机的ssh用户名"
+                                        require="true"
+                                        realHeight="30" flexWidth="50% - 73" text="root">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <ClearableTextField fx:id="sshPassword" tipText="主机的ssh密码"
+                                        require="true"
+                                        realHeight="30" flexWidth="50% - 72">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>

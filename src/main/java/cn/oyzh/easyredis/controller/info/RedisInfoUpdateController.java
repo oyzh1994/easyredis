@@ -7,8 +7,10 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
+import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.ToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
@@ -141,6 +143,60 @@ public class RedisInfoUpdateController extends Controller {
     private FlexComboBox<String> authType;
 
     /**
+     * 开启ssh
+     */
+    @FXML
+    private ToggleSwitch sshForward;
+
+    /**
+     * ssh主机地址
+     */
+    @FXML
+    private ClearableTextField sshHost;
+
+    /**
+     * ssh主机端口
+     */
+    @FXML
+    private PortTextField sshPort;
+
+    /**
+     * ssh主机端口
+     */
+    @FXML
+    private NumberTextField sshTimeout;
+
+    /**
+     * ssh主机用户
+     */
+    @FXML
+    private ClearableTextField sshUser;
+
+    /**
+     * ssh主机密码
+     */
+    @FXML
+    private ClearableTextField sshPassword;
+
+    /**
+     * ssh连接组件
+     */
+    @FXML
+    private FlexHBox sshHostBox;
+
+    /**
+     * ssh认证组件
+     */
+    @FXML
+    private FlexHBox sshAuthBox;
+
+    /**
+     * ssh超时组件
+     */
+    @FXML
+    private FlexHBox sshTimeoutBox;
+
+    /**
      * redis连接储存对象
      */
     private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
@@ -167,6 +223,21 @@ public class RedisInfoUpdateController extends Controller {
     }
 
     /**
+     * 获取ssh信息
+     *
+     * @return ssh连接信息
+     */
+    private SSHConnectInfo getSSHInfo() {
+        SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
+        sshConnectInfo.setHost(this.sshHost.getText());
+        sshConnectInfo.setUser(this.sshUser.getText());
+        sshConnectInfo.setPassword(this.sshPassword.getText());
+        sshConnectInfo.setPort(this.sshPort.getIntValue());
+        sshConnectInfo.setTimeout(this.sshTimeout.getIntValue());
+        return sshConnectInfo;
+    }
+
+    /**
      * 测试连接
      */
     @FXML
@@ -174,7 +245,17 @@ public class RedisInfoUpdateController extends Controller {
         // 检查连接地址
         String host = this.getHost();
         if (StrUtil.isNotBlank(host)) {
-            RedisConnectUtil.testConnect(this.stage, host, this.password.getText(), 3);
+            RedisInfo redisInfo = new RedisInfo();
+            redisInfo.setHost(host);
+            redisInfo.setExecuteTimeOut(3);
+            redisInfo.setConnectTimeOut(3);
+            redisInfo.setUser(this.user.getText());
+            redisInfo.setPassword(this.password.getText());
+            redisInfo.setSshForward(this.sshForward.isSelected());
+            if (redisInfo.isSSHForward()) {
+                redisInfo.setSshInfo(this.getSSHInfo());
+            }
+            RedisConnectUtil.testConnect(this.stage, redisInfo);
         }
     }
 
@@ -198,8 +279,10 @@ public class RedisInfoUpdateController extends Controller {
 
         this.redisInfo.setHost(host.trim());
         this.redisInfo.setUser(this.user.getText());
+        this.redisInfo.setSshInfo(this.getSSHInfo());
         this.redisInfo.setRemark(this.remark.getTextTrim());
         this.redisInfo.setPassword(this.password.getText());
+        this.redisInfo.setSshForward(this.sshForward.isSelected());
         this.redisInfo.setReadonly(this.readonly.isSelected());
         this.redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
         this.redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
@@ -247,12 +330,22 @@ public class RedisInfoUpdateController extends Controller {
         this.password.setText(this.redisInfo.getPassword());
         this.readonly.setSelected(this.redisInfo.isReadonly());
         this.masterUser.setText(this.redisInfo.getMasterUser());
+        this.sshForward.setSelected(this.redisInfo.isSSHForward());
         this.masterPassword.setText(this.redisInfo.getMasterPassword());
         this.connectTimeOut.setValue(this.redisInfo.getConnectTimeOut());
         this.executeTimeOut.setValue(this.redisInfo.getExecuteTimeOut());
         this.redirectMaster.setSelected(this.redisInfo.isRedirectMaster());
         if (this.redisInfo.isRedirectMaster()) {
             this.sentinelBox.enable();
+        }
+        // ssh连接信息
+        SSHConnectInfo connectInfo = this.redisInfo.getSshInfo();
+        if (connectInfo != null) {
+            this.sshHost.setText(connectInfo.getHost());
+            this.sshUser.setText(connectInfo.getUser());
+            this.sshPort.setValue(connectInfo.getPort());
+            this.sshTimeout.setValue(connectInfo.getTimeout());
+            this.sshPassword.setText(connectInfo.getPassword());
         }
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
@@ -302,6 +395,18 @@ public class RedisInfoUpdateController extends Controller {
                 if (this.redirectMaster.isSelected()) {
                     this.masterUser.enable();
                 }
+            }
+        });
+        // ssh配置
+        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
+            if (newValue) {
+                this.sshAuthBox.enable();
+                this.sshHostBox.enable();
+                this.sshTimeoutBox.enable();
+            } else {
+                this.sshAuthBox.disable();
+                this.sshHostBox.disable();
+                this.sshTimeoutBox.disable();
             }
         });
     }

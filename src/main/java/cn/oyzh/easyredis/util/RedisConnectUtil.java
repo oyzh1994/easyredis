@@ -18,27 +18,84 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RedisConnectUtil {
 
+    // /**
+    //  * 测试连接
+    //  *
+    //  * @param view     页面
+    //  * @param host     地址
+    //  * @param password 密码
+    //  * @param timeout  超时时间
+    //  */
+    // public static void testConnect(StageWrapper view, String host, String password, int timeout) {
+    //     testConnect(view, null, host, password, timeout);
+    // }
+    //
+    // /**
+    //  * 测试连接
+    //  *
+    //  * @param view           页面
+    //  * @param sshConnectInfo ssh连接信息
+    //  * @param host           地址
+    //  * @param password       密码
+    //  * @param timeout        超时时间
+    //  */
+    // public static void testConnect(StageWrapper view, SSHConnectInfo sshConnectInfo, String host, String password, int timeout) {
+    //     ThreadUtil.startVirtual(() -> {
+    //         try {
+    //             view.disable();
+    //             view.waitCursor();
+    //             view.appendTitle("==连接测试中...");
+    //             // 创建redis信息
+    //             RedisInfo redisInfo = new RedisInfo();
+    //             // ssh转发
+    //             if (sshConnectInfo != null) {
+    //                 SSHForwarder forwarder = new SSHForwarder(sshConnectInfo);
+    //                 String hostAddr = host.split(":")[0];
+    //                 int port = Integer.parseInt(host.split(":")[1]);
+    //                 SSHForwardInfo forwardInfo = new SSHForwardInfo();
+    //                 forwardInfo.setHost(hostAddr);
+    //                 forwardInfo.setPort(port);
+    //                 int localPort = forwarder.forward(forwardInfo);
+    //                 redisInfo.setHost("127.0.0.1:" + localPort);
+    //             } else {// 直连
+    //                 redisInfo.setHost(host);
+    //             }
+    //             redisInfo.setPassword(password);
+    //             redisInfo.setConnectTimeOut(timeout);
+    //             redisInfo.setExecuteTimeOut(timeout);
+    //             RedisClient client = new RedisClient(redisInfo);
+    //             // 开始连接
+    //             client.start();
+    //             if (client.isConnected()) {
+    //                 client.close();
+    //                 MessageBox.okToast("连接成功！");
+    //             } else {
+    //                 MessageBox.warn("连接失败，请检查地址是否有效！");
+    //             }
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //             MessageBox.exception(ex);
+    //         } finally {
+    //             view.enable();
+    //             view.defaultCursor();
+    //             view.restoreTitle();
+    //         }
+    //     });
+    // }
+
     /**
      * 测试连接
      *
-     * @param view     页面
-     * @param host     地址
-     * @param password 密码
-     * @param timeout  超时时间
+     * @param view 页面
+     * @param info redis信息
      */
-    public static void testConnect(StageWrapper view, String host, String password, int timeout) {
+    public static void testConnect(StageWrapper view, RedisInfo info) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();
                 view.waitCursor();
                 view.appendTitle("==连接测试中...");
-                // 创建redis信息
-                RedisInfo redisInfo = new RedisInfo();
-                redisInfo.setHost(host);
-                redisInfo.setPassword(password);
-                redisInfo.setConnectTimeOut(timeout);
-                redisInfo.setExecuteTimeOut(timeout);
-                RedisClient client = new RedisClient(redisInfo);
+                RedisClient client = new RedisClient(info);
                 // 开始连接
                 client.start();
                 if (client.isConnected()) {

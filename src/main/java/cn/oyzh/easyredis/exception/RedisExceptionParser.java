@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.exception;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.common.ssh.SSHException;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
@@ -24,6 +25,10 @@ public class RedisExceptionParser implements Function<Throwable, String> {
     public String apply(Throwable e) {
         if (e == null) {
             return null;
+        }
+
+        if (e instanceof SSHException e1) {
+            return e1.getMessage();
         }
 
         if (e instanceof RuntimeException) {
@@ -61,6 +66,9 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             }
             if (StrUtil.contains(message, "Failed to connect to")) {
                 return "连接失败，请检查Redis服务是否启动、网络是否可用、认证信息是否正确";
+            }
+            if (StrUtil.contains(message, "Read timed out")) {
+                return "连接失败，读取超时";
             }
         }
 
