@@ -272,8 +272,6 @@ public class RedisMainController extends ParentController {
         EventUtil.register(this.tabPane);
 
         // 初始化过滤
-        // this.tree.itemFilter(this.treeItemFilter);
-        // this.treeItemFilter.initFilters();
         this.filter();
 
         // 设置上次保存的页面拉伸
@@ -358,18 +356,9 @@ public class RedisMainController extends ParentController {
         this.showZSet.selectedChanged((obs, o, n) -> this.filter());
         this.showString.selectedChanged((obs, o, n) -> this.filter());
         this.showStream.selectedChanged((obs, o, n) -> this.filter());
-//        this.showHyLog.selectedChanged((obs, o, n) -> this.filter());
 
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
-        // this.tabPane.selectedTabChanged((abs, o, n) -> {
-        //     if (o != null) {
-        //         o.getStyleClass().remove("tab-active");
-        //     }
-        //     if (n != null) {
-        //         n.getStyleClass().add("tab-active");
-        //     }
-        // });
         // redis树键变化事件
         this.tree.selectItemChanged(this::treeItemChanged);
         // 文件拖拽初始化

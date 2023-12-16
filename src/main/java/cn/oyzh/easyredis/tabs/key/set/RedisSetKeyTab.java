@@ -13,10 +13,6 @@ import lombok.NonNull;
  */
 public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
 
-    public RedisSetKeyTab(@NonNull RedisSetKeyTreeItem treeItem) {
-        super(treeItem);
-    }
-
     @Override
     protected String url() {
         return  "/tabs/key/redisSetKeyTabContent.fxml";

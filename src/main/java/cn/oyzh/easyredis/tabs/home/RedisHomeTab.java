@@ -15,21 +15,19 @@ import javafx.scene.Node;
  */
 public class RedisHomeTab extends DynamicTab {
 
-    {
-        this.setClosable(true);
-        this.loadContent();
+    public RedisHomeTab(){
+        super();
+        super.flush();
     }
 
     @Override
-    protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/home/redisHomeTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.setContent(content);
-        this.setText("主页");
-        // 刷新图标
-        this.flushGraphic();
+    protected String url() {
+        return "/tabs/home/redisHomeTabContent.fxml";
+    }
+
+    @Override
+    public void flushTitle() {
+        super.title("主页");
     }
 
     @Override

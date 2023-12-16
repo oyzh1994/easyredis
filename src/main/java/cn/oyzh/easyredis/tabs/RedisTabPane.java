@@ -327,20 +327,15 @@ public class RedisTabPane extends DynamicTabPane {
      */
     public void initKeyTab(RedisKeyTreeItem<?, ?> item) {
         if (item != null) {
-            RedisKeyTab<?> nodeTab = this.getKeyTab(item);
-            if (nodeTab != null && nodeTab.treeItem() != item) {
-                nodeTab.closeTab();
-                nodeTab = null;
+            RedisKeyTab keyTab = this.getKeyTab(item);
+            if (keyTab == null) {
+                keyTab = RedisKeyTab.ofItem(item);
+                super.addTab(keyTab);
             }
-            if (nodeTab == null) {
-                nodeTab = RedisKeyTab.ofItem(item);
-                super.addTab(nodeTab);
-            } else {
-                nodeTab.flushGraphic();
-            }
-            if (!nodeTab.isSelected()) {
-                this.select(nodeTab);
-            }
+            // 选中节点
+            this.select(keyTab);
+            // 初始化节点
+            keyTab.init(item);
         }
     }
 
@@ -412,11 +407,8 @@ public class RedisTabPane extends DynamicTabPane {
         RedisFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new RedisFilterTab();
-            tab.init();
             super.addTab(tab);
         }
-        if (!tab.isSelected()) {
-            this.select(tab);
-        }
+        this.select(tab);
     }
 }

@@ -53,55 +53,48 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
      */
     @Getter
     @Accessors(fluent = true)
-    protected final T treeItem;
+    protected T treeItem;
 
     /**
      * 执行初始化
      *
-     * @param treeItem redis树键
+     * @param treeItem zk树节点
      */
-    public RedisKeyTab(@NonNull T treeItem) {
-        this.setClosable(true);
-        this.treeItem = treeItem;
-        // 初始化
-        if (!this.controller().init(treeItem)) {
-            this.disable();
+    public void init(@NonNull T treeItem) {
+        if (treeItem != this.treeItem) {
+            this.treeItem = treeItem;
+            // 刷新
+            this.flush();
+            // 初始化
+            if (!this.controller().init(treeItem)) {
+                this.disable();
+            }
+            // 判断这个key是否到期
+            if (treeItem.isExpire()) {
+                BackgroundService.submitFXLater(() -> {
+                    if (MessageBox.confirm("键[" + treeItem.key() + "]已过期，是否删除？")) {
+                        treeItem.delete();
+                    }
+                });
+            }
         }
-        // 刷新图标
-        this.flushGraphic();
-        // 刷新标题
-        this.flushTitle();
-        // 判断这个key是否到期
-        if (treeItem.isExpire()) {
-            BackgroundService.submitFXLater(() -> {
-                if (MessageBox.confirm("键[" + treeItem.key() + "]已过期，是否删除？")) {
-                    treeItem.delete();
-                }
-            });
-        }
-    }
-
-    @Override
-    public void setOnCloseRequest(EventHandler<Event> value) {
-        super.setOnCloseRequest(value);
     }
 
     @Override
     public void flushTitle() {
         // 设置文本
-        this.setText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
+        this.setText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
         // 设置提示文本
-        this.setTipText("（" + this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "）" + this.treeItem.key());
+        this.setTipText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
     }
 
     @Override
     public void flushGraphic() {
-        SVGGlyph graphic = (SVGGlyph) this.getGraphic();
-        if (graphic == null) {
-            graphic = new SVGGlyph("/font/treeNode.svg", 12);
-        }
-        if (graphic.getCursor() != Cursor.DEFAULT) {
-            graphic.setCursor(Cursor.DEFAULT);
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        if (glyph == null) {
+            glyph = new SVGGlyph("/font/key.svg", 12);
+            glyph.setCursor(Cursor.DEFAULT);
+            this.setGraphic(glyph);
         }
     }
 
@@ -110,14 +103,14 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
         return (RedisKeyTabContent<T>) super.controller();
     }
 
-    /**
-     * 获取键数据组件
-     *
-     * @return 键数据组件
-     */
-    public FlexTextArea getNodeDataNode() {
-        return this.controller().getNodeDataNode();
-    }
+//    /**
+//     * 获取键数据组件
+//     *
+//     * @return 键数据组件
+//     */
+//    public FlexTextArea getNodeDataNode() {
+//        return this.controller().getNodeDataNode();
+//    }
 
     /**
      * 重新载入
@@ -153,20 +146,18 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
 
     public static <T extends RedisKeyTreeItem<?, ?>> RedisKeyTab<T> ofItem(T item) {
         RedisKeyTab<T> tab = null;
-        if (item instanceof RedisStringKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisStringKeyTab(treeItem);
-        } else if (item instanceof RedisListKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisListKeyTab(treeItem);
-        } else if (item instanceof RedisSetKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisSetKeyTab(treeItem);
-        } else if (item instanceof RedisZSetKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisZSetKeyTab(treeItem);
-        } else if (item instanceof RedisHashKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisHashKeyTab(treeItem);
-//        } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
-//            tab = (RedisKeyTab<T>) new RedisHyLogKeyTab(treeItem);
-        } else if (item instanceof RedisStreamKeyTreeItem treeItem) {
-            tab = (RedisKeyTab<T>) new RedisStreamKeyTab(treeItem);
+        if (item instanceof RedisStringKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisStringKeyTab();
+        } else if (item instanceof RedisListKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisListKeyTab();
+        } else if (item instanceof RedisSetKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisSetKeyTab();
+        } else if (item instanceof RedisZSetKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisZSetKeyTab();
+        } else if (item instanceof RedisHashKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisHashKeyTab();
+        } else if (item instanceof RedisStreamKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisStreamKeyTab();
         }
         return tab;
     }

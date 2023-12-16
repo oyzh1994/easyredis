@@ -28,7 +28,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
      */
     @Getter
     @Accessors(fluent = true, chain = false)
-    private RedisKeyType value;
+    private final RedisKeyType value;
 
     /**
      * 父节点
