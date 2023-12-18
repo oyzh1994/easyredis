@@ -106,7 +106,7 @@
                         </HBox.margin>
                     </SVGGlyph>
                 </FlexHBox>
-                <MsgTextArea editable="false" fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
+                <MsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
                              maxLine="1000"/>
             </FlexVBox>
         </FXTab>

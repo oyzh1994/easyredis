@@ -315,7 +315,7 @@ public class RedisKeyExportController extends Controller {
                 }
                 // 收尾工作
                 this.updateStatus("处理文件中...");
-                this.exportMsg.waitTextExpend();
+                // this.exportMsg.waitTextExpend();
                 File file = FXFileChooser.save("Redis数据导出", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {

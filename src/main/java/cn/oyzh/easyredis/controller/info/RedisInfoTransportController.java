@@ -339,7 +339,7 @@ public class RedisInfoTransportController extends Controller {
                 // 执行传输
                 this.transport(fIndex, tIndex, this.allKeys);
                 this.updateStatus("数据传输收尾中....");
-                this.transportMsg.waitTextExpend();
+                // this.transportMsg.waitTextExpend();
                 this.updateStatus("数据传输结束");
                 MessageBox.okToast("传输数据结束！");
             } catch (Exception e) {
