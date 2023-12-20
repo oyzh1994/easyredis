@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
         title = "过滤配置新增",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "filter/redisFilterAdd.fxml"
 )
 public class RedisFilterAddController extends Controller {
@@ -43,13 +43,13 @@ public class RedisFilterAddController extends Controller {
      * 是否启用
      */
     @FXML
-    private ToggleSwitch enable;
+    private FXToggleSwitch enable;
 
     /**
      * 模糊匹配
      */
     @FXML
-    private ToggleSwitch partMatch;
+    private FXToggleSwitch partMatch;
 
     /**
      * redis过滤配置储存

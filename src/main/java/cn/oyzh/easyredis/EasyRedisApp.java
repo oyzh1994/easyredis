@@ -4,10 +4,12 @@ import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.DisposableBean;
@@ -50,6 +52,9 @@ public class EasyRedisApp extends SpringApplication implements CommandLineRunner
     @Override
     public void start(Stage primaryStage) {
         try {
+            // 初始化主题
+            ThemeManager.currentTheme(RedisSettingStore.SETTING.getTheme());
+            // 注册异常处理器
             MessageBox.registerExceptionParser(RedisExceptionParser.INSTANCE);
             // 开启定期gc
             SystemUtil.gcInterval(60_000);

@@ -16,11 +16,11 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
-<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<FlexTabPane styleClass="panel,panel-primary" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+<FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1"
@@ -69,7 +69,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="16"
+                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="12"
                          onMousePrimaryClicked="#ttlUpdate">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -86,12 +86,12 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <ToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="地理坐标"
-                              unselectedText="有序集合" realWidth="90">
+                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="地理坐标"
+                              unselectedText="有序集合">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </ToggleSwitch>
+                </FXToggleSwitch>
                 <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>

@@ -32,7 +32,7 @@ import java.util.Map;
         title = "添加stream消息",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisStreamMessageAdd.fxml"
 )
 public class RedisStreamMessageAddController extends Controller {

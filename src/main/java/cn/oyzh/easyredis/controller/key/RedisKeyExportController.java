@@ -5,7 +5,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
@@ -32,8 +31,8 @@ import cn.oyzh.fx.plus.controls.textfield.FlexTextField;
 import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
 import javafx.stage.FileChooser;
@@ -55,12 +54,11 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/07/07
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis数据导出",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
 )
 public class RedisKeyExportController extends Controller {
@@ -316,7 +314,7 @@ public class RedisKeyExportController extends Controller {
                 // 收尾工作
                 this.updateStatus("处理文件中...");
                 // this.exportMsg.waitTextExpend();
-                File file = FXFileChooser.save("Redis数据导出", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                File file = FileChooserUtil.save("Redis数据导出", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);

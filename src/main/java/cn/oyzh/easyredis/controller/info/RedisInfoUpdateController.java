@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
@@ -31,12 +31,11 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2022/06/16
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis连接修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = RedisConst.ICON_PATH,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoUpdate.fxml"
 )
 public class RedisInfoUpdateController extends Controller {
@@ -146,7 +145,7 @@ public class RedisInfoUpdateController extends Controller {
      * 开启ssh
      */
     @FXML
-    private ToggleSwitch sshForward;
+    private FXToggleSwitch sshForward;
 
     /**
      * ssh主机地址

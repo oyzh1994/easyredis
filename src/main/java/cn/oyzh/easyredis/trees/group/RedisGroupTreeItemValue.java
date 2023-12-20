@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.group;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -27,9 +28,9 @@ public class RedisGroupTreeItemValue extends RedisTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/group.svg", "12");
+        if (this.graphic() == null) {
+            SVGGlyph glyph = new SVGGlyph("/font/group.svg", 10);
+            glyph.disableTheme();
             this.graphic(glyph);
         }
     }
@@ -37,10 +38,14 @@ public class RedisGroupTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (this.item.isChildEmpty() && glyph.getColor() != Color.BLACK) {
-            glyph.setColor(Color.BLACK);
-        } else if (!this.item.isChildEmpty() && glyph.getColor() != Color.DEEPSKYBLUE) {
-            glyph.setColor(Color.DARKBLUE);
+        if (this.item.isChildEmpty()) {
+            if (ThemeManager.isDarkMode()) {
+                glyph.setColor(Color.WHITE);
+            } else {
+                glyph.setColor(Color.BLACK);
+            }
+        } else {
+            glyph.setColor(Color.DEEPSKYBLUE);
         }
     }
 }

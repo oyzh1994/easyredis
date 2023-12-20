@@ -15,13 +15,13 @@
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<FlexTabPane styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600">
     <FXTab text="批量删除键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -38,7 +38,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -66,7 +66,7 @@
     <FXTab text="批量设置键ttl">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -79,7 +79,7 @@
                 </NumberTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -96,7 +96,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -124,7 +124,7 @@
     <FXTab text="清空数据库">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="相关操作" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="相关操作" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -136,7 +136,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -164,7 +164,7 @@
     <FXTab text="批量移动键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -176,7 +176,7 @@
                 </RedisDBComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -193,7 +193,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -221,7 +221,7 @@
     <FXTab text="批量复制键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -238,7 +238,7 @@
                 </FlexCheckBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -255,7 +255,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>

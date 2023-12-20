@@ -20,13 +20,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -38,7 +38,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="数  据  库" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="数  据  库" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -55,7 +55,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" visible="false">
-        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -73,7 +73,7 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="200" fx:id="keysBox2" visible="false">
-        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -85,7 +85,7 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -127,7 +127,7 @@
 <!--        </FlexCheckBox>-->
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -168,7 +168,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -184,7 +184,7 @@
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <IconButton tipText="开始执行导出" fx:id="exportBtn" onAction="#doExport" realHeight="30"
-                    styleClass="btn,btn-primary"
+                    styleClass="accent"
                     text="导出"
                     iconSizePercent="0.75">
             <graphic>

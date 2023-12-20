@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
         title = "添加hyperLogLog元素",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisHyperLogLogElementsAdd.fxml"
 )
 public class RedisHyLogElementsAddController extends Controller {

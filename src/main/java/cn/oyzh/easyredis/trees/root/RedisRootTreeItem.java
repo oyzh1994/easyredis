@@ -26,7 +26,7 @@ import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.util.FXFileChooser;
+import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -113,7 +113,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         }
         RedisInfoExport export = RedisInfoExport.fromConnects(redisInfos);
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        File file = FXFileChooser.save("保存Redis连接列表", "Redis连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
+        File file = FileChooserUtil.save("保存Redis连接列表", "Redis连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
@@ -149,7 +149,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     private void importConnect() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FXFileChooser.choose("选择redis连接列表", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose("选择redis连接列表", new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseConnect(file);
     }

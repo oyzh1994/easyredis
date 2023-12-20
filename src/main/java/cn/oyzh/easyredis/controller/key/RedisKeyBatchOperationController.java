@@ -38,7 +38,7 @@ import java.util.Set;
         title = "Redis键批量操作",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )
 public class RedisKeyBatchOperationController extends Controller {

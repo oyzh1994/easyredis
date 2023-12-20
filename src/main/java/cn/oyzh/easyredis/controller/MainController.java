@@ -39,7 +39,7 @@ import java.util.List;
         usePrimary = true,
         title = "EasyRedis主页",
         iconUrls = RedisConst.ICON_PATH,
-        cssUrls = RedisStyle.MAIN,
+        // cssUrls = RedisStyle.MAIN,
         value = RedisConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentController {

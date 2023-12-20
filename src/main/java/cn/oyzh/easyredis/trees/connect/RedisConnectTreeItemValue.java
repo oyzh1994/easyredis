@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -33,9 +34,9 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/redis.svg", "12");
+        if (this.graphic() == null) {
+            SVGGlyph glyph = new SVGGlyph("/font/redis.svg", 10);
+            glyph.disableTheme();
             this.graphic(glyph);
         }
     }
@@ -43,10 +44,14 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (this.item.isConnected() && glyph.getColor() != Color.GREEN) {
+        if (this.item.isConnected()) {
             glyph.setColor(Color.GREEN);
-        } else if (!this.item.isConnected() && glyph.getColor() != Color.BLACK) {
-            glyph.setColor(Color.BLACK);
+        } else {
+            if (ThemeManager.isDarkMode()) {
+                glyph.setColor(Color.WHITE);
+            } else {
+                glyph.setColor(Color.BLACK);
+            }
         }
     }
 

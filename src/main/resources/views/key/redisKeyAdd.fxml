@@ -11,17 +11,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
-<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="680"
           fx:id="root">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="键类型" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="键类型" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -33,7 +33,7 @@
         </RedisKeyTypeComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -47,7 +47,7 @@
     </FlexHBox>
     <FlexVBox fx:id="zSetBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="分    数" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="分    数" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -60,7 +60,7 @@
             </DecimalTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 50">
-            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -94,7 +94,7 @@
     </FlexVBox>
     <FlexVBox fx:id="bitBox" flexWidth="100%" flexHeight="100" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="下    标" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="下    标" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -107,21 +107,21 @@
             </NumberTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50">
-            <FXLabel text="下标值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="下标值" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </FXLabel>
-            <ToggleSwitch realWidth="90" realHeight="26" fx:id="bitValue" selected="true" selectedText="真/1" unselectedText="假/0">
+            <FXToggleSwitch fx:id="bitValue" selected="true" selectedText="真/1" unselectedText="假/0">
                 <HBox.margin>
                     <Insets left="10" top="12"/>
                 </HBox.margin>
-            </ToggleSwitch>
+            </FXToggleSwitch>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="geoBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="经度值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="经度值" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -134,7 +134,7 @@
             </LongitudeField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="纬度值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="纬度值" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -147,7 +147,7 @@
             </LatitudeField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 100">
-            <FXLabel text="坐标名" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="坐标名" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -180,7 +180,7 @@
     </FlexVBox>
     <FlexVBox fx:id="hashBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FXLabel text="字段名" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="字段名" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -193,7 +193,7 @@
             </FlexTextArea>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FXLabel text="字段值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="字段值" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -226,7 +226,7 @@
     </FlexVBox>
     <FlexVBox fx:id="streamBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <FXLabel text="消息ID" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="消息ID" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -238,7 +238,7 @@
             </ClearableTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 50">
-            <FXLabel text="消息值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="消息值" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -272,7 +272,7 @@
     </FlexVBox>
     <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -305,7 +305,7 @@
     </FlexVBox>
     <FlexVBox fx:id="setBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -338,7 +338,7 @@
     </FlexVBox>
     <FlexVBox fx:id="hylogBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <FXLabel text="统计项" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="统计项" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -372,7 +372,7 @@
     </FlexVBox>
     <FlexVBox fx:id="stringBox" flexWidth="100%" flexHeight="100% - 240">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <FXLabel text="内    容" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+            <FXLabel text="内    容" realHeight="30" realWidth="65" styleClass="accent">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
@@ -404,7 +404,7 @@
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

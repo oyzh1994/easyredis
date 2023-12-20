@@ -27,7 +27,7 @@ import javafx.stage.WindowEvent;
         title = "添加hash字段",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisHashFieldAdd.fxml"
 )
 public class RedisHashFieldAddController extends Controller {

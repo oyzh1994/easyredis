@@ -14,18 +14,18 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
-<?import cn.oyzh.fx.plus.controls.ToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="基础设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -38,7 +38,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -52,7 +52,7 @@
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -65,7 +65,7 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -81,7 +81,7 @@
         <FXTab text="高级设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -100,7 +100,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -119,7 +119,7 @@
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="100">
-                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -136,7 +136,7 @@
         <FXTab text="认证设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="认证方式" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="认证方式" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -156,7 +156,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox">
-                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -182,7 +182,7 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -205,20 +205,19 @@
         <FXTab text="SSH通道">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <ToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭"
-                                  realHeight="20">
+                    <FXToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
-                    </ToggleSwitch>
+                    </FXToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -242,7 +241,7 @@
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -257,7 +256,7 @@
                     </NumberTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="用户信息" styleClass="lbl,lbl-primary">
+                    <FXLabel realHeight="30" realWidth="65" text="用户信息" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -281,7 +280,7 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton onAction="#testConnect" text="测试" styleClass="btn,btn-success" iconSizePercent="0.8">
+        <IconButton onAction="#testConnect" text="测试" styleClass="success" iconSizePercent="0.8">
             <graphic>
                 <SVGGlyph url="/font/link.svg"/>
             </graphic>

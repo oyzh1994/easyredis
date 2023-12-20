@@ -2,12 +2,14 @@ package cn.oyzh.easyredis.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -134,6 +136,16 @@ public class SearchController extends SubController {
     private RedisSearchHandler searchHandler;
 
     /**
+     * 设置
+     */
+    private final RedisSetting setting = RedisSettingStore.SETTING;
+
+    /**
+     * 设置储存
+     */
+    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
+
+    /**
      * 搜索历史储存
      */
     private final RedisSearchHistoryStore historyStore = RedisSearchHistoryStore.INSTANCE;
@@ -162,6 +174,8 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.display();
         this.showSearchMore.disappear();
+        this.setting.setSearchMoreExpand((byte) 0);
+        this.settingStore.update(this.setting);
     }
 
     /**
@@ -176,6 +190,8 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.disappear();
         this.showSearchMore.display();
+        this.setting.setSearchMoreExpand((byte) 1);
+        this.settingStore.update(this.setting);
     }
 
     /**
@@ -347,8 +363,11 @@ public class SearchController extends SubController {
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView);
-        // this.searchHandler.init(this.treeView, this.parent().tabPane);
         this.searchKW.setHistoryPopup(new RedisSearchHistoryPopup());
+        // 显示更多
+        if (this.setting.isSearchMoreExpand()) {
+            this.showSearchMore();
+        }
     }
 
     @Override

@@ -30,12 +30,11 @@ import java.util.List;
  * @author oyzh
  * @since 2023/07/19
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis键过滤",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         resizeable = false,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyFilter.fxml"
 )

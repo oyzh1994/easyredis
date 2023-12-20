@@ -20,7 +20,7 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         resizeable = false,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "about.fxml"

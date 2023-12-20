@@ -10,7 +10,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<FlexTabPane styleClass="panel,panel-primary" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
+<FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1"
@@ -104,12 +104,12 @@
                         <Insets left="5" top="-4"/>
                     </FlowPane.margin>
                 </RedisFormatComboBox>
-                <FXLabel fx:id="count" tipText="元素统计值" fontSize="16">-->
+                <FXLabel fx:id="count" tipText="元素统计值" fontSize="12">-->
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="16"
+                <FXLabel fx:id="ttl" tipText="TTL（剩余到期时间），单位秒，-1代表永不过期，点击可编辑" fontSize="12"
                          onMousePrimaryClicked="#ttlUpdate">
                     <FlowPane.margin>
                         <Insets left="5"/>

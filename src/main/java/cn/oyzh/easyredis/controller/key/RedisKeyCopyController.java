@@ -24,12 +24,11 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2023/08/09
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis键复制",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyCopy.fxml"
 )
 public class RedisKeyCopyController extends Controller {

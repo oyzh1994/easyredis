@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -34,9 +35,9 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (glyph == null) {
-            glyph = new SVGGlyph("/font/database-2-line.svg", "12");
+        if (this.graphic() == null) {
+            SVGGlyph glyph = new SVGGlyph("/font/database-2-line.svg", 10);
+            glyph.disableTheme();
             this.graphic(glyph);
         }
     }
@@ -44,9 +45,13 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (this.item.isKeyEmpty() && glyph.getColor() != Color.BLACK) {
-            glyph.setColor(Color.BLACK);
-        } else if (!this.item.isKeyEmpty() && glyph.getColor() != Color.DARKGREEN) {
+        if (this.item.isKeyEmpty()) {
+            if (ThemeManager.isDarkMode()) {
+                glyph.setColor(Color.WHITE);
+            } else {
+                glyph.setColor(Color.BLACK);
+            }
+        } else {
             glyph.setColor(Color.DARKGREEN);
         }
     }
@@ -65,6 +70,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
                 if (text == null) {
                     text = new FXText();
                     this.addChild(text);
+                    text.disableTheme();
                     text.setId("num");
                     text.setFill(Color.valueOf("#228B22"));
                     HBox.setMargin(text, new Insets(0, 0, 0, 3));

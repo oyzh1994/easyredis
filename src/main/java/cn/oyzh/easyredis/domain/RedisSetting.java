@@ -2,6 +2,8 @@ package cn.oyzh.easyredis.domain;
 
 
 import cn.oyzh.fx.plus.domain.Setting;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * redis设置
@@ -9,5 +11,23 @@ import cn.oyzh.fx.plus.domain.Setting;
  * @author oyzh
  * @since 2023/6/16
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class RedisSetting extends Setting {
+
+    /**
+     * 搜索-更多-展开状态
+     * 0|null 不展开
+     * 1 展开
+     */
+    private Byte searchMoreExpand;
+
+    /**
+     * 是否展开搜索-更多
+     *
+     * @return 结果
+     */
+    public boolean isSearchMoreExpand() {
+        return this.searchMoreExpand != null && this.searchMoreExpand == 1;
+    }
 }

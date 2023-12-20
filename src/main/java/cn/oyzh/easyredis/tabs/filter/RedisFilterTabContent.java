@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.PagePane;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
@@ -138,10 +138,10 @@ public class RedisFilterTabContent extends DynamicTabController {
         // 状态栏初始化
         this.enable.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
-            public ToggleSwitch initGraphic() {
+            public FXToggleSwitch initGraphic() {
                 RedisFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    ToggleSwitch toggleSwitch = new ToggleSwitch();
+                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
                     toggleSwitch.setFontSize(11);
                     toggleSwitch.setSelectedText("已启用");
                     toggleSwitch.setUnselectedText("已禁用");
@@ -163,10 +163,10 @@ public class RedisFilterTabContent extends DynamicTabController {
         // 匹配模式栏初始化
         this.partMatch.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
-            public ToggleSwitch initGraphic() {
+            public FXToggleSwitch initGraphic() {
                 RedisFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    ToggleSwitch toggleSwitch = new ToggleSwitch();
+                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
                     toggleSwitch.fontSize(11);
                     toggleSwitch.setSelectedText("模糊匹配");
                     toggleSwitch.setUnselectedText("完全匹配");

@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
         title = "添加list行",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisListRowAdd.fxml"
 )
 public class RedisListRowAddController extends Controller {

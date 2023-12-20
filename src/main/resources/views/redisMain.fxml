@@ -11,7 +11,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FlexPane styleClass="panel,panel-primary,mainPane" xmlns:fx="http://javafx.com/fxml/1"
+<FlexPane styleClass="root,mainPane" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
         <FXTab text="连接">

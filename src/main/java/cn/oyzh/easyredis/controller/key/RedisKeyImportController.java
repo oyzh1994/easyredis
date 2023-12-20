@@ -6,7 +6,6 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
@@ -41,8 +40,8 @@ import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXFileChooser;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -63,12 +62,11 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/07/19
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis数据导入",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyImport.fxml"
 )
 public class RedisKeyImportController extends Controller {
@@ -185,7 +183,7 @@ public class RedisKeyImportController extends Controller {
     private void chooseFile() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FXFileChooser.choose("选择redis脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose("选择redis脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseFile(file);
     }

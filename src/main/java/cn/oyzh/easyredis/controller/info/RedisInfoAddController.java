@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
@@ -36,7 +36,7 @@ import javafx.stage.WindowEvent;
         title = "Redis连接新增",
         modality = Modality.WINDOW_MODAL,
         iconUrls = RedisConst.ICON_PATH,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
 )
 public class RedisInfoAddController extends Controller {
@@ -141,7 +141,7 @@ public class RedisInfoAddController extends Controller {
      * 开启ssh
      */
     @FXML
-    private ToggleSwitch sshForward;
+    private FXToggleSwitch sshForward;
 
     /**
      * ssh主机地址

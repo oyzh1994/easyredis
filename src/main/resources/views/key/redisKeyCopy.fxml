@@ -11,11 +11,11 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
-<FlexVBox styleClass="panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyCopyController" realWidth="400"
           realHeight="210">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -27,7 +27,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -39,7 +39,7 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="设  置" realHeight="30" realWidth="65" styleClass="lbl,lbl-primary">
+        <FXLabel text="设  置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

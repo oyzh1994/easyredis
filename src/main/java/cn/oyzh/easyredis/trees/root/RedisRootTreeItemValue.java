@@ -27,7 +27,7 @@ public class RedisRootTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new FlexImageView(IconUtil.getIcon(RedisConst.ICON_PATH), 13));
+            this.graphic(new FlexImageView(IconUtil.getIcon(RedisConst.ICON_PATH), 12));
         }
     }
 }

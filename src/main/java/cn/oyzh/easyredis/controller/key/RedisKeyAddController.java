@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexVBox;
-import cn.oyzh.fx.plus.controls.ToggleSwitch;
+import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
         title = "Redis键添加",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
 )
 public class RedisKeyAddController extends Controller {
@@ -117,7 +117,7 @@ public class RedisKeyAddController extends Controller {
      * bit值
      */
     @FXML
-    private ToggleSwitch bitValue;
+    private FXToggleSwitch bitValue;
 
     /**
      * bit索引

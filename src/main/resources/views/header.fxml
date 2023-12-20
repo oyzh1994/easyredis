@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<FlexFlowPane styleClass="header,panel,panel-primary" xmlns:fx="http://javafx.com/fxml/1"
+<FlexFlowPane styleClass="header,root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
     <SVGLabel text="过滤" onMousePrimaryClicked="#filter" tipText="键过滤配置" url="/font/filter.svg" size="13">
         <FlowPane.margin>

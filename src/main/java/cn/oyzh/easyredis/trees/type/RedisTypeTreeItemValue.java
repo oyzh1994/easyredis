@@ -28,7 +28,7 @@ public class RedisTypeTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new SVGGlyph("/font/folder.svg", 12));
+            this.graphic(new SVGGlyph("/font/folder.svg", 10));
         }
     }
 
@@ -44,6 +44,7 @@ public class RedisTypeTreeItemValue extends RedisTreeItemValue {
             if (text == null) {
                 text = new FXText();
                 this.addChild(text);
+                text.disableTheme();
                 text.setId("num");
                 text.setFill(Color.valueOf("#228B22"));
                 HBox.setMargin(text, new Insets(0, 0, 0, 3));

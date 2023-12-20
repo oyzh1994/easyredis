@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.controller.key;
 
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -24,12 +23,11 @@ import java.sql.Date;
  * @author oyzh
  * @since 2023/07/09
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis键TTL变更",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        cssUrls = RedisStyle.COMMON,
+        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
 )
 public class RedisKeyTTLController extends Controller {
