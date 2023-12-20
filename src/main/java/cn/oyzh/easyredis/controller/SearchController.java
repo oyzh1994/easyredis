@@ -174,7 +174,7 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.display();
         this.showSearchMore.disappear();
-        this.setting.setSearchMoreExpand((byte) 0);
+        this.setting.setSearchMoreExpand((byte) 1);
         this.settingStore.update(this.setting);
     }
 
@@ -190,7 +190,7 @@ public class SearchController extends SubController {
         this.searchMain.autosize();
         this.hideSearchMore.disappear();
         this.showSearchMore.display();
-        this.setting.setSearchMoreExpand((byte) 1);
+        this.setting.setSearchMoreExpand((byte) 0);
         this.settingStore.update(this.setting);
     }
 

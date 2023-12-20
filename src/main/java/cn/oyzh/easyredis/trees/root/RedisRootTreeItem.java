@@ -305,7 +305,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             this.extend();
         } else {
             groupItem.addConnect(redisInfo);
-            groupItem.extend();
+            // groupItem.extend();
         }
     }
 
