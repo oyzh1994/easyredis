@@ -21,6 +21,7 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -107,7 +108,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * @param pageNo 数据页码
      */
     private void initDataList(int pageNo) {
-        this.pageData = this.filterStore.getPage(10, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
+        this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(RedisFilterVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);
@@ -129,7 +130,7 @@ public class RedisFilterTabContent extends DynamicTabController {
                     del.setTipText("删除");
                     del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
                     this.hBox = new HBox(del);
-                    this.hBox.setSpacing(5);
+                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
                 }
                 return hBox;
             }

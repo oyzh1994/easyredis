@@ -9,8 +9,8 @@
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyredis.tabs.home.RedisHomeTabContent">
-    <ImageView fitWidth="200" fitHeight="200" layoutX="50" layoutY="110">
-        <Image url="/image/redis_clip.png"/>
+    <ImageView fitWidth="240" fitHeight="240" layoutX="35" layoutY="95">
+        <Image url="/image/redis_no_bg.png"/>
     </ImageView>
     <FXText text="欢迎使用EasyRedis！" layoutX="260" layoutY="150" fontSize="30"/>
     <FXLabel fx:id="softInfo" layoutX="260" layoutY="180"/>

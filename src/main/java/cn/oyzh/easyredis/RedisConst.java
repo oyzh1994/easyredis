@@ -26,6 +26,6 @@ public class RedisConst {
     /**
      * icon地址
      */
-    public final static String ICON_PATH = "/image/redis_clip.png";
+    public final static String ICON_PATH = "/image/redis_no_bg.png";
 
 }
