@@ -128,6 +128,8 @@ public class SettingController extends Controller {
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
+        // 主题相关处理
+        this.theme.select(this.setting.getTheme());
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());

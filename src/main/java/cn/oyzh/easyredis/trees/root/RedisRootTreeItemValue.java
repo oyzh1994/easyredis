@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.root;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.FlexImageView;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.util.IconUtil;
 
 
@@ -27,7 +28,8 @@ public class RedisRootTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            this.graphic(new FlexImageView(IconUtil.getIcon(RedisConst.ICON_PATH), 12));
+            SVGGlyph glyph = new SVGGlyph("/font/redis.svg", 10);
+            this.graphic(glyph);
         }
     }
 }

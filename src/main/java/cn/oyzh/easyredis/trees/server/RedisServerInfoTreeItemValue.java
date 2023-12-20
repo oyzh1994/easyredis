@@ -26,7 +26,7 @@ public class RedisServerInfoTreeItemValue extends RedisTreeItemValue {
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/info-circle.svg", "12");
+            glyph = new SVGGlyph("/font/info-circle.svg", 10);
             this.graphic(glyph);
         }
     }
