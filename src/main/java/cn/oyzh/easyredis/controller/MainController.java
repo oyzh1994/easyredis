@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.controller;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventTypes;
@@ -18,7 +17,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.plus.tray.FXSystemTray;
+import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
@@ -34,12 +33,10 @@ import java.util.List;
  * @author oyzh
  * @since 2022/8/19
  */
-//@Slf4j
 @StageAttribute(
         usePrimary = true,
         title = "EasyRedis主页",
         iconUrls = RedisConst.ICON_PATH,
-        // cssUrls = RedisStyle.MAIN,
         value = RedisConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentController {
@@ -49,11 +46,6 @@ public class MainController extends ParentController {
      */
     @Autowired
     private Project project;
-
-    /**
-     * 系统托盘
-     */
-    private static FXSystemTray tray;
 
     /**
      * 头部页面
@@ -86,32 +78,31 @@ public class MainController extends ParentController {
      * 初始化系统托盘
      */
     private void initSystemTray() {
-        if (tray != null) {
-            return;
-        }
-        try {
-            // 初始化托盘
-            tray = new FXSystemTray(RedisConst.ICON_PATH);
-            // 设置标题
-            tray.setTitle(this.project.getName() + " v" + this.project.getVersion());
-            // 打开主页
-            tray.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
-            // 打开设置
-            tray.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
-            // 退出程序
-            tray.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
-                StaticLog.warn("exit app by tray.");
-                this.exit();
-            });
-            // 鼠标事件
-            tray.onMouseClicked(e -> {
-                // 单击鼠标主键，显示主页
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    this.showMain();
-                }
-            });
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (!TrayManager.exist()) {
+            try {
+                // 初始化托盘
+                TrayManager.init(RedisConst.ICON_PATH);
+                // 设置标题
+                TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
+                // 打开主页
+                TrayManager.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
+                // 打开设置
+                TrayManager.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
+                // 退出程序
+                TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
+                    StaticLog.warn("exit app by tray.");
+                    this.exit();
+                });
+                // 鼠标事件
+                TrayManager.onMouseClicked(e -> {
+                    // 单击鼠标主键，显示主页
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        this.showMain();
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -176,9 +167,9 @@ public class MainController extends ParentController {
 
         // 系统托盘
         if (this.setting.isExitTray()) {
-            if (tray != null) {
+            if (TrayManager.exist()) {
                 StaticLog.info("show tray.");
-                tray.show();
+                TrayManager.show();
             } else {
                 StaticLog.error("tray not support!");
                 MessageBox.warn("不支持系统托盘！");
@@ -206,7 +197,7 @@ public class MainController extends ParentController {
         EventUtil.register(this);
         try {
             this.initSystemTray();
-            tray.show();
+            TrayManager.show();
         } catch (Exception ex) {
             StaticLog.warn("不支持系统托盘!");
             ex.printStackTrace();
@@ -243,9 +234,7 @@ public class MainController extends ParentController {
         }
 
         // 关闭托盘
-        if (tray != null) {
-            tray.close();
-        }
+        TrayManager.destroy();
         super.onSystemExit();
     }
 
@@ -256,24 +245,18 @@ public class MainController extends ParentController {
         if (this.setting.isRememberPageSize()) {
             if (this.pageInfo.isMaximized()) {
                 this.stage.setMaximized(true);
-                // if (log.isDebugEnabled()) {
-                    StaticLog.debug("view setMaximized");
-                // }
+                StaticLog.debug("view setMaximized");
             } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
                 this.stage.setWidth(this.pageInfo.getWidth());
                 this.stage.setHeight(this.pageInfo.getHeight());
-                // if (log.isDebugEnabled()) {
-                    StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
-                // }
+                StaticLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
             }
         }
         // 设置上次保存的页面位置
         if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
             this.stage.setX(this.pageInfo.getScreenX());
             this.stage.setY(this.pageInfo.getScreenY());
-            // if (log.isDebugEnabled()) {
-                StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
-            // }
+            StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
         }
     }
 }
