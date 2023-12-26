@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupManage;
+import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -42,7 +42,6 @@ import java.util.stream.Collectors;
         title = "Redis键添加",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
 )
 public class RedisKeyAddController extends Controller {
@@ -180,7 +179,7 @@ public class RedisKeyAddController extends Controller {
     /**
      * 节点互斥组件
      */
-    private final NodeGroupManage mutexes = new NodeGroupManage();
+    private final NodeMutexes mutexes = new NodeMutexes();
 
     /**
      * 获取值文本组件
