@@ -75,6 +75,7 @@ public class RedisTreeView extends RichTreeView {
 
     @Override
     protected void initEvenListener() {
+        super.initEvenListener();
         // 暂停按键处理
         KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
             TreeItem<?> item = this.getSelectedItem();
