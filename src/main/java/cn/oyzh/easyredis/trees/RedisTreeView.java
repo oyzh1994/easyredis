@@ -31,67 +31,14 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/1/29
  */
-//@Slf4j
-@Accessors(chain = true, fluent = true)
 public class RedisTreeView extends RichTreeView {
-
-    // /**
-    //  * 排序方式
-    //  */
-    // @Getter
-    // @Setter
-    // private Boolean sortOrder;
-
-    // /**
-    //  * 键过滤器
-    //  */
-    // @Getter
-    // @Setter
-    // private RedisTreeItemFilter itemFilter;
-
-    // /**
-    //  * 导入中标志位
-    //  */
-    // private volatile boolean importing;
 
     /**
      * 搜索中标志位
      */
     @Getter
+    @Accessors(chain = true, fluent = true)
     private volatile boolean searching;
-
-    // /**
-    //  * 子节点变化处理
-    //  */
-    // @Setter
-    // @Getter
-    // private Runnable childChanged;
-
-    // /**
-    //  * 图标变化处理
-    //  */
-    // @Setter
-    // @Getter
-    // private Consumer<TreeItem<?>> graphicChanged;
-
-    // /**
-    //  * 连接关闭处理
-    //  */
-    // @Setter
-    // @Getter
-    // private Consumer<RedisConnectTreeItem> connectClosed;
-    //
-    // /**
-    //  * 连接完成处理
-    //  */
-    // @Setter
-    // @Getter
-    // private Consumer<RedisConnectTreeItem> connectConnected;
-
-    // /**
-    //  * 配置储存对象
-    //  */
-    // private final RedisSetting setting = RedisSettingStore.SETTING;
 
     @Override
     public RedisTreeItemFilter itemFilter() {
@@ -104,64 +51,10 @@ public class RedisTreeView extends RichTreeView {
         return (RedisTreeItemFilter) this.itemFilter;
     }
 
-    // /**
-    //  * 触发子节点变化事件
-    //  */
-    // public void fireChildChanged() {
-    //     if (this.childChanged != null) {
-    //         try {
-    //             this.childChanged.run();
-    //         } catch (Exception ex) {
-    //             ex.printStackTrace();
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * 触发图标变化事件
-    //  */
-    // public void fireGraphicChanged(@NonNull TreeItem<?> item) {
-    //     if (this.graphicChanged != null) {
-    //         try {
-    //             this.graphicChanged.accept(item);
-    //         } catch (Exception ex) {
-    //             ex.printStackTrace();
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * 触发连接关闭事件
-    //  */
-    // public void fireConnectClosed(@NonNull RedisConnectTreeItem item) {
-    //     if (this.connectClosed != null) {
-    //         try {
-    //             this.connectClosed.accept(item);
-    //         } catch (Exception ex) {
-    //             ex.printStackTrace();
-    //         }
-    //     }
-    // }
-    //
-    // /**
-    //  * 触发连接完成事件
-    //  */
-    // public void fireConnectConnected(@NonNull RedisConnectTreeItem item) {
-    //     if (this.connectConnected != null) {
-    //         try {
-    //             this.connectConnected.accept(item);
-    //         } catch (Exception ex) {
-    //             ex.printStackTrace();
-    //         }
-    //     }
-    // }
-
     public RedisTreeView() {
         this.dragContent = "redis_tree_drag";
         this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
-        // 初始化事件处理
-        this.initEventHandler();
         super.root(new RedisRootTreeItem(this));
         this.root().extend();
     }
@@ -180,65 +73,8 @@ public class RedisTreeView extends RichTreeView {
         }
     }
 
-    // /**
-    //  * 获取窗口
-    //  *
-    //  * @return 窗口
-    //  */
-    // public Window window() {
-    //     return this.getScene().getWindow();
-    // }
-
-    // @Override
-    // public void selectAndScroll(TreeItem<?> item) {
-    //     if (item != null) {
-    //         super.selectAndScroll(item);
-    //     } else {
-    //         this.clearSelection();
-    //     }
-    // }
-
-    /**
-     * 初始化事件处理器
-     */
-    protected void initEventHandler() {
-        // 主鼠标按钮点击事件
-        super.setOnMousePrimaryClicked(e -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (MouseUtil.isSingleClick(e)) {
-                this.clearContextMenu();
-                if (item instanceof RedisServerInfoTreeItem serverInfoTreeItem) {
-                    serverInfoTreeItem.showServerInfo();
-                }
-            } else {
-                if (item instanceof RedisConnectTreeItem treeItem) {
-                    treeItem.connect();
-                }
-            }
-        });
-        // 右键菜单事件
-        this.setOnContextMenuRequested(e -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof RedisTreeItem treeItem) {
-                this.showContextMenu(treeItem.getMenuItems(), e.getScreenX() - 10, e.getScreenY() - 10);
-            } else {
-                this.clearContextMenu();
-            }
-        });
-        // f2按键处理
-        KeyListener.listenReleased(this, KeyCode.F2, event -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof RedisTreeItem treeItem) {
-                treeItem.rename();
-            }
-        });
-        // 删除按键处理
-        KeyListener.listenReleased(this, KeyCode.DELETE, event -> {
-            TreeItem<?> item = this.getSelectedItem();
-            if (item instanceof RedisTreeItem<?> treeItem) {
-                treeItem.delete();
-            }
-        });
+    @Override
+    protected void initEvenListener() {
         // 暂停按键处理
         KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
             TreeItem<?> item = this.getSelectedItem();
@@ -250,46 +86,11 @@ public class RedisTreeView extends RichTreeView {
         });
     }
 
-    // /**
-    //  * 对键排序
-    //  *
-    //  * @param sortOrder 排序方式
-    //  */
-    // public void sortItem(Boolean sortOrder) {
-    //     this.sortOrder = sortOrder;
-    //     if (sortOrder != null) {
-    //         // 获取选中键
-    //         TreeItem<?> item = this.getSelectedItem();
-    //         // 执行排序
-    //         if (item instanceof RedisTreeItem treeItem) {
-    //             treeItem.sort(sortOrder);
-    //         }
-    //         // 重新选中此键
-    //         this.select(item);
-    //     }
-    // }
-
-    // /**
-    //  * 过滤键
-    //  */
-    // public void filterItem() {
-    //     // 获取选中键
-    //     TreeItem<?> item = this.getSelectedItem();
-    //     // 清除选中键
-    //     this.clearSelection();
-    //     // 执行过滤
-    //     this.root().filter(this.itemFilter);
-    //     // 选中并滚动键
-    //     this.selectAndScroll(item);
-    // }
-
     /**
      * 重新载入
      */
     public void reload() {
         TreeItem<?> item = this.getSelectedItem();
-        if (item instanceof RedisKeyTreeItem treeItem) {
-        }
     }
 
     /**

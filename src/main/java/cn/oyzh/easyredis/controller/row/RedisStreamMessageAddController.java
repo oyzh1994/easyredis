@@ -25,14 +25,12 @@ import java.util.Map;
  * redis添加stream消息
  *
  * @author oyzh
- * @since 2022/07/07
+ * @since 2023/07/07
  */
-//@Slf4j
 @StageAttribute(
         title = "添加stream消息",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisStreamMessageAdd.fxml"
 )
 public class RedisStreamMessageAddController extends Controller {

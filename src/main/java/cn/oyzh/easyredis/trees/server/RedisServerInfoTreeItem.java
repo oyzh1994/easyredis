@@ -39,4 +39,9 @@ public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeIt
     public void showServerInfo() {
         EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.parent.client());
     }
+
+    @Override
+    public void onPrimarySingleClick() {
+        this.showServerInfo();
+    }
 }

@@ -478,4 +478,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public boolean allowDrag() {
         return true;
     }
+
+    @Override
+    public void onPrimaryDoubleClick() {
+        this.connect();
+    }
 }
