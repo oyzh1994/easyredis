@@ -12,13 +12,13 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
 <?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import java.lang.String?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">

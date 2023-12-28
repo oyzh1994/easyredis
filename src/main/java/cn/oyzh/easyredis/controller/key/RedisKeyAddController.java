@@ -5,7 +5,6 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -15,9 +14,9 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -37,7 +36,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/22
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis键添加",
         iconUrls = RedisConst.ICON_PATH,

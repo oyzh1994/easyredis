@@ -8,9 +8,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.textfield.PortTextField?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.IconButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
@@ -19,6 +17,8 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoUpdateController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">

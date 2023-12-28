@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
-import cn.oyzh.fx.plus.controls.PagePane;
+import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -36,7 +36,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
      * 分页面板
      */
     @FXML
-    protected PagePane<R> pagePane;
+    protected PageBox<R> pagePane;
 
     /**
      * 数据过滤组件
@@ -153,7 +153,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
      *
      * @param pageNo 页码
      */
-    protected void initPage(int pageNo) {
+    protected void initPage(long pageNo) {
         List<R> rows = this.getRows();
         this.pageData = new Paging<>(rows, 10);
         List<R> pageRows = this.pageData.page(pageNo);

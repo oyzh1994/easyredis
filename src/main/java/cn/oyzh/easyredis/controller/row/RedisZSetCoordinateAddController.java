@@ -2,13 +2,12 @@ package cn.oyzh.easyredis.controller.row;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
+import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -20,14 +19,12 @@ import javafx.stage.WindowEvent;
  * redis添加set成员
  *
  * @author oyzh
- * @since 2022/06/27
+ * @since 2023/06/27
  */
-//@Slf4j
 @StageAttribute(
         title = "添加地理坐标",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisZSetCoordinateAdd.fxml"
 )
 public class RedisZSetCoordinateAddController extends Controller {

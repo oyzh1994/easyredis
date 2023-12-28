@@ -5,7 +5,6 @@
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.PagePane?>
 <?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
@@ -16,6 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -82,17 +82,17 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="25">
+                <ClearableTextField fx:id="filter" tipText="请输入过滤内容" realHeight="22">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
                 </ClearableTextField>
-                <PagePane fx:id="pagePane" iconSize="14" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                          onPrevClicked="#prevPage" onNextClicked="#nextPage">
+                <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
+                         onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
                     <FlowPane.margin>
-                        <Insets left="5" top="2"/>
+                        <Insets left="5"/>
                     </FlowPane.margin>
-                </PagePane>
+                </PageBox>
                 <padding>
                     <Insets top="9"/>
                 </padding>
@@ -157,7 +157,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </SVGGlyph>
-                <RedisFormatComboBox prefHeight="24" fontSize="10" initIndex="0" tipText="格式" fx:id="format">
+                <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="格式" fx:id="format" realWidth="120">
                     <FlowPane.margin>
                         <Insets left="5" top="-4"/>
                     </FlowPane.margin>

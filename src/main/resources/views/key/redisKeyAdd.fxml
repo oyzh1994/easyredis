@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
 <?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="680"
           fx:id="root">

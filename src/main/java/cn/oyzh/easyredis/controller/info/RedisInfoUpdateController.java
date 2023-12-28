@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.controller.info;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
@@ -14,10 +13,10 @@ import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.textfield.PortTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -35,7 +34,6 @@ import lombok.NonNull;
         title = "Redis连接修改",
         modality = Modality.WINDOW_MODAL,
         iconUrls = RedisConst.ICON_PATH,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoUpdate.fxml"
 )
 public class RedisInfoUpdateController extends Controller {

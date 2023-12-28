@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -12,9 +10,8 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -33,12 +30,10 @@ import java.util.Set;
  * @author oyzh
  * @since 2020/10/09
  */
-//@Slf4j
 @StageAttribute(
         title = "Redis键批量操作",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )
 public class RedisKeyBatchOperationController extends Controller {

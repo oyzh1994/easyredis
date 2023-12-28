@@ -6,8 +6,8 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -27,7 +27,6 @@ import java.sql.Date;
         title = "Redis键TTL变更",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
 )
 public class RedisKeyTTLController extends Controller {

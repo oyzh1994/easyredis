@@ -2,13 +2,12 @@ package cn.oyzh.easyredis.controller;
 
 
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
+import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
@@ -29,7 +28,6 @@ import javafx.stage.WindowEvent;
         title = "应用设置",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "setting.fxml"
 )
 public class SettingController extends Controller {

@@ -8,11 +8,12 @@ import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.PagePane;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -48,7 +49,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * 分页组件
      */
     @FXML
-    private PagePane<RedisFilter> pagePane;
+    private PageBox<RedisFilter> pagePane;
 
     /**
      * 搜索词汇
@@ -60,7 +61,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * 数据列表
      */
     @FXML
-    private TableView<RedisFilter> listTable;
+    private FlexTableView<RedisFilter> listTable;
 
     /**
      * 数据索id列
@@ -107,10 +108,9 @@ public class RedisFilterTabContent extends DynamicTabController {
      *
      * @param pageNo 数据页码
      */
-    private void initDataList(int pageNo) {
+    private void initDataList(long pageNo) {
         this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
-        this.listTable.getItems().clear();
-        this.listTable.getItems().addAll(RedisFilterVO.convert(this.pageData.page(pageNo)));
+        this.listTable.setItem(RedisFilterVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);
     }
 
