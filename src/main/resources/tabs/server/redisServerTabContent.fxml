@@ -6,7 +6,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTabContent" flexHeight="100%"
           flexWidth="100%">
-    <FlexTableView flexWidth="100%" realHeight="70" fx:id="propTable">
+    <FlexTableView flexWidth="100%" realHeight="80" fx:id="propTable">
         <columns>
             <FlexTableColumn sortable="false" fx:id="serverVersion" text="Redis版本" flexWidth="13%"/>
             <FlexTableColumn sortable="false" fx:id="usedMemory" text="已用内存" flexWidth="13%"/>
@@ -15,7 +15,7 @@
             <FlexTableColumn sortable="false" fx:id="uptime" text="正常运行时间" flexWidth="14%"/>
             <FlexTableColumn sortable="false" fx:id="keyCount" text="键总量" flexWidth="11%"/>
             <FlexTableColumn sortable="false" fx:id="hitRate" text="命中率" flexWidth="11%"/>
-            <FlexTableColumn sortable="false" fx:id="role" text="角色" flexWidth="11% - 10"/>
+            <FlexTableColumn sortable="false" fx:id="role" text="角色" flexWidth="11% - 15"/>
         </columns>
     </FlexTableView>
     <FlexTabPane flexWidth="100%" flexHeight="100% - 70" fx:id="tabPane">

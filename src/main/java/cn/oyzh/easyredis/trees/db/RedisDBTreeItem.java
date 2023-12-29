@@ -157,7 +157,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         MenuItemExt reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载redis键", this::reloadChild);
         MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
         MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
-        // MenuItemExt flushDB = MenuItemExt.newItem("清空数据", new SVGGlyph("/font/clear.svg", "12"), "清空此数据库所有数据", this::flushDB);
         MenuItemExt batchOperation = MenuItemExt.newItem("批量操作", new SVGGlyph("/font/mml-batch-command-16.svg", "12"), "批量操作数据", this::batchOperation);
 
         items.add(add);
@@ -165,7 +164,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         items.add(reload);
         items.add(exportData);
         items.add(transportData);
-        // items.add(flushDB);
         items.add(batchOperation);
         return items;
     }
@@ -224,26 +222,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         fxView.setProp("treeItem", this);
         fxView.display();
     }
-
-    // /**
-    //  * 清空数据库
-    //  */
-    // private void flushDB() {
-    //     if (!MessageBox.confirm("第1次确认，共2次", "确定清空此数据库所有数据？")) {
-    //         return;
-    //     }
-    //     if (!MessageBox.confirm("第2次确认，共2次", "请慎重操作，确定清空此数据库所有数据？")) {
-    //         return;
-    //     }
-    //     try {
-    //         this.client().flushDB(this.dbIndex);
-    //         this.clearChild();
-    //         // this.flushItemValue();
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //         MessageBox.exception(ex);
-    //     }
-    // }
 
     @Override
     public void reloadChild() {
@@ -444,11 +422,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     stream = new ArrayList<>();
                 }
                 stream.add(treeItem);
-//            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
-//                if (hyLog == null) {
-//                    hyLog = new ArrayList<>();
-//                }
-//                hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.realChildren()) {
@@ -472,10 +445,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 if (CollUtil.isNotEmpty(zset)) {
                     child.addChild(zset);
                 }
-//            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-//                if (CollUtil.isNotEmpty(hyLog)) {
-//                    child.addChild(hyLog);
-//                }
             } else if (child.value() == RedisKeyType.STREAM) {
                 if (CollUtil.isNotEmpty(stream)) {
                     child.addChild(stream);
@@ -530,11 +499,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     stream = new ArrayList<>();
                 }
                 stream.add(treeItem);
-//            } else if (item instanceof RedisHyLogKeyTreeItem treeItem) {
-//                if (hyLog == null) {
-//                    hyLog = new ArrayList<>();
-//                }
-//                hyLog.add(treeItem);
             }
         }
         for (RedisTypeTreeItem child : this.realChildren()) {
@@ -558,10 +522,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 if (CollUtil.isNotEmpty(zset)) {
                     child.removeChild(zset);
                 }
-//            } else if (child.value() == RedisKeyType.HYPERLOGLOG) {
-//                if (CollUtil.isNotEmpty(hyLog)) {
-//                    child.removeChild(hyLog);
-//                }
             } else if (child.value() == RedisKeyType.STREAM) {
                 if (CollUtil.isNotEmpty(stream)) {
                     child.removeChild(stream);
@@ -691,10 +651,6 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         if (node instanceof RedisHashKey hashNode) {
             return new RedisHashKeyTreeItem(hashNode, this);
         }
-
-//        if (node instanceof RedisHyLogKey logLogNode) {
-//            return new RedisHyLogKeyTreeItem(logLogNode, this);
-//        }
 
         if (node instanceof RedisStreamKey streamNode) {
             return new RedisStreamKeyTreeItem(streamNode, this);

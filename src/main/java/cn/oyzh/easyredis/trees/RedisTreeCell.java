@@ -8,43 +8,6 @@ import cn.oyzh.fx.plus.trees.RichTreeCell;
  * @author oyzh
  * @since 2023/06/31
  */
-//@Slf4j
 public class RedisTreeCell extends RichTreeCell<RedisTreeItemValue> {
 
-    // public static final String DRAG_CONTENT = "redis_drag";
-    //
-    // /**
-    //  * 拖动增强
-    //  */
-    // private DrapNodeHandler drapNodeHandler;
-    //
-    // @Override
-    // public Node initGraphic() {
-    //     TreeItem<?> item = this.getTreeItem();
-    //     if (item instanceof RedisKeyTreeItem<?> treeItem && !treeItem.visible()) {
-    //         return null;
-    //     }
-    //     // 初始化拖动
-    //     if (item instanceof DragNodeItem dragItem && dragItem.allowDragDrop() && this.drapNodeHandler == null) {
-    //         this.drapNodeHandler = new DrapNodeHandler();
-    //         DragUtil.initDragNode(this.drapNodeHandler, this, DRAG_CONTENT);
-    //     }
-    //     // 基础节点
-    //     if (item instanceof BaseTreeItem treeItem) {
-    //         treeItem.flushGraphic();
-    //         if (this.getCursor() != Cursor.HAND) {
-    //             this.setCursor(Cursor.HAND);
-    //         }
-    //         return treeItem.itemValue().create();
-    //     }
-    //     return null;
-    // }
-
-    // /**
-    //  * 初始化拖动事件
-    //  */
-    // private void initDragEvent() {
-    //     this.drapNodeHandler = new DrapNodeHandler();
-    //     DragUtil.initDrag(this.drapNodeHandler, this);
-    // }
 }

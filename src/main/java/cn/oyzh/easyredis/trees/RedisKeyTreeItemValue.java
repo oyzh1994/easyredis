@@ -36,14 +36,14 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?, ?>> ex
     @Override
     public void flushGraphicColor() {
         if (this.graphic() instanceof SVGGlyph glyph) {
-            if (!this.item.dataUnsaved()) {
+            if (this.item.dataUnsaved()) {
+                glyph.setColor(Color.ORANGERED);
+            } else {
                 if (ThemeManager.isDarkMode()) {
                     glyph.setColor(Color.WHITE);
                 } else {
                     glyph.setColor(Color.BLACK);
                 }
-            } else {
-                glyph.setColor(Color.ORANGERED);
             }
         }
     }

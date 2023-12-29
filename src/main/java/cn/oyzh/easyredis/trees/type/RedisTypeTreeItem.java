@@ -41,13 +41,29 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         this.parent = parent;
         this.value = type;
         this.setValue(new RedisTypeTreeItemValue(this));
+        // // 监听展开变化
+        // super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+        //     this.flushChildColor();
+        // });
     }
+
+    // /**
+    //  * 刷新值
+    //  */
+    // private void flushChildColor() {
+    //     for (RichTreeItem<?> richChild : this.getRichChildren()) {
+    //         richChild.getValue().flushGraphicColor();
+    //     }
+    // }
 
     /**
      * 刷新值
      */
     private void flushValue() {
-        BackgroundService.submitFXLater(() -> this.getValue().flushNum());
+        BackgroundService.submitFXLater(() -> {
+            this.getValue().flushNum();
+            this.getValue().flushGraphicColor();
+        });
     }
 
     @Override
@@ -65,15 +81,6 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         return this.value == RedisKeyType.STREAM;
     }
 
-//    /**
-//     * 是否统计值类型
-//     *
-//     * @return 结果
-//     */
-//    public boolean isHyLogType() {
-//        return this.value == RedisKeyType.HYPERLOGLOG;
-//    }
-
     /**
      * 是否字符串类型
      *
@@ -85,6 +92,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
 
     /**
      * 是否有序集合类型
+     *
      * @return 结果
      */
     public boolean isZSetType() {
@@ -93,6 +101,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
 
     /**
      * 是否集合类型
+     *
      * @return 结果
      */
     public boolean isSetType() {
@@ -101,6 +110,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
 
     /**
      * 是否列表类型
+     *
      * @return 结果
      */
     public boolean isListType() {
@@ -109,6 +119,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
 
     /**
      * 是否哈希表类型
+     *
      * @return 结果
      */
     public boolean isHashType() {

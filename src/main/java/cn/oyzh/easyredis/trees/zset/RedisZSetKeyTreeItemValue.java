@@ -22,14 +22,14 @@ public class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKe
         item.longitudeProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
     }
 
-    @Override
-    public void flushGraphicColor() {
-        if (this.graphic() instanceof SVGGlyph glyph) {
-            if (!this.item.dataUnsaved() && glyph.getColor() != Color.BLACK) {
-                glyph.setColor(Color.BLACK);
-            } else if (this.item.dataUnsaved() && glyph.getColor() != Color.ORANGERED) {
-                glyph.setColor(Color.ORANGERED);
-            }
-        }
-    }
+    // @Override
+    // public void flushGraphicColor() {
+    //     if (this.graphic() instanceof SVGGlyph glyph) {
+    //         if (!this.item.dataUnsaved() && glyph.getColor() != Color.BLACK) {
+    //             glyph.setColor(Color.BLACK);
+    //         } else if (this.item.dataUnsaved() && glyph.getColor() != Color.ORANGERED) {
+    //             glyph.setColor(Color.ORANGERED);
+    //         }
+    //     }
+    // }
 }

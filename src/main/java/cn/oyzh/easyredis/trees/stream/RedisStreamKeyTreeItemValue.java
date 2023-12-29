@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
  * @author oyzh
  * @since 2023/11/21
  */
-//@Slf4j
 public class RedisStreamKeyTreeItemValue extends RedisKeyTreeItemValue<RedisStreamKeyTreeItem> {
 
     public RedisStreamKeyTreeItemValue(RedisStreamKeyTreeItem item) {

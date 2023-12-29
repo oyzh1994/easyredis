@@ -9,7 +9,6 @@ import cn.oyzh.fx.plus.trees.RichTreeView;
  * @author oyzh
  * @since 2023/06/27
  */
-//@Slf4j
 public abstract class RedisTreeItem<V extends RedisTreeItemValue> extends RichTreeItem<V> {
 
     public RedisTreeItem(RichTreeView treeView) {

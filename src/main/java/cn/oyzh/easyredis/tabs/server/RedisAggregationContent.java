@@ -107,8 +107,8 @@ public class RedisAggregationContent {
      * @param prop 属性
      */
     private void initNetworkChart(RedisInfoProp prop) {
-        XYChart.Series<String, Number> inData=this.networkChart.getChartData(0);
-        XYChart.Series<String, Number> outData=this.networkChart.getChartData(1);
+        XYChart.Series<String, Number> inData = this.networkChart.getChartData(0);
+        XYChart.Series<String, Number> outData = this.networkChart.getChartData(1);
         if (inData == null) {
             inData = new XYChart.Series<>();
             inData.setName("网络输入");
@@ -130,7 +130,7 @@ public class RedisAggregationContent {
      * @param prop 属性
      */
     private void initCommandChart(RedisInfoProp prop) {
-        XYChart.Series<String, Number> data=this.commandChart.getChartData(0);
+        XYChart.Series<String, Number> data = this.commandChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
             data.setName("每秒执行命令数");
