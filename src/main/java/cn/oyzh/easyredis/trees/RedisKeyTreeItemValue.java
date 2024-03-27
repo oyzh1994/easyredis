@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -39,11 +38,7 @@ public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?, ?>> ex
             if (this.item.dataUnsaved()) {
                 glyph.setColor(Color.ORANGERED);
             } else {
-                if (ThemeManager.isDarkMode()) {
-                    glyph.setColor(Color.WHITE);
-                } else {
-                    glyph.setColor(Color.BLACK);
-                }
+                super.flushGraphicColor();
             }
         }
     }

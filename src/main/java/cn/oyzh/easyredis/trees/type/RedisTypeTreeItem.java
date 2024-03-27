@@ -41,20 +41,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         this.parent = parent;
         this.value = type;
         this.setValue(new RedisTypeTreeItemValue(this));
-        // // 监听展开变化
-        // super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-        //     this.flushChildColor();
-        // });
     }
-
-    // /**
-    //  * 刷新值
-    //  */
-    // private void flushChildColor() {
-    //     for (RichTreeItem<?> richChild : this.getRichChildren()) {
-    //         richChild.getValue().flushGraphicColor();
-    //     }
-    // }
 
     /**
      * 刷新值

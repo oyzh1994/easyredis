@@ -46,10 +46,8 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (this.item.isConnected() || this.item.isConnecting()) {
             glyph.setColor(Color.GREEN);
-        } else if (ThemeManager.isDarkMode()) {
-            glyph.setColor(Color.WHITE);
         } else {
-            glyph.setColor(Color.BLACK);
+            super.flushGraphicColor();
         }
     }
 

@@ -14,6 +14,6 @@ public class RedisListKeyTreeItemValue extends RedisKeyTreeItemValue<RedisListKe
 
     public RedisListKeyTreeItemValue(RedisListKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
+        item.dataProperty().addListener((_, _, _) -> this.flushGraphicColor());
     }
 }

@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.group;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -39,11 +38,7 @@ public class RedisGroupTreeItemValue extends RedisTreeItemValue {
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (this.item.isChildEmpty()) {
-            if (ThemeManager.isDarkMode()) {
-                glyph.setColor(Color.WHITE);
-            } else {
-                glyph.setColor(Color.BLACK);
-            }
+            super.flushGraphicColor();
         } else {
             glyph.setColor(Color.DEEPSKYBLUE);
         }

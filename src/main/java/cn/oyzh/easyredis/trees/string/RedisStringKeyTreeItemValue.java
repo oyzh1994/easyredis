@@ -9,11 +9,10 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
  * @author oyzh
  * @since 2023/11/21
  */
-//@Slf4j
 public class RedisStringKeyTreeItemValue extends RedisKeyTreeItemValue<RedisStringKeyTreeItem> {
 
     public RedisStringKeyTreeItemValue(RedisStringKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((observableValue, o, t1) -> this.flushGraphicColor());
+        item.dataProperty().addListener((_, _, _) -> this.flushGraphicColor());
     }
 }

@@ -13,7 +13,6 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-//@Slf4j
 public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey,RedisListKeyTreeItemValue, RedisListRow> {
 
     public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisDBTreeItem parent) {

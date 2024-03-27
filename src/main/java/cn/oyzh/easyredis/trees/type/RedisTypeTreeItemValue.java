@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
  */
 public class RedisTypeTreeItemValue extends RedisTreeItemValue {
 
-
     private final RedisTypeTreeItem item;
 
     public RedisTypeTreeItemValue(RedisTypeTreeItem item) {
@@ -58,5 +57,4 @@ public class RedisTypeTreeItemValue extends RedisTreeItemValue {
             ex.printStackTrace();
         }
     }
-
 }

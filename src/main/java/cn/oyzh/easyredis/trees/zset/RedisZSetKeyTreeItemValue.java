@@ -1,8 +1,6 @@
 package cn.oyzh.easyredis.trees.zset;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -16,20 +14,9 @@ public class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKe
 
     public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
-        item.scoreProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
-        item.latitudeProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
-        item.longitudeProperty().addListener((observableValue, aDouble, t1) -> this.flushGraphicColor());
+        item.dataProperty().addListener((_, _, _) -> this.flushGraphicColor());
+        item.scoreProperty().addListener((_, _, _) -> this.flushGraphicColor());
+        item.latitudeProperty().addListener((_, _, _) -> this.flushGraphicColor());
+        item.longitudeProperty().addListener((_, _, _) -> this.flushGraphicColor());
     }
-
-    // @Override
-    // public void flushGraphicColor() {
-    //     if (this.graphic() instanceof SVGGlyph glyph) {
-    //         if (!this.item.dataUnsaved() && glyph.getColor() != Color.BLACK) {
-    //             glyph.setColor(Color.BLACK);
-    //         } else if (this.item.dataUnsaved() && glyph.getColor() != Color.ORANGERED) {
-    //             glyph.setColor(Color.ORANGERED);
-    //         }
-    //     }
-    // }
 }
