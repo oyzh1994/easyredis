@@ -10,12 +10,10 @@ import cn.oyzh.easyredis.event.msg.RedisKeyMovedMsg;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
-import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
-import cn.oyzh.fx.plus.util.MouseUtil;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -69,7 +67,7 @@ public class RedisTreeView extends RichTreeView {
      */
     public void closeConnects() {
         for (RedisConnectTreeItem treeItem : this.root().getConnectedItems()) {
-            ThreadUtil.startVirtual(treeItem::disConnect);
+            ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
 
@@ -77,12 +75,12 @@ public class RedisTreeView extends RichTreeView {
     protected void initEvenListener() {
         super.initEvenListener();
         // 暂停按键处理
-        KeyListener.listenReleased(this, KeyCode.PAUSE, event -> {
+        KeyListener.listenReleased(this, KeyCode.PAUSE, _ -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof RedisConnectTreeItem treeItem) {
-                treeItem.disConnect();
+                treeItem.closeConnect();
             } else if (item instanceof RedisKeyTreeItem<?, ?> nodeTreeItem) {
-                nodeTreeItem.connectTreeItem().disConnect();
+                nodeTreeItem.connectTreeItem().closeConnect();
             }
         });
     }
