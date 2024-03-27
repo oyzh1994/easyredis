@@ -44,14 +44,12 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (this.item.isConnected()) {
+        if (this.item.isConnected() || this.item.isConnecting()) {
             glyph.setColor(Color.GREEN);
+        } else if (ThemeManager.isDarkMode()) {
+            glyph.setColor(Color.WHITE);
         } else {
-            if (ThemeManager.isDarkMode()) {
-                glyph.setColor(Color.WHITE);
-            } else {
-                glyph.setColor(Color.BLACK);
-            }
+            glyph.setColor(Color.BLACK);
         }
     }
 

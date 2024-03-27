@@ -26,7 +26,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.trees.RichTreeItem;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -37,7 +36,6 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -156,7 +154,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         } else if (this.isConnected()) {
             MenuItemExt disConnect = MenuItemExt.newItem("断开连接", new SVGGlyph("/font/poweroff.svg", "12"), "断开redis连接(快捷键pause)", this::disConnect);
             MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
-            MenuItemExt serverInfo = MenuItemExt.newItem("服务信息", new SVGGlyph("/font/server.svg", "12"), "查看服务信息", this::serverInfo);
+            MenuItemExt serverInfo = MenuItemExt.newItem("服务监控", new SVGGlyph("/font/server.svg", "12"), "监控服务信息", this::serverInfo);
             MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
             MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入redis数据", this::importNode);
             MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
@@ -280,7 +278,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 连接
      */
     public void connect() {
-        if (!this.isWaiting() && !this.isConnected() && !this.isConnecting()) {
+        if (!this.isConnected() && !this.isConnecting()) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(() -> {
                         this.client.start();
@@ -291,12 +289,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                             this.canceled = false;
                         } else if (this.initConnect()) {
                             this.extend();
-                            this.flushGraphic();
                         } else {
                             this.closConnect();
                         }
                     })
-                    .onFinish(this::stopWaiting)
+                    .onFinish(() -> {
+                        this.stopWaiting();
+                        this.flushGraphic();
+                    })
+                    .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
             // 执行连接
@@ -341,7 +342,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         if (!this.isWaiting() && this.isConnected()) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(this::closConnect)
-                    .onFinish(this::stopWaiting)
+                    .onFinish(() -> {
+                        this.stopWaiting();
+                        this.flushGraphic();
+                    })
+                    .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
