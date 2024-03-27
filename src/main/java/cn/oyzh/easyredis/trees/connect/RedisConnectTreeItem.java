@@ -291,11 +291,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                         } else {
                             this.closeConnect(false);
                         }
-                    })
-                    .onFinish(() -> {
-                        this.stopWaiting();
                         this.flushGraphic();
                     })
+                    .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
                     .build();
@@ -424,7 +422,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     public void value(@NonNull RedisInfo value) {
         this.value = value;
-        this.closeConnect(false);
         this.client = new RedisClient(value);
         this.setValue(new RedisConnectTreeItemValue(this));
     }

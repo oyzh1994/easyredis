@@ -143,8 +143,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         // 键数据处理
         if (this.nodeData.isEditable()) {
             this.nodeData.addTextChangeListener(this.getDataListener());
-            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+            this.nodeData.undoableProperty().addListener((_, _, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((_, _, t1) -> this.dataRedo.setDisable(!t1));
         }
 
         // 收藏处理
@@ -157,15 +157,13 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.keyInfoController.init(treeItem);
 
         // 格式变化
-        if (this.format != null) {
-            this.format.selectedItemChanged((observableValue, s, t1) -> this.onFormatChange());
-        }
+        this.format.selectedItemChanged((_, _, _) -> this.onFormatChange(this.format));
 
         // 初始化节点
         this.initNode();
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
+        FXUtil.runWait(() -> this.loadTime.setText(STR."耗时:\{this.treeItem.loadTime()}ms"));
         return true;
     }
 
@@ -190,9 +188,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void copyKeyInfo() {
-        String builder = "数据库：" + this.treeItem.dbIndex() + System.lineSeparator() +
-                "键类型：" + this.treeItem.value().type() + System.lineSeparator() +
-                "键名称：" + this.treeItem.key();
+        String builder = STR."数据库：\{this.treeItem.dbIndex()}\{System.lineSeparator()}键类型：\{this.treeItem.value().type()}\{System.lineSeparator()}键名称：\{this.treeItem.key()}";
         ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
@@ -245,7 +241,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void deleteNode() {
-        if (MessageBox.confirm("删除" + this.treeItem.key(), "确定删除此键？")) {
+        if (MessageBox.confirm(STR."删除\{this.treeItem.key()}", "确定删除此键？")) {
             this.treeItem.delete();
         }
     }
@@ -318,26 +314,28 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         if (this.ttl.getCursor() != Cursor.HAND) {
             this.ttl.setCursor(Cursor.HAND);
         }
-        this.ttl.setText("TTL: " + this.treeItem.ttl());
+        this.ttl.setText(STR."TTL: \{this.treeItem.ttl()}");
     }
 
     /**
      * 格式变化事件
+     *
+     * @param comboBox 格式选择组件
      */
-    protected void onFormatChange() {
-        if (this.format.isRawFormat()) {
+    protected void onFormatChange(RedisFormatComboBox comboBox) {
+        if (comboBox.isRawFormat()) {
             this.showData((byte) 0);
             this.nodeData.setEditable(true);
-        } else if (this.format.isJsonFormat()) {
+        } else if (comboBox.isJsonFormat()) {
             this.showData((byte) 1);
             this.nodeData.setEditable(true);
-        } else if (this.format.isBinaryFormat()) {
+        } else if (comboBox.isBinaryFormat()) {
             this.showData((byte) 2);
             this.nodeData.setEditable(false);
-        } else if (this.format.isHexFormat()) {
+        } else if (comboBox.isHexFormat()) {
             this.showData((byte) 3);
             this.nodeData.setEditable(false);
-        } else if (this.format.isStringFormat()) {
+        } else if (comboBox.isStringFormat()) {
             this.showData((byte) 4);
             this.nodeData.setEditable(false);
         }

@@ -57,7 +57,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      * redis数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
-    private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+    private final ChangeListener<String> dataListener = (_, _, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
             this.treeItem.clearData();
         } else {
@@ -69,7 +69,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     public boolean init(RedisSetKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;

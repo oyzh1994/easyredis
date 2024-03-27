@@ -56,7 +56,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      * 数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
-    private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+    private final ChangeListener<String> dataListener = (_, _, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
             this.treeItem.clearData();
         } else {
@@ -68,7 +68,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     public boolean init(RedisListKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -83,7 +83,6 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        // this.lineIndex.setCellValueFactory(new PropertyValueFactory<>("lineIndex"));
     }
 
     /**
@@ -129,8 +128,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     @FXML
     @Override
     protected void copyRow() {
-        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
-                "成员：" + this.treeItem.currentRow().getValue();
+        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() + "成员：" + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "行信息");
     }
 

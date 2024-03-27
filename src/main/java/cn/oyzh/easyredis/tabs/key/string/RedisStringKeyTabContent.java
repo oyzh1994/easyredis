@@ -79,7 +79,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
             if (this.treeItem.isHyLog()) {
                 this.nodeData.setEditable(false);
             } else {
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+                this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 this.nodeData.setEditable(true);
             }
             return true;
