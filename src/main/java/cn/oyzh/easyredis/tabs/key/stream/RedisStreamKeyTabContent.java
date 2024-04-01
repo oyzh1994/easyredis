@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key.stream;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.msg.RedisStreamMessageAddedMsg;
+import cn.oyzh.easyredis.event.RedisStreamMessageAddedMsg;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;

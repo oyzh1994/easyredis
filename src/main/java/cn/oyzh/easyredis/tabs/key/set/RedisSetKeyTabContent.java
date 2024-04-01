@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key.set;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.msg.RedisSetMemberAddedMsg;
+import cn.oyzh.easyredis.event.RedisSetMemberAddedMsg;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.msg.RedisHyLogElementsAddedMsg;
+import cn.oyzh.easyredis.event.RedisHyLogElementsAddedMsg;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
