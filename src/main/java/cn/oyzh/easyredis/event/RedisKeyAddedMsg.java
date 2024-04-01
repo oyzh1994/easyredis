@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
@@ -15,7 +15,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyDeletedMsg extends Event<RedisDBTreeItem> implements  EventFormatter {
+public class RedisKeyAddedMsg extends Event<RedisDBTreeItem> implements EventFormatter {
+
+    @Setter
+    private String type;
 
     @Setter
     private String key;
@@ -23,8 +26,8 @@ public class RedisKeyDeletedMsg extends Event<RedisDBTreeItem> implements  Event
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 删除键[%s-db%s]",
-                this.data().info().getName(), this.key, this.data().dbIndex()
+                "[%s] 新增键[%s-db%s] 类型:[%s] ",
+                this.data().info().getName(), this.data().dbIndex(), this.key, this.type
         );
     }
 }

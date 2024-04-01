@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.event.RedisEventGroups;
@@ -16,15 +16,11 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisConnectionClosedMsg extends Event<RedisClient> implements  EventFormatter {
-
-    private final String name = RedisEventTypes.REDIS_CONNECTION_CLOSED;
-
-    private final String group = RedisEventGroups.CONNECTION_ACTION;
+public class RedisConnectionConnectedMsg extends Event<RedisClient> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 客户端已断开", this.data().infoName());
+        return String.format("[%s] 客户端已连接", this.data().infoName());
     }
 
     public RedisInfo info() {

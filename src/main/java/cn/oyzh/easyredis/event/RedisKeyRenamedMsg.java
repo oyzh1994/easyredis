@@ -1,10 +1,9 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
-
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,23 +11,20 @@ import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/11/20
+ * @since 2023/12/11
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisListRowAddedMsg extends Event<RedisListKeyTreeItem> implements  EventFormatter {
+public class RedisKeyRenamedMsg extends Event<RedisKeyTreeItem<?, ?>> implements  EventFormatter {
 
     @Setter
-    private String key;
-
-    @Setter
-    private String member;
+    private String oldKey;
 
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键:%s(db%s) 新增行:%s",
-                this.data().infoName(), this.key, this.data().dbIndex(), this.member
+                "[%s] 键更名[%s-db%s] 新名称:%s",
+                this.data().info().getName(), this.oldKey, this.data().dbIndex(), this.data().key()
         );
     }
 }

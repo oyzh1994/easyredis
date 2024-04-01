@@ -10,6 +10,9 @@ import cn.oyzh.easyredis.event.msg.RedisKeyCopiedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyFlushedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyMovedMsg;
+import cn.oyzh.easyredis.event.msg.RedisSearchFinishMsg;
+import cn.oyzh.easyredis.event.msg.RedisSearchStartMsg;
+import cn.oyzh.easyredis.event.msg.TreeChildFilterMsg;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
@@ -184,9 +187,8 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     /**
      * 搜索开始事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, async = true, verbose = true)
     @Subscribe
-    private void onSearchStart() {
+    private void onSearchStart(RedisSearchStartMsg event) {
         this.searching = true;
         this.filter();
     }
@@ -194,9 +196,8 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     /**
      * 搜索结束事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, async = true, verbose = true)
     @Subscribe
-    private void onSearchFinish() {
+    private void onSearchFinish(RedisSearchFinishMsg event) {
         this.searching = false;
         this.filter();
     }
@@ -204,33 +205,11 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     /**
      * 树节点过滤
      */
-    // @EventReceiver(value = RedisEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
     @Subscribe
-    private void onTreeChildFilter() {
+    private void onTreeChildFilter(TreeChildFilterMsg event) {
         this.itemFilter().initFilters();
         this.filter();
     }
-
-    // /**
-    //  * 导入开始事件
-    //  */
-    // @EventReceiver(RedisEventTypes.REDIS_IMPORT_START)
-    // private void onImportStart() {
-    //     this.importing = true;
-    //     StaticLog.info("REDIS_IMPORT_START.");
-    // }
-    //
-    // /**
-    //  * 导入结束事件
-    //  */
-    // @EventReceiver(value = RedisEventTypes.REDIS_IMPORT_FINISH, async = true, verbose = true)
-    // private void onImportFinish(RedisConnectTreeItem connectTreeItem) {
-    //     this.importing = false;
-    //     for (RedisDBTreeItem child : connectTreeItem.getChildren()) {
-    //         child.reloadChild();
-    //     }
-    //     StaticLog.info("REDIS_IMPORT_FINISH.");
-    // }
 
     /**
      * 添加连接

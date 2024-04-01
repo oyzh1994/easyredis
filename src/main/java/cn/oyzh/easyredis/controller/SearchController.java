@@ -380,13 +380,6 @@ public class SearchController extends SubController {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
-
-    @Override
     public RedisMainController parent() {
         return (RedisMainController) super.parent();
     }

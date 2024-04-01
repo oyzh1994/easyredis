@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;

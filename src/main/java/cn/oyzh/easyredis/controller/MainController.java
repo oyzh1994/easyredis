@@ -183,13 +183,6 @@ public class MainController extends ParentController {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
-        // 取消注册事件处理
-        EventUtil.unregister(this);
-    }
-
-    @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         // 注册事件处理

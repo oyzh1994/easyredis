@@ -79,12 +79,6 @@ public class RedisKeyFilterController extends Controller {
         this.pattern.requestFocus();
     }
 
-    @Override
-    public void onStageHidden(WindowEvent event) {
-        EventUtil.unregister(this);
-        super.onStageHidden(event);
-    }
-
     /**
      * 键过滤
      */

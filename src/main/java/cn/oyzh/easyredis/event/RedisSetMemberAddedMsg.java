@@ -1,8 +1,8 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
@@ -11,20 +11,24 @@ import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/12/11
+ * @since 2023/11/20
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyTTLUpdatedMsg extends Event<RedisKeyTreeItem<?, ?>> implements  EventFormatter {
+public class RedisSetMemberAddedMsg extends Event<RedisSetKeyTreeItem> implements  EventFormatter {
 
     @Setter
-    private Long ttl;
+    private String key;
+
+    @Setter
+    private String member;
 
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键TTL更新[%s-db%s] ttl:%s",
-                this.data().info().getName(), data().key(), this.data().dbIndex(), this.ttl
+                "[%s] 键:%s(db%s) 新增成员:%s",
+                this.data().infoName(), this.key, this.data().dbIndex(), this.member
         );
     }
+
 }

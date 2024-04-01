@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
@@ -8,10 +8,10 @@ import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/11/27
+ * @since 2023/9/19
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeChildChangedMsg extends Event<Object> {
+public class TreeChildFilterMsg extends Event<Object> {
 
 }

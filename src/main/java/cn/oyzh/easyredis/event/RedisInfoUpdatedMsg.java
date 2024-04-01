@@ -1,12 +1,9 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -15,10 +12,10 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisInfoDeletedMsg extends Event<RedisInfo> implements  EventFormatter {
+public class RedisInfoUpdatedMsg extends Event<RedisInfo> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("连接[%s] 已删除", this.data().getName());
+        return String.format("连接[%s] 已修改", this.data().getName());
     }
 }

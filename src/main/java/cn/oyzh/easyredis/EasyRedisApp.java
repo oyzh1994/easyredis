@@ -41,7 +41,6 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
                 SqlInitializationAutoConfiguration.class,
         }
 )
-//@Slf4j
 @EnableSpringUtil
 public class EasyRedisApp extends SpringApplication implements CommandLineRunner, DisposableBean {
 

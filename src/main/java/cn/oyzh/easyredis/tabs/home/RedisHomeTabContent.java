@@ -1,16 +1,14 @@
 package cn.oyzh.easyredis.tabs.home;
 
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,7 +37,7 @@ public class RedisHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-    @Autowired
+    @Resource
     private Project project;
 
     @Override

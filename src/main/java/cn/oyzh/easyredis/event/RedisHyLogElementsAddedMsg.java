@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event.msg;
+package cn.oyzh.easyredis.event;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
