@@ -534,7 +534,8 @@ public class RedisClient {
             // 已关闭
             if (isClosed) {
                 this.state.set(RedisConnState.CLOSED);
-                EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
+                // EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
+                RedisEventUtil.clientClosed(this);
             }
             // 重置变量
             this.pool = null;

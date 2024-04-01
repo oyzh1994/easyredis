@@ -8,11 +8,11 @@ import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -79,7 +79,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
             if (this.treeItem.isHyLog()) {
                 this.nodeData.setEditable(false);
             } else {
-                this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
+                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 this.nodeData.setEditable(true);
             }
             return true;
@@ -207,9 +207,10 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_HYLOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_HYLOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
+    @Subscribe
     private void onHyLogElementAdded(RedisHyLogElementsAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             // 刷新数据
             this.treeItem.flushCount();
             this.initNode();

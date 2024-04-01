@@ -11,6 +11,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.easyredis.fx.RedisMsgTextArea?>
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100%" flexHeight="100% - 30">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
@@ -106,8 +107,8 @@
                         </HBox.margin>
                     </SVGGlyph>
                 </FlexHBox>
-                <MsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
-                             maxLine="1000"/>
+                <RedisMsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%"
+                                  maxLine="1000"/>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>

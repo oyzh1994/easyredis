@@ -143,8 +143,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         // 键数据处理
         if (this.nodeData.isEditable()) {
             this.nodeData.addTextChangeListener(this.getDataListener());
-            this.nodeData.undoableProperty().addListener((_, _, t1) -> this.dataUndo.setDisable(!t1));
-            this.nodeData.redoableProperty().addListener((_, _, t1) -> this.dataRedo.setDisable(!t1));
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
 
         // 收藏处理
@@ -157,13 +157,13 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.keyInfoController.init(treeItem);
 
         // 格式变化
-        this.format.selectedItemChanged((_, _, _) -> this.onFormatChange(this.format));
+        this.format.selectedItemChanged((t3, t2, t1) -> this.onFormatChange(this.format));
 
         // 初始化节点
         this.initNode();
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText(STR."耗时:\{this.treeItem.loadTime()}ms"));
+        FXUtil.runWait(() -> this.loadTime.setText("耗时:" + this.treeItem.loadTime() + "ms"));
         return true;
     }
 
@@ -188,7 +188,9 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void copyKeyInfo() {
-        String builder = STR."数据库：\{this.treeItem.dbIndex()}\{System.lineSeparator()}键类型：\{this.treeItem.value().type()}\{System.lineSeparator()}键名称：\{this.treeItem.key()}";
+        String builder = "数据库：" + this.treeItem.dbIndex() + System.lineSeparator() +
+                "键类型：" + this.treeItem.value().type() + System.lineSeparator() +
+                "键名称：" + this.treeItem.key();
         ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
@@ -241,7 +243,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void deleteNode() {
-        if (MessageBox.confirm(STR."删除\{this.treeItem.key()}", "确定删除此键？")) {
+        if (MessageBox.confirm("删除" + this.treeItem.key(), "确定删除此键？")) {
             this.treeItem.delete();
         }
     }
@@ -314,7 +316,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         if (this.ttl.getCursor() != Cursor.HAND) {
             this.ttl.setCursor(Cursor.HAND);
         }
-        this.ttl.setText(STR."TTL: \{this.treeItem.ttl()}");
+        this.ttl.setText("TTL: " + this.treeItem.ttl());
     }
 
     /**

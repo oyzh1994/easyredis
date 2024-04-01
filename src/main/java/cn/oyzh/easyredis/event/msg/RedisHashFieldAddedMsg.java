@@ -3,8 +3,8 @@ package cn.oyzh.easyredis.event.msg;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,14 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisHashFieldAddedMsg implements EventMsg, EventMsgFormatter {
-
-    private final String name = RedisEventTypes.REDIS_HASH_FIELD_ADDED;
-
-    private final String group = RedisEventGroups.KEY_ACTION;
-
-    @Setter
-    private RedisHashKeyTreeItem item;
+public class RedisHashFieldAddedMsg extends Event<RedisHashKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;
@@ -34,10 +27,10 @@ public class RedisHashFieldAddedMsg implements EventMsg, EventMsgFormatter {
     private String value;
 
     @Override
-    public String formatMsg() {
+    public String eventFormat() {
         return String.format(
                 "[%s] 键:%s(db%s) 新增字段:%s 值:%s",
-                this.item.infoName(), this.key, this.item.dbIndex(), this.field, this.value
+                this.data().infoName(), this.key, this.data().dbIndex(), this.field, this.value
         );
     }
 }

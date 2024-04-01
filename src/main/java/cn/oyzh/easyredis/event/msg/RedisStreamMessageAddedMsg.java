@@ -3,8 +3,8 @@ package cn.oyzh.easyredis.event.msg;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,14 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisStreamMessageAddedMsg implements EventMsg, EventMsgFormatter {
-
-    private final String name = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED;
-
-    private final String group = RedisEventGroups.KEY_ACTION;
-
-    @Setter
-    private RedisStreamKeyTreeItem item;
+public class RedisStreamMessageAddedMsg extends Event<RedisStreamKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;
@@ -31,10 +24,10 @@ public class RedisStreamMessageAddedMsg implements EventMsg, EventMsgFormatter {
     private String message;
 
     @Override
-    public String formatMsg() {
+    public String eventFormat() {
         return String.format(
                 "[%s] 键:%s(db%s) 新增消息:%s",
-                this.item.infoName(), this.key, this.item.dbIndex(), this.message
+                this.data().infoName(), this.key, this.data().dbIndex(), this.message
         );
     }
 }

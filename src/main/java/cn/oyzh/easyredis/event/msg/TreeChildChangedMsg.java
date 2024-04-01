@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.event.msg;
 
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -12,9 +12,6 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class TreeChildChangedMsg implements EventMsg {
+public class TreeChildChangedMsg extends Event<Object> {
 
-    private final String name = RedisEventTypes.TREE_CHILD_CHANGED;
-
-    private final String group = RedisEventGroups.TREE_ACTION;
 }

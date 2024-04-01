@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.fx.plus.controls.FXListView;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -50,7 +51,8 @@ public class RedisKeyFilterHistoryPopup extends Popup {
             this.setAutoHide(true);
             this.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    EventUtil.fire(RedisEventTypes.REDIS_FILTER_HISTORY_SELECTED, newValue);
+                    // EventUtil.fire(RedisEventTypes.REDIS_FILTER_HISTORY_SELECTED, newValue);
+                    RedisEventUtil.filterHistorySelected(newValue);
                     this.hide();
                 }
             });

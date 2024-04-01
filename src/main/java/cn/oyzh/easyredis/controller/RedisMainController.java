@@ -2,10 +2,17 @@ package cn.oyzh.easyredis.controller;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisKeyFilterEvent;
+import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
+import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
+import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
+import cn.oyzh.easyredis.fx.RedisMsgTextArea;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisPageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
@@ -21,13 +28,10 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventGroup;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
+import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -47,7 +51,6 @@ import java.util.List;
  * @since 2023/06/22
  */
 @Lazy
-//@Slf4j
 @Component
 public class RedisMainController extends ParentController {
 
@@ -168,7 +171,7 @@ public class RedisMainController extends ParentController {
      * 消息文本框
      */
     @FXML
-    private MsgTextArea msgArea;
+    private RedisMsgTextArea msgArea;
 
     /**
      * 搜索Controller
@@ -211,10 +214,16 @@ public class RedisMainController extends ParentController {
     /**
      * redis信息修改事件
      *
-     * @param info redis信息
+     * @param event 事件
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true)
-    private void onInfoUpdate(RedisInfo info) {
+    // @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true)
+    @Subscribe
+    private void onInfoUpdate(RedisInfoUpdatedMsg event) {
+       this.infoUpdate(event.data());
+    }
+
+
+    private void infoUpdate(RedisInfo info) {
         if (this.info == info) {
             this.stage.appendTitle(" (" + info.getName() + ")");
         }
@@ -249,9 +258,9 @@ public class RedisMainController extends ParentController {
             this.stage.restoreTitle();
         } else if (this.info != item.value()) {
             this.info = item.value();
-            this.onInfoUpdate(this.info);
+            this.infoUpdate(this.info);
         }
-        EventUtil.fire(RedisEventTypes.CONNECTION_CHANGED, item);
+        // EventUtil.fire(RedisEventTypes.CONNECTION_CHANGED, item);
     }
 
     /**
@@ -413,8 +422,8 @@ public class RedisMainController extends ParentController {
     /**
      * 键过滤
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FILTER, async = true, verbose = true)
-    private void keyFilter() {
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_FILTER, async = true, verbose = true)
+    private void keyFilter(RedisKeyFilterEvent event) {
         this.tree.itemFilter().initFilters();
         this.filter();
         StaticLog.info("REDIS_NODE_FILTER.");
@@ -423,8 +432,8 @@ public class RedisMainController extends ParentController {
     /**
      * 展开左侧
      */
-    @EventReceiver(value = RedisEventTypes.LEFT_EXTEND, async = true, verbose = true)
-    private void leftExtend() {
+    // @EventReceiver(value = RedisEventTypes.LEFT_EXTEND, async = true, verbose = true)
+    private void leftExtend(RedisLeftExtendEvent event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
@@ -436,8 +445,8 @@ public class RedisMainController extends ParentController {
     /**
      * 收缩左侧
      */
-    @EventReceiver(value = RedisEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
-    private void leftCollapse() {
+    // @EventReceiver(value = RedisEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
+    private void leftCollapse(RedisLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
@@ -497,18 +506,18 @@ public class RedisMainController extends ParentController {
         this.msgArea.clear();
     }
 
-    /**
-     * 处理操作消息
-     */
-    @EventGroup(value = RedisEventGroups.KEY_ACTION, async = true, verbose = true)
-    @EventGroup(value = RedisEventGroups.INFO_ACTION, async = true, verbose = true)
-    @EventGroup(value = RedisEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    private void onActionMsg(Event<EventMsg> event) {
-        if (event.data() instanceof EventMsgFormatter formatter) {
-            String formatMsg = formatter.formatMsg();
-            if (formatMsg != null) {
-                this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
-            }
-        }
-    }
+    // /**
+    //  * 处理操作消息
+    //  */
+    // @EventGroup(value = RedisEventGroups.KEY_ACTION, async = true, verbose = true)
+    // @EventGroup(value = RedisEventGroups.INFO_ACTION, async = true, verbose = true)
+    // @EventGroup(value = RedisEventGroups.CONNECTION_ACTION, async = true, verbose = true)
+    // private void onActionMsg(Event<EventMsg> event) {
+    //     if (event.data() instanceof EventMsgFormatter formatter) {
+    //         String formatMsg = formatter.formatMsg();
+    //         if (formatMsg != null) {
+    //             this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
+    //         }
+    //     }
+    // }
 }

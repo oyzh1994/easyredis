@@ -27,6 +27,7 @@ import cn.oyzh.easyredis.event.msg.RedisZSetCoordinateAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisZSetMemberAddedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
 import cn.oyzh.easyredis.event.msg.TreeChildFilterMsg;
+import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -37,7 +38,6 @@ import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.plus.event.EventBuilder;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
@@ -56,10 +56,21 @@ public class RedisEventUtil {
      *
      * @param client redis客户端
      */
+    public static void clientClosed(RedisClient client) {
+        RedisClientClosedEvent event = new RedisClientClosedEvent();
+        event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 连接关闭事件
+     *
+     * @param client redis客户端
+     */
     public static void connectionClosed(RedisClient client) {
         RedisConnectionClosedMsg msg = new RedisConnectionClosedMsg();
-        msg.client(client);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(client);
+        EventUtil.post(msg);
     }
 
     /**
@@ -69,8 +80,8 @@ public class RedisEventUtil {
      */
     public static void connectionConnected(RedisClient client) {
         RedisConnectionConnectedMsg msg = new RedisConnectionConnectedMsg();
-        msg.client(client);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(client);
+        EventUtil.post(msg);
     }
 
     /**
@@ -87,8 +98,8 @@ public class RedisEventUtil {
      */
     public static void terminalOpen(RedisInfo info) {
         RedisTerminalOpenMsg msg = new RedisTerminalOpenMsg();
-        msg.info(info);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(info);
+        EventUtil.post(msg);
     }
 
     /**
@@ -98,8 +109,8 @@ public class RedisEventUtil {
      */
     public static void terminalClose(RedisInfo info) {
         RedisTerminalCloseMsg msg = new RedisTerminalCloseMsg();
-        msg.info(info);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(info);
+        EventUtil.post(msg);
     }
 
     /**
@@ -111,10 +122,10 @@ public class RedisEventUtil {
      */
     public static void listRowAdded(RedisListKeyTreeItem item, String key, String member) {
         RedisListRowAddedMsg msg = new RedisListRowAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.member(member);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -126,10 +137,10 @@ public class RedisEventUtil {
      */
     public static void setMemberAdded(RedisSetKeyTreeItem item, String key, String member) {
         RedisSetMemberAddedMsg msg = new RedisSetMemberAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.member(member);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -142,11 +153,11 @@ public class RedisEventUtil {
      */
     public static void zSetMemberAdded(RedisZSetKeyTreeItem item, String key, String member, Double score) {
         RedisZSetMemberAddedMsg msg = new RedisZSetMemberAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.score(score);
         msg.member(member);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -160,12 +171,12 @@ public class RedisEventUtil {
      */
     public static void zSetCoordinateAdded(RedisZSetKeyTreeItem item, String key, String member, double longitude, double latitude) {
         RedisZSetCoordinateAddedMsg msg = new RedisZSetCoordinateAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.member(member);
         msg.latitude(latitude);
         msg.longitude(longitude);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -177,10 +188,10 @@ public class RedisEventUtil {
      */
     public static void streamMessageAdded(RedisStreamKeyTreeItem item, String key, String message) {
         RedisStreamMessageAddedMsg msg = new RedisStreamMessageAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.message(message);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -193,11 +204,11 @@ public class RedisEventUtil {
      */
     public static void hashFieldAdded(RedisHashKeyTreeItem item, String key, String field, String value) {
         RedisHashFieldAddedMsg msg = new RedisHashFieldAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.field(field);
         msg.value(value);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -209,10 +220,10 @@ public class RedisEventUtil {
      */
     public static void hyLogElementsAdded(RedisStringKeyTreeItem item, String key, String[] elements) {
         RedisHyLogElementsAddedMsg msg = new RedisHyLogElementsAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.elements(elements);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -220,8 +231,8 @@ public class RedisEventUtil {
      */
     public static void searchStart(RedisSearchParam searchParam) {
         RedisSearchStartMsg msg = new RedisSearchStartMsg();
-        msg.searchParam(searchParam);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(searchParam);
+        EventUtil.post(msg);
     }
 
     /**
@@ -229,24 +240,22 @@ public class RedisEventUtil {
      */
     public static void searchFinish(RedisSearchParam searchParam) {
         RedisSearchFinishMsg msg = new RedisSearchFinishMsg();
-        msg.searchParam(searchParam);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(searchParam);
+        EventUtil.post(msg);
     }
 
     /**
      * 树节点过滤事件
      */
     public static void treeChildFilter() {
-        TreeChildFilterMsg msg = new TreeChildFilterMsg();
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(new TreeChildFilterMsg());
     }
 
     /**
      * 树节点变化事件
      */
     public static void treeChildChanged() {
-        TreeChildChangedMsg msg = new TreeChildChangedMsg();
-        EventUtil.fireDelay(EventBuilder.newBuilder(msg).build(), 100);
+        EventUtil.post(new TreeChildChangedMsg());
     }
 
     /**
@@ -258,10 +267,10 @@ public class RedisEventUtil {
      */
     public static void keyAdded(RedisDBTreeItem item, String type, String key) {
         RedisKeyAddedMsg msg = new RedisKeyAddedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
         msg.type(type);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -272,9 +281,9 @@ public class RedisEventUtil {
      */
     public static void keyDeleted(RedisDBTreeItem item, String key) {
         RedisKeyDeletedMsg msg = new RedisKeyDeletedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.key(key);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -284,8 +293,8 @@ public class RedisEventUtil {
      */
     public static void keyFlushed(RedisDBTreeItem item) {
         RedisKeyFlushedMsg msg = new RedisKeyFlushedMsg();
-        msg.item(item);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(item);
+        EventUtil.post(msg);
     }
 
     /**
@@ -293,7 +302,7 @@ public class RedisEventUtil {
      */
     public static void filterMain() {
         RedisFilterMainMsg msg = new RedisFilterMainMsg();
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -303,8 +312,8 @@ public class RedisEventUtil {
      */
     public static void infoAdded(RedisInfo info) {
         RedisInfoAddedMsg msg = new RedisInfoAddedMsg();
-        msg.info(info);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(info);
+        EventUtil.post(msg);
     }
 
     /**
@@ -314,8 +323,8 @@ public class RedisEventUtil {
      */
     public static void infoUpdated(RedisInfo info) {
         RedisInfoUpdatedMsg msg = new RedisInfoUpdatedMsg();
-        msg.info(info);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(info);
+        EventUtil.post(msg);
     }
 
     /**
@@ -325,8 +334,8 @@ public class RedisEventUtil {
      */
     public static void infoDeleted(RedisInfo info) {
         RedisInfoDeletedMsg msg = new RedisInfoDeletedMsg();
-        msg.info(info);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        msg.data(info);
+        EventUtil.post(msg);
     }
 
     /**
@@ -337,9 +346,9 @@ public class RedisEventUtil {
      */
     public static void keyTTLUpdated(RedisKeyTreeItem<?, ?> item, Long ttl) {
         RedisKeyTTLUpdatedMsg msg = new RedisKeyTTLUpdatedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.ttl(ttl);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -350,9 +359,9 @@ public class RedisEventUtil {
      */
     public static void keyRenamed(RedisKeyTreeItem<?, ?> item, String oldKey) {
         RedisKeyRenamedMsg msg = new RedisKeyRenamedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.oldKey(oldKey);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -363,9 +372,9 @@ public class RedisEventUtil {
      */
     public static void keyCopied(TreeItem<?> item, int targetDB) {
         RedisKeyCopiedMsg msg = new RedisKeyCopiedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.targetDB(targetDB);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
     }
 
     /**
@@ -376,8 +385,74 @@ public class RedisEventUtil {
      */
     public static void keyMoved(TreeItem<?> item, int targetDB) {
         RedisKeyMovedMsg msg = new RedisKeyMovedMsg();
-        msg.item(item);
+        msg.data(item);
         msg.targetDB(targetDB);
-        EventUtil.fire(EventBuilder.newBuilder(msg).build());
+        EventUtil.post(msg);
+    }
+
+    /**
+     * 服务监控事件
+     *
+     * @param client redis客户端
+     */
+    public static void serverMonitor(RedisClient client) {
+        RedisServerMonitorEvent event = new RedisServerMonitorEvent();
+        event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 订阅打开事件
+     *
+     * @param item redis节点
+     */
+    public static void pubsubOpen(RedisPubsubItem item) {
+        RedisPubsubOpenEvent event = new RedisPubsubOpenEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
+
+    public static void filterAdded() {
+        RedisFilterAddedEvent event = new RedisFilterAddedEvent();
+        EventUtil.post(event);
+    }
+
+    public static void keyFilter() {
+        RedisKeyFilterEvent event = new RedisKeyFilterEvent();
+        EventUtil.post(event);
+    }
+
+    public static void filterHistorySelected(String kw) {
+        RedisFilterHistorySelectedEvent event = new RedisFilterHistorySelectedEvent();
+        event.data(kw);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 添加分组
+     */
+    public static void addGroup() {
+        EventUtil.post(new RedisAddGroupEvent());
+    }
+
+    /**
+     * 添加连接
+     */
+    public static void addConnect() {
+        EventUtil.post(new RedisAddConnectEvent());
+    }
+
+    /**
+     * 展开左侧
+     */
+    public static void leftExtend() {
+        EventUtil.post(new RedisLeftExtendEvent());
+    }
+
+    /**
+     * 收缩左侧
+     */
+    public static void leftCollapse() {
+        EventUtil.post(new RedisLeftCollapseEvent());
     }
 }

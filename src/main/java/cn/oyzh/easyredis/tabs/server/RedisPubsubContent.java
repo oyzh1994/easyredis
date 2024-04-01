@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.common.spring.ScopeType;
@@ -101,7 +102,8 @@ public class RedisPubsubContent {
      */
     private void subscribe(RedisPubsubItem pubsubItem) {
         pubsubItem.setClient(this.client);
-        EventUtil.fire(RedisEventTypes.REDIS_OPEN_PUBSUB, pubsubItem);
+        // EventUtil.fire(RedisEventTypes.REDIS_OPEN_PUBSUB, pubsubItem);
+        RedisEventUtil.pubsubOpen(pubsubItem);
     }
 
     /**

@@ -22,11 +22,11 @@ import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -60,8 +60,8 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
-        // 注册事件处理
-        EventUtil.register(this);
+        // // 注册事件处理
+        // EventUtil.register(this);
         // 初始化子节点
         this.initChildes();
         // 监听键变化
@@ -204,16 +204,16 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 添加连接
      */
-    @EventReceiver(RedisEventTypes.REDIS_ADD_CONNECT)
-    private void addConnect() {
+    // @EventReceiver(RedisEventTypes.REDIS_ADD_CONNECT)
+    public void addConnect() {
         StageUtil.showStage(RedisInfoAddController.class, this.window());
     }
 
     /**
      * 添加分组
      */
-    @EventReceiver(RedisEventTypes.REDIS_ADD_GROUP)
-    private void addGroup() {
+    // @EventReceiver(RedisEventTypes.REDIS_ADD_GROUP)
+    public void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
         // 名称为空，则忽略
         if (StrUtil.isBlank(groupName)) {
@@ -265,31 +265,29 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 连接新增事件
      *
-     * @param msg 消息
+     * @param info redis连接
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_INFO_ADDED, async = true, verbose = true)
-    private void onInfoAdded(RedisInfoAddedMsg msg) {
-        this.addConnect(msg.info());
+    private void infoAdded(RedisInfo info) {
+        this.addConnect(info);
     }
 
     /**
      * 连接变更事件
      *
-     * @param msg 消息
+     * @param info redis连接
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true, verbose = true)
-    private void onInfoUpdate(RedisInfoUpdatedMsg msg) {
+    public void infoUpdate(RedisInfo info) {
         f1:
         for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.value() == msg.info()) {
-                    connectTreeItem.value(msg.info());
+                if (connectTreeItem.value() == info) {
+                    connectTreeItem.value(info);
                     break;
                 }
             } else if (item instanceof RedisGroupTreeItem groupTreeItem) {
                 for (RedisConnectTreeItem connectTreeItem : groupTreeItem.getConnectItems()) {
-                    if (connectTreeItem.value() == msg.info()) {
-                        connectTreeItem.value(msg.info());
+                    if (connectTreeItem.value() == info) {
+                        connectTreeItem.value(info);
                         break f1;
                     }
                 }

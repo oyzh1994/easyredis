@@ -9,12 +9,12 @@ import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -57,7 +57,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      * redis数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
-    private final ChangeListener<String> dataListener = (_, _, newValue) -> {
+    private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
             this.treeItem.clearData();
         } else {
@@ -69,7 +69,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     public boolean init(RedisSetKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -132,9 +132,10 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onSetMemberAdded(RedisSetMemberAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             this.firstPage();
         }
     }

@@ -1,11 +1,9 @@
 package cn.oyzh.easyredis.event.msg;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
-import cn.oyzh.fx.plus.event.EventMsg;
-import cn.oyzh.fx.plus.event.EventMsgFormatter;
+import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,14 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisHyLogElementsAddedMsg implements EventMsg, EventMsgFormatter {
-
-    private final String name = RedisEventTypes.REDIS_HYLOG_ELEMENT_ADDED;
-
-    private final String group = RedisEventGroups.KEY_ACTION;
-
-    @Setter
-    private RedisStringKeyTreeItem item;
+public class RedisHyLogElementsAddedMsg extends Event<RedisStringKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;
@@ -32,10 +23,10 @@ public class RedisHyLogElementsAddedMsg implements EventMsg, EventMsgFormatter {
     private String[] elements;
 
     @Override
-    public String formatMsg() {
+    public String eventFormat() {
         return String.format(
                 "[%s] 键:%s(db%s) 新增统计元素:%s",
-                this.item.infoName(), this.key, this.item.dbIndex(), ArrayUtil.toString(this.elements)
+                this.data().infoName(), this.key, this.data().dbIndex(), ArrayUtil.toString(this.elements)
         );
     }
 }

@@ -10,12 +10,12 @@ import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -95,7 +95,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     public boolean init(RedisHashKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((t1, t2, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -180,9 +180,10 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onHashFieldAdded(RedisHashFieldAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             this.firstPage();
         }
     }

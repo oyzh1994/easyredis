@@ -8,12 +8,12 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -56,7 +56,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      * 数据监听器
      */
     @Getter(value = AccessLevel.PROTECTED)
-    private final ChangeListener<String> dataListener = (_, _, newValue) -> {
+    private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
             this.treeItem.clearData();
         } else {
@@ -68,7 +68,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     public boolean init(RedisListKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
-            this.treeItem.dataProperty().addListener((_, _, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            this.treeItem.dataProperty().addListener((t1, t2, newValue) -> this.saveNodeData.setDisable(newValue == null));
             return true;
         }
         return false;
@@ -137,9 +137,10 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onListRowAdded(RedisListRowAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             this.firstPage();
         }
     }

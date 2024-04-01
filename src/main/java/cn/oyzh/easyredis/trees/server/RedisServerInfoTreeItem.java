@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.plus.event.EventUtil;
@@ -37,7 +38,8 @@ public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeIt
      * 显示服务信息
      */
     public void showServerInfo() {
-        EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.parent.client());
+        // EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.parent.client());
+        RedisEventUtil.serverMonitor(this.parent.client());
     }
 
     @Override

@@ -3,8 +3,11 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisFilterHistorySelectedEvent;
+import cn.oyzh.fx.plus.search.SearchHistorySelectedEvent;
+import cn.oyzh.easyredis.event.msg.TreeChildChangedMsg;
+import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
@@ -21,12 +24,12 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
+import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -153,9 +156,14 @@ public class SearchController extends SubController {
     /**
      * 搜索历史点击事件
      *
-     * @param kw 点击关键词
+     * @param event 事件
      */
-    @EventReceiver(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED)
+    // @EventReceiver(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED)
+    @Subscribe
+    private void searchHistorySelected(RedisFilterHistorySelectedEvent event) {
+        this.searchHistorySelected(event.data());
+    }
+
     private void searchHistorySelected(String kw) {
         if (!this.searchKW.getTextTrim().equals(kw)) {
             this.searchKW.setText(kw);
@@ -347,8 +355,9 @@ public class SearchController extends SubController {
     /**
      * 刷新搜索结果
      */
-    @EventReceiver(value = RedisEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
-    public void flushSearchResult() {
+    // @EventReceiver(value = RedisEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
+    @Subscribe
+    public void flushSearchResult(TreeChildChangedMsg event) {
         TaskManager.startDelay("redis:search:flushSearchResult", () -> {
             this.searchHandler.updateResult();
             this.updateSearchResult();

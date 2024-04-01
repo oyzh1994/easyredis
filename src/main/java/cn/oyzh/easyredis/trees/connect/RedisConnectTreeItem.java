@@ -192,7 +192,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     @FXML
     private void serverInfo() {
-        EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.client);
+        // EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.client);
+        RedisEventUtil.serverMonitor(this.client);
     }
 
     /**

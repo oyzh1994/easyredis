@@ -1,7 +1,10 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.hutool.extra.spring.SpringUtil;
-import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisAddConnectEvent;
+import cn.oyzh.easyredis.event.RedisAddGroupEvent;
+import cn.oyzh.easyredis.event.msg.RedisInfoAddedMsg;
+import cn.oyzh.easyredis.event.msg.RedisInfoUpdatedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyAddedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyCopiedMsg;
 import cn.oyzh.easyredis.event.msg.RedisKeyDeletedMsg;
@@ -11,9 +14,10 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.event.EventReceiver;
+import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.trees.RichTreeView;
+import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -29,7 +33,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/1/29
  */
-public class RedisTreeView extends RichTreeView {
+public class RedisTreeView extends RichTreeView implements EventListener {
 
     /**
      * 搜索中标志位
@@ -50,6 +54,7 @@ public class RedisTreeView extends RichTreeView {
     }
 
     public RedisTreeView() {
+        EventListener.super.register();
         this.dragContent = "redis_tree_drag";
         this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
@@ -75,7 +80,7 @@ public class RedisTreeView extends RichTreeView {
     protected void initEvenListener() {
         super.initEvenListener();
         // 暂停按键处理
-        KeyListener.listenReleased(this, KeyCode.PAUSE, _ -> {
+        KeyListener.listenReleased(this, KeyCode.PAUSE, t1 -> {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof RedisConnectTreeItem treeItem) {
                 treeItem.closeConnect();
@@ -97,10 +102,11 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onKeyAdded(RedisKeyAddedMsg msg) {
-        if (msg != null && msg.item() != null) {
-            msg.item().onKeyAdded(msg.key());
+        if (msg != null && msg.data() != null) {
+            msg.data().onKeyAdded(msg.key());
         }
     }
 
@@ -109,10 +115,11 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
+    @Subscribe
     private void onKeyDeleted(RedisKeyDeletedMsg msg) {
-        if (msg != null && msg.item() != null) {
-            msg.item().onKeyDeleted(msg.key());
+        if (msg != null && msg.data() != null) {
+            msg.data().onKeyDeleted(msg.key());
         }
     }
 
@@ -121,10 +128,11 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSHED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSHED, verbose = true, async = true)
+    @Subscribe
     private void onKeyFlushed(RedisKeyFlushedMsg msg) {
-        if (msg != null && msg.item() != null) {
-            msg.item().reloadChild();
+        if (msg != null && msg.data() != null) {
+            msg.data().reloadChild();
         }
     }
 
@@ -133,10 +141,11 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPIED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPIED, verbose = true, async = true)
+    @Subscribe
     private void onKeyCopied(RedisKeyCopiedMsg msg) {
         int dbIndex = msg.targetDB();
-        TreeItem<?> treeItem = msg.item();
+        TreeItem<?> treeItem = msg.data();
         RedisDBTreeItem targetDBItem = null;
         if (treeItem instanceof RedisDBTreeItem dbItem) {
             dbItem.reloadChild();
@@ -154,10 +163,11 @@ public class RedisTreeView extends RichTreeView {
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
+    @Subscribe
     private void onKeyMoved(RedisKeyMovedMsg msg) {
         int dbIndex = msg.targetDB();
-        TreeItem<?> treeItem = msg.item();
+        TreeItem<?> treeItem = msg.data();
         RedisDBTreeItem targetDBItem = null;
         if (treeItem instanceof RedisDBTreeItem dbItem) {
             dbItem.reloadChild();
@@ -174,7 +184,8 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索开始事件
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, async = true, verbose = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_START, async = true, verbose = true)
+    @Subscribe
     private void onSearchStart() {
         this.searching = true;
         this.filter();
@@ -183,7 +194,8 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 搜索结束事件
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, async = true, verbose = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_SEARCH_FINISH, async = true, verbose = true)
+    @Subscribe
     private void onSearchFinish() {
         this.searching = false;
         this.filter();
@@ -192,7 +204,8 @@ public class RedisTreeView extends RichTreeView {
     /**
      * 树节点过滤
      */
-    @EventReceiver(value = RedisEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    // @EventReceiver(value = RedisEventTypes.TREE_CHILD_FILTER, async = true, verbose = true)
+    @Subscribe
     private void onTreeChildFilter() {
         this.itemFilter().initFilters();
         this.filter();
@@ -218,4 +231,41 @@ public class RedisTreeView extends RichTreeView {
     //     }
     //     StaticLog.info("REDIS_IMPORT_FINISH.");
     // }
+
+    /**
+     * 添加连接
+     */
+    @Subscribe
+    private void addConnect(RedisAddConnectEvent event) {
+        this.root().addConnect();
+    }
+
+    /**
+     * 添加分组
+     */
+    @Subscribe
+    private void addConnect(RedisAddGroupEvent event) {
+        this.root().addGroup();
+    }
+
+    /**
+     * 连接新增事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void infoAdded(RedisInfoAddedMsg event) {
+        this.root().addConnect(event.data());
+    }
+
+    /**
+     * 连接变更事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void infoUpdate(RedisInfoUpdatedMsg event) {
+        this.root().infoUpdate(event.data());
+    }
+
 }

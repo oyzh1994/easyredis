@@ -252,7 +252,7 @@ public class RedisKeyImportController extends Controller {
         this.importTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
-                EventUtil.fire(RedisEventTypes.REDIS_IMPORT_START);
+                // EventUtil.fire(RedisEventTypes.REDIS_IMPORT_START);
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
@@ -304,7 +304,7 @@ public class RedisKeyImportController extends Controller {
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                EventUtil.fire(RedisEventTypes.REDIS_IMPORT_FINISH, this.treeItem);
+                // EventUtil.fire(RedisEventTypes.REDIS_IMPORT_FINISH, this.treeItem);
                 SystemUtil.gcLater();
             }
         });

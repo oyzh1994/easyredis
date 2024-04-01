@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
@@ -15,11 +16,11 @@ import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import com.google.common.eventbus.Subscribe;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -237,8 +238,9 @@ public class RedisFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    @EventReceiver(RedisEventTypes.REDIS_FILTER_ADDED)
-    private void filterAdded() {
+    // @EventReceiver(RedisEventTypes.REDIS_FILTER_ADDED)
+    @Subscribe
+    private void filterAdded(RedisFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
     }
 

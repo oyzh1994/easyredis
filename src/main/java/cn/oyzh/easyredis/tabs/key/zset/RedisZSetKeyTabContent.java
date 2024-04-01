@@ -15,13 +15,13 @@ import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.property.ScaleDoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -346,9 +346,10 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onZSetCoordinateAdded(RedisZSetCoordinateAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             this.firstPage();
         }
     }
@@ -358,9 +359,10 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
      *
      * @param msg 消息
      */
-    @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
+    // @EventReceiver(value = RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, verbose = true, async = true)
+    @Subscribe
     private void onZSetMemberAdded(RedisZSetMemberAddedMsg msg) {
-        if (this.treeItem == msg.item()) {
+        if (this.treeItem == msg.data()) {
             this.firstPage();
         }
     }

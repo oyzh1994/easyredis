@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventTypes;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
@@ -77,8 +78,10 @@ public class RedisFilterAddController extends Controller {
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.partMatch.isSelected());
             if (this.filterStore.add(filter)) {
-                EventUtil.fire(RedisEventTypes.REDIS_FILTER_ADDED);
-                EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
+                // EventUtil.fire(RedisEventTypes.REDIS_FILTER_ADDED);
+                // EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
+                RedisEventUtil.filterAdded();
+                RedisEventUtil.keyFilter();
                 MessageBox.okToast("新增Redis过滤配置成功!");
                 this.closeStage();
             } else {

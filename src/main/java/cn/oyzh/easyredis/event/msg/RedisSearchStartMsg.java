@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.event.msg;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventGroups;
 import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.fx.plus.event.EventMsg;
+import cn.oyzh.fx.plus.event.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,13 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisSearchStartMsg implements EventMsg {
+public class RedisSearchStartMsg extends Event<RedisSearchParam> {
 
-    private final String name = RedisEventTypes.REDIS_SEARCH_START;
-
-    private final String group = RedisEventGroups.SEARCH_ACTION;
-
-    @Setter
-    private RedisSearchParam searchParam;
 
 }

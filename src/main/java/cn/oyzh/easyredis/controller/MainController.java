@@ -11,7 +11,6 @@ import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventReceiver;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -207,7 +206,7 @@ public class MainController extends ParentController {
     /**
      * 应用退出
      */
-    @EventReceiver(RedisEventTypes.APP_EXIT)
+    // @EventReceiver(RedisEventTypes.APP_EXIT)
     public void exit() {
         StageUtil.exit();
     }

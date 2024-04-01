@@ -60,7 +60,8 @@ public class RedisHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        EventUtil.fire(RedisEventTypes.REDIS_ADD_CONNECT);
+        // EventUtil.fire(RedisEventTypes.REDIS_ADD_CONNECT);
+        RedisEventUtil.addConnect();
     }
 
     /**
@@ -68,7 +69,8 @@ public class RedisHomeTabContent extends DynamicTabController {
      */
     @FXML
     private void addGroup() {
-        EventUtil.fire(RedisEventTypes.REDIS_ADD_GROUP);
+        // EventUtil.fire(RedisEventTypes.REDIS_ADD_GROUP);
+        RedisEventUtil.addGroup();
     }
 
     /**

@@ -14,9 +14,9 @@ public class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKe
 
     public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((_, _, _) -> this.flushGraphicColor());
-        item.scoreProperty().addListener((_, _, _) -> this.flushGraphicColor());
-        item.latitudeProperty().addListener((_, _, _) -> this.flushGraphicColor());
-        item.longitudeProperty().addListener((_, _, _) -> this.flushGraphicColor());
+        item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        item.scoreProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        item.latitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        item.longitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
     }
 }
