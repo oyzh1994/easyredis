@@ -4,7 +4,6 @@ import cn.hutool.core.map.MapUtil;
 import cn.oyzh.easyredis.controller.filter.RedisFilterAddController;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.store.RedisFilterStore;
@@ -26,7 +25,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import org.springframework.context.annotation.Lazy;
@@ -42,7 +40,6 @@ import java.util.ResourceBundle;
  * @since 2023/11/27
  */
 @Lazy
-//@Slf4j
 @Component
 public class RedisFilterTabContent extends DynamicTabController {
 
@@ -238,7 +235,6 @@ public class RedisFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    // @EventReceiver(RedisEventTypes.REDIS_FILTER_ADDED)
     @Subscribe
     private void filterAdded(RedisFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
@@ -246,8 +242,7 @@ public class RedisFilterTabContent extends DynamicTabController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 注册事件处理
-        EventUtil.register(this);
+        super.initialize(url, resourceBundle);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
@@ -255,11 +250,5 @@ public class RedisFilterTabContent extends DynamicTabController {
         this.initTable();
         // 显示首页
         this.firstPage();
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        // 取消注册事件处理
-        EventUtil.unregister(this);
     }
 }

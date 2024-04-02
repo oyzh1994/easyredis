@@ -201,14 +201,4 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
             });
         }
     }
-
-    @Override
-    public void onTabInit() {
-        EventUtil.register(this);
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        EventUtil.unregister(this);
-    }
 }

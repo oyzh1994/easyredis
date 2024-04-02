@@ -137,21 +137,10 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      *
      * @param msg 消息
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_LIST_ROW_ADDED, verbose = true, async = true)
     @Subscribe
     private void onListRowAdded(RedisListRowAddedMsg msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
-    }
-
-    @Override
-    public void onTabInit() {
-        EventUtil.register(this);
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        EventUtil.unregister(this);
     }
 }

@@ -207,7 +207,6 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
      *
      * @param msg 消息
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_HYLOG_ELEMENT_ADDED, verbose = true, async = true, fxThread = true)
     @Subscribe
     private void onHyLogElementAdded(RedisHyLogElementsAddedMsg msg) {
         if (this.treeItem == msg.data()) {
@@ -215,15 +214,5 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
             this.treeItem.flushCount();
             this.initNode();
         }
-    }
-
-    @Override
-    public void onTabInit() {
-        EventUtil.register(this);
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        EventUtil.unregister(this);
     }
 }

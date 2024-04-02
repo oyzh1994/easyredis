@@ -132,21 +132,10 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      *
      * @param msg 消息
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_SET_MEMBER_ADDED, verbose = true, async = true)
     @Subscribe
     private void onSetMemberAdded(RedisSetMemberAddedMsg msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
-    }
-
-    @Override
-    public void onTabInit() {
-        EventUtil.register(this);
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        EventUtil.unregister(this);
     }
 }

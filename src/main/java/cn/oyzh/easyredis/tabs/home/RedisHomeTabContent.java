@@ -41,7 +41,8 @@ public class RedisHomeTabContent extends DynamicTabController {
     private Project project;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
         this.softInfo.setText("程序信息 v" + this.project.getVersion() + " Powered by oyzh.");
         String jdkInfo = "";
         if (System.getProperty("java.vm.name") != null) {

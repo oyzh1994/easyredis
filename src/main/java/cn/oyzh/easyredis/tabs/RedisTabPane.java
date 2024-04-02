@@ -47,7 +47,6 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
 
     @Override
     protected void initTabPane() {
-        EventListener.super.register();
         super.initTabPane();
         this.initHomeTab();
         // 监听tab
@@ -414,7 +413,6 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     /**
      * 初始化过滤tab
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_FILTER_MAIN, async = true, verbose = true)
     @Subscribe
     public void initFilterTab(RedisFilterMainMsg msg) {
         RedisFilterTab tab = this.getFilterTab();

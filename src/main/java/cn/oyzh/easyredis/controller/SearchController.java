@@ -1,16 +1,12 @@
 package cn.oyzh.easyredis.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisFilterHistorySelectedEvent;
-import cn.oyzh.easyredis.event.TreeChildChangedMsg;
-import cn.oyzh.fx.plus.search.SearchHistorySelectedEvent;
-import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.event.TreeChildChangedMsg;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
@@ -23,12 +19,12 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.controls.textfield.SearchTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
+import cn.oyzh.fx.plus.search.SearchTextField;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
@@ -37,8 +33,6 @@ import javafx.stage.WindowEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * redis搜索子组件
@@ -152,23 +146,6 @@ public class SearchController extends SubController {
      * 搜索历史储存
      */
     private final RedisSearchHistoryStore historyStore = RedisSearchHistoryStore.INSTANCE;
-
-    /**
-     * 搜索历史点击事件
-     *
-     * @param event 事件
-     */
-    // @EventReceiver(RedisEventTypes.REDIS_SEARCH_HISTORY_SELECTED)
-    @Subscribe
-    private void searchHistorySelected(RedisFilterHistorySelectedEvent event) {
-        this.searchHistorySelected(event.data());
-    }
-
-    private void searchHistorySelected(String kw) {
-        if (!this.searchKW.getTextTrim().equals(kw)) {
-            this.searchKW.setText(kw);
-        }
-    }
 
     /**
      * 搜索-更多
@@ -355,7 +332,6 @@ public class SearchController extends SubController {
     /**
      * 刷新搜索结果
      */
-    // @EventReceiver(value = RedisEventTypes.TREE_CHILD_CHANGED, async = true, verbose = true)
     @Subscribe
     public void flushSearchResult(TreeChildChangedMsg event) {
         TaskManager.startDelay("redis:search:flushSearchResult", () -> {
@@ -382,74 +358,5 @@ public class SearchController extends SubController {
     @Override
     public RedisMainController parent() {
         return (RedisMainController) super.parent();
-    }
-
-    /**
-     * redis搜索控件按键事件
-     *
-     * @param e 事件
-     */
-    @FXML
-    private void onSearchKeyPressed(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            this.searchNext();
-        } else if (e.getCode() == KeyCode.UP) {
-            String currKW = this.searchKW.getTextTrim();
-            List<String> list = this.historyStore.getSearchKw();
-            String historyKW = this.getHistoryKW(currKW, list, true);
-            if (historyKW != null) {
-                this.searchHistorySelected(historyKW);
-            }
-        } else if (e.getCode() == KeyCode.DOWN) {
-            String currKW = this.searchKW.getTextTrim();
-            List<String> list = this.historyStore.getSearchKw();
-            String historyKW = this.getHistoryKW(currKW, list, false);
-            if (historyKW != null) {
-                this.searchHistorySelected(historyKW);
-            }
-        }
-    }
-
-    /**
-     * 获取历史词汇
-     *
-     * @param currKW 当前词汇
-     * @param list   词汇列表
-     * @param isUp   是否向上查找
-     * @return 搜索词
-     */
-    private String getHistoryKW(String currKW, List<String> list, boolean isUp) {
-        if (list == null || list.isEmpty()) {
-            return null;
-        }
-        String kw;
-        if (isUp) {
-            // 获取首个
-            if (currKW == null) {
-                kw = CollUtil.getFirst(list);
-            } else {
-                int index = list.indexOf(currKW) + 1;
-                // 获取最后一个
-                if (index >= list.size()) {
-                    kw = CollUtil.getLast(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        } else {
-            // 获取最后一个
-            if (currKW == null) {
-                kw = CollUtil.getLast(list);
-            } else {
-                int index = list.indexOf(currKW) - 1;
-                // 获取首个
-                if (index <= 0) {
-                    kw = CollUtil.getFirst(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        }
-        return kw;
     }
 }

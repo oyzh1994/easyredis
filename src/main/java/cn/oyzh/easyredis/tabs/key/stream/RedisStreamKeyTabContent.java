@@ -119,21 +119,10 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
      *
      * @param msg 消息
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, verbose = true, async = true)
     @Subscribe
     private void onStreamMessageAdded(RedisStreamMessageAddedMsg msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
-    }
-
-    @Override
-    public void onTabInit() {
-        EventUtil.register(this);
-    }
-
-    @Override
-    public void onTabClose(Event event) {
-        EventUtil.unregister(this);
     }
 }

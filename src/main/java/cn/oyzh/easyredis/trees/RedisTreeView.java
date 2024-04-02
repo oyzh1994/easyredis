@@ -57,7 +57,6 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     }
 
     public RedisTreeView() {
-        EventListener.super.register();
         this.dragContent = "redis_tree_drag";
         this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
