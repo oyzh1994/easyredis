@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.TreeChildChangedEvent;
-import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
+import cn.oyzh.easyredis.search.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;

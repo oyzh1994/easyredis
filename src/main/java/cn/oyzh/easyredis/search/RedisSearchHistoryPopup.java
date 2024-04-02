@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.fx;
+package cn.oyzh.easyredis.search;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
