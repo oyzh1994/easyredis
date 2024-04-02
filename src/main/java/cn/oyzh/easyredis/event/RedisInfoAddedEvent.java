@@ -8,7 +8,7 @@ import cn.oyzh.fx.plus.event.EventFormatter;
  * @author oyzh
  * @since 2023/12/08
  */
-public class RedisInfoAddedMsg extends Event<RedisInfo> implements EventFormatter {
+public class RedisInfoAddedEvent extends Event<RedisInfo> implements EventFormatter {
 
     @Override
     public String eventFormat() {

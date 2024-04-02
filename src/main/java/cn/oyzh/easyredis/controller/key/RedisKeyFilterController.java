@@ -11,6 +11,7 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.search.SearchTextField;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
@@ -43,23 +44,12 @@ public class RedisKeyFilterController extends Controller {
      * 过滤模式
      */
     @FXML
-    private ClearableTextField pattern;
+    private SearchTextField keyFilter;
 
     /**
      * 树键
      */
     private RedisDBTreeItem treeItem;
-
-    /**
-     * 过滤历史
-     */
-    @FXML
-    private SVGGlyph filterHistory;
-
-    /**
-     * 搜索历史弹窗
-     */
-    private RedisKeyFilterHistoryPopup filterHistoryPopup;
 
     /**
      * 过滤历史储存
@@ -74,9 +64,10 @@ public class RedisKeyFilterController extends Controller {
         this.treeItem = this.getStageProp("treeItem");
         String pattern = this.getStageProp("pattern");
         if (!StrUtil.isBlank(pattern)) {
-            this.pattern.setText(pattern);
+            this.keyFilter.setText(pattern);
         }
-        this.pattern.requestFocus();
+        this.keyFilter.requestFocus();
+        this.keyFilter.setHistoryPopup(new RedisKeyFilterHistoryPopup());
     }
 
     /**
@@ -84,112 +75,11 @@ public class RedisKeyFilterController extends Controller {
      */
     @FXML
     private void keyFilter() {
-        String pattern = this.pattern.getText();
+        String pattern = this.keyFilter.getText();
         if (StrUtil.isNotBlank(pattern) && !"*".equals(pattern)) {
             this.historyStore.addHistory(pattern);
         }
         this.treeItem.doKeyFilter(pattern);
         this.closeStage();
-    }
-
-    /**
-     * 过滤历史
-     *
-     * @param event 鼠标事件
-     */
-    @FXML
-    private void filterHistory(MouseEvent event) {
-        if (this.filterHistoryPopup == null) {
-            this.filterHistoryPopup = new RedisKeyFilterHistoryPopup();
-        }
-        this.filterHistoryPopup.show(this.filterHistory, event.getScreenX(), event.getScreenY());
-    }
-
-    /**
-     * 过滤历史点击事件
-     *
-     * @param event 事件
-     */
-    // @EventReceiver(RedisEventTypes.REDIS_FILTER_HISTORY_SELECTED)
-    @Subscribe
-    private void filterHistorySelected(RedisFilterHistorySelectedEvent event) {
-        if (!this.pattern.getTextTrim().equals(event.data())) {
-            this.pattern.setText(event.data());
-        }
-    }
-
-    private void filterHistorySelected(String kw) {
-        if (!this.pattern.getTextTrim().equals(kw)) {
-            this.pattern.setText(kw);
-        }
-    }
-
-    /**
-     * 键过滤按键事件
-     *
-     * @param e 按键事件
-     */
-    @FXML
-    private void onPatternKeyPressed(KeyEvent e) {
-        if (e.getCode() == KeyCode.ENTER) {
-            this.keyFilter();
-        } else if (e.getCode() == KeyCode.UP) {
-            String currKW = this.pattern.getTextTrim();
-            List<String> list = this.historyStore.getPatterns();
-            String historyKW = this.getHistoryKW(currKW, list, true);
-            if (historyKW != null) {
-                this.filterHistorySelected(historyKW);
-            }
-        } else if (e.getCode() == KeyCode.DOWN) {
-            String currKW = this.pattern.getTextTrim();
-            List<String> list = this.historyStore.getPatterns();
-            String historyKW = this.getHistoryKW(currKW, list, false);
-            if (historyKW != null) {
-                this.filterHistorySelected(historyKW);
-            }
-        }
-    }
-
-    /**
-     * 获取历史词汇
-     *
-     * @param currKW 当前词汇
-     * @param list   词汇列表
-     * @param isUp   是否向上查找
-     * @return 搜索词
-     */
-    private String getHistoryKW(String currKW, List<String> list, boolean isUp) {
-        if (list == null || list.isEmpty()) {
-            return null;
-        }
-        String kw;
-        if (isUp) {
-            // 获取首个
-            if (currKW == null) {
-                kw = CollUtil.getFirst(list);
-            } else {
-                int index = list.indexOf(currKW) + 1;
-                // 获取最后一个
-                if (index >= list.size()) {
-                    kw = CollUtil.getLast(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        } else {
-            // 获取最后一个
-            if (currKW == null) {
-                kw = CollUtil.getLast(list);
-            } else {
-                int index = list.indexOf(currKW) - 1;
-                // 获取首个
-                if (index <= 0) {
-                    kw = CollUtil.getFirst(list);
-                } else {// 获取目标索引数据
-                    kw = list.get(index);
-                }
-            }
-        }
-        return kw;
     }
 }

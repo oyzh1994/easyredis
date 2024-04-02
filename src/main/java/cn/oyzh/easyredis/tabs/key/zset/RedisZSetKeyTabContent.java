@@ -3,9 +3,8 @@ package cn.oyzh.easyredis.tabs.key.zset;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedMsg;
-import cn.oyzh.easyredis.event.RedisZSetMemberAddedMsg;
+import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
+import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
@@ -15,7 +14,6 @@ import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.property.ScaleDoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -23,7 +21,6 @@ import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -348,7 +345,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
     @Subscribe
-    private void onZSetCoordinateAdded(RedisZSetCoordinateAddedMsg msg) {
+    private void onZSetCoordinateAdded(RedisZSetCoordinateAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
@@ -360,7 +357,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
      * @param msg 消息
      */
     @Subscribe
-    private void onZSetMemberAdded(RedisZSetMemberAddedMsg msg) {
+    private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }

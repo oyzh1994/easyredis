@@ -2,20 +2,17 @@ package cn.oyzh.easyredis.tabs.key.list;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisListRowAddedMsg;
+import cn.oyzh.easyredis.event.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -138,7 +135,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      * @param msg 消息
      */
     @Subscribe
-    private void onListRowAdded(RedisListRowAddedMsg msg) {
+    private void onListRowAdded(RedisListRowAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }

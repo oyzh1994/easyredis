@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.event.TreeChildChangedMsg;
+import cn.oyzh.easyredis.event.TreeChildChangedEvent;
 import cn.oyzh.easyredis.fx.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.search.RedisSearchParam;
@@ -333,7 +333,7 @@ public class SearchController extends SubController {
      * 刷新搜索结果
      */
     @Subscribe
-    public void flushSearchResult(TreeChildChangedMsg event) {
+    public void flushSearchResult(TreeChildChangedEvent event) {
         TaskManager.startDelay("redis:search:flushSearchResult", () -> {
             this.searchHandler.updateResult();
             this.updateSearchResult();

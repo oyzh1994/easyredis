@@ -2,18 +2,15 @@ package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisStreamMessageAddedMsg;
+import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import com.google.common.eventbus.Subscribe;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -120,7 +117,7 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
      * @param msg 消息
      */
     @Subscribe
-    private void onStreamMessageAdded(RedisStreamMessageAddedMsg msg) {
+    private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }

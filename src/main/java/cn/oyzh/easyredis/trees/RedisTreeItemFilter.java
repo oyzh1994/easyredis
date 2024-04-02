@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisFilterStore;

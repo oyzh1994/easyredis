@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
@@ -15,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisSetMemberAddedMsg extends Event<RedisSetKeyTreeItem> implements  EventFormatter {
+public class RedisSetMemberAddedEvent extends Event<RedisSetKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;

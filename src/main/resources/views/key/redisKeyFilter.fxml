@@ -8,22 +8,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.search.SearchTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyFilterController" realWidth="400" realHeight="110">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SVGGlyph url="/font/history.svg" tipText="查看过滤历史" size="20" fx:id="filterHistory"
-                  onMousePrimaryClicked="#filterHistory">
-            <HBox.margin>
-                <Insets left="10" top="15"/>
-            </HBox.margin>
-        </SVGGlyph>
-        <ClearableTextField fx:id="pattern" realHeight="30.0" flexWidth="100% - 65"
-                            tipText="请输入过滤模式，例如*a、a*、*a*，↑↓切换历史" require="true" text="*"
-                            onKeyPressed="#onPatternKeyPressed">
+        <SearchTextField fx:id="keyFilter" onSearch="#keyFilter" realHeight="30.0" flexWidth="100% - 65"
+                            tipText="请输入过滤模式，例如*a、a*、*a*，↑↓切换历史" require="true" text="*">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </ClearableTextField>
+        </SearchTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#keyFilter">

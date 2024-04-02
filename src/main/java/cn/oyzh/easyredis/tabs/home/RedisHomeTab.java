@@ -1,11 +1,8 @@
 package cn.oyzh.easyredis.tabs.home;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 
 /**
  * redis主页tab

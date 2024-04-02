@@ -2,32 +2,25 @@ package cn.oyzh.easyredis.controller;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisInfoUpdatedMsg;
+import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFilterEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
 import cn.oyzh.easyredis.fx.RedisMsgTextArea;
-import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisPageInfoStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentController;
 import cn.oyzh.fx.plus.controller.SubController;
-import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
@@ -216,12 +209,10 @@ public class RedisMainController extends ParentController {
      *
      * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_INFO_UPDATED, async = true)
     @Subscribe
-    private void onInfoUpdate(RedisInfoUpdatedMsg event) {
+    private void onInfoUpdate(RedisInfoUpdatedEvent event) {
        this.infoUpdate(event.data());
     }
-
 
     private void infoUpdate(RedisInfo info) {
         if (this.info == info) {
@@ -432,7 +423,7 @@ public class RedisMainController extends ParentController {
     /**
      * 展开左侧
      */
-    // @EventReceiver(value = RedisEventTypes.LEFT_EXTEND, async = true, verbose = true)
+    @Subscribe
     private void leftExtend(RedisLeftExtendEvent event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
@@ -445,7 +436,7 @@ public class RedisMainController extends ParentController {
     /**
      * 收缩左侧
      */
-    // @EventReceiver(value = RedisEventTypes.LEFT_COLLAPSE, async = true, verbose = true)
+    @Subscribe
     private void leftCollapse(RedisLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);

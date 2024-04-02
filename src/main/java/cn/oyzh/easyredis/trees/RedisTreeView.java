@@ -3,16 +3,16 @@ package cn.oyzh.easyredis.trees;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.event.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.RedisAddGroupEvent;
-import cn.oyzh.easyredis.event.RedisInfoAddedMsg;
-import cn.oyzh.easyredis.event.RedisInfoUpdatedMsg;
-import cn.oyzh.easyredis.event.RedisKeyAddedMsg;
-import cn.oyzh.easyredis.event.RedisKeyCopiedMsg;
-import cn.oyzh.easyredis.event.RedisKeyDeletedMsg;
-import cn.oyzh.easyredis.event.RedisKeyFlushedMsg;
+import cn.oyzh.easyredis.event.RedisInfoAddedEvent;
+import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
+import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
+import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
+import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
+import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedMsg;
-import cn.oyzh.easyredis.event.RedisSearchFinishMsg;
-import cn.oyzh.easyredis.event.RedisSearchStartMsg;
-import cn.oyzh.easyredis.event.TreeChildFilterMsg;
+import cn.oyzh.easyredis.event.RedisSearchFinishEvent;
+import cn.oyzh.easyredis.event.RedisSearchStartEvent;
+import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
@@ -106,7 +106,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
     @Subscribe
-    private void onKeyAdded(RedisKeyAddedMsg msg) {
+    private void onKeyAdded(RedisKeyAddedEvent msg) {
         if (msg != null && msg.data() != null) {
             msg.data().onKeyAdded(msg.key());
         }
@@ -119,7 +119,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
     @Subscribe
-    private void onKeyDeleted(RedisKeyDeletedMsg msg) {
+    private void onKeyDeleted(RedisKeyDeletedEvent msg) {
         if (msg != null && msg.data() != null) {
             msg.data().onKeyDeleted(msg.key());
         }
@@ -132,7 +132,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSHED, verbose = true, async = true)
     @Subscribe
-    private void onKeyFlushed(RedisKeyFlushedMsg msg) {
+    private void onKeyFlushed(RedisKeyFlushedEvent msg) {
         if (msg != null && msg.data() != null) {
             msg.data().reloadChild();
         }
@@ -145,7 +145,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPIED, verbose = true, async = true)
     @Subscribe
-    private void onKeyCopied(RedisKeyCopiedMsg msg) {
+    private void onKeyCopied(RedisKeyCopiedEvent msg) {
         int dbIndex = msg.targetDB();
         TreeItem<?> treeItem = msg.data();
         RedisDBTreeItem targetDBItem = null;
@@ -187,7 +187,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 搜索开始事件
      */
     @Subscribe
-    private void onSearchStart(RedisSearchStartMsg event) {
+    private void onSearchStart(RedisSearchStartEvent event) {
         this.searching = true;
         this.filter();
     }
@@ -196,7 +196,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 搜索结束事件
      */
     @Subscribe
-    private void onSearchFinish(RedisSearchFinishMsg event) {
+    private void onSearchFinish(RedisSearchFinishEvent event) {
         this.searching = false;
         this.filter();
     }
@@ -205,7 +205,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 树节点过滤
      */
     @Subscribe
-    private void onTreeChildFilter(TreeChildFilterMsg event) {
+    private void onTreeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
     }
@@ -232,7 +232,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * @param event 事件
      */
     @Subscribe
-    public void infoAdded(RedisInfoAddedMsg event) {
+    public void infoAdded(RedisInfoAddedEvent event) {
         this.root().addConnect(event.data());
     }
 
@@ -242,7 +242,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * @param event 事件
      */
     @Subscribe
-    public void infoUpdate(RedisInfoUpdatedMsg event) {
+    public void infoUpdate(RedisInfoUpdatedEvent event) {
         this.root().infoUpdate(event.data());
     }
 

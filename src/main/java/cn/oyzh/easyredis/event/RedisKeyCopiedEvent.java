@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyCopiedMsg extends Event<TreeItem<?>> implements  EventFormatter {
+public class RedisKeyCopiedEvent extends Event<TreeItem<?>> implements  EventFormatter {
 
     @Setter
     private int targetDB;

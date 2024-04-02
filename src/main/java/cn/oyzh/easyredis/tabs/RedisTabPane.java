@@ -3,13 +3,13 @@ package cn.oyzh.easyredis.tabs;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisClientClosedEvent;
+import cn.oyzh.easyredis.event.RedisFilterMainEvent;
+import cn.oyzh.easyredis.event.RedisKeyRenamedEvent;
+import cn.oyzh.easyredis.event.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
-import cn.oyzh.easyredis.event.RedisFilterMainMsg;
-import cn.oyzh.easyredis.event.RedisKeyRenamedMsg;
-import cn.oyzh.easyredis.event.RedisKeyTTLUpdatedMsg;
-import cn.oyzh.easyredis.event.RedisTerminalCloseMsg;
-import cn.oyzh.easyredis.event.RedisTerminalOpenMsg;
+import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
+import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -147,7 +147,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
     @Subscribe
-    private void openTerminal(RedisTerminalOpenMsg msg) {
+    private void openTerminal(RedisTerminalOpenEvent msg) {
         this.initTerminalTab(msg.data());
     }
 
@@ -158,7 +158,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
     @Subscribe
-    private void closeTerminal(RedisTerminalCloseMsg event) {
+    private void closeTerminal(RedisTerminalCloseEvent event) {
         try {
             // 寻找节点
             RedisTerminalTab terminalTab = this.getTerminalTab(event.data());
@@ -353,7 +353,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
     @Subscribe
-    private void onKeyRenamed(RedisKeyRenamedMsg msg) {
+    private void onKeyRenamed(RedisKeyRenamedEvent msg) {
         RedisKeyTab<?> tab = this.getKeyTab(msg.data());
         if (tab != null && tab.treeItem() == msg.data()) {
             tab.flushGraphic();
@@ -368,7 +368,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     // @EventReceiver(value = RedisEventTypes.REDIS_KEY_TTL_UPDATED, verbose = true, async = true, fxThread = true)
     @Subscribe
-    private void onTTLUpdated(RedisKeyTTLUpdatedMsg msg) {
+    private void onTTLUpdated(RedisKeyTTLUpdatedEvent msg) {
         RedisKeyTab<?> tab = this.getKeyTab(msg.data());
         if (tab != null) {
             tab.flushTTL();
@@ -414,7 +414,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      * 初始化过滤tab
      */
     @Subscribe
-    public void initFilterTab(RedisFilterMainMsg msg) {
+    public void initFilterTab(RedisFilterMainEvent msg) {
         RedisFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new RedisFilterTab();

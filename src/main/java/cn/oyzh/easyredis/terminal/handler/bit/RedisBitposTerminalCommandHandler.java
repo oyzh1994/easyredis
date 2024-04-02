@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.handler.bit;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.command.bit.RedisBitposCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;

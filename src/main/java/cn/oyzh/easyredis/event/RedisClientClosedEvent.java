@@ -4,20 +4,12 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/11/28
  */
-@Getter
-@Accessors(fluent = true)
 public class RedisClientClosedEvent extends Event<RedisClient> implements EventFormatter {
-
-    private final String name = RedisEventTypes.REDIS_CONNECTION_CLOSED;
-
-    private final String group = RedisEventGroups.CONNECTION_ACTION;
 
     @Override
     public String eventFormat() {

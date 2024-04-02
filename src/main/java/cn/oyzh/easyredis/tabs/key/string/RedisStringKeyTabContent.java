@@ -1,20 +1,17 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisHyLogElementsAddedMsg;
+import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -208,7 +205,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
      * @param msg 消息
      */
     @Subscribe
-    private void onHyLogElementAdded(RedisHyLogElementsAddedMsg msg) {
+    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             // 刷新数据
             this.treeItem.flushCount();

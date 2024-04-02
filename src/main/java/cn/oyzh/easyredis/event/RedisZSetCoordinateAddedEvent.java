@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
@@ -15,11 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisZSetCoordinateAddedMsg extends Event<RedisZSetKeyTreeItem> implements  EventFormatter {
-
-    private final String name = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED;
-
-    private final String group = RedisEventGroups.KEY_ACTION;
+public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;

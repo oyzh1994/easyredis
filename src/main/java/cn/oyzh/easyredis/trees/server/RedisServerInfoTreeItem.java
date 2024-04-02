@@ -1,10 +1,8 @@
 package cn.oyzh.easyredis.trees.server;
 
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.MenuItem;
 import lombok.NonNull;
 

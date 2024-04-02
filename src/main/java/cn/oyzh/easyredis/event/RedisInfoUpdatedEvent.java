@@ -3,16 +3,12 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/12/08
  */
-@Getter
-@Accessors(fluent = true)
-public class RedisInfoUpdatedMsg extends Event<RedisInfo> implements EventFormatter {
+public class RedisInfoUpdatedEvent extends Event<RedisInfo> implements EventFormatter {
 
     @Override
     public String eventFormat() {

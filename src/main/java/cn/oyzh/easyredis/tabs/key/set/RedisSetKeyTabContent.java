@@ -2,21 +2,18 @@ package cn.oyzh.easyredis.tabs.key.set;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
-import cn.oyzh.easyredis.event.RedisEventTypes;
-import cn.oyzh.easyredis.event.RedisSetMemberAddedMsg;
+import cn.oyzh.easyredis.event.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -133,7 +130,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      * @param msg 消息
      */
     @Subscribe
-    private void onSetMemberAdded(RedisSetMemberAddedMsg msg) {
+    private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }

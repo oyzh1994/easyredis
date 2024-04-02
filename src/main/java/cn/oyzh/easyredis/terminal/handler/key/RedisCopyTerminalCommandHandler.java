@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.command.key.RedisCopyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.common.util.ArrUtil;

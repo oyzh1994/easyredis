@@ -1,10 +1,7 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.event.RedisEventGroups;
-import cn.oyzh.easyredis.event.RedisEventTypes;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
-
 import cn.oyzh.fx.plus.event.EventFormatter;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisListRowAddedMsg extends Event<RedisListKeyTreeItem> implements  EventFormatter {
+public class RedisListRowAddedEvent extends Event<RedisListKeyTreeItem> implements  EventFormatter {
 
     @Setter
     private String key;
