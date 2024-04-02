@@ -439,4 +439,11 @@ public class RedisEventUtil {
     public static void leftCollapse() {
         EventUtil.post(new RedisLeftCollapseEvent());
     }
+
+    /**
+     * 搜索触发事件
+     */
+    public static void searchFire() {
+        EventUtil.post(new RedisSearchFireEvent());
+    }
 }

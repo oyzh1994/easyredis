@@ -5,6 +5,11 @@
 <?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
 <FlexFlowPane styleClass="header,root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
+    <SVGLabel text="查找" onMousePrimaryClicked="#search" tipText="查找节点(Ctrl+F)" url="/font/search.svg" size="14">
+        <FlowPane.margin>
+            <Insets left="8" top="5" bottom="5"/>
+        </FlowPane.margin>
+    </SVGLabel>
     <SVGLabel text="过滤" onMousePrimaryClicked="#filter" tipText="键过滤配置" url="/font/filter.svg" size="13">
         <FlowPane.margin>
             <Insets left="8" top="8" bottom="5"/>

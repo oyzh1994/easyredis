@@ -3,9 +3,10 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.event.RedisSearchFireEvent;
 import cn.oyzh.easyredis.event.TreeChildChangedEvent;
-import cn.oyzh.easyredis.search.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchHandler;
+import cn.oyzh.easyredis.search.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -14,25 +15,20 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
-import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.keyboard.KeyHandler;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.search.SearchResult;
 import cn.oyzh.fx.plus.search.SearchTextField;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * redis搜索子组件
@@ -60,12 +56,6 @@ public class SearchController extends SubController {
      */
     @FXML
     private FlexVBox searchMain;
-
-    /**
-     * 搜索-更多2
-     */
-    @FXML
-    private FlexHBox searchMore2;
 
     /**
      * 搜索-下一个
@@ -110,18 +100,6 @@ public class SearchController extends SubController {
     private FlexText searchResult;
 
     /**
-     * 搜索-更多
-     */
-    @FXML
-    private SVGGlyph showSearchMore;
-
-    /**
-     * 搜索-更少
-     */
-    @FXML
-    private SVGGlyph hideSearchMore;
-
-    /**
      * redis树
      */
     private RedisTreeView treeView;
@@ -129,7 +107,7 @@ public class SearchController extends SubController {
     /**
      * redis主页搜索处理
      */
-    @Autowired
+    @Resource
     private RedisSearchHandler searchHandler;
 
     /**
@@ -146,38 +124,6 @@ public class SearchController extends SubController {
      * 搜索历史储存
      */
     private final RedisSearchHistoryStore historyStore = RedisSearchHistoryStore.INSTANCE;
-
-    /**
-     * 搜索-更多
-     */
-    @FXML
-    private void showSearchMore() {
-        this.searchMore2.display();
-        this.searchMain.setRealHeight(60);
-        this.treeView.setFlexHeight("100% - 132");
-        // 重新布局
-        this.searchMain.autosize();
-        this.hideSearchMore.display();
-        this.showSearchMore.disappear();
-        this.setting.setSearchMoreExpand((byte) 1);
-        this.settingStore.update(this.setting);
-    }
-
-    /**
-     * 搜索-更少
-     */
-    @FXML
-    private void hideSearchMore() {
-        this.searchMore2.disappear();
-        this.searchMain.setRealHeight(30);
-        this.treeView.setFlexHeight("100% - 92");
-        // 重新布局
-        this.searchMain.autosize();
-        this.hideSearchMore.disappear();
-        this.showSearchMore.display();
-        this.setting.setSearchMoreExpand((byte) 0);
-        this.settingStore.update(this.setting);
-    }
 
     /**
      * 搜索-搜索下一个
@@ -242,19 +188,18 @@ public class SearchController extends SubController {
                     // 执行预搜索
                     this.searchResult.setText("搜索中...");
                     this.searchHandler.preSearch(param);
-                    // 触发事件
+                    // 搜索开始
                     RedisEventUtil.searchStart(param);
                     // 更新搜索结果
                     this.searchResult.setText("");
                     this.updateSearchResult();
-                    // 搜索结束
-                    RedisEventUtil.searchFinish(param);
                 } else {// 搜索结束
                     RedisEventUtil.searchFinish(param);
                 }
-                this.treeView.enable();
             } catch (Exception ex) {
                 ex.printStackTrace();
+            } finally {
+                this.treeView.enable();
             }
         }, 300);
     }
@@ -313,20 +258,23 @@ public class SearchController extends SubController {
     @Override
     protected void bindListeners() {
         // 搜索相关处理
-        this.searchMore2.managedBindVisible();
+        this.searchMain.managedBindVisible();
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        this.showSearchMore.managedProperty().bind(this.showSearchMore.visibleProperty());
-        this.hideSearchMore.managedProperty().bind(this.hideSearchMore.visibleProperty());
         this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
-        // 搜索触发事件
-        KeyListener.listen(this.stage, new KeyHandler().keyType(KeyEvent.KEY_RELEASED).keyCode(KeyCode.F).controlDown(true).handler(e -> {
-            this.searchKW.requestFocus();
-            this.searchKW.selectEnd();
-        }));
+
+        // 监听搜索组件显示事件
+        this.searchMain.visibleProperty().addListener((t1, t2, newValue) -> {
+            if (newValue) {
+                this.preSearch();
+            } else {
+                this.searchHandler.preSearch(null);
+                RedisEventUtil.searchFinish(null);
+            }
+        });
     }
 
     /**
@@ -334,25 +282,35 @@ public class SearchController extends SubController {
      */
     @Subscribe
     public void flushSearchResult(TreeChildChangedEvent event) {
-        TaskManager.startDelay("redis:search:flushSearchResult", () -> {
-            this.searchHandler.updateResult();
-            this.updateSearchResult();
-        }, 300);
+        if (this.treeView.searching()) {
+            TaskManager.startDelay("redis:search:flushSearchResult", () -> {
+                this.searchHandler.updateResult();
+                this.updateSearchResult();
+            }, 300);
+        }
+    }
+
+    /**
+     * 搜索触发
+     */
+    @Subscribe
+    public void searchFire(RedisSearchFireEvent event) {
+        if (this.searchMain.isVisible()) {
+            this.searchMain.disappear();
+            this.treeView.setFlexHeight("100% - 60");
+        } else {
+            this.searchMain.display();
+            this.treeView.setFlexHeight("100% - 120");
+        }
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // 注册事件处理
-        EventUtil.register(this);
         this.treeView = this.parent().tree;
         // 初始化搜索
         this.searchHandler.init(this.treeView);
         this.searchKW.setHistoryPopup(new RedisSearchHistoryPopup());
-        // 显示更多
-        if (this.setting.isSearchMoreExpand()) {
-            this.showSearchMore();
-        }
     }
 
     @Override

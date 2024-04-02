@@ -11,9 +11,10 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 主页头部业务
@@ -29,7 +30,7 @@ public class HeaderController extends SubController {
     /**
      * 项目信息
      */
-    @Autowired
+    @Resource
     private Project project;
 
     /**
@@ -117,6 +118,14 @@ public class HeaderController extends SubController {
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
         RedisEventUtil.leftExtend();
+    }
+
+    /**
+     * 搜索
+     */
+    @FXML
+    private void search() {
+        RedisEventUtil.searchFire();
     }
 
     @Override

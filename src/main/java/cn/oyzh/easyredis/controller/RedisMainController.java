@@ -4,6 +4,7 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
@@ -21,6 +22,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.ResizeEnhance;
 import com.google.common.eventbus.Subscribe;
@@ -96,12 +98,6 @@ public class RedisMainController extends ParentController {
      */
     @FXML
     private FlexCheckBox showHash;
-
-//    /**
-//     * 过滤hyperLogLog键
-//     */
-//    @FXML
-//    private FlexCheckBox showHyLog;
 
     /**
      * 过滤stream键
@@ -188,7 +184,7 @@ public class RedisMainController extends ParentController {
      */
     @Subscribe
     private void onInfoUpdate(RedisInfoUpdatedEvent event) {
-       this.infoUpdate(event.data());
+        this.infoUpdate(event.data());
     }
 
     private void infoUpdate(RedisInfo info) {
@@ -356,18 +352,11 @@ public class RedisMainController extends ParentController {
         this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
         this.resizeEnhance.initResizeEvent();
 
-        // // 监听图标变化事件
-        // this.tree.graphicChanged(i -> {
-        //     if (i instanceof RedisKeyTreeItem) {
-        //         this.tabPane.flushGraphic();
-        //     }
-        // });
-
-        // // 监听节点变化
-        // this.tree.childChanged(() -> this.searchController.flushSearchResult());
-
-        // 监听F5按键
+        // 搜索触发事件
+        KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> RedisEventUtil.searchFire()));
+        // 刷新触发事件
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        // 刷新触发事件
         KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
@@ -452,19 +441,4 @@ public class RedisMainController extends ParentController {
     private void clearMsg() {
         this.msgArea.clear();
     }
-
-    // /**
-    //  * 处理操作消息
-    //  */
-    // @EventGroup(value = RedisEventGroups.KEY_ACTION, async = true, verbose = true)
-    // @EventGroup(value = RedisEventGroups.INFO_ACTION, async = true, verbose = true)
-    // @EventGroup(value = RedisEventGroups.CONNECTION_ACTION, async = true, verbose = true)
-    // private void onActionMsg(Event<EventMsg> event) {
-    //     if (event.data() instanceof EventMsgFormatter formatter) {
-    //         String formatMsg = formatter.formatMsg();
-    //         if (formatMsg != null) {
-    //             this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
-    //         }
-    //     }
-    // }
 }
