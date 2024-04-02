@@ -175,12 +175,11 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     /**
      * hash字段添加事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_HASH_FIELD_ADDED, verbose = true, async = true)
     @Subscribe
-    private void onHashFieldAdded(RedisHashFieldAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
+    private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
+        if (this.treeItem == event.data()) {
             this.firstPage();
         }
     }

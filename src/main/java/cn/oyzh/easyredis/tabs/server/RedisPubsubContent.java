@@ -100,7 +100,6 @@ public class RedisPubsubContent {
      */
     private void subscribe(RedisPubsubItem pubsubItem) {
         pubsubItem.setClient(this.client);
-        // EventUtil.fire(RedisEventTypes.REDIS_OPEN_PUBSUB, pubsubItem);
         RedisEventUtil.pubsubOpen(pubsubItem);
     }
 

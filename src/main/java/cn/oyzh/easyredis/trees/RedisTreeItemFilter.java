@@ -10,10 +10,10 @@ import cn.oyzh.fx.plus.trees.RichTreeItem;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,13 +62,6 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean excludeStringType;
 
-//    /**
-//     * 排除hyperLogLog键
-//     */
-//    @Setter
-//    @Getter
-//    private boolean excludeHyLogType;
-
     /**
      * 排除stream键
      */
@@ -86,7 +79,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     /**
      * redis主页搜索处理
      */
-    @Autowired
+    @Resource
     private RedisSearchHandler searchHandler;
 
     /**

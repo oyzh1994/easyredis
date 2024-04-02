@@ -36,7 +36,6 @@ public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeIt
      * 显示服务信息
      */
     public void showServerInfo() {
-        // EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.parent.client());
         RedisEventUtil.serverMonitor(this.parent.client());
     }
 

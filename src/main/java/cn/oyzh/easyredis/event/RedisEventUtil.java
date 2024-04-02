@@ -42,9 +42,9 @@ public class RedisEventUtil {
      * @param client redis客户端
      */
     public static void connectionClosed(RedisClient client) {
-        RedisConnectionClosedEvent msg = new RedisConnectionClosedEvent();
-        msg.data(client);
-        EventUtil.post(msg);
+        RedisConnectionClosedEvent event = new RedisConnectionClosedEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -53,9 +53,9 @@ public class RedisEventUtil {
      * @param client redis客户端
      */
     public static void connectionConnected(RedisClient client) {
-        RedisConnectionConnectedMsg msg = new RedisConnectionConnectedMsg();
-        msg.data(client);
-        EventUtil.post(msg);
+        RedisConnectionConnectedEvent event = new RedisConnectionConnectedEvent();
+        event.data(client);
+        EventUtil.post(event);
     }
 
     /**
@@ -71,9 +71,9 @@ public class RedisEventUtil {
      * @param info redis信息
      */
     public static void terminalOpen(RedisInfo info) {
-        RedisTerminalOpenEvent msg = new RedisTerminalOpenEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -82,9 +82,9 @@ public class RedisEventUtil {
      * @param info redis信息
      */
     public static void terminalClose(RedisInfo info) {
-        RedisTerminalCloseEvent msg = new RedisTerminalCloseEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        RedisTerminalCloseEvent event = new RedisTerminalCloseEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -95,11 +95,11 @@ public class RedisEventUtil {
      * @param member 成员
      */
     public static void listRowAdded(RedisListKeyTreeItem item, String key, String member) {
-        RedisListRowAddedEvent msg = new RedisListRowAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.member(member);
-        EventUtil.post(msg);
+        RedisListRowAddedEvent event = new RedisListRowAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.member(member);
+        EventUtil.post(event);
     }
 
     /**
@@ -110,11 +110,11 @@ public class RedisEventUtil {
      * @param member 成员
      */
     public static void setMemberAdded(RedisSetKeyTreeItem item, String key, String member) {
-        RedisSetMemberAddedEvent msg = new RedisSetMemberAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.member(member);
-        EventUtil.post(msg);
+        RedisSetMemberAddedEvent event = new RedisSetMemberAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.member(member);
+        EventUtil.post(event);
     }
 
     /**
@@ -126,12 +126,12 @@ public class RedisEventUtil {
      * @param score  成员
      */
     public static void zSetMemberAdded(RedisZSetKeyTreeItem item, String key, String member, Double score) {
-        RedisZSetMemberAddedEvent msg = new RedisZSetMemberAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.score(score);
-        msg.member(member);
-        EventUtil.post(msg);
+        RedisZSetMemberAddedEvent event = new RedisZSetMemberAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.score(score);
+        event.member(member);
+        EventUtil.post(event);
     }
 
     /**
@@ -144,13 +144,13 @@ public class RedisEventUtil {
      * @param latitude  纬度
      */
     public static void zSetCoordinateAdded(RedisZSetKeyTreeItem item, String key, String member, double longitude, double latitude) {
-        RedisZSetCoordinateAddedEvent msg = new RedisZSetCoordinateAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.member(member);
-        msg.latitude(latitude);
-        msg.longitude(longitude);
-        EventUtil.post(msg);
+        RedisZSetCoordinateAddedEvent event = new RedisZSetCoordinateAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.member(member);
+        event.latitude(latitude);
+        event.longitude(longitude);
+        EventUtil.post(event);
     }
 
     /**
@@ -161,11 +161,11 @@ public class RedisEventUtil {
      * @param message 内容
      */
     public static void streamMessageAdded(RedisStreamKeyTreeItem item, String key, String message) {
-        RedisStreamMessageAddedEvent msg = new RedisStreamMessageAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.message(message);
-        EventUtil.post(msg);
+        RedisStreamMessageAddedEvent event = new RedisStreamMessageAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.message(message);
+        EventUtil.post(event);
     }
 
     /**
@@ -177,12 +177,12 @@ public class RedisEventUtil {
      * @param value 字段值
      */
     public static void hashFieldAdded(RedisHashKeyTreeItem item, String key, String field, String value) {
-        RedisHashFieldAddedEvent msg = new RedisHashFieldAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.field(field);
-        msg.value(value);
-        EventUtil.post(msg);
+        RedisHashFieldAddedEvent event = new RedisHashFieldAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.field(field);
+        event.value(value);
+        EventUtil.post(event);
     }
 
     /**
@@ -193,29 +193,29 @@ public class RedisEventUtil {
      * @param elements 统计元素
      */
     public static void hyLogElementsAdded(RedisStringKeyTreeItem item, String key, String[] elements) {
-        RedisHyLogElementsAddedEvent msg = new RedisHyLogElementsAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.elements(elements);
-        EventUtil.post(msg);
+        RedisHyLogElementsAddedEvent event = new RedisHyLogElementsAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.elements(elements);
+        EventUtil.post(event);
     }
 
     /**
      * 搜索开始事件
      */
     public static void searchStart(RedisSearchParam searchParam) {
-        RedisSearchStartEvent msg = new RedisSearchStartEvent();
-        msg.data(searchParam);
-        EventUtil.post(msg);
+        RedisSearchStartEvent event = new RedisSearchStartEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
     }
 
     /**
      * 搜索结束事件
      */
     public static void searchFinish(RedisSearchParam searchParam) {
-        RedisSearchFinishEvent msg = new RedisSearchFinishEvent();
-        msg.data(searchParam);
-        EventUtil.post(msg);
+        RedisSearchFinishEvent event = new RedisSearchFinishEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
     }
 
     /**
@@ -240,11 +240,11 @@ public class RedisEventUtil {
      * @param key  键名称
      */
     public static void keyAdded(RedisDBTreeItem item, String type, String key) {
-        RedisKeyAddedEvent msg = new RedisKeyAddedEvent();
-        msg.data(item);
-        msg.key(key);
-        msg.type(type);
-        EventUtil.post(msg);
+        RedisKeyAddedEvent event = new RedisKeyAddedEvent();
+        event.data(item);
+        event.key(key);
+        event.type(type);
+        EventUtil.post(event);
     }
 
     /**
@@ -254,10 +254,10 @@ public class RedisEventUtil {
      * @param key  键名称
      */
     public static void keyDeleted(RedisDBTreeItem item, String key) {
-        RedisKeyDeletedEvent msg = new RedisKeyDeletedEvent();
-        msg.data(item);
-        msg.key(key);
-        EventUtil.post(msg);
+        RedisKeyDeletedEvent event = new RedisKeyDeletedEvent();
+        event.data(item);
+        event.key(key);
+        EventUtil.post(event);
     }
 
     /**
@@ -266,17 +266,17 @@ public class RedisEventUtil {
      * @param item redis树节点
      */
     public static void keyFlushed(RedisDBTreeItem item) {
-        RedisKeyFlushedEvent msg = new RedisKeyFlushedEvent();
-        msg.data(item);
-        EventUtil.post(msg);
+        RedisKeyFlushedEvent event = new RedisKeyFlushedEvent();
+        event.data(item);
+        EventUtil.post(event);
     }
 
     /**
      * 过滤主页事件
      */
     public static void filterMain() {
-        RedisFilterMainEvent msg = new RedisFilterMainEvent();
-        EventUtil.post(msg);
+        RedisFilterMainEvent event = new RedisFilterMainEvent();
+        EventUtil.post(event);
     }
 
     /**
@@ -285,9 +285,9 @@ public class RedisEventUtil {
      * @param info redis信息
      */
     public static void infoAdded(RedisInfo info) {
-        RedisInfoAddedEvent msg = new RedisInfoAddedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        RedisInfoAddedEvent event = new RedisInfoAddedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -296,9 +296,9 @@ public class RedisEventUtil {
      * @param info Redis信息
      */
     public static void infoUpdated(RedisInfo info) {
-        RedisInfoUpdatedEvent msg = new RedisInfoUpdatedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        RedisInfoUpdatedEvent event = new RedisInfoUpdatedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -307,9 +307,9 @@ public class RedisEventUtil {
      * @param info Redis信息
      */
     public static void infoDeleted(RedisInfo info) {
-        RedisInfoDeletedEvent msg = new RedisInfoDeletedEvent();
-        msg.data(info);
-        EventUtil.post(msg);
+        RedisInfoDeletedEvent event = new RedisInfoDeletedEvent();
+        event.data(info);
+        EventUtil.post(event);
     }
 
     /**
@@ -319,10 +319,10 @@ public class RedisEventUtil {
      * @param ttl  ttl值
      */
     public static void keyTTLUpdated(RedisKeyTreeItem<?, ?> item, Long ttl) {
-        RedisKeyTTLUpdatedEvent msg = new RedisKeyTTLUpdatedEvent();
-        msg.data(item);
-        msg.ttl(ttl);
-        EventUtil.post(msg);
+        RedisKeyTTLUpdatedEvent event = new RedisKeyTTLUpdatedEvent();
+        event.data(item);
+        event.ttl(ttl);
+        EventUtil.post(event);
     }
 
     /**
@@ -332,10 +332,10 @@ public class RedisEventUtil {
      * @param oldKey 旧名称
      */
     public static void keyRenamed(RedisKeyTreeItem<?, ?> item, String oldKey) {
-        RedisKeyRenamedEvent msg = new RedisKeyRenamedEvent();
-        msg.data(item);
-        msg.oldKey(oldKey);
-        EventUtil.post(msg);
+        RedisKeyRenamedEvent event = new RedisKeyRenamedEvent();
+        event.data(item);
+        event.oldKey(oldKey);
+        EventUtil.post(event);
     }
 
     /**
@@ -345,10 +345,10 @@ public class RedisEventUtil {
      * @param targetDB 目标库
      */
     public static void keyCopied(TreeItem<?> item, int targetDB) {
-        RedisKeyCopiedEvent msg = new RedisKeyCopiedEvent();
-        msg.data(item);
-        msg.targetDB(targetDB);
-        EventUtil.post(msg);
+        RedisKeyCopiedEvent event = new RedisKeyCopiedEvent();
+        event.data(item);
+        event.targetDB(targetDB);
+        EventUtil.post(event);
     }
 
     /**
@@ -358,10 +358,10 @@ public class RedisEventUtil {
      * @param targetDB 目标库
      */
     public static void keyMoved(TreeItem<?> item, int targetDB) {
-        RedisKeyMovedMsg msg = new RedisKeyMovedMsg();
-        msg.data(item);
-        msg.targetDB(targetDB);
-        EventUtil.post(msg);
+        RedisKeyMovedEvent event = new RedisKeyMovedEvent();
+        event.data(item);
+        event.targetDB(targetDB);
+        EventUtil.post(event);
     }
 
     /**
@@ -386,25 +386,31 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
+    /**
+     * 过滤添加事件
+     */
     public static void filterAdded() {
         RedisFilterAddedEvent event = new RedisFilterAddedEvent();
         EventUtil.post(event);
     }
 
-    public static void keyFilter() {
-        RedisKeyFilterEvent event = new RedisKeyFilterEvent();
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 键过滤事件
+    //  */
+    // public static void keyFilter() {
+    //     RedisKeyFilterEvent event = new RedisKeyFilterEvent();
+    //     EventUtil.post(event);
+    // }
 
-    /**
-     * 过滤历史选中事件
-     * @param kw
-     */
-    public static void filterHistorySelected(String kw) {
-        RedisFilterHistorySelectedEvent event = new RedisFilterHistorySelectedEvent();
-        event.data(kw);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 过滤历史选中事件
+    //  * @param kw
+    //  */
+    // public static void filterHistorySelected(String kw) {
+    //     RedisFilterHistorySelectedEvent event = new RedisFilterHistorySelectedEvent();
+    //     event.data(kw);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 添加分组

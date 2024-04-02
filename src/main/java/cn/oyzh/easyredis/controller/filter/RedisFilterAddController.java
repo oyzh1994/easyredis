@@ -80,7 +80,7 @@ public class RedisFilterAddController extends Controller {
                 // EventUtil.fire(RedisEventTypes.REDIS_FILTER_ADDED);
                 // EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
                 RedisEventUtil.filterAdded();
-                RedisEventUtil.keyFilter();
+                // RedisEventUtil.keyFilter();
                 MessageBox.okToast("新增Redis过滤配置成功!");
                 this.closeStage();
             } else {

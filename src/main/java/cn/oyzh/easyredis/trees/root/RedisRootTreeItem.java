@@ -199,7 +199,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 添加连接
      */
-    // @EventReceiver(RedisEventTypes.REDIS_ADD_CONNECT)
     public void addConnect() {
         StageUtil.showStage(RedisInfoAddController.class, this.window());
     }
@@ -207,7 +206,6 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 添加分组
      */
-    // @EventReceiver(RedisEventTypes.REDIS_ADD_GROUP)
     public void addGroup() {
         String groupName = MessageBox.prompt("请输入分组名称");
         // 名称为空，则忽略

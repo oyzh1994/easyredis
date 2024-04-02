@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller.key;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.event.RedisFilterHistorySelectedEvent;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;

@@ -198,7 +198,6 @@ public class MainController extends ParentController {
     /**
      * 应用退出
      */
-    // @EventReceiver(RedisEventTypes.APP_EXIT)
     public void exit() {
         StageUtil.exit();
     }

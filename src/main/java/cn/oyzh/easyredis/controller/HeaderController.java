@@ -54,12 +54,6 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void filter() {
-        // StageWrapper StageWrapper = StageUtil.getStage(RedisFilterMainController.class);
-        // if (StageWrapper != null) {
-        //     StageWrapper.toFront();
-        // } else {
-        //     StageUtil.showStage(RedisFilterMainController.class);
-        // }
         RedisEventUtil.filterMain();
     }
 
@@ -103,7 +97,6 @@ public class HeaderController extends SubController {
     @FXML
     private void quit() {
         if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
-            // EventUtil.fire(RedisEventTypes.APP_EXIT);
             StageUtil.exit();
         }
     }
@@ -114,7 +107,6 @@ public class HeaderController extends SubController {
     @FXML
     private void collapseTree() {
         this.treeMutexes.visible(this.expandTree);
-        // EventUtil.fire(RedisEventTypes.LEFT_COLLAPSE);
         RedisEventUtil.leftCollapse();
     }
 
@@ -124,7 +116,6 @@ public class HeaderController extends SubController {
     @FXML
     private void expandTree() {
         this.treeMutexes.visible(this.collapseTree);
-        // EventUtil.fire(RedisEventTypes.LEFT_EXTEND);
         RedisEventUtil.leftExtend();
     }
 

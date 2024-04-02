@@ -341,12 +341,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     /**
      * zset坐标添加事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_ZSET_COORDINATE_ADDED, verbose = true, async = true)
     @Subscribe
-    private void onZSetCoordinateAdded(RedisZSetCoordinateAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
+    private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
+        if (this.treeItem == event.data()) {
             this.firstPage();
         }
     }

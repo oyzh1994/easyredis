@@ -143,12 +143,11 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     /**
      * 终端打开事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_OPEN_TERMINAL, async = true, verbose = true, fxThread = true)
     @Subscribe
-    private void openTerminal(RedisTerminalOpenEvent msg) {
-        this.initTerminalTab(msg.data());
+    private void terminalOpen(RedisTerminalOpenEvent event) {
+        this.initTerminalTab(event.data());
     }
 
     /**
@@ -156,9 +155,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_CLOSE_TERMINAL, async = true, verbose = true, fxThread = true)
     @Subscribe
-    private void closeTerminal(RedisTerminalCloseEvent event) {
+    private void terminalClose(RedisTerminalCloseEvent event) {
         try {
             // 寻找节点
             RedisTerminalTab terminalTab = this.getTerminalTab(event.data());
@@ -193,9 +191,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_OPEN_PUBSUB, verbose = true, async = true, fxThread = true)
     @Subscribe
-    public void initPubsubTab(RedisPubsubOpenEvent event) {
+    public void pubsubOpen(RedisPubsubOpenEvent event) {
         RedisPubsubTab tab = this.getPubsubTab(event.data());
         if (tab == null) {
             tab = new RedisPubsubTab();
@@ -231,9 +228,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_SERVER_INFO, verbose = true, async = true, fxThread = true)
     @Subscribe
-    public void initServerTab(RedisServerMonitorEvent event) {
+    public void serverMonitor(RedisServerMonitorEvent event) {
         RedisServerTab serverTab = this.getServerTab(event.data());
         if (serverTab == null) {
             serverTab = new RedisServerTab();
@@ -349,13 +345,12 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     /**
      * 键更名事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_RENAMED, verbose = true, async = true, fxThread = true)
     @Subscribe
-    private void onKeyRenamed(RedisKeyRenamedEvent msg) {
-        RedisKeyTab<?> tab = this.getKeyTab(msg.data());
-        if (tab != null && tab.treeItem() == msg.data()) {
+    private void keyRenamed(RedisKeyRenamedEvent event) {
+        RedisKeyTab<?> tab = this.getKeyTab(event.data());
+        if (tab != null && tab.treeItem() == event.data()) {
             tab.flushGraphic();
             tab.flushTitle();
         }
@@ -364,12 +359,11 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     /**
      * ttl更新事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_TTL_UPDATED, verbose = true, async = true, fxThread = true)
     @Subscribe
-    private void onTTLUpdated(RedisKeyTTLUpdatedEvent msg) {
-        RedisKeyTab<?> tab = this.getKeyTab(msg.data());
+    private void ttlUpdated(RedisKeyTTLUpdatedEvent event) {
+        RedisKeyTab<?> tab = this.getKeyTab(event.data());
         if (tab != null) {
             tab.flushTTL();
         }
@@ -380,9 +374,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_CLINE_CLOSED, verbose = true, async = true)
     @Subscribe
-    private void onClientClosed(RedisClientClosedEvent event) {
+    private void clientClosed(RedisClientClosedEvent event) {
         RedisClient client= event.data();
         List<Tab> closeTabs = new ArrayList<>();
         for (Tab tab : this.getTabs()) {
@@ -412,9 +405,10 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
 
     /**
      * 初始化过滤tab
+     * @param event 事件
      */
     @Subscribe
-    public void initFilterTab(RedisFilterMainEvent msg) {
+    public void filterMain(RedisFilterMainEvent event) {
         RedisFilterTab tab = this.getFilterTab();
         if (tab == null) {
             tab = new RedisFilterTab();

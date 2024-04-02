@@ -4,8 +4,8 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
-import cn.oyzh.easyredis.event.RedisKeyFilterEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
 import cn.oyzh.easyredis.fx.RedisMsgTextArea;
@@ -73,11 +73,6 @@ public class RedisMainController extends ParentController {
      * 大小调整增强
      */
     private ResizeEnhance resizeEnhance;
-
-    // /**
-    //  * 倒序排序
-    //  */
-    // private boolean ascSort;
 
     /**
      * 节点排序(正序)
@@ -155,11 +150,6 @@ public class RedisMainController extends ParentController {
      */
     private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
-    // /**
-    //  * 树节点过滤器
-    //  */
-    // private final RedisTreeItemFilter treeItemFilter = new RedisTreeItemFilter();
-
     /**
      * 消息文本框
      */
@@ -171,18 +161,6 @@ public class RedisMainController extends ParentController {
      */
     @FXML
     private SearchController searchController;
-
-    // /**
-    //  * 对子节点排序
-    //  */
-    // @FXML
-    // private void sortNodes() {
-    //     // 设置排序方式
-    //     this.ascSort = !this.ascSort;
-    //     this.sortAsc.setVisible(!this.ascSort);
-    //     this.sortDesc.setVisible(this.ascSort);
-    //     this.tree.sortItem(this.ascSort);
-    // }
 
     /**
      * 对子节点排序，正序
@@ -411,16 +389,6 @@ public class RedisMainController extends ParentController {
     }
 
     /**
-     * 键过滤
-     */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_FILTER, async = true, verbose = true)
-    private void keyFilter(RedisKeyFilterEvent event) {
-        this.tree.itemFilter().initFilters();
-        this.filter();
-        StaticLog.info("REDIS_NODE_FILTER.");
-    }
-
-    /**
      * 展开左侧
      */
     @Subscribe
@@ -451,15 +419,6 @@ public class RedisMainController extends ParentController {
     }
 
     /**
-     * 当前活跃的redis树节点
-     *
-     * @return redis树节点
-     */
-    public TreeItem<?> activeItem() {
-        return tree.getSelectedItem();
-    }
-
-    /**
      * 执行过滤
      */
     private void filter() {
@@ -471,7 +430,6 @@ public class RedisMainController extends ParentController {
                 this.tree.itemFilter().setExcludeHashType(false);
                 this.tree.itemFilter().setExcludeListType(false);
                 this.tree.itemFilter().setExcludeZSetType(false);
-//                this.tree.itemFilter().setExcludeHyLogType(false);
                 this.tree.itemFilter().setExcludeStringType(false);
                 this.tree.itemFilter().setExcludeStreamType(false);
             } else {
@@ -480,7 +438,6 @@ public class RedisMainController extends ParentController {
                 this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
                 this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
                 this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
-//                this.tree.itemFilter().setExcludeHyLogType(!this.showHyLog.isSelected());
                 this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
                 this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
             }

@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
-import cn.oyzh.easyredis.event.RedisKeyMovedMsg;
+import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.RedisSearchFinishEvent;
 import cn.oyzh.easyredis.event.RedisSearchStartEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
@@ -102,52 +102,48 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     /**
      * 键添加事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_ADDED, verbose = true, async = true)
     @Subscribe
-    private void onKeyAdded(RedisKeyAddedEvent msg) {
-        if (msg != null && msg.data() != null) {
-            msg.data().onKeyAdded(msg.key());
+    private void keyAdded(RedisKeyAddedEvent event) {
+        if (event != null && event.data() != null) {
+            event.data().onKeyAdded(event.key());
         }
     }
 
     /**
      * 键删除事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_DELETED, verbose = true, async = true)
     @Subscribe
-    private void onKeyDeleted(RedisKeyDeletedEvent msg) {
-        if (msg != null && msg.data() != null) {
-            msg.data().onKeyDeleted(msg.key());
+    private void keyDeleted(RedisKeyDeletedEvent event) {
+        if (event != null && event.data() != null) {
+            event.data().onKeyDeleted(event.key());
         }
     }
 
     /**
      * 键刷新事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_FLUSHED, verbose = true, async = true)
     @Subscribe
-    private void onKeyFlushed(RedisKeyFlushedEvent msg) {
-        if (msg != null && msg.data() != null) {
-            msg.data().reloadChild();
+    private void keyFlushed(RedisKeyFlushedEvent event) {
+        if (event != null && event.data() != null) {
+            event.data().reloadChild();
         }
     }
 
     /**
      * 键复制事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_COPIED, verbose = true, async = true)
     @Subscribe
-    private void onKeyCopied(RedisKeyCopiedEvent msg) {
-        int dbIndex = msg.targetDB();
-        TreeItem<?> treeItem = msg.data();
+    private void keyCopied(RedisKeyCopiedEvent event) {
+        int dbIndex = event.targetDB();
+        TreeItem<?> treeItem = event.data();
         RedisDBTreeItem targetDBItem = null;
         if (treeItem instanceof RedisDBTreeItem dbItem) {
             dbItem.reloadChild();
@@ -165,9 +161,8 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param msg 消息
      */
-    // @EventReceiver(value = RedisEventTypes.REDIS_KEY_MOVED, verbose = true, async = true)
     @Subscribe
-    private void onKeyMoved(RedisKeyMovedMsg msg) {
+    private void onKeyMoved(RedisKeyMovedEvent msg) {
         int dbIndex = msg.targetDB();
         TreeItem<?> treeItem = msg.data();
         RedisDBTreeItem targetDBItem = null;
@@ -187,7 +182,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 搜索开始事件
      */
     @Subscribe
-    private void onSearchStart(RedisSearchStartEvent event) {
+    private void searchStart(RedisSearchStartEvent event) {
         this.searching = true;
         this.filter();
     }
@@ -196,7 +191,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 搜索结束事件
      */
     @Subscribe
-    private void onSearchFinish(RedisSearchFinishEvent event) {
+    private void searchFinish(RedisSearchFinishEvent event) {
         this.searching = false;
         this.filter();
     }
@@ -205,7 +200,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * 树节点过滤
      */
     @Subscribe
-    private void onTreeChildFilter(TreeChildFilterEvent event) {
+    private void treeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
     }

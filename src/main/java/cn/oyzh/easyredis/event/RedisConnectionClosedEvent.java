@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.event.EventFormatter;
  * @author oyzh
  * @since 2023/11/28
  */
-public class RedisConnectionClosedEvent extends Event<RedisClient> implements  EventFormatter {
+public class RedisConnectionClosedEvent extends Event<RedisClient> implements EventFormatter {
 
     @Override
     public String eventFormat() {
