@@ -2,14 +2,12 @@ package cn.oyzh.easyredis.controller.filter;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;

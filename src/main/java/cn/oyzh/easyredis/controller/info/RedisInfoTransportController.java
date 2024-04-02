@@ -2,12 +2,11 @@ package cn.oyzh.easyredis.controller.info;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.RedisStyle;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.fx.RedisConnectComboBox;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
-import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;

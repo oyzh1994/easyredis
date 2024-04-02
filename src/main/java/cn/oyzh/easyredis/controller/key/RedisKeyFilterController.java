@@ -1,26 +1,17 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.search.SearchTextField;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-
-import java.util.List;
 
 
 /**

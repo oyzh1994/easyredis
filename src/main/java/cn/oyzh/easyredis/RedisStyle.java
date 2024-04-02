@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis;
 
-import cn.oyzh.fx.plus.FXStyle;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -11,15 +10,5 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class RedisStyle {
-
-    // /**
-    //  * 通用样式文件
-    //  */
-    // public final static String COMMON = FXStyle.JMETRO + ";" + FXStyle.JMETRO_LIGHT_THEME + ";" + FXStyle.BOOTSTRAP_FX;
-    //
-    // /**
-    //  * 主页样式文件
-    //  */
-    // public final static String MAIN = COMMON + ";/css/main.css";
 
 }

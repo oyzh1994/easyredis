@@ -4,7 +4,6 @@ import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
