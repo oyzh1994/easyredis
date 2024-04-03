@@ -140,7 +140,7 @@ public class SettingController extends Controller {
     private void saveSetting() {
         String tips = "";
         // 设置参数
-        this.setting.setTheme(this.theme.getValue().name());
+        this.setting.setTheme(this.theme.name());
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
@@ -150,7 +150,7 @@ public class SettingController extends Controller {
         if (this.settingStore.update(this.setting)) {
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.currentTheme(this.theme.getValue());
+            ThemeManager.changeTheme(this.theme.getValue());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }

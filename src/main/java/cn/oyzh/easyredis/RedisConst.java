@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis;
 
+import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
@@ -28,4 +29,7 @@ public class RedisConst {
      */
     public final static String ICON_PATH = "/image/redis_no_bg.png";
 
+    static {
+        FXUtil.setAppStorePath(STORE_PATH);
+    }
 }

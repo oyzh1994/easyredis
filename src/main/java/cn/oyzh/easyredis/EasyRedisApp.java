@@ -52,7 +52,7 @@ public class EasyRedisApp extends SpringApplication implements CommandLineRunner
     public void start(Stage primaryStage) {
         try {
             // 初始化主题
-            ThemeManager.currentTheme(RedisSettingStore.SETTING.getTheme());
+            ThemeManager.changeTheme(RedisSettingStore.SETTING.getTheme());
             // 注册异常处理器
             MessageBox.registerExceptionParser(RedisExceptionParser.INSTANCE);
             // 开启定期gc
