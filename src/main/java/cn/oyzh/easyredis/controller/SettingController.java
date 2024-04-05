@@ -150,7 +150,7 @@ public class SettingController extends Controller {
         if (this.settingStore.update(this.setting)) {
             MessageBox.okToast("保存配置成功" + tips);
             this.closeStage();
-            ThemeManager.changeTheme(this.theme.getValue());
+            ThemeManager.apply(this.setting.themeConfig());
         } else {
             MessageBox.warnToast("保存配置失败！");
         }
