@@ -24,7 +24,7 @@ public class RedisHomeTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
-        super.title("主页");
+        super.setTitle("主页");
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RedisFilterTab extends DynamicTab {
 
     @Override
     public void flushTitle() {
-        super.title("过滤配置列表");
+        super.setTitle("过滤配置列表");
     }
 
     @Override

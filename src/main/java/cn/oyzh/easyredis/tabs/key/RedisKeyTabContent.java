@@ -14,6 +14,7 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -401,8 +402,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     }
 
     @Override
-    public void onTabClose(Event event) {
-        super.onTabClose(event);
+    public void onTabClose(DynamicTab tab, Event event) {
+        super.onTabClose(tab, event);
         // 取消当前键的选中
         if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
             this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
