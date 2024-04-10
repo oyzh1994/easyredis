@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.page.PageBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;

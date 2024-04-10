@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;

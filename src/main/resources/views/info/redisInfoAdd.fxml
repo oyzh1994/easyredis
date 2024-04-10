@@ -12,7 +12,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
-<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>

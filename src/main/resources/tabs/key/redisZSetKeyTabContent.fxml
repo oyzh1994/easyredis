@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FXToggleSwitch?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -87,7 +87,7 @@
                     </FlowPane.margin>
                 </SVGGlyph>
                 <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="地理坐标"
-                              unselectedText="有序集合">
+                                unselectedText="有序集合">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
