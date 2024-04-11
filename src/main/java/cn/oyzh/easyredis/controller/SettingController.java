@@ -10,7 +10,7 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox;
+import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import javafx.fxml.FXML;
@@ -84,7 +84,7 @@ public class SettingController extends Controller {
      * 标签策略
      */
     @FXML
-    private DynamicTabStrategyComboBox tabStrategy;
+    private TabStrategyComboBox tabStrategy;
 
     /**
      * 主题

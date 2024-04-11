@@ -10,7 +10,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.tabs.DynamicTabStrategyComboBox?>
+<?import cn.oyzh.fx.plus.tabs.TabStrategyComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -86,12 +86,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <DynamicTabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
-                                                fx:id="tabStrategy">
+                    <TabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
+                                         fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
-                    </DynamicTabStrategyComboBox>
+                    </TabStrategyComboBox>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
