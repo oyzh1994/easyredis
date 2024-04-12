@@ -17,7 +17,7 @@ import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -146,17 +146,17 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isWaiting()) {
-            MenuItem cancel = MenuItemExt.newItem("取消连接", new SVGGlyph("/font/close.svg", "11"), "取消redis连接", this::cancelConnect);
+            MenuItem cancel = FXMenuItem.newItem("取消连接", new SVGGlyph("/font/close.svg", "11"), "取消redis连接", this::cancelConnect);
             items.add(cancel);
         } else if (this.isConnected()) {
-            MenuItemExt disConnect = MenuItemExt.newItem("关闭连接", new SVGGlyph("/font/poweroff.svg", "12"), "关闭连接(快捷键pause)", this::closeConnect);
-            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
-            MenuItemExt serverInfo = MenuItemExt.newItem("服务监控", new SVGGlyph("/font/server.svg", "12"), "监控服务信息", this::serverInfo);
-            MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出数据", this::exportNode);
-            MenuItemExt importData = MenuItemExt.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入数据", this::importNode);
-            MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输数据", this::transportData);
-            MenuItemExt flushAll = MenuItemExt.newItem("清空数据", new SVGGlyph("/font/clear.svg", "12"), "清空所有数据库", this::flushAll);
-            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此连接副本", this::repeatConnect);
+            FXMenuItem disConnect = FXMenuItem.newItem("关闭连接", new SVGGlyph("/font/poweroff.svg", "12"), "关闭连接(快捷键pause)", this::closeConnect);
+            FXMenuItem editConnect = FXMenuItem.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
+            FXMenuItem serverInfo = FXMenuItem.newItem("服务监控", new SVGGlyph("/font/server.svg", "12"), "监控服务信息", this::serverInfo);
+            FXMenuItem exportData = FXMenuItem.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出数据", this::exportNode);
+            FXMenuItem importData = FXMenuItem.newItem("导入数据", new SVGGlyph("/font/Import.svg", "12"), "导入数据", this::importNode);
+            FXMenuItem transportData = FXMenuItem.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输数据", this::transportData);
+            FXMenuItem flushAll = FXMenuItem.newItem("清空数据", new SVGGlyph("/font/clear.svg", "12"), "清空所有数据库", this::flushAll);
+            FXMenuItem repeatConnect = FXMenuItem.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此连接副本", this::repeatConnect);
 
             items.add(disConnect);
             items.add(editConnect);
@@ -167,11 +167,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             items.add(transportData);
             items.add(flushAll);
         } else {
-            MenuItemExt connect = MenuItemExt.newItem("开始连接", new SVGGlyph("/font/play-circle.svg", "12"), "开始连接(鼠标左键双击)", this::connect);
-            MenuItemExt editConnect = MenuItemExt.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
-            MenuItemExt renameConnect = MenuItemExt.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
-            MenuItemExt deleteConnect = MenuItemExt.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除连接(快捷键delete)", this::delete);
-            MenuItemExt repeatConnect = MenuItemExt.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此redis连接为新连接", this::repeatConnect);
+            FXMenuItem connect = FXMenuItem.newItem("开始连接", new SVGGlyph("/font/play-circle.svg", "12"), "开始连接(鼠标左键双击)", this::connect);
+            FXMenuItem editConnect = FXMenuItem.newItem("编辑连接", new SVGGlyph("/font/edit.svg", "12"), "编辑连接", this::editConnect);
+            FXMenuItem renameConnect = FXMenuItem.newItem("连接更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改连接名称(快捷键f2)", this::rename);
+            FXMenuItem deleteConnect = FXMenuItem.newItem("删除连接", new SVGGlyph("/font/delete.svg", "12"), "删除连接(快捷键delete)", this::delete);
+            FXMenuItem repeatConnect = FXMenuItem.newItem("复制连接", new SVGGlyph("/font/repeated.svg", "12"), "复制此redis连接为新连接", this::repeatConnect);
 
             items.add(connect);
             items.add(editConnect);
@@ -180,7 +180,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             items.add(deleteConnect);
         }
 
-        MenuItem terminal = MenuItemExt.newItem("打开终端", new SVGGlyph("/font/code library.svg", "11"), "打开redis终端", this::openTerminal);
+        MenuItem terminal = FXMenuItem.newItem("打开终端", new SVGGlyph("/font/code library.svg", "11"), "打开redis终端", this::openTerminal);
         items.add(terminal);
         return items;
     }

@@ -16,7 +16,7 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -85,10 +85,10 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem addConnect = MenuItemExt.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
-        MenuItem addGroup = MenuItemExt.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
-        MenuItem exportConnect = MenuItemExt.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出redis连接", this::exportConnect);
-        MenuItem importConnect = MenuItemExt.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入redis连接，也可拖拽文件到窗口进行导入", this::importConnect);
+        MenuItem addConnect = FXMenuItem.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
+        MenuItem addGroup = FXMenuItem.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
+        MenuItem exportConnect = FXMenuItem.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出redis连接", this::exportConnect);
+        MenuItem importConnect = FXMenuItem.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入redis连接，也可拖拽文件到窗口进行导入", this::importConnect);
         exportConnect.setDisable(this.isChildEmpty());
         items.add(addConnect);
         items.add(addGroup);

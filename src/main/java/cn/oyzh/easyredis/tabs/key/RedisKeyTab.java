@@ -15,7 +15,7 @@ import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
@@ -162,8 +162,8 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = super.getMenuItems();
-        MenuItem closeConnectTab = MenuItemExt.newItem("关闭当前连接", "关闭当前连接标签页", this::closeConnectTab);
-        MenuItem closeOtherConnectTab = MenuItemExt.newItem("关闭其他连接", "关闭其他连接标签页", this::closeOtherConnectTab);
+        MenuItem closeConnectTab = FXMenuItem.newItem("关闭当前连接", "关闭当前连接标签页", this::closeConnectTab);
+        MenuItem closeOtherConnectTab = FXMenuItem.newItem("关闭其他连接", "关闭其他连接标签页", this::closeOtherConnectTab);
         items.add(4, closeConnectTab);
         items.add(5, closeOtherConnectTab);
         return items;

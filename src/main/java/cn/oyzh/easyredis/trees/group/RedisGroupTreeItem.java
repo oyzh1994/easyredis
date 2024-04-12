@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -82,9 +82,9 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem addConnect = MenuItemExt.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
-        MenuItem renameGroup = MenuItemExt.newItem("分组更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改分组名称(快捷键f2)", this::rename);
-        MenuItem delGroup = MenuItemExt.newItem("删除分组", new SVGGlyph("/font/delete.svg", "12"), "删除此分组", this::delete);
+        MenuItem addConnect = FXMenuItem.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
+        MenuItem renameGroup = FXMenuItem.newItem("分组更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改分组名称(快捷键f2)", this::rename);
+        MenuItem delGroup = FXMenuItem.newItem("删除分组", new SVGGlyph("/font/delete.svg", "12"), "删除此分组", this::delete);
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);

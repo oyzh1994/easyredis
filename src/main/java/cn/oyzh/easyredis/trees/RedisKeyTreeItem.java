@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -115,10 +115,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem rename = MenuItemExt.newItem("重命名键", new SVGGlyph("/font/edit-square.svg", "12"), "更改键名称(快捷键f2)", this::rename);
-        MenuItem delete = MenuItemExt.newItem("删除此键", new SVGGlyph("/font/delete.svg", "12"), "删除此键(快捷键delete)", this::delete);
-        MenuItem moveKey = MenuItemExt.newItem("移动此键", new SVGGlyph("/font/move.svg", "12"), "移动此键到其他库", this::moveKey);
-        MenuItem copyKey = MenuItemExt.newItem("复制此键", new SVGGlyph("/font/copy.svg", "12"), "复制此键到其他库", this::copyKey);
+        MenuItem rename = FXMenuItem.newItem("重命名键", new SVGGlyph("/font/edit-square.svg", "12"), "更改键名称(快捷键f2)", this::rename);
+        MenuItem delete = FXMenuItem.newItem("删除此键", new SVGGlyph("/font/delete.svg", "12"), "删除此键(快捷键delete)", this::delete);
+        MenuItem moveKey = FXMenuItem.newItem("移动此键", new SVGGlyph("/font/move.svg", "12"), "移动此键到其他库", this::moveKey);
+        MenuItem copyKey = FXMenuItem.newItem("复制此键", new SVGGlyph("/font/copy.svg", "12"), "复制此键到其他库", this::copyKey);
         items.add(rename);
         items.add(moveKey);
         items.add(copyKey);

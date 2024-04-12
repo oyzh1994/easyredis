@@ -33,7 +33,7 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.plus.controls.popup.MenuItemExt;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -152,12 +152,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItemExt add = MenuItemExt.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addKey);
-        MenuItemExt keyFilter = MenuItemExt.newItem("键过滤器", new SVGGlyph("/font/filter.svg", "12"), "过滤redis键", this::keyFilter);
-        MenuItemExt reload = MenuItemExt.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载redis键", this::reloadChild);
-        MenuItemExt exportData = MenuItemExt.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
-        MenuItemExt transportData = MenuItemExt.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
-        MenuItemExt batchOperation = MenuItemExt.newItem("批量操作", new SVGGlyph("/font/mml-batch-command-16.svg", "12"), "批量操作数据", this::batchOperation);
+        FXMenuItem add = FXMenuItem.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addKey);
+        FXMenuItem keyFilter = FXMenuItem.newItem("键过滤器", new SVGGlyph("/font/filter.svg", "12"), "过滤redis键", this::keyFilter);
+        FXMenuItem reload = FXMenuItem.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载redis键", this::reloadChild);
+        FXMenuItem exportData = FXMenuItem.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
+        FXMenuItem transportData = FXMenuItem.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
+        FXMenuItem batchOperation = FXMenuItem.newItem("批量操作", new SVGGlyph("/font/mml-batch-command-16.svg", "12"), "批量操作数据", this::batchOperation);
 
         items.add(add);
         items.add(keyFilter);
