@@ -1,12 +1,14 @@
-package cn.oyzh.easyredis.redis;
+package cn.oyzh.easyredis.redis.batch;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * redis 扫描结果
@@ -29,5 +31,13 @@ public class RedisScanResult {
 
     public boolean isFinish() {
         return Objects.equals(this.cursor, ScanParams.SCAN_POINTER_START) || CollUtil.isEmpty(this.keys);
+    }
+
+    public int keySize() {
+        return this.keys == null ? 0 : this.keys.size();
+    }
+
+    public List<String> keys() {
+        return this.keys == null ? Collections.emptyList() : this.keys.parallelStream().map(RedisKey::key).collect(Collectors.toList());
     }
 }

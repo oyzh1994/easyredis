@@ -12,7 +12,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.redis.RedisScanResult;
+import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;

@@ -1,11 +1,16 @@
 package cn.oyzh.easyredis.controller.key;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.batch.RedisCountResult;
+import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
@@ -14,9 +19,11 @@ import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,6 +76,12 @@ public class RedisKeyBatchOperationController extends Controller {
     private ClearableTextField pattern5;
 
     /**
+     * 移动键表达式
+     */
+    @FXML
+    private ClearableTextField pattern6;
+
+    /**
      * 删除键表达式
      */
     @FXML
@@ -97,6 +110,12 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private ReadOnlyTextArea keys5;
+
+    /**
+     * 移动键表达式
+     */
+    @FXML
+    private ReadOnlyTextArea keys6;
 
     /**
      * db索引
@@ -161,32 +180,61 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private void delKeys() {
-        try {
-            this.client.throwSentinelException();
-            if (CollUtil.isEmpty(this.delKeys)) {
-                this.delKeys = this.client.keys(this.dbIndex, this.pattern1.getText());
-            }
-            if (CollUtil.isEmpty(this.delKeys)) {
-                MessageBox.warn("未发现匹配的键");
-                return;
-            }
-            if (MessageBox.confirm("确定删除这些键？")) {
-                try {
-                    this.stage.disable();
-                    this.stage.appendTitle("操作中...");
-                    this.client.del(this.dbIndex, this.delKeys);
-                    this.showKeys(this.delKeys, this.keys1);
-                    RedisEventUtil.keyFlushed(this.treeItem);
-                    MessageBox.okToast("删除键成功");
-                } finally {
-                    this.stage.enable();
-                    this.stage.restoreTitle();
+        this.client.throwSentinelException();
+        if (MessageBox.confirm("确定执行删除操作？")) {
+            TaskManager.start(() -> {
+                // 当前光标
+                String cursor = null;
+                // 扫描参数
+                String pattern = StrUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
+                ScanParams params = new ScanParams();
+                params.count(100);
+                params.match(pattern);
+                // 全部节点
+                int count = 0;
+                // 扫描数据
+                while (true) {
+                    // 扫描数据
+                    RedisDeleteResult result = RedisKeyUtil.deleteKeys(this.dbIndex, cursor, params, this.client);
+                    // 查询结束
+                    if (result.isFinish()) {
+                        break;
+                    }
+                    count += result.getCount();
+                    long finalCount = count;
+                    FXUtil.runWait(() -> this.keys1.setText("已删除:" + finalCount));
+                    // 更新光标
+                    cursor = result.getCursor();
                 }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
+            });
         }
+
+        // try {
+        //     this.client.throwSentinelException();
+        //     if (CollUtil.isEmpty(this.delKeys)) {
+        //         this.delKeys = this.client.keys(this.dbIndex, this.pattern1.getText());
+        //     }
+        //     if (CollUtil.isEmpty(this.delKeys)) {
+        //         MessageBox.warn("未发现匹配的键");
+        //         return;
+        //     }
+        //     if (MessageBox.confirm("确定删除这些键？")) {
+        //         try {
+        //             this.stage.disable();
+        //             this.stage.appendTitle("操作中...");
+        //             this.client.del(this.dbIndex, this.delKeys);
+        //             this.showKeys(this.delKeys, this.keys1);
+        //             RedisEventUtil.keyFlushed(this.treeItem);
+        //             MessageBox.okToast("删除键成功");
+        //         } finally {
+        //             this.stage.enable();
+        //             this.stage.restoreTitle();
+        //         }
+        //     }
+        // } catch (Exception ex) {
+        //     ex.printStackTrace();
+        //     MessageBox.exception(ex);
+        // }
     }
 
     /**
@@ -418,6 +466,35 @@ public class RedisKeyBatchOperationController extends Controller {
     private void showKeys5() {
         this.copyKeys = this.client.keys(this.dbIndex, this.pattern5.getText());
         this.showKeys(this.copyKeys, this.keys5);
+    }
+
+    @FXML
+    private void countKeys() {
+        TaskManager.start(() -> {
+            // 当前光标
+            String cursor = null;
+            // 扫描参数
+            String pattern = StrUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
+            ScanParams params = new ScanParams();
+            params.count(100);
+            params.match(pattern);
+            long count = 0;
+            // 扫描数据
+            while (true) {
+                // 扫描数据
+                RedisCountResult result = RedisKeyUtil.countKeys(this.dbIndex, cursor, params, this.client);
+                if (result.getCount() != null) {
+                    count += result.getCount();
+                    long finalCount = count;
+                    FXUtil.runWait(() -> this.keys6.setText("已找到:" + finalCount));
+                }
+                if (result.isFinish()) {
+                    break;
+                }
+                // 更新光标
+                cursor = result.getCursor();
+            }
+        });
     }
 
     @Override

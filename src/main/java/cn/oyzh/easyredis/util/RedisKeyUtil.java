@@ -9,9 +9,11 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.batch.RedisCountResult;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.redis.RedisScanResult;
+import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
+import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
@@ -438,6 +440,51 @@ public class RedisKeyUtil {
         }
         scanResult.setKeys(redisKeys);
         return scanResult;
+    }
+
+    /**
+     * 统计键
+     *
+     * @param dbIndex 都不索引
+     * @param cursor  光标
+     * @param params  参数
+     * @param client  redis客户端
+     * @return 本次键数量
+     */
+    public static RedisCountResult countKeys(Integer dbIndex, String cursor, ScanParams params, RedisClient client) {
+        // 扫描
+        ScanResult<String> result = client.scan(dbIndex, cursor, params);
+        RedisCountResult countResult = new RedisCountResult();
+        if (result == null) {
+            return countResult;
+        }
+        // 设置游标
+        countResult.setCursor(result.getCursor());
+        countResult.setCount(CollUtil.size(result.getResult()));
+        return countResult;
+    }
+
+    /**
+     * 删除键
+     *
+     * @param dbIndex 都不索引
+     * @param cursor  光标
+     * @param params  参数
+     * @param client  redis客户端
+     * @return 本次键数量
+     */
+    public static RedisDeleteResult deleteKeys(Integer dbIndex, String cursor, ScanParams params, RedisClient client) {
+        // 扫描
+        ScanResult<String> result = client.scan(dbIndex, cursor, params);
+        RedisDeleteResult countResult = new RedisDeleteResult();
+        if (result == null) {
+            return countResult;
+        }
+        // 设置游标
+        countResult.setCursor(result.getCursor());
+        countResult.setCount(CollUtil.size(result.getResult()));
+        client.del(dbIndex, result.getResult());
+        return countResult;
     }
 
     /**

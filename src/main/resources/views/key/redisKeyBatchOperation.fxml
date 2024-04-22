@@ -280,4 +280,44 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
+    <FXTab text="计算键数量">
+        <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                    <HBox.margin>
+                        <Insets left="20" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ClearableTextField fx:id="pattern6" realHeight="30.0" flexWidth="100% - 120" text="*">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </ClearableTextField>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" flexHeight="100% - 170">
+                <FXLabel text="键数量" realHeight="30" realWidth="65" styleClass="accent">
+                    <HBox.margin>
+                        <Insets left="20" top="10"/>
+                    </HBox.margin>
+                </FXLabel>
+                <ReadOnlyTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% - 120">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </ReadOnlyTextArea>
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="50">
+                <SubmitButton onAction="#countKeys" text="统计">
+                    <HBox.margin>
+                        <Insets left="95" top="10"/>
+                    </HBox.margin>
+                </SubmitButton>
+                <CancelButton>
+                    <HBox.margin>
+                        <Insets left="15" top="10"/>
+                    </HBox.margin>
+                </CancelButton>
+            </FlexHBox>
+        </FlexVBox>
+    </FXTab>
 </FlexTabPane>
