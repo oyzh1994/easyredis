@@ -13,6 +13,7 @@ import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
@@ -21,6 +22,7 @@ import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -415,5 +417,22 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
             super.addTab(tab);
         }
         this.select(tab);
+    }
+
+    /**
+     * 更新日志事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void changelog(ChangelogEvent event) {
+        ChangelogTab tab = this.getTab(ChangelogTab.class);
+        if (tab == null) {
+            tab = new ChangelogTab();
+            super.addTab(tab);
+        }
+        if (!tab.isSelected()) {
+            this.select(tab);
+        }
     }
 }

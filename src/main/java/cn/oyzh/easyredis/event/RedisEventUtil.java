@@ -12,6 +12,7 @@ import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
@@ -445,5 +446,12 @@ public class RedisEventUtil {
      */
     public static void searchFire() {
         EventUtil.post(new RedisSearchFireEvent());
+    }
+
+    /**
+     * 更新日志事件
+     */
+    public static void changelog() {
+        EventUtil.post(new ChangelogEvent());
     }
 }
