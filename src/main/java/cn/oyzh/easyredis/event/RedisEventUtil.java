@@ -60,24 +60,6 @@ public class RedisEventUtil {
     }
 
     /**
-     * 终端打开事件
-     */
-    public static void terminalOpen() {
-        terminalOpen(null);
-    }
-
-    /**
-     * 终端打开事件
-     *
-     * @param info redis信息
-     */
-    public static void terminalOpen(RedisInfo info) {
-        RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
-        event.data(info);
-        EventUtil.post(event);
-    }
-
-    /**
      * 终端关闭事件
      *
      * @param info redis信息
@@ -202,24 +184,6 @@ public class RedisEventUtil {
     }
 
     /**
-     * 搜索开始事件
-     */
-    public static void searchStart(RedisSearchParam searchParam) {
-        RedisSearchStartEvent event = new RedisSearchStartEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索结束事件
-     */
-    public static void searchFinish(RedisSearchParam searchParam) {
-        RedisSearchFinishEvent event = new RedisSearchFinishEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
-
-    /**
      * 树节点过滤事件
      */
     public static void treeChildFilter() {
@@ -273,14 +237,6 @@ public class RedisEventUtil {
     }
 
     /**
-     * 过滤主页事件
-     */
-    public static void filterMain() {
-        RedisFilterMainEvent event = new RedisFilterMainEvent();
-        EventUtil.post(event);
-    }
-
-    /**
      * 连接已新增事件
      *
      * @param info redis信息
@@ -300,6 +256,57 @@ public class RedisEventUtil {
         RedisInfoUpdatedEvent event = new RedisInfoUpdatedEvent();
         event.data(info);
         EventUtil.post(event);
+    }
+
+    /**
+     * 终端打开事件
+     */
+    public static void terminalOpen() {
+        terminalOpen(null);
+    }
+
+    /**
+     * 终端打开事件
+     *
+     * @param info redis信息
+     */
+    public static void terminalOpen(RedisInfo info) {
+        RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
+        event.data(info);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 过滤主页事件
+     */
+    public static void filterMain() {
+        RedisFilterMainEvent event = new RedisFilterMainEvent();
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索开始事件
+     */
+    public static void searchStart(RedisSearchParam searchParam) {
+        RedisSearchStartEvent event = new RedisSearchStartEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索结束事件
+     */
+    public static void searchFinish(RedisSearchParam searchParam) {
+        RedisSearchFinishEvent event = new RedisSearchFinishEvent();
+        event.data(searchParam);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 搜索触发事件
+     */
+    public static void searchFire() {
+        EventUtil.post(new RedisSearchFireEvent());
     }
 
     /**
@@ -388,32 +395,6 @@ public class RedisEventUtil {
     }
 
     /**
-     * 过滤添加事件
-     */
-    public static void filterAdded() {
-        RedisFilterAddedEvent event = new RedisFilterAddedEvent();
-        EventUtil.post(event);
-    }
-
-    // /**
-    //  * 键过滤事件
-    //  */
-    // public static void keyFilter() {
-    //     RedisKeyFilterEvent event = new RedisKeyFilterEvent();
-    //     EventUtil.post(event);
-    // }
-
-    // /**
-    //  * 过滤历史选中事件
-    //  * @param kw
-    //  */
-    // public static void filterHistorySelected(String kw) {
-    //     RedisFilterHistorySelectedEvent event = new RedisFilterHistorySelectedEvent();
-    //     event.data(kw);
-    //     EventUtil.post(event);
-    // }
-
-    /**
      * 添加分组
      */
     public static void addGroup() {
@@ -442,10 +423,11 @@ public class RedisEventUtil {
     }
 
     /**
-     * 搜索触发事件
+     * 过滤添加事件
      */
-    public static void searchFire() {
-        EventUtil.post(new RedisSearchFireEvent());
+    public static void filterAdded() {
+        RedisFilterAddedEvent event = new RedisFilterAddedEvent();
+        EventUtil.post(event);
     }
 
     /**
@@ -453,5 +435,14 @@ public class RedisEventUtil {
      */
     public static void changelog() {
         EventUtil.post(new ChangelogEvent());
+    }
+
+    /**
+     * 树节点选中事件
+     */
+    public static void treeChildSelected(RedisKeyTreeItem<?,?> item) {
+        TreeChildSelectedEvent event = new TreeChildSelectedEvent();
+        event.data(item);
+        EventUtil.post(event);
     }
 }

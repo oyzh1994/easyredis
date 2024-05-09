@@ -1,76 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.TestButton?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.SwitchToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.area.LimitTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.digital.PortTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoUpdateController" realWidth="750" realHeight="320">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
-        <FXTab text="基础设置">
+        <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="名      称" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.name">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <ClearableTextField tipText="请输入名称" maxLen="30" require="true" fx:id="name"
-                                        realHeight="30" flexWidth="100% - 140">
+                    </AccentLabel>
+                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 140">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接地址" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="连接地址，例如192.168.2.100" require="true"
-                                        realHeight="30"
-                                        flexWidth="100% - 140" maxLen="1024">
+                    </AccentLabel>
+                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 140" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接端口" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.port">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <PortTextField flexWidth="100% - 140" fx:id="hostPort" tipText="端口号(1-65535)" realHeight="30"
-                                   value="6379">
+                    </AccentLabel>
+                    <PortTextField flexWidth="100% - 140" fx:id="hostPort" realHeight="30" value="6379">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接设置" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.options">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <FlexCheckBox text="只读模式" tipText="开启只读模式，防止误操作数据" fx:id="readonly">
+                    </AccentLabel>
+                    <FlexCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
@@ -78,54 +74,49 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="高级设置">
+        <FXTab text="%base.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <NumberTextField flexWidth="100% - 140" realHeight="30" min="3" max="120" fx:id="connectTimeOut"
-                                     tipText="连接超时(3-120)，单位秒，默认15秒" value="15"
-                                     require="true">
+                    </AccentLabel>
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXLabel text="秒">
+                    <FXLabel text="%base.second">
                         <HBox.margin>
                             <Insets left="5" top="18"/>
                         </HBox.margin>
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="网络超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.executeTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <NumberTextField flexWidth="100% - 140" realHeight="30" min="3" max="120" fx:id="executeTimeOut"
-                                     tipText="网络超时(3-120)，单位秒，默认30秒" value="30"
-                                     require="true">
+                    </AccentLabel>
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="executeTimeout" tipText="%info.executeTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
-                    <FXLabel text="秒">
+                    <FXLabel text="%base.second">
                         <HBox.margin>
                             <Insets left="5" top="18"/>
                         </HBox.margin>
                     </FXLabel>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="100">
-                    <FXLabel realHeight="30" realWidth="65" text="备      注" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.remark">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <LimitTextArea fx:id="remark" tipText="请输入备注信息" maxLen="100"
-                                   realHeight="80" flexWidth="100% - 140">
+                    </AccentLabel>
+                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -141,7 +132,8 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </FXLabel>
-                    <FlexComboBox fx:id="authType" tipText="认证方式" realHeight="30" flexWidth="100% - 282">
+                    <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0"
+                                  realHeight="30" flexWidth="100% - 140">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="无需认证"/>
@@ -161,14 +153,14 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
-                                        realHeight="30" flexWidth="50% - 145">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
                                         require="true"
-                                        realHeight="30" flexWidth="50% - 142">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
@@ -187,13 +179,13 @@
                         </HBox.margin>
                     </FXLabel>
                     <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 145">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                     <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 142">
+                                        realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
@@ -201,75 +193,61 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="SSH通道">
+        <FXTab text="%base.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="启用通道" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.enableSSHChannel">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <FXToggleSwitch fx:id="sshForward" tipText="开启ssh通道" selectedText="开启" unselectedText="关闭">
+                    </AccentLabel>
+                    <SwitchToggleSwitch fx:id="sshForward">
                         <HBox.margin>
                             <Insets left="10" top="15"/>
                         </HBox.margin>
-                    </FXToggleSwitch>
+                    </SwitchToggleSwitch>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshHostBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="主机信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.host">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <ClearableTextField fx:id="sshHost"
-                                        tipText="主机地址，例如192.168.2.100"
-                                        require="true"
-                                        realHeight="30"
-                                        flexWidth="100% - 245" maxLen="1024">
+                    </AccentLabel>
+                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 245" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <PortTextField realWidth="100" fx:id="sshPort"
-                                   tipText="ssh连接端口"
-                                   realHeight="30"
-                                   value="22">
+                    <PortTextField realWidth="100" fx:id="sshPort" realHeight="30" value="22">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshTimeoutBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="连接超时" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout"
-                                     tipText="ssh连接超时，单位毫秒"
-                                     realHeight="30"
-                                     value="3000">
+                    </AccentLabel>
+                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%info.sshTimeoutTip" realHeight="30" value="3000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </NumberTextField>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sshAuthBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="用户信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.sshInfo">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <ClearableTextField fx:id="sshUser" tipText="主机的ssh用户名"
-                                        require="true"
-                                        realHeight="30" flexWidth="50% - 73" text="root">
+                    </AccentLabel>
+                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 73" text="root">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="sshPassword" tipText="主机的ssh密码"
-                                        require="true"
-                                        realHeight="30" flexWidth="50% - 72">
+                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 72">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>
@@ -279,15 +257,12 @@
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton onAction="#testConnect" text="测试" styleClass="success" iconSizePercent="0.8">
-            <graphic>
-                <SVGGlyph url="/font/link.svg"/>
-            </graphic>
+        <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="130" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <SubmitButton onAction="#update" text="确定">
+        </TestButton>
+        <SubmitButton onAction="#update">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>

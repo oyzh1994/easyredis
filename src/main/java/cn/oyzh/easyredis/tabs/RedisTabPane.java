@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
+import cn.oyzh.easyredis.event.TreeChildSelectedEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -326,21 +327,22 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     }
 
     /**
-     * 初始化键tab
+     * 初始化节点tab
      *
-     * @param item redis树节点
+     * @param event 事件
      */
-    public void initKeyTab(RedisKeyTreeItem<?, ?> item) {
-        if (item != null) {
-            RedisKeyTab keyTab = this.getKeyTab(item);
-            if (keyTab == null) {
-                keyTab = RedisKeyTab.ofItem(item);
-                super.addTab(keyTab);
-            }
-            // 选中节点
-            this.select(keyTab);
-            // 初始化节点
-            keyTab.init(item);
+    @Subscribe
+    public void treeChildSelected(TreeChildSelectedEvent event) {
+        if (event != null && event.data() != null) {
+                RedisKeyTab keyTab = this.getKeyTab(event.data());
+                if (keyTab == null) {
+                    keyTab = RedisKeyTab.ofItem(event.data());
+                    super.addTab(keyTab);
+                }
+                // 选中节点
+                this.select(keyTab);
+                // 初始化节点
+                keyTab.init(event.data());
         }
     }
 

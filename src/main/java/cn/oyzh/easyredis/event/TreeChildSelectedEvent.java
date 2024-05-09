@@ -1,0 +1,13 @@
+package cn.oyzh.easyredis.event;
+
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.fx.plus.event.Event;
+
+/**
+ * @author oyzh
+ * @since 2024/05/09
+ */
+public class TreeChildSelectedEvent extends Event<RedisKeyTreeItem<?, ?>> {
+
+
+}

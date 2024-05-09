@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.controller;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
@@ -34,12 +33,12 @@ import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * redis键主页
+ * redis主页
  *
  * @author oyzh
  * @since 2023/06/22
@@ -88,10 +87,22 @@ public class RedisMainController extends ParentController {
     private SVGGlyph sortDesc;
 
     /**
-     * 仅看收藏键
+     * 仅看收藏
      */
     @FXML
     private FlexCheckBox onlyCollect;
+
+    /**
+     * redis切换面板
+     */
+    @FXML
+    public RedisTabPane tabPane;
+
+    /**
+     * 消息文本框
+     */
+    @FXML
+    private RedisMsgTextArea msgArea;
 
     /**
      * 过滤hash键
@@ -130,10 +141,10 @@ public class RedisMainController extends ParentController {
     private FlexCheckBox showList;
 
     /**
-     * redis切换面板
+     * 搜索Controller
      */
     @FXML
-    public RedisTabPane tabPane;
+    private SearchController searchController;
 
     /**
      * 页面信息
@@ -144,18 +155,6 @@ public class RedisMainController extends ParentController {
      * 页面信息储存
      */
     private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
-
-    /**
-     * 消息文本框
-     */
-    @FXML
-    private RedisMsgTextArea msgArea;
-
-    /**
-     * 搜索Controller
-     */
-    @FXML
-    private SearchController searchController;
 
     /**
      * 对子节点排序，正序
@@ -178,73 +177,72 @@ public class RedisMainController extends ParentController {
     }
 
     /**
+     * 打开终端
+     */
+    @FXML
+    private void openTerminal() {
+        RedisEventUtil.terminalOpen();
+    }
+
+    /**
+     * 执行过滤
+     */
+    private void filter() {
+        TaskManager.startDelay("redis:tree:filter", () -> {
+            this.tree.disable();
+            if (this.onlyCollect.isSelected()) {
+                this.tree.itemFilter().setOnlyCollect(true);
+                this.tree.itemFilter().setExcludeSetType(false);
+                this.tree.itemFilter().setExcludeHashType(false);
+                this.tree.itemFilter().setExcludeListType(false);
+                this.tree.itemFilter().setExcludeZSetType(false);
+                this.tree.itemFilter().setExcludeStringType(false);
+                this.tree.itemFilter().setExcludeStreamType(false);
+            } else {
+                this.tree.itemFilter().setOnlyCollect(false);
+                this.tree.itemFilter().setExcludeSetType(!this.showSet.isSelected());
+                this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
+                this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
+                this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
+                this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
+                this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
+            }
+            this.tree.filter();
+            this.tree.enable();
+        }, 100);
+    }
+
+    /**
      * redis信息修改事件
      *
      * @param event 事件
      */
     @Subscribe
     private void onInfoUpdate(RedisInfoUpdatedEvent event) {
-        this.infoUpdate(event.data());
-    }
+        if (this.info == event.data()) {
+            this.flushViewTitle(event.data());
+        }    }
 
-    private void infoUpdate(RedisInfo info) {
-        if (this.info == info) {
+    /**
+     * 刷新窗口标题
+     *
+     * @param info zk信息
+     */
+    private void flushViewTitle(RedisInfo info) {
+        if (info != null) {
             this.stage.appendTitle(" (" + info.getName() + ")");
-        }
-    }
-
-    /**
-     * 树节点变化事件
-     *
-     * @param item 节点
-     */
-    private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            this.nodeTreeItemChanged(treeItem);
-            this.connectTreeItemChanged(treeItem.connectTreeItem());
-        } else if (item instanceof RedisConnectTreeItem treeItem) {
-            this.nodeTreeItemChanged(null);
-            this.connectTreeItemChanged(treeItem);
         } else {
-            this.nodeTreeItemChanged(null);
-            this.connectTreeItemChanged(null);
-        }
-    }
-
-    /**
-     * 连接节点变化事件
-     *
-     * @param item 连接节点
-     */
-    private void connectTreeItemChanged(RedisConnectTreeItem item) {
-        if (item == null) {
-            this.info = null;
             this.stage.restoreTitle();
-        } else if (this.info != item.value()) {
-            this.info = item.value();
-            this.infoUpdate(this.info);
         }
-        // EventUtil.fire(RedisEventTypes.CONNECTION_CHANGED, item);
-    }
-
-    /**
-     * 树节点变更事件
-     *
-     * @param item 树节点
-     */
-    private void nodeTreeItemChanged(RedisKeyTreeItem<?, ?> item) {
-        this.tabPane.initKeyTab(item);
+        this.info = info;
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // 注册事件处理
-        EventUtil.register(this);
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
-
-        // 初始化过滤
+        EventUtil.register(this.msgArea);
         this.filter();
 
         // 设置上次保存的页面拉伸
@@ -256,10 +254,9 @@ public class RedisMainController extends ParentController {
     @Override
     public void onStageHidden(WindowEvent event) {
         super.onStageHidden(event);
-        // 取消注册事件处理
-        EventUtil.unregister(this);
         EventUtil.unregister(this.tree);
         EventUtil.unregister(this.tabPane);
+        EventUtil.unregister(this.msgArea);
         // 关闭连接
         this.tree.closeConnects();
         // 保存页面拉伸
@@ -311,7 +308,6 @@ public class RedisMainController extends ParentController {
                 this.showList.disable();
                 this.showString.disable();
                 this.showStream.disable();
-//                this.showHyLog.disable();
             } else {
                 this.showSet.enable();
                 this.showZSet.enable();
@@ -319,7 +315,6 @@ public class RedisMainController extends ParentController {
                 this.showList.enable();
                 this.showString.enable();
                 this.showStream.enable();
-//                this.showHyLog.enable();
             }
             this.filter();
         });
@@ -329,10 +324,9 @@ public class RedisMainController extends ParentController {
         this.showZSet.selectedChanged((obs, o, n) -> this.filter());
         this.showString.selectedChanged((obs, o, n) -> this.filter());
         this.showStream.selectedChanged((obs, o, n) -> this.filter());
-
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
-        // redis树键变化事件
+        // redis树变化事件
         this.tree.selectItemChanged(this::treeItemChanged);
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
@@ -361,19 +355,27 @@ public class RedisMainController extends ParentController {
     }
 
     /**
+     * 树节点变化事件
+     *
+     * @param item 节点
+     */
+    private void treeItemChanged(TreeItem<?> item) {
+        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+            this.flushViewTitle(treeItem.info());
+            RedisEventUtil.treeChildSelected(treeItem);
+        } else if (item instanceof RedisConnectTreeItem treeItem) {
+            this.flushViewTitle(treeItem.value());
+        } else {
+            this.flushViewTitle(null);
+        }
+    }
+
+    /**
      * 定位节点
      */
     @FXML
     private void positionNode() {
         this.tree.scrollTo(this.tree.getSelectedItem());
-    }
-
-    /**
-     * 打开终端
-     */
-    @FXML
-    private void openTerminal() {
-        this.tabPane.initTerminalTab(null);
     }
 
     /**
@@ -386,7 +388,6 @@ public class RedisMainController extends ParentController {
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
-        StaticLog.info("LEFT_EXTEND.");
     }
 
     /**
@@ -398,40 +399,13 @@ public class RedisMainController extends ParentController {
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
         this.tabPaneLeft.parentAutosize();
-        StaticLog.info("LEFT_COLLAPSE.");
     }
 
     @Override
     public List<SubController> getSubControllers() {
-        return Collections.singletonList(this.searchController);
-    }
-
-    /**
-     * 执行过滤
-     */
-    private void filter() {
-        TaskManager.startDelay("redis:tree:filter", () -> {
-            this.tree.disable();
-            if (this.onlyCollect.isSelected()) {
-                this.tree.itemFilter().setOnlyCollect(true);
-                this.tree.itemFilter().setExcludeSetType(false);
-                this.tree.itemFilter().setExcludeHashType(false);
-                this.tree.itemFilter().setExcludeListType(false);
-                this.tree.itemFilter().setExcludeZSetType(false);
-                this.tree.itemFilter().setExcludeStringType(false);
-                this.tree.itemFilter().setExcludeStreamType(false);
-            } else {
-                this.tree.itemFilter().setOnlyCollect(false);
-                this.tree.itemFilter().setExcludeSetType(!this.showSet.isSelected());
-                this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
-                this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
-                this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
-                this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
-                this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
-            }
-            this.tree.filter();
-            this.tree.enable();
-        }, 100);
+        List<SubController> list = new ArrayList<>();
+        list.add(this.searchController);
+        return list;
     }
 
     /**
