@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.controller;
 
 
-import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
+import javax.annotation.Resource;
+
 /**
  * 关于业务
  *
@@ -19,7 +21,6 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         resizeable = false,
-        // cssUrls = RedisStyle.COMMON,
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "about.fxml"
@@ -28,6 +29,9 @@ public class AboutController extends SubController {
 
     @FXML
     private FlexText name;
+
+    @FXML
+    private FlexText type;
 
     @FXML
     private FlexText version;
@@ -41,14 +45,27 @@ public class AboutController extends SubController {
     /**
      * 项目信息
      */
-    private final Project project = SpringUtil.getBean(Project.class);
+    @Resource
+    private Project project;
 
     @Override
     public void onStageShown(WindowEvent event) {
+        // 当舞台被显示时，设置名称文本框的文本为项目名称
         this.name.setText(this.project.getName());
+        // 设置版本文本框的文本为项目版本号
         this.version.setText("v" + this.project.getVersion());
+        // 设置更新日期文本框的文本为项目的更新日期
         this.updateDate.setText(this.project.getUpdateDate());
+        // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
+        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("base.buildType1") : this.i18nString("base.buildType2"));
+        // 设置标题
+        this.stage.appendTitle(this.project.getName());
         this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "about";
     }
 }

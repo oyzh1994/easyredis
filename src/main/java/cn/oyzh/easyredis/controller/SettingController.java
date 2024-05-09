@@ -1,14 +1,26 @@
 package cn.oyzh.easyredis.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.controls.FlexHBox;
+import cn.oyzh.fx.plus.controls.FlexSlider;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.font.FontFamilyComboBox;
+import cn.oyzh.fx.plus.font.FontManager;
+import cn.oyzh.fx.plus.font.FontSizeComboBox;
+import cn.oyzh.fx.plus.font.FontWeightComboBox;
+import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
@@ -18,6 +30,8 @@ import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
+import java.util.Objects;
+
 /**
  * 应用设置业务
  *
@@ -25,7 +39,6 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/16
  */
 @StageAttribute(
-        title = "应用设置",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "setting.fxml"
@@ -93,6 +106,72 @@ public class SettingController extends Controller {
     private ThemeComboBox theme;
 
     /**
+     * 背景色
+     */
+    @FXML
+    private FlexColorPicker bgColor;
+
+    /**
+     * 前景色
+     */
+    @FXML
+    private FlexColorPicker fgColor;
+
+    /**
+     * 强调色
+     */
+    @FXML
+    private FlexColorPicker accentColor;
+
+    /**
+     * 背景色
+     */
+    @FXML
+    private FlexHBox bgColorBox;
+
+    /**
+     * 前景色
+     */
+    @FXML
+    private FlexHBox fgColorBox;
+
+    /**
+     * 强调色
+     */
+    @FXML
+    private FlexHBox accentColorBox;
+
+    /**
+     * 字体大小
+     */
+    @FXML
+    private FontSizeComboBox fontSize;
+
+    /**
+     * 字体粗细
+     */
+    @FXML
+    private FontWeightComboBox fontWeight;
+
+    /**
+     * 字体名称
+     */
+    @FXML
+    private FontFamilyComboBox fontFamily;
+
+    /**
+     * 区域
+     */
+    @FXML
+    private LocaleComboBox locale;
+
+    /**
+     * 透明度
+     */
+    @FXML
+    private FlexSlider opacity;
+
+    /**
      * 配置对象
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
@@ -128,9 +207,22 @@ public class SettingController extends Controller {
         }
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
+        this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
+        this.bgColor.setColor(StrUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
+        this.accentColor.setColor(StrUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
         // 标签相关处理
         this.tabLimit.setValue(this.setting.getTabLimit());
         this.tabStrategy.select(this.setting.getTabStrategy());
+        // 字体相关处理
+        this.fontSize.select(this.setting.getFontSize());
+        this.fontFamily.select(this.setting.getFontFamily());
+        this.fontWeight.selectWeight(this.setting.getFontWeight());
+        // 区域相关处理
+        this.locale.select(this.setting.getLocale());
+        // 透明度相关处理
+        if (this.setting.getOpacity() != null) {
+            this.opacity.setValue(this.setting.getOpacity());
+        }
     }
 
     /**
@@ -138,26 +230,155 @@ public class SettingController extends Controller {
      */
     @FXML
     private void saveSetting() {
-        String tips = "";
-        // 设置参数
+        String locale = this.locale.name();
+        Integer fontSize = this.fontSize.getValue();
+        String fontFamily = this.fontFamily.getValue();
+        Integer fontWeight = this.fontWeight.getWeight();
+
+        // 提示文字
+        String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
+
+        // 字体相关
+        this.setting.setFontSize(fontSize);
+        this.setting.setFontWeight(fontWeight);
+        this.setting.setFontFamily(fontFamily);
+        // 主题相关
         this.setting.setTheme(this.theme.name());
+        this.setting.setBgColor(this.bgColor.getColor());
+        this.setting.setFgColor(this.fgColor.getColor());
+        this.setting.setAccentColor(this.accentColor.getColor());
+        // 区域相关处理
+        this.setting.setLocale(locale);
+        // 透明度相关处理
+        this.setting.setOpacity(this.opacity.getValue());
+        // 其他设置
+        this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
-        this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
         this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
         this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
         if (this.settingStore.update(this.setting)) {
-            MessageBox.okToast("保存配置成功" + tips);
+            MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess") + tips);
             this.closeStage();
+            // 应用区域配置
+            I18nManager.apply(this.setting.getLocale());
+            // 应用字体配置
+            FontManager.apply(this.setting.fontConfig());
+            // 应用透明度配置
+            OpacityManager.apply(this.opacity.getValue());
+            // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
         } else {
-            MessageBox.warnToast("保存配置失败！");
+            MessageBox.warnToast(I18nResourceBundle.i18nString("base.actionFail"));
+        }
+    }
+
+    /**
+     * 检查重启软件配置
+     *
+     * @param fontSize   字体大小
+     * @param fontWeight 字体宽度
+     * @param fontFamily 字体名称
+     * @param locale     区域
+     * @return 结果
+     */
+    private String checkConfigForRestart(Integer fontSize, Integer fontWeight, String fontFamily, String locale) {
+        if (!Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
+                || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
+            return I18nResourceBundle.i18nString("base.restartTip1");
+        }
+        return "";
+    }
+
+    @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        this.fgColorBox.disableProperty().bind(this.accentColorBox.disabledProperty());
+        this.bgColorBox.disableProperty().bind(this.accentColorBox.disabledProperty());
+        this.theme.selectedItemChanged((observableValue, number, t1) -> {
+            this.accentColorBox.setDisable(this.theme.isSystem());
+            this.fgColor.setValue(t1.getForegroundColor());
+            this.bgColor.setValue(t1.getBackgroundColor());
+            this.accentColor.setValue(t1.getAccentColor());
+        });
+        if (!this.theme.isSystem()) {
+            this.accentColorBox.enable();
         }
     }
 
     @Override
     public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
         this.stage.hideOnEscape();
+    }
+
+    /**
+     * 重置前景色
+     */
+    @FXML
+    private void resetFgColor() {
+        this.fgColor.setValue(this.theme.getValue().getForegroundColor());
+    }
+
+    /**
+     * 重置背景色
+     */
+    @FXML
+    private void resetBgColor() {
+        this.bgColor.setValue(this.theme.getValue().getBackgroundColor());
+    }
+
+    /**
+     * 重置强调色
+     */
+    @FXML
+    private void resetAccentColor() {
+        this.accentColor.setValue(this.theme.getValue().getAccentColor());
+    }
+
+    /**
+     * 重置字体名称
+     */
+    @FXML
+    private void resetFontFamily() {
+        this.fontFamily.select(null);
+    }
+
+    /**
+     * 重置字体大小
+     */
+    @FXML
+    private void resetFontSize() {
+        this.fontSize.select(null);
+    }
+
+    /**
+     * 重置字体粗细
+     */
+    @FXML
+    private void resetFontWeight() {
+        this.fontWeight.select(null);
+    }
+
+    /**
+     * 重置区域
+     */
+    @FXML
+    private void resetLocale() {
+        this.locale.select((String) null);
+    }
+
+    /**
+     * 重置透明度
+     */
+    @FXML
+    private void resetOpacity() {
+        this.opacity.setValue(OpacityManager.defaultOpacity * 100);
+    }
+
+    @Override
+    public String i18nId() {
+        return "setting";
     }
 }

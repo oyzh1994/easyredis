@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -23,7 +24,6 @@ import javax.annotation.Resource;
  * @since 2023/06/16
  */
 @Lazy
-//@Slf4j
 @Component
 public class HeaderController extends SubController {
 
@@ -51,34 +51,13 @@ public class HeaderController extends SubController {
     private final NodeMutexes treeMutexes = new NodeMutexes();
 
     /**
-     * 过滤
-     */
-    @FXML
-    private void filter() {
-        RedisEventUtil.filterMain();
-    }
-
-    /**
-     * 传输数据
-     */
-    @FXML
-    private void transport() {
-        StageWrapper StageWrapper = StageUtil.getStage(RedisInfoTransportController.class);
-        if (StageWrapper != null) {
-            StageWrapper.toFront();
-        } else {
-            StageUtil.showStage(RedisInfoTransportController.class);
-        }
-    }
-
-    /**
      * 设置
      */
     @FXML
     private void setting() {
-        StageWrapper StageWrapper = StageUtil.getStage(SettingController.class);
-        if (StageWrapper != null) {
-            StageWrapper.toFront();
+        StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
         } else {
             StageUtil.showStage(SettingController.class, this.stage);
         }
@@ -93,12 +72,33 @@ public class HeaderController extends SubController {
     }
 
     /**
+     * 过滤
+     */
+    @FXML
+    private void filter() {
+        RedisEventUtil.filterMain();
+    }
+
+    /**
      * 退出
      */
     @FXML
     private void quit() {
-        if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
+        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.quit") + this.project.getName())) {
             StageUtil.exit();
+        }
+    }
+
+    /**
+     * 传输数据
+     */
+    @FXML
+    private void transport() {
+        StageWrapper wrapper = StageUtil.getStage(RedisInfoTransportController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
+        } else {
+            StageUtil.showStage(RedisInfoTransportController.class);
         }
     }
 

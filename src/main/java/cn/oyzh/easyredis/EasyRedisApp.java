@@ -6,7 +6,10 @@ import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.plus.font.FontManager;
+import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -51,16 +54,22 @@ public class EasyRedisApp extends SpringApplication implements CommandLineRunner
     @Override
     public void start(Stage primaryStage) {
         try {
+            // 应用区域
+            I18nManager.apply(RedisSettingStore.SETTING.getLocale());
+            // 应用字体
+            FontManager.apply(RedisSettingStore.SETTING.fontConfig());
             // 应用主题
             ThemeManager.apply(RedisSettingStore.SETTING.themeConfig());
+            // 应用透明度
+            OpacityManager.apply(RedisSettingStore.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(RedisExceptionParser.INSTANCE);
-            // 开启定期gc
-            SystemUtil.gcInterval(60_000);
             // 开始执行业务
             super.start(primaryStage);
             // 显示主页面
             StageUtil.showStage(MainController.class);
+            // 开启定期gc
+            SystemUtil.gcInterval(60_000);
             // 设置stage全部关闭后不自动销毁进程
             Platform.setImplicitExit(false);
         } catch (Exception ex) {

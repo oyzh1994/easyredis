@@ -2,47 +2,51 @@
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.button.ResetButton?>
+<?import cn.oyzh.fx.plus.controls.button.SaveButton?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
+<?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
+<?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
+<?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
+<?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
 <?import cn.oyzh.fx.plus.tabs.TabStrategyComboBox?>
+<?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexSlider?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="280">
+          fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
-        <FXTab text="窗口设置">
-            <FlexVBox flexWidth="100%">
+        <FXTab text="%base.window">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口关闭" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%base.close" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <fx:define>
                         <FXToggleGroup fx:id="exitMode"/>
                     </fx:define>
-                    <FXRadioButton toggleGroup="$exitMode" text="最小化到托盘" realHeight="25" selected="true"
-                                   fx:id="exitMode0" userData="0">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode3" realHeight="25" selected="true" fx:id="exitMode0" userData="0">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="询问是否退出" realHeight="25" fx:id="exitMode1"
-                                   userData="1">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode1" realHeight="25" fx:id="exitMode1" userData="1">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FXRadioButton>
-                    <FXRadioButton toggleGroup="$exitMode" text="直接退出程序" realHeight="25" fx:id="exitMode2"
-                                   userData="2">
+                    <FXRadioButton toggleGroup="$exitMode" text="%base.exitMode2" realHeight="25" fx:id="exitMode2" userData="2">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
@@ -52,42 +56,61 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="窗口记忆" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%base.remember" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <FlexCheckBox text="记住窗口大小" realHeight="25" fx:id="pageSize">
+                    </AccentLabel>
+                    <FlexCheckBox text="%base.windowSize" realHeight="25" fx:id="pageSize">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="记住窗口位置" realHeight="25" fx:id="pageLocation">
+                    <FlexCheckBox text="%base.windowLocation" realHeight="25" fx:id="pageLocation">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FlexCheckBox>
-                    <FlexCheckBox text="记住窗口拉伸" selected="true" realHeight="25" fx:id="pageResize">
+                    <FlexCheckBox text="%base.windowResize" selected="true" realHeight="25" fx:id="pageResize">
                         <HBox.margin>
                             <Insets left="10" top="12"/>
                         </HBox.margin>
                     </FlexCheckBox>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.opacity" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FlexSlider realHeight="25" fx:id="opacity" min="40" value="100">
+                        <HBox.margin>
+                            <Insets left="10" top="15"/>
+                        </HBox.margin>
+                    </FlexSlider>
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetOpacity">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
                     <VBox.margin>
                         <Insets top="10"/>
                     </VBox.margin>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="标签设置">
+        <FXTab text="%base.label">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制策略" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%base.strategy" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <TabStrategyComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种限制策略"
-                                         fx:id="tabStrategy">
+                    </AccentLabel>
+                    <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -97,13 +120,14 @@
                     </VBox.margin>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="限制数量" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%base.limit" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140" realHeight="30"
-                                     tipText="0代表无限制，最大值1000">
+                    </AccentLabel>
+                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
+                                     realHeight="30"
+                                     tipText="%base.tabLimitTip">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -114,15 +138,79 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="主题设置">
+        <FXTab text="%base.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel text="主题名称" realHeight="30" realWidth="65" styleClass="accent">
+                    <AccentLabel text="%base.fontName" realHeight="30" realWidth="80">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
-                    <ThemeComboBox flexWidth="100% - 140" initIndex="0" tipText="选择一种主题"
+                    </AccentLabel>
+                    <FontFamilyComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontFamily">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FontFamilyComboBox>
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontFamily">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.fontSize" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FontSizeComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontSize">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FontSizeComboBox>
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontSize">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.fontWeight" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FontWeightComboBox realHeight="30" flexWidth="100% - 225" fx:id="fontWeight">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FontWeightComboBox>
+                    <ResetButton realWidth="80" realHeight="25" onAction="#resetFontWeight">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="%base.theme">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.themeName" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <ThemeComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" tipText="%base.themeTip"
                                    fx:id="theme">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
@@ -132,15 +220,106 @@
                         <Insets top="10"/>
                     </VBox.margin>
                 </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="fgColorBox" disable="true">
+                    <AccentLabel text="%base.fgColor" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.fgColorTip"
+                                     fx:id="fgColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <ResetButton realWidth="80" realHeight="25"
+                                 onAction="#resetFgColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="bgColorBox" disable="true">
+                    <AccentLabel text="%base.bgColor" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.bgColorTip"
+                                     fx:id="bgColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <ResetButton realWidth="80" realHeight="25"
+                                 onAction="#resetBgColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50" fx:id="accentColorBox" disable="true">
+                    <AccentLabel text="%base.accentColor" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <FlexColorPicker realHeight="30" flexWidth="100% - 225" tipText="%base.accentColorTip"
+                                     fx:id="accentColor">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </FlexColorPicker>
+                    <ResetButton realWidth="80" realHeight="25"
+                                 onAction="#resetAccentColor">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="%base.locale">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel text="%base.language" realHeight="30" realWidth="80">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <LocaleComboBox realHeight="30" flexWidth="100% - 225" initIndex="0" fx:id="locale">
+                        <HBox.margin>
+                            <Insets left="10" top="10"/>
+                        </HBox.margin>
+                    </LocaleComboBox>
+                    <ResetButton realWidth="80" realHeight="25"
+                                 onAction="#resetLocale">
+                        <HBox.margin>
+                            <Insets left="5" top="15"/>
+                        </HBox.margin>
+                    </ResetButton>
+                    <VBox.margin>
+                        <Insets top="10"/>
+                    </VBox.margin>
+                </FlexHBox>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#saveSetting" text="保存">
+        <SaveButton onAction="#saveSetting">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
-        </SubmitButton>
+        </SaveButton>
         <CancelButton>
             <HBox.margin>
                 <Insets left="15" top="10"/>
