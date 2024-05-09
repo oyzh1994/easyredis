@@ -16,6 +16,7 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -758,7 +759,7 @@ public class RedisInfoTransportController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "info.transport";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.info.transport");
     }
 }

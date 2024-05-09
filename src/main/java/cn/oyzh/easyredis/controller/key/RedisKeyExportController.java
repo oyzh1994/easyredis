@@ -16,6 +16,7 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -55,10 +56,8 @@ import java.util.Set;
  * @since 2023/07/07
  */
 @StageAttribute(
-        title = "Redis数据导出",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
 )
 public class RedisKeyExportController extends Controller {
@@ -560,5 +559,10 @@ public class RedisKeyExportController extends Controller {
                 this.keys.appendLines(texts);
             }
         }
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.export");
     }
 }

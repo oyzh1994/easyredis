@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -37,7 +38,6 @@ import java.util.stream.Collectors;
  * @since 2023/06/22
  */
 @StageAttribute(
-        title = "Redis键添加",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
@@ -530,5 +530,10 @@ public class RedisKeyAddController extends Controller {
     @Override
     public void onStageHidden(WindowEvent event) {
         super.onStageHidden(event);
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.key.add");
     }
 }

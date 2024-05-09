@@ -226,7 +226,7 @@ public class RedisMainController extends ParentController {
     /**
      * 刷新窗口标题
      *
-     * @param info zk信息
+     * @param info redis信息
      */
     private void flushViewTitle(RedisInfo info) {
         if (info != null) {

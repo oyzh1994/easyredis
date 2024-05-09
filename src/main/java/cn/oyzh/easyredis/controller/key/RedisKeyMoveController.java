@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.DisabledTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -23,10 +24,8 @@ import javafx.stage.WindowEvent;
  * @since 2023/07/08
  */
 @StageAttribute(
-        title = "Redis键移动",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyMove.fxml"
 )
 public class RedisKeyMoveController extends Controller {
@@ -136,5 +135,10 @@ public class RedisKeyMoveController extends Controller {
     @Override
     public void onStageHidden(WindowEvent event) {
         super.onStageHidden(event);
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.key.move");
     }
 }

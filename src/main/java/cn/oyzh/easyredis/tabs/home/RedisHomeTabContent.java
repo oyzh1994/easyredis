@@ -85,9 +85,4 @@ public class RedisHomeTabContent extends DynamicTabController {
     private void changelog() {
         RedisEventUtil.changelog();
     }
-
-    @Override
-    public String i18nId() {
-        return "home";
-    }
 }

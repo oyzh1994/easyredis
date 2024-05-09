@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.home;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -30,5 +31,10 @@ public class RedisHomeTab extends DynamicTab {
             graphic.setCursor(Cursor.DEFAULT);
             this.setGraphic(graphic);
         }
+    }
+
+    @Override
+    protected String getTabTitle() {
+        return I18nResourceBundle.i18nString("base.title.home");
     }
 }

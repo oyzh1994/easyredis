@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.search.SearchTextField;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -21,10 +22,8 @@ import javafx.stage.WindowEvent;
  * @since 2023/07/19
  */
 @StageAttribute(
-        title = "Redis键过滤",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         resizeable = false,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyFilter.fxml"
 )
@@ -71,5 +70,10 @@ public class RedisKeyFilterController extends Controller {
         }
         this.treeItem.doKeyFilter(pattern);
         this.closeStage();
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.key.filter");
     }
 }

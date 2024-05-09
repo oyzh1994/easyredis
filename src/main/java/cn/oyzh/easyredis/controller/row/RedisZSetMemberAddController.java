@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -23,7 +24,6 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/27
  */
 @StageAttribute(
-        title = "添加zset成员",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisZSetMemberAdd.fxml"
@@ -78,9 +78,7 @@ public class RedisZSetMemberAddController extends Controller {
             // 添加元素
             client.zadd(dbIndex, key, score, rowValue);
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_ZSET_MEMBER_ADDED, this.treeItem);
             RedisEventUtil.zSetMemberAdded(this.treeItem, key, rowValue, score);
-            // MessageBox.okToast("新增成员成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -131,5 +129,10 @@ public class RedisZSetMemberAddController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.zSetMemberAdd");
     }
 }

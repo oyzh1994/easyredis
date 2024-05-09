@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -38,7 +39,6 @@ import java.util.Set;
  * @since 2020/10/09
  */
 @StageAttribute(
-        title = "Redis键批量操作",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
@@ -517,5 +517,10 @@ public class RedisKeyBatchOperationController extends Controller {
         this.copyTargetDB.setDbCount(this.client.databases());
         this.copyTargetDB.selectFirst();
         this.stage.appendTitle("(" + this.treeItem.info().getName() + "-db" + this.treeItem.dbIndex() + ")");
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.key.batchOperation");
     }
 }

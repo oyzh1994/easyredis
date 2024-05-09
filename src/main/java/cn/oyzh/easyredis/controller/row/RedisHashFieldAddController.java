@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -21,9 +22,7 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2023/06/27
  */
-//@Slf4j
 @StageAttribute(
-        title = "添加hash字段",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisHashFieldAdd.fxml"
@@ -130,5 +129,10 @@ public class RedisHashFieldAddController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.hashFieldAdd");
     }
 }

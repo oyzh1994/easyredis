@@ -393,7 +393,7 @@ public class RedisInfoAddController extends Controller {
     }
 
     @Override
-    public String i18nId() {
-        return "info.add";
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.info.add");
     }
 }

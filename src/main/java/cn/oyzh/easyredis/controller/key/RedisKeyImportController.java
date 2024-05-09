@@ -26,6 +26,7 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -61,10 +62,8 @@ import java.util.stream.Collectors;
  * @since 2023/07/19
  */
 @StageAttribute(
-        title = "Redis数据导入",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyImport.fxml"
 )
 public class RedisKeyImportController extends Controller {
@@ -500,5 +499,10 @@ public class RedisKeyImportController extends Controller {
             this.counter.setExtraMsg(extraMsg);
         }
         FXUtil.runLater(() -> this.importStatus.setText(this.counter.knownFormat()));
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("base.title.import");
     }
 }

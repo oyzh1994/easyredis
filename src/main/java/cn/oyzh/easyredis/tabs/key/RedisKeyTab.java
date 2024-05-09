@@ -55,7 +55,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
     /**
      * 执行初始化
      *
-     * @param treeItem zk树节点
+     * @param treeItem redis树节点
      */
     public void init(@NonNull T treeItem) {
         if (treeItem != this.treeItem) {

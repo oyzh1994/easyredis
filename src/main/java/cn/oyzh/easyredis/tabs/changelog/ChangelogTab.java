@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.changelog;
 
 import cn.oyzh.fx.plus.controls.svg.ChangelogSVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
@@ -30,5 +31,10 @@ public class ChangelogTab extends DynamicTab {
     @Override
     protected String url() {
         return "/tabs/changelog/changelogContent.fxml";
+    }
+
+    @Override
+    protected String getTabTitle() {
+        return I18nResourceBundle.i18nString("base.title.changelog");
     }
 }

@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -27,7 +28,6 @@ import java.util.Map;
  * @since 2023/07/07
  */
 @StageAttribute(
-        title = "添加stream消息",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisStreamMessageAdd.fxml"
@@ -146,4 +146,8 @@ public class RedisStreamMessageAddController extends Controller {
         super.onStageShown(event);
     }
 
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.streamMessageAdd");
+    }
 }

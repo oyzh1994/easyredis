@@ -248,9 +248,4 @@ public class RedisFilterTabContent extends DynamicTabController {
         // 显示首页
         this.firstPage();
     }
-
-    @Override
-    public String i18nId() {
-        return "filter.main";
-    }
 }

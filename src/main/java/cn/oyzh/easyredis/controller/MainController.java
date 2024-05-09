@@ -9,18 +9,20 @@ import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controller.ParentController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.event.EventUtil;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.tray.DesktopTrayItem;
+import cn.oyzh.fx.plus.tray.QuitTrayItem;
+import cn.oyzh.fx.plus.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +35,6 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
-        title = "EasyRedis主页",
         iconUrls = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "main.fxml"
 )
@@ -42,7 +43,7 @@ public class MainController extends ParentController {
     /**
      * 项目信息
      */
-    @Autowired
+    @Resource
     private Project project;
 
     /**
@@ -76,21 +77,25 @@ public class MainController extends ParentController {
      * 初始化系统托盘
      */
     private void initSystemTray() {
+        if (!TrayManager.supported()) {
+            StaticLog.warn("tray is not supported.");
+            return;
+        }
         if (!TrayManager.exist()) {
             try {
-                // 初始化托盘
+                // 初始化
                 TrayManager.init(RedisConst.ICON_PATH);
                 // 设置标题
                 TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
                 // 打开主页
-                TrayManager.addMenuItem("打开", new SVGGlyph("/font/desktop.svg", "12"), this::showMain);
+                TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
                 // 打开设置
-                TrayManager.addMenuItem("设置", new SVGGlyph("/font/setting.svg", "12"), this::showSetting);
+                TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
                 // 退出程序
-                TrayManager.addMenuItem("退出", new SVGGlyph("/font/poweroff.svg", "12"), () -> {
+                TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
                     StaticLog.warn("exit app by tray.");
-                    this.exit();
-                });
+                    StageUtil.exit();
+                }));
                 // 鼠标事件
                 TrayManager.onMouseClicked(e -> {
                     // 单击鼠标主键，显示主页
@@ -109,10 +114,10 @@ public class MainController extends ParentController {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            StageWrapper StageWrapper = StageUtil.getStage(SettingController.class);
-            if (StageWrapper != null) {
+            StageWrapper wrapper = StageUtil.getStage(SettingController.class);
+            if (wrapper != null) {
                 StaticLog.info("front setting.");
-                StageWrapper.toFront();
+                wrapper.toFront();
             } else {
                 StaticLog.info("show setting.");
                 StageUtil.showStage(SettingController.class, this.stage);
@@ -125,10 +130,10 @@ public class MainController extends ParentController {
      */
     private void showMain() {
         FXUtil.runLater(() -> {
-            StageWrapper StageWrapper = StageUtil.getStage(MainController.class);
-            if (StageWrapper != null) {
+            StageWrapper wrapper = StageUtil.getStage(MainController.class);
+            if (wrapper != null) {
                 StaticLog.info("front main.");
-                StageWrapper.toFront();
+                wrapper.toFront();
             } else {
                 StaticLog.info("show main.");
                 StageUtil.showStage(MainController.class);
@@ -137,7 +142,7 @@ public class MainController extends ParentController {
     }
 
     @Override
-    public List<Controller> getSubControllers() {
+    public List<? extends Controller> getSubControllers() {
         return Arrays.asList(this.redisMainController, this.headerController);
     }
 
@@ -147,30 +152,22 @@ public class MainController extends ParentController {
         // 直接退出应用
         if (this.setting.isExitDirectly()) {
             StaticLog.info("exit directly.");
-            this.exit();
-            return;
-        }
-
-        // 总是询问
-        if (this.setting.isExitAsk()) {
-            if (MessageBox.confirm("确定退出" + this.project.getName() + "？")) {
+            StageUtil.exit();
+        } else if (this.setting.isExitAsk()) { // 总是询问
+            if (MessageBox.confirm(I18nResourceBundle.i18nString("base.quit") + this.project.getName())) {
                 StaticLog.info("exit by confirm.");
-                this.exit();
+                StageUtil.exit();
             } else {
                 StaticLog.info("cancel by confirm.");
                 event.consume();
             }
-            return;
-        }
-
-        // 系统托盘
-        if (this.setting.isExitTray()) {
+        } else if (this.setting.isExitTray()) {// 系统托盘
             if (TrayManager.exist()) {
                 StaticLog.info("show tray.");
                 TrayManager.show();
             } else {
                 StaticLog.error("tray not support!");
-                MessageBox.warn("不支持系统托盘！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.trayNotSupport"));
             }
         }
     }
@@ -184,8 +181,6 @@ public class MainController extends ParentController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        // 注册事件处理
-        EventUtil.register(this);
         try {
             this.initSystemTray();
             TrayManager.show();
@@ -193,13 +188,6 @@ public class MainController extends ParentController {
             StaticLog.warn("不支持系统托盘!");
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * 应用退出
-     */
-    public void exit() {
-        StageUtil.exit();
     }
 
     @Override
@@ -222,15 +210,14 @@ public class MainController extends ParentController {
         if (savePageInfo) {
             this.pageInfoStore.update(this.pageInfo);
         }
-
         // 关闭托盘
         TrayManager.destroy();
         super.onSystemExit();
     }
 
     @Override
-    public void onStageInitialize(StageWrapper view) {
-        super.onStageInitialize(view);
+    public void onStageInitialize(StageWrapper stage) {
+        super.onStageInitialize(stage);
         // 设置上次保存的页面大小
         if (this.setting.isRememberPageSize()) {
             if (this.pageInfo.isMaximized()) {
@@ -248,5 +235,10 @@ public class MainController extends ParentController {
             this.stage.setY(this.pageInfo.getScreenY());
             StaticLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
         }
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.main");
     }
 }

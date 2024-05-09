@@ -197,7 +197,7 @@ public class RedisConnectUtil {
      * 复制连接
      *
      * @param connect 连接对象
-     * @param info    zk对象
+     * @param info    redis对象
      */
     public static void copyConnect(RedisConnect connect, RedisInfo info) {
         if (connect != null && info != null) {

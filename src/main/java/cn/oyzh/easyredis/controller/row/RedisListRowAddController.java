@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -22,12 +23,9 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2023/06/25
  */
-//@Slf4j
 @StageAttribute(
-        title = "添加list行",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "row/redisListRowAdd.fxml"
 )
 public class RedisListRowAddController extends Controller {
@@ -129,4 +127,8 @@ public class RedisListRowAddController extends Controller {
         super.onStageShown(event);
     }
 
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.listRowAdd");
+    }
 }

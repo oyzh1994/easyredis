@@ -8,6 +8,7 @@ import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -24,7 +25,6 @@ import java.sql.Date;
  * @since 2023/07/09
  */
 @StageAttribute(
-        title = "Redis键TTL变更",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
@@ -167,5 +167,10 @@ public class RedisKeyTTLController extends Controller {
             this.ttl.setValue(ttl);
             this.expirePreview.setText(Const.DATE_FORMAT.format(new Date(System.currentTimeMillis() + ttl * 1000)));
         }
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.key.ttlUpdate");
     }
 }

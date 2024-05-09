@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -22,7 +23,6 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/27
  */
 @StageAttribute(
-        title = "添加地理坐标",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisZSetCoordinateAdd.fxml"
@@ -122,5 +122,10 @@ public class RedisZSetCoordinateAddController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);
+    }
+
+    @Override
+    public String getViewTitle() {
+        return I18nResourceBundle.i18nString("redis.title.zSetCoordinateAdd");
     }
 }
