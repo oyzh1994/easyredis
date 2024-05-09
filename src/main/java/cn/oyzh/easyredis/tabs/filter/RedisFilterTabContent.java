@@ -8,13 +8,15 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.page.PageBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -23,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import org.springframework.context.annotation.Lazy;
@@ -57,7 +60,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * 数据列表
      */
     @FXML
-    private FlexTableView<RedisFilter> listTable;
+    private TableView<RedisFilter> listTable;
 
     /**
      * 数据索id列
@@ -75,13 +78,13 @@ public class RedisFilterTabContent extends DynamicTabController {
      * 数据状态列
      */
     @FXML
-    private FlexTableColumn<RedisFilterVO, String> enable;
+    private FlexTableColumn<RedisFilterVO, String> status;
 
     /**
-     * 数据名称列
+     * 匹配模式列
      */
     @FXML
-    private FlexTableColumn<RedisFilterVO, String> partMatch;
+    private FlexTableColumn<RedisFilterVO, String> matchMode;
 
     /**
      * 数据操作列
@@ -106,7 +109,8 @@ public class RedisFilterTabContent extends DynamicTabController {
      */
     private void initDataList(long pageNo) {
         this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
-        this.listTable.setItem(RedisFilterVO.convert(this.pageData.page(pageNo)));
+        this.listTable.getItems().clear();
+        this.listTable.getItems().addAll(RedisFilterVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);
     }
 
@@ -122,8 +126,7 @@ public class RedisFilterTabContent extends DynamicTabController {
             public Node initGraphic() {
                 if (this.hBox == null) {
                     // 删除按钮
-                    SVGGlyph del = new SVGGlyph("/font/delete.svg", 14.d);
-                    del.setTipText("删除");
+                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
                     del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
                     this.hBox = new HBox(del);
                     HBox.setMargin(del, new Insets(7, 0, 0, 5));
@@ -133,22 +136,20 @@ public class RedisFilterTabContent extends DynamicTabController {
         });
 
         // 状态栏初始化
-        this.enable.setCellFactory((cell) -> new FXTableCell<>() {
+        this.status.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 RedisFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
                     toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelectedText("已启用");
-                    toggleSwitch.setUnselectedText("已禁用");
                     toggleSwitch.setSelected(filterVO.isEnable());
                     toggleSwitch.selectedChanged((abs, o, n) -> {
                         filterVO.setEnable(n);
-                        if (!filterStore.update(filterVO)) {
-                            MessageBox.warn("修改状态失败！");
-                        } else {
+                        if (filterStore.update(filterVO)) {
                             RedisEventUtil.treeChildFilter();
+                        } else {
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                         }
                     });
                     return toggleSwitch;
@@ -158,22 +159,20 @@ public class RedisFilterTabContent extends DynamicTabController {
         });
 
         // 匹配模式栏初始化
-        this.partMatch.setCellFactory((cell) -> new FXTableCell<>() {
+        this.matchMode.setCellFactory((cell) -> new FXTableCell<>() {
             @Override
             public FXToggleSwitch initGraphic() {
                 RedisFilterVO filterVO = this.getTableItem();
                 if (filterVO != null) {
-                    FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+                    MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
                     toggleSwitch.fontSize(11);
-                    toggleSwitch.setSelectedText("模糊匹配");
-                    toggleSwitch.setUnselectedText("完全匹配");
                     toggleSwitch.setSelected(filterVO.isPartMatch());
                     toggleSwitch.selectedChanged((obs, o, n) -> {
                         filterVO.setPartMatch(n);
-                        if (!filterStore.update(filterVO)) {
-                            MessageBox.warn("修改匹配方式失败！");
-                        } else if (filterVO.isEnable()) {
+                        if (filterStore.update(filterVO)) {
                             RedisEventUtil.treeChildFilter();
+                        } else if (filterVO.isEnable()) {
+                            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
                         }
                     });
                     return toggleSwitch;
@@ -189,12 +188,12 @@ public class RedisFilterTabContent extends DynamicTabController {
      * @param info redis信息
      */
     private void deleteInfo(RedisFilter info) {
-        if (MessageBox.confirm("确定删除此过滤配置？")) {
+        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
             if (this.filterStore.delete(info)) {
                 RedisEventUtil.treeChildFilter();
                 this.firstPage();
             } else {
-                MessageBox.warn("删除过滤配置失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         }
     }
@@ -239,8 +238,8 @@ public class RedisFilterTabContent extends DynamicTabController {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url, resourceBundle);
+    public void initialize(URL url, ResourceBundle resources) {
+        super.initialize(url, resources);
         this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
@@ -248,5 +247,10 @@ public class RedisFilterTabContent extends DynamicTabController {
         this.initTable();
         // 显示首页
         this.firstPage();
+    }
+
+    @Override
+    public String i18nId() {
+        return "filter.main";
     }
 }

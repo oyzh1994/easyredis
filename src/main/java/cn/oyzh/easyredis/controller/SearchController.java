@@ -16,6 +16,7 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexVBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -76,22 +77,22 @@ public class SearchController extends SubController {
     private SVGGlyph searchAnalyse;
 
     /**
-     * 搜索-搜索模式
+     * 搜索-过滤模式
      */
     @FXML
-    private FlexCheckBox mode;
+    private FXCheckBox filterMode;
 
     /**
      * 搜索-全文匹配
      */
     @FXML
-    private FlexCheckBox fullMatch;
+    private FXCheckBox matchFull;
 
     /**
      * 搜索-匹配大小写
      */
     @FXML
-    private FlexCheckBox compareCase;
+    private FXCheckBox matchCase;
 
     /**
      * 搜索-搜索结果
@@ -109,16 +110,6 @@ public class SearchController extends SubController {
      */
     @Resource
     private RedisSearchHandler searchHandler;
-
-    /**
-     * 设置
-     */
-    private final RedisSetting setting = RedisSettingStore.SETTING;
-
-    /**
-     * 设置储存
-     */
-    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     /**
      * 搜索历史储存
@@ -219,10 +210,11 @@ public class SearchController extends SubController {
      */
     private RedisSearchParam getSearchParam() {
         RedisSearchParam searchParam = new RedisSearchParam();
+        searchParam.setMode(this.filterMode.isSelected() ? 1 : 0);
         searchParam.setKw(this.searchKW.getTextTrim());
-        searchParam.setFullMatch(this.fullMatch.isSelected());
-        searchParam.setMode(this.mode.isSelected() ? 1 : 0);
-        searchParam.setCompareCase(this.compareCase.isSelected());
+        searchParam.setFullMatch(this.matchFull.isSelected());
+        searchParam.setCompareCase(this.matchCase.isSelected());
+        // 返回搜索参数
         return searchParam;
     }
 
@@ -261,9 +253,9 @@ public class SearchController extends SubController {
         this.searchMain.managedBindVisible();
         this.searchPrev.disableProperty().bind(this.searchNext.disableProperty());
         this.searchAnalyse.disableProperty().bind(this.searchNext.disableProperty());
-        this.mode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.fullMatch.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
-        this.compareCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.matchCase.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.matchFull.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
+        this.filterMode.selectedChanged((observable, oldValue, newValue) -> this.preSearch());
         this.searchKW.addTextChangeListener((observable, oldValue, newValue) -> this.preSearch());
 
         // 监听搜索组件显示事件

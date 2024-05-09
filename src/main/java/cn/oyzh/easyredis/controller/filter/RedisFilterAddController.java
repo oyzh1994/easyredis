@@ -6,8 +6,9 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -21,12 +22,9 @@ import javafx.stage.WindowEvent;
  * @author oyzh
  * @since 2023/06/30
  */
-//@Slf4j
 @StageAttribute(
-        title = "过滤配置新增",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "filter/redisFilterAdd.fxml"
 )
 public class RedisFilterAddController extends Controller {
@@ -44,10 +42,10 @@ public class RedisFilterAddController extends Controller {
     private FXToggleSwitch enable;
 
     /**
-     * 模糊匹配
+     * 匹配方式
      */
     @FXML
-    private FXToggleSwitch partMatch;
+    private FXToggleSwitch matchMode;
 
     /**
      * redis过滤配置储存
@@ -59,32 +57,31 @@ public class RedisFilterAddController extends Controller {
      */
     @FXML
     private void addFilter() {
-        // 获取键值
+        // 获取输入内容
         String kw = this.kw.getText().trim();
         if (StrUtil.isBlank(kw)) {
-            MessageBox.tipMsg("请输入过滤关键字！", this.kw);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentNotEmpty"), this.kw);
             return;
         }
         if (this.filterStore.exist(kw)) {
-            MessageBox.tipMsg("此关键字已存在！", this.kw);
+            MessageBox.tipMsg(I18nResourceBundle.i18nString("base.contentAlreadyExists"), this.kw);
             return;
         }
         try {
             RedisFilter filter = new RedisFilter();
             filter.setKw(kw);
             filter.setEnable(this.enable.isSelected());
-            filter.setPartMatch(this.partMatch.isSelected());
+            filter.setPartMatch(this.matchMode.isSelected());
             if (this.filterStore.add(filter)) {
-                // EventUtil.fire(RedisEventTypes.REDIS_FILTER_ADDED);
-                // EventUtil.fire(RedisEventTypes.REDIS_KEY_FILTER);
                 RedisEventUtil.filterAdded();
-                // RedisEventUtil.keyFilter();
-                MessageBox.okToast("新增Redis过滤配置成功!");
+                RedisEventUtil.treeChildFilter();
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn("新增Redis过滤配置失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
@@ -96,7 +93,7 @@ public class RedisFilterAddController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
+    public String i18nId() {
+        return "filter.add";
     }
 }
