@@ -23,11 +23,6 @@ public class RedisHomeTab extends DynamicTab {
     }
 
     @Override
-    public void flushTitle() {
-        super.setTitle("主页");
-    }
-
-    @Override
     public void flushGraphic() {
         SVGGlyph graphic = (SVGGlyph) this.getGraphic();
         if (graphic == null) {

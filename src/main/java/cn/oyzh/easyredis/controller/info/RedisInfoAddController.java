@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -18,6 +17,8 @@ import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.digital.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import javafx.fxml.FXML;
@@ -31,12 +32,17 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/16
  */
 @StageAttribute(
-        title = "Redis连接新增",
         modality = Modality.WINDOW_MODAL,
         iconUrls = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
 )
 public class RedisInfoAddController extends Controller {
+
+    /**
+     * 只读模式
+     */
+    @FXML
+    private FlexCheckBox readonly;
 
     /**
      * tab组件
@@ -109,12 +115,6 @@ public class RedisInfoAddController extends Controller {
      */
     @FXML
     private FlexCheckBox redirectMaster;
-
-    /**
-     * 只读模式
-     */
-    @FXML
-    private FlexCheckBox readonly;
 
     /**
      * 连接超时
@@ -242,8 +242,8 @@ public class RedisInfoAddController extends Controller {
         // 检查连接地址
         String host = this.getHost();
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
-            MessageBox.warn("请填写地址");
-        }else {
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
+        } else {
             RedisInfo redisInfo = new RedisInfo();
             redisInfo.setHost(host);
             redisInfo.setExecuteTimeOut(3);
@@ -275,7 +275,6 @@ public class RedisInfoAddController extends Controller {
             String name = this.name.getTextTrim();
             RedisInfo redisInfo = new RedisInfo();
             redisInfo.setName(name);
-
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number executeTimeOut = this.executeTimeOut.getValue();
 
@@ -314,22 +313,15 @@ public class RedisInfoAddController extends Controller {
             boolean result = this.infoStore.add(redisInfo);
             if (result) {
                 RedisEventUtil.infoAdded(redisInfo);
-                MessageBox.okToast("新增redis信息成功!");
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
                 this.closeStage();
             } else {
-                MessageBox.warn("新增redis信息失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             MessageBox.exception(ex);
         }
-    }
-
-    @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
-        this.stage.switchOnTab();
-        this.group = this.getStageProp("group");
-        this.stage.hideOnEscape();
     }
 
     @Override
@@ -393,7 +385,15 @@ public class RedisInfoAddController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        this.group = this.getStageProp("group");
+        this.stage.switchOnTab();
+        this.stage.hideOnEscape();
+    }
+
+    @Override
+    public String i18nId() {
+        return "info.add";
     }
 }

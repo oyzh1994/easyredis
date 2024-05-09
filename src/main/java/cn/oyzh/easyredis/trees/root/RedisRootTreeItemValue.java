@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.root;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 
 /**
@@ -19,7 +20,7 @@ public class RedisRootTreeItemValue extends RedisTreeItemValue {
 
     @Override
     public String name() {
-        return "Redis连接列表";
+        return I18nResourceBundle.i18nString("base.redis");
     }
 
     @Override

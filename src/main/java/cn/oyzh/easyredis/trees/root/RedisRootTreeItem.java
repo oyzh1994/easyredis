@@ -16,10 +16,13 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
+import cn.oyzh.fx.plus.menu.AddGroupMenuItem;
+import cn.oyzh.fx.plus.menu.ExportConnectMenuItem;
+import cn.oyzh.fx.plus.menu.ImportConnectMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.event.EventHandler;
@@ -55,11 +58,9 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
-        // // 注册事件处理
-        // EventUtil.register(this);
         // 初始化子节点
         this.initChildes();
-        // 监听键变化
+        // 监听变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             RedisEventUtil.treeChildChanged();
             this.flushLocal();
@@ -70,6 +71,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 初始化子节点
      */
     private void initChildes() {
+        // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
         if (CollUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>();
@@ -78,22 +80,27 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             }
             this.addChild(list);
         }
+        // 初始化连接
         List<RedisInfo> infos = this.infoStore.load();
-        this.addConnects(infos);
+        if (CollUtil.isNotEmpty(infos)) {
+            this.addConnects(infos);
+        }
     }
 
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem addConnect = FXMenuItem.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
-        MenuItem addGroup = FXMenuItem.newItem("添加分组", new SVGGlyph("/font/addGroup.svg", "12"), "添加分组", this::addGroup);
-        MenuItem exportConnect = FXMenuItem.newItem("导出连接", new SVGGlyph("/font/export.svg", "12"), "导出redis连接", this::exportConnect);
-        MenuItem importConnect = FXMenuItem.newItem("导入连接", new SVGGlyph("/font/Import.svg", "12"), "选择文件，导入redis连接，也可拖拽文件到窗口进行导入", this::importConnect);
+        AddConnectMenuItem addConnect = new AddConnectMenuItem("12", this::addConnect);
+        ExportConnectMenuItem exportConnect = new ExportConnectMenuItem("12", this::exportConnect);
+        ImportConnectMenuItem importConnect = new ImportConnectMenuItem("12", this::importConnect);
+        AddGroupMenuItem addGroup = new AddGroupMenuItem("12", this::addGroup);
+
         exportConnect.setDisable(this.isChildEmpty());
+
         items.add(addConnect);
-        items.add(addGroup);
         items.add(exportConnect);
         items.add(importConnect);
+        items.add(addGroup);
         return items;
     }
 
@@ -101,21 +108,20 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 导出连接
      */
     private void exportConnect() {
-        List<RedisInfo> redisInfos = this.infoStore.load();
-        if (redisInfos.isEmpty()) {
-            MessageBox.warn("连接为空！");
+        List<RedisInfo> infos = this.infoStore.load();
+        if (infos.isEmpty()) {
+            MessageBox.warn(I18nResourceBundle.i18nString("base.connect", "base.is", "base.empty"));
             return;
         }
-        RedisInfoExport export = RedisInfoExport.fromConnects(redisInfos);
+        RedisInfoExport export = RedisInfoExport.fromConnects(infos);
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        File file = FileChooserUtil.save("保存Redis连接列表", "Redis连接列表.json", new FileChooser.ExtensionFilter[]{extensionFilter});
+        File file = FileChooserUtil.save(I18nResourceBundle.i18nString("base.save", "base.connect"), I18nResourceBundle.i18nString("base.redis", "base.connect", "base._json"), new FileChooser.ExtensionFilter[]{extensionFilter});
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast("保存连接成功！");
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
             } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.warn("保存连接失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         }
     }
@@ -130,10 +136,10 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn("仅支持单个文件！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.onlySupport", "base.single", "base.file"));
             return;
         }
-        File file = files.get(0);
+        File file = CollUtil.getFirst(files);
         // 解析文件
         this.parseConnect(file);
     }
@@ -144,7 +150,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     private void importConnect() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose("选择redis连接列表", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(I18nResourceBundle.i18nString("base.choose", "base.file"), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseConnect(file);
     }
@@ -159,47 +165,45 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn("文件不存在！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.file", "base.notExists"));
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn("不支持文件夹！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.notSupport", "base.folder"));
             return;
         }
         if (!FileNameUtil.isType(file.getName(), "json")) {
-            MessageBox.warn("仅支持json文件！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.invalid", "base.format"));
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn("文件内容为空！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentNotEmpty"));
             return;
         }
         try {
             String text = FileUtil.readUtf8String(file);
             RedisInfoExport export = RedisInfoExport.fromJSON(text);
-            List<RedisInfo> redisInfos = export.getConnects();
-            if (CollUtil.isNotEmpty(redisInfos)) {
-                for (RedisInfo info : redisInfos) {
-                    if (this.infoStore.exist(info)) {
-                        MessageBox.warn("连接[" + info.getName() + "]已存在");
-                    } else if (this.infoStore.add(info)) {
+            List<RedisInfo> infos = export.getConnects();
+            if (CollUtil.isNotEmpty(infos)) {
+                for (RedisInfo info : infos) {
+                    if (this.infoStore.add(info)) {
                         this.addConnect(info);
                     } else {
-                        MessageBox.warn("连接[" + info.getName() + "]导入失败");
+                        MessageBox.warn(I18nResourceBundle.i18nString("base.connect") + "[" + info.getName() + "]" + I18nResourceBundle.i18nString("base.importFail"));
                     }
                 }
-                MessageBox.okToast("导入连接成功！");
+                MessageBox.okToast(I18nResourceBundle.i18nString("base.actionSuccess"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.warn("解析连接失败！");
+            MessageBox.exception(ex, I18nResourceBundle.i18nString("base.actionException"));
         }
     }
 
     /**
      * 添加连接
      */
-    public void addConnect() {
+    private void addConnect() {
         StageUtil.showStage(RedisInfoAddController.class, this.window());
     }
 
@@ -207,27 +211,35 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 添加分组
      */
     public void addGroup() {
-        String groupName = MessageBox.prompt("请输入分组名称");
-        // 名称为空，则忽略
-        if (StrUtil.isBlank(groupName)) {
+        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"));
+
+        // 名称为null，则忽略
+        if (groupName == null) {
             return;
         }
+
+        // 不能为空
+        if (StrUtil.isBlank(groupName)) {
+            MessageBox.warn(I18nResourceBundle.i18nString("base.nameNotEmpty"));
+            return;
+        }
+
         RedisGroup group = new RedisGroup();
         group.setName(groupName);
         if (this.groupStore.exist(group)) {
-            MessageBox.warn("此分组已存在！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         group = this.groupStore.add(groupName);
         if (group != null) {
             this.addChild(new RedisGroupTreeItem(group, this.getTreeView()));
         } else {
-            MessageBox.warn("添加分组失败！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 
     /**
-     * 获取分组键
+     * 获取分组树节点组件
      *
      * @param groupId 分组id
      */
@@ -241,9 +253,9 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     }
 
     /**
-     * 获取分组键
+     * 获取分组树节点组件
      *
-     * @return 分组键
+     * @return 分组树节点组件
      */
     private List<RedisGroupTreeItem> getGroupItems() {
         List<RedisGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
@@ -258,16 +270,16 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * 连接新增事件
      *
-     * @param info redis连接
+     * @param info 连接
      */
-    private void infoAdded(RedisInfo info) {
+    public void infoAdded(RedisInfo info) {
         this.addConnect(info);
     }
 
     /**
      * 连接变更事件
      *
-     * @param info redis连接
+     * @param info 连接
      */
     public void infoUpdate(RedisInfo info) {
         f1:
@@ -289,14 +301,13 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     }
 
     @Override
-    public void addConnect(@NonNull RedisInfo redisInfo) {
-        RedisGroupTreeItem groupItem = this.getGroupItem(redisInfo.getGroupId());
+    public void addConnect(@NonNull RedisInfo info) {
+        RedisGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
-            super.addChild(new RedisConnectTreeItem(redisInfo, this.getTreeView()));
+            super.addChild(new RedisConnectTreeItem(info, this.getTreeView()));
             this.extend();
         } else {
-            groupItem.addConnect(redisInfo);
-            // groupItem.extend();
+            groupItem.addConnect(info);
         }
     }
 
@@ -316,6 +327,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
+            this.extend();
         }
     }
 

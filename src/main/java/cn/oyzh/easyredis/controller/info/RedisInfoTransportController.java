@@ -47,12 +47,9 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/07/20
  */
-//@Slf4j
 @StageAttribute(
-        title = "Redis数据传输",
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        // cssUrls = RedisStyle.COMMON,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoTransport.fxml"
 )
 public class RedisInfoTransportController extends Controller {
@@ -181,12 +178,6 @@ public class RedisInfoTransportController extends Controller {
      */
     @FXML
     private FlexCheckBox hashType;
-
-//    /**
-//     * 排除hyperLogLog类型
-//     */
-//    @FXML
-//    private FlexCheckBox hyperLogLogType;
 
     /**
      * 当前传输redis对象
@@ -764,5 +755,10 @@ public class RedisInfoTransportController extends Controller {
             }
             this.keys.appendLines(texts);
         }
+    }
+
+    @Override
+    public String i18nId() {
+        return "info.transport";
     }
 }

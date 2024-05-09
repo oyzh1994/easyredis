@@ -18,11 +18,6 @@ public class RedisFilterTab extends DynamicTab {
     }
 
     @Override
-    public void flushTitle() {
-        super.setTitle("过滤配置列表");
-    }
-
-    @Override
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {

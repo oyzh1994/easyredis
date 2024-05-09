@@ -19,18 +19,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.button.TransportButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
-          realHeight="850">
+          fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850" realHeight="850">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="来源连接" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.source" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <RedisConnectComboBox fx:id="fromConnect" realHeight="30" flexWidth="100% - 315">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -83,11 +86,11 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标连接" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.target" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <RedisConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -190,11 +193,6 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-<!--        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">-->
-<!--            <HBox.margin>-->
-<!--                <Insets left="10" top="18"/>-->
-<!--            </HBox.margin>-->
-<!--        </FlexCheckBox>-->
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
         <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
@@ -211,46 +209,35 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton disable="true" tipText="开始执行传输" fx:id="transportBtn" onAction="#doTransport"
-                    styleClass="accent"
-                    text="传输"
-                    iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/export.svg" color="white"/>
-            </graphic>
+        <TransportButton stateManager="$stateManager" fx:id="transportBtn" onAction="#doTransport" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <IconButton disable="true" text="结束" fx:id="stopTransportBtn" tipText="结束传输" onAction="#stopTransport"
-                    styleClass="btn,btn-default"
-                    iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
+        </TransportButton>
+        <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport" realHeight="30" iconSizePercent="0.9">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <CancelButton text="关闭" iconSizePercent="0.6">
+        </StopButton>
+        <CloseButton>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </CancelButton>
+        </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="温馨提示:" textFill="#666">
+        <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
-                <Insets top="10"/>
+                <Insets top="20"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" text="1. 连接且数据库相同时无法传输">
+        <Text fill="#666" text="%info.transport.tip1">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
         </Text>
         <VBox.margin>
-            <Insets left="95"/>
+            <Insets left="110"/>
         </VBox.margin>
     </FlexVBox>
 </FlexVBox>
