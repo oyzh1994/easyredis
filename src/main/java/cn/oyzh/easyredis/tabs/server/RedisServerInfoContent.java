@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.util.TableViewUtil;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -81,12 +82,12 @@ public class RedisServerInfoContent {
             tableView.setFlexHeight("100%");
 
             FlexTableColumn<RedisInfoPropItem, String> name = new FlexTableColumn<>();
-            name.setText("属性名");
+            name.setText(I18nResourceBundle.i18nString("base.name"));
             name.setFlexWidth("30%");
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             FlexTableColumn<RedisInfoPropItem, String> value = new FlexTableColumn<>();
-            value.setText("属性值");
+            value.setText(I18nResourceBundle.i18nString("base.value"));
             value.setFlexWidth("70% - 20");
             value.setCellValueFactory(new PropertyValueFactory<>("value"));
 

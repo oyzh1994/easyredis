@@ -3,13 +3,15 @@
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.ExportButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
@@ -20,17 +22,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
+<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="服 务 器" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="服 务 器" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextField disable="true" realHeight="30" fx:id="serverName" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -38,11 +41,11 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="数  据  库" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.database" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <RedisDBComboBox fx:id="db" realHeight="30" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -55,11 +58,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" visible="false">
-        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ClearableTextField stateManager="$stateManager" fx:id="pattern" realHeight="30.0" flexWidth="100% - 275"
                             text="*">
             <HBox.margin>
@@ -73,11 +76,11 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="200" fx:id="keysBox2" visible="false">
-        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 10" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -85,11 +88,11 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -120,18 +123,13 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-<!--        <FlexCheckBox stateManager="$stateManager" fx:id="hyperLogLogType" text="HYPERLOGLOG">-->
-<!--            <HBox.margin>-->
-<!--                <Insets left="10" top="18"/>-->
-<!--            </HBox.margin>-->
-<!--        </FlexCheckBox>-->
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导出配置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -143,11 +141,6 @@
                 <Insets left="10" top="12"/>
             </HBox.margin>
         </FlexComboBox>
-        <!-- <CharsetComboBox prefWidth="120" fx:id="charset" promptText="导出字符集" tipText="默认是此连接的字符集"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="10" top="12"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </CharsetComboBox> -->
         <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
                       tipText="键名称按字典排序">
             <HBox.margin>
@@ -168,11 +161,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -183,35 +176,24 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <IconButton tipText="开始执行导出" fx:id="exportBtn" onAction="#doExport" realHeight="30"
-                    styleClass="accent"
-                    text="导出"
-                    iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/export.svg" color="white"/>
-            </graphic>
+        <ExportButton fx:id="exportBtn" onAction="#doExport" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <IconButton disable="true" text="结束" fx:id="stopExportBtn" tipText="结束导出" onAction="#stopExport"
-                    styleClass="btn,btn-default"
-                    realHeight="30" iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
+        </ExportButton>
+        <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport" realHeight="30" iconSizePercent="0.9">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <CancelButton text="关闭" iconSizePercent="0.6">
+        </StopButton>
+        <CloseButton iconSizePercent="0.6">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </CancelButton>
+        </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="温馨提示:" textFill="#666">
+        <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
                 <Insets left="95" top="10"/>
             </VBox.margin>

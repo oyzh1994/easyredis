@@ -1,59 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyMoveController" realWidth="400"
-          realHeight="210">
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyMoveController" realWidth="480"
+          realHeight="220">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.keyName" realHeight="30" realWidth="100">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
-        <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 140">
+        </AccentLabel>
+        <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.targetDB" realHeight="30" realWidth="100">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
-        <RedisDBComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 140">
+        </AccentLabel>
+        <RedisDBComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="设  置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="100">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
-        <FlexCheckBox selected="true" fx:id="retainTTL" text="移动时保留ttl">
+        </AccentLabel>
+        <FlexCheckBox selected="true" fx:id="retainTTL" text="%redis.key.move.options1">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#moveKey" fx:id="submit" text="移动">
+        <SubmitButton onAction="#moveKey" fx:id="submit" text="%base.move">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="130" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

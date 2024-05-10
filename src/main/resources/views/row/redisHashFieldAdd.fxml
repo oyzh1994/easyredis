@@ -10,15 +10,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <FXLabel text="字段" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.field" realHeight="30" realWidth="50" styleClass="accent">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexTextArea fx:id="fieldValue" flexHeight="100% - 25" tipText="请输入字段名称"
                       flexWidth="100% - 100">
             <HBox.margin>
@@ -27,11 +28,11 @@
         </FlexTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <FXLabel text="数据" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.data" realHeight="30" realWidth="50" styleClass="accent">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入字段数据"
                       flexWidth="100% - 100">
             <HBox.margin>

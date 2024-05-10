@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.IconButton?>
+<?import cn.oyzh.fx.plus.controls.button.ImportButton?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.button.SuccessButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox realHeight="50" flexWidth="100%">
-        <FXLabel text="文件信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.file" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
-        <IconButton stateManager="$stateManager"
-                    tipText="选择导出文件，也可将导出文件拖入到窗口以执行导入" onAction="#chooseFile"
-                    text="选择"
-                    styleClass="success" iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/file.svg"/>
-            </graphic>
+        </AccentLabel>
+        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </IconButton>
+        </FileButton>
     </FlexHBox>
     <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
         <VBox.margin>
@@ -44,11 +42,11 @@
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="冲突配置" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
@@ -75,35 +73,24 @@
         </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="导入选项" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值"
                       selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <!-- <FXLabel text="字符集:"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="10" top="20"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <CharsetComboBox prefWidth="120" initIndex="1" fx:id="charset" promptText="导入字符集" -->
-        <!--                  tipText="默认是源信息的字符集"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5" top="12"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </CharsetComboBox> -->
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexVBox flexWidth="100% - 140" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -113,33 +100,31 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
-        <IconButton tipText="开始执行导入" onAction="#doImport" styleClass="accent"
-                    text="导入" fx:id="importBtn" disable="true" iconSizePercent="0.75">
+        <ImportButton onAction="#doImport"
+                      fx:id="importBtn" disable="true" iconSizePercent="0.75">
             <graphic>
                 <SVGGlyph url="/font/Import.svg" color="white"/>
             </graphic>
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <IconButton disable="true" text="结束" fx:id="stopImportBtn" tipText="结束导入" onAction="#stopImport"
-                    styleClass="btn,btn-default"
-                    realHeight="30" iconSizePercent="0.9">
+        </ImportButton>
+        <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport" realHeight="30" iconSizePercent="0.9">
             <graphic>
                 <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
             </graphic>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </IconButton>
-        <CancelButton text="关闭" iconSizePercent="0.6">
+        </StopButton>
+        <CloseButton iconSizePercent="0.6">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
-        </CancelButton>
+        </CloseButton>
     </FlexHBox>
     <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="温馨提示:" textFill="#666">
+        <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

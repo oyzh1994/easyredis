@@ -10,14 +10,15 @@
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyTTLController" realWidth="600" realHeight="320">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <NumberTextField fx:id="ttl" flexWidth="100%" tipText="请输入TTL值，单位秒" value="-1"
                          require="true" min="-1" max="9223372036854775807" step="3600">
             <HBox.margin>
@@ -26,11 +27,11 @@
         </NumberTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="追加设置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="追加设置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FXButton text="存活加1分钟" onMousePrimaryClicked="#appendWith1M">
             <HBox.margin>
                 <Insets left="5" top="10"/>
@@ -48,11 +49,11 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="快速设置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="快速设置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FXButton text="1分钟后到期" onMousePrimaryClicked="#expireAt1M">
             <HBox.margin>
                 <Insets left="5" top="10"/>

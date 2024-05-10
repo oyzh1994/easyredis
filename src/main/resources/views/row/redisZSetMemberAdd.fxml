@@ -11,15 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <FXLabel text="成员" realHeight="30" realWidth="55" styleClass="accent">
+        <AccentLabel text="成员" realHeight="30" realWidth="55" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入成员数据"
                       flexWidth="100% - 140">
             <HBox.margin>
@@ -47,11 +48,11 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="分数" realHeight="30" realWidth="55" styleClass="accent">
+        <AccentLabel text="分数" realHeight="30" realWidth="55" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DecimalTextField realHeight="30" flexWidth="100% - 140" scaleLen="10" fx:id="score" tipText="分数(score)" value="0" require="true">
             <HBox.margin>
                 <Insets left="10" top="10"/>

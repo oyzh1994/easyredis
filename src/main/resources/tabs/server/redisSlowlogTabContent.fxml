@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisSlowlogContent" text="慢查日志">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisSlowlogContent" text="%base.slowlog">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox flexWidth="100%" realHeight="40">
-            <SVGLabel text="刷新" url="/font/reload.svg" onMousePrimaryClicked="#refresh">
+            <RefreshSVGGlyph onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
-            </SVGLabel>
+            </RefreshSVGGlyph>
         </FlexHBox>
         <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <!-- <FlexTableColumn flexWidth="7%" fx:id="index" text="编号"/> -->
                 <FlexTableColumn flexWidth="7%" fx:id="id" text="ID"/>
-                <FlexTableColumn flexWidth="33%" fx:id="command" text="指令"/>
-                <FlexTableColumn flexWidth="20%" fx:id="timeStamp" text="发生时间"/>
-                <FlexTableColumn flexWidth="16%" fx:id="clientHost" text="客户端地址"/>
-                <FlexTableColumn flexWidth="12%" fx:id="clientName" text="客户端名称"/>
+                <FlexTableColumn flexWidth="33%" fx:id="command" text="%base.cmd"/>
+                <FlexTableColumn flexWidth="20%" fx:id="timeStamp" text="%base.time"/>
+                <FlexTableColumn flexWidth="16%" fx:id="clientHost" text="%base.clientAddr"/>
+                <FlexTableColumn flexWidth="12%" fx:id="clientName" text="%base.clientName"/>
                 <FlexTableColumn flexWidth="12% - 20" fx:id="executionTime" text="耗时(μs)"/>
             </columns>
         </FlexTableView>

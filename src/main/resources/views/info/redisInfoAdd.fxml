@@ -127,11 +127,11 @@
         <FXTab text="认证设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <FXLabel realHeight="30" realWidth="65" text="认证方式" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="65" text="认证方式" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0"
                                   realHeight="30" flexWidth="100% - 140">
                         <items>
@@ -147,11 +147,11 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox">
-                    <FXLabel realHeight="30" realWidth="65" text="认证信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="65" text="认证信息" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
                                         realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>
@@ -173,11 +173,11 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true">
-                    <FXLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
-                    </FXLabel>
+                    </AccentLabel>
                     <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
                                         realHeight="30" flexWidth="50% - 120">
                         <HBox.margin>

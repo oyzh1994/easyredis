@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisAggregationContent" text="汇总图表">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisAggregationContent" text="%base.aggregate">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">
@@ -15,14 +15,8 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="数量"/>
+                    <NumberAxis label="%base.num"/>
                 </yAxis>
-                <!-- <data> -->
-                <!--     <FXCollections fx:factory="observableArrayList"> -->
-                <!--     <Series name="已连接客户端数量"> -->
-                <!--     </Series> -->
-                <!--     </FXCollections> -->
-                <!-- </data> -->
             </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
                 <xAxis>
@@ -39,7 +33,7 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="数量"/>
+                    <NumberAxis label="%base.num"/>
                 </yAxis>
             </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">

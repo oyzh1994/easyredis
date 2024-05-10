@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.DisabledTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyCopyController" realWidth="400"
           realHeight="210">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="键名称" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.keyName" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -26,11 +26,11 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="目标库" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <RedisDBComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 140">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -38,11 +38,11 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="设  置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox fx:id="replace" text="键存在时替换">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -50,7 +50,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#copyKey" fx:id="submit" text="复制">
+        <SubmitButton onAction="#copyKey" fx:id="submit" text="%base.copy">
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>

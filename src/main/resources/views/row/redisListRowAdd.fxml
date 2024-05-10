@@ -12,14 +12,15 @@
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisListRowAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <FXLabel text="数据" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.data" realHeight="30" realWidth="50" styleClass="accent">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入行数据"
                       flexWidth="100% - 100">
             <HBox.margin>
@@ -47,11 +48,11 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="方式" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="方式" realHeight="30" realWidth="50" styleClass="accent">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <fx:define>
             <FXToggleGroup fx:id="insertMode"/>
         </fx:define>

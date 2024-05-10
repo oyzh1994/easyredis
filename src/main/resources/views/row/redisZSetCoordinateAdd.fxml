@@ -12,15 +12,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-        <FXLabel text="坐标" realHeight="30" realWidth="55" styleClass="accent">
+        <AccentLabel text="坐标" realHeight="30" realWidth="55" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入坐标名称"
                       flexWidth="100% - 140">
             <HBox.margin>
@@ -43,11 +44,11 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="经度" realHeight="30" realWidth="55" styleClass="accent">
+        <AccentLabel text="经度" realHeight="30" realWidth="55" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitude" tipText="经度值" value="0" step="5">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -55,11 +56,11 @@
         </LongitudeField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="纬度" realHeight="30" realWidth="55" styleClass="accent">
+        <AccentLabel text="纬度" realHeight="30" realWidth="55" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitude" tipText="纬度值" value="0" step="5">
             <HBox.margin>
                 <Insets left="10" top="10"/>

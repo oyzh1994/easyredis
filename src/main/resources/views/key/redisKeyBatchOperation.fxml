@@ -15,17 +15,18 @@
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600">
     <FXTab text="批量删除键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="pattern1" realHeight="30.0" flexWidth="100% - 215" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -38,11 +39,11 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys1" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -66,11 +67,11 @@
     <FXTab text="批量设置键ttl">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="TTL值" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="请输入TTL值，单位秒，-1代表永不过期" value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
@@ -79,11 +80,11 @@
                 </NumberTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="pattern2" realHeight="30.0" flexWidth="100% - 215" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -96,11 +97,11 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys2" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -124,11 +125,11 @@
     <FXTab text="清空数据库">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="相关操作" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="相关操作" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <FXButton text="显示受影响键" onAction="#showKeys3">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -136,11 +137,11 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys3" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -164,11 +165,11 @@
     <FXTab text="批量移动键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <RedisDBComboBox fx:id="moveTargetDB" realHeight="30" prefWidth="120" initIndex="1">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -176,11 +177,11 @@
                 </RedisDBComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="pattern4" realHeight="30.0" flexWidth="100% - 215" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -193,11 +194,11 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys4" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -221,11 +222,11 @@
     <FXTab text="批量复制键">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="目 标 库" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <RedisDBComboBox fx:id="copyTargetDB" realHeight="30" prefWidth="120" initIndex="1">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -238,11 +239,11 @@
                 </FlexCheckBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="pattern5" realHeight="30.0" flexWidth="100% - 215" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -255,11 +256,11 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys5" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -283,11 +284,11 @@
     <FXTab text="计算键数量">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ClearableTextField fx:id="pattern6" realHeight="30.0" flexWidth="100% - 120" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -295,11 +296,11 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <FXLabel text="键数量" realHeight="30" realWidth="65" styleClass="accent">
+                <AccentLabel text="键数量" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
-                </FXLabel>
+                </AccentLabel>
                 <ReadOnlyTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% - 120">
                     <HBox.margin>
                         <Insets left="10" top="10"/>

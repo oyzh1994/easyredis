@@ -39,11 +39,11 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisConnectComboBox>
-        <FXLabel text="数据库:" prefWidth="40">
+        <AccentLabel text="%base.database" prefWidth="40">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <RedisDBComboBox disable="true" fx:id="fromDB" realHeight="30" prefWidth="80" initIndex="1">
             <HBox.margin>
                 <Insets left="5" top="10"/>
@@ -56,11 +56,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" visible="false">
-        <FXLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*"
                             stateManager="$stateManager">
             <HBox.margin>
@@ -74,11 +74,11 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" visible="false">
-        <FXLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 10" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -96,7 +96,7 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisConnectComboBox>
-        <FXLabel text="数据库:" prefWidth="40">
+        <FXLabel text="%base.database" prefWidth="40">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
@@ -108,11 +108,11 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="冲突配置" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
@@ -139,11 +139,11 @@
         </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="传输选项" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值" selected="true"
                       stateManager="$stateManager">
             <HBox.margin>
@@ -158,11 +158,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <FXLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -195,11 +195,11 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <FXLabel text="过程信息" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="65" styleClass="accent">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
-        </FXLabel>
+        </AccentLabel>
         <FlexVBox flexWidth="100% - 180" flexHeight="100%">
             <HBox.margin>
                 <Insets left="10" top="10"/>

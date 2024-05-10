@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGLabel?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisClientInfoContent" text="客户端">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisClientInfoContent" text="%base.client">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox flexWidth="100%" realHeight="40">
-            <SVGLabel text="刷新" url="/font/reload.svg" onMousePrimaryClicked="#refresh">
+            <RefreshSVGGlyph onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
-            </SVGLabel>
+            </RefreshSVGGlyph>
         </FlexHBox>
         <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="10%" fx:id="index" text="编号"/>
-                <FlexTableColumn flexWidth="25%" fx:id="addr" text="地址"/>
-                <FlexTableColumn flexWidth="20%" fx:id="age" text="存活(秒)"/>
-                <FlexTableColumn flexWidth="20%" fx:id="idle" text="空闲"/>
-                <FlexTableColumn flexWidth="10%" fx:id="flags" text="标记"/>
-                <FlexTableColumn flexWidth="15% - 20" fx:id="db" text="当前库"/>
+                <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+                <FlexTableColumn flexWidth="25%" fx:id="addr" text="%base.clientAddr"/>
+                <FlexTableColumn flexWidth="20%" fx:id="age" text="%redis.server.survival"/>
+                <FlexTableColumn flexWidth="20%" fx:id="idle" text="%base.idle"/>
+                <FlexTableColumn flexWidth="10%" fx:id="flags" text="%base.flags"/>
+                <FlexTableColumn flexWidth="15% - 20" fx:id="db" text="%redis.server.currDB"/>
             </columns>
         </FlexTableView>
     </FlexVBox>
