@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.home;
 
+import cn.oyzh.fx.plus.controls.svg.HomeSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
@@ -13,7 +14,7 @@ import javafx.scene.Cursor;
  */
 public class RedisHomeTab extends DynamicTab {
 
-    public RedisHomeTab(){
+    public RedisHomeTab() {
         super();
         super.flush();
     }
@@ -27,7 +28,7 @@ public class RedisHomeTab extends DynamicTab {
     public void flushGraphic() {
         SVGGlyph graphic = (SVGGlyph) this.getGraphic();
         if (graphic == null) {
-            graphic = new SVGGlyph("/font/home.svg", "13");
+            graphic = new HomeSVGGlyph("13");
             graphic.setCursor(Cursor.DEFAULT);
             this.setGraphic(graphic);
         }

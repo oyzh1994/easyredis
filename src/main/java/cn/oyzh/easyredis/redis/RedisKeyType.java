@@ -1,8 +1,9 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.Getter;
-import lombok.experimental.Accessors;
+import cn.oyzh.fx.plus.i18n.I18nManager;
+
+import java.util.Locale;
 
 /**
  * redis键类型
@@ -11,20 +12,46 @@ import lombok.experimental.Accessors;
  * @since 2023/07/01
  */
 public enum RedisKeyType {
-    STRING("字符串"),
-    SET("集合"),
-    ZSET("有序集合"),
-    LIST("列表"),
-    HASH("哈希表"),
-    //    HYPERLOGLOG("统计值"),
-    STREAM("流");
+    STRING(),
+    SET(),
+    ZSET(),
+    LIST(),
+    HASH(),
+    STREAM();
 
-    @Getter
-    @Accessors(fluent = true, chain = false)
-    private final String desc;
+    public String desc() {
+        if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
+            return switch (this) {
+                case STRING -> "字符串";
+                case SET -> "集合";
+                case ZSET -> "有序集合";
+                case LIST -> "列表";
+                case HASH -> "哈希表";
+                case STREAM -> "流";
+            };
 
-    RedisKeyType(String desc) {
-        this.desc = desc;
+        } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
+            return switch (this) {
+                case STRING -> "字符串";
+                case SET -> "集合";
+                case ZSET -> "有序集合";
+                case LIST -> "列表";
+                case HASH -> "哈希表";
+                case STREAM -> "流";
+            };
+        } else {
+            return switch (this) {
+                case STRING -> "String";
+                case SET -> "Set";
+                case ZSET -> "ZSet";
+                case LIST -> "List";
+                case HASH -> "Hash";
+                case STREAM -> "Stream";
+            };
+        }
+    }
+
+    RedisKeyType() {
     }
 
     public static RedisKeyType valueOfType(String type) {
@@ -35,7 +62,6 @@ public enum RedisKeyType {
                 case "zset", "geo" -> ZSET;
                 case "list" -> LIST;
                 case "hash" -> HASH;
-//                case "hyperloglog" -> HYPERLOGLOG;
                 case "stream" -> STREAM;
                 default -> null;
             };

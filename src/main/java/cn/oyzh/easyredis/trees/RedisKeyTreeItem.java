@@ -11,9 +11,12 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.CopyKeyMenuItem;
+import cn.oyzh.fx.plus.menu.DeleteKeyMenuItem;
+import cn.oyzh.fx.plus.menu.MoveKeyMenuItem;
+import cn.oyzh.fx.plus.menu.RenameKeyMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -115,10 +118,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem rename = FXMenuItem.newItem("重命名键", new SVGGlyph("/font/edit-square.svg", "12"), "更改键名称(快捷键f2)", this::rename);
-        MenuItem delete = FXMenuItem.newItem("删除此键", new SVGGlyph("/font/delete.svg", "12"), "删除此键(快捷键delete)", this::delete);
-        MenuItem moveKey = FXMenuItem.newItem("移动此键", new SVGGlyph("/font/move.svg", "12"), "移动此键到其他库", this::moveKey);
-        MenuItem copyKey = FXMenuItem.newItem("复制此键", new SVGGlyph("/font/copy.svg", "12"), "复制此键到其他库", this::copyKey);
+        RenameKeyMenuItem rename = new RenameKeyMenuItem("12", this::rename);
+        DeleteKeyMenuItem delete = new DeleteKeyMenuItem("12", this::delete);
+        MoveKeyMenuItem moveKey = new MoveKeyMenuItem("12", this::moveKey);
+        CopyKeyMenuItem copyKey = new CopyKeyMenuItem("12", this::copyKey);
         items.add(rename);
         items.add(moveKey);
         items.add(copyKey);
@@ -261,34 +264,28 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     public void collect() {
         this.info().addCollect(this.dbIndex(), this.key());
         RedisInfoStore.INSTANCE.update(this.info());
-        MessageBox.okToast("键已收藏");
     }
 
     /**
      * 取消收藏键
-     *
-     * @param tips 提示
      */
-    public void unCollect(boolean tips) {
+    public void unCollect() {
         if (this.info().removeCollect(this.dbIndex(), this.key())) {
             RedisInfoStore.INSTANCE.update(this.info());
             this.doFilter();
-            if (tips) {
-                MessageBox.okToast("键已取消收藏");
-            }
         }
     }
 
     @Override
     public void delete() {
         try {
-            if (!MessageBox.confirm("确定删除键:" + this.key())) {
+            if (!MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.key") + this.key())) {
                 return;
             }
             // 删除此键
             this.client().del(this.dbIndex(), this.key());
             // 取消此键的收藏
-            this.unCollect(false);
+            this.unCollect();
             // 移除此键
             this.remove();
             // 发送事件
@@ -301,14 +298,14 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
 
     @Override
     public void rename() {
-        String newKey = MessageBox.prompt("请输入新的键名称", this.value.key());
+        String newKey = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.key());
         // 名称为空或者跟当前名称相同，则忽略
         if (StrUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
             return;
         }
         // 键已存在
         if (this.client().exists(this.dbIndex(), newKey)) {
-            MessageBox.warn("键名称[" + newKey + "]已经存在！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         try {
@@ -319,7 +316,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
                 this.getValue().name(newKey);
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {
-                MessageBox.warn("更改键名称失败！");
+                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

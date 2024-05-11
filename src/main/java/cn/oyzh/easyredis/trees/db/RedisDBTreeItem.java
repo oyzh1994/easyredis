@@ -33,9 +33,18 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
+import cn.oyzh.fx.plus.menu.AddKeyMenuItem;
+import cn.oyzh.fx.plus.menu.AddNodeMenuItem;
+import cn.oyzh.fx.plus.menu.BatchOperationMenuItem;
+import cn.oyzh.fx.plus.menu.BatchOptMenuItem;
+import cn.oyzh.fx.plus.menu.ExportDataMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.KeyFilterMenuItem;
+import cn.oyzh.fx.plus.menu.ReloadDataMenuItem;
+import cn.oyzh.fx.plus.menu.RepeatConnectMenuItem;
+import cn.oyzh.fx.plus.menu.TransportDataMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
@@ -152,12 +161,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem add = FXMenuItem.newItem("添加新键", new SVGGlyph("/font/add.svg", "12"), "添加redis键", this::addKey);
-        FXMenuItem keyFilter = FXMenuItem.newItem("键过滤器", new SVGGlyph("/font/filter.svg", "12"), "过滤redis键", this::keyFilter);
-        FXMenuItem reload = FXMenuItem.newItem("重新载入", new SVGGlyph("/font/reload.svg", "12"), "重新加载redis键", this::reloadChild);
-        FXMenuItem exportData = FXMenuItem.newItem("导出数据", new SVGGlyph("/font/export.svg", "12"), "导出redis数据", this::exportNode);
-        FXMenuItem transportData = FXMenuItem.newItem("传输数据", new SVGGlyph("/font/arrow-left-right-line.svg", "12"), "传输redis数据", this::transportData);
-        FXMenuItem batchOperation = FXMenuItem.newItem("批量操作", new SVGGlyph("/font/mml-batch-command-16.svg", "12"), "批量操作数据", this::batchOperation);
+        AddKeyMenuItem add = new AddKeyMenuItem("12", this::addKey);
+        KeyFilterMenuItem keyFilter = new KeyFilterMenuItem("12", this::keyFilter);
+        ReloadDataMenuItem reload = new ReloadDataMenuItem("12", this::reloadChild);
+        ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportNode);
+        TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
+        BatchOperationMenuItem batchOperation = new BatchOperationMenuItem("12", this::batchOperation);
 
         items.add(add);
         items.add(keyFilter);

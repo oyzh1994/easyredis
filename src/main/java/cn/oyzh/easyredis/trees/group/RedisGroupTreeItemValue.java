@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.group;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
+import cn.oyzh.fx.plus.controls.svg.GroupSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
@@ -28,7 +29,7 @@ public class RedisGroupTreeItemValue extends RedisTreeItemValue {
     @Override
     public void flushGraphic() {
         if (this.graphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/group.svg", 10);
+            GroupSVGGlyph glyph = new GroupSVGGlyph("10");
             glyph.disableTheme();
             this.graphic(glyph);
         }

@@ -2,34 +2,35 @@
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FlexLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.text.SuccessLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoContent" text="信息" fx:id="infoRoot">
+       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoContent" text="%base.info" fx:id="infoRoot">
     <graphic>
         <SVGGlyph initCursor="DEFAULT" url="/font/status.svg" size="13"/>
     </graphic>
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexFlowPane realHeight="32" flexWidth="100%">
-            <SVGGlyph tipText="复制键状态" size="16" onMousePrimaryClicked="#copy"
-                      url="/font/file-copy.svg">
+            <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
                 <FlowPane.margin>
                     <Insets left="5"/>
                 </FlowPane.margin>
-            </SVGGlyph>
-            <SVGGlyph tipText="刷新键状态" size="15" onMousePrimaryClicked="#refresh"
-                      url="/font/reload.svg">
+            </CopySVGGlyph>
+            <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refresh">
                 <FlowPane.margin>
                     <Insets left="5"/>
                 </FlowPane.margin>
-            </SVGGlyph>
+            </RefreshSVGGlyph>
             <padding>
                 <Insets top="9"/>
             </padding>
@@ -39,34 +40,34 @@
                 <Insets left="5"/>
             </VBox.margin>
             <FlexHBox flexWidth="100%" realHeight="35">
-                <FXLabel text="编码类型" realWidth="135" realHeight="30" styleClass="success">
+                <SuccessLabel text="%base.encoding" realWidth="135" realHeight="30">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
-                </FXLabel>
-                <FlexLabel fx:id="objectEncoding" realHeight="30" flexWidth="100% - 180" styleClass="success"/>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectEncoding" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
                     <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="35">
-                <FXLabel text="空闲时间" realWidth="135" realHeight="30" styleClass="success">
+                <SuccessLabel text="%base.idletime" realWidth="135" realHeight="30">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
-                </FXLabel>
-                <FlexLabel fx:id="objectIdletime" realHeight="30" flexWidth="100% - 180" styleClass="success"/>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectIdletime" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
                     <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="35">
-                <FXLabel text="引用数量" realWidth="135" realHeight="30" styleClass="success">
+                <SuccessLabel text="%base.referenceCount" realWidth="135" realHeight="30">
                     <HBox.margin>
                         <Insets right="5"/>
                     </HBox.margin>
-                </FXLabel>
-                <FlexLabel fx:id="objectRefcount" realHeight="30" flexWidth="100% - 180" styleClass="success"/>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectRefcount" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
                     <Insets top="5"/>
                 </HBox.margin>

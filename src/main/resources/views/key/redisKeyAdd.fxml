@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.easyredis.fx.LatitudeField?>
 <?import cn.oyzh.easyredis.fx.LongitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="680"
           fx:id="root">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="键类型" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.keyType" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -34,13 +35,13 @@
         </RedisKeyTypeComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyName" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.keyName" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
         <ClearableTextField fx:id="key" realHeight="30.0" flexWidth="100% - 140"
-                            tipText="请输入键名称(key)" require="true">
+                            tipText="%redis.key.keyNameTip1" require="true">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -48,12 +49,12 @@
     </FlexHBox>
     <FlexVBox fx:id="zSetBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="分    数" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.score" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <DecimalTextField realHeight="30" flexWidth="100% - 140" fx:id="scoreValue" tipText="请输入分数(score)"
+            <DecimalTextField realHeight="30" flexWidth="100% - 140" fx:id="scoreValue" tipText="%base.contentTip1"
                               value="0">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -61,46 +62,44 @@
             </DecimalTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 50">
-            <AccentLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.member" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入成员名称(可选)"
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1"
                           flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="bitBox" flexWidth="100%" flexHeight="100" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="下    标" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.subscript" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <NumberTextField realHeight="30" flexWidth="100% - 140" fx:id="bitIndex" tipText="请输入下标"
+            <NumberTextField realHeight="30" flexWidth="100% - 140" fx:id="bitIndex" tipText="%base.contentTip1"
                              value="0" min="0">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -108,12 +107,12 @@
             </NumberTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50">
-            <AccentLabel text="下标值" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.subscriptValue" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FXToggleSwitch fx:id="bitValue" selected="true" selectedText="真/1" unselectedText="假/0">
+            <FXToggleSwitch fx:id="bitValue" selected="true" selectedText="1" unselectedText="0">
                 <HBox.margin>
                     <Insets left="10" top="12"/>
                 </HBox.margin>
@@ -122,12 +121,12 @@
     </FlexVBox>
     <FlexVBox fx:id="geoBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="经度值" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.longitude" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitudeValue" tipText="请输入经度值"
+            <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitudeValue" tipText="%base.contentTip1"
                             value="0" step="5">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -135,12 +134,12 @@
             </LongitudeField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="纬度值" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.latitude" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitudeValue" tipText="请输入纬度值"
+            <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitudeValue" tipText="%base.contentTip1"
                            value="0" step="5">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -148,45 +147,43 @@
             </LatitudeField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 100">
-            <AccentLabel text="坐标名" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.coordinates" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入坐标名称" flexWidth="100% - 140">
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="hashBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <AccentLabel text="字段名" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.fieldName" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea fx:id="fieldValue" flexHeight="100% - 25" tipText="请输入字段名"
+            <FlexTextArea fx:id="fieldValue" flexHeight="100% - 25" tipText="%base.contentTip1"
                           flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
@@ -194,146 +191,139 @@
             </FlexTextArea>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <AccentLabel text="字段值" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.fieldValue" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入字段值" flexWidth="100% - 140">
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="streamBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" realHeight="50">
-            <AccentLabel text="消息ID" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.messageId" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <ClearableTextField realHeight="30" flexWidth="100% - 140" fx:id="streamIDValue" tipText="请输入消息id，*代表自动生成" text="*">
+            <ClearableTextField realHeight="30" flexWidth="100% - 140" fx:id="streamIDValue"
+                                tipText="%redis.key.msgTip1" text="*">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </ClearableTextField>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="100% - 50">
-            <FXLabel text="消息值" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.content" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
-            </FXLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入消息内容，json格式"
+            </AccentLabel>
+            <FlexTextArea flexHeight="100% - 25" tipText="%redis.key.msgTip2"
                           flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.member" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入成员" flexWidth="100% - 140">
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="setBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="成    员" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.member" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入成员" flexWidth="100% - 140">
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
@@ -351,66 +341,62 @@
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="stringBox" flexWidth="100%" flexHeight="100% - 240">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="内    容" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.content" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入内容" flexWidth="100% - 140">
+            <FlexTextArea flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </FlexTextArea>
             <FlexVBox>
-                <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                          tipText="粘贴数据">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                          tipText="清空数据">
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
-                <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
-                </SVGGlyph>
+                </JSONSVGGlyph>
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="TTL值" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.ttl" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <NumberTextField realHeight="30" flexWidth="100% - 140" fx:id="ttlValue" tipText="请输入ttl值，-1为永不过期" value="-1"
+        <NumberTextField realHeight="30" flexWidth="100% - 140" fx:id="ttlValue" tipText="%redis.key.ttlTip2" value="-1"
                          min="-1"
                          max="9223372036854775807" step="3600">
             <HBox.margin>

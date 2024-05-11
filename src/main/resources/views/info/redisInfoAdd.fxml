@@ -82,7 +82,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%zk.info.connectTimoutTip" value="5" require="true">
+                    <NumberTextField realHeight="30" flexWidth="100% - 220" min="3" max="30" fx:id="connectTimeOut" tipText="%redis.info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>

@@ -16,7 +16,11 @@ import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
+import cn.oyzh.fx.plus.menu.DeleteGroupMenuItem;
+import cn.oyzh.fx.plus.menu.RenameGroupMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.event.EventHandler;
@@ -36,7 +40,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-//@Slf4j
 public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> implements RedisConnectManager {
 
     /**
@@ -59,10 +62,10 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value = group;
+        this.setValue(new RedisGroupTreeItemValue(this));
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
-        this.setValue(new RedisGroupTreeItemValue(this));
-        // 监听键变化
+        // 监听变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             RedisEventUtil.treeChildChanged();
             this.flushLocal();
@@ -82,9 +85,9 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        MenuItem addConnect = FXMenuItem.newItem("添加连接", new SVGGlyph("/font/add.svg", "12"), "添加redis连接", this::addConnect);
-        MenuItem renameGroup = FXMenuItem.newItem("分组更名", new SVGGlyph("/font/edit-square.svg", "12"), "更改分组名称(快捷键f2)", this::rename);
-        MenuItem delGroup = FXMenuItem.newItem("删除分组", new SVGGlyph("/font/delete.svg", "12"), "删除此分组", this::delete);
+        AddConnectMenuItem addConnect = new AddConnectMenuItem("12", this::addConnect);
+        RenameGroupMenuItem renameGroup = new RenameGroupMenuItem("12", this::rename);
+        DeleteGroupMenuItem delGroup = new DeleteGroupMenuItem("12", this::delete);
         items.add(addConnect);
         items.add(renameGroup);
         items.add(delGroup);
@@ -93,7 +96,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
 
     @Override
     public void rename() {
-        String groupName = MessageBox.prompt("请输入新的分组名称", this.value.getName());
+        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
@@ -107,28 +110,28 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            MessageBox.warn("此分组已存在！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
             return;
         }
         // 修改名称
         if (this.groupStore.update(this.value)) {
-            this.getValue().name(groupName);
+            this.getValue().flushText();
         } else {
-            MessageBox.warn("修改分组名称失败！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
         }
     }
 
     @Override
     public void delete() {
-        if (this.isChildEmpty() && !MessageBox.confirm("确定删除此分组？")) {
+        if (this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip1"))) {
             return;
         }
-        if (!this.isChildEmpty() && !MessageBox.confirm("确定删除此分组？(连接将移动到根键)")) {
+        if (!this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip2"))) {
             return;
         }
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
-            MessageBox.warn("删除分组失败！");
+            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
             return;
         }
         // 处理连接
@@ -136,10 +139,10 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
             // 清除分组id
             List<RedisConnectTreeItem> childes = this.getConnectItems();
             childes.forEach(c -> c.value().setGroupId(null));
-            // 连接转移到父键
+            // 连接转移到父节点
             this.parent().addConnectItems(childes);
         }
-        // 移除键
+        // 移除节点
         this.remove();
     }
 
@@ -147,15 +150,15 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
      * 添加连接
      */
     private void addConnect() {
-        StageWrapper fxView = StageUtil.parseStage(RedisInfoAddController.class, this.parent().window());
+        StageWrapper fxView = StageUtil.parseStage(RedisInfoAddController.class, this.window());
         fxView.setProp("group", this.value);
         fxView.display();
     }
 
     /**
-     * 父键
+     * 父节点
      *
-     * @return redis根键
+     * @return 根节点
      */
     public RedisRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
