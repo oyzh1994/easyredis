@@ -13,10 +13,13 @@
 <?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisListRowAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <AccentLabel text="%base.data" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.data" realHeight="30" realWidth="50" >
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -28,27 +31,25 @@
             </HBox.margin>
         </FlexTextArea>
         <FlexVBox>
-            <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                      tipText="粘贴数据">
+            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
-            <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                      tipText="清空数据">
+            </PasteSVGGlyph>
+            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
-            <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+            </ClearSVGGlyph>
+            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
+            </JSONSVGGlyph>
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="方式" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.method" realHeight="30" realWidth="50" >
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -56,12 +57,12 @@
         <fx:define>
             <FXToggleGroup fx:id="insertMode"/>
         </fx:define>
-        <FXRadioButton text="插入头部(lpush)" toggleGroup="$insertMode" userData="0" selected="true">
+        <FXRadioButton text="lpush" toggleGroup="$insertMode" userData="0" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton text="插入尾部(rpush)" toggleGroup="$insertMode" userData="1">
+        <FXRadioButton text="rpush" toggleGroup="$insertMode" userData="1">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

@@ -19,10 +19,10 @@
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600">
-    <FXTab text="批量删除键">
+    <FXTab text="%base.deleteKey">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -32,14 +32,14 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="显示受影响键" onAction="#showKeys1">
+                <FXButton text="%redis.key.tip2" onAction="#showKeys1">
                     <HBox.margin>
                         <Insets left="3" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -51,7 +51,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#delKeys" text="删除">
+                <SubmitButton onAction="#delKeys" text="%base.delete">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>
@@ -64,15 +64,15 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="批量设置键ttl">
+    <FXTab text="%base.ttl">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="TTL值" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.ttl" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="请输入TTL值，单位秒，-1代表永不过期" value="-1"
+                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="%redis.batch.tip7" value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -80,7 +80,7 @@
                 </NumberTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -90,14 +90,14 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="显示受影响键" onAction="#showKeys2">
+                <FXButton text="%redis.key.tip2" onAction="#showKeys2">
                     <HBox.margin>
                         <Insets left="3" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -109,7 +109,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#expireKeys" text="设置">
+                <SubmitButton onAction="#expireKeys" text="%base.save">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>
@@ -122,22 +122,22 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="清空数据库">
+    <FXTab text="%base.database">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="相关操作" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.operation" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <FXButton text="显示受影响键" onAction="#showKeys3">
+                <FXButton text="%redis.key.tip2" onAction="#showKeys3">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -149,7 +149,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#flushDB" text="清空">
+                <SubmitButton onAction="#flushDB" text="%base.clear">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>
@@ -162,7 +162,7 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="批量移动键">
+    <FXTab text="%base.move">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
                 <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
@@ -177,7 +177,7 @@
                 </RedisDBComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -187,14 +187,14 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="显示受影响键" onAction="#showKeys4">
+                <FXButton text="%redis.key.tip2" onAction="#showKeys4">
                     <HBox.margin>
                         <Insets left="3" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -206,7 +206,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#moveKeys" text="移动">
+                <SubmitButton onAction="#moveKeys" text="%base.move">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>
@@ -219,7 +219,7 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="批量复制键">
+    <FXTab text="%base.copy">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
                 <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
@@ -232,14 +232,14 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </RedisDBComboBox>
-                <FlexCheckBox fx:id="replaceOnCopy" text="键存在时替换">
+                <FlexCheckBox fx:id="replaceOnCopy" text="%redis.batch.tip8">
                     <HBox.margin>
                         <Insets left="5" top="20"/>
                     </HBox.margin>
                 </FlexCheckBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -249,14 +249,14 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="显示受影响键" onAction="#showKeys5">
+                <FXButton text="%redis.key.tip2" onAction="#showKeys5">
                     <HBox.margin>
                         <Insets left="3" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="受影响键" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -268,7 +268,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#copyKeys" text="复制">
+                <SubmitButton onAction="#copyKeys" text="%base.copy">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>
@@ -281,10 +281,10 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="计算键数量">
+    <FXTab text="%base.count">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="键表达式" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -296,7 +296,7 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="键数量" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.keyNum" realHeight="30" realWidth="65" >
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -308,7 +308,7 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#countKeys" text="统计">
+                <SubmitButton onAction="#countKeys" text="%base.count">
                     <HBox.margin>
                         <Insets left="95" top="10"/>
                     </HBox.margin>

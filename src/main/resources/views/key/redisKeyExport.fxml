@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisPrettyComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <?import cn.oyzh.fx.plus.controls.button.ExportButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.handler.StateManager?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import java.lang.String?>
-<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
     <fx:define>
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="服 务 器" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.server" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -51,14 +49,14 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="过滤键" stateManager="$stateManager">
+        <FlexCheckBox fx:id="filterKeys" text="%base.filter" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" visible="false">
-        <AccentLabel text="键表达式" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -69,14 +67,14 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <FXButton text="显示受影响键" onAction="#showKeys" stateManager="$stateManager">
+        <FXButton text="%redis.key.tip2" onAction="#showKeys" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="3" top="10"/>
             </HBox.margin>
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="200" fx:id="keysBox2" visible="false">
-        <AccentLabel text="受影响键" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -88,7 +86,7 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="包含类型" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.keyType" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -125,43 +123,41 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" tipText="美化json" fx:id="pretty">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="开启美化"/>
-                    <String fx:value="关闭美化"/>
-                </FXCollections>
-            </items>
-            <HBox.margin>
-                <Insets left="10" top="12"/>
-            </HBox.margin>
-        </FlexComboBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="按字典排序"
-                      tipText="键名称按字典排序">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值"
-                      selected="true">
+        <FlexFlowPane>
+            <FXLabel text="%base.pretty" maxWidth="100">
+                <FlowPane.margin>
+                    <Insets left="10" top="20"/>
+                </FlowPane.margin>
+            </FXLabel>
+            <RedisPrettyComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty">
+                <FlowPane.margin>
+                    <Insets left="5" top="12"/>
+                </FlowPane.margin>
+            </RedisPrettyComboBox>
+        </FlexFlowPane>
+        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="%base.sortDict">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="适用过滤配置"
-                      tipText="适用过滤配置列表的数据">
+        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FlexCheckBox>
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%redis.transport.tip11">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="65" styleClass="accent">
+        <AccentLabel text="%base.options" realHeight="30">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -198,12 +194,12 @@
                 <Insets left="95" top="10"/>
             </VBox.margin>
         </FXLabel>
-        <Text fill="#666" layoutY="65.0" text="1. 不建议导出HYPERLOGLOG类型，统计值无法导出">
+        <Text fill="#666" layoutY="65.0" text="%redis.export.tip3">
             <VBox.margin>
                 <Insets left="95" top="10"/>
             </VBox.margin>
         </Text>
-        <Text fill="#666" layoutY="90.0" text="2. 不建议导出STREAM类型数据，消息id有可能会冲突">
+        <Text fill="#666" layoutY="90.0" text="%redis.export.tip4">
             <VBox.margin>
                 <Insets left="95" top="10"/>
             </VBox.margin>

@@ -8,6 +8,8 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextArea;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
@@ -15,12 +17,11 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 /**
- * redis终端
+ * redis终端文本域
  *
  * @author oyzh
  * @since 2023/7/21
  */
-//@Slf4j
 public class RedisTerminalTextArea extends TerminalTextArea {
 
     {
@@ -51,7 +52,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     public void flushPrompt() {
         String str;
         if (this.isTemporary()) {
-            str = "redis连接";
+            str = "redis" + I18nHelper.connect();
         } else {
             str = this.client.infoName();
         }
@@ -59,12 +60,12 @@ public class RedisTerminalTextArea extends TerminalTextArea {
             str += "@" + this.info().getHost();
         }
         if (this.isConnecting()) {
-            str += "（连接中）> ";
+            str += "（" + I18nHelper.connectIng() + "）> ";
         } else if (this.isConnected()) {
             if (this.client.isReadonly()) {
-                str += "（已连接/只读模式）> ";
+                str += "（" + I18nResourceBundle.i18nString("base.connected") + "/" + I18nResourceBundle.i18nString("base.readonlyMode") + "）> ";
             } else {
-                str += "（已连接）> ";
+                str += "（" + I18nResourceBundle.i18nString("base.connected") + "）> ";
             }
         } else {
             str += "> ";
@@ -80,7 +81,8 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     public void init(@NonNull RedisClient client) {
         this.client = client;
         this.disableInput();
-        this.appendLine("欢迎使用EasyRedis!");
+        this.outputLine(I18nResourceBundle.i18nString("redis.home.welcome"));
+        // this.appendLine("欢迎使用EasyRedis!");
         this.appendLine("Powered By oyzh(2023-2023).");
         this.flushPrompt();
         if (this.isTemporary()) {
@@ -152,15 +154,15 @@ public class RedisTerminalTextArea extends TerminalTextArea {
      * 临时连接处理
      */
     private void initByTemporary() {
-        this.outputLine("请输入信息然后回车");
+        // this.outputLine("请输入信息然后回车");
         this.outputLine("connect [-timeout timeout] -h host [-p port] [-u user] [-a password] [-n db] [-r]");
-        this.outputLine("-timeout 超时时间，单位毫秒");
-        this.outputLine("-h 地址");
-        this.outputLine("-p 端口");
-        this.outputLine("-u 用户名");
-        this.outputLine("-a 密码");
-        this.outputLine("-n 数据库");
-        this.outputLine("-r 只读模式");
+        this.outputLine("-timeout " + I18nResourceBundle.i18nString("base.unit", "base.ms"));
+        this.outputLine("-h " + I18nHelper.host());
+        this.outputLine("-p " + I18nHelper.port());
+        this.outputLine("-u " + I18nHelper.userName());
+        this.outputLine("-a " + I18nHelper.password());
+        this.outputLine("-n " + I18nHelper.database());
+        this.outputLine("-r " + I18nHelper.readonlyMode());
         this.appendByPrompt("connect -timeout 3000 -h 127.0.0.1 -p 6379 -n 0");
         this.enableInput();
         this.flushAndMoveCaretAnd();
@@ -209,23 +211,29 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                 // 获取连接
                 String host = this.client.redisInfo().getHost();
                 if (t1 == RedisConnState.CONNECTED) {
-                    this.outputLine(host + " 连接成功.");
-                    this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
-                    this.outputLine("输入\"命令 -?\"可查看此命令详情.");
+                    // this.outputLine(host + " 连接成功.");
+                    // this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
+                    // this.outputLine("输入\"命令 -?\"可查看此命令详情.");
+                    this.outputLine(I18nResourceBundle.i18nString("base.terminalTip2"));
+                    this.outputLine(I18nResourceBundle.i18nString("base.terminalTip1"));
                     this.outputPrompt();
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == RedisConnState.CLOSED) {
-                    this.outputLine(host + " 连接关闭.");
+                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectClose") + " .");
+                    // this.outputLine(host + " 连接关闭.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.CONNECTING) {
-                    this.outputLine(host + " 开始连接.");
+                    this.outputLine(host + I18nHelper.connectStart() + " .");
+                    // this.outputLine(host + " 开始连接.");
                     this.disableInput();
                 } else if (t1 == RedisConnState.BROKEN) {
-                    this.outputLine(host + " 连接中断.");
+                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectBroken") + " .");
+                    // this.outputLine(host + " 连接中断.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.FAILED) {
-                    this.outputLine(host + " 连接失败.");
+                    this.outputLine(host + I18nHelper.connectFail() + " .");
+                    // this.outputLine(host + " 连接失败.");
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());
                     }

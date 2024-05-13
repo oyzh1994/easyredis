@@ -2,14 +2,13 @@
 
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
+<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.button.ImportButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.button.SuccessButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FlexText?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
@@ -18,7 +17,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.button.FileButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
     <fx:define>
@@ -30,7 +28,8 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose" iconSizePercent="0.75">
+        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose"
+                    iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -42,48 +41,37 @@
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="冲突配置" realHeight="30" realWidth="65">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <fx:define>
-            <FXToggleGroup fx:id="existStrategy"/>
-        </fx:define>
-        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
-                       text="键存在时跳过" selected="true"
-                       userData="0" tipText="跳过此键的导入">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
-                       text="键存在时覆盖" userData="1"
-                       tipText="删除键，并重新创建键并设置值，可避免键类型不一致的问题">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
-                       text="键存在时更新" userData="2"
-                       tipText="string类型更新值，list、set、zset类型更新列表，stream类型添加消息，如果键类型不一致则失败">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.options" realHeight="30" realWidth="65">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="保留TTL" tipText="保留键的ttl值"
-                      selected="true">
+        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
+        <fx:define>
+            <FXToggleGroup fx:id="existStrategy"/>
+        </fx:define>
+        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+                       text="%redis.transport.tip12" selected="true" userData="0">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+                       text="%redis.transport.tip13" userData="1">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+                       text="%redis.transport.tip14" userData="2">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
         <AccentLabel text="%base.process" realHeight="30" realWidth="65">
@@ -102,17 +90,11 @@
     <FlexHBox prefHeight="50" flexWidth="100%">
         <ImportButton onAction="#doImport"
                       fx:id="importBtn" disable="true" iconSizePercent="0.75">
-            <graphic>
-                <SVGGlyph url="/font/Import.svg" color="white"/>
-            </graphic>
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>
         </ImportButton>
         <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport" realHeight="30" iconSizePercent="0.9">
-            <graphic>
-                <SVGGlyph url="/font/stop-circle-line.svg" color="white"/>
-            </graphic>
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
@@ -129,7 +111,7 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="1. 键不存在时将创建">
+        <FlexText fill="#666" text="%redis.import.tip5">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

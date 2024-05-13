@@ -26,6 +26,7 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -33,7 +34,7 @@
              fx:controller="cn.oyzh.easyredis.tabs.key.list.RedisListKeyTabContent">
     <FXTab text="%base.data">
         <graphic>
-            <SVGGlyph initCursor="DEFAULT" url="/font/file-text.svg" size="13"/>
+            <FileSVGGlyph initCursor="DEFAULT" size="13"/>
         </graphic>
         <FlexVBox fx:id="root" flexWidth="100%" flexHeight="100%">
             <FlexFlowPane realHeight="32" flexWidth="100%">

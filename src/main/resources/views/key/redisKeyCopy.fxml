@@ -43,7 +43,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox fx:id="replace" text="键存在时替换">
+        <FlexCheckBox fx:id="replace" text="%redis.batch.tip8">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

@@ -9,9 +9,9 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.batch.RedisCountResult;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
+import cn.oyzh.easyredis.redis.batch.RedisCountResult;
 import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
@@ -25,6 +25,7 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
@@ -503,7 +504,7 @@ public class RedisKeyUtil {
         // 批量获取键类型
         List<RedisKeyType> types = keyType(dbIndex, keys, client);
         if (types == null) {
-            throw new RuntimeException("获取键类型失败！");
+            throw new RuntimeException(I18nResourceBundle.i18nString("base.get", "base.keyType", "base.fail"));
         }
         // 结束时间
         long end = System.currentTimeMillis();

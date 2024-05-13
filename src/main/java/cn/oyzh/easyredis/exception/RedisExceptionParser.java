@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.exception;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.fx.common.ssh.SSHException;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
@@ -35,31 +36,32 @@ public class RedisExceptionParser implements Function<Throwable, String> {
 
         if (e instanceof SSHException e1) {
             if (StrUtil.contains(e.getMessage(), "Auth fail")) {
-                return "ssh认证失败，请检查ssh用户名、密码是否正确";
+                // return "ssh认证失败，请检查ssh用户名、密码是否正确";
+                return I18nResourceBundle.i18nString("base.ssh", "base.authFail");
             }
             return e1.getMessage();
         }
 
         String message = e.getMessage();
         if (e instanceof JedisDataException) {
-            if (StrUtil.contains(message, "NOAUTH Authentication required")) {
-                return "连接需要认证！";
-            }
-            if (StrUtil.contains(message, "ERR invalid longitude")) {
-                return "坐标经纬度参数错误！";
-            }
-            if (StrUtil.contains(message, "ERR The ID specified in XADD is equal or smaller than the target stream top item")) {
-                return "消息ID值过小！";
-            }
-            if (StrUtil.contains(message, "ERR source and destination objects are the same")) {
-                return "来源库和目标库相同！";
-            }
-            if (StrUtil.contains(message, "READONLY You can't write against a read only replica")) {
-                return "当前是只读副本连接(从节点)！";
-            }
-            if (StrUtil.contains(message, "ERR invalid password")) {
-                return "认证密码错误！";
-            }
+            // if (StrUtil.contains(message, "NOAUTH Authentication required")) {
+            //     return "连接需要认证！";
+            // }
+            // if (StrUtil.contains(message, "ERR invalid longitude")) {
+            //     return "坐标经纬度参数错误！";
+            // }
+            // if (StrUtil.contains(message, "ERR The ID specified in XADD is equal or smaller than the target stream top item")) {
+            //     return "消息ID值过小！";
+            // }
+            // if (StrUtil.contains(message, "ERR source and destination objects are the same")) {
+            //     return "来源库和目标库相同！";
+            // }
+            // if (StrUtil.contains(message, "READONLY You can't write against a read only replica")) {
+            //     return "当前是只读副本连接(从节点)！";
+            // }
+            // if (StrUtil.contains(message, "ERR invalid password")) {
+            //     return "认证密码错误！";
+            // }
             return message;
         }
 
@@ -79,10 +81,6 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             return message;
         }
 
-        if (e instanceof RedisException) {
-            return message;
-        }
-
         if (e instanceof UnsupportedOperationException) {
             return message;
         }
@@ -91,7 +89,11 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             return message;
         }
 
+        if (e instanceof RedisException) {
+            return message;
+        }
+
         e.printStackTrace();
-        return "未知错误！";
+        return message;
     }
 }

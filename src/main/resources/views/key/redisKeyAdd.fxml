@@ -329,12 +329,12 @@
     </FlexVBox>
     <FlexVBox fx:id="hylogBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
-            <AccentLabel text="统计项" realHeight="30" realWidth="65" styleClass="accent">
+            <AccentLabel text="%base.elements" realHeight="30" realWidth="65">
                 <HBox.margin>
                     <Insets left="20" top="10"/>
                 </HBox.margin>
             </AccentLabel>
-            <FlexTextArea flexHeight="100% - 25" tipText="请输入统计元素，多个元素请换行区分"
+            <FlexTextArea flexHeight="100% - 25" tipText="%redis.key.tip4"
                           flexWidth="100% - 140">
                 <HBox.margin>
                     <Insets left="10" top="10"/>

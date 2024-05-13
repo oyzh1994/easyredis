@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.field" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.field" realHeight="30" realWidth="50">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -28,35 +29,33 @@
         </FlexTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.data" realHeight="30" realWidth="50" styleClass="accent">
+        <AccentLabel text="%base.data" realHeight="30" realWidth="50">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="请输入字段数据"
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%base.contentTip1"
                       flexWidth="100% - 100">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </FlexTextArea>
         <FlexVBox>
-            <SVGGlyph url="/font/file-paste.svg" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
-                      tipText="粘贴数据">
+            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
-            <SVGGlyph url="/font/clear.svg" size="16" onMousePrimaryClicked="#clearData"
-                      tipText="清空数据">
+            </PasteSVGGlyph>
+            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
-            <SVGGlyph url="/font/json.svg" onMousePrimaryClicked="#parseToJson" tipText="解析为json">
+            </ClearSVGGlyph>
+            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SVGGlyph>
+            </JSONSVGGlyph>
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
