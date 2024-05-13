@@ -20,7 +20,7 @@ public class RedisFormatComboBox extends FlexComboBox<String> implements I18nSel
 
     {
         NodeManager.init(this);
-        this.setTipText(I18nResourceBundle.i18nString("base.format"));
+        this.setTipText(I18nHelper.format());
     }
 
     /**

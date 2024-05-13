@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
@@ -84,7 +85,7 @@ public class HeaderController extends SubController {
      */
     @FXML
     private void quit() {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.quit") + this.project.getName())) {
+        if (MessageBox.confirm(I18nHelper.quit() + this.project.getName())) {
             StageUtil.exit();
         }
     }

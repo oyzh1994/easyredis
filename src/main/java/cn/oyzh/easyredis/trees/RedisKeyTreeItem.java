@@ -280,7 +280,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public void delete() {
         try {
-            if (!MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.key") + this.key())) {
+            if (!MessageBox.confirm(I18nHelper.deleteKey() + this.key())) {
                 return;
             }
             // 删除此键

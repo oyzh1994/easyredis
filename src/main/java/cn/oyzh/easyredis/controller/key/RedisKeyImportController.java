@@ -428,7 +428,7 @@ public class RedisKeyImportController extends Controller {
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
             this.stage.disable();
-            this.stage.appendTitle(I18nHelper.dragTip1());
+            this.stage.appendTitle("===" + I18nHelper.dragTip1() + "===");
             event1.acceptTransferModes(TransferMode.ANY);
             event1.consume();
         });

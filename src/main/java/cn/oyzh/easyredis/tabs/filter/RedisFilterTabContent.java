@@ -189,7 +189,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * @param info redis信息
      */
     private void deleteInfo(RedisFilter info) {
-        if (MessageBox.confirm(I18nResourceBundle.i18nString("base.delete", "base.data"))) {
+        if (MessageBox.confirm(I18nHelper.deleteData())) {
             if (this.filterStore.delete(info)) {
                 RedisEventUtil.treeChildFilter();
                 this.firstPage();

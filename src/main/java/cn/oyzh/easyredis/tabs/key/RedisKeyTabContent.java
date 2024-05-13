@@ -11,6 +11,7 @@ import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -165,7 +166,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.initNode();
 
         // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText(I18nResourceBundle.i18nString("base.cost") + ":" + this.treeItem.loadTime() + "ms"));
+        FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
         return true;
     }
 
