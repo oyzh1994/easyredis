@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -49,7 +50,7 @@ public class RedisSetMemberAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-                MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             // redis键
@@ -59,15 +60,13 @@ public class RedisSetMemberAddController extends Controller {
             // redis客户端
             RedisClient client = this.treeItem.client();
             if (client.sismember(dbIndex, key, rowValue)) {
-                MessageBox.warn("此成员已存在！");
+                MessageBox.warn(I18nHelper.alreadyExists());
                 return;
             }
             // 添加元素
             client.sadd(dbIndex, key, rowValue);
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_SET_MEMBER_ADDED, this.treeItem);
             RedisEventUtil.setMemberAdded(this.treeItem, key, rowValue);
-            // MessageBox.okToast("新增成员成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -61,17 +62,17 @@ public class RedisZSetCoordinateAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-                MessageBox.tipMsg("坐标不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             Number longitudeValue = this.longitude.getValue();
             if (longitudeValue == null) {
-                MessageBox.tipMsg("经度不能为空", this.latitude);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.latitude);
                 return;
             }
             Number latitudeValue = this.latitude.getValue();
             if (latitudeValue == null) {
-                MessageBox.tipMsg("纬度不能为空", this.latitude);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.latitude);
                 return;
             }
             // redis键
@@ -81,7 +82,7 @@ public class RedisZSetCoordinateAddController extends Controller {
             // redis客户端
             RedisClient client = this.treeItem.client();
             if (client.zrank(dbIndex, key, rowValue) != null) {
-                MessageBox.warn("此坐标已存在！");
+                MessageBox.warn(I18nHelper.alreadyExists());
                 return;
             }
             double longitude = longitudeValue.doubleValue();
@@ -89,9 +90,7 @@ public class RedisZSetCoordinateAddController extends Controller {
             // 添加元素
             client.geoadd(dbIndex, key, longitude, latitude, rowValue);
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_GEO_COORDINATE_ADDED, this.treeItem);
             RedisEventUtil.zSetCoordinateAdded(this.treeItem, key, rowValue, longitude, latitude);
-            // MessageBox.okToast("新增坐标成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

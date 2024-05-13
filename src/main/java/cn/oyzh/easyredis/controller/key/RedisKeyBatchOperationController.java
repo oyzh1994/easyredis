@@ -17,6 +17,7 @@ import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -248,19 +249,19 @@ public class RedisKeyBatchOperationController extends Controller {
                 this.ttlKeys = this.client.keys(this.dbIndex, this.pattern2.getText());
             }
             if (CollUtil.isEmpty(this.ttlKeys)) {
-                MessageBox.warn("未发现匹配的键");
+                MessageBox.warn(I18nHelper.noMatchedKey());
                 return;
             }
             try {
                 this.stage.disable();
-                this.stage.appendTitle("操作中...");
+                this.stage.appendTitle(I18nHelper.operationIng());
                 long ttl = this.ttl.getValue();
                 if (ttl == 0) {
                     if (MessageBox.confirm("ttl为0时，这些键将被删除，确定么？")) {
                         this.client.del(this.dbIndex, this.ttlKeys);
                         this.showKeys(this.ttlKeys, this.keys2);
                         RedisEventUtil.keyFlushed(this.treeItem);
-                        MessageBox.okToast("操作成功");
+                        MessageBox.okToast(I18nHelper.operationSuccess());
                     }
                 } else if (ttl == -1) {
                     if (MessageBox.confirm("ttl为-1时，这些键将被持久化，确定么？")) {
@@ -269,7 +270,7 @@ public class RedisKeyBatchOperationController extends Controller {
                         }
                         this.showKeys(this.ttlKeys, this.keys2);
                         RedisEventUtil.keyFlushed(this.treeItem);
-                        MessageBox.okToast("操作成功");
+                        MessageBox.okToast(I18nHelper.operationSuccess());
                     }
                 } else {
                     for (String ttlKey : this.ttlKeys) {
@@ -277,7 +278,7 @@ public class RedisKeyBatchOperationController extends Controller {
                     }
                     this.showKeys(this.ttlKeys, this.keys2);
                     RedisEventUtil.keyFlushed(this.treeItem);
-                    MessageBox.okToast("设置ttl成功");
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 }
             } finally {
                 this.stage.enable();
@@ -306,7 +307,7 @@ public class RedisKeyBatchOperationController extends Controller {
                     this.client.flushDB(this.dbIndex);
                     this.showKeys(this.ttlKeys, this.keys3);
                     RedisEventUtil.keyFlushed(this.treeItem);
-                    MessageBox.okToast("清空数据库成功");
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 } finally {
                     this.stage.enable();
                     this.stage.restoreTitle();
@@ -347,7 +348,7 @@ public class RedisKeyBatchOperationController extends Controller {
                     }
                     this.showKeys(this.moveKeys, this.keys4);
                     RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
-                    MessageBox.okToast("移动键成功");
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 } finally {
                     this.stage.enable();
                     this.stage.restoreTitle();
@@ -393,7 +394,7 @@ public class RedisKeyBatchOperationController extends Controller {
                     }
                     this.showKeys(keys, this.keys5);
                     RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);
-                    MessageBox.okToast("复制键成功");
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 } finally {
                     this.stage.enable();
                     this.stage.restoreTitle();

@@ -8,6 +8,7 @@ import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -75,9 +76,8 @@ public class RedisKeyTTLController extends Controller {
             } else {
                 this.client.expire(this.treeItem.dbIndex(), this.treeItem.key(), ttlValue.longValue(), null);
             }
-            // EventUtil.fire(RedisEventTypes.REDIS_TTL_UPDATED, this.treeItem);
             RedisEventUtil.keyTTLUpdated(this.treeItem, ttlValue.longValue());
-            MessageBox.okToast("更新TTL成功！");
+            MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);

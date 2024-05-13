@@ -16,8 +16,6 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -29,8 +27,11 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
@@ -330,17 +331,16 @@ public class RedisInfoTransportController extends Controller {
                 // 执行传输
                 this.transport(fIndex, tIndex, this.allKeys);
                 this.updateStatus("数据传输收尾中....");
-                // this.transportMsg.waitTextExpend();
                 this.updateStatus("数据传输结束");
-                MessageBox.okToast("传输数据结束！");
+                MessageBox.okToast(I18nHelper.operationSuccess());
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据传输取消");
-                    MessageBox.okToast("传输数据取消！");
+                    MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
                     this.updateStatus("数据传输失败");
-                    MessageBox.warn("传输数据失败！");
+                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束传输
@@ -698,30 +698,30 @@ public class RedisInfoTransportController extends Controller {
     private void updateStatus(String key, int status, Exception ex) {
         String msg;
         if (status == 1) {
-            msg = "传输键：" + key + " 成功";
+            msg = I18nHelper.transportKey() + "：" + key + " " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "传输键：" + key + " 跳过，此键被过滤";
+            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键被过滤";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "传输键：" + key + " 跳过，此键被排除";
+            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键被排除";
             this.counter.updateIgnore();
         } else if (status == 4) {
-            msg = "传输键：" + key + " 跳过，此键已存在";
+            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键已存在";
             this.counter.updateIgnore();
         } else if (status == 5) {
-            msg = "传输键：" + key + " 成功，此键已更新";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，此键已更新";
             this.counter.updateSuccess();
         } else if (status == 6) {
-            msg = "传输键：" + key + " 成功，此键已覆盖";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，此键已覆盖";
             this.counter.updateSuccess();
         } else if (status == 7) {
-            msg = "传输键：" + key + " 失败，此键已存在，且类型不一致";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.fail() + " ，此键已存在，且类型不一致";
             this.counter.updateFail();
         } else {
-            msg = "传输键：" + key + " 失败";
+            msg = I18nHelper.transportKey() + "：" + key + " " + I18nHelper.fail();
             if (ex != null) {
-                msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nHelper.errorInfo() + "：" + RedisExceptionParser.INSTANCE.apply(ex);
             }
             this.counter.updateFail();
         }

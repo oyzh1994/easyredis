@@ -18,6 +18,7 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.menu.CancelActionMenuItem;
+import cn.oyzh.fx.plus.menu.ClearDataMenuItem;
 import cn.oyzh.fx.plus.menu.CloseConnectMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteConnectMenuItem;
 import cn.oyzh.fx.plus.menu.EditConnectMenuItem;
@@ -168,7 +169,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportNode);
             ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importNode);
             TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
-            FXMenuItem flushAll = FXMenuItem.newItem("清空数据", new SVGGlyph("/font/clear.svg", "12"), "清空所有数据库", this::flushAll);
+            ClearDataMenuItem flushAll = new ClearDataMenuItem("12", this::flushAll);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
 
             items.add(disConnect);

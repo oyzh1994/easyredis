@@ -13,8 +13,7 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -110,14 +109,14 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         this.value.setName(groupName);
         if (this.groupStore.exist(this.value)) {
             this.value.setName(name);
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         // 修改名称
         if (this.groupStore.update(this.value)) {
             this.getValue().flushText();
         } else {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -131,7 +130,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         }
         // 删除失败
         if (!this.groupStore.delete(this.value)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+            MessageBox.warn(I18nHelper.operationFail());
             return;
         }
         // 处理连接

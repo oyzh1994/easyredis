@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CopyKeyMenuItem;
@@ -305,7 +306,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
         }
         // 键已存在
         if (this.client().exists(this.dbIndex(), newKey)) {
-            MessageBox.warn(I18nResourceBundle.i18nString("base.contentAlreadyExists"));
+            MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
         try {
@@ -316,7 +317,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
                 this.getValue().name(newKey);
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {
-                MessageBox.warn(I18nResourceBundle.i18nString("base.actionFail"));
+                MessageBox.warn(I18nHelper.operationFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -11,12 +11,13 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
@@ -231,11 +232,11 @@ public class RedisKeyAddController extends Controller {
                 return;
             }
             if (key.isEmpty()) {
-                MessageBox.tipMsg("键名称不能为空！", this.key);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.key);
                 return;
             }
             if (this.client.exists(dbIndex, key)) {
-                MessageBox.warn("key:" + key + "已经存在！");
+                MessageBox.warn("key:" + key + I18nHelper.alreadyExists());
                 return;
             }
             boolean result = false;
@@ -276,7 +277,7 @@ public class RedisKeyAddController extends Controller {
                 this.client.expire(dbIndex, key, ttl, null);
             }
             RedisEventUtil.keyAdded(this.dbItem, keyType, key);
-            MessageBox.okToast("新增键成功！");
+            MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeStage();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -330,7 +331,7 @@ public class RedisKeyAddController extends Controller {
     private boolean addZSetNode(int dbIndex, String key) {
         Number score = this.scoreValue.getValue();
         if (score == null) {
-            MessageBox.tipMsg("请填写分数！", this.scoreValue);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.scoreValue);
             return false;
         }
         String nodeValue = this.valueText();
@@ -347,7 +348,7 @@ public class RedisKeyAddController extends Controller {
     private boolean addHashNode(int dbIndex, String key) {
         String field = this.fieldValue.getText();
         if (field == null) {
-            MessageBox.tipMsg("请填写字段名称！", this.fieldValue);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.fieldValue);
             return false;
         }
         String nodeValue = this.valueText();
@@ -367,7 +368,7 @@ public class RedisKeyAddController extends Controller {
         List<String> elements = nodeValue.lines().collect(Collectors.toList());
         elements = CollUtil.removeBlank(elements);
         if (elements.isEmpty()) {
-            MessageBox.tipMsg("元素内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
         return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) > 0;
@@ -384,17 +385,17 @@ public class RedisKeyAddController extends Controller {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
-            MessageBox.tipMsg("坐标名称不能为空", this.valueTextArea());
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
         Number latitudeValue = this.latitudeValue.getValue();
         if (latitudeValue == null) {
-            MessageBox.tipMsg("请输入纬度！", this.latitudeValue);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.latitudeValue);
             return false;
         }
         Number longitudeValue = this.longitudeValue.getValue();
         if (longitudeValue == null) {
-            MessageBox.tipMsg("请输入经度！", this.longitudeValue);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.longitudeValue);
             return false;
         }
         return this.client.geoadd(dbIndex, key, longitudeValue.doubleValue(), latitudeValue.doubleValue(), nodeValue) > 0;
@@ -411,7 +412,7 @@ public class RedisKeyAddController extends Controller {
         String nodeValue = this.valueText();
         // 行数据
         if (nodeValue.isEmpty()) {
-            MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
         if (!JSONUtil.isTypeJSON(nodeValue)) {
@@ -420,12 +421,12 @@ public class RedisKeyAddController extends Controller {
         }
         String streamID = this.streamIDValue.getText();
         if (streamID == null) {
-            MessageBox.tipMsg("消息id不能为空", this.streamIDValue);
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.streamIDValue);
             return false;
         }
         JSONObject object = JSONUtil.parseObj(nodeValue);
         if (object.isEmpty()) {
-            MessageBox.tipMsg("消息内容不能为空", this.valueTextArea());
+            MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
         // 流添加参数

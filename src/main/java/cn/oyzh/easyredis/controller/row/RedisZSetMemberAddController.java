@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -56,12 +57,12 @@ public class RedisZSetMemberAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-                MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             Number scoreValue = this.score.getValue();
             if (scoreValue == null) {
-                MessageBox.tipMsg("分数不能为空", this.score);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.score);
                 return;
             }
             // redis键
@@ -71,7 +72,7 @@ public class RedisZSetMemberAddController extends Controller {
             // redis客户端
             RedisClient client = this.treeItem.client();
             if (client.zrank(dbIndex, key, rowValue) != null) {
-                MessageBox.warn("此成员已存在！");
+                MessageBox.warn(I18nHelper.alreadyExists());
                 return;
             }
             double score = scoreValue.doubleValue();

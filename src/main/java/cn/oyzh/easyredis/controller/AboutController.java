@@ -51,13 +51,9 @@ public class AboutController extends SubController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        // 当舞台被显示时，设置名称文本框的文本为项目名称
         this.name.setText(this.project.getName());
-        // 设置版本文本框的文本为项目版本号
         this.version.setText("v" + this.project.getVersion());
-        // 设置更新日期文本框的文本为项目的更新日期
         this.updateDate.setText(this.project.getUpdateDate());
-        // 设置版权文本框的文本为项目的版权信息
         this.copyright.setText(this.project.getCopyright());
         this.type.setText(StrUtil.equals(this.project.getType(), "build") ? this.i18nString("base.buildType1") : this.i18nString("base.buildType2"));
         // 设置标题

@@ -2,6 +2,13 @@ package cn.oyzh.easyredis.fx;
 
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
+import cn.oyzh.fx.plus.node.NodeManager;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * redis格式下拉框
@@ -9,14 +16,11 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
  * @author oyzh
  * @since 2023/8/14
  */
-public class RedisFormatComboBox extends FlexComboBox<String> {
+public class RedisFormatComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
 
     {
-        this.getItems().add("原始");
-        this.getItems().add("JSON串");
-        this.getItems().add("二进制");
-        this.getItems().add("十六进制");
-        this.getItems().add("字符串");
+        NodeManager.init(this);
+        this.setTipText(I18nResourceBundle.i18nString("base.format"));
     }
 
     /**
@@ -106,5 +110,16 @@ public class RedisFormatComboBox extends FlexComboBox<String> {
      */
     public void selectJson() {
         this.select(1);
+    }
+
+    @Override
+    public List<String> values(Locale locale) {
+        this.clearItems();
+        this.addItem(I18nHelper.raw());
+        this.addItem(I18nHelper.json());
+        this.addItem(I18nHelper.binary());
+        this.addItem(I18nHelper.hex());
+        this.addItem(I18nHelper.string());
+        return this.getItems();
     }
 }

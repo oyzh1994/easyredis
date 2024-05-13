@@ -26,8 +26,6 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
@@ -37,8 +35,11 @@ import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
@@ -464,24 +465,24 @@ public class RedisKeyImportController extends Controller {
     private void updateStatus(String key, int dbIndex, int status, Exception ex) {
         String msg;
         if (status == 1) {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 成功";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 跳过，此键已存在";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] 跳过，此键已存在";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 成功，此键已更新";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，此键已更新";
             this.counter.updateSuccess();
         } else if (status == 4) {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 成功，此键已覆盖";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，此键已覆盖";
             this.counter.updateSuccess();
         } else if (status == 5) {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 失败，此键已存在，且类型不一致";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail() + "，此键已存在，且类型不一致";
             this.counter.updateFail();
         } else {
-            msg = "导入键：" + key + " [db" + dbIndex + "] 失败";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();
             if (ex != null) {
-                msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nHelper.errorInfo() + "：" + RedisExceptionParser.INSTANCE.apply(ex);
             }
             this.counter.updateSuccess();
         }

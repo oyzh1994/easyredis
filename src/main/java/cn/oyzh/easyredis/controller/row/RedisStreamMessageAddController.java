@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -60,7 +61,7 @@ public class RedisStreamMessageAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-                MessageBox.tipMsg("消息内容不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             if (!JSONUtil.isTypeJSON(rowValue)) {
@@ -69,12 +70,12 @@ public class RedisStreamMessageAddController extends Controller {
             }
             JSONObject fields = JSONUtil.parseObj(rowValue);
             if (fields.isEmpty()) {
-                MessageBox.tipMsg("消息内容不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             String streamIDText = this.streamID.getText();
             if (streamIDText == null) {
-                MessageBox.tipMsg("消息id不能为空", this.streamID);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.streamID);
                 return;
             }
             // redis键
@@ -89,9 +90,7 @@ public class RedisStreamMessageAddController extends Controller {
             // 添加流
             client.xadd(dbIndex, key, (Map) fields, params);
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_STREAM_MESSAGE_ADDED, this.treeItem);
             RedisEventUtil.streamMessageAdded(this.treeItem, key, rowValue);
-            // MessageBox.okToast("新增消息成功！");
             this.closeStage();
         } catch (Exception ex) {
             ex.printStackTrace();

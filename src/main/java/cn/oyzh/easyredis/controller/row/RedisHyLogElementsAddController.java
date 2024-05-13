@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -53,13 +54,13 @@ public class RedisHyLogElementsAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue) || StrUtil.isBlank(rowValue)) {
-                MessageBox.tipMsg("元素不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             List<String> elements = rowValue.lines().collect(Collectors.toList());
             elements = CollUtil.removeBlank(elements);
             if (elements.isEmpty()) {
-                MessageBox.tipMsg("元素内容不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             // redis键

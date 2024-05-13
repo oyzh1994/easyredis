@@ -16,8 +16,6 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.common.util.SystemUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexHBox;
@@ -30,8 +28,11 @@ import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.FlexTextField;
 import cn.oyzh.fx.plus.handler.StateManager;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
 import javafx.fxml.FXML;
@@ -318,18 +319,18 @@ public class RedisKeyExportController extends Controller {
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
                     this.updateStatus("文件保存成功");
-                    MessageBox.okToast("导出数据成功！");
+                    MessageBox.okToast(I18nHelper.operationSuccess());
                 } else {
-                    this.updateStatus("文件保存取消");
+                    this.updateStatus(I18nHelper.operationCancel());
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus("数据导出取消");
-                    MessageBox.okToast("导出数据取消！");
+                    MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
                     this.updateStatus("数据导出失败");
-                    MessageBox.warn("导出数据失败！");
+                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束处理
@@ -495,18 +496,18 @@ public class RedisKeyExportController extends Controller {
         key = URLDecoder.decode(key, StandardCharsets.UTF_8);
         String msg;
         if (status == 1) {
-            msg = "导出键：" + key + " [db" + dbIndex + "] 成功";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = "导出键：" + key + " [db" + dbIndex + "] 已忽略，此键适用过滤配置";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] 已忽略，此键适用过滤配置";
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = "导出键：" + key + " [db" + dbIndex + "] 已忽略，此键类型被排除";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] 已忽略，此键类型被排除";
             this.counter.updateIgnore();
         } else {
-            msg = "导出键：" + key + " [db" + dbIndex + "] 失败";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();
             if (ex != null) {
-                msg += "，错误信息：" + RedisExceptionParser.INSTANCE.apply(ex);
+                msg += "，" + I18nHelper.errorInfo() + "：" + RedisExceptionParser.INSTANCE.apply(ex);
             }
             this.counter.updateFail();
         }

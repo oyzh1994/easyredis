@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.DisabledTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -84,7 +85,7 @@ public class RedisKeyCopyController extends Controller {
             boolean result = this.client.copy(fromDBIndex, key, key, targetDBIndex, this.replace.isSelected());
             if (result) {
                 RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);
-                MessageBox.okToast("复制键成功！");
+                MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
             } else {
                 MessageBox.warn("复制键失败，键可能已经存在！");

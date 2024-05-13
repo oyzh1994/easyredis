@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
@@ -56,7 +57,7 @@ public class RedisListRowAddController extends Controller {
             // 行数据
             String rowValue = this.rowValue.getText();
             if (StrUtil.isEmpty(rowValue)) {
-                MessageBox.tipMsg("行数据不能为空", this.rowValue);
+                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
             // redis键
@@ -72,9 +73,7 @@ public class RedisListRowAddController extends Controller {
                 client.rpushx(dbIndex, key, rowValue);
             }
             // 发送事件
-            // EventUtil.fire(RedisEventTypes.REDIS_LIST_ROW_ADDED, this.treeItem);
             RedisEventUtil.listRowAdded(this.treeItem, key, rowValue);
-            // MessageBox.okToast("新增行成功！");
             this.closeStage();
         } catch (Exception ex) {
             MessageBox.exception(ex);
