@@ -24,6 +24,7 @@ import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -166,10 +167,10 @@ public class RedisKeyImportController extends Controller {
             return;
         }
         if (files.size() != 1) {
-            MessageBox.warn("仅支持单个文件！");
+            MessageBox.warn(I18nHelper.onlySupportSingleFile());
             return;
         }
-        File file = files.get(0);
+        File file = files.getFirst();
         // 解析文件
         this.parseFile(file);
     }
@@ -181,7 +182,7 @@ public class RedisKeyImportController extends Controller {
     private void chooseFile() {
         FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files|TXT files", "*.json", "*.txt");
         FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose("选择redis脚本", new FileChooser.ExtensionFilter[]{filter1, filter2});
+        File file = FileChooserUtil.choose(I18nHelper.chooseFile(), new FileChooser.ExtensionFilter[]{filter1, filter2});
         // 解析文件
         this.parseFile(file);
     }
@@ -196,19 +197,19 @@ public class RedisKeyImportController extends Controller {
             return;
         }
         if (!file.exists()) {
-            MessageBox.warn("文件不存在！");
+            MessageBox.warn(I18nHelper.fileNotExists());
             return;
         }
         if (file.isDirectory()) {
-            MessageBox.warn("不支持文件夹！");
+            MessageBox.warn(I18nHelper.notSupportFolder());
             return;
         }
-        if (!FileNameUtil.isType(file.getName(), "txt", "json")) {
-            MessageBox.warn("仅支持txt或json文件！");
+        if (!FileNameUtil.isType(file.getName(), "json")) {
+            MessageBox.warn(I18nHelper.invalidFormat());
             return;
         }
         if (file.length() == 0) {
-            MessageBox.warn("文件内容为空！");
+            MessageBox.warn(I18nHelper.contentIsEmpty());
             return;
         }
         try {
@@ -218,18 +219,18 @@ public class RedisKeyImportController extends Controller {
             this.importMsg.clear();
             this.importBtn.enable();
             // 脚本信息
-            String info = "文件名：" + file.getName() + "，" +
-                    "共：" + this.nodeExport.counts() + "行，" +
-                    "大小：" + Math.max(1, file.length() / 1024) + "Kb，" +
-                    "源版本：" + this.nodeExport.version() + "，" +
-                    "源平台：" + this.nodeExport.platform() + "，" +
-                    "字符集：" + this.nodeExport.charset();
+            String info = I18nHelper.fileName() + " " + file.getName() + "，" +
+                    I18nHelper.total() + " " + this.nodeExport.counts() + I18nHelper.line() + "，" +
+                    I18nHelper.size() + " " + Math.max(1, file.length() / 1024) + "Kb，" +
+                    I18nHelper.version() + " " + this.nodeExport.version() + "，" +
+                    I18nHelper.platform() + " " + this.nodeExport.platform() + "，" +
+                    I18nHelper.charset() + " " + this.nodeExport.charset();
             this.scriptInfo.setText(info);
         } catch (Exception ex) {
             ex.printStackTrace();
             this.nodeExport = null;
             this.importBtn.disable();
-            MessageBox.warn("解析脚本失败！");
+            MessageBox.exception(ex, I18nHelper.parseFail());
         }
     }
 
@@ -245,12 +246,11 @@ public class RedisKeyImportController extends Controller {
         // 开始处理
         this.importBtn.disable();
         this.stateManager.disable();
-        this.stage.appendTitle("===导入执行中===");
+        this.stage.appendTitle("===" + I18nHelper.importProcessing() + "===");
         // 执行导入
         this.importTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
-                // EventUtil.fire(RedisEventTypes.REDIS_IMPORT_START);
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.importTask)) {
@@ -283,18 +283,16 @@ public class RedisKeyImportController extends Controller {
                     this.updateStatus(key, dbIndex, status, exception);
                 }
                 // 收尾工作
-                this.updateStatus("数据导入收尾中...");
-                // this.importMsg.waitTextExpend();
-                this.updateStatus("数据导入结束");
-                MessageBox.okToast("导入数据结束！");
+                this.updateStatus(I18nHelper.operationFinish());
+                MessageBox.okToast(I18nHelper.operationFinish());
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据导入取消");
-                    MessageBox.okToast("导入数据取消！");
+                    this.updateStatus(I18nHelper.operationCancel());
+                    MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
-                    this.updateStatus("数据导入失败");
-                    MessageBox.warn("导入数据失败！");
+                    this.updateStatus(I18nHelper.operationFail());
+                    MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
                 // 结束处理
@@ -302,7 +300,6 @@ public class RedisKeyImportController extends Controller {
                 this.stateManager.enable();
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
-                // EventUtil.fire(RedisEventTypes.REDIS_IMPORT_FINISH, this.treeItem);
                 SystemUtil.gcLater();
             }
         });
@@ -354,8 +351,6 @@ public class RedisKeyImportController extends Controller {
         RedisKey redisKey = RedisKeyUtil.deserializeNode(type, value);
         if (redisKey instanceof RedisStringKey stringNode) {
             this.client.set(dbIndex, key, (String) stringNode.value());
-//        } else if (redisKey instanceof RedisHyLogKey) {
-//            this.client.pfadd(dbIndex, key, "");
         } else if (redisKey instanceof RedisListKey listNode) {
             String[] arr;
             if (CollUtil.isEmpty(listNode.value())) {
@@ -433,7 +428,7 @@ public class RedisKeyImportController extends Controller {
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {
             this.stage.disable();
-            this.stage.appendTitle("===松开鼠标以释放文件===");
+            this.stage.appendTitle(I18nHelper.dragTip1());
             event1.acceptTransferModes(TransferMode.ANY);
             event1.consume();
         });
@@ -468,16 +463,16 @@ public class RedisKeyImportController extends Controller {
             msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] 跳过，此键已存在";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.importTip1();
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，此键已更新";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，" + RedisI18nHelper.importTip2();
             this.counter.updateSuccess();
         } else if (status == 4) {
-            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，此键已覆盖";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success() + "，" + RedisI18nHelper.importTip3();
             this.counter.updateSuccess();
         } else if (status == 5) {
-            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail() + "，此键已存在，且类型不一致";
+            msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail() + "，" + RedisI18nHelper.importTip4();
             this.counter.updateFail();
         } else {
             msg = I18nHelper.importKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();

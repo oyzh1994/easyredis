@@ -14,6 +14,7 @@ import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -104,12 +105,6 @@ public class RedisKeyExportController extends Controller {
      */
     @FXML
     private FlexComboBox<String> pretty;
-
-    // /**
-    //  * 导出字符集
-    //  */
-    // @FXML
-    // private CharsetComboBox charset;
 
     /**
      * 消息组件
@@ -212,12 +207,6 @@ public class RedisKeyExportController extends Controller {
     @FXML
     private FlexCheckBox hashType;
 
-//    /**
-//     * 排除hyperLogLog类型
-//     */
-//    @FXML
-//    private FlexCheckBox hyperLogLogType;
-
     /**
      * 导出操作任务
      */
@@ -264,7 +253,7 @@ public class RedisKeyExportController extends Controller {
         if (this.db.hasProp("canDisable")) {
             this.db.disable();
         }
-        this.stage.appendTitle("===导出执行中===");
+        this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.filters = this.filterStore.loadEnable();
@@ -301,35 +290,33 @@ public class RedisKeyExportController extends Controller {
                 boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
                 // 导出内容
                 String exportData = RedisExportUtil.nodesToJSON(allNodes, null, prettyFormat);
-                // String exportData = RedisExportUtil.nodesToJSON(allNodes, this.charset.getCharset(), prettyFormat);
                 // 文件格式
                 FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
                 // 处理名称
-                String fileName;
-                if (StrUtil.equals("所有数据库", this.db.getValue())) {
-                    fileName = "Redis连接-" + this.client.infoName() + "-导出数据.json";
+                String fileName = "Redis-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
+                if (StrUtil.equals(I18nHelper.allDatabase(), this.db.getValue())) {
+                    fileName += ".json";
                 } else {
-                    fileName = "Redis连接-" + this.client.infoName() + "-db" + this.db.getValue() + "-导出数据.json";
+                    fileName += "-db" + this.db.getValue() + ".json";
                 }
                 // 收尾工作
-                this.updateStatus("处理文件中...");
-                // this.exportMsg.waitTextExpend();
-                File file = FileChooserUtil.save("Redis数据导出", fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
+                this.updateStatus(I18nHelper.fileProcessing());
+                File file = FileChooserUtil.save(I18nHelper.exportData(), fileName, new FileChooser.ExtensionFilter[]{extensionFilter});
                 // 保存文件
                 if (file != null) {
                     FileUtil.writeUtf8String(exportData, file);
-                    this.updateStatus("文件保存成功");
+                    this.updateStatus(I18nHelper.operationSuccess());
                     MessageBox.okToast(I18nHelper.operationSuccess());
                 } else {
                     this.updateStatus(I18nHelper.operationCancel());
                 }
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据导出取消");
+                    this.updateStatus(I18nHelper.operationCancel());
                     MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
-                    this.updateStatus("数据导出失败");
+                    this.updateStatus(I18nHelper.operationFail());
                     MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
@@ -400,7 +387,7 @@ public class RedisKeyExportController extends Controller {
         TreeItem<?> treeItem = this.getStageProp("treeItem");
         if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
             this.client = connectTreeItem.client();
-            this.db.addItem("所有数据库");
+            this.db.addItem(I18nHelper.allDatabase());
             this.db.setDbCount(this.client.databases());
             this.db.setProp("canDisable", true);
             this.serverName.setText(connectTreeItem.value().getName());
@@ -476,9 +463,6 @@ public class RedisKeyExportController extends Controller {
         if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-//        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
-//            return true;
-//        }
         if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }
@@ -499,10 +483,10 @@ public class RedisKeyExportController extends Controller {
             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] 已忽略，此键适用过滤配置";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip1();
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] 已忽略，此键类型被排除";
+            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip2();
             this.counter.updateIgnore();
         } else {
             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();

@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
@@ -228,7 +229,7 @@ public class RedisKeyAddController extends Controller {
         try {
             long ttl = this.ttlValue.getValue();
             if (ttl == 0) {
-                MessageBox.warn("TTL设置为马上过期，新增键已取消！");
+                MessageBox.warn(RedisI18nHelper.addTip2());
                 return;
             }
             if (key.isEmpty()) {
@@ -416,7 +417,7 @@ public class RedisKeyAddController extends Controller {
             return false;
         }
         if (!JSONUtil.isTypeJSON(nodeValue)) {
-            MessageBox.warn("内容必须为json键值对");
+            MessageBox.warn(RedisI18nHelper.addTip1());
             return false;
         }
         String streamID = this.streamIDValue.getText();

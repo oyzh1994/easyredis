@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
@@ -70,7 +71,7 @@ public class RedisKeyTTLController extends Controller {
             if (ttlValue.longValue() <= -1) {
                 this.client.persist(this.treeItem.dbIndex(), this.treeItem.key());
             } else if (ttlValue.longValue() == 0) {
-                if (MessageBox.confirm("ttl设置为0，此key将立刻过期，确定这样设置么？")) {
+                if (MessageBox.confirm(RedisI18nHelper.ttlTip1())) {
                     this.client.del(this.treeItem.dbIndex(), this.treeItem.key());
                 }
             } else {
@@ -144,7 +145,7 @@ public class RedisKeyTTLController extends Controller {
         this.ttl.addTextChangeListener((observable, oldValue, newValue) -> {
             long ttl = this.ttl.getValue();
             if (ttl <= -1) {
-                this.expirePreview.setText("永不过期");
+                this.expirePreview.setText(I18nHelper.neverExpire());
             } else {
                 this.expirePreview.setText(Const.DATE_FORMAT.format(new Date(this.showTime + ttl * 1000)));
             }
@@ -162,7 +163,7 @@ public class RedisKeyTTLController extends Controller {
         Long ttl = this.treeItem.ttl();
         if (ttl == null || ttl <= -1) {
             this.ttl.setValue(-1);
-            this.expirePreview.setText("永不过期");
+            this.expirePreview.setText(I18nHelper.neverExpire());
         } else {
             this.ttl.setValue(ttl);
             this.expirePreview.setText(Const.DATE_FORMAT.format(new Date(System.currentTimeMillis() + ttl * 1000)));

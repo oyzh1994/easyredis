@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
@@ -78,7 +79,7 @@ public class RedisKeyCopyController extends Controller {
             this.client.throwSentinelException();
             this.client.throwCommandException("copy");
             if (targetDBIndex == fromDBIndex) {
-                MessageBox.warn("目标库和来源库不能是同一个！");
+                MessageBox.warn(RedisI18nHelper.moveTip1());
                 return;
             }
             // 移动键
@@ -88,7 +89,7 @@ public class RedisKeyCopyController extends Controller {
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeStage();
             } else {
-                MessageBox.warn("复制键失败，键可能已经存在！");
+                MessageBox.warn(RedisI18nHelper.copyTip1());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

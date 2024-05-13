@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
@@ -77,11 +78,11 @@ public class RedisKeyMoveController extends Controller {
             this.client.throwClusterException();
             this.client.throwSentinelException();
             if (targetDBIndex == fromDBIndex) {
-                MessageBox.warn("目标库和来源库不能是同一个！");
+                MessageBox.warn(RedisI18nHelper.moveTip1());
                 return;
             }
             if (this.client.exists(targetDBIndex, key)) {
-                MessageBox.warn("目标库已存在此键！");
+                MessageBox.warn(RedisI18nHelper.moveTip2());
                 return;
             }
             // 保留ttl

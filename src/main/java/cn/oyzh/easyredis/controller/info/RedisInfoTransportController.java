@@ -14,6 +14,7 @@ import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
@@ -272,11 +273,11 @@ public class RedisInfoTransportController extends Controller {
     private void doTransport() {
         // 检查连接
         if (this.fromConnect.getValue() == null) {
-            MessageBox.tipMsg("请选择一个传输连接", this.fromConnect);
+            MessageBox.tipMsg(RedisI18nHelper.transportTip7(), this.fromConnect);
             return;
         }
         if (this.targetConnect.getValue() == null) {
-            MessageBox.tipMsg("请选择一个目标连接", this.fromConnect);
+            MessageBox.tipMsg(RedisI18nHelper.transportTip8(), this.targetConnect);
             return;
         }
         RedisInfo fromInfo = this.fromConnect.getValue();
@@ -284,7 +285,7 @@ public class RedisInfoTransportController extends Controller {
         int fIndex = this.fromDB.getDB();
         int tIndex = this.targetDB.getDB();
         if (fromInfo == targetInfo && fIndex == tIndex) {
-            MessageBox.tipMsg("传输目标不能是自己", this.fromConnect);
+            MessageBox.tipMsg(RedisI18nHelper.transportTip9(), this.fromConnect);
             return;
         }
         // 开始传输
@@ -293,7 +294,7 @@ public class RedisInfoTransportController extends Controller {
         if (this.fromClient == null || !this.fromClient.isConnected()) {
             try {
                 this.fromConnect.requestFocus();
-                MessageBox.warn("传输连接[" + fromInfo.getName() + "]初始化失败！");
+                MessageBox.warn(I18nHelper.sourceConnect() + "[" + fromInfo.getName() + "]" + I18nHelper.initFail());
                 return;
             } finally {
                 this.transportEnd();
@@ -304,7 +305,7 @@ public class RedisInfoTransportController extends Controller {
         if (this.targetClient == null || !this.targetClient.isConnected()) {
             try {
                 this.targetConnect.requestFocus();
-                MessageBox.warn("目标连接[" + targetInfo.getName() + "]初始化失败！");
+                MessageBox.warn(I18nHelper.targetConnect() + "[" + targetInfo.getName() + "]" + I18nHelper.initFail());
                 return;
             } finally {
                 this.transportEnd();
@@ -315,7 +316,7 @@ public class RedisInfoTransportController extends Controller {
         this.counter.reset();
         // 开始传输
         this.transportStart();
-        this.stage.appendTitle("===传输执行中===");
+        this.stage.appendTitle("===" + I18nHelper.transportIng() + "===");
         // 执行传输
         this.exportTask = ThreadUtil.start(() -> {
             this.stopTransportBtn.enable();
@@ -330,16 +331,15 @@ public class RedisInfoTransportController extends Controller {
                 }
                 // 执行传输
                 this.transport(fIndex, tIndex, this.allKeys);
-                this.updateStatus("数据传输收尾中....");
-                this.updateStatus("数据传输结束");
+                this.updateStatus(I18nHelper.transportFinish());
                 MessageBox.okToast(I18nHelper.operationSuccess());
             } catch (Exception e) {
                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus("数据传输取消");
+                    this.updateStatus(I18nHelper.transportCancel());
                     MessageBox.okToast(I18nHelper.operationCancel());
                 } else {
                     e.printStackTrace();
-                    this.updateStatus("数据传输失败");
+                    this.updateStatus(I18nHelper.transportFail());
                     MessageBox.warn(I18nHelper.operationFail());
                 }
             } finally {
@@ -500,7 +500,7 @@ public class RedisInfoTransportController extends Controller {
     private void initDBList(RedisDBComboBox comboBox, RedisClient client) {
         try {
             this.stage.disable();
-            this.stage.appendTitle("连接初始化中...");
+            this.stage.appendTitle(I18nHelper.connectInitIng());
             comboBox.clearItems();
             // 执行连接
             if (!client.isConnected()) {
@@ -513,11 +513,11 @@ public class RedisInfoTransportController extends Controller {
                 comboBox.selectFirst();
             } else {// 连接失败
                 comboBox.disable();
-                MessageBox.warn("连接初始化失败！");
+                MessageBox.warn(I18nHelper.connectInitFail());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.warn("连接初始化失败！");
+            MessageBox.warn(I18nHelper.connectInitFail());
         } finally {
             this.stage.enable();
             this.stage.restoreTitle();
@@ -679,9 +679,6 @@ public class RedisInfoTransportController extends Controller {
         if (!this.hashType.isSelected() && node.isHashKey()) {
             return true;
         }
-//        if (!this.hyperLogLogType.isSelected() && node.isHyLogKey()) {
-//            return true;
-//        }
         if (!this.streamType.isSelected() && node.isStreamKey()) {
             return true;
         }
@@ -701,22 +698,22 @@ public class RedisInfoTransportController extends Controller {
             msg = I18nHelper.transportKey() + "：" + key + " " + I18nHelper.success();
             this.counter.updateSuccess();
         } else if (status == 2) {
-            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键被过滤";
+            msg = I18nHelper.transportKey() + "：" + key + " " + RedisI18nHelper.transportTip1();
             this.counter.updateIgnore();
         } else if (status == 3) {
-            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键被排除";
+            msg = I18nHelper.transportKey() + "：" + key + " " + RedisI18nHelper.transportTip2();
             this.counter.updateIgnore();
         } else if (status == 4) {
-            msg = I18nHelper.transportKey() + "：" + key + " 跳过，此键已存在";
+            msg = I18nHelper.transportKey() + "：" + key + " " + RedisI18nHelper.transportTip3();
             this.counter.updateIgnore();
         } else if (status == 5) {
-            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，此键已更新";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，" + RedisI18nHelper.transportTip4();
             this.counter.updateSuccess();
         } else if (status == 6) {
-            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，此键已覆盖";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.success() + " ，" + RedisI18nHelper.transportTip5();
             this.counter.updateSuccess();
         } else if (status == 7) {
-            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.fail() + " ，此键已存在，且类型不一致";
+            msg = I18nHelper.transportKey() + "：" + key + I18nHelper.fail() + " ，" + RedisI18nHelper.transportTip6();
             this.counter.updateFail();
         } else {
             msg = I18nHelper.transportKey() + "：" + key + " " + I18nHelper.fail();

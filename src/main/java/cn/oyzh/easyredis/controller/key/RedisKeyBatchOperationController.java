@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.batch.RedisCountResult;
 import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.Controller;
@@ -182,7 +183,7 @@ public class RedisKeyBatchOperationController extends Controller {
     @FXML
     private void delKeys() {
         this.client.throwSentinelException();
-        if (MessageBox.confirm("确定执行删除操作？")) {
+        if (MessageBox.confirm(I18nHelper.deleteKeys())) {
             TaskManager.start(() -> {
                 // 当前光标
                 String cursor = null;
@@ -203,7 +204,7 @@ public class RedisKeyBatchOperationController extends Controller {
                     }
                     count += result.getCount();
                     long finalCount = count;
-                    FXUtil.runWait(() -> this.keys1.setText("已删除:" + finalCount));
+                    FXUtil.runWait(() -> this.keys1.setText(I18nHelper.deleted() + ":" + finalCount));
                     // 更新光标
                     cursor = result.getCursor();
                 }
@@ -257,14 +258,14 @@ public class RedisKeyBatchOperationController extends Controller {
                 this.stage.appendTitle(I18nHelper.operationIng());
                 long ttl = this.ttl.getValue();
                 if (ttl == 0) {
-                    if (MessageBox.confirm("ttl为0时，这些键将被删除，确定么？")) {
+                    if (MessageBox.confirm(RedisI18nHelper.batchTip1())) {
                         this.client.del(this.dbIndex, this.ttlKeys);
                         this.showKeys(this.ttlKeys, this.keys2);
                         RedisEventUtil.keyFlushed(this.treeItem);
                         MessageBox.okToast(I18nHelper.operationSuccess());
                     }
                 } else if (ttl == -1) {
-                    if (MessageBox.confirm("ttl为-1时，这些键将被持久化，确定么？")) {
+                    if (MessageBox.confirm(RedisI18nHelper.batchTip2())) {
                         for (String ttlKey : this.ttlKeys) {
                             this.client.persist(this.dbIndex, ttlKey);
                         }
@@ -300,10 +301,10 @@ public class RedisKeyBatchOperationController extends Controller {
             if (CollUtil.isEmpty(this.flushDBKeys)) {
                 this.flushDBKeys = this.client.keys(this.dbIndex, "*");
             }
-            if (MessageBox.confirm("确定清空数据库？")) {
+            if (MessageBox.confirm(RedisI18nHelper.batchTip3())) {
                 try {
                     this.stage.disable();
-                    this.stage.appendTitle("操作中...");
+                    this.stage.appendTitle(I18nHelper.operationIng());
                     this.client.flushDB(this.dbIndex);
                     this.showKeys(this.ttlKeys, this.keys3);
                     RedisEventUtil.keyFlushed(this.treeItem);
@@ -331,18 +332,18 @@ public class RedisKeyBatchOperationController extends Controller {
                 this.moveKeys = this.client.keys(this.dbIndex, this.pattern4.getText());
             }
             if (CollUtil.isEmpty(this.moveKeys)) {
-                MessageBox.warn("未发现匹配的键");
+                MessageBox.warn(I18nHelper.noMatchedKey());
                 return;
             }
             int targetDBIndex = this.moveTargetDB.getDB();
             if (targetDBIndex == this.dbIndex) {
-                MessageBox.warn("目标库不能与当前库相同！");
+                MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
-            if (MessageBox.confirm("确定移动这些键？")) {
+            if (MessageBox.confirm(RedisI18nHelper.batchTip5())) {
                 try {
                     this.stage.disable();
-                    this.stage.appendTitle("操作中...");
+                    this.stage.appendTitle(I18nHelper.operationIng());
                     for (String moveKey : this.moveKeys) {
                         this.client.move(moveKey, this.dbIndex, targetDBIndex);
                     }
@@ -373,18 +374,18 @@ public class RedisKeyBatchOperationController extends Controller {
                 this.copyKeys = this.client.keys(this.dbIndex, this.pattern5.getText());
             }
             if (CollUtil.isEmpty(this.copyKeys)) {
-                MessageBox.warn("未发现匹配的键");
+                MessageBox.warn(I18nHelper.noMatchedKey());
                 return;
             }
             int targetDBIndex = this.copyTargetDB.getDB();
             if (targetDBIndex == this.dbIndex) {
-                MessageBox.warn("目标库不能与当前库相同！");
+                MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
-            if (MessageBox.confirm("确定复制这些键？")) {
+            if (MessageBox.confirm(RedisI18nHelper.batchTip6())) {
                 try {
                     this.stage.disable();
-                    this.stage.appendTitle("操作中...");
+                    this.stage.appendTitle(I18nHelper.operationIng());
                     Set<String> keys = new HashSet<>();
                     for (String copyKey : this.copyKeys) {
                         boolean result = this.client.copy(this.dbIndex, copyKey, copyKey, targetDBIndex, this.replaceOnCopy.isSelected());
@@ -487,7 +488,7 @@ public class RedisKeyBatchOperationController extends Controller {
                 if (result.getCount() != null) {
                     count += result.getCount();
                     long finalCount = count;
-                    FXUtil.runWait(() -> this.keys6.setText("已找到:" + finalCount));
+                    FXUtil.runWait(() -> this.keys6.setText(I18nHelper.found() + ":" + finalCount));
                 }
                 if (result.isFinish()) {
                     break;
