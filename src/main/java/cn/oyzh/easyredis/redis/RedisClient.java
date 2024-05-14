@@ -214,7 +214,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             // 初始化cluster集群
             this.initCluster(host, clientConfig);
-        } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到matser
+        } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
             // 初始化哨兵
             this.initSentinel(host, clientConfig);
             // 获取当前角色
@@ -392,7 +392,8 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isMasterMode() {
-        return !this.isClusterMode() && !this.isStandaloneMode();
+        return !this.isClusterMode();
+        // return !this.isClusterMode() && !this.isStandaloneMode();
     }
 
     /**

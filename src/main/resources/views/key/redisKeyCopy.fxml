@@ -52,7 +52,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#copyKey" fx:id="submit" text="%base.copy">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

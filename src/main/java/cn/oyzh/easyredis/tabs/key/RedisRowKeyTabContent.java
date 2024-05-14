@@ -6,6 +6,7 @@ import cn.oyzh.fx.common.dto.Paging;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.page.PageBox;
+import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -177,8 +178,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
             public Node initGraphic() {
                 if (this.hBox == null) {
                     // 删除按钮
-                    SVGGlyph del = new SVGGlyph("/font/delete.svg", 14.d);
-                    del.setTipText("删除");
+                    DeleteSVGGlyph del = new DeleteSVGGlyph( "14");
                     del.setOnMousePrimaryClicked((event) -> deleteRow());
 
                     this.hBox = new HBox(del);

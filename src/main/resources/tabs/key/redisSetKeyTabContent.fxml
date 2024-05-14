@@ -80,7 +80,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow" url="/font/add.svg">
+                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow" >
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>

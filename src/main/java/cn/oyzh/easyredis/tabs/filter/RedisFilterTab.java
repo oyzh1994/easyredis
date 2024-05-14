@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.filter;
 
+import cn.oyzh.fx.plus.controls.svg.FilterSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
@@ -13,7 +14,7 @@ import javafx.scene.Cursor;
  */
 public class RedisFilterTab extends DynamicTab {
 
-    public RedisFilterTab(){
+    public RedisFilterTab() {
         super();
         super.flush();
     }
@@ -22,7 +23,7 @@ public class RedisFilterTab extends DynamicTab {
     public void flushGraphic() {
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new SVGGlyph("/font/filter.svg", "12");
+            glyph = new FilterSVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }

@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
@@ -47,7 +48,7 @@ public class RedisTerminalTab extends DynamicTab {
     public void flushGraphic() {
         SVGGlyph graphic = (SVGGlyph) this.getGraphic();
         if (graphic == null) {
-            graphic = new SVGGlyph("/font/code library.svg", "13");
+            graphic = new TerminalSVGGlyph("13");
             graphic.setCursor(Cursor.DEFAULT);
             this.setGraphic(graphic);
         }

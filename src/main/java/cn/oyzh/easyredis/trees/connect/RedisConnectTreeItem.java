@@ -136,6 +136,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     }
 
     /**
+     * 是否哨兵模式
+     *
+     * @return 结果
+     */
+    public boolean isSentinelMode() {
+        return this.client.isSentinelMode();
+    }
+
+    /**
      * 初始化连接
      *
      * @return 结果

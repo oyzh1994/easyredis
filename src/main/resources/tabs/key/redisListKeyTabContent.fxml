@@ -10,12 +10,12 @@
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RenameSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
@@ -26,7 +26,6 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -81,7 +80,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow" url="/font/add.svg">
+                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>

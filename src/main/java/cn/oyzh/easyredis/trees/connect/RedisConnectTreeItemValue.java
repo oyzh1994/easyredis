@@ -63,10 +63,10 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
      * 刷新角色组件
      */
     public void flushRole() {
-        // 单机模式
-        if (this.item.isStandaloneMode()) {
-            return;
-        }
+        // // 单机模式
+        // if (this.item.isStandaloneMode()) {
+        //     return;
+        // }
         // 角色名称
         String roleName = switch (item.role().toLowerCase()) {
             case "sentinel" -> I18nHelper.sentinel();
@@ -86,14 +86,16 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
                 this.addChild(role);
                 HBox.setMargin(role, new Insets(0, 0, 0, 3));
             }
-            String str = "(" + roleName;
-            if (this.item.isClusterMode()) {
-                str += "/" + I18nHelper.cluster();
+            String str = "(";
+            if (this.item.isSentinelMode()) {
+                str += roleName;
+            } else if (this.item.isClusterMode()) {
+                str += I18nHelper.cluster() + "/" + roleName;
             } else if (this.item.isMasterMode()) {
-                str += "/" + I18nHelper.master_slave();
+                str += I18nHelper.master_slave() + "/" + roleName;
             }
             if (this.item.isReadonly()) {
-                str += "/" + I18nHelper.readonlyMode();
+                str += "/" + I18nHelper.readonly();
             }
             str += ")";
             role.setText(str);

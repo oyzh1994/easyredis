@@ -12,7 +12,6 @@ import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -354,7 +353,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     protected void showData(byte showType) {
         this.nodeData.disable();
         this.nodeData.clear();
-        this.nodeData.setPromptText("数据加载中...");
+        this.nodeData.setPromptText(I18nHelper.dataLoading() + "...");
         ExecutorUtil.start(() -> FXUtil.runLater(() -> {
             try {
                 this.nodeData.setShowType(showType);
@@ -380,7 +379,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
             return;
         }
         this.nodeData.disable();
-        this.nodeData.setPromptText("数据加载中...");
+        this.nodeData.setPromptText(I18nHelper.dataLoading() + "...");
         ExecutorUtil.start(() -> FXUtil.runLater(() -> {
             try {
                 this.nodeData.setRawData(rawData);
