@@ -14,6 +14,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.batch.RedisCountResult;
 import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
+import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
@@ -351,7 +352,7 @@ public class RedisKeyUtil {
     /**
      * 获取键值
      *
-     * @param node    redis节点
+     * @param node    redis键
      * @param dbIndex db索引
      * @param key     键
      * @param client  redis客户端
@@ -387,7 +388,7 @@ public class RedisKeyUtil {
     /**
      * 获取键对象信息
      *
-     * @param node    redis节点
+     * @param node    redis键
      * @param dbIndex db索引
      * @param key     键
      * @param client  redis客户端
@@ -402,7 +403,7 @@ public class RedisKeyUtil {
     }
 
     /**
-     * 扫描节点
+     * 扫描键
      *
      * @param dbIndex 都不索引
      * @param cursor  光标
@@ -441,6 +442,47 @@ public class RedisKeyUtil {
         }
         scanResult.setKeys(redisKeys);
         return scanResult;
+    }
+
+    /**
+     * 扫描键，简单模式
+     *
+     * @param dbIndex 都不索引
+     * @param cursor  光标
+     * @param params  参数
+     * @param client  redis客户端
+     * @return 扫描结果
+     */
+    public static RedisScanSimpleResult scanKeysSimple(Integer dbIndex, String cursor, ScanParams params, RedisClient client) {
+        // 扫描
+        ScanResult<String> result = client.scan(dbIndex, cursor, params);
+        RedisScanSimpleResult scanResult = new RedisScanSimpleResult();
+        if (result == null) {
+            return scanResult;
+        }
+        // 设置游标
+        scanResult.setCursor(result.getCursor());
+        // 获取游标结果
+        List<String> keys = result.getResult();
+        scanResult.setKeys(keys);
+        return scanResult;
+    }
+
+    /**
+     * 扫描键，简单限制
+     *
+     * @param dbIndex 都不索引
+     * @param client  redis客户端
+     * @param pattern 键模式
+     * @param limit   最大限制
+     * @return 键列表
+     */
+    public static List<String> scanKeys(Integer dbIndex, RedisClient client, String pattern, int limit) {
+        ScanParams params = new ScanParams();
+        params.count(limit);
+        params.match(pattern);
+        RedisScanSimpleResult result = scanKeysSimple(dbIndex, null, params, client);
+        return result.getKeys();
     }
 
     /**
@@ -489,12 +531,12 @@ public class RedisKeyUtil {
     }
 
     /**
-     * 获取所有节点
+     * 获取所有键
      *
      * @param dbIndex db索引
      * @param pattern 键模式
      * @param client  redis客户端
-     * @return 节点列表
+     * @return 键列表
      */
     public static List<RedisKey> allKeys(Integer dbIndex, String pattern, RedisClient client) {
         // 开始时间
@@ -528,7 +570,7 @@ public class RedisKeyUtil {
      * @param ttl       是否获取ttl
      * @param loadValue 是否加载值
      * @param client    redis客户端
-     * @return redis节点
+     * @return redis键
      */
     public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
         // 开始时间

@@ -16,12 +16,9 @@
 <?import cn.oyzh.fx.plus.controls.toggle.SwitchToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.combo.FlexComboBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoAddController" realWidth="750" realHeight="320">
-    <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
@@ -30,7 +27,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 140">
+                    <ClearableTextField fx:id="name" tipText="%base.nameTip" maxLen="30" require="true" realHeight="30" flexWidth="100% - 180">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -42,7 +39,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 140" maxLen="1024">
+                    <ClearableTextField fx:id="hostIp" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 180" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -54,7 +51,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <PortTextField flexWidth="100% - 140" fx:id="hostPort" realHeight="30" value="6379">
+                    <PortTextField flexWidth="100% - 180" fx:id="hostPort" realHeight="30" value="6379">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -116,7 +113,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <LimitTextArea fx:id="remark" realHeight="80" flexWidth="100% - 140" tipText="%base.remarkTip" maxLen="100">
+                    <LimitTextArea fx:id="remark" realHeight="100" flexWidth="100% - 180" tipText="%base.remarkTip" maxLen="100">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -124,75 +121,106 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="认证设置">
+        <FXTab text="%base.auth">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="80" text="认证方式" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.userName">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0"
-                                  realHeight="30" flexWidth="100% - 140">
-                        <items>
-                            <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="无需认证"/>
-                                <String fx:value="密码认证"/>
-                                <String fx:value="用户名及密码认证(redis6.0或以上)"/>
-                            </FXCollections>
-                        </items>
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </FlexComboBox>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox">
-                    <AccentLabel realHeight="30" realWidth="80" text="认证信息" styleClass="accent">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)"
-                                        realHeight="30" flexWidth="50% - 120">
+                    <ClearableTextField fx:id="user" tipText="%redis.info.tip1"
+                                        realHeight="30" flexWidth="100% - 180">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)"
+                </FlexHBox>
+                <FlexHBox flexWidth="100%" realHeight="50">
+                    <AccentLabel realHeight="30" realWidth="100" text="%base.password">
+                        <HBox.margin>
+                            <Insets left="20" top="10"/>
+                        </HBox.margin>
+                    </AccentLabel>
+                    <ClearableTextField fx:id="password" tipText="%redis.info.tip2"
                                         require="true"
-                                        realHeight="30" flexWidth="50% - 120">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                    <FlexCheckBox fx:id="redirectMaster" text="重定向哨兵" fontSize="11"
-                                  tipText="发现redis连接是哨兵角色，则重定向到master连接">
-                        <HBox.margin>
-                            <Insets left="5" top="20"/>
-                        </HBox.margin>
-                    </FlexCheckBox>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="80" text="哨兵配置" styleClass="accent">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 120">
+                                        realHeight="30" flexWidth="100% - 180">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </ClearableTextField>
-                    <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20"
-                                        realHeight="30" flexWidth="50% - 120">
-                        <HBox.margin>
-                            <Insets left="5" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
+        <!-- <FXTab text="认证设置"> -->
+        <!--     <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <AccentLabel realHeight="30" realWidth="80" text="认证方式" styleClass="accent"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <FlexComboBox fx:id="authType" tipText="认证方式" initIndex="0" -->
+        <!--                           realHeight="30" flexWidth="100% - 180"> -->
+        <!--                 <items> -->
+        <!--                     <FXCollections fx:factory="observableArrayList"> -->
+        <!--                         <String fx:value="无需认证"/> -->
+        <!--                         <String fx:value="密码认证"/> -->
+        <!--                         <String fx:value="用户名及密码认证(redis6.0或以上)"/> -->
+        <!--                     </FXCollections> -->
+        <!--                 </items> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </FlexComboBox> -->
+        <!--         </FlexHBox> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox"> -->
+        <!--             <AccentLabel realHeight="30" realWidth="80" text="认证信息" styleClass="accent"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <ClearableTextField fx:id="user" tipText="用户名，redis版本6.0以上(可选)" -->
+        <!--                                 realHeight="30" flexWidth="50% - 120"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </ClearableTextField> -->
+        <!--             <ClearableTextField fx:id="password" tipText="密码，服务的认证密码(可选)" -->
+        <!--                                 require="true" -->
+        <!--                                 realHeight="30" flexWidth="50% - 120"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="5" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </ClearableTextField> -->
+        <!--             <FlexCheckBox fx:id="redirectMaster" text="重定向哨兵" fontSize="11" -->
+        <!--                           tipText="发现redis连接是哨兵角色，则重定向到master连接"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="5" top="20"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </FlexCheckBox> -->
+        <!--         </FlexHBox> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true"> -->
+        <!--             <AccentLabel realHeight="30" realWidth="80" text="哨兵配置" styleClass="accent"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <ClearableTextField fx:id="masterUser" tipText="哨兵监控的master用户名(可选)" maxLen="20" -->
+        <!--                                 realHeight="30" flexWidth="50% - 120"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </ClearableTextField> -->
+        <!--             <ClearableTextField fx:id="masterPassword" tipText="哨兵监控的master密码(可选)" maxLen="20" -->
+        <!--                                 realHeight="30" flexWidth="50% - 120"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="5" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </ClearableTextField> -->
+        <!--         </FlexHBox> -->
+        <!--     </FlexVBox> -->
+        <!-- </FXTab> -->
         <FXTab text="%base.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
@@ -213,7 +241,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 245" maxLen="1024">
+                    <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30" flexWidth="100% - 285" maxLen="1024">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -230,7 +258,7 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <NumberTextField flexWidth="100% - 140" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
+                    <NumberTextField flexWidth="100% - 180" fx:id="sshTimeout" tipText="%base.sshTimeoutTip" realHeight="30" value="3000">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
@@ -242,12 +270,12 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 73" text="root">
+                    <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30" flexWidth="50% - 93" text="root">
                         <HBox.margin>
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </ClearableTextField>
-                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 72">
+                    <ClearableTextField fx:id="sshPassword" tipText="%base.sshPwdTip" require="true" realHeight="30" flexWidth="50% - 92">
                         <HBox.margin>
                             <Insets left="5" top="10"/>
                         </HBox.margin>

@@ -26,24 +26,24 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ClearableTextField fx:id="pattern1" realHeight="30.0" flexWidth="100% - 215" text="*">
+                <ClearableTextField fx:id="pattern1" realHeight="30.0" flexWidth="100% - 285" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="%redis.key.tip2" onAction="#showKeys1">
+                <FXButton text="%redis.key.tip2" tipText="%redis.key.tip5" onAction="#showKeys1">
                     <HBox.margin>
-                        <Insets left="3" top="10"/>
+                        <Insets left="5" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
-            <FlexHBox flexWidth="100%" flexHeight="100% - 120">
+            <FlexHBox flexWidth="100%" flexHeight="100% -140">
                 <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys1" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys1" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -52,7 +52,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#delKeys" text="%base.delete">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -71,7 +71,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="%redis.batch.tip7"
+                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% -140" tipText="%redis.batch.tip7"
                                  value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
@@ -85,14 +85,14 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ClearableTextField fx:id="pattern2" realHeight="30.0" flexWidth="100% - 215" text="*">
+                <ClearableTextField fx:id="pattern2" realHeight="30.0" flexWidth="100% - 285" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="%redis.key.tip2" onAction="#showKeys2">
+                <FXButton text="%redis.key.tip2" tipText="%redis.key.tip5" onAction="#showKeys2">
                     <HBox.margin>
-                        <Insets left="3" top="10"/>
+                        <Insets left="5" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
@@ -102,16 +102,16 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys2" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys2" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#expireKeys" text="%base.save">
+                <SubmitButton onAction="#expireKeys">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -122,7 +122,7 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.database">
+    <FXTab text="%base.clear">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
                 <AccentLabel text="%base.operation" realHeight="30" realWidth="80">
@@ -130,19 +130,19 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <FXButton text="%redis.key.tip2" onAction="#showKeys3">
+                <FXButton text="%redis.key.tip2" tipText="%redis.key.tip5" onAction="#showKeys3">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
-            <FlexHBox flexWidth="100%" flexHeight="100% - 120">
+            <FlexHBox flexWidth="100%" flexHeight="100% -140">
                 <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys3" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys3" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -151,7 +151,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#flushDB" text="%base.clear">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -182,14 +182,14 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ClearableTextField fx:id="pattern4" realHeight="30.0" flexWidth="100% - 215" text="*">
+                <ClearableTextField fx:id="pattern4" realHeight="30.0" flexWidth="100% - 285" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="%redis.key.tip2" onAction="#showKeys4">
+                <FXButton text="%redis.key.tip2" tipText="%redis.key.tip5" onAction="#showKeys4">
                     <HBox.margin>
-                        <Insets left="3" top="10"/>
+                        <Insets left="5" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
@@ -199,7 +199,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys4" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys4" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -208,7 +208,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#moveKeys" text="%base.move">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -244,14 +244,14 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ClearableTextField fx:id="pattern5" realHeight="30.0" flexWidth="100% - 215" text="*">
+                <ClearableTextField fx:id="pattern5" realHeight="30.0" flexWidth="100% - 285" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </ClearableTextField>
-                <FXButton text="%redis.key.tip2" onAction="#showKeys5">
+                <FXButton text="%redis.key.tip2" tipText="%redis.key.tip5" onAction="#showKeys5">
                     <HBox.margin>
-                        <Insets left="3" top="10"/>
+                        <Insets left="5" top="10"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
@@ -261,7 +261,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys5" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys5" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -270,7 +270,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#copyKeys" text="%base.copy">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -289,7 +289,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ClearableTextField fx:id="pattern6" realHeight="30.0" flexWidth="100% - 120" text="*">
+                <ClearableTextField fx:id="pattern6" realHeight="30.0" flexWidth="100% -140" text="*">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -301,7 +301,7 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% - 120">
+                <ReadOnlyTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -310,7 +310,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#countKeys" text="%base.count">
                     <HBox.margin>
-                        <Insets left="95" top="10"/>
+                        <Insets left="110" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>

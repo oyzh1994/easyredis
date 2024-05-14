@@ -214,48 +214,48 @@ public class RedisClient {
         if (this.isClusterMode()) {
             // 初始化cluster集群
             this.initCluster(host, clientConfig);
-        } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
-            // 初始化哨兵
-            this.initSentinel(host, clientConfig);
-            // 获取当前角色
-            this.role = (String) CollUtil.getFirst(this.role());
+        // } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
+        //     // 初始化哨兵
+        //     this.initSentinel(host, clientConfig);
+        //     // 获取当前角色
+        //     this.role = (String) CollUtil.getFirst(this.role());
         }
     }
 
-    /**
-     * 初始化哨兵
-     *
-     * @param host         地址
-     * @param clientConfig 客户端配置
-     */
-    private void initSentinel(HostAndPort host, DefaultJedisClientConfig clientConfig) {
-        // master客户端配置
-        DefaultJedisClientConfig masterConfig = this.intClientConfig(this.redisInfo.getMasterUser(), this.redisInfo.getMasterPassword());
-        // 连接池配置
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        // 初始化连接池
-        this.intPoolConfig(poolConfig);
-        // 获取master名称
-        String masterName = this.infoProp().masterName();
-        // 创建哨兵连接池
-        this.sentinelPool = new JedisSentinelPool(masterName, CollUtil.newHashSet(host), poolConfig, masterConfig, clientConfig);
-        // 清除信息属性
-        this.clearInfoProp();
-        // cluster集群模式
-        if (this.isClusterMode()) {
-            if (this.sentinelPool.getCurrentHostMaster() != null) {
-                // 初始化cluster集群
-                this.initCluster(this.sentinelPool.getCurrentHostMaster(), masterConfig);
-                // 关闭哨兵连接池
-                this.sentinelPool.close();
-                this.sentinelPool = null;
-            }
-        } else {
-            // 关闭连接池
-            this.pool.close();
-            this.pool = null;
-        }
-    }
+    // /**
+    //  * 初始化哨兵
+    //  *
+    //  * @param host         地址
+    //  * @param clientConfig 客户端配置
+    //  */
+    // private void initSentinel(HostAndPort host, DefaultJedisClientConfig clientConfig) {
+    //     // master客户端配置
+    //     DefaultJedisClientConfig masterConfig = this.intClientConfig(this.redisInfo.getMasterUser(), this.redisInfo.getMasterPassword());
+    //     // 连接池配置
+    //     JedisPoolConfig poolConfig = new JedisPoolConfig();
+    //     // 初始化连接池
+    //     this.intPoolConfig(poolConfig);
+    //     // 获取master名称
+    //     String masterName = this.infoProp().masterName();
+    //     // 创建哨兵连接池
+    //     this.sentinelPool = new JedisSentinelPool(masterName, CollUtil.newHashSet(host), poolConfig, masterConfig, clientConfig);
+    //     // 清除信息属性
+    //     this.clearInfoProp();
+    //     // cluster集群模式
+    //     if (this.isClusterMode()) {
+    //         if (this.sentinelPool.getCurrentHostMaster() != null) {
+    //             // 初始化cluster集群
+    //             this.initCluster(this.sentinelPool.getCurrentHostMaster(), masterConfig);
+    //             // 关闭哨兵连接池
+    //             this.sentinelPool.close();
+    //             this.sentinelPool = null;
+    //         }
+    //     } else {
+    //         // 关闭连接池
+    //         this.pool.close();
+    //         this.pool = null;
+    //     }
+    // }
 
     /**
      * 初始化cluster集群
@@ -368,14 +368,14 @@ public class RedisClient {
         return StrUtil.equalsIgnoreCase("master", this.role);
     }
 
-    /**
-     * 是否重定向master
-     *
-     * @return 结果
-     */
-    public boolean isRedirectMaster() {
-        return this.redisInfo.isRedirectMaster();
-    }
+    // /**
+    //  * 是否重定向master
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isRedirectMaster() {
+    //     return this.redisInfo.isRedirectMaster();
+    // }
 
     /**
      * 是否从节点
@@ -402,7 +402,8 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isSentinelMode() {
-        return this._isSentinelMode() && !this.isRedirectMaster();
+        return this._isSentinelMode();
+        // return this._isSentinelMode() && !this.isRedirectMaster();
     }
 
     /**

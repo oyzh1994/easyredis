@@ -68,26 +68,26 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     @Setter
     private String password;
 
-    /**
-     * master用户名
-     */
-    @Getter
-    @Setter
-    private String masterUser;
-
-    /**
-     * master密码
-     */
-    @Getter
-    @Setter
-    private String masterPassword;
-
-    /**
-     * 是否重定向到master
-     */
-    @Setter
-    @Getter
-    private Boolean redirectMaster;
+    // /**
+    //  * master用户名
+    //  */
+    // @Getter
+    // @Setter
+    // private String masterUser;
+    //
+    // /**
+    //  * master密码
+    //  */
+    // @Getter
+    // @Setter
+    // private String masterPassword;
+    //
+    // /**
+    //  * 是否重定向到master
+    //  */
+    // @Setter
+    // @Getter
+    // private Boolean redirectMaster;
 
     /**
      * 只读模式
@@ -147,9 +147,9 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
         this.collects = info.collects;
         this.password = info.password;
         this.sshForward = info.sshForward;
-        this.masterUser = info.masterUser;
-        this.redirectMaster = info.redirectMaster;
-        this.masterPassword = info.masterPassword;
+        // this.masterUser = info.masterUser;
+        // this.redirectMaster = info.redirectMaster;
+        // this.masterPassword = info.masterPassword;
         this.connectTimeOut = info.connectTimeOut;
         return this;
     }
@@ -206,14 +206,14 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
         return dbIndex + "_@coll@_" + key;
     }
 
-    /**
-     * 是否重定向到master
-     *
-     * @return 结果
-     */
-    public boolean isRedirectMaster() {
-        return BooleanUtil.isTrue(this.redirectMaster);
-    }
+    // /**
+    //  * 是否重定向到master
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isRedirectMaster() {
+    //     return BooleanUtil.isTrue(this.redirectMaster);
+    // }
 
     /**
      * 是否只读模式

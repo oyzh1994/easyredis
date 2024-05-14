@@ -41,6 +41,34 @@
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
+        <AccentLabel text="%base.keyExists" realHeight="30" realWidth="80">
+            <HBox.margin>
+                <Insets left="20" top="10"/>
+            </HBox.margin>
+        </AccentLabel>
+        <fx:define>
+            <FXToggleGroup fx:id="existStrategy"/>
+        </fx:define>
+        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+                       text="%base.skip" selected="true" userData="0">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+                       text="%base.overwrite" userData="1">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+                       text="%base.update" userData="2">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXRadioButton>
+    </FlexHBox>
+    <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -51,27 +79,6 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <fx:define>
-            <FXToggleGroup fx:id="existStrategy"/>
-        </fx:define>
-        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
-                       text="%redis.transport.tip12" selected="true" userData="0">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
-                       text="%redis.transport.tip13" userData="1">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
-                       text="%redis.transport.tip14" userData="2">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">

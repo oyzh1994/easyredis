@@ -87,35 +87,35 @@ public class RedisInfoAddController extends Controller {
     @FXML
     private PortTextField hostPort;
 
-    /**
-     * 认证配置组件
-     */
-    @FXML
-    private FlexHBox authInfoBox;
+    // /**
+    //  * 认证配置组件
+    //  */
+    // @FXML
+    // private FlexHBox authInfoBox;
+    //
+    // /**
+    //  * 哨兵配置组件
+    //  */
+    // @FXML
+    // private FlexHBox sentinelBox;
 
-    /**
-     * 哨兵配置组件
-     */
-    @FXML
-    private FlexHBox sentinelBox;
-
-    /**
-     * master用户名
-     */
-    @FXML
-    private ClearableTextField masterUser;
-
-    /**
-     * master密码
-     */
-    @FXML
-    private ClearableTextField masterPassword;
-
-    /**
-     * 重定向到master
-     */
-    @FXML
-    private FlexCheckBox redirectMaster;
+    // /**
+    //  * master用户名
+    //  */
+    // @FXML
+    // private ClearableTextField masterUser;
+    //
+    // /**
+    //  * master密码
+    //  */
+    // @FXML
+    // private ClearableTextField masterPassword;
+    //
+    // /**
+    //  * 重定向到master
+    //  */
+    // @FXML
+    // private FlexCheckBox redirectMaster;
 
     /**
      * 连接超时
@@ -129,11 +129,11 @@ public class RedisInfoAddController extends Controller {
     @FXML
     private NumberTextField executeTimeOut;
 
-    /**
-     * 认证方式
-     */
-    @FXML
-    private FlexComboBox<String> authType;
+    // /**
+    //  * 认证方式
+    //  */
+    // @FXML
+    // private FlexComboBox<String> authType;
 
     /**
      * 开启ssh
@@ -289,27 +289,27 @@ public class RedisInfoAddController extends Controller {
             redisInfo.setGroupId(this.group == null ? null : this.group.getGid());
             redisInfo.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             redisInfo.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
-            // 哨兵配置
-            if (this.redirectMaster.isSelected()) {
-                redisInfo.setMasterUser(this.masterUser.getText());
-                redisInfo.setMasterPassword(this.masterPassword.getText());
-                redisInfo.setRedirectMaster(this.redirectMaster.isSelected());
-            } else {
-                redisInfo.setMasterUser(null);
-                redisInfo.setMasterPassword(null);
-                redisInfo.setRedirectMaster(false);
-            }
-            // 无需认证
-            if (this.authType.getSelectedIndex() == 0) {
-                redisInfo.setUser(null);
-                redisInfo.setPassword(null);
-                redisInfo.setMasterUser(null);
-                redisInfo.setMasterPassword(null);
-                redisInfo.setRedirectMaster(false);
-            } else if (this.authType.getSelectedIndex() == 1) {// 密码认证
-                redisInfo.setUser(null);
-                redisInfo.setMasterUser(null);
-            }
+            // // 哨兵配置
+            // if (this.redirectMaster.isSelected()) {
+            //     redisInfo.setMasterUser(this.masterUser.getText());
+            //     redisInfo.setMasterPassword(this.masterPassword.getText());
+            //     redisInfo.setRedirectMaster(this.redirectMaster.isSelected());
+            // } else {
+            //     redisInfo.setMasterUser(null);
+            //     redisInfo.setMasterPassword(null);
+            //     redisInfo.setRedirectMaster(false);
+            // }
+            // // 无需认证
+            // if (this.authType.getSelectedIndex() == 0) {
+            //     redisInfo.setUser(null);
+            //     redisInfo.setPassword(null);
+            //     redisInfo.setMasterUser(null);
+            //     redisInfo.setMasterPassword(null);
+            //     redisInfo.setRedirectMaster(false);
+            // } else if (this.authType.getSelectedIndex() == 1) {// 密码认证
+            //     redisInfo.setUser(null);
+            //     redisInfo.setMasterUser(null);
+            // }
             // 保存数据
             boolean result = this.infoStore.add(redisInfo);
             if (result) {
@@ -327,50 +327,50 @@ public class RedisInfoAddController extends Controller {
 
     @Override
     protected void bindListeners() {
-        // 重定向到master
-        this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
-            if (newValue) {
-                if (this.authType.getSelectedIndex() == 2) {
-                    this.masterUser.enable();
-                }
-                this.masterPassword.enable();
-            } else {
-                if (this.authType.getSelectedIndex() == 2) {
-                    this.masterUser.disable();
-                }
-                this.masterPassword.disable();
-            }
-        });
-        // 开启哨兵配置
-        this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
-            if (!this.authInfoBox.isDisable()) {
-                if (newValue) {
-                    this.sentinelBox.enable();
-                } else {
-                    this.sentinelBox.disable();
-                }
-            }
-        });
-        // 认证方式配置
-        this.authType.selectedIndexChanged((observable, oldValue, newValue) -> {
-            if (newValue.intValue() == 0) {
-                this.authInfoBox.disable();
-                this.sentinelBox.disable();
-            } else if (newValue.intValue() == 1) {
-                this.user.disable();
-                this.masterUser.disable();
-                this.authInfoBox.enable();
-                if (this.redirectMaster.isSelected()) {
-                    this.sentinelBox.enable();
-                }
-            } else {
-                this.user.enable();
-                this.authInfoBox.enable();
-                if (this.redirectMaster.isSelected()) {
-                    this.masterUser.enable();
-                }
-            }
-        });
+        // // 重定向到master
+        // this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
+        //     if (newValue) {
+        //         if (this.authType.getSelectedIndex() == 2) {
+        //             this.masterUser.enable();
+        //         }
+        //         this.masterPassword.enable();
+        //     } else {
+        //         if (this.authType.getSelectedIndex() == 2) {
+        //             this.masterUser.disable();
+        //         }
+        //         this.masterPassword.disable();
+        //     }
+        // });
+        // // 开启哨兵配置
+        // this.redirectMaster.selectedChanged((observable, oldValue, newValue) -> {
+        //     if (!this.authInfoBox.isDisable()) {
+        //         if (newValue) {
+        //             this.sentinelBox.enable();
+        //         } else {
+        //             this.sentinelBox.disable();
+        //         }
+        //     }
+        // });
+        // // 认证方式配置
+        // this.authType.selectedIndexChanged((observable, oldValue, newValue) -> {
+        //     if (newValue.intValue() == 0) {
+        //         this.authInfoBox.disable();
+        //         this.sentinelBox.disable();
+        //     } else if (newValue.intValue() == 1) {
+        //         this.user.disable();
+        //         this.masterUser.disable();
+        //         this.authInfoBox.enable();
+        //         if (this.redirectMaster.isSelected()) {
+        //             this.sentinelBox.enable();
+        //         }
+        //     } else {
+        //         this.user.enable();
+        //         this.authInfoBox.enable();
+        //         if (this.redirectMaster.isSelected()) {
+        //             this.masterUser.enable();
+        //         }
+        //     }
+        // });
         // ssh配置
         this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
             if (newValue) {

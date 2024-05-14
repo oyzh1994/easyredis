@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.info;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,7 +70,7 @@ public class RedisServerItem {
             hitRate = decimal.doubleValue() + "%";
         }
         this.setHitRate(hitRate);
-        this.setUptime(uptime + "天");
+        this.setUptime(uptime + I18nHelper.days());
         this.setUsedMemory(useMemory == null ? "N/A" : useMemory);
         this.setConnectedClients(String.valueOf(connectedClients));
         this.setKeyCount(keyCount == null ? "N/A" : String.valueOf(keyCount));
@@ -168,11 +169,14 @@ public class RedisServerItem {
 
     public void setRole(String role) {
         if (StrUtil.equalsIgnoreCase("master", role)) {
-            this.role = "主节点";
+            this.role = I18nHelper.master();
+            // this.role = "主节点";
         } else if (StrUtil.equalsIgnoreCase("slave", role)) {
-            this.role = "从节点";
+            this.role = I18nHelper.slave();
+            // this.role = "从节点";
         } else if (StrUtil.equalsIgnoreCase("sentinel", role)) {
-            this.role = "哨兵";
+            this.role = I18nHelper.sentinel();
+            // this.role = "哨兵";
         } else {
             this.role = "N/A";
         }

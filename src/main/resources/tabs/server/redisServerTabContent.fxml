@@ -13,7 +13,7 @@
             <FlexTableColumn sortable="false" fx:id="connectedClients" text="%base.clientNum" flexWidth="12%"/>
             <FlexTableColumn sortable="false" fx:id="totalCommandsProcessed" text="%redis.server.execCommandNum" flexWidth="15%"/>
             <FlexTableColumn sortable="false" fx:id="uptime" text="%base.uptime" flexWidth="14%"/>
-            <FlexTableColumn sortable="false" fx:id="keyCount" text="%redis.server.keyNum" flexWidth="11%"/>
+            <FlexTableColumn sortable="false" fx:id="keyCount" text="%base.keyNum" flexWidth="11%"/>
             <FlexTableColumn sortable="false" fx:id="hitRate" text="%base.hitRate" flexWidth="11%"/>
             <FlexTableColumn sortable="false" fx:id="role" text="%base.role" flexWidth="11% - 15"/>
         </columns>

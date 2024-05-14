@@ -6,8 +6,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.batch.RedisCountResult;
-import cn.oyzh.easyredis.redis.batch.RedisDeleteResult;
+import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -22,16 +21,15 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.Future;
 
 
 /**
@@ -135,35 +133,10 @@ public class RedisKeyBatchOperationController extends Controller {
     private RedisDBTreeItem treeItem;
 
     /**
-     * 删除键列表
-     */
-    private Set<String> delKeys;
-
-    /**
-     * ttl键列表
-     */
-    private Set<String> ttlKeys;
-
-    /**
-     * 清空库键列表
-     */
-    private Set<String> flushDBKeys;
-
-    /**
-     * 移动键列表
-     */
-    private Set<String> moveKeys;
-
-    /**
      * 移动目标库
      */
     @FXML
     private RedisDBComboBox moveTargetDB;
-
-    /**
-     * 复制键列表
-     */
-    private Set<String> copyKeys;
 
     /**
      * 复制目标库
@@ -178,65 +151,49 @@ public class RedisKeyBatchOperationController extends Controller {
     private FlexCheckBox replaceOnCopy;
 
     /**
+     * 任务
+     */
+    private Future<?> future;
+
+    /**
      * 删除键
      */
     @FXML
     private void delKeys() {
         this.client.throwSentinelException();
+        // 扫描参数
+        String pattern = StrUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
         if (MessageBox.confirm(I18nHelper.deleteKeys())) {
-            TaskManager.start(() -> {
-                // 当前光标
-                String cursor = null;
-                // 扫描参数
-                String pattern = StrUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
-                ScanParams params = new ScanParams();
-                params.count(100);
-                params.match(pattern);
-                // 全部节点
-                int count = 0;
-                // 扫描数据
-                while (true) {
-                    // 扫描数据
-                    RedisDeleteResult result = RedisKeyUtil.deleteKeys(this.dbIndex, cursor, params, this.client);
-                    // 查询结束
-                    if (result.isFinish()) {
-                        break;
+            this.future = TaskManager.startDelay(() -> {
+                try {
+                    this.stage.disable();
+                    this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                    // 扫描键
+                    List<String> keys = this.findKeys(this.keys1, pattern);
+                    int succCount = 0;
+                    int failCount = 0;
+                    for (String key : keys) {
+                        // 扫描数据
+                        long result = this.client.del(this.dbIndex, key);
+                        // 查询结束
+                        if (result == 1) {
+                            succCount++;
+                            this.keys1.appendLine(I18nHelper.deleteKey() + ":[" + key + "]" + I18nHelper.success());
+                        } else {
+                            failCount++;
+                            this.keys1.appendLine(I18nHelper.deleteKey() + ":[" + key + "]" + I18nHelper.fail());
+                        }
                     }
-                    count += result.getCount();
-                    long finalCount = count;
-                    FXUtil.runWait(() -> this.keys1.setText(I18nHelper.deleted() + ":" + finalCount));
-                    // 更新光标
-                    cursor = result.getCursor();
+                    RedisEventUtil.keyFlushed(this.treeItem);
+                    // 提示信息
+                    String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
+                    MessageBox.info(msg);
+                } finally {
+                    this.stage.enable();
+                    this.stage.restoreTitle();
                 }
-            });
+            }, 200);
         }
-
-        // try {
-        //     this.client.throwSentinelException();
-        //     if (CollUtil.isEmpty(this.delKeys)) {
-        //         this.delKeys = this.client.keys(this.dbIndex, this.pattern1.getText());
-        //     }
-        //     if (CollUtil.isEmpty(this.delKeys)) {
-        //         MessageBox.warn("未发现匹配的键");
-        //         return;
-        //     }
-        //     if (MessageBox.confirm("确定删除这些键？")) {
-        //         try {
-        //             this.stage.disable();
-        //             this.stage.appendTitle("操作中...");
-        //             this.client.del(this.dbIndex, this.delKeys);
-        //             this.showKeys(this.delKeys, this.keys1);
-        //             RedisEventUtil.keyFlushed(this.treeItem);
-        //             MessageBox.okToast("删除键成功");
-        //         } finally {
-        //             this.stage.enable();
-        //             this.stage.restoreTitle();
-        //         }
-        //     }
-        // } catch (Exception ex) {
-        //     ex.printStackTrace();
-        //     MessageBox.exception(ex);
-        // }
     }
 
     /**
@@ -246,45 +203,40 @@ public class RedisKeyBatchOperationController extends Controller {
     private void expireKeys() {
         try {
             this.client.throwSentinelException();
-            if (CollUtil.isEmpty(this.ttlKeys)) {
-                this.ttlKeys = this.client.keys(this.dbIndex, this.pattern2.getText());
-            }
-            if (CollUtil.isEmpty(this.ttlKeys)) {
-                MessageBox.warn(I18nHelper.noMatchedKey());
-                return;
-            }
-            try {
-                this.stage.disable();
-                this.stage.appendTitle(I18nHelper.operationIng());
-                long ttl = this.ttl.getValue();
-                if (ttl == 0) {
-                    if (MessageBox.confirm(RedisI18nHelper.batchTip1())) {
-                        this.client.del(this.dbIndex, this.ttlKeys);
-                        this.showKeys(this.ttlKeys, this.keys2);
-                        RedisEventUtil.keyFlushed(this.treeItem);
-                        MessageBox.okToast(I18nHelper.operationSuccess());
-                    }
-                } else if (ttl == -1) {
-                    if (MessageBox.confirm(RedisI18nHelper.batchTip2())) {
-                        for (String ttlKey : this.ttlKeys) {
-                            this.client.persist(this.dbIndex, ttlKey);
+            String pattern = StrUtil.isBlank(this.pattern2.getText()) ? "*" : this.pattern2.getText();
+            this.future = TaskManager.startDelay(() -> {
+                try {
+                    this.stage.disable();
+                    this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                    // 扫描键
+                    List<String> keys = this.findKeys(this.keys2, pattern);
+                    int succCount = 0;
+                    int failCount = 0;
+                    long ttl = this.ttl.getValue();
+                    for (String key : keys) {
+                        long result;
+                        if (ttl == -1) {
+                            result = this.client.persist(this.dbIndex, key);
+                        } else {
+                            result = this.client.expire(this.dbIndex, key, ttl, null);
                         }
-                        this.showKeys(this.ttlKeys, this.keys2);
-                        RedisEventUtil.keyFlushed(this.treeItem);
-                        MessageBox.okToast(I18nHelper.operationSuccess());
+                        if (result == 1) {
+                            succCount++;
+                            this.keys2.appendLine(I18nHelper.handleKey() + ":[" + key + "]" + I18nHelper.success());
+                        } else {
+                            failCount++;
+                            this.keys2.appendLine(I18nHelper.handleKey() + ":[" + key + "]" + I18nHelper.fail());
+                        }
                     }
-                } else {
-                    for (String ttlKey : this.ttlKeys) {
-                        this.client.expire(this.dbIndex, ttlKey, ttl, null);
-                    }
-                    this.showKeys(this.ttlKeys, this.keys2);
                     RedisEventUtil.keyFlushed(this.treeItem);
-                    MessageBox.okToast(I18nHelper.operationSuccess());
+                    // 提示信息
+                    String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
+                    MessageBox.info(msg);
+                } finally {
+                    this.stage.enable();
+                    this.stage.restoreTitle();
                 }
-            } finally {
-                this.stage.enable();
-                this.stage.restoreTitle();
-            }
+            }, 200);
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -298,21 +250,19 @@ public class RedisKeyBatchOperationController extends Controller {
     private void flushDB() {
         try {
             this.client.throwSentinelException();
-            if (CollUtil.isEmpty(this.flushDBKeys)) {
-                this.flushDBKeys = this.client.keys(this.dbIndex, "*");
-            }
             if (MessageBox.confirm(RedisI18nHelper.batchTip3())) {
-                try {
-                    this.stage.disable();
-                    this.stage.appendTitle(I18nHelper.operationIng());
-                    this.client.flushDB(this.dbIndex);
-                    this.showKeys(this.ttlKeys, this.keys3);
-                    RedisEventUtil.keyFlushed(this.treeItem);
-                    MessageBox.okToast(I18nHelper.operationSuccess());
-                } finally {
-                    this.stage.enable();
-                    this.stage.restoreTitle();
-                }
+                this.future = TaskManager.startDelay(() -> {
+                    try {
+                        this.stage.disable();
+                        this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                        this.client.flushDB(this.dbIndex);
+                        RedisEventUtil.keyFlushed(this.treeItem);
+                        MessageBox.okToast(I18nHelper.operationSuccess());
+                    } finally {
+                        this.stage.enable();
+                        this.stage.restoreTitle();
+                    }
+                }, 200);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -328,32 +278,41 @@ public class RedisKeyBatchOperationController extends Controller {
         try {
             this.client.throwClusterException();
             this.client.throwSentinelException();
-            if (CollUtil.isEmpty(this.moveKeys)) {
-                this.moveKeys = this.client.keys(this.dbIndex, this.pattern4.getText());
-            }
-            if (CollUtil.isEmpty(this.moveKeys)) {
-                MessageBox.warn(I18nHelper.noMatchedKey());
-                return;
-            }
             int targetDBIndex = this.moveTargetDB.getDB();
             if (targetDBIndex == this.dbIndex) {
                 MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
+            String pattern = StrUtil.isBlank(this.pattern4.getText()) ? "*" : this.pattern4.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip5())) {
-                try {
-                    this.stage.disable();
-                    this.stage.appendTitle(I18nHelper.operationIng());
-                    for (String moveKey : this.moveKeys) {
-                        this.client.move(moveKey, this.dbIndex, targetDBIndex);
+                this.future = TaskManager.startDelay(() -> {
+                    try {
+                        this.stage.disable();
+                        this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                        // 扫描键
+                        List<String> keys = this.findKeys(this.keys4, pattern);
+                        int succCount = 0;
+                        int failCount = 0;
+                        for (String key : keys) {
+                            // 扫描数据
+                            long result = this.client.move(key, this.dbIndex, targetDBIndex);
+                            if (result == 1) {
+                                succCount++;
+                                this.keys4.appendLine(I18nHelper.moveKey() + ":[" + key + "]" + I18nHelper.success());
+                            } else {
+                                failCount++;
+                                this.keys4.appendLine(I18nHelper.moveKey() + ":[" + key + "]" + I18nHelper.fail());
+                            }
+                        }
+                        RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
+                        // 提示信息
+                        String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
+                        MessageBox.info(msg);
+                    } finally {
+                        this.stage.enable();
+                        this.stage.restoreTitle();
                     }
-                    this.showKeys(this.moveKeys, this.keys4);
-                    RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
-                    MessageBox.okToast(I18nHelper.operationSuccess());
-                } finally {
-                    this.stage.enable();
-                    this.stage.restoreTitle();
-                }
+                }, 200);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -370,36 +329,41 @@ public class RedisKeyBatchOperationController extends Controller {
             this.client.throwClusterException();
             this.client.throwSentinelException();
             this.client.throwCommandException("copy");
-            if (CollUtil.isEmpty(this.copyKeys)) {
-                this.copyKeys = this.client.keys(this.dbIndex, this.pattern5.getText());
-            }
-            if (CollUtil.isEmpty(this.copyKeys)) {
-                MessageBox.warn(I18nHelper.noMatchedKey());
-                return;
-            }
             int targetDBIndex = this.copyTargetDB.getDB();
             if (targetDBIndex == this.dbIndex) {
                 MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
+            String pattern = StrUtil.isBlank(this.pattern5.getText()) ? "*" : this.pattern5.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip6())) {
-                try {
-                    this.stage.disable();
-                    this.stage.appendTitle(I18nHelper.operationIng());
-                    Set<String> keys = new HashSet<>();
-                    for (String copyKey : this.copyKeys) {
-                        boolean result = this.client.copy(this.dbIndex, copyKey, copyKey, targetDBIndex, this.replaceOnCopy.isSelected());
-                        if (result) {
-                            keys.add(copyKey);
+                this.future = TaskManager.startDelay(() -> {
+                    try {
+                        this.stage.disable();
+                        this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                        // 扫描键
+                        List<String> keys = this.findKeys(this.keys5, pattern);
+                        int succCount = 0;
+                        int failCount = 0;
+                        for (String key : keys) {
+                            // 扫描数据
+                            boolean result = this.client.copy(this.dbIndex, key, key, targetDBIndex, this.replaceOnCopy.isSelected());
+                            if (result) {
+                                succCount++;
+                                this.keys5.appendLine(I18nHelper.copyKey() + ":[" + key + "]" + I18nHelper.success());
+                            } else {
+                                failCount++;
+                                this.keys5.appendLine(I18nHelper.copyKey() + ":[" + key + "]" + I18nHelper.fail());
+                            }
                         }
+                        RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);
+                        // 提示信息
+                        String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
+                        MessageBox.info(msg);
+                    } finally {
+                        this.stage.enable();
+                        this.stage.restoreTitle();
                     }
-                    this.showKeys(keys, this.keys5);
-                    RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);
-                    MessageBox.okToast(I18nHelper.operationSuccess());
-                } finally {
-                    this.stage.enable();
-                    this.stage.restoreTitle();
-                }
+                }, 200);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -408,12 +372,32 @@ public class RedisKeyBatchOperationController extends Controller {
     }
 
     /**
+     * 统计键
+     */
+    @FXML
+    private void countKeys() {
+        this.future = TaskManager.startDelay(() -> {
+            try {
+                this.stage.disable();
+                this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
+                // 扫描参数
+                String pattern = StrUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
+                // 扫描键
+                this.findKeys(this.keys6, pattern);
+            } finally {
+                this.stage.enable();
+                this.stage.restoreTitle();
+            }
+        }, 200);
+    }
+
+    /**
      * 显示受影响的键
      *
      * @param keys 键列表
      * @param area 文本域组件
      */
-    private void showKeys(Set<String> keys, FlexTextArea area) {
+    private void showKeys(Collection<String> keys, FlexTextArea area) {
         area.clear();
         if (CollUtil.isNotEmpty(keys)) {
             List<String> texts = new ArrayList<>(keys.size());
@@ -426,12 +410,36 @@ public class RedisKeyBatchOperationController extends Controller {
     }
 
     /**
+     * 寻找键
+     * @param area 文本域组件
+     * @param pattern 模式
+     * @return 键列表
+     */
+    private List<String> findKeys(FlexTextArea area, String pattern) {
+        List<String> keys = new ArrayList<>();
+        String cursor = null;
+        while (true) {
+            ScanParams params = new ScanParams();
+            params.count(100);
+            params.match(pattern);
+            RedisScanSimpleResult result = RedisKeyUtil.scanKeysSimple(this.dbIndex, cursor, params, this.client);
+            if (result.isFinish()) {
+                break;
+            }
+            keys.addAll(result.getKeys());
+            cursor = result.getCursor();
+            area.setTextExt(I18nHelper.found() + ":" + keys.size());
+        }
+        return keys;
+    }
+
+    /**
      * 显示受影响的删除键
      */
     @FXML
     private void showKeys1() {
-        this.delKeys = this.client.keys(this.dbIndex, this.pattern1.getText());
-        this.showKeys(this.delKeys, this.keys1);
+        List<String> keys = RedisKeyUtil.scanKeys(this.dbIndex, this.client, this.pattern1.getText(), 2000);
+        this.showKeys(keys, this.keys1);
     }
 
     /**
@@ -439,8 +447,8 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private void showKeys2() {
-        this.ttlKeys = this.client.keys(this.dbIndex, this.pattern2.getText());
-        this.showKeys(this.ttlKeys, this.keys2);
+        List<String> keys = RedisKeyUtil.scanKeys(this.dbIndex, this.client, this.pattern2.getText(), 2000);
+        this.showKeys(keys, this.keys2);
     }
 
     /**
@@ -448,8 +456,8 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private void showKeys3() {
-        this.flushDBKeys = this.client.keys(this.dbIndex, "*");
-        this.showKeys(this.flushDBKeys, this.keys3);
+        List<String> keys = RedisKeyUtil.scanKeys(this.dbIndex, this.client, "*", 2000);
+        this.showKeys(keys, this.keys3);
     }
 
     /**
@@ -457,8 +465,8 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private void showKeys4() {
-        this.moveKeys = this.client.keys(this.dbIndex, this.pattern4.getText());
-        this.showKeys(this.moveKeys, this.keys4);
+        List<String> keys = RedisKeyUtil.scanKeys(this.dbIndex, this.client, this.pattern4.getText(), 2000);
+        this.showKeys(keys, this.keys4);
     }
 
     /**
@@ -466,37 +474,8 @@ public class RedisKeyBatchOperationController extends Controller {
      */
     @FXML
     private void showKeys5() {
-        this.copyKeys = this.client.keys(this.dbIndex, this.pattern5.getText());
-        this.showKeys(this.copyKeys, this.keys5);
-    }
-
-    @FXML
-    private void countKeys() {
-        TaskManager.start(() -> {
-            // 当前光标
-            String cursor = null;
-            // 扫描参数
-            String pattern = StrUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
-            ScanParams params = new ScanParams();
-            params.count(100);
-            params.match(pattern);
-            long count = 0;
-            // 扫描数据
-            while (true) {
-                // 扫描数据
-                RedisCountResult result = RedisKeyUtil.countKeys(this.dbIndex, cursor, params, this.client);
-                if (result.getCount() != null) {
-                    count += result.getCount();
-                    long finalCount = count;
-                    FXUtil.runWait(() -> this.keys6.setText(I18nHelper.found() + ":" + finalCount));
-                }
-                if (result.isFinish()) {
-                    break;
-                }
-                // 更新光标
-                cursor = result.getCursor();
-            }
-        });
+        List<String> keys = RedisKeyUtil.scanKeys(this.dbIndex, this.client, this.pattern5.getText(), 2000);
+        this.showKeys(keys, this.keys5);
     }
 
     @Override
@@ -519,6 +498,12 @@ public class RedisKeyBatchOperationController extends Controller {
         this.copyTargetDB.setDbCount(this.client.databases());
         this.copyTargetDB.selectFirst();
         this.stage.appendTitle("(" + this.treeItem.info().getName() + "-db" + this.treeItem.dbIndex() + ")");
+    }
+
+    @Override
+    public void onStageHiding(WindowEvent event) {
+        super.onStageHiding(event);
+        TaskManager.cancel(this.future);
     }
 
     @Override
