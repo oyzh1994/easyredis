@@ -3,15 +3,16 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 
 /**
  * @author oyzh
  * @since 2023/12/08
  */
-public class RedisInfoDeletedEvent extends Event<RedisInfo> implements  EventFormatter {
+public class RedisInfoDeletedEvent extends Event<RedisInfo> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("连接[%s] 已删除", this.data().getName());
+        return String.format("[%s] "+ I18nHelper.connectionDeleted(), this.data().getName());
     }
 }

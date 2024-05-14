@@ -27,7 +27,7 @@
         <StateManager fx:id="stateManager" managedBindVisible="true"/>
     </fx:define>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.server" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.server" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -39,7 +39,7 @@
         </ReadOnlyTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.database" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.database" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -56,7 +56,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" visible="false">
-        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65">
+        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -74,7 +74,7 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="200" fx:id="keysBox2" visible="false">
-        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65">
+        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -86,7 +86,7 @@
         </ReadOnlyTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyType" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.keyType" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -123,7 +123,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -150,7 +150,7 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%redis.transport.tip11">
+        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%base.applyFilter">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>

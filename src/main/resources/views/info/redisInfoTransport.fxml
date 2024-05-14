@@ -32,16 +32,16 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <RedisConnectComboBox fx:id="fromConnect" realHeight="30" flexWidth="100% - 315">
+        <RedisConnectComboBox fx:id="fromConnect" realHeight="30" flexWidth="100% - 345">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisConnectComboBox>
-        <AccentLabel text="%base.database" prefWidth="40">
+        <FXLabel text="%base.database" prefWidth="65">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
-        </AccentLabel>
+        </FXLabel>
         <RedisDBComboBox disable="true" fx:id="fromDB" realHeight="30" prefWidth="80" initIndex="1">
             <HBox.margin>
                 <Insets left="5" top="10"/>
@@ -54,7 +54,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" visible="false">
-        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65">
+        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -72,7 +72,7 @@
         </FXButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" visible="false">
-        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65">
+        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -89,12 +89,12 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <RedisConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 315">
+        <RedisConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 345">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisConnectComboBox>
-        <FXLabel text="%base.database" prefWidth="40">
+        <FXLabel text="%base.database" prefWidth="65">
             <HBox.margin>
                 <Insets left="10" top="20"/>
             </HBox.margin>
@@ -106,7 +106,7 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -117,7 +117,7 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="%redis.transport.tip11" stateManager="$stateManager">
+        <FlexCheckBox fx:id="applyFilter" text="%base.applyFilter" stateManager="$stateManager">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -145,7 +145,7 @@
         </FXRadioButton>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyType" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.keyType" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -182,7 +182,7 @@
         </FlexCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <AccentLabel text="%base.process" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -196,7 +196,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <TransportButton stateManager="$stateManager" fx:id="transportBtn" onAction="#doTransport" realHeight="30"
+        <TransportButton fx:id="transportBtn" onAction="#doTransport" realHeight="30"
                          iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>

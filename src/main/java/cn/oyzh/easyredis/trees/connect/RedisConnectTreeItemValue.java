@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -62,11 +63,15 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
      * 刷新角色组件
      */
     public void flushRole() {
+        // 单机模式
+        if (this.item.isStandaloneMode()) {
+            return;
+        }
         // 角色名称
         String roleName = switch (item.role().toLowerCase()) {
-            case "sentinel" -> "哨兵节点";
-            case "master" -> "主节点";
-            case "slave" -> "从节点";
+            case "sentinel" -> I18nHelper.sentinel();
+            case "master" -> I18nHelper.master();
+            case "slave" -> I18nHelper.slave();
             default -> null;
         };
         // 寻找组件
@@ -83,12 +88,12 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
             }
             String str = "(" + roleName;
             if (this.item.isClusterMode()) {
-                str += "/cluster集群";
+                str += "/" + I18nHelper.cluster();
             } else if (this.item.isMasterMode()) {
-                str += "/主从集群";
+                str += "/" + I18nHelper.master_slave();
             }
             if (this.item.isReadonly()) {
-                str += "/只读模式";
+                str += "/" + I18nHelper.readonlyMode();
             }
             str += ")";
             role.setText(str);

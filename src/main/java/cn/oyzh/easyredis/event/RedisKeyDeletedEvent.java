@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,7 +22,7 @@ public class RedisKeyDeletedEvent extends Event<RedisDBTreeItem> implements  Eve
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 删除键[%s-db%s]",
+                "[%s] [%s-db%s]"+ I18nHelper.keyDeleted() ,
                 this.data().info().getName(), this.key, this.data().dbIndex()
         );
     }

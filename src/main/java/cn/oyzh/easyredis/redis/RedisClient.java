@@ -392,7 +392,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isMasterMode() {
-        return !this.isClusterMode();
+        return !this.isClusterMode() && !this.isStandaloneMode();
     }
 
     /**
@@ -438,6 +438,15 @@ public class RedisClient {
      */
     private boolean _isSentinelMode() {
         return StrUtil.equalsIgnoreCase("sentinel", this.role);
+    }
+
+    /**
+     * 是否单机模式
+     *
+     * @return 结果
+     */
+    public boolean isStandaloneMode() {
+        return StrUtil.equalsIgnoreCase("standalone", this.infoProp().getRedisMode());
     }
 
     /**
@@ -533,7 +542,8 @@ public class RedisClient {
             if (isClosed) {
                 this.state.set(RedisConnState.CLOSED);
                 // EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
-                RedisEventUtil.clientClosed(this);
+                // RedisEventUtil.clientClosed(this);
+                RedisEventUtil.connectionClosed(this);
             }
             // 重置变量
             this.pool = null;

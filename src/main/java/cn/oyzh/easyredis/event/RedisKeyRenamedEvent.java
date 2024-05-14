@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem<?, ?>> implements  EventFormatter {
+public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem<?, ?>> implements EventFormatter {
 
     @Setter
     private String oldKey;
@@ -21,7 +22,7 @@ public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem<?, ?>> implemen
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键更名[%s-db%s] 新名称:%s",
+                "[%s] " + I18nHelper.keyRenamed() + "[%s-db%s] " + I18nHelper.newName() + ":%s",
                 this.data().info().getName(), this.oldKey, this.data().dbIndex(), this.data().key()
         );
     }

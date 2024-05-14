@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -13,7 +14,7 @@ public class RedisConnectionClosedEvent extends Event<RedisClient> implements Ev
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] 客户端已断开", this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
     }
 
     public RedisInfo info() {

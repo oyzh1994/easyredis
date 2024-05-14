@@ -127,6 +127,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     }
 
     /**
+     * 是否单机模式
+     *
+     * @return 结果
+     */
+    public boolean isStandaloneMode() {
+        return this.client.isStandaloneMode();
+    }
+
+    /**
      * 初始化连接
      *
      * @return 结果

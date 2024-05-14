@@ -127,7 +127,7 @@
         <FXTab text="认证设置">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel realHeight="30" realWidth="65" text="认证方式" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="认证方式" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -147,7 +147,7 @@
                     </FlexComboBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" disable="true" fx:id="authInfoBox">
-                    <AccentLabel realHeight="30" realWidth="65" text="认证信息" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="认证信息" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>
@@ -173,7 +173,7 @@
                     </FlexCheckBox>
                 </FlexHBox>
                 <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true">
-                    <AccentLabel realHeight="30" realWidth="65" text="哨兵配置" styleClass="accent">
+                    <AccentLabel realHeight="30" realWidth="80" text="哨兵配置" styleClass="accent">
                         <HBox.margin>
                             <Insets left="20" top="10"/>
                         </HBox.margin>

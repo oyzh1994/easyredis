@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisHyLogElementsAddedEvent extends Event<RedisStringKeyTreeItem> implements  EventFormatter {
+public class RedisHyLogElementsAddedEvent extends Event<RedisStringKeyTreeItem> implements EventFormatter {
 
     @Setter
     private String key;
@@ -25,7 +26,7 @@ public class RedisHyLogElementsAddedEvent extends Event<RedisStringKeyTreeItem> 
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键:%s(db%s) 新增统计元素:%s",
+                "[%s] " + I18nHelper.key() + ":%s(db%s) " + I18nHelper.addElement() + ":%s",
                 this.data().infoName(), this.key, this.data().dbIndex(), ArrayUtil.toString(this.elements)
         );
     }

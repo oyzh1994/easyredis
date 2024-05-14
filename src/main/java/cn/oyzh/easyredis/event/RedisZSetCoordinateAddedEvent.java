@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> implements  EventFormatter {
+public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> implements EventFormatter {
 
     @Setter
     private String key;
@@ -30,7 +31,7 @@ public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> i
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键:%s(db%s) 新增坐标:%s 经度:%s 纬度:%s",
+                "[%s] " + I18nHelper.key() + ":%s(db%s) " + I18nHelper.coordinatesAdded() + ":%s " + I18nHelper.longitude() + ":%s " + I18nHelper.latitude() + ":%s",
                 this.data().infoName(), this.key, this.data().dbIndex(), this.member, this.longitude, this.latitude
         );
     }

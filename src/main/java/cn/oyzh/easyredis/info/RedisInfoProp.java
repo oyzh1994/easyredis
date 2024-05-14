@@ -306,6 +306,15 @@ public class RedisInfoProp {
     }
 
     /**
+     * 获取redis mode
+     *
+     * @return redis_mode
+     */
+    public String getRedisMode() {
+        return this.getProp("server", "redis_mode");
+    }
+
+    /**
      * 获取键数量
      *
      * @return 键数量

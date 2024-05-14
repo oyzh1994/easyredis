@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
+<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
+<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600">
     <FXTab text="%base.deleteKey">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -39,7 +38,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -67,12 +66,13 @@
     <FXTab text="%base.ttl">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.ttl" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.ttl" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="%redis.batch.tip7" value="-1"
+                <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% - 120" tipText="%redis.batch.tip7"
+                                 value="-1"
                                  require="true" min="-1" max="9223372036854775807" step="3600">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
@@ -80,7 +80,7 @@
                 </NumberTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -97,7 +97,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -125,7 +125,7 @@
     <FXTab text="%base.database">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.operation" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.operation" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -137,7 +137,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -165,7 +165,7 @@
     <FXTab text="%base.move">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -177,7 +177,7 @@
                 </RedisDBComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -194,7 +194,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -222,7 +222,7 @@
     <FXTab text="%base.copy">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -239,7 +239,7 @@
                 </FlexCheckBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -256,7 +256,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -284,7 +284,7 @@
     <FXTab text="%base.count">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="65" >
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -296,7 +296,7 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%base.keyNum" realHeight="30" realWidth="65" >
+                <AccentLabel text="%base.keyNum" realHeight="30" realWidth="80">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>

@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 
 /**
  * @author oyzh
@@ -12,6 +13,6 @@ public class RedisInfoAddedEvent extends Event<RedisInfo> implements EventFormat
 
     @Override
     public String eventFormat() {
-        return String.format("连接[%s] 已新增", this.data().getName());
+        return String.format("[%s] "+ I18nHelper.connectionAdded(), this.data().getName());
     }
 }

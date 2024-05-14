@@ -26,16 +26,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RedisEventUtil {
 
-    /**
-     * 连接关闭事件
-     *
-     * @param client redis客户端
-     */
-    public static void clientClosed(RedisClient client) {
-        RedisClientClosedEvent event = new RedisClientClosedEvent();
-        event.data(client);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 连接关闭事件
+    //  *
+    //  * @param client redis客户端
+    //  */
+    // public static void clientClosed(RedisClient client) {
+    //     RedisClientClosedEvent event = new RedisClientClosedEvent();
+    //     event.data(client);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 连接关闭事件

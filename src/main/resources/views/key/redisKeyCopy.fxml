@@ -14,7 +14,7 @@
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyCopyController" realWidth="400"
           realHeight="210">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyName" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.keyName" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -26,7 +26,7 @@
         </DisabledTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.targetDB" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.targetDB" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -38,7 +38,7 @@
         </RedisDBComboBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="65">
+        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>

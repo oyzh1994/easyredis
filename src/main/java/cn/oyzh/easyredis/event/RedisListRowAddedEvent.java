@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Accessors(fluent = true)
-public class RedisListRowAddedEvent extends Event<RedisListKeyTreeItem> implements  EventFormatter {
+public class RedisListRowAddedEvent extends Event<RedisListKeyTreeItem> implements EventFormatter {
 
     @Setter
     private String key;
@@ -24,7 +25,7 @@ public class RedisListRowAddedEvent extends Event<RedisListKeyTreeItem> implemen
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] 键:%s(db%s) 新增行:%s",
+                "[%s] " + I18nHelper.key() + ":%s(db%s) " + I18nHelper.rowAdded() + ":%s",
                 this.data().infoName(), this.key, this.data().dbIndex(), this.member
         );
     }
