@@ -66,15 +66,16 @@ public class RedisExceptionParser implements Function<Throwable, String> {
         }
 
         if (e instanceof JedisConnectionException) {
-            if (StrUtil.containsAny(message, "Attempting to read from a broken connection", "你的主机中的软件中止了一个已建立的连接")) {
-                return "连接已中断！";
-            }
-            if (StrUtil.contains(message, "Failed to connect to")) {
-                return "连接失败，请检查Redis服务是否启动、网络是否可用、认证信息是否正确";
-            }
-            if (StrUtil.contains(message, "Read timed out")) {
-                return "连接失败，读取超时";
-            }
+            // if (StrUtil.containsAny(message, "Attempting to read from a broken connection", "你的主机中的软件中止了一个已建立的连接")) {
+            //     return "连接已中断！";
+            // }
+            // if (StrUtil.contains(message, "Failed to connect to")) {
+            //     return "连接失败，请检查Redis服务是否启动、网络是否可用、认证信息是否正确";
+            // }
+            // if (StrUtil.contains(message, "Read timed out")) {
+            //     return "连接失败，读取超时";
+            // }
+            return message;
         }
 
         if (e instanceof JedisException) {

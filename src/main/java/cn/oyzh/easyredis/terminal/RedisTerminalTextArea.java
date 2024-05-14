@@ -220,19 +220,19 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                     this.flushCaret();
                     super.enableInput();
                 } else if (t1 == RedisConnState.CLOSED) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectClose") + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionClosed() + " .");
                     // this.outputLine(host + " 连接关闭.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.CONNECTING) {
-                    this.outputLine(host + I18nHelper.connectStart() + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionConnecting() + " .");
                     // this.outputLine(host + " 开始连接.");
                     this.disableInput();
                 } else if (t1 == RedisConnState.BROKEN) {
-                    this.outputLine(host + I18nResourceBundle.i18nString("base.connectBroken") + " .");
+                    this.outputLine(host + " " + I18nHelper.connectionBroken() + " .");
                     // this.outputLine(host + " 连接中断.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.FAILED) {
-                    this.outputLine(host + I18nHelper.connectFail() + " .");
+                    this.outputLine(host + " " + I18nHelper.connectFail() + " .");
                     // this.outputLine(host + " 连接失败.");
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());

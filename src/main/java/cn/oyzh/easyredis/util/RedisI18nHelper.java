@@ -62,6 +62,8 @@ public class RedisI18nHelper {
 
     public static final String COPY_TIP1 = "redis.copy.tip1";
 
+    public static final String PUBSUB_TIP1 = "redis.pubsub.tip1";
+
     public static String importTip1() {
         return I18nResourceBundle.i18nString(IMPORT_TIP1);
     }
@@ -168,5 +170,9 @@ public class RedisI18nHelper {
 
     public static String copyTip1() {
         return I18nResourceBundle.i18nString(COPY_TIP1);
+    }
+
+    public static String pubsubTip1() {
+        return I18nResourceBundle.i18nString(PUBSUB_TIP1);
     }
 }

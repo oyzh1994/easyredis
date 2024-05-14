@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.ServerSVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
@@ -58,7 +58,7 @@ public class RedisServerTab extends DynamicTab {
     public void init(RedisClient client) {
         try {
             // 设置文本
-            this.setText(I18nResourceBundle.i18nString("base.serverInfo") + "-" + client.infoName());
+            this.setText(I18nHelper.serverInfo() + "-" + client.infoName());
             // 刷新图标
             this.flushGraphic();
             // 初始化

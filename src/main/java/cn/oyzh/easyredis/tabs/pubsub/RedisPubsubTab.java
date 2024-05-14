@@ -68,7 +68,7 @@ public class RedisPubsubTab extends DynamicTab {
         try {
             this.item = item;
             // 设置文本
-            this.setText(item.getClient().infoName() + "(" + item.getChannel() + ")");
+            this.setText(item.getClient().infoName() + "-" + item.getChannel());
             // 刷新图标
             this.flushGraphic();
             // 初始化

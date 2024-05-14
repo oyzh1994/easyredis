@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
 import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
@@ -63,7 +64,8 @@ public class RedisTerminalTab extends DynamicTab {
         try {
             if (info == null) {
                 info = new RedisInfo();
-                info.setName("未命名连接");
+                info.setName(I18nHelper.unnamedConnection());
+
             }
             // 设置文本
             this.setText(info.getName());

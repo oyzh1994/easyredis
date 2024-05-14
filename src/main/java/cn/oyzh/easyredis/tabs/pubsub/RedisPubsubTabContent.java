@@ -1,8 +1,10 @@
 package cn.oyzh.easyredis.tabs.pubsub;
 
 import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
@@ -38,11 +40,11 @@ public class RedisPubsubTabContent extends DynamicTabController {
      * @param item redis发布订阅键
      */
     public void init(RedisPubsubItem item) {
-        this.textArea.appendText("消息订阅已开始，关闭页签自动停止订阅，通道: " + item.getChannel());
+        this.textArea.appendText(RedisI18nHelper.pubsubTip1() + item.getChannel());
         this.pubSub = new JedisPubSub() {
             @Override
             public void onMessage(String channel, String message) {
-                textArea.appendLine("收到消息: " + message);
+                textArea.appendLine(I18nHelper.receiveMessage() + ": " + message);
             }
         };
         ThreadUtil.startVirtual(() -> item.getClient().subscribe(this.pubSub, item.getChannel()));
