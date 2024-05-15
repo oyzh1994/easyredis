@@ -6,9 +6,11 @@ import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -149,7 +151,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @FXML
     private void reloadRow() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         try {
@@ -166,9 +168,9 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @FXML
     @Override
     protected void copyRow() {
-        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
-                "字段：" + this.treeItem.currentRow().getField() + System.lineSeparator() +
-                "数据：" + this.treeItem.currentRow().getValue();
+        String builder = I18nHelper.keyName()+": " + this.treeItem.key() + System.lineSeparator() +
+                I18nHelper.fieldName()+ ": " + this.treeItem.currentRow().getField() + System.lineSeparator() +
+                I18nHelper.fieldValue()+  ": " + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "行信息");
     }
 
@@ -188,9 +190,11 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     @Override
     protected void saveNodeData() {
         if (this.treeItem.checkExists()) {
-            MessageBox.warn("此字段已存在！");
-        } else if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(() -> {
+            MessageBox.warn(I18nHelper.dataAlreadyExists());
+            return;
+        }
+        if (this.treeItem.dataUnsaved()) {
+            TaskManager.start(() -> {
                 if (this.treeItem.saveNodeValue()) {
                     this.saveNodeData.disable();
                 }

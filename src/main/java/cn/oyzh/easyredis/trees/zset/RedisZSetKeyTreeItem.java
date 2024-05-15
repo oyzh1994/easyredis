@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
-import javafx.beans.property.SimpleObjectProperty;
+import cn.oyzh.fx.plus.property.DigitalDecimalProperty;
 import lombok.NonNull;
 import redis.clients.jedis.GeoCoordinate;
 
@@ -23,17 +23,17 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     /**
      * 分数属性
      */
-    private SimpleObjectProperty<Double> scoreProperty;
+    private DigitalDecimalProperty scoreProperty;
 
     /**
      * 经度属性
      */
-    private SimpleObjectProperty<Double> latitudeProperty;
+    private DigitalDecimalProperty latitudeProperty;
 
     /**
      * 纬度属性
      */
-    private SimpleObjectProperty<Double> longitudeProperty;
+    private DigitalDecimalProperty longitudeProperty;
 
     @Override
     public void clearData() {
@@ -56,9 +56,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      *
      * @return 分数属性
      */
-    public SimpleObjectProperty<Double> scoreProperty() {
+    public DigitalDecimalProperty scoreProperty() {
         if (this.scoreProperty == null) {
-            this.scoreProperty = new SimpleObjectProperty<>();
+            this.scoreProperty = new DigitalDecimalProperty(5);
         }
         return this.scoreProperty;
     }
@@ -68,9 +68,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      *
      * @return 纬度属性
      */
-    public SimpleObjectProperty<Double> latitudeProperty() {
+    public DigitalDecimalProperty latitudeProperty() {
         if (this.latitudeProperty == null) {
-            this.latitudeProperty = new SimpleObjectProperty<>();
+            this.latitudeProperty = new DigitalDecimalProperty(5);
         }
         return this.latitudeProperty;
     }
@@ -80,9 +80,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      *
      * @return 经度属性
      */
-    public SimpleObjectProperty<Double> longitudeProperty() {
+    public DigitalDecimalProperty longitudeProperty() {
         if (this.longitudeProperty == null) {
-            this.longitudeProperty = new SimpleObjectProperty<>();
+            this.longitudeProperty = new DigitalDecimalProperty(5);
         }
         return this.longitudeProperty;
     }
@@ -93,7 +93,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @return 分数
      */
     public Double score() {
-        return this.scoreProperty == null ? null : this.scoreProperty().get();
+        return this.scoreProperty == null ? null : this.scoreProperty().getDouble();
     }
 
     /**
@@ -102,7 +102,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @param score 分数
      */
     public void score(Double score) {
-        this.scoreProperty().set(score);
+        this.scoreProperty().setValue(score);
     }
 
     /**
@@ -111,7 +111,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @return 纬度
      */
     public Double latitude() {
-        return this.latitudeProperty == null ? null : this.latitudeProperty().get();
+        return this.latitudeProperty == null ? null : this.latitudeProperty().getDouble();
     }
 
     /**
@@ -120,7 +120,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @param latitude 纬度
      */
     public void latitude(Double latitude) {
-        this.latitudeProperty().set(latitude);
+        this.latitudeProperty().setValue(latitude);
     }
 
     /**
@@ -129,7 +129,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @return 经度
      */
     public Double longitude() {
-        return this.longitudeProperty == null ? null : this.longitudeProperty().get();
+        return this.longitudeProperty == null ? null : this.longitudeProperty().getDouble();
     }
 
     /**
@@ -138,7 +138,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      * @param longitude 经度
      */
     public void longitude(Double longitude) {
-        this.longitudeProperty().set(longitude);
+        this.longitudeProperty().setValue(longitude);
     }
 
     /**

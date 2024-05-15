@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -92,7 +93,7 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
 
     @Override
     protected void initRow(RedisStreamRow row) {
-       super.initRow(row);
+        super.initRow(row);
         if (row == null) {
             this.streamID.clear();
             this.streamID.disable();
@@ -105,9 +106,9 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @FXML
     @Override
     protected void copyRow() {
-        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
-                "消息ID：" + this.treeItem.currentRow().getId() + System.lineSeparator() +
-                "消息内容：" + this.treeItem.currentRow().getValue();
+        String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
+                I18nHelper.messageId() + ": " + this.treeItem.currentRow().getId() + System.lineSeparator() +
+                I18nHelper.content() + ": " + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "消息");
     }
 

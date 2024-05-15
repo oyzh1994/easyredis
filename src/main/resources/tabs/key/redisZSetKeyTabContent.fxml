@@ -92,17 +92,16 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </AddFillSVGGlyph>
-                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="%base.geocoordinates"
-                                unselectedText="%base.zset">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXToggleSwitch>
                 <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
                 </ClearableTextField>
+                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="%base.coordinates" unselectedText="%base.zset">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXToggleSwitch>
                 <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
                          onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
                     <FlowPane.margin>
@@ -174,20 +173,20 @@
                 </padding>
             </FlexFlowPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="scoreBox" text="%base.score" collapsible="false">
-                <DecimalTextField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="scoreVal"
+                <DecimalTextField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="scoreVal"
                                   tipText="%base.score" value="0" step="5"
                                   disable="true" onKeyPressed="#onNodeDataKeyPressed">
                 </DecimalTextField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="longitudeBox" text="%base.longitude" visible="false"
                             managed="false" collapsible="false">
-                <LongitudeField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="longitudeVal"
+                <LongitudeField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="longitudeVal"
                                 tipText="%base.longitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
                 </LongitudeField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="latitudeBox" text="%base.latitude" visible="false"
                             managed="false" collapsible="false">
-                <LatitudeField scaleLen="10" flexHeight="100%" flexWidth="100%" fx:id="latitudeVal"
+                <LatitudeField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="latitudeVal"
                                tipText="%base.latitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
                 </LatitudeField>
             </FlexTitledPane>

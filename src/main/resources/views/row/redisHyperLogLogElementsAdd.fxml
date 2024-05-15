@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import javafx.geometry.Insets?>
@@ -15,26 +15,34 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <AccentLabel text="%base.element" realHeight="30" realWidth="50" >
+        <AccentLabel text="%base.element" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-            <VBox.margin>
-                <Insets left="5" top="10"/>
-            </VBox.margin>
-        </PasteSVGGlyph>
-        <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-            <VBox.margin>
-                <Insets left="5" top="10"/>
-            </VBox.margin>
-        </ClearSVGGlyph>
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%redis.key.tip6"
+                      flexWidth="100% - 180">
+            <HBox.margin>
+                <Insets left="10" top="10"/>
+            </HBox.margin>
+        </FlexTextArea>
+        <FlexVBox>
+            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                <VBox.margin>
+                    <Insets left="5" top="10"/>
+                </VBox.margin>
+            </PasteSVGGlyph>
+            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                <VBox.margin>
+                    <Insets left="5" top="10"/>
+                </VBox.margin>
+            </ClearSVGGlyph>
+        </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="70" top="10"/>
+                <Insets left="100" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

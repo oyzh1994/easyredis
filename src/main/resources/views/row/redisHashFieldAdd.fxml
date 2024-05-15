@@ -16,7 +16,7 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.field" realHeight="30" realWidth="50">
+        <AccentLabel text="%base.field" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -29,7 +29,7 @@
         </FlexTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.data" realHeight="30" realWidth="50">
+        <AccentLabel text="%base.data" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -61,7 +61,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="70" top="10"/>
+                <Insets left="100" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

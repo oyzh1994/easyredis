@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.redis.row;
 
 import cn.oyzh.easyredis.redis.RedisRow;
-import javafx.beans.property.SimpleDoubleProperty;
+import cn.oyzh.fx.plus.property.DigitalDecimalProperty;
 import javafx.beans.property.SimpleStringProperty;
 import redis.clients.jedis.GeoCoordinate;
 
@@ -21,17 +21,17 @@ public class RedisZSetRow extends RedisRow {
     /**
      * 分数
      */
-    private SimpleDoubleProperty scoreProperty;
+    private DigitalDecimalProperty scoreProperty;
 
     /**
      * 纬度
      */
-    private SimpleDoubleProperty latitudeProperty;
+    private DigitalDecimalProperty latitudeProperty;
 
     /**
      * 经度
      */
-    private SimpleDoubleProperty longitudeProperty;
+    private DigitalDecimalProperty longitudeProperty;
 
     public RedisZSetRow(String value, double score) {
         this.setValue(value);
@@ -63,9 +63,9 @@ public class RedisZSetRow extends RedisRow {
         return this.valueProperty == null ? null : this.valueProperty.get();
     }
 
-    public SimpleDoubleProperty scoreProperty() {
+    public DigitalDecimalProperty scoreProperty() {
         if (this.scoreProperty == null) {
-            this.scoreProperty = new SimpleDoubleProperty();
+            this.scoreProperty = new DigitalDecimalProperty(5);
         }
         return scoreProperty;
     }
@@ -75,12 +75,12 @@ public class RedisZSetRow extends RedisRow {
     }
 
     public double getScore() {
-        return this.scoreProperty == null ? Double.NaN : this.scoreProperty.get();
+        return this.scoreProperty == null ? Double.NaN : this.scoreProperty.getDouble();
     }
 
-    public SimpleDoubleProperty longitudeProperty() {
+    public DigitalDecimalProperty longitudeProperty() {
         if (this.longitudeProperty == null) {
-            this.longitudeProperty = new SimpleDoubleProperty();
+            this.longitudeProperty = new DigitalDecimalProperty(5);
         }
         return this.longitudeProperty;
     }
@@ -90,12 +90,12 @@ public class RedisZSetRow extends RedisRow {
     }
 
     public double getLongitude() {
-        return this.longitudeProperty == null ? Double.NaN : this.longitudeProperty.get();
+        return this.longitudeProperty == null ? Double.NaN : this.longitudeProperty.getDouble();
     }
 
-    public SimpleDoubleProperty latitudeProperty() {
+    public DigitalDecimalProperty latitudeProperty() {
         if (this.latitudeProperty == null) {
-            this.latitudeProperty = new SimpleDoubleProperty();
+            this.latitudeProperty = new DigitalDecimalProperty(5);
         }
         return this.latitudeProperty;
     }
@@ -105,6 +105,6 @@ public class RedisZSetRow extends RedisRow {
     }
 
     public double getLatitude() {
-        return this.latitudeProperty == null ? Double.NaN : this.latitudeProperty.get();
+        return this.latitudeProperty == null ? Double.NaN : this.latitudeProperty.getDouble();
     }
 }

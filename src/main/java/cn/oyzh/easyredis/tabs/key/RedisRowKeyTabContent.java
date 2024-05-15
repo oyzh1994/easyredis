@@ -11,6 +11,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -108,7 +109,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
     @Override
     public void reloadNode() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         try {

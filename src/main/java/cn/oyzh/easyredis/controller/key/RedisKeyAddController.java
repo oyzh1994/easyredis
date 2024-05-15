@@ -221,7 +221,7 @@ public class RedisKeyAddController extends Controller {
      * 添加redis键
      */
     @FXML
-    private void addNode() {
+    private void addKey() {
         // 获取键值
         int type = this.type.getSelectedIndex();
         String key = this.key.getTextTrim();
@@ -237,7 +237,7 @@ public class RedisKeyAddController extends Controller {
                 return;
             }
             if (this.client.exists(dbIndex, key)) {
-                MessageBox.warn("key:" + key + I18nHelper.alreadyExists());
+                MessageBox.warn("key:[" + key + "] " + I18nHelper.alreadyExists());
                 return;
             }
             boolean result = false;

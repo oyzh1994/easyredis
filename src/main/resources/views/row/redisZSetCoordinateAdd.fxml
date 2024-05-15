@@ -17,12 +17,12 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-        <AccentLabel text="%base.coordinates" realHeight="30" realWidth="55">
+        <AccentLabel text="%base.coordinates" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 140">
+        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -41,24 +41,24 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.longitude" realHeight="30" realWidth="55">
+        <AccentLabel text="%base.longitude" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitude" value="0" step="5">
+        <LongitudeField realHeight="30" flexWidth="100% - 180" fx:id="longitude" value="0" step="5">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </LongitudeField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.latitude" realHeight="30" realWidth="55">
+        <AccentLabel text="%base.latitude" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitude" value="0" step="5">
+        <LatitudeField realHeight="30" flexWidth="100% - 180" fx:id="latitude" value="0" step="5">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -67,7 +67,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="85" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

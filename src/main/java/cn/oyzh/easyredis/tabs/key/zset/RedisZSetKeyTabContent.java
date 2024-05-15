@@ -8,14 +8,14 @@ import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.property.ScaleDoublePropertyValueFactory;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -198,9 +198,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         // 判断geo视图是否支持
         if (this.isSupportGEO() && this.isGEOView()) {
-            this.latitude.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("latitude", 10));
-            this.longitude.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("longitude", 10));
-            this.value.setText("坐标名称");
+            this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+            this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+            this.value.setText(I18nHelper.coordinates());
             this.value.setFlexWidth("26%");
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
             this.longitudeVal.addTextChangeListener(this.longitudeValListener);
@@ -208,21 +208,21 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
             this.latitude.setVisible(true);
             this.longitude.setVisible(true);
             this.reverseView.setSelected(true);
-            this.dataBox.setText("坐标");
+            this.dataBox.setText(I18nHelper.coordinates());
             this.dataBox.setFlexHeight("100% - 500");
             this.latitudeBox.display();
             this.longitudeBox.display();
             this.scoreBox.disappear();
         } else {
-            this.score.setCellValueFactory(new ScaleDoublePropertyValueFactory<>("score", 10));
-            this.value.setText("成员名称");
+            this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
+            this.value.setText(I18nHelper.member());
             this.value.setFlexWidth("46%");
             this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.score.setVisible(true);
             this.latitude.setVisible(false);
             this.longitude.setVisible(false);
             this.reverseView.setSelected(false);
-            this.dataBox.setText("成员");
+            this.dataBox.setText(I18nHelper.member());
             this.dataBox.setFlexHeight("100% - 450");
             this.latitudeBox.disappear();
             this.longitudeBox.disappear();
@@ -287,9 +287,11 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @Override
     protected void saveNodeData() {
         if (this.treeItem.checkExists()) {
-            MessageBox.warn("此成员或坐标已存在！");
-        } else if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(() -> {
+            MessageBox.warn(I18nHelper.dataAlreadyExists());
+            return;
+        }
+        if (this.treeItem.dataUnsaved()) {
+            TaskManager.start(() -> {
                 if (this.treeItem.saveNodeValue()) {
                     this.saveNodeData.disable();
                 }
@@ -301,15 +303,14 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @Override
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
+        builder.append(I18nHelper.keyName()).append(": ").append(this.treeItem.key()).append(System.lineSeparator());
         if (this.isGEOView()) {
-            builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
-                    .append("坐标：").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append("经度：").append(this.treeItem.currentRow().getLongitude()).append(System.lineSeparator())
-                    .append("纬度：").append(this.treeItem.currentRow().getLatitude());
+            builder.append(I18nHelper.coordinates()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
+                    .append(I18nHelper.longitude()).append(": ").append(this.treeItem.currentRow().getLongitude()).append(System.lineSeparator())
+                    .append(I18nHelper.latitude()).append(": ").append(this.treeItem.currentRow().getLatitude());
         } else {
-            builder.append("键名称：").append(this.treeItem.key()).append(System.lineSeparator())
-                    .append("成员：").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append("分数：").append(this.treeItem.currentRow().getScore());
+            builder.append(I18nHelper.member()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
+                    .append(I18nHelper.score()).append(": ").append(this.treeItem.currentRow().getScore());
         }
         ClipboardUtil.setStringAndTip(builder.toString(), "成员信息");
     }

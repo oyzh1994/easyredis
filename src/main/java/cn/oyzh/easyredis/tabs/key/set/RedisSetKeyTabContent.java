@@ -6,8 +6,9 @@ import cn.oyzh.easyredis.event.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -110,17 +111,19 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     @Override
     protected void saveNodeData() {
         if (this.treeItem.checkExists()) {
-            MessageBox.warn("此成员已存在！");
-        } else if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
+            MessageBox.warn(I18nHelper.dataAlreadyExists());
+            return;
+        }
+        if (this.treeItem.dataUnsaved()) {
+            TaskManager.start(() -> this.treeItem.saveNodeValue());
         }
     }
 
     @FXML
     @Override
     protected void copyRow() {
-        String builder = "键名称：" + this.treeItem.key() + System.lineSeparator() +
-                "成员：" + this.treeItem.currentRow().getValue();
+        String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
+                I18nHelper.member() + ": " + this.treeItem.currentRow().getValue();
         ClipboardUtil.setStringAndTip(builder, "成员信息");
     }
 

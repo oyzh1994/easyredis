@@ -457,7 +457,8 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isReadonly() {
-        return this.redisInfo.isReadonly() || (this.isMasterMode() && this.isSlave());
+        return this.redisInfo.isReadonly();
+        // return this.redisInfo.isReadonly() || (this.isMasterMode() && this.isSlave());
     }
 
     /**

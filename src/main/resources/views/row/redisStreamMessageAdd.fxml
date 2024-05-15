@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.area.FlexTextArea?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.JSONSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.messageId" realHeight="30" realWidth="55" >
+        <AccentLabel text="%base.messageId" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField flexWidth="100% - 140" fx:id="streamID" tipText="%redis.row.tip2" text="*" require="true">
+        <ClearableTextField flexWidth="100% - 180" fx:id="streamID" tipText="%redis.row.tip2" text="*" require="true">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <AccentLabel text="%base.content" realHeight="30" realWidth="55" >
+        <AccentLabel text="%base.content" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%redis.row.tip1"
-                      flexWidth="100% - 140">
+                      flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
@@ -63,7 +61,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="85" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>

@@ -405,7 +405,7 @@
         </NumberTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#addNode">
+        <SubmitButton onAction="#addKey">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

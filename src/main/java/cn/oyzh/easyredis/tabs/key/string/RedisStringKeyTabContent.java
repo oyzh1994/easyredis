@@ -4,9 +4,11 @@ import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
+import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
@@ -91,9 +93,9 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         // 大小
         Integer size = this.treeItem.size();
         if (size == null) {
-            this.size.setText("大小: N/A");
+            this.size.setText(I18nHelper.size() + ": N/A");
         } else {
-            this.size.setText("大小: " + size + " bytes");
+            this.size.setText(I18nHelper.size() + ": " + size + " bytes");
         }
         // 刷新二进制处理
         this.flushBinary();
@@ -131,7 +133,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
      */
     private void initHyLogNode() {
         // 统计值
-        this.count.setText("统计值: " + this.treeItem.count());
+        this.count.setText(I18nHelper.count() + ": " + this.treeItem.count());
         // 按钮状态处理
         this.count.display();
         this.addRow.display();
@@ -163,7 +165,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @FXML
     private void reloadData() {
         // 放弃保存
-        if (this.treeItem.dataUnsaved() && !MessageBox.confirm("放弃未保存的数据？")) {
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
         // 刷新数据
@@ -181,7 +183,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @Override
     protected void saveNodeData() {
         if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(() -> {
+            TaskManager.start(() -> {
                 if (this.treeItem.saveNodeValue()) {
                     this.flushBinary();
                 }
