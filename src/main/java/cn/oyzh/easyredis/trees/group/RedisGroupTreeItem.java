@@ -13,8 +13,8 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.AddConnectMenuItem;
@@ -95,7 +95,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
 
     @Override
     public void rename() {
-        String groupName = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.getName());
+        String groupName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (groupName == null || Objects.equals(groupName, this.value.getName())) {
             return;
@@ -122,10 +122,10 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
 
     @Override
     public void delete() {
-        if (this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip1"))) {
+        if (this.isChildEmpty() && !MessageBox.confirm(I18nHelper.deleteGroupTip1())) {
             return;
         }
-        if (!this.isChildEmpty() && !MessageBox.confirm(I18nResourceBundle.i18nString("base.deleteGroupTip2"))) {
+        if (!this.isChildEmpty() && !MessageBox.confirm(I18nHelper.deleteGroupTip2())) {
             return;
         }
         // 删除失败

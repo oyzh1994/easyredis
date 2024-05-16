@@ -226,7 +226,7 @@ public class RedisServerTabContent extends DynamicTabController {
                 serverItem.setRole((String) CollUtil.getFirst(this.client.role()));
                 this.propTable.getItems().add(serverItem);
             } else {
-                serverItem = this.propTable.getItems().get(0);
+                serverItem = this.propTable.getItems().getFirst();
             }
             serverItem.update(
                     infoProp.getUptimeInDays(),

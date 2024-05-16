@@ -299,7 +299,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
 
     @Override
     public void rename() {
-        String newKey = MessageBox.prompt(I18nResourceBundle.i18nString("base.contentTip1"), this.value.key());
+        String newKey = MessageBox.prompt(I18nHelper.contentTip1(), this.value.key());
         // 名称为空或者跟当前名称相同，则忽略
         if (StrUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
             return;

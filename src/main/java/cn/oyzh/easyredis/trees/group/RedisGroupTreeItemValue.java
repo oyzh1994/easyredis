@@ -13,7 +13,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/11/21
  */
-//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisGroupTreeItemValue extends RedisTreeItemValue {
 

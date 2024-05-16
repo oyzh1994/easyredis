@@ -4,6 +4,8 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -12,14 +14,13 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/11/20
  */
-@Getter
+@Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
 public class RedisKeyAddedEvent extends Event<RedisDBTreeItem> implements EventFormatter {
 
-    @Setter
     private String type;
 
-    @Setter
     private String key;
 
     @Override

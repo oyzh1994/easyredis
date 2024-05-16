@@ -18,19 +18,12 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.scene.Cursor;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * redis 键tab
@@ -151,44 +144,4 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
         }
         return tab;
     }
-
-    // @Override
-    // public List<MenuItem> getMenuItems() {
-    //     List<MenuItem> items = super.getMenuItems();
-    //     MenuItem closeConnectTab = FXMenuItem.newItem("关闭当前连接", "关闭当前连接标签页", this::closeConnectTab);
-    //     MenuItem closeOtherConnectTab = FXMenuItem.newItem("关闭其他连接", "关闭其他连接标签页", this::closeOtherConnectTab);
-    //     items.add(4, closeConnectTab);
-    //     items.add(5, closeOtherConnectTab);
-    //     return items;
-    // }
-
-    // /**
-    //  * 关闭当前连接tab
-    //  */
-    // private void closeConnectTab() {
-    //     FXUtil.runLater(() -> {
-    //         List<Tab> list = new ArrayList<>();
-    //         for (Tab tab : this.tabs()) {
-    //             if (tab instanceof RedisKeyTab<?> keyType && keyType.client() == this.treeItem.client()) {
-    //                 list.add(tab);
-    //             }
-    //         }
-    //         this.tabs().removeAll(list);
-    //     });
-    // }
-    //
-    // /**
-    //  * 关闭其他连接tab
-    //  */
-    // private void closeOtherConnectTab() {
-    //     FXUtil.runLater(() -> {
-    //         List<Tab> list = new ArrayList<>();
-    //         for (Tab tab : this.tabs()) {
-    //             if (tab instanceof RedisKeyTab<?> keyType && keyType.client() == this.treeItem.client()) {
-    //                 list.add(tab);
-    //             }
-    //         }
-    //         this.tabs().removeAll(list);
-    //     });
-    // }
 }

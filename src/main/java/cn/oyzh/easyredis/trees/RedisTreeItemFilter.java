@@ -124,14 +124,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
             // 过滤stream键
-            if (this.excludeStreamType && treeItem.isStreamType()) {
-                return false;
-            }
-//            // 过滤hyperLogLog键
-//            if (this.excludeHyLogType && treeItem.isHyLogType()) {
-//                return false;
-//            }
-            return true;
+            return !this.excludeStreamType || !treeItem.isStreamType();
         }
 
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {

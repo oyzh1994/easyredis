@@ -3,11 +3,8 @@ package cn.oyzh.easyredis.tabs.pubsub;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -34,21 +31,15 @@ public class RedisPubsubTab extends DynamicTab {
     @Accessors(fluent = true, chain = true)
     private RedisPubsubItem item;
 
-    /**
-     * 内容controller
-     */
-    private RedisPubsubTabContent contentController;
-
     @Override
-    protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/pubsub/redisPubsubTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.contentController = loaderExt.getController();
-        this.setContent(content);
+    public RedisPubsubTabContent controller() {
+        return (RedisPubsubTabContent) super.controller();
     }
 
+    @Override
+    protected String url() {
+        return  "/tabs/terminal/redisTerminalTabContent.fxml";
+    }
     @Override
     public void flushGraphic() {
         SVGGlyph graphic = (SVGGlyph) this.getGraphic();
@@ -72,7 +63,7 @@ public class RedisPubsubTab extends DynamicTab {
             // 刷新图标
             this.flushGraphic();
             // 初始化
-            this.contentController.init(item);
+            this.controller().init(item);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -82,7 +73,7 @@ public class RedisPubsubTab extends DynamicTab {
      * 取消订阅
      */
     public void unsubscribe() {
-        this.contentController.unsubscribe();
+        this.controller().unsubscribe();
     }
 
     public RedisClient client() {

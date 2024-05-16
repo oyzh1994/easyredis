@@ -4,6 +4,8 @@ import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -12,20 +14,17 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/11/20
  */
-@Getter
+@Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
 public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> implements EventFormatter {
 
-    @Setter
     private String key;
 
-    @Setter
     private Double longitude;
 
-    @Setter
     private Double latitude;
 
-    @Setter
     private String member;
 
     @Override

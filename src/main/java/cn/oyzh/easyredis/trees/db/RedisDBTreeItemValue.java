@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -16,7 +17,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/22
  */
-//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisDBTreeItemValue extends RedisTreeItemValue {
 
@@ -90,7 +90,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
                 this.addChild(text);
                 HBox.setMargin(text, new Insets(0, 0, 0, 3));
             }
-            text.setText("[键过滤:" + this.item.getFilterPattern() + "]");
+            text.setText("["+ I18nHelper.keyFilter() +":" + this.item.getFilterPattern() + "]");
         } else {
             this.removeChild(text);
         }

@@ -6,7 +6,6 @@ import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.stage.StageUtil;

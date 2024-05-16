@@ -178,10 +178,10 @@ public class RedisKeyBatchOperationController extends Controller {
                         // 查询结束
                         if (result == 1) {
                             succCount++;
-                            this.keys1.appendLine(I18nHelper.deleteKey() + ":[" + key + "]" + I18nHelper.success());
+                            this.keys1.appendLine(I18nHelper.deleteKey() + ": [" + key + "] " + I18nHelper.success());
                         } else {
                             failCount++;
-                            this.keys1.appendLine(I18nHelper.deleteKey() + ":[" + key + "]" + I18nHelper.fail());
+                            this.keys1.appendLine(I18nHelper.deleteKey() + ": [" + key + "] " + I18nHelper.fail());
                         }
                     }
                     RedisEventUtil.keyFlushed(this.treeItem);
@@ -222,10 +222,10 @@ public class RedisKeyBatchOperationController extends Controller {
                         }
                         if (result == 1) {
                             succCount++;
-                            this.keys2.appendLine(I18nHelper.handleKey() + ":[" + key + "]" + I18nHelper.success());
+                            this.keys2.appendLine(I18nHelper.handleKey() + ": [" + key + "] " + I18nHelper.success());
                         } else {
                             failCount++;
-                            this.keys2.appendLine(I18nHelper.handleKey() + ":[" + key + "]" + I18nHelper.fail());
+                            this.keys2.appendLine(I18nHelper.handleKey() + ": [" + key + "] " + I18nHelper.fail());
                         }
                     }
                     RedisEventUtil.keyFlushed(this.treeItem);
@@ -298,10 +298,10 @@ public class RedisKeyBatchOperationController extends Controller {
                             long result = this.client.move(key, this.dbIndex, targetDBIndex);
                             if (result == 1) {
                                 succCount++;
-                                this.keys4.appendLine(I18nHelper.moveKey() + ":[" + key + "]" + I18nHelper.success());
+                                this.keys4.appendLine(I18nHelper.moveKey() + ": [" + key + "] " + I18nHelper.success());
                             } else {
                                 failCount++;
-                                this.keys4.appendLine(I18nHelper.moveKey() + ":[" + key + "]" + I18nHelper.fail());
+                                this.keys4.appendLine(I18nHelper.moveKey() + ": [" + key + "] " + I18nHelper.fail());
                             }
                         }
                         RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
@@ -349,10 +349,10 @@ public class RedisKeyBatchOperationController extends Controller {
                             boolean result = this.client.copy(this.dbIndex, key, key, targetDBIndex, this.replaceOnCopy.isSelected());
                             if (result) {
                                 succCount++;
-                                this.keys5.appendLine(I18nHelper.copyKey() + ":[" + key + "]" + I18nHelper.success());
+                                this.keys5.appendLine(I18nHelper.copyKey() + ": [" + key + "] " + I18nHelper.success());
                             } else {
                                 failCount++;
-                                this.keys5.appendLine(I18nHelper.copyKey() + ":[" + key + "]" + I18nHelper.fail());
+                                this.keys5.appendLine(I18nHelper.copyKey() + ": [" + key + "] " + I18nHelper.fail());
                             }
                         }
                         RedisEventUtil.keyCopied(this.treeItem, targetDBIndex);

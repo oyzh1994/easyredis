@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
@@ -65,7 +66,7 @@ public class RedisStreamMessageAddController extends Controller {
                 return;
             }
             if (!JSONUtil.isTypeJSON(rowValue)) {
-                MessageBox.warn("消息内容必须为json键值对");
+                MessageBox.warn(RedisI18nHelper.addTip4());
                 return;
             }
             JSONObject fields = JSONUtil.parseObj(rowValue);

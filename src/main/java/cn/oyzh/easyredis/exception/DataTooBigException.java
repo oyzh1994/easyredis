@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.exception;
 
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 /**
@@ -9,7 +10,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 public class DataTooBigException extends RedisException {
 
     public DataTooBigException() {
-        this(I18nResourceBundle.i18nString("base.dataTooLarge"));
+        this(I18nHelper.dataTooLarge());
         // this("数据太大");
     }
 

@@ -5,7 +5,6 @@ import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

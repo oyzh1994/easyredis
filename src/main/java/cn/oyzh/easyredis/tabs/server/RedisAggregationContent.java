@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
@@ -51,7 +52,7 @@ public class RedisAggregationContent {
     /**
      * 日期格式化
      */
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH时mm分ss秒");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH-mm-ss");
 
     /**
      * 执行初始化
@@ -76,7 +77,7 @@ public class RedisAggregationContent {
         XYChart.Series<String, Number> data = this.memoryChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
-            data.setName("已用内存");
+            data.setName(I18nHelper.usedMemory());
             this.memoryChart.addChartData(data);
         }
         double usedMemory = prop.getUsedMemory() / 1024.0 / 1024;
@@ -93,7 +94,7 @@ public class RedisAggregationContent {
         XYChart.Series<String, Number> data = this.clientChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
-            data.setName("已连接客户端数量");
+            data.setName(I18nHelper.connectedClientNum());
             this.clientChart.addChartData(data);
         }
         int connectedClients = prop.getConnectedClients();
@@ -111,9 +112,9 @@ public class RedisAggregationContent {
         XYChart.Series<String, Number> outData = this.networkChart.getChartData(1);
         if (inData == null) {
             inData = new XYChart.Series<>();
-            inData.setName("网络输入");
+            inData.setName(I18nHelper.networkInput());
             outData = new XYChart.Series<>();
-            outData.setName("网络输出");
+            outData.setName(I18nHelper.networkOutput());
             this.networkChart.addChartData(inData);
             this.networkChart.addChartData(outData);
         }
@@ -133,7 +134,7 @@ public class RedisAggregationContent {
         XYChart.Series<String, Number> data = this.commandChart.getChartData(0);
         if (data == null) {
             data = new XYChart.Series<>();
-            data.setName("每秒执行命令数");
+            data.setName(I18nHelper.execCmdPerSec());
             this.commandChart.addChartData(data);
         }
         long opsPerSec = prop.getInstantaneousOpsPerSec();

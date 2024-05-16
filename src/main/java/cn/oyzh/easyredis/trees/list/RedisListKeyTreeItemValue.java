@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
  * @author oyzh
  * @since 2023/11/21
  */
-//@Slf4j
 public class RedisListKeyTreeItemValue extends RedisKeyTreeItemValue<RedisListKeyTreeItem> {
 
     public RedisListKeyTreeItemValue(RedisListKeyTreeItem item) {

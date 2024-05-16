@@ -48,6 +48,10 @@ public class RedisI18nHelper {
 
     public static final String ADD_TIP2 = "redis.add.tip2";
 
+    public static final String ADD_TIP3 = "redis.add.tip3";
+
+    public static final String ADD_TIP4 = "redis.add.tip4";
+
     public static final String BATCH_TIP1 = "redis.batch.tip1";
 
     public static final String BATCH_TIP2 = "redis.batch.tip2";
@@ -63,6 +67,14 @@ public class RedisI18nHelper {
     public static final String COPY_TIP1 = "redis.copy.tip1";
 
     public static final String PUBSUB_TIP1 = "redis.pubsub.tip1";
+
+    public static final String CONNECT_TIP1 = "redis.connect.tip1";
+
+    public static final String CONNECT_TIP2 = "redis.connect.tip2";
+
+    public static final String CONNECT_TIP3 = "redis.connect.tip3";
+
+    public static final String CONNECT_TIP4 = "redis.connect.tip4";
 
     public static String importTip1() {
         return I18nResourceBundle.i18nString(IMPORT_TIP1);
@@ -144,6 +156,14 @@ public class RedisI18nHelper {
         return I18nResourceBundle.i18nString(ADD_TIP2);
     }
 
+    public static String addTip3() {
+        return I18nResourceBundle.i18nString(ADD_TIP3);
+    }
+
+    public static String addTip4() {
+        return I18nResourceBundle.i18nString(ADD_TIP4);
+    }
+
     public static String batchTip1() {
         return I18nResourceBundle.i18nString(BATCH_TIP1);
     }
@@ -174,5 +194,21 @@ public class RedisI18nHelper {
 
     public static String pubsubTip1() {
         return I18nResourceBundle.i18nString(PUBSUB_TIP1);
+    }
+
+    public static String connectTip1() {
+        return I18nResourceBundle.i18nString(CONNECT_TIP1);
+    }
+
+    public static String connectTip2() {
+        return I18nResourceBundle.i18nString(CONNECT_TIP2);
+    }
+
+    public static String connectTip3() {
+        return I18nResourceBundle.i18nString(CONNECT_TIP3);
+    }
+
+    public static String connectTip4() {
+        return I18nResourceBundle.i18nString(CONNECT_TIP4);
     }
 }

@@ -49,12 +49,6 @@ public class RedisSlowlogContent {
     @FXML
     private FlexTableColumn<RedisSlowlogItem, String> id;
 
-    // /**
-    //  * 编号
-    //  */
-    // @FXML
-    // private FlexTableColumn<RedisSlowlogItem, String> index;
-
     /**
      * 命令
      */
@@ -93,7 +87,6 @@ public class RedisSlowlogContent {
     public void init(@NonNull RedisClient client) {
         this.client = client;
         this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
         this.command.setCellValueFactory(new PropertyValueFactory<>("command"));
         this.timeStamp.setCellValueFactory(new PropertyValueFactory<>("timeStamp"));
         this.clientHost.setCellValueFactory(new PropertyValueFactory<>("clientHost"));
@@ -116,10 +109,8 @@ public class RedisSlowlogContent {
     private void initSlowlog() {
         List<Slowlog> list = this.client.slowlogGet(1024);
         List<RedisSlowlogItem> items = new ArrayList<>();
-        // int index = 1;
         for (Slowlog slowlog : list) {
             RedisSlowlogItem item = RedisSlowlogItem.from(slowlog);
-            // item.setIndex(index++);
             items.add(item);
         }
         Collections.reverse(items);

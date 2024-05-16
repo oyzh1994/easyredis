@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 
 import java.util.List;

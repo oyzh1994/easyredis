@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -71,7 +72,7 @@ public class RedisHyLogElementsAddController extends Controller {
             RedisClient client = this.treeItem.client();
             String[] array = ArrayUtil.toArray(elements, String.class);
             if (client.pfadd(dbIndex, key, array) <= 0) {
-                MessageBox.warn("新增元素失败或元素均已存在！");
+                MessageBox.warn(RedisI18nHelper.addTip3());
                 return;
             }
             // 发送事件

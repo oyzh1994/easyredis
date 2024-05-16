@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.server;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.InfoSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 
@@ -21,7 +22,7 @@ public class RedisServerInfoTreeItemValue extends RedisTreeItemValue {
 
     @Override
     public String name() {
-        return I18nResourceBundle.i18nString("base.serverInfo");
+        return I18nHelper.serverInfo();
     }
 
     @Override

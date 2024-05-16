@@ -190,9 +190,9 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void copyKeyInfo() {
-        String builder = "数据库：" + this.treeItem.dbIndex() + System.lineSeparator() +
-                "键类型：" + this.treeItem.value().type() + System.lineSeparator() +
-                "键名称：" + this.treeItem.key();
+        String builder = I18nHelper.database() + ": " + this.treeItem.dbIndex() + System.lineSeparator() +
+                I18nHelper.keyType() + ": " + this.treeItem.value().type() + System.lineSeparator() +
+                I18nHelper.keyName() + ": " + this.treeItem.key();
         ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
@@ -245,7 +245,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     @FXML
     protected void deleteNode() {
-        if (MessageBox.confirm("删除" + this.treeItem.key(), "确定删除此键？")) {
+        if (MessageBox.confirm(I18nHelper.delete() + " [" + this.treeItem.key() + "]", I18nHelper.areYouSure())) {
             this.treeItem.delete();
         }
     }

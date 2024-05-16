@@ -5,6 +5,8 @@ import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,11 +15,11 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/12/12
  */
-@Getter
+@Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
 public class RedisKeyMovedEvent extends Event<TreeItem<?>> implements EventFormatter {
 
-    @Setter
     private int targetDB;
 
     @Override

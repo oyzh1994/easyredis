@@ -114,7 +114,6 @@ public class RedisClientInfoContent {
             item.setIndex(index.getAndIncrement());
             items.add(item);
         });
-        // Collections.reverse(items);
         this.listTable.getItems().setAll(items);
     }
 }

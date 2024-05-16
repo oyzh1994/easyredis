@@ -7,7 +7,6 @@ import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

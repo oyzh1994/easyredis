@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
@@ -25,7 +26,6 @@ import java.util.ResourceBundle;
  * @since 2023/08/03
  */
 @Lazy
-//@Slf4j
 @Component
 @Scope(ScopeType.PROTOTYPE)
 public class RedisKeyInfoContent implements Initializable {
@@ -74,11 +74,11 @@ public class RedisKeyInfoContent implements Initializable {
      */
     @FXML
     private void copy() {
-        String builder = "键名称: " + this.treeItem.key() + System.lineSeparator() +
-                "数据库: " + this.treeItem.dbIndex() + System.lineSeparator() +
-                "编码类型: " + this.redisKey.objectedEncoding() + System.lineSeparator() +
-                "空闲时间: " + this.redisKey.objectIdletime() + System.lineSeparator() +
-                "引用数量: " + this.redisKey.objectRefcount();
+        String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
+                I18nHelper.database() + ": " + this.treeItem.dbIndex() + System.lineSeparator() +
+                I18nHelper.encoding() + ": " + this.redisKey.objectedEncoding() + System.lineSeparator() +
+                I18nHelper.idleTime() + ": " + this.redisKey.objectIdletime() + System.lineSeparator() +
+                I18nHelper.refcount() + ": " + this.redisKey.objectRefcount();
         ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 

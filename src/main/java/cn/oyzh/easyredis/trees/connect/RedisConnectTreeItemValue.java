@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/08/10
  */
-//@Slf4j
 @Accessors(chain = true, fluent = true)
 public class RedisConnectTreeItemValue extends RedisTreeItemValue {
 
@@ -63,10 +62,6 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
      * 刷新角色组件
      */
     public void flushRole() {
-        // // 单机模式
-        // if (this.item.isStandaloneMode()) {
-        //     return;
-        // }
         // 角色名称
         String roleName = switch (item.role().toLowerCase()) {
             case "sentinel" -> I18nHelper.sentinel();

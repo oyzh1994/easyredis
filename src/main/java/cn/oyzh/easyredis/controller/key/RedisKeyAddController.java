@@ -237,7 +237,7 @@ public class RedisKeyAddController extends Controller {
                 return;
             }
             if (this.client.exists(dbIndex, key)) {
-                MessageBox.warn("key:[" + key + "] " + I18nHelper.alreadyExists());
+                MessageBox.warn("key: [" + key + "] " + I18nHelper.alreadyExists());
                 return;
             }
             boolean result = false;

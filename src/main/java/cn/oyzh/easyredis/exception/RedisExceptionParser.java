@@ -34,13 +34,13 @@ public class RedisExceptionParser implements Function<Throwable, String> {
             }
         }
 
-        if (e instanceof SSHException e1) {
-            if (StrUtil.contains(e.getMessage(), "Auth fail")) {
-                // return "ssh认证失败，请检查ssh用户名、密码是否正确";
-                return I18nResourceBundle.i18nString("base.ssh", "base.authFail");
-            }
-            return e1.getMessage();
-        }
+        // if (e instanceof SSHException e1) {
+        //     if (StrUtil.contains(e.getMessage(), "Auth fail")) {
+        //         // return "ssh认证失败，请检查ssh用户名、密码是否正确";
+        //         return I18nResourceBundle.i18nString("base.ssh", "base.authFail");
+        //     }
+        //     return e1.getMessage();
+        // }
 
         String message = e.getMessage();
         if (e instanceof JedisDataException) {

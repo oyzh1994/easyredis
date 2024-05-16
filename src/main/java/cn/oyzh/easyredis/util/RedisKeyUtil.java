@@ -50,7 +50,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-//@Slf4j
 @UtilityClass
 public class RedisKeyUtil {
 
@@ -94,11 +93,6 @@ public class RedisKeyUtil {
         if (redisKey instanceof RedisStringKey stringNode) {
             return (String) stringNode.value();
         }
-
-//        // hylog
-//        if (redisKey instanceof RedisHyLogKey) {
-//            return "";
-//        }
 
         // list
         if (redisKey instanceof RedisListKey listNode) {
@@ -189,13 +183,6 @@ public class RedisKeyUtil {
             node.value(value == null ? "" : value);
             return node;
         }
-
-//        // hylog
-//        if (StrUtil.equalsIgnoreCase(type, RedisKeyType.HYPERLOGLOG.toString())) {
-//            RedisHyLogKey node = new RedisHyLogKey();
-//            node.value(new byte[]{});
-//            return node;
-//        }
 
         // list
         if (type == RedisKeyType.LIST) {
@@ -298,8 +285,6 @@ public class RedisKeyUtil {
         // string
         if (node instanceof RedisStringKey stringNode) {
             client.set(dbIndex, key, (String) stringNode.value());
-//        } else if (node instanceof RedisHyLogKey) {// hylog
-//            client.pfadd(dbIndex, key, "");
         } else if (node instanceof RedisListKey listNode) {// list
             String[] arr;
             if (CollUtil.isEmpty(listNode.value())) {
@@ -375,11 +360,6 @@ public class RedisKeyUtil {
             List<String> value = client.zrange(dbIndex, key);
             List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value, String.class));
             zSetNode.valueOfScore(value, scores);
-//        } else if (node instanceof RedisHyLogKey logLogNode) {// hylog
-//            Long pfcount = client.pfcount(dbIndex, key);
-//            byte[] value = client.get(dbIndex, key.getBytes());
-//            logLogNode.value(value);
-//            logLogNode.count(pfcount);
         } else if (node instanceof RedisStreamKey streamNode) {// stream
             streamNode.value(client.xrange(dbIndex, key));
         }

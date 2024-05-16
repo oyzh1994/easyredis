@@ -29,7 +29,7 @@ public class RedisConnectUtil {
             try {
                 view.disable();
                 view.waitCursor();
-                view.appendTitle("==" + I18nHelper.connectTesting() + "...");
+                view.appendTitle("===" + I18nHelper.connectTesting() + "===");
                 RedisClient client = new RedisClient(info);
                 // 开始连接
                 client.start();

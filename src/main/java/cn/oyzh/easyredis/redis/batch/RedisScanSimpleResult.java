@@ -1,15 +1,11 @@
 package cn.oyzh.easyredis.redis.batch;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyredis.redis.key.RedisKey;
 import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * redis 扫描结果

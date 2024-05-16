@@ -14,19 +14,18 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.menu.CancelActionMenuItem;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.ClearDataMenuItem;
 import cn.oyzh.fx.plus.menu.CloseConnectMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteConnectMenuItem;
 import cn.oyzh.fx.plus.menu.EditConnectMenuItem;
-import cn.oyzh.fx.plus.menu.EditMenuItem;
 import cn.oyzh.fx.plus.menu.ExportDataMenuItem;
-import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.ImportDataMenuItem;
 import cn.oyzh.fx.plus.menu.OpenTerminalMenuItem;
 import cn.oyzh.fx.plus.menu.RenameConnectMenuItem;
@@ -38,7 +37,6 @@ import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -85,7 +83,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public RedisConnectTreeItem(@NonNull RedisInfo value, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value(value);
-        // 监听键变化
+        // 监听变化
         super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             RedisEventUtil.treeChildChanged();
             this.flushLocal();
@@ -165,7 +163,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                 this.setChild(items);
             }
             // 刷新角色
-            BackgroundService.submitFXLater(() -> this.getValue().flushRole());
+            BackgroundService.submitFXLater(this::flushRole);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -174,109 +172,90 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         return false;
     }
 
+    public void flushRole() {
+        this.getValue().flushRole();
+    }
+
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        if (this.isWaiting()) {
-            CancelActionMenuItem cancel = new CancelActionMenuItem("12", this::cancelConnect);
-            items.add(cancel);
+        if (this.isConnecting()) {
+            CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("12", this::cancelConnect);
+            items.add(cancelConnect);
         } else if (this.isConnected()) {
-            CloseConnectMenuItem disConnect = new CloseConnectMenuItem("12", this::closeConnect);
+            CloseConnectMenuItem closeConnect = new CloseConnectMenuItem("12", this::closeConnect);
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
-            ServerInfoMenuItem serverInfo = new ServerInfoMenuItem("12", this::serverInfo);
-            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportNode);
-            ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importNode);
+            RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
+            ServerInfoMenuItem server = new ServerInfoMenuItem("12", this::serverInfo);
+            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
+            ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importData);
             TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
             ClearDataMenuItem flushAll = new ClearDataMenuItem("12", this::flushAll);
-            RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
 
-            items.add(disConnect);
+            items.add(closeConnect);
             items.add(editConnect);
             items.add(repeatConnect);
-            items.add(serverInfo);
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
+            items.add(server);
             items.add(flushAll);
         } else {
-            TransportDataMenuItem connect = new TransportDataMenuItem("12", this::connect);
+            StartConnectMenuItem connect = new StartConnectMenuItem("12", this::connect);
             EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
             RenameConnectMenuItem renameConnect = new RenameConnectMenuItem("12", this::rename);
             DeleteConnectMenuItem deleteConnect = new DeleteConnectMenuItem("12", this::delete);
             RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
+            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
+            TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
 
             items.add(connect);
             items.add(editConnect);
             items.add(renameConnect);
             items.add(repeatConnect);
+            items.add(exportData);
+            items.add(transportData);
             items.add(deleteConnect);
         }
-
-        OpenTerminalMenuItem terminal = new OpenTerminalMenuItem("12", this::openTerminal);
-        items.add(terminal);
+        OpenTerminalMenuItem openTerminal = new OpenTerminalMenuItem("12", this::openTerminal);
+        items.add(openTerminal);
         return items;
     }
 
     /**
-     * 服务信息
+     * 导出zk节点
      */
-    @FXML
-    private void serverInfo() {
-        // EventUtil.fire(RedisEventTypes.REDIS_SERVER_INFO, this.client);
-        RedisEventUtil.serverMonitor(this.client);
-    }
-
-    /**
-     * 打开终端
-     */
-    @FXML
-    private void openTerminal() {
-        RedisEventUtil.terminalOpen(this.value);
-    }
-
-    /**
-     * 传输数据
-     */
-    @FXML
-    private void transportData() {
-        StageWrapper fxView = StageUtil.getStage(RedisInfoTransportController.class);
-        if (fxView != null) {
-            fxView.disappear();
-        }
-        fxView = StageUtil.parseStage(RedisInfoTransportController.class);
-        fxView.setProp("treeItem", this);
-        fxView.display();
-    }
-
-    /**
-     * 导入键
-     */
-    public void importNode() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyImportController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.display();
-    }
-
-    /**
-     * 导出键
-     */
-    public void exportNode() {
+    public void exportData() {
         StageWrapper fxView = StageUtil.parseStage(RedisKeyExportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
 
     /**
+     * 查看服务信息
+     */
+    private void serverInfo() {
+        RedisEventUtil.serverMonitor(this.client);
+    }
+
+    /**
+     * 打开终端
+     */
+    private void openTerminal() {
+        RedisEventUtil.terminalOpen(this.value);
+    }
+
+    /**
      * 清空所有
      */
     private void flushAll() {
-        if (!MessageBox.confirm("第1次确认，共3次", "确定清空所有数据库？")) {
+        if (!MessageBox.confirm(RedisI18nHelper.connectTip1(), RedisI18nHelper.connectTip4())) {
             return;
         }
-        if (!MessageBox.confirm("第2次确认，共3次", "请慎重操作，确定清空所有数据库？")) {
+        if (!MessageBox.confirm(RedisI18nHelper.connectTip2(), RedisI18nHelper.connectTip4())) {
             return;
         }
-        if (!MessageBox.confirm("第3次确认，共3次", "最后确认下，确定清空所有数据库？")) {
+        if (!MessageBox.confirm(RedisI18nHelper.connectTip3(), RedisI18nHelper.connectTip4())) {
             return;
         }
         try {
@@ -314,13 +293,12 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                         this.client.start();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn(this.value.getName() + "连接失败");
+                                MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
                             }
                             this.canceled = false;
+                            this.closeConnect(false);
                         } else if (this.initConnect()) {
                             this.extend();
-                        } else {
-                            this.closeConnect(false);
                         }
                         this.flushGraphic();
                     })
@@ -334,33 +312,25 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     }
 
     /**
-     * 编辑连接
+     * 导入数据
      */
-    private void editConnect() {
-        if (this.isConnected()) {
-            if (!MessageBox.confirm("需要关闭连接，继续么？")) {
-                return;
-            }
-            this.closeConnect(false);
-        }
-        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
-        fxView.setProp("redisInfo", this.value());
+    private void importData() {
+        StageWrapper fxView = StageUtil.parseStage(RedisKeyImportController.class, this.window());
+        fxView.setProp("treeItem", this);
         fxView.display();
     }
 
     /**
-     * 复制连接
+     * 传输数据
      */
-    private void repeatConnect() {
-        RedisInfo redisInfo = new RedisInfo();
-        redisInfo.copy(this.value);
-        redisInfo.setName(this.value.getName() + "-复制");
-        redisInfo.setCollects(Collections.emptyList());
-        if (this.infoStore.add(redisInfo)) {
-            this.parent().addConnect(redisInfo);
-        } else {
-            MessageBox.warn("复制连接失败！");
+    private void transportData() {
+        StageWrapper wrapper = StageUtil.getStage(RedisInfoTransportController.class);
+        if (wrapper != null) {
+            wrapper.disappear();
         }
+        wrapper = StageUtil.parseStage(RedisInfoTransportController.class);
+        wrapper.setProp("treeItem", this);
+        wrapper.display();
     }
 
     /**
@@ -378,7 +348,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * @param waiting 是否开启等待动画
      */
     public void closeConnect(boolean waiting) {
-        // 实际业务
         Runnable func = () -> {
             this.client.close();
             this.getValue().clearRole();
@@ -407,42 +376,66 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         }
     }
 
+    /**
+     * 编辑连接
+     */
+    private void editConnect() {
+        if (this.isConnected()) {
+            if (!MessageBox.confirm(I18nHelper.closeAndContinue())) {
+                return;
+            }
+            this.closeConnect();
+        }
+        StageWrapper fxView = StageUtil.parseStage(RedisInfoUpdateController.class, this.window());
+        fxView.setProp("redisInfo", this.value());
+        fxView.display();
+    }
+
+    /**
+     * 复制连接
+     */
+    private void repeatConnect() {
+        RedisInfo redisInfo = new RedisInfo();
+        redisInfo.copy(this.value);
+        redisInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
+        redisInfo.setCollects(Collections.emptyList());
+        if (this.infoStore.add(redisInfo)) {
+            this.parent().addConnect(redisInfo);
+        } else {
+            MessageBox.warn(I18nHelper.operationFail());
+        }
+    }
+
     @Override
     public void delete() {
-        if (MessageBox.confirm("删除" + this.value.getName(), "确定删除连接？")) {
+        if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
             if (this.parent().delConnectItem(this)) {
                 RedisEventUtil.infoDeleted(this.value);
             } else {
-                MessageBox.warn("删除连接失败！");
+                MessageBox.warn(I18nHelper.operationFail());
             }
         }
     }
 
     @Override
     public void rename() {
-        String connectName = MessageBox.prompt("请输入新的连接名称", this.value.getName());
+        String connectName = MessageBox.prompt(I18nHelper.contentTip1(), this.value.getName());
         // 名称为null或者跟当前名称相同，则忽略
         if (connectName == null || Objects.equals(connectName, this.value.getName())) {
             return;
         }
         // 检查名称
         if (StrUtil.isBlank(connectName)) {
+            MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }
-        // 检查是否存在
-        String name = this.value.getName();
         this.value.setName(connectName);
-        if (this.infoStore.exist(this.value)) {
-            this.value.setName(name);
-            MessageBox.warn("此连接名称已存在！");
-            return;
-        }
         // 修改名称
         if (this.infoStore.update(this.value)) {
-            this.getValue().name(connectName);
+            this.setValue(new RedisConnectTreeItemValue(this));
         } else {
-            MessageBox.warn("修改连接名称失败！");
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -473,15 +466,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     public boolean isConnecting() {
         return this.client != null && this.client.isConnecting();
-    }
-
-    /**
-     * 是否以广播
-     *
-     * @return 结果
-     */
-    public boolean isClosed() {
-        return this.client != null && this.client.isClosed();
     }
 
     /**

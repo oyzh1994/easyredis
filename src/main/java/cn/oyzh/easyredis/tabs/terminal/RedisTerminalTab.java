@@ -5,12 +5,9 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.TerminalSVGGlyph;
-import cn.oyzh.fx.plus.ext.FXMLLoaderExt;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
-import javafx.scene.CacheHint;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 
 /**
  * redis终端tab
@@ -24,25 +21,20 @@ public class RedisTerminalTab extends DynamicTab {
         this.setClosable(true);
         this.setOnCloseRequest(event -> {
             // 关闭redis连接
-            RedisClient client = this.contentController.client();
+            RedisClient client = this.controller().client();
             RedisConnectUtil.close(client, true);
         });
         this.loadContent();
     }
 
-    /**
-     * 内容controller
-     */
-    private RedisTerminalTabContent contentController;
+    @Override
+    public RedisTerminalTabContent controller() {
+        return (RedisTerminalTabContent) super.controller();
+    }
 
     @Override
-    protected void loadContent() {
-        FXMLLoaderExt loaderExt = new FXMLLoaderExt();
-        Node content = loaderExt.load("/tabs/terminal/redisTerminalTabContent.fxml");
-        content.setCache(true);
-        content.setCacheHint(CacheHint.QUALITY);
-        this.contentController = loaderExt.getController();
-        this.setContent(content);
+    protected String url() {
+        return  "/tabs/terminal/redisTerminalTabContent.fxml";
     }
 
     @Override
@@ -72,7 +64,7 @@ public class RedisTerminalTab extends DynamicTab {
             // 刷新图标
             this.flushGraphic();
             // 初始化redis连接
-            this.contentController.client(new RedisClient(info));
+            this.controller().client(new RedisClient(info));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -84,6 +76,6 @@ public class RedisTerminalTab extends DynamicTab {
      * @return 当前redis信息
      */
     public RedisInfo info() {
-        return this.contentController.info();
+        return this.controller().info();
     }
 }

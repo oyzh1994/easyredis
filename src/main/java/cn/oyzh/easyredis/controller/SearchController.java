@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisSearchFireEvent;
 import cn.oyzh.easyredis.event.TreeChildChangedEvent;
@@ -9,7 +8,6 @@ import cn.oyzh.easyredis.search.RedisSearchHandler;
 import cn.oyzh.easyredis.search.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
-import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
@@ -17,7 +15,6 @@ import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubController;
 import cn.oyzh.fx.plus.controls.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.i18n.I18nHelper;

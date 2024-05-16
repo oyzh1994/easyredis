@@ -52,7 +52,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     public void flushPrompt() {
         String str;
         if (this.isTemporary()) {
-            str = "redis" + I18nHelper.connect();
+            str = "redis " + I18nHelper.connection();
         } else {
             str = this.client.infoName();
         }
@@ -63,9 +63,9 @@ public class RedisTerminalTextArea extends TerminalTextArea {
             str += "（" + I18nHelper.connectIng() + "）> ";
         } else if (this.isConnected()) {
             if (this.client.isReadonly()) {
-                str += "（" + I18nResourceBundle.i18nString("base.connected") + "/" + I18nResourceBundle.i18nString("base.readonlyMode") + "）> ";
+                str += "（" + I18nHelper.connected() + "/" + I18nHelper.readonlyMode() + "）> ";
             } else {
-                str += "（" + I18nResourceBundle.i18nString("base.connected") + "）> ";
+                str += "（" + I18nHelper.connected() + "）> ";
             }
         } else {
             str += "> ";
@@ -214,8 +214,8 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                     // this.outputLine(host + " 连接成功.");
                     // this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
                     // this.outputLine("输入\"命令 -?\"可查看此命令详情.");
-                    this.outputLine(I18nResourceBundle.i18nString("base.terminalTip2"));
-                    this.outputLine(I18nResourceBundle.i18nString("base.terminalTip1"));
+                    this.outputLine(I18nHelper.terminalTip2());
+                    this.outputLine(I18nHelper.terminalTip1());
                     this.outputPrompt();
                     this.flushCaret();
                     super.enableInput();
