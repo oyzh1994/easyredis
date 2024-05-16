@@ -28,6 +28,7 @@ import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.FlexTextField;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -104,7 +105,7 @@ public class RedisKeyExportController extends Controller {
      * 美化选项
      */
     @FXML
-    private FlexComboBox<String> pretty;
+    private FXToggleSwitch pretty;
 
     /**
      * 消息组件
@@ -287,7 +288,7 @@ public class RedisKeyExportController extends Controller {
                 if (dictSort) {
                     allNodes.sort(RedisKey::compareTo);
                 }
-                boolean prettyFormat = this.pretty.getSelectedIndex() == 0;
+                boolean prettyFormat = this.pretty.isSelected();
                 // 导出内容
                 String exportData = RedisExportUtil.nodesToJSON(allNodes, null, prettyFormat);
                 // 文件格式

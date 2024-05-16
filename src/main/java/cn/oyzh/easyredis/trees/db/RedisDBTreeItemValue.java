@@ -45,7 +45,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     public void flushGraphicColor() {
         SVGGlyph glyph = (SVGGlyph) this.graphic();
         if (this.item.isKeyEmpty()) {
-           super.flushGraphicColor();
+            super.flushGraphicColor();
         } else {
             glyph.setColor(Color.DARKGREEN);
         }
@@ -62,6 +62,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
             if (totalNum == null) {
                 this.removeChild(text);
             } else {
+                int keySize = this.item.keyChildren().size();
                 if (text == null) {
                     text = new FXText();
                     this.addChild(text);
@@ -70,7 +71,11 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
                     text.setFill(Color.valueOf("#228B22"));
                     HBox.setMargin(text, new Insets(0, 0, 0, 3));
                 }
-                text.setText("(" + totalNum + ")");
+                if (keySize != totalNum) {
+                    text.setText("(" + keySize + "-" + totalNum + ")");
+                } else {
+                    text.setText("(" + totalNum + ")");
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -90,7 +95,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
                 this.addChild(text);
                 HBox.setMargin(text, new Insets(0, 0, 0, 3));
             }
-            text.setText("["+ I18nHelper.keyFilter() +":" + this.item.getFilterPattern() + "]");
+            text.setText("[" + I18nHelper.keyFilter() + ":" + this.item.getFilterPattern() + "]");
         } else {
             this.removeChild(text);
         }

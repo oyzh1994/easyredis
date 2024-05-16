@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
-<?import cn.oyzh.easyredis.fx.RedisPrettyComboBox?>
 <?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.CloseButton?>
@@ -8,16 +7,15 @@
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.StopButton?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
+<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -128,18 +126,6 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexFlowPane>
-            <FXLabel text="%base.pretty" maxWidth="100">
-                <FlowPane.margin>
-                    <Insets left="10" top="20"/>
-                </FlowPane.margin>
-            </FXLabel>
-            <RedisPrettyComboBox stateManager="$stateManager" prefWidth="100" initIndex="0" fx:id="pretty">
-                <FlowPane.margin>
-                    <Insets left="5" top="12"/>
-                </FlowPane.margin>
-            </RedisPrettyComboBox>
-        </FlexFlowPane>
         <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="%base.sortDict">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -155,9 +141,14 @@
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
+        <FXToggleSwitch fx:id="pretty" selected="true" selectedText="%base.enablePretty" unselectedText="%base.disablePretty">
+            <HBox.margin>
+                <Insets left="10" top="18"/>
+            </HBox.margin>
+        </FXToggleSwitch>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <AccentLabel text="%base.options" realHeight="30">
+        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
@@ -174,7 +165,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <ExportButton fx:id="exportBtn" onAction="#doExport" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </ExportButton>
         <StopButton disable="true" fx:id="stopExportBtn" onAction="#stopExport" realHeight="30" iconSizePercent="0.9">
@@ -191,18 +182,21 @@
     <FlexVBox flexWidth="100%" fontSize="12">
         <FXLabel text="%base.tip" textFill="#666">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
         <Text fill="#666" layoutY="65.0" text="%redis.export.tip3">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </Text>
         <Text fill="#666" layoutY="90.0" text="%redis.export.tip4">
             <VBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets top="10"/>
             </VBox.margin>
         </Text>
+        <VBox.margin>
+            <Insets left="110"/>
+        </VBox.margin>
     </FlexVBox>
 </FlexVBox>

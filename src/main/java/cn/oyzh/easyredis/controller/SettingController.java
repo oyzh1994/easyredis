@@ -173,6 +173,12 @@ public class SettingController extends Controller {
     private FlexSlider opacity;
 
     /**
+     * 键加载限制
+     */
+    @FXML
+    private NumberTextField keyLoadLimit;
+
+    /**
      * 配置对象
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
@@ -181,7 +187,6 @@ public class SettingController extends Controller {
      * 配置持久化对象
      */
     private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
-
 
     @Override
     public void onStageShowing(WindowEvent event) {
@@ -206,6 +211,8 @@ public class SettingController extends Controller {
         if (this.setting.getRememberPageLocation() != null) {
             this.pageLocation.setSelected(this.setting.isRememberPageLocation());
         }
+        // 键加载上限
+        this.keyLoadLimit.setValue(this.setting.keyLoadLimit());
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
         this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
@@ -255,6 +262,7 @@ public class SettingController extends Controller {
         // 其他设置
         this.setting.setPageInfo(this.pageSize.isSelected() ? 1 : 0);
         this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+        this.setting.setKeyLoadLimit(this.keyLoadLimit.getIntValue());
         this.setting.setTabLimit(this.tabLimit.getValue().intValue());
         this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
         this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
