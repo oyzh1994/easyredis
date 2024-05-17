@@ -13,6 +13,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
@@ -182,7 +183,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
                     del.setOnMousePrimaryClicked((event) -> deleteRow());
 
                     this.hBox = new HBox(del);
-                    this.hBox.setSpacing(5);
+                    this.hBox.setPadding(new Insets(5,0,0,5));
                 }
                 return this.hBox;
             }
@@ -203,7 +204,8 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
             this.clearRawData();
             this.dataAction.disable();
         } else {
-            this.setRawData(this.treeItem.rawValue());
+            this.firstShowData();
+            // this.setRawData(this.treeItem.rawValue());
             this.dataAction.enable();
         }
     }

@@ -610,6 +610,19 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     }
 
     /**
+     * 获取当前键数量
+     *
+     * @return 当前键节点
+     */
+    public int keySize() {
+        int count = 0;
+        for (RedisTypeTreeItem item : this.realChildren()) {
+            count += item.getRealChildrenSize();
+        }
+        return count;
+    }
+
+    /**
      * 键节点是否为空
      *
      * @return 结果

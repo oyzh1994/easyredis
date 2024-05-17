@@ -19,6 +19,9 @@ import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextArea;
+import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -109,13 +112,35 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 数据组件
      */
     @FXML
-    protected RedisDataTextArea nodeData;
+    protected RichDataPane nodeData;
+    // protected RedisDataTextArea nodeData;
 
     /**
      * 键信息
      */
     @FXML
     private RedisKeyInfoContent keyInfoController;
+
+    /**
+     * 格式监听器
+     */
+    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
+        if (this.format.isStringFormat()) {
+            this.showData(RichDataType.STRING);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isJsonFormat()) {
+            this.showData(RichDataType.JSON);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isBinaryFormat()) {
+            this.showData(RichDataType.BINARY);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isHexFormat()) {
+            this.showData(RichDataType.HEX);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isRawFormat()) {
+            this.showData(RichDataType.RAW);
+        }
+    };
 
     /**
      * 获取数据监听器
@@ -158,8 +183,8 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         // 初始化键信息
         this.keyInfoController.init(treeItem);
 
-        // 格式变化
-        this.format.selectedItemChanged((t3, t2, t1) -> this.onFormatChange(this.format));
+        // 格式监听
+        this.format.selectedItemChanged(this.formatListener);
 
         // 初始化节点
         this.initNode();
@@ -181,7 +206,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      *
      * @return 键数据组件
      */
-    public FlexTextArea getNodeDataNode() {
+    public RichDataPane getNodeDataNode() {
         return this.nodeData;
     }
 
@@ -322,76 +347,28 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     }
 
     /**
-     * 格式变化事件
-     *
-     * @param comboBox 格式选择组件
+     * 首次显示数据
      */
-    protected void onFormatChange(RedisFormatComboBox comboBox) {
-        if (comboBox.isRawFormat()) {
-            this.showData((byte) 0);
-            this.nodeData.setEditable(true);
-        } else if (comboBox.isJsonFormat()) {
-            this.showData((byte) 1);
-            this.nodeData.setEditable(true);
-        } else if (comboBox.isBinaryFormat()) {
-            this.showData((byte) 2);
-            this.nodeData.setEditable(false);
-        } else if (comboBox.isHexFormat()) {
-            this.showData((byte) 3);
-            this.nodeData.setEditable(false);
-        } else if (comboBox.isStringFormat()) {
-            this.showData((byte) 4);
-            this.nodeData.setEditable(false);
-        }
+    protected void firstShowData() {
+        this.showData();
+        // 首次设置数据要清除历史
+        this.nodeData.forgetHistory();
+    }
+
+    /**
+     * 显示数据
+     */
+    protected void showData() {
+        this.nodeData.showData(this.treeItem.rawValue());
     }
 
     /**
      * 显示数据
      *
-     * @param showType 类型
+     * @param dataType 数据类型
      */
-    protected void showData(byte showType) {
-        this.nodeData.disable();
-        this.nodeData.clear();
-        this.nodeData.setPromptText(I18nHelper.dataLoading() + "...");
-        ExecutorUtil.start(() -> FXUtil.runLater(() -> {
-            try {
-                this.nodeData.setShowType(showType);
-                this.nodeData.showData();
-                this.treeItem.clearData();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            } finally {
-                this.nodeData.setPromptText("");
-                this.nodeData.enable();
-            }
-        }), 50);
-    }
-
-    /**
-     * 设置原始数据
-     *
-     * @param rawData 原始数据
-     */
-    protected void setRawData(Object rawData) {
-        if (rawData == null) {
-            return;
-        }
-        this.nodeData.disable();
-        this.nodeData.setPromptText(I18nHelper.dataLoading() + "...");
-        ExecutorUtil.start(() -> FXUtil.runLater(() -> {
-            try {
-                this.nodeData.setRawData(rawData);
-                this.treeItem.clearData();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            } finally {
-                this.nodeData.setPromptText("");
-                this.nodeData.enable();
-            }
-        }), 50);
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.rawValue());
     }
 
     /**

@@ -62,7 +62,7 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
             if (totalNum == null) {
                 this.removeChild(text);
             } else {
-                int keySize = this.item.keyChildren().size();
+                int keySize = this.item.keySize();
                 if (text == null) {
                     text = new FXText();
                     this.addChild(text);

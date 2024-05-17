@@ -407,7 +407,7 @@ public class RedisKeyUtil {
         // 批量获取键类型
         List<RedisKeyType> types = keyType(dbIndex, keys, client);
         if (types == null) {
-            throw new RuntimeException("获取键类型失败！");
+            throw new RuntimeException(I18nResourceBundle.i18nString("get", "keyType", "fail"));
         }
         // 结束时间
         long end = System.currentTimeMillis();

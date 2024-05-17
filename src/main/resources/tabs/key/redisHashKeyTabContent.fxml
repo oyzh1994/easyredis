@@ -16,7 +16,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.RenameSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
@@ -28,6 +28,9 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
+<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -55,11 +58,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
-                <RenameSVGGlyph size="16" onMousePrimaryClicked="#renameNode">
+                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameNode">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </RenameSVGGlyph>
+                </RenameKeySVGGlyph>
                 <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteNode">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -82,18 +85,18 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow" >
+                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </AddFillSVGGlyph>
-                <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22">
+                <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
                 </ClearableTextField>
                 <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                         onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
+                         onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -105,10 +108,10 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="12%" fx:id="index" text="%base.No"/>
-                    <FlexTableColumn flexWidth="26%" fx:id="field" text="%base.field"/>
+                    <FlexTableColumn flexWidth="8%" fx:id="index" text="%base.No"/>
+                    <FlexTableColumn flexWidth="32%" fx:id="field" text="%base.field"/>
                     <FlexTableColumn flexWidth="50%" fx:id="value" text="%base.value"/>
-                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="%base.action" sortable="false"/>
+                    <FlexTableColumn flexWidth="10% - 20" fx:id="action" text="%base.action" sortable="false"/>
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
@@ -170,8 +173,10 @@
                               onKeyPressed="#onNodeDataKeyPressed"/>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 480" text="%base.fieldValue" collapsible="false">
-                <RedisDataTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData"
-                                   onKeyPressed="#onNodeDataKeyPressed"/>
+                <RichDataPane disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData"
+                              onKeyPressed="#onNodeDataKeyPressed"/>
+                <!-- <RedisDataTextArea disable="true" flexHeight="100%" flexWidth="100%" fontSize="12" fx:id="nodeData" -->
+                <!--                    onKeyPressed="#onNodeDataKeyPressed"/> -->
             </FlexTitledPane>
         </FlexVBox>
     </FXTab>

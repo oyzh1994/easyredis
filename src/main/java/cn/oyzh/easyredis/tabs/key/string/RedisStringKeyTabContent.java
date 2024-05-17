@@ -88,7 +88,8 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @Override
     protected void initNode() {
         // 数据处理
-        this.setRawData(this.treeItem.rawValue());
+        // this.setRawData(this.treeItem.rawValue());
+        this.firstShowData();
         // 大小
         Integer size = this.treeItem.size();
         if (size == null) {

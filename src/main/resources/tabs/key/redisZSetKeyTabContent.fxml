@@ -2,7 +2,6 @@
 
 <?import cn.oyzh.easyredis.fx.LatitudeField?>
 <?import cn.oyzh.easyredis.fx.LongitudeField?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
@@ -14,12 +13,12 @@
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.RenameSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
@@ -29,10 +28,12 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
+<?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
+<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.FileSVGGlyph?>
+<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -60,11 +61,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
-                <RenameSVGGlyph size="16" onMousePrimaryClicked="#renameNode">
+                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameNode">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </RenameSVGGlyph>
+                </RenameKeySVGGlyph>
                 <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteNode">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -87,27 +88,28 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow" >
+                <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </AddFillSVGGlyph>
-                <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22">
+                <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
                     <FlowPane.margin>
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
                 </ClearableTextField>
-                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="%base.coordinates" unselectedText="%base.zset">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXToggleSwitch>
                 <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
                          onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </PageBox>
+                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="%base.coordinates"
+                                unselectedText="%base.zset">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </FXToggleSwitch>
                 <padding>
                     <Insets top="9"/>
                 </padding>
@@ -192,12 +194,18 @@
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" fx:id="dataBox" text="%base.member"
                             collapsible="false">
-                <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%"
+                <RichDataPane disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%"
                                    flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
                     <HBox.margin>
                         <Insets top="5"/>
                     </HBox.margin>
-                </RedisDataTextArea>
+                </RichDataPane>
+                <!-- <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%" -->
+                <!--                    flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed"> -->
+                <!--     <HBox.margin> -->
+                <!--         <Insets top="5"/> -->
+                <!--     </HBox.margin> -->
+                <!-- </RedisDataTextArea> -->
             </FlexTitledPane>
         </FlexVBox>
     </FXTab>

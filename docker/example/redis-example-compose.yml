@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  # 主节点
+  master:
+    image: redis
+    container_name: redis-example
+    volumes:
+      - ./redis-example.conf:/conf/redis.conf
+      - D:/redis//bak_redis136/data:/data
+    ports:
+      - 7381:7381
+    # 192.168.31.180（替换成自己的IP）master节点宿主机IP地址，如果安装同一台机子上，不能写127.0.0.1 因为这样访问的是容器本身的地址
+    command: redis-server /conf/redis.conf
