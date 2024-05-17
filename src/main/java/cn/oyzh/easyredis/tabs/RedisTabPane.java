@@ -397,31 +397,6 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    // /**
-    //  * redis客户端关闭事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @Subscribe
-    // private void clientClosed(RedisClientClosedEvent event) {
-    //     RedisClient client= event.data();
-    //     List<Tab> closeTabs = new ArrayList<>();
-    //     for (Tab tab : this.getTabs()) {
-    //         if (tab instanceof RedisServerTab serverTab && serverTab.client() == client) {
-    //             serverTab.closeRefreshTask();
-    //             closeTabs.add(tab);
-    //         } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
-    //             pubsubTab.unsubscribe();
-    //             closeTabs.add(tab);
-    //         } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
-    //             closeTabs.add(tab);
-    //         }
-    //     }
-    //     if (!closeTabs.isEmpty()) {
-    //         FXUtil.runLater(() -> this.getTabs().removeAll(closeTabs));
-    //     }
-    // }
-
     /**
      * 获取过滤tab
      *

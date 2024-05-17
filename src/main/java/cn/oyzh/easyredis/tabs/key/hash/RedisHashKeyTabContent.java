@@ -187,7 +187,7 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
 
     @FXML
     @Override
-    protected void saveNodeData() {
+    protected void saveKeyData() {
         if (this.treeItem.checkExists()) {
             MessageBox.warn(I18nHelper.dataAlreadyExists());
             return;

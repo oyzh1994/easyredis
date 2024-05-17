@@ -1,0 +1,113 @@
+package cn.oyzh.easyredis.tabs.key.hyLog;
+
+import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
+import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
+import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
+import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.stage.StageWrapper;
+import com.google.common.eventbus.Subscribe;
+import javafx.fxml.FXML;
+
+/**
+ * hyLog键tab内容组件
+ *
+ * @author oyzh
+ * @since 2024/05/17
+ */
+public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTreeItem> {
+
+    /**
+     * 数据大小
+     */
+    @FXML
+    private FXLabel size;
+
+    /**
+     * 二进制数据
+     */
+    @FXML
+    private FXLabel binary;
+
+    /**
+     * 统计值
+     */
+    @FXML
+    private FXLabel count;
+
+    @Override
+    protected void initNode() {
+        // 数据处理
+        this.firstShowData();
+        // 大小
+        Integer size = this.treeItem.size();
+        if (size == null) {
+            this.size.setText(I18nHelper.size() + ": N/A");
+        } else {
+            this.size.setText(I18nHelper.size() + ": " + size + " bytes");
+        }
+        // 刷新二进制处理
+        this.flushBinary();
+        // 统计值
+        this.count.setText(I18nHelper.count() + ": " + this.treeItem.count());
+    }
+
+    /**
+     * 刷新二进制处理
+     */
+    private void flushBinary() {
+        // 如果是raw格式，则选择binary
+        if (this.treeItem.isRawEncoding()) {
+            this.binary.display();
+        } else {
+            this.binary.disappear();
+        }
+    }
+
+    /**
+     * 重载数据
+     */
+    @FXML
+    private void reloadData() {
+        // 放弃保存
+        if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            return;
+        }
+        // 刷新数据
+        try {
+            this.treeItem.refreshNodeValue();
+            // 数据变更
+            this.initNode();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 添加统计值
+     */
+    @FXML
+    private void addRow() {
+        StageWrapper fxView = StageUtil.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
+        fxView.setProp("treeItem", this.treeItem);
+        fxView.display();
+    }
+
+    /**
+     * hyLog元素添加事件
+     *
+     * @param msg 消息
+     */
+    @Subscribe
+    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
+        if (this.treeItem == msg.data()) {
+            // 刷新数据
+            this.treeItem.flushCount();
+            this.initNode();
+        }
+    }
+}

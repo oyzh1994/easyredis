@@ -177,12 +177,19 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
 
     @Override
     public boolean init(RedisZSetKeyTreeItem treeItem) {
-        this.pageData = null;
-        this.scoreBox.managedBindVisible();
-        this.reverseView.managedBindVisible();
-        this.latitudeBox.managedBindVisible();
-        this.longitudeBox.managedBindVisible();
-        return super.init(treeItem);
+        if (super.init(treeItem)) {
+            this.pageData = null;
+            this.scoreBox.managedBindVisible();
+            this.reverseView.managedBindVisible();
+            this.latitudeBox.managedBindVisible();
+            this.longitudeBox.managedBindVisible();
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.getDataListener());
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -285,7 +292,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
 
     @FXML
     @Override
-    protected void saveNodeData() {
+    protected void saveKeyData() {
         if (this.treeItem.checkExists()) {
             MessageBox.warn(I18nHelper.dataAlreadyExists());
             return;

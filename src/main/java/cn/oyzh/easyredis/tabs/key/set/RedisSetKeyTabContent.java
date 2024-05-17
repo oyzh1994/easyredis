@@ -109,7 +109,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
 
     @FXML
     @Override
-    protected void saveNodeData() {
+    protected void saveKeyData() {
         if (this.treeItem.checkExists()) {
             MessageBox.warn(I18nHelper.dataAlreadyExists());
             return;

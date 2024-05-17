@@ -28,12 +28,10 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
-<?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
-<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
+<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -61,7 +59,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
-                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameNode">
+                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -76,14 +74,14 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </CopySVGGlyph>
-                <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="12"
+                <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
                          onMousePrimaryClicked="#ttlUpdate">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <FXLabel fx:id="loadTime"
-                         style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
+                <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
+                         realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -127,7 +125,7 @@
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
                 <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
-                              onMousePrimaryClicked="#saveNodeData">
+                              onMousePrimaryClicked="#saveKeyData">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -194,13 +192,13 @@
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" fx:id="dataBox" text="%base.member"
                             collapsible="false">
-                <RichDataPane disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%"
-                                   flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100%"
+                              flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
                     <HBox.margin>
                         <Insets top="5"/>
                     </HBox.margin>
                 </RichDataPane>
-                <!-- <RedisDataTextArea disable="true" fontSize="12" fx:id="nodeData" flexHeight="100%" -->
+                <!-- <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100%" -->
                 <!--                    flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed"> -->
                 <!--     <HBox.margin> -->
                 <!--         <Insets top="5"/> -->

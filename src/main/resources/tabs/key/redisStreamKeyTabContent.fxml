@@ -20,11 +20,9 @@
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
-<?import cn.oyzh.fx.rich.control.FlexVirtualizedScrollPane?>
-<?import cn.oyzh.fx.rich.data.RichDataTextArea?>
+<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.fx.rich.data.RichDataPane?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -52,7 +50,7 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
-                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameNode">
+                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -67,14 +65,14 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </CopySVGGlyph>
-                <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="12"
+                <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
                          onMousePrimaryClicked="#ttlUpdate">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <FXLabel fx:id="loadTime"
-                         style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
+                <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
+                         realHeight="15">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -134,11 +132,11 @@
                 </ReadOnlyTextField>
             </FlexTitledPane>
             <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" text="%base.content" collapsible="false">
-                <RichDataPane editable="false" dataType="JSON" disable="true" fontSize="12" fx:id="nodeData"
+                <RichDataPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
                               flexHeight="100%"
                               flexWidth="100%">
                 </RichDataPane>
-                <!-- <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="12" fx:id="nodeData" -->
+                <!-- <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="11" fx:id="nodeData" -->
                 <!--                    flexHeight="100%" -->
                 <!--                    flexWidth="100%"> -->
                 <!-- </RedisDataTextArea> -->

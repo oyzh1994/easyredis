@@ -1,14 +1,11 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
-import cn.oyzh.easyredis.fx.RedisDataTextArea;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.fx.common.spring.ScopeType;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.FlexVBox;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -20,7 +17,6 @@ import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.rich.data.RichDataPane;
-import cn.oyzh.fx.rich.data.RichDataTextArea;
 import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -31,6 +27,9 @@ import javafx.scene.input.KeyEvent;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * redis键tab内容组件
@@ -167,16 +166,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
             return false;
         }
 
-        // 键数据处理
-        if (this.nodeData.isEditable()) {
-            this.nodeData.addTextChangeListener(this.getDataListener());
-            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-        }
-
         // 收藏处理
-        this.collect.managedBindVisible();
-        this.unCollect.managedBindVisible();
         this.collect.setVisible(!this.treeItem.isCollect());
         this.unCollect.setVisible(this.treeItem.isCollect());
 
@@ -184,7 +174,9 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.keyInfoController.init(treeItem);
 
         // 格式监听
-        this.format.selectedItemChanged(this.formatListener);
+        if (this.format != null) {
+            this.format.selectedItemChanged(this.formatListener);
+        }
 
         // 初始化节点
         this.initNode();
@@ -199,15 +191,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      */
     protected void initNode() {
 
-    }
-
-    /**
-     * 获取键数据组件
-     *
-     * @return 键数据组件
-     */
-    public RichDataPane getNodeDataNode() {
-        return this.nodeData;
     }
 
     /**
@@ -261,7 +244,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 重命名键
      */
     @FXML
-    protected void renameNode() {
+    protected void renameKey() {
         this.treeItem.rename();
     }
 
@@ -305,7 +288,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         KeyCode code = e.getCode();
         // 保存键数据
         if (code == KeyCode.S && e.isControlDown()) {
-            this.saveNodeData();
+            this.saveKeyData();
         }
     }
 
@@ -313,7 +296,7 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
      * 保存键数据
      */
     @FXML
-    protected void saveNodeData() {
+    protected void saveKeyData() {
         if (this.treeItem.dataUnsaved()) {
             ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
         }
@@ -386,5 +369,12 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
             this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.collect.managedBindVisible();
+        this.unCollect.managedBindVisible();
     }
 }

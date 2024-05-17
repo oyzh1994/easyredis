@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
+import cn.oyzh.easyredis.tabs.key.hyLog.RedisHyLogKeyTab;
 import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;
 import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTab;
 import cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTab;
@@ -129,8 +130,12 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
 
     public static <T extends RedisKeyTreeItem<?, ?>> RedisKeyTab<T> ofItem(T item) {
         RedisKeyTab<T> tab = null;
-        if (item instanceof RedisStringKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisStringKeyTab();
+        if (item instanceof RedisStringKeyTreeItem item1) {
+            if (item1.isHyLog()) {
+                tab = (RedisKeyTab<T>) new RedisHyLogKeyTab();
+            } else {
+                tab = (RedisKeyTab<T>) new RedisStringKeyTab();
+            }
         } else if (item instanceof RedisListKeyTreeItem) {
             tab = (RedisKeyTab<T>) new RedisListKeyTab();
         } else if (item instanceof RedisSetKeyTreeItem) {

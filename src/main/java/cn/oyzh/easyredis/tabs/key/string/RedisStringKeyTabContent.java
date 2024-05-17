@@ -40,18 +40,6 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     private FXLabel binary;
 
     /**
-     * 统计值
-     */
-    @FXML
-    private FXLabel count;
-
-    /**
-     * 添加统计元素
-     */
-    @FXML
-    private SVGGlyph addRow;
-
-    /**
      * 数据保存按钮
      */
     @FXML
@@ -72,14 +60,11 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     @Override
     public boolean init(RedisStringKeyTreeItem treeItem) {
         if (super.init(treeItem)) {
-            this.addRow.managedBindVisible();
-            // hyLog格式
-            if (this.treeItem.isHyLog()) {
-                this.nodeData.setEditable(false);
-            } else {
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
-                this.nodeData.setEditable(true);
-            }
+            this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.getDataListener());
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
             return true;
         }
         return false;
@@ -99,52 +84,12 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         }
         // 刷新二进制处理
         this.flushBinary();
-        // hyLog格式
-        if (this.treeItem.isHyLog()) {
-            this.initHyLogNode();
-        } else {
-            this.initStringNode();
-        }
-    }
-
-    /**
-     * 初始化字符串节点
-     */
-    private void initStringNode() {
-        // 按钮状态处理
-        this.count.disappear();
-        this.addRow.disappear();
-        this.nodeData.enable();
-        this.dataUndo.display();
-        this.dataRedo.display();
-        this.pasteData.display();
-        this.clearData.display();
-        this.saveNodeData.display();
         // 按钮状态处理
         this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
         // 如果是raw格式，则选择binary
         if (this.treeItem.isRawEncoding()) {
             this.format.selectBinary();
         }
-    }
-
-    /**
-     * 初始化统计值节点
-     */
-    private void initHyLogNode() {
-        // 统计值
-        this.count.setText(I18nHelper.count() + ": " + this.treeItem.count());
-        // 按钮状态处理
-        this.count.display();
-        this.addRow.display();
-        this.nodeData.disable();
-        this.dataUndo.disappear();
-        this.dataRedo.disappear();
-        this.pasteData.disappear();
-        this.clearData.disappear();
-        this.saveNodeData.disappear();
-        // 统计值默认选择字符串
-        this.format.selectString();
     }
 
     /**
@@ -181,37 +126,13 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
 
     @FXML
     @Override
-    protected void saveNodeData() {
+    protected void saveKeyData() {
         if (this.treeItem.dataUnsaved()) {
             TaskManager.start(() -> {
                 if (this.treeItem.saveNodeValue()) {
                     this.flushBinary();
                 }
             });
-        }
-    }
-
-    /**
-     * 添加统计值
-     */
-    @FXML
-    private void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
-    }
-
-    /**
-     * hyLog元素添加事件
-     *
-     * @param msg 消息
-     */
-    @Subscribe
-    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            // 刷新数据
-            this.treeItem.flushCount();
-            this.initNode();
         }
     }
 }
