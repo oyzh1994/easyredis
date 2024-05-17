@@ -103,12 +103,12 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="12%" fx:id="index" text="%base.No"/>
-                    <FlexTableColumn flexWidth="76%" fx:id="value" text="%base.value"/>
-                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="%base.action" sortable="false"/>
+                    <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+                    <FlexTableColumn flexWidth="80%" fx:id="value" text="%base.value"/>
+                    <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
                 </columns>
             </FlexTableView>
-            <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
+            <FlexFlowPane disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
                 <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                               onMousePrimaryClicked="#saveKeyData">
                     <FlowPane.margin>
@@ -162,10 +162,8 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 402"
+            <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 400"
                           flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
-            <!-- <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 402" -->
-            <!--                    flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/> -->
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

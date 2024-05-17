@@ -128,7 +128,7 @@ public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, 
      */
     @FXML
     protected void deleteRow() {
-        if (MessageBox.confirm("确定删除此数据？")) {
+        if (MessageBox.confirm(I18nHelper.deleteData() + "?")) {
             if (this.treeItem.deleteRow()) {
                 this.firstPage();
             }
@@ -179,11 +179,11 @@ public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, 
             public Node initGraphic() {
                 if (this.hBox == null) {
                     // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph( "14");
+                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
                     del.setOnMousePrimaryClicked((event) -> deleteRow());
 
                     this.hBox = new HBox(del);
-                    this.hBox.setPadding(new Insets(5,0,0,5));
+                    this.hBox.setPadding(new Insets(5, 0, 0, 5));
                 }
                 return this.hBox;
             }
@@ -219,5 +219,5 @@ public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, 
     /**
      * 清除行
      */
-    protected abstract void clearRaw() ;
+    protected abstract void clearRaw();
 }

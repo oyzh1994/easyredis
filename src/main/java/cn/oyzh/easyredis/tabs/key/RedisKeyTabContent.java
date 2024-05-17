@@ -61,30 +61,6 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
     protected SVGGlyph unCollect;
 
     /**
-     * 数据撤销
-     */
-    @FXML
-    protected SVGGlyph dataUndo;
-
-    /**
-     * 数据重做
-     */
-    @FXML
-    protected SVGGlyph dataRedo;
-
-    /**
-     * 清除数据
-     */
-    @FXML
-    protected SVGGlyph clearData;
-
-    /**
-     * 粘贴数据
-     */
-    @FXML
-    protected SVGGlyph pasteData;
-
-    /**
      * 树节点
      */
     protected T treeItem;

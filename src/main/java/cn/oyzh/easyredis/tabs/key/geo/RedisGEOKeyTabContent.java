@@ -31,12 +31,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * zset键tab内容组件
+ * zset键地理坐标tab内容组件
  *
  * @author oyzh
  * @since 2023/06/30
  */
 public class RedisGEOKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    private SVGGlyph dataUndo;
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private SVGGlyph dataRedo;
 
     /**
      * redis数据保存按钮

@@ -16,26 +16,26 @@
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
           realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.field" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.fieldName" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexTextArea fx:id="fieldValue" flexHeight="100% - 25" tipText="请输入字段名称"
-                      flexWidth="100% - 100">
+        <FlexTextArea fx:id="fieldValue" flexHeight="100% - 25" tipText="%base.contentTip1"
+                      flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </FlexTextArea>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="50% - 50">
-        <AccentLabel text="%base.data" realHeight="30" realWidth="80">
+        <AccentLabel text="%base.fieldValue" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </AccentLabel>
         <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%base.contentTip1"
-                      flexWidth="100% - 100">
+                      flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>

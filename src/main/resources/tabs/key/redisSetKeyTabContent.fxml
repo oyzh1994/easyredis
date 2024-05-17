@@ -103,9 +103,9 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="12%" fx:id="index" text="%base.No"/>
-                    <FlexTableColumn flexWidth="76%" fx:id="value" text="%base.value"/>
-                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="%base.action" sortable="false"/>
+                    <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+                    <FlexTableColumn flexWidth="80%" fx:id="value" text="%base.value"/>
+                    <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">

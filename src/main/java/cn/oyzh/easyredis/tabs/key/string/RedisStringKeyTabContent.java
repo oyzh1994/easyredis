@@ -24,6 +24,18 @@ import java.util.Objects;
 public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyTreeItem> {
 
     /**
+     * 数据撤销
+     */
+    @FXML
+    private SVGGlyph dataUndo;
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private SVGGlyph dataRedo;
+
+    /**
      * 数据大小
      */
     @FXML

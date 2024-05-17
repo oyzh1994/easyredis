@@ -65,9 +65,10 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
             // 判断这个key是否到期
             if (treeItem.isExpire()) {
                 BackgroundService.submitFXLater(() -> {
-                    String tips = I18nHelper.key() + "[" + treeItem.key() + "]" + I18nHelper.expired() + "," + I18nHelper.delete() + "?";
+                    String tips = I18nHelper.key() + " [" + treeItem.key() + "] " + I18nHelper.expired() + ", " + I18nHelper.delete() + "?";
                     if (MessageBox.confirm(tips)) {
-                        treeItem.delete();
+                        treeItem.deleteByExpired();
+                        this.closeTab();
                     }
                 });
             }

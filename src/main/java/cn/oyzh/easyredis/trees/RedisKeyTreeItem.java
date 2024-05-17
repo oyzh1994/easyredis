@@ -12,7 +12,6 @@ import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CopyKeyMenuItem;
 import cn.oyzh.fx.plus.menu.DeleteKeyMenuItem;
@@ -280,7 +279,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public void delete() {
         try {
-            if (!MessageBox.confirm(I18nHelper.deleteKey() + this.key())) {
+            if (!MessageBox.confirm(I18nHelper.deleteKey() + " " + this.key())) {
                 return;
             }
             // 删除此键
@@ -379,5 +378,17 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      */
     public short loadTime() {
         return this.value.loadTime() == 0 ? 1 : this.value.loadTime();
+    }
+
+    /**
+     * 删除键，当键已过期
+     */
+    public void deleteByExpired() {
+        try {
+            this.unCollect();
+            this.remove();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

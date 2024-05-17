@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
 <?import cn.oyzh.fx.plus.controls.svg.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.ClearSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
@@ -17,6 +16,7 @@
 <?import cn.oyzh.fx.plus.controls.svg.RedoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.RenameKeySVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.svg.ReverseSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.UndoSVGGlyph?>
@@ -30,7 +30,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.svg.ReverseSVGGlyph?>
+<?import javafx.scene.layout.VBox?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -101,7 +101,8 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </PageBox>
-                <ReverseSVGGlyph fx:id="reverseView" onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip8" size="16">
+                <ReverseSVGGlyph fx:id="reverseView" onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip8"
+                                 size="16">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
@@ -168,21 +169,26 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <FlexTitledPane flexWidth="100%" realHeight="50" text="%base.score" collapsible="false">
-                <DecimalTextField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="scoreVal"
-                                  tipText="%base.score" value="0" step="5"
-                                  disable="true" onKeyPressed="#onNodeDataKeyPressed">
-                </DecimalTextField>
-            </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" text="%base.member"
-                            collapsible="false">
-                <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100%"
-                              flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
-                    <HBox.margin>
-                        <Insets top="5"/>
-                    </HBox.margin>
-                </RichDataPane>
-            </FlexTitledPane>
+            <FXSeparator text="%base.member" flexWidth="100%">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </FXSeparator>
+            <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 505"
+                          flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                <HBox.margin>
+                    <Insets top="5"/>
+                </HBox.margin>
+            </RichDataPane>
+            <FXSeparator text="%base.score" flexWidth="100%">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </FXSeparator>
+            <DecimalTextField scaleLen="5" realHeight="24" flexWidth="100%" fx:id="scoreVal"
+                              tipText="%base.score" value="0" step="5"
+                              disable="true" onKeyPressed="#onNodeDataKeyPressed">
+            </DecimalTextField>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

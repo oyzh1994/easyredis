@@ -6,7 +6,6 @@ import cn.oyzh.easyredis.event.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
-import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTabContent;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -22,8 +21,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +33,18 @@ import java.util.stream.Collectors;
  * @since 2023/06/21
  */
 public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTreeItem, RedisSetRow> {
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    private SVGGlyph dataUndo;
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private SVGGlyph dataRedo;
 
     /**
      * redis数据保存按钮
@@ -149,6 +158,17 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
         fxView.display();
     }
 
+    @Override
+    protected void initRow(RedisSetRow row) {
+        super.initRow(row);
+        if (row == null) {
+            this.nodeData.clear();
+            this.nodeData.disable();
+        } else {
+            this.nodeData.enable();
+        }
+    }
+
     @FXML
     @Override
     protected void saveKeyData() {
@@ -179,6 +199,42 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
+    }
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    private void dataUndo() {
+        this.nodeData.undo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private void dataRedo() {
+        this.nodeData.redo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 粘贴数据
+     */
+    @FXML
+    private void pasteData() {
+        this.nodeData.paste();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 清除数据
+     */
+    @FXML
+    private void clearData() {
+        this.nodeData.clear();
+        this.nodeData.requestFocus();
     }
 
     @Override

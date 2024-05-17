@@ -2,8 +2,8 @@
 
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexTitledPane?>
 <?import cn.oyzh.fx.plus.controls.svg.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.svg.CopySVGGlyph?>
@@ -22,6 +22,7 @@
 <?import cn.oyzh.fx.rich.data.RichDataPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -102,10 +103,15 @@
                     <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
                     <FlexTableColumn flexWidth="25%" fx:id="id" text="%base.id"/>
                     <FlexTableColumn flexWidth="55%" fx:id="value" text="%base.content"/>
-                    <FlexTableColumn flexWidth="10% - 6" fx:id="action" text="%base.action" sortable="false"/>
+                    <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
                 </columns>
             </FlexTableView>
-            <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
+            <FXSeparator text="%base.content" flexWidth="100%">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </FXSeparator>
+            <FlexFlowPane disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
                 <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
                     <FlowPane.margin>
                         <Insets left="5"/>
@@ -116,24 +122,17 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </DeleteSVGGlyph>
-                <padding>
-                    <Insets top="9"/>
-                </padding>
             </FlexFlowPane>
-            <FlexTitledPane flexWidth="100%" realHeight="50" text="%base.id" collapsible="false">
-                <ReadOnlyTextField disable="true" flexHeight="100%" flexWidth="100%" fx:id="streamID">
-                </ReadOnlyTextField>
-            </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" text="%base.content" collapsible="false">
-                <RichDataPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                              flexHeight="100%"
-                              flexWidth="100%">
-                </RichDataPane>
-                <!-- <RedisDataTextArea editable="false" showType="1" disable="true" fontSize="11" fx:id="nodeData" -->
-                <!--                    flexHeight="100%" -->
-                <!--                    flexWidth="100%"> -->
-                <!-- </RedisDataTextArea> -->
-            </FlexTitledPane>
+            <RichDataPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
+                          flexHeight="100% - 505"
+                          flexWidth="100%">
+            </RichDataPane>
+            <FXSeparator text="%base.id" flexWidth="100%">
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </FXSeparator>
+            <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100%" fx:id="streamID"/>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

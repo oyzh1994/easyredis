@@ -128,8 +128,6 @@
             </FlexFlowPane>
             <RichDataPane fontSize="11" fx:id="nodeData" flexHeight="100% - 32"
                           flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
-            <!-- <RedisDataTextArea fontSize="11" fx:id="nodeData" flexHeight="100% - 32" -->
-            <!--                    flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/> -->
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

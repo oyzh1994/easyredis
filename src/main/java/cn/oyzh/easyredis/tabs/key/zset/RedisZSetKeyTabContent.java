@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.zset;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
@@ -9,9 +8,7 @@ import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
-import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
@@ -40,6 +37,18 @@ import java.util.stream.Collectors;
  * @since 2023/06/30
  */
 public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    private SVGGlyph dataUndo;
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private SVGGlyph dataRedo;
 
     /**
      * redis数据保存按钮
@@ -171,15 +180,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         List<RedisZSetRow> rows = this.treeItem.nodeValue();
         String filterKW = this.filter.getText();
         if (StrUtil.isNotEmpty(filterKW)) {
-            if (this.isGEOView()) {
-                rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLatitude()), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLongitude()), filterKW))
-                        .collect(Collectors.toList());
-            } else {
-                rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
-                        .collect(Collectors.toList());
-            }
+            rows = rows.parallelStream()
+                    .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
+                    .collect(Collectors.toList());
         }
         return rows;
     }
@@ -187,12 +190,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView;
-        if (this.isGEOView()) {
-            fxView = StageUtil.parseStage(RedisZSetCoordinateAddController.class);
-        } else {
-            fxView = StageUtil.parseStage(RedisZSetMemberAddController.class);
-        }
+        StageWrapper fxView = StageUtil.parseStage(RedisZSetMemberAddController.class);
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }
@@ -235,24 +233,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void copyRow() {
         StringBuilder builder = new StringBuilder();
         builder.append(I18nHelper.keyName()).append(": ").append(this.treeItem.key()).append(System.lineSeparator());
-        if (this.isGEOView()) {
-            builder.append(I18nHelper.coordinates()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.longitude()).append(": ").append(this.treeItem.currentRow().getLongitude()).append(System.lineSeparator())
-                    .append(I18nHelper.latitude()).append(": ").append(this.treeItem.currentRow().getLatitude());
-        } else {
-            builder.append(I18nHelper.member()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.score()).append(": ").append(this.treeItem.currentRow().getScore());
-        }
-        ClipboardUtil.setStringAndTip(builder.toString(), "成员信息");
-    }
-
-    /**
-     * 是否地理坐标视图
-     *
-     * @return 结果
-     */
-    private boolean isGEOView() {
-        return this.treeItem.isGEOView();
+        builder.append(I18nHelper.member()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
+                .append(I18nHelper.score()).append(": ").append(this.treeItem.currentRow().getScore());
+        ClipboardUtil.setStringAndTip(builder.toString());
     }
 
     /**

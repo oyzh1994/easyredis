@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * redis添加set成员
+ * redis添加hyLog元素
  *
  * @author oyzh
  * @since 2023/06/27
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @StageAttribute(
         iconUrls = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "row/redisHyperLogLogElementsAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "row/redisHyLogElementsAdd.fxml"
 )
 public class RedisHyLogElementsAddController extends Controller {
 

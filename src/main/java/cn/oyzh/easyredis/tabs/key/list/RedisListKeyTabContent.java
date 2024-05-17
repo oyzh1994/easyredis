@@ -36,6 +36,18 @@ import java.util.stream.Collectors;
 public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTreeItem, RedisListRow> {
 
     /**
+     * 数据撤销
+     */
+    @FXML
+    private SVGGlyph dataUndo;
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private SVGGlyph dataRedo;
+
+    /**
      * 数据保存按钮
      */
     @FXML
@@ -180,7 +192,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
     protected void copyRow() {
         String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
                 I18nHelper.member() + ": " + this.treeItem.currentRow().getValue();
-        ClipboardUtil.setStringAndTip(builder, "行信息");
+        ClipboardUtil.setStringAndTip(builder);
     }
 
     /**
@@ -248,5 +260,4 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
         this.nodeData.clear();
         this.nodeData.disable();
     }
-
 }
