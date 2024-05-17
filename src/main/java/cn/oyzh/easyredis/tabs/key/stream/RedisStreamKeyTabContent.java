@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.key.stream;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
+import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -11,7 +12,10 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -51,6 +55,11 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     @FXML
     private TableColumn<RedisStreamRow, String> value;
 
+    /**
+     * 数据
+     */
+    @FXML
+    private RichDataPane nodeData;
 
     @Override
     public boolean init(RedisStreamKeyTreeItem treeItem) {
@@ -95,11 +104,14 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
     protected void initRow(RedisStreamRow row) {
         super.initRow(row);
         if (row == null) {
+            this.nodeData.clear();
+            this.nodeData.disable();
             this.streamID.clear();
             this.streamID.disable();
         } else {
             this.streamID.setText(row.getId());
             this.streamID.enable();
+            this.nodeData.enable();
         }
     }
 
@@ -122,5 +134,23 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }
+    }
+
+    @Override
+    protected void firstShowData() {
+        this.nodeData.showData(this.treeItem.rawValue());
+        // 首次设置数据要清除历史
+        this.nodeData.forgetHistory();
+    }
+
+    @Override
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.rawValue());
+    }
+
+    @Override
+    protected void clearRaw() {
+        this.nodeData.clear();
+        this.nodeData.disable();
     }
 }

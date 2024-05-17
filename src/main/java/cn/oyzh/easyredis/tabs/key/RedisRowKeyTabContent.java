@@ -27,7 +27,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R extends RedisRow> extends RedisKeyTabContent<T> {
+public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R extends RedisRow> extends RedisKeyTabContent<T> {
 
     /**
      * 分页数据
@@ -201,7 +201,7 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
         this.treeItem.currentRow(row);
         this.treeItem.data(null);
         if (row == null) {
-            this.clearRawData();
+            this.clearRaw();
             this.dataAction.disable();
         } else {
             this.firstShowData();
@@ -215,4 +215,9 @@ public class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R ext
      */
     protected void copyRow() {
     }
+
+    /**
+     * 清除行
+     */
+    protected abstract void clearRaw() ;
 }

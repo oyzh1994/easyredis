@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.zset;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
@@ -163,6 +164,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
      */
     public void reverseView() {
         this.showType = (byte) (this.isGEOView() ? 0 : 1);
+        RedisEventUtil.zSetReverseView(this);
     }
 
     /**

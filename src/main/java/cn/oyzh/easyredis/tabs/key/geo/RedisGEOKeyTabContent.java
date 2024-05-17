@@ -1,19 +1,18 @@
-package cn.oyzh.easyredis.tabs.key.zset;
+package cn.oyzh.easyredis.tabs.key.geo;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
-import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
-import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
+import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
 import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
@@ -27,10 +26,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +36,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
+public class RedisGEOKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTreeItem, RedisZSetRow> {
 
     /**
      * redis数据保存按钮
@@ -48,16 +45,16 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private SVGGlyph saveNodeData;
 
     /**
-     * 反转视图
+     * 经度值
      */
     @FXML
-    private SVGGlyph reverseView;
+    private DecimalTextField longitudeVal;
 
     /**
-     * 分数值
+     * 纬度值
      */
     @FXML
-    private DecimalTextField scoreVal;
+    private DecimalTextField latitudeVal;
 
     /**
      * 编号列
@@ -66,16 +63,22 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     private TableColumn<RedisZSetRow, Integer> index;
 
     /**
-     * 分数列
+     * 经度列
      */
     @FXML
-    private TableColumn<RedisZSetRow, Double> score;
+    private TableColumn<RedisZSetRow, Double> longitude;
 
     /**
-     * 值列
+     * 纬度列
      */
     @FXML
-    private FlexTableColumn<RedisZSetRow, String> value;
+    private TableColumn<RedisZSetRow, Double> latitude;
+
+    /**
+     * 坐标列
+     */
+    @FXML
+    private FlexTableColumn<RedisZSetRow, String> coordinate;
 
     /**
      * 数据组件
@@ -123,14 +126,27 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     };
 
     /**
-     * 分数监听器
+     * 经度值监听器
      */
-    private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
-        Number scoreVal = this.scoreVal.getValue();
-        if (this.treeItem.currentRow() == null || Objects.equals(scoreVal.doubleValue(), this.treeItem.currentRow().getScore())) {
-            this.treeItem.score(null);
+    private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
+        Number value = this.longitudeVal.getValue();
+        if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLongitude())) {
+            this.treeItem.longitude(null);
         } else {
-            this.treeItem.score(scoreVal.doubleValue());
+            this.treeItem.longitude(value.doubleValue());
+        }
+        this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+    };
+
+    /**
+     * 纬度值监听器
+     */
+    private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
+        Number value = this.latitudeVal.getValue();
+        if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLatitude())) {
+            this.treeItem.latitude(null);
+        } else {
+            this.treeItem.latitude(value.doubleValue());
         }
         this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
@@ -156,14 +172,13 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         this.initTable();
         // 显示首页
         this.firstPage();
-        // 显示切换按钮
-        this.reverseView.setVisible(this.isSupportGEO());
         // 绑定属性
         this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
-        this.value.setText(I18nHelper.member());
-        this.scoreVal.addTextChangeListener(this.scoreValListener);
+        this.coordinate.setCellValueFactory(new PropertyValueFactory<>("value"));
+        this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+        this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+        this.latitudeVal.addTextChangeListener(this.latitudeValListener);
+        this.longitudeVal.addTextChangeListener(this.longitudeValListener);
     }
 
     @Override
@@ -171,15 +186,9 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         List<RedisZSetRow> rows = this.treeItem.nodeValue();
         String filterKW = this.filter.getText();
         if (StrUtil.isNotEmpty(filterKW)) {
-            if (this.isGEOView()) {
-                rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLatitude()), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLongitude()), filterKW))
-                        .collect(Collectors.toList());
-            } else {
-                rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
-                        .collect(Collectors.toList());
-            }
+            rows = rows.parallelStream()
+                    .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLatitude()), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getLongitude()), filterKW))
+                    .collect(Collectors.toList());
         }
         return rows;
     }
@@ -187,12 +196,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView;
-        if (this.isGEOView()) {
-            fxView = StageUtil.parseStage(RedisZSetCoordinateAddController.class);
-        } else {
-            fxView = StageUtil.parseStage(RedisZSetMemberAddController.class);
-        }
+        StageWrapper fxView = StageUtil.parseStage(RedisZSetCoordinateAddController.class);
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }
@@ -203,11 +207,15 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
         if (row == null) {
             this.nodeData.clear();
             this.nodeData.disable();
-            this.scoreVal.clear();
-            this.scoreVal.disable();
+            this.latitudeVal.clear();
+            this.latitudeVal.disable();
+            this.longitudeVal.clear();
+            this.longitudeVal.disable();
         } else {
-            this.scoreVal.setValue(row.getScore());
-            this.scoreVal.enable();
+            this.latitudeVal.setValue(row.getLatitude());
+            this.latitudeVal.enable();
+            this.longitudeVal.setValue(row.getLongitude());
+            this.longitudeVal.enable();
             this.nodeData.enable();
             this.saveNodeData.disable();
             this.treeItem.clearData();
@@ -233,50 +241,29 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @FXML
     @Override
     protected void copyRow() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(I18nHelper.keyName()).append(": ").append(this.treeItem.key()).append(System.lineSeparator());
-        if (this.isGEOView()) {
-            builder.append(I18nHelper.coordinates()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.longitude()).append(": ").append(this.treeItem.currentRow().getLongitude()).append(System.lineSeparator())
-                    .append(I18nHelper.latitude()).append(": ").append(this.treeItem.currentRow().getLatitude());
-        } else {
-            builder.append(I18nHelper.member()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.score()).append(": ").append(this.treeItem.currentRow().getScore());
-        }
-        ClipboardUtil.setStringAndTip(builder.toString(), "成员信息");
+        String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
+                I18nHelper.coordinates() + ": " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
+                I18nHelper.longitude() + ": " + this.treeItem.currentRow().getLongitude() + System.lineSeparator() +
+                I18nHelper.latitude() + ": " + this.treeItem.currentRow().getLatitude();
+        ClipboardUtil.setStringAndTip(builder);
     }
 
     /**
-     * 是否地理坐标视图
-     *
-     * @return 结果
+     * 反转视图
      */
-    private boolean isGEOView() {
-        return this.treeItem.isGEOView();
-    }
-
-    /**
-     * 是否支持地理坐标
-     *
-     * @return 结果
-     */
-    private boolean isSupportGEO() {
-        return this.treeItem.isSupportGEO();
-    }
-
     @FXML
     private void reverseView() {
         this.treeItem.reverseView();
     }
 
     /**
-     * zset成员添加事件
+     * zset坐标添加事件
      *
-     * @param msg 消息
+     * @param event 事件
      */
     @Subscribe
-    private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
+    private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
+        if (this.treeItem == event.data()) {
             this.firstPage();
         }
     }
@@ -333,11 +320,5 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     protected void clearRaw() {
         this.nodeData.clear();
         this.nodeData.disable();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
-        this.reverseView.managedBindVisible();
     }
 }

@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
+import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
 import cn.oyzh.easyredis.event.TreeChildSelectedEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -333,15 +334,36 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     @Subscribe
     public void treeChildSelected(TreeChildSelectedEvent event) {
         if (event != null && event.data() != null) {
-                RedisKeyTab keyTab = this.getKeyTab(event.data());
-                if (keyTab == null) {
-                    keyTab = RedisKeyTab.ofItem(event.data());
-                    super.addTab(keyTab);
-                }
-                // 选中节点
-                this.select(keyTab);
-                // 初始化节点
-                keyTab.init(event.data());
+            RedisKeyTab keyTab = this.getKeyTab(event.data());
+            if (keyTab == null) {
+                keyTab = RedisKeyTab.ofItem(event.data());
+                super.addTab(keyTab);
+            }
+            // 选中节点
+            this.select(keyTab);
+            // 初始化节点
+            keyTab.init(event.data());
+        }
+    }
+
+    /**
+     * zset反转视图时间
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
+        if (event != null && event.data() != null) {
+            RedisKeyTab keyTab = this.getKeyTab(event.data());
+            if (keyTab != null) {
+                keyTab.closeTab();
+            }
+            keyTab = RedisKeyTab.ofItem(event.data());
+            super.addTab(keyTab);
+            // 选中节点
+            this.select(keyTab);
+            // 初始化节点
+            keyTab.init(event.data());
         }
     }
 
@@ -379,7 +401,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     @Subscribe
     private void connectionClosed(RedisConnectionClosedEvent event) {
-        RedisClient client= event.data();
+        RedisClient client = event.data();
         List<Tab> closeTabs = new ArrayList<>();
         for (Tab tab : this.getTabs()) {
             if (tab instanceof RedisServerTab serverTab && serverTab.client() == client) {
@@ -408,6 +430,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
 
     /**
      * 初始化过滤tab
+     *
      * @param event 事件
      */
     @Subscribe

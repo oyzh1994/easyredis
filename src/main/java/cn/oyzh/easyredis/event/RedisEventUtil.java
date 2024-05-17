@@ -440,8 +440,19 @@ public class RedisEventUtil {
     /**
      * 树节点选中事件
      */
-    public static void treeChildSelected(RedisKeyTreeItem<?,?> item) {
+    public static void treeChildSelected(RedisKeyTreeItem<?, ?> item) {
         TreeChildSelectedEvent event = new TreeChildSelectedEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
+
+    /**
+     * zset反转视图事件
+     *
+     * @param item 节点
+     */
+    public static void zSetReverseView(RedisZSetKeyTreeItem item) {
+        RedisZSetReverseViewEvent event = new RedisZSetReverseViewEvent();
         event.data(item);
         EventUtil.post(event);
     }

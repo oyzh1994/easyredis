@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
-import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
-import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
+import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
@@ -9,13 +8,10 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
-import com.google.common.eventbus.Subscribe;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 import java.util.Objects;
 
@@ -46,9 +42,20 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
     private SVGGlyph saveNodeData;
 
     /**
+     * 格式
+     */
+    @FXML
+    private RedisFormatComboBox format;
+
+    /**
+     * 数据组件
+     */
+    @FXML
+    private RichDataPane nodeData;
+
+    /**
      * redis数据监听器
      */
-    @Getter(AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (Objects.equals(newValue, this.treeItem.value().value())) {
             this.treeItem.clearData();
@@ -57,12 +64,35 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
         }
     };
 
+    /**
+     * 格式监听器
+     */
+    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
+        if (this.format.isStringFormat()) {
+            this.showData(RichDataType.STRING);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isJsonFormat()) {
+            this.showData(RichDataType.JSON);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isBinaryFormat()) {
+            this.showData(RichDataType.BINARY);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isHexFormat()) {
+            this.showData(RichDataType.HEX);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isRawFormat()) {
+            this.showData(RichDataType.RAW);
+        }
+    };
+
     @Override
     public boolean init(RedisStringKeyTreeItem treeItem) {
         if (super.init(treeItem)) {
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
             this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
             // 键数据处理
-            this.nodeData.addTextChangeListener(this.getDataListener());
+            this.nodeData.addTextChangeListener(this.dataListener);
             this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
             this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
             return true;
@@ -134,5 +164,53 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
                 }
             });
         }
+    }
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    protected void dataUndo() {
+        this.nodeData.undo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    protected void dataRedo() {
+        this.nodeData.redo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 粘贴数据
+     */
+    @FXML
+    protected void pasteData() {
+        this.nodeData.paste();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 清除数据
+     */
+    @FXML
+    protected void clearData() {
+        this.nodeData.clear();
+        this.nodeData.requestFocus();
+    }
+
+    @Override
+    protected void firstShowData() {
+        this.nodeData.showData(this.treeItem.rawValue());
+        // 首次设置数据要清除历史
+        this.nodeData.forgetHistory();
+    }
+
+    @Override
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.rawValue());
     }
 }

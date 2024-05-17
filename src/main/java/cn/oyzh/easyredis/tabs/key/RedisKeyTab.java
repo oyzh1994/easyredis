@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.tabs.key.geo.RedisGEOKeyTab;
 import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
 import cn.oyzh.easyredis.tabs.key.hyLog.RedisHyLogKeyTab;
 import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;
@@ -140,8 +141,12 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
             tab = (RedisKeyTab<T>) new RedisListKeyTab();
         } else if (item instanceof RedisSetKeyTreeItem) {
             tab = (RedisKeyTab<T>) new RedisSetKeyTab();
-        } else if (item instanceof RedisZSetKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisZSetKeyTab();
+        } else if (item instanceof RedisZSetKeyTreeItem item1) {
+            if (item1.isGEOView()) {
+                tab = (RedisKeyTab<T>) new RedisGEOKeyTab();
+            } else {
+                tab = (RedisKeyTab<T>) new RedisZSetKeyTab();
+            }
         } else if (item instanceof RedisHashKeyTreeItem) {
             tab = (RedisKeyTab<T>) new RedisHashKeyTab();
         } else if (item instanceof RedisStreamKeyTreeItem) {

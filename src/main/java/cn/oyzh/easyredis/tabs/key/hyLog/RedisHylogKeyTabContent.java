@@ -9,6 +9,8 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 
@@ -37,6 +39,12 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
      */
     @FXML
     private FXLabel count;
+
+    /**
+     * 数据
+     */
+    @FXML
+    private RichDataPane nodeData;
 
     @Override
     protected void initNode() {
@@ -109,5 +117,17 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
             this.treeItem.flushCount();
             this.initNode();
         }
+    }
+
+    @Override
+    protected void firstShowData() {
+        this.nodeData.showData(this.treeItem.rawValue());
+        // 首次设置数据要清除历史
+        this.nodeData.forgetHistory();
+    }
+
+    @Override
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.rawValue());
     }
 }

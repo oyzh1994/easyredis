@@ -40,7 +40,7 @@ import java.util.ResourceBundle;
 @Lazy
 @Component
 @Scope(ScopeType.PROTOTYPE)
-public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends DynamicTabController {
+public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends DynamicTabController {
 
     /**
      * 根节点
@@ -85,12 +85,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     protected SVGGlyph pasteData;
 
     /**
-     * 格式
-     */
-    @FXML
-    protected RedisFormatComboBox format;
-
-    /**
      * 树节点
      */
     protected T treeItem;
@@ -108,47 +102,10 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
     protected FXLabel loadTime;
 
     /**
-     * 数据组件
-     */
-    @FXML
-    protected RichDataPane nodeData;
-    // protected RedisDataTextArea nodeData;
-
-    /**
      * 键信息
      */
     @FXML
     private RedisKeyInfoContent keyInfoController;
-
-    /**
-     * 格式监听器
-     */
-    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
-        if (this.format.isStringFormat()) {
-            this.showData(RichDataType.STRING);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isJsonFormat()) {
-            this.showData(RichDataType.JSON);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isBinaryFormat()) {
-            this.showData(RichDataType.BINARY);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isHexFormat()) {
-            this.showData(RichDataType.HEX);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isRawFormat()) {
-            this.showData(RichDataType.RAW);
-        }
-    };
-
-    /**
-     * 获取数据监听器
-     *
-     * @return 数据监听器
-     */
-    protected ChangeListener<String> getDataListener() {
-        return null;
-    }
 
     /**
      * 初始化
@@ -172,11 +129,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
 
         // 初始化键信息
         this.keyInfoController.init(treeItem);
-
-        // 格式监听
-        if (this.format != null) {
-            this.format.selectedItemChanged(this.formatListener);
-        }
 
         // 初始化节点
         this.initNode();
@@ -202,42 +154,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
                 I18nHelper.keyType() + ": " + this.treeItem.value().type() + System.lineSeparator() +
                 I18nHelper.keyName() + ": " + this.treeItem.key();
         ClipboardUtil.setStringAndTip(builder, "键信息");
-    }
-
-    /**
-     * 数据撤销
-     */
-    @FXML
-    protected void dataUndo() {
-        this.nodeData.undo();
-        this.nodeData.requestFocus();
-    }
-
-    /**
-     * 数据重做
-     */
-    @FXML
-    protected void dataRedo() {
-        this.nodeData.redo();
-        this.nodeData.requestFocus();
-    }
-
-    /**
-     * 粘贴数据
-     */
-    @FXML
-    protected void pasteData() {
-        this.nodeData.paste();
-        this.nodeData.requestFocus();
-    }
-
-    /**
-     * 清除数据
-     */
-    @FXML
-    protected void clearData() {
-        this.nodeData.clear();
-        this.nodeData.requestFocus();
     }
 
     /**
@@ -329,39 +245,6 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.ttl.setText("TTL: " + this.treeItem.ttl());
     }
 
-    /**
-     * 首次显示数据
-     */
-    protected void firstShowData() {
-        this.showData();
-        // 首次设置数据要清除历史
-        this.nodeData.forgetHistory();
-    }
-
-    /**
-     * 显示数据
-     */
-    protected void showData() {
-        this.nodeData.showData(this.treeItem.rawValue());
-    }
-
-    /**
-     * 显示数据
-     *
-     * @param dataType 数据类型
-     */
-    protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.treeItem.rawValue());
-    }
-
-    /**
-     * 清除原始数据
-     */
-    protected void clearRawData() {
-        this.nodeData.clear();
-        this.nodeData.disable();
-    }
-
     @Override
     public void onTabClose(DynamicTab tab, Event event) {
         super.onTabClose(tab, event);
@@ -377,4 +260,18 @@ public class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends Dynami
         this.collect.managedBindVisible();
         this.unCollect.managedBindVisible();
     }
+
+    /**
+     * 首次显示数据
+     */
+    protected abstract void firstShowData( ) ;
+
+    /**
+     * 显示数据
+     *
+     * @param dataType 数据类型
+     */
+    protected abstract void showData(RichDataType dataType) ;
+
+
 }

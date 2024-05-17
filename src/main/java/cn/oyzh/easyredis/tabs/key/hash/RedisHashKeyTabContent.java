@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.key.hash;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
+import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
@@ -14,13 +15,13 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,9 +66,20 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
     private FlexTextArea hashField;
 
     /**
+     * 数据组件
+     */
+    @FXML
+    private RichDataPane nodeData;
+
+    /**
+     * 格式
+     */
+    @FXML
+    private RedisFormatComboBox format;
+
+    /**
      * redis数据监听器
      */
-    @Getter(value = AccessLevel.PROTECTED)
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
         if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
             this.treeItem.clearData();
@@ -89,11 +101,38 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
     };
 
+    /**
+     * 格式监听器
+     */
+    private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
+        if (this.format.isStringFormat()) {
+            this.showData(RichDataType.STRING);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isJsonFormat()) {
+            this.showData(RichDataType.JSON);
+            this.nodeData.setEditable(true);
+        } else if (this.format.isBinaryFormat()) {
+            this.showData(RichDataType.BINARY);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isHexFormat()) {
+            this.showData(RichDataType.HEX);
+            this.nodeData.setEditable(false);
+        } else if (this.format.isRawFormat()) {
+            this.showData(RichDataType.RAW);
+        }
+    };
+
     @Override
     public boolean init(RedisHashKeyTreeItem treeItem) {
         this.pageData = null;
         if (super.init(treeItem)) {
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
             this.treeItem.dataProperty().addListener((t1, t2, newValue) -> this.saveNodeData.setDisable(newValue == null));
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
             return true;
         }
         return false;
@@ -118,9 +157,12 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
         if (row == null) {
             this.hashField.clear();
             this.hashField.disable();
+            this.nodeData.clear();
+            this.nodeData.disable();
         } else {
             this.hashField.setText(row.getField());
             this.hashField.enable();
+            this.nodeData.enable();
         }
     }
 
@@ -199,5 +241,59 @@ public class RedisHashKeyTabContent extends RedisRowKeyTabContent<RedisHashKeyTr
                 }
             });
         }
+    }
+
+    /**
+     * 数据撤销
+     */
+    @FXML
+    private void dataUndo() {
+        this.nodeData.undo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 数据重做
+     */
+    @FXML
+    private void dataRedo() {
+        this.nodeData.redo();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 粘贴数据
+     */
+    @FXML
+    private void pasteData() {
+        this.nodeData.paste();
+        this.nodeData.requestFocus();
+    }
+
+    /**
+     * 清除数据
+     */
+    @FXML
+    private void clearData() {
+        this.nodeData.clear();
+        this.nodeData.requestFocus();
+    }
+
+    @Override
+    protected void firstShowData() {
+        this.nodeData.showData(this.treeItem.rawValue());
+        // 首次设置数据要清除历史
+        this.nodeData.forgetHistory();
+    }
+
+    @Override
+    protected void showData(RichDataType dataType) {
+        this.nodeData.showData(dataType, this.treeItem.rawValue());
+    }
+
+    @Override
+    protected void clearRaw() {
+        this.nodeData.clear();
+        this.nodeData.disable();
     }
 }

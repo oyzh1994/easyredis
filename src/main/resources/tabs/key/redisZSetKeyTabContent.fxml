@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.LatitudeField?>
-<?import cn.oyzh.easyredis.fx.LongitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FlexVBox?>
@@ -27,11 +26,11 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import cn.oyzh.fx.rich.data.RichDataPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.svg.ReverseSVGGlyph?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"
@@ -102,12 +101,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </PageBox>
-                <FXToggleSwitch fx:id="reverseView" onMouseClicked="#reverseView" selectedText="%base.coordinates"
-                                unselectedText="%base.zset">
+                <ReverseSVGGlyph fx:id="reverseView" onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip8" size="16">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
-                </FXToggleSwitch>
+                </ReverseSVGGlyph>
                 <padding>
                     <Insets top="9"/>
                 </padding>
@@ -115,12 +113,10 @@
             <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                            fixedCellSize="30">
                 <columns>
-                    <FlexTableColumn flexWidth="12%" fx:id="index" text="%base.No"/>
-                    <FlexTableColumn flexWidth="46%" fx:id="value" text="%base.name"/>
-                    <FlexTableColumn flexWidth="30%" fx:id="score" visible="false" text="%base.score"/>
-                    <FlexTableColumn flexWidth="25%" fx:id="longitude" visible="false" text="%base.longitude"/>
-                    <FlexTableColumn flexWidth="25%" fx:id="latitude" visible="false" text="%base.latitude"/>
-                    <FlexTableColumn flexWidth="12% - 20" fx:id="action" text="%base.action" sortable="false"/>
+                    <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
+                    <FlexTableColumn flexWidth="50%" fx:id="value" text="%base.name"/>
+                    <FlexTableColumn flexWidth="30%" fx:id="score" text="%base.score"/>
+                    <FlexTableColumn flexWidth="10% - 20" fx:id="action" text="%base.action" sortable="false"/>
                 </columns>
             </FlexTableView>
             <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
@@ -172,25 +168,13 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="scoreBox" text="%base.score" collapsible="false">
+            <FlexTitledPane flexWidth="100%" realHeight="50" text="%base.score" collapsible="false">
                 <DecimalTextField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="scoreVal"
                                   tipText="%base.score" value="0" step="5"
                                   disable="true" onKeyPressed="#onNodeDataKeyPressed">
                 </DecimalTextField>
             </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="longitudeBox" text="%base.longitude" visible="false"
-                            managed="false" collapsible="false">
-                <LongitudeField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="longitudeVal"
-                                tipText="%base.longitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
-                </LongitudeField>
-            </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" realHeight="50" fx:id="latitudeBox" text="%base.latitude" visible="false"
-                            managed="false" collapsible="false">
-                <LatitudeField scaleLen="5" flexHeight="100%" flexWidth="100% - 10" fx:id="latitudeVal"
-                               tipText="%base.latitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
-                </LatitudeField>
-            </FlexTitledPane>
-            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" fx:id="dataBox" text="%base.member"
+            <FlexTitledPane flexWidth="100%" flexHeight="100% - 450" text="%base.member"
                             collapsible="false">
                 <RichDataPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100%"
                               flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
@@ -198,12 +182,6 @@
                         <Insets top="5"/>
                     </HBox.margin>
                 </RichDataPane>
-                <!-- <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100%" -->
-                <!--                    flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed"> -->
-                <!--     <HBox.margin> -->
-                <!--         <Insets top="5"/> -->
-                <!--     </HBox.margin> -->
-                <!-- </RedisDataTextArea> -->
             </FlexTitledPane>
         </FlexVBox>
     </FXTab>
