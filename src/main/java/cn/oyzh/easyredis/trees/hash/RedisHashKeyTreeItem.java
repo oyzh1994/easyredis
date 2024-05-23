@@ -68,7 +68,6 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, Redi
         super.clearData();
     }
 
-
     @Override
     public boolean checkExists() {
         String field1 = this.field();

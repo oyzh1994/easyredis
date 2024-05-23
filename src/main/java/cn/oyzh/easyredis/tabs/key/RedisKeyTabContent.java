@@ -181,6 +181,7 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
         // 保存键数据
         if (code == KeyCode.S && e.isControlDown()) {
             this.saveKeyData();
+            e.consume();
         }
     }
 
