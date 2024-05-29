@@ -1,58 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.list.RedisLpopTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/27
  */
 @Component
-public class RedisLpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisLpopTerminalCommand> {
+public class RedisLpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 2 || words.length == 3;
-    }
-
-    @Override
-    protected RedisLpopTerminalCommand parseCommand(String line, String[] words) {
-        RedisLpopTerminalCommand command = new RedisLpopTerminalCommand();
-        command.key(words[1]);
-        if (words.length == 3) {
-            command.count(Integer.parseInt(words[2]));
-        }
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisLpopTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            if (command.count() != null) {
-                List<String> lpop = terminal.client().lpop(null, command.key(), command.count());
-                result.setResult(RedisTerminalUtil.formatOut(lpop));
-            } else {
-                String lpop = terminal.client().lpop(null, command.key());
-                result.setResult(RedisTerminalUtil.formatOut(lpop));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "LPOP";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.LPOP;
     }
 
     @Override

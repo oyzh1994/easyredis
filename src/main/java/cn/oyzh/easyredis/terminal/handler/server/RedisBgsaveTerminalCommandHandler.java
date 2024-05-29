@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
@@ -30,6 +31,11 @@ public class RedisBgsaveTerminalCommandHandler extends RedisTerminalCommandHandl
     @Override
     public String commandName() {
         return "BGSAVE";
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.BGSAVE;
     }
 
     @Override

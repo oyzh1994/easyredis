@@ -68,7 +68,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                 str += "（" + I18nHelper.connected() + "）> ";
             }
         } else {
-            str += "> ";
+            str += " > ";
         }
         this.prompt(str);
     }
@@ -165,7 +165,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
         this.outputLine("-r " + I18nHelper.readonlyMode());
         this.appendByPrompt("connect -timeout 3000 -h 127.0.0.1 -p 6379 -n 0");
         this.enableInput();
-        this.flushAndMoveCaretAnd();
+        this.flushAndMoveCaretEnd();
     }
 
     /**
@@ -194,7 +194,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
     /**
      * 刷新光标并移动到尾部
      */
-    private void flushAndMoveCaretAnd() {
+    private void flushAndMoveCaretEnd() {
         ExecutorUtil.start(() -> {
             this.flushCaret();
             this.moveCaretEnd();
@@ -237,7 +237,7 @@ public class RedisTerminalTextArea extends TerminalTextArea {
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());
                     }
-                    this.flushAndMoveCaretAnd();
+                    this.flushAndMoveCaretEnd();
                     this.enableInput();
                 }
                 StaticLog.info("connState={}", t1);

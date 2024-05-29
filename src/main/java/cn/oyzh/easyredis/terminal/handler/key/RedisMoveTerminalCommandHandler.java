@@ -1,49 +1,16 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.key.RedisMoveTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
 @Component
-public class RedisMoveTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisMoveTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 3 ;
-    }
-
-    @Override
-    protected RedisMoveTerminalCommand parseCommand(String line, String[] words) {
-        RedisMoveTerminalCommand command = new RedisMoveTerminalCommand();
-        command.key(words[1]);
-        command.targetDBIndex(Integer.parseInt(words[2]));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisMoveTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long count = terminal.client().move(command.key(), null, command.targetDBIndex());
-            result.setResult(RedisTerminalUtil.formatOut(count));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "MOVE";
-    }
+public class RedisMoveTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -53,5 +20,10 @@ public class RedisMoveTerminalCommandHandler extends RedisKeyTerminalCommandHand
     @Override
     public String commandDesc() {
         return "移动键";
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.MOVE;
     }
 }

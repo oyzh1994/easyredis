@@ -1,51 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.string;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.string.RedisMgetTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
 @Component
-public class RedisMgetTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisMgetTerminalCommand> {
+public class RedisMgetTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length > 1;
-    }
-
-    @Override
-    protected RedisMgetTerminalCommand parseCommand(String line, String[] words) {
-        RedisMgetTerminalCommand command = new RedisMgetTerminalCommand();
-        command.keys(ArrayUtil.sub(words, 1, words.length));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisMgetTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            List<String> values = terminal.client().mget(null, command.keys());
-            result.setResult(RedisTerminalUtil.formatOut(values));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "MGET";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.MGET;
     }
 
     @Override

@@ -1,52 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.list.RedisBrpopTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.common.util.ArrUtil;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/27
  */
 @Component
-public class RedisBrpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisBrpopTerminalCommand> {
+public class RedisBrpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 3;
-    }
-
-    @Override
-    protected RedisBrpopTerminalCommand parseCommand(String line, String[] words) {
-        RedisBrpopTerminalCommand command = new RedisBrpopTerminalCommand();
-        command.timeout(Integer.parseInt(ArrUtil.last(words)));
-        command.keys(ArrUtil.sub(words, 1, words.length - 1));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisBrpopTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            List<String> blpop = terminal.client().brpop(null, command.timeout(), command.keys());
-            result.setResult(RedisTerminalUtil.formatOut(blpop));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "BRPOP";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.BRPOP;
     }
 
     @Override

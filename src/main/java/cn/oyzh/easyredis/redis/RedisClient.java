@@ -24,6 +24,7 @@ import lombok.experimental.Accessors;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.BuilderFactory;
 import redis.clients.jedis.ClusterPipeline;
+import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.CommandObjects;
 import redis.clients.jedis.Connection;
 import redis.clients.jedis.ConnectionPool;
@@ -214,11 +215,11 @@ public class RedisClient {
         if (this.isClusterMode()) {
             // 初始化cluster集群
             this.initCluster(host, clientConfig);
-        // } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
-        //     // 初始化哨兵
-        //     this.initSentinel(host, clientConfig);
-        //     // 获取当前角色
-        //     this.role = (String) CollUtil.getFirst(this.role());
+            // } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
+            //     // 初始化哨兵
+            //     this.initSentinel(host, clientConfig);
+            //     // 获取当前角色
+            //     this.role = (String) CollUtil.getFirst(this.role());
         }
     }
 
@@ -4735,5 +4736,19 @@ public class RedisClient {
      */
     public String infoName() {
         return this.redisInfo.getName();
+    }
+
+    public Object execCommand(Integer dbIndex, CommandObject<Object> commandObject) {
+        Jedis jedis = this.getResource();
+        try {
+            this.dbIndex(jedis, dbIndex);
+            return jedis.getConnection().executeCommand(commandObject);
+        } finally {
+            this.returnResource(jedis);
+        }
+    }
+
+    public Object execCommand(CommandObject<Object> commandObject) {
+        return this.execCommand(null, commandObject);
     }
 }

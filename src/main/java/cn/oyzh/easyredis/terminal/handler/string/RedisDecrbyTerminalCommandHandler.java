@@ -1,49 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.string;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.string.RedisDecrbyCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/27
  */
 @Component
-public class RedisDecrbyTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisDecrbyCommand> {
+public class RedisDecrbyTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 3;
-    }
-
-    @Override
-    protected RedisDecrbyCommand parseCommand(String line, String[] words) {
-        RedisDecrbyCommand command = new RedisDecrbyCommand();
-        command.key(words[1]);
-        command.decrement(Long.parseLong(words[2]));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisDecrbyCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long value = terminal.client().decrBy(null, command.key(), command.decrement());
-            result.setResult(RedisTerminalUtil.formatOut(value));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "DECRBY";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.DECRBY;
     }
 
     @Override

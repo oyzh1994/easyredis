@@ -1,39 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.hash;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisHkeysCommandHandler extends RedisKeyTerminalCommandHandler<RedisKeyTerminalCommand> {
-
-    @Override
-    public TerminalExecuteResult execute(RedisKeyTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            Set<String> hkeys = terminal.client().hkeys(null, command.key());
-            result.setResult(RedisTerminalUtil.formatOut(hkeys));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "HKEYS";
-    }
+public class RedisHkeysCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandDesc() {
@@ -43,5 +21,10 @@ public class RedisHkeysCommandHandler extends RedisKeyTerminalCommandHandler<Red
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.HASH;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.HKEYS;
     }
 }

@@ -1,36 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
 @Component
-public class RedisLlenTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisKeyTerminalCommand> {
+public class RedisLlenTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public TerminalExecuteResult execute(RedisKeyTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long llen = terminal.client().llen(null, command.key());
-            result.setResult(RedisTerminalUtil.formatOut(llen));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "LLEN";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.LLEN;
     }
 
     @Override

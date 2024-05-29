@@ -1,50 +1,16 @@
 package cn.oyzh.easyredis.terminal.handler.key;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.key.RedisKeysTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
 @Component
-public class RedisKeysTerminalCommandHandler extends RedisTerminalCommandHandler<RedisKeysTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 2;
-    }
-
-    @Override
-    protected RedisKeysTerminalCommand parseCommand(String line, String[] words) {
-        RedisKeysTerminalCommand command = new RedisKeysTerminalCommand();
-        command.pattern(words[1]);
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisKeysTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            Set<String> keys = terminal.client().keys((Integer) null, command.pattern());
-            result.setResult(RedisTerminalUtil.formatOut(keys));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "KEYS";
-    }
+public class RedisKeysTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -54,6 +20,11 @@ public class RedisKeysTerminalCommandHandler extends RedisTerminalCommandHandler
     @Override
     public String commandDesc() {
         return "列举键";
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.KEYS;
     }
 
 }

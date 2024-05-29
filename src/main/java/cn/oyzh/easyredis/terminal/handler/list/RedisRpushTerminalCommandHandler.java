@@ -1,50 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.list.RedisRpushTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/21
  */
 @Component
-public class RedisRpushTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisRpushTerminalCommand> {
+public class RedisRpushTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length > 2;
-    }
-
-    @Override
-    protected RedisRpushTerminalCommand parseCommand(String line, String[] words) {
-        RedisRpushTerminalCommand command = new RedisRpushTerminalCommand();
-        command.key(words[1]);
-        command.values(ArrayUtil.sub(words, 2, words.length));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisRpushTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long count = terminal.client().rpush(null, command.key(), command.values());
-            result.setResult(RedisTerminalUtil.formatOut(count));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "RPUSH";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.RPUSH;
     }
 
     @Override

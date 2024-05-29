@@ -1,51 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.set;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.set.RedisSaddTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisSaddTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisSaddTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length > 2;
-    }
-
-    @Override
-    protected RedisSaddTerminalCommand parseCommand(String line, String[] words) {
-        RedisSaddTerminalCommand command = new RedisSaddTerminalCommand();
-        command.key(words[1]);
-        command.members(ArrayUtil.sub(words, 2, words.length));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisSaddTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long count = terminal.client().sadd(null, command.key(), command.members());
-            result.setResult(RedisTerminalUtil.formatOut(count));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "SADD";
-    }
+public class RedisSaddTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -60,5 +26,10 @@ public class RedisSaddTerminalCommandHandler extends RedisKeyTerminalCommandHand
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.SADD;
     }
 }

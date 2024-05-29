@@ -1,48 +1,20 @@
 package cn.oyzh.easyredis.terminal.handler.server;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.server.RedisWaitTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/31
  */
 @Component
-public class RedisWaitTerminalCommandHandler extends RedisTerminalCommandHandler<RedisWaitTerminalCommand> {
+public class RedisWaitTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) throws RuntimeException {
-        return words.length == 3;
-    }
-
-    @Override
-    protected RedisWaitTerminalCommand parseCommand(String line, String[] words) throws RuntimeException {
-        RedisWaitTerminalCommand command = new RedisWaitTerminalCommand();
-        command.replicas(Integer.parseInt(words[1]));
-        command.timeout(Long.parseLong(words[2]));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisWaitTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long waitReplicas = terminal.client().waitReplicas(command.replicas(), command.timeout());
-            result.setResult(RedisTerminalUtil.formatOut(waitReplicas));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "WAIT";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.WAIT;
     }
 
     @Override

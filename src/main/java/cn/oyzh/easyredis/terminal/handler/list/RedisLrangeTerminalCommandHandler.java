@@ -1,52 +1,21 @@
 package cn.oyzh.easyredis.terminal.handler.list;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.list.RedisLrangeTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisLrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisLrangeTerminalCommand> {
+public class RedisLrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 4;
-    }
-
-    @Override
-    protected RedisLrangeTerminalCommand parseCommand(String line, String[] words) {
-        RedisLrangeTerminalCommand command = new RedisLrangeTerminalCommand();
-        command.key(words[1]);
-        command.start(Integer.parseInt(words[2]));
-        command.end(Integer.parseInt(words[3]));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisLrangeTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            List<String> values = terminal.client().lrange(null, command.key(), command.start(), command.end());
-            result.setResult(RedisTerminalUtil.formatOut(values));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "LRANGE";
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.LRANGE;
     }
 
     @Override

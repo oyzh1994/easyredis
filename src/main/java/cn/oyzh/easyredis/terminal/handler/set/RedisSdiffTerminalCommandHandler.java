@@ -1,52 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.set;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.set.RedisSdiffTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisSdiffTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisSdiffTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length > 1;
-    }
-
-    @Override
-    protected RedisSdiffTerminalCommand parseCommand(String line, String[] words) {
-        RedisSdiffTerminalCommand command = new RedisSdiffTerminalCommand();
-        command.keys(ArrayUtil.sub(words, 1, words.length));
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisSdiffTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            Set<String> sdiff = terminal.client().sdiff(null, command.keys());
-            result.setResult(RedisTerminalUtil.formatOut(sdiff));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "SDIFF";
-    }
+public class RedisSdiffTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -61,5 +26,10 @@ public class RedisSdiffTerminalCommandHandler extends RedisKeyTerminalCommandHan
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.SDIFF;
     }
 }

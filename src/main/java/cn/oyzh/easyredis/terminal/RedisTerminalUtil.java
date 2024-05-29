@@ -1,9 +1,15 @@
 package cn.oyzh.easyredis.terminal;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.experimental.UtilityClass;
+import redis.clients.jedis.BuilderFactory;
+import redis.clients.jedis.CommandArguments;
+import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.GeoCoordinate;
+import redis.clients.jedis.Protocol;
 import redis.clients.jedis.resps.StreamEntry;
+import redis.clients.jedis.util.SafeEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,13 +32,24 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOut(Object value) {
-        if (value == null) {
+        // if (value == null) {
+        //     return "";
+        // }
+        // if (value instanceof Collection) {
+        //     return formatOut((Collection<?>) value);
+        // }
+        // if (value instanceof Boolean b) {
+        //     return "\"" + (b ? "1" : "0") + "\"";
+        // }
+        // return "\"" + value + "\"";
+        Object o = SafeEncoder.encodeObject(value);
+        if (o == null) {
             return "";
         }
-        if (value instanceof Boolean b) {
-            return "\"" + (b ? "1" : "0") + "\"";
+        if (o instanceof Collection<?> collection) {
+            return formatOut(collection);
         }
-        return "\"" + value + "\"";
+        return o.toString();
     }
 
     /**
@@ -108,5 +125,11 @@ public class RedisTerminalUtil {
                     .append("\"").append(value.getLatitude()).append("\"").append("\n");
         }
         return builder.toString();
+    }
+
+    public CommandObject<Object> getCommand(Protocol.Command command, TerminalCommand terminalCommand) {
+        CommandArguments arguments = new CommandArguments(command);
+        arguments.addObjects(terminalCommand.argsList());
+        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
     }
 }

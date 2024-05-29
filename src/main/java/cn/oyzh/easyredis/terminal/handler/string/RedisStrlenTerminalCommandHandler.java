@@ -1,37 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.string;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/27
  */
 @Component
-public class RedisStrlenTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisKeyTerminalCommand> {
-
-    @Override
-    public TerminalExecuteResult execute(RedisKeyTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            long strlen = terminal.client().strlen(null, command.key());
-            result.setResult(RedisTerminalUtil.formatOut(strlen));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "STRLEN";
-    }
+public class RedisStrlenTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandDesc() {
@@ -41,5 +21,10 @@ public class RedisStrlenTerminalCommandHandler extends RedisKeyTerminalCommandHa
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.STRLEN;
     }
 }

@@ -1,57 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.stream;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.stream.RedisXrangeTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.resps.StreamEntry;
-
-import java.util.List;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisXrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisXrangeTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 3 || words.length == 4;
-    }
-
-    @Override
-    protected RedisXrangeTerminalCommand parseCommand(String line, String[] words) {
-        RedisXrangeTerminalCommand command = new RedisXrangeTerminalCommand();
-        command.key(words[1]);
-        command.startOfString(words[2]);
-        command.endOfString(words[3]);
-        if (words.length == 5) {
-            command.count(Integer.valueOf(words[4]));
-        }
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisXrangeTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            List<StreamEntry> entries = terminal.client().xrange(null, command.key(), command.start(), command.end(), command.count());
-            result.setResult(RedisTerminalUtil.formatOutStream(entries));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "XRANGE";
-    }
+public class RedisXrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -66,5 +26,10 @@ public class RedisXrangeTerminalCommandHandler extends RedisKeyTerminalCommandHa
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STREAM;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.XRANGE;
     }
 }

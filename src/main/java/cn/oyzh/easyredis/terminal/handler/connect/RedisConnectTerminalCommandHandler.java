@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.terminal.handler.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
@@ -29,6 +30,11 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     @Override
     public String commandName() {
         return "connect";
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return null;
     }
 
     @Override

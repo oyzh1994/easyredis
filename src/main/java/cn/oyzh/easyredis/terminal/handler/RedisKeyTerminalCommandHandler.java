@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.command.RedisKeyTerminalCommand;
 import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
@@ -57,14 +56,7 @@ public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> 
     }
 
     @Override
-    protected C parseCommand(String line, String[] words) throws RuntimeException {
-        RedisKeyTerminalCommand command = new RedisKeyTerminalCommand();
-        command.key(words[1]);
-        return (C) command;
-    }
-
-    @Override
     protected boolean checkArgs(String[] words) {
-        return words.length == 2;
+        return words.length >= 2;
     }
 }

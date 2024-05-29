@@ -1,51 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.zset;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.zset.RedisZrevrankTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/26
  */
 @Component
-public class RedisZrevrankTerminalCommandHandler extends RedisKeyTerminalCommandHandler<RedisZrevrankTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 3;
-    }
-
-
-    @Override
-    protected RedisZrevrankTerminalCommand parseCommand(String line, String[] words) {
-        RedisZrevrankTerminalCommand command = new RedisZrevrankTerminalCommand();
-        command.key(words[1]);
-        command.member(words[2]);
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisZrevrankTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            Long zrevrank = terminal.client().zrevrank(null, command.key(), command.member());
-            result.setResult(RedisTerminalUtil.formatOut(zrevrank));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "ZREVRANK";
-    }
+public class RedisZrevrankTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandArg() {
@@ -60,5 +26,10 @@ public class RedisZrevrankTerminalCommandHandler extends RedisKeyTerminalCommand
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.ZREVRANK;
     }
 }

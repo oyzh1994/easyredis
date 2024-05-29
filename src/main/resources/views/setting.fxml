@@ -113,7 +113,7 @@
                             <Insets left="10" top="15"/>
                         </HBox.margin>
                     </FlexSlider>
-                    <ResetButton realWidth="100" realHeight="25" onAction="#resetOpacity">
+                    <ResetButton prefWidth="80" realHeight="25" onAction="#resetOpacity">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -173,7 +173,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontFamilyComboBox>
-                    <ResetButton realWidth="100" realHeight="25" onAction="#resetFontFamily">
+                    <ResetButton prefWidth="80" realHeight="25" onAction="#resetFontFamily">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -193,7 +193,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontSizeComboBox>
-                    <ResetButton realWidth="100" realHeight="25" onAction="#resetFontSize">
+                    <ResetButton prefWidth="80" realHeight="25" onAction="#resetFontSize">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -213,7 +213,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FontWeightComboBox>
-                    <ResetButton realWidth="100" realHeight="25" onAction="#resetFontWeight">
+                    <ResetButton prefWidth="80" realHeight="25" onAction="#resetFontWeight">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
                         </HBox.margin>
@@ -254,7 +254,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetButton realWidth="100" realHeight="25"
+                    <ResetButton prefWidth="80" realHeight="25"
                                  onAction="#resetFgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
@@ -276,7 +276,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetButton realWidth="100" realHeight="25"
+                    <ResetButton prefWidth="80" realHeight="25"
                                  onAction="#resetBgColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
@@ -298,7 +298,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </FlexColorPicker>
-                    <ResetButton realWidth="100" realHeight="25"
+                    <ResetButton prefWidth="80" realHeight="25"
                                  onAction="#resetAccentColor">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
@@ -323,7 +323,7 @@
                             <Insets left="10" top="10"/>
                         </HBox.margin>
                     </LocaleComboBox>
-                    <ResetButton realWidth="100" realHeight="25"
+                    <ResetButton prefWidth="80" realHeight="25"
                                  onAction="#resetLocale">
                         <HBox.margin>
                             <Insets left="5" top="15"/>
@@ -339,7 +339,7 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SaveButton onAction="#saveSetting">
             <HBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets left="130" top="10"/>
             </HBox.margin>
         </SaveButton>
         <CancelButton>

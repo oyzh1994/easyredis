@@ -1,61 +1,17 @@
 package cn.oyzh.easyredis.terminal.handler.hash;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
-import cn.oyzh.easyredis.terminal.command.hash.RedisHrandfieldTerminalCommand;
 import cn.oyzh.easyredis.terminal.handler.RedisKeyTerminalCommandHandler;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
+import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/7/27
  */
 @Component
-public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandler<RedisHrandfieldTerminalCommand> {
-
-    @Override
-    protected boolean checkArgs(String[] words) {
-        return words.length == 2 || words.length == 3 || words.length == 4;
-    }
-
-    @Override
-    protected RedisHrandfieldTerminalCommand parseCommand(String line, String[] words) {
-        RedisHrandfieldTerminalCommand command = new RedisHrandfieldTerminalCommand();
-        command.key(words[1]);
-        if (words.length == 3) {
-            command.count(Integer.valueOf(words[2]));
-        } else if (words.length == 4) {
-            command.count(Integer.valueOf(words[2]));
-            command.withValuesOfString(words[3]);
-        }
-        return command;
-    }
-
-    @Override
-    public TerminalExecuteResult execute(RedisHrandfieldTerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            if (command.count() == null) {
-                String hrandfield = terminal.client().hrandfield(null, command.key());
-                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
-            } else if (command.withValues() == null) {
-                List<String> hrandfield = terminal.client().hrandfield(null, command.key(), command.count());
-                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
-            } else {
-                List<Map.Entry<String, String>> hrandfield = terminal.client().hrandfieldWithValues(null, command.key(), command.count());
-                result.setResult(RedisTerminalUtil.formatOut(hrandfield));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
+public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     public String commandName() {
@@ -75,5 +31,10 @@ public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandle
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.HASH;
+    }
+
+    @Override
+    protected Protocol.Command getCommandType() {
+        return Protocol.Command.HRANDFIELD;
     }
 }
