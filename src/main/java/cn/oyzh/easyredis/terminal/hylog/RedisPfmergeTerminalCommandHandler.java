@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.hyperloglog;
+package cn.oyzh.easyredis.terminal.hylog;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.terminal.RedisKeyTerminalCommandHandler;
@@ -11,16 +11,17 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/26
  */
 @Component
-public class RedisPfaddTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
+public class RedisPfmergeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
+
 
     @Override
     public String commandArg() {
-        return "key value [value...]";
+        return "destkey sourcekey [sourcekey...]";
     }
 
     @Override
     public String commandDesc() {
-        return "添加hyperloglog统计值";
+        return "合并多个hyperloglog";
     }
 
     @Override
@@ -30,6 +31,6 @@ public class RedisPfaddTerminalCommandHandler extends RedisKeyTerminalCommandHan
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.PFADD;
+        return Protocol.Command.PFMERGE;
     }
 }

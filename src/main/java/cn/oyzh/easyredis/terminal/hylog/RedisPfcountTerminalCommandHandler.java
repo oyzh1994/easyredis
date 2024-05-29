@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.hyperloglog;
+package cn.oyzh.easyredis.terminal.hylog;
 
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.terminal.RedisKeyTerminalCommandHandler;

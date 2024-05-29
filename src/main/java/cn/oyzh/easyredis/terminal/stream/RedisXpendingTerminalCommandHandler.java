@@ -11,7 +11,7 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/26
  */
 @Component
-public class RedisXdelTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
+public class RedisXpendingTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
     protected RedisKeyType getKeyType() {
@@ -20,6 +20,6 @@ public class RedisXdelTerminalCommandHandler extends RedisKeyTerminalCommandHand
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.XDEL;
+        return Protocol.Command.XPENDING;
     }
 }

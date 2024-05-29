@@ -10,10 +10,10 @@ import redis.clients.jedis.Protocol;
  * @since 2023/08/02
  */
 @Component
-public class RedisPublishTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisSunsubscribeTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.PUBLISH;
+        return Protocol.Command.SUNSUBSCRIBE;
     }
 }

@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisXaddTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key id filed value [field value...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "添加stream消息";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STREAM;
     }

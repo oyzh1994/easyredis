@@ -14,11 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisXinfoTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取stream信息";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STREAM;
     }

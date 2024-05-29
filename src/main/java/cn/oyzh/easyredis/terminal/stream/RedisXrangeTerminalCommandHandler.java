@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisXrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key start end [count]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取stream区间内的消息";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STREAM;
     }
