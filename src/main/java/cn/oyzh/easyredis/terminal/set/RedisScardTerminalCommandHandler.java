@@ -14,11 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisScardTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取set成员数量";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }

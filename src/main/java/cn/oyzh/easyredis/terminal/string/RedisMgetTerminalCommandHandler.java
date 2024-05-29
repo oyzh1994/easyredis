@@ -19,16 +19,6 @@ public class RedisMgetTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandArg() {
-        return "key [key...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取多个string值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

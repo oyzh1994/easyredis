@@ -13,11 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisExistsTerminalCommandHandler extends RedisNKeysTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "键是否存在";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.EXISTS;
     }

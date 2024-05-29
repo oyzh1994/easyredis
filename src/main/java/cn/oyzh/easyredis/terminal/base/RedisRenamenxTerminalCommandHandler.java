@@ -17,5 +17,4 @@ public class RedisRenamenxTerminalCommandHandler extends RedisKeyTerminalCommand
         return Protocol.Command.RENAMENX;
     }
 
-
 }

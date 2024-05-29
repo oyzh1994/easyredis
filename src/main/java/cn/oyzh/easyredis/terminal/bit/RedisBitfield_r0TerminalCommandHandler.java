@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.terminal.bit;
 
+import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.terminal.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,11 @@ import redis.clients.jedis.Protocol;
  */
 @Component
 public class RedisBitfield_r0TerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
+
+    @Override
+    protected RedisKeyType getKeyType() {
+        return RedisKeyType.STRING;
+    }
 
     @Override
     protected Protocol.Command getCommandType() {

@@ -20,6 +20,6 @@ public class RedisZinterstoreTerminalCommandHandler extends RedisKeyTerminalComm
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.ZINTER;
+        return Protocol.Command.ZINTERSTORE;
     }
 }

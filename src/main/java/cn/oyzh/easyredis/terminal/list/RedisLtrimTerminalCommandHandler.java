@@ -19,16 +19,6 @@ public class RedisLtrimTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    public String commandArg() {
-        return "key start stop";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "剪切list";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

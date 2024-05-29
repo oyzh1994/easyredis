@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisZrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key start end";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取zset指定区间成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

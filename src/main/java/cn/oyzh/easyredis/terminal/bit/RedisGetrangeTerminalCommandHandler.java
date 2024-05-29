@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisGetrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key startOffset endOffset";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取string指定区间值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

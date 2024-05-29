@@ -13,11 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisPingTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "检测连接";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.PING;
     }

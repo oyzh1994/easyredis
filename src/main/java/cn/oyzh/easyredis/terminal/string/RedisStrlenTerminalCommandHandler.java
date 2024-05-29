@@ -14,11 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisStrlenTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取string值长度";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

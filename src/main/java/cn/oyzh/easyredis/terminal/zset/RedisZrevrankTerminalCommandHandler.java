@@ -19,11 +19,6 @@ public class RedisZrevrankTerminalCommandHandler extends RedisKeyTerminalCommand
     }
 
     @Override
-    public String commandDesc() {
-        return "获取zset成员排名，从大小到小排序";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

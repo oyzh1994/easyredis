@@ -16,9 +16,4 @@ public class RedisRandomkeyTerminalCommandHandler extends RedisTerminalCommandHa
     protected Protocol.Command getCommandType() {
         return Protocol.Command.RANDOMKEY;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取随机key";
-    }
 }

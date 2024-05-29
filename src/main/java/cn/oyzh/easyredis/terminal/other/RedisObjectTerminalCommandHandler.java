@@ -13,11 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisObjectTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取键编码信息";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.OBJECT;
     }

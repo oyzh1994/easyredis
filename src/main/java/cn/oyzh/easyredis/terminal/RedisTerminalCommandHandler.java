@@ -1,5 +1,8 @@
 package cn.oyzh.easyredis.terminal;
 
+import cn.hutool.core.util.StrUtil;
+import cn.oyzh.easyredis.command.RedisCommand;
+import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.terminal.command.BaseTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -13,10 +16,6 @@ import redis.clients.jedis.Protocol;
  */
 public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, RedisTerminalTextArea> {
 
-    @Override
-    public String commandSupportedVersion() {
-        return RedisVersionUtil.getSupportedVersion(this.commandName());
-    }
 
     @Override
     public TerminalExecuteResult execute(C command, RedisTerminalTextArea terminal) {
@@ -37,5 +36,30 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
         return this.getCommandType().name();
     }
 
+    @Override
+    public String commandHelp(RedisTerminalTextArea terminal) {
+        StringBuilder builder = new StringBuilder();
+        if (StrUtil.isNotBlank(this.commandArg())) {
+            builder.append(" ").append(this.commandArg());
+        }
+        return builder.isEmpty() ? "" : builder.substring(1);
+    }
+
+    @Override
+    public String commandArg() {
+       return RedisCommandUtil.getCommandArgs(this.commandName());
+    }
+
+    @Override
+    public String commandDesc() {
+       return RedisCommandUtil.getCommandDesc(this.commandName());
+    }
+
+    @Override
+    public String commandSupportedVersion() {
+       return RedisCommandUtil.getCommandAvailable(this.commandName());
+    }
+
     protected abstract Protocol.Command getCommandType();
+
 }

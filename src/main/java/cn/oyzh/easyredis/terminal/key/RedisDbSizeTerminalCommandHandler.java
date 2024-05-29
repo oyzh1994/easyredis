@@ -16,9 +16,4 @@ public class RedisDbSizeTerminalCommandHandler extends RedisTerminalCommandHandl
     protected Protocol.Command getCommandType() {
         return Protocol.Command.DBSIZE;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取键数量";
-    }
 }

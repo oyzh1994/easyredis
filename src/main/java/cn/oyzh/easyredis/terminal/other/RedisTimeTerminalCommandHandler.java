@@ -13,11 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisTimeTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取服务器时间";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.TIME;
     }

@@ -16,14 +16,4 @@ public class RedisInfoTerminalCommandHandler extends RedisTerminalCommandHandler
     protected Protocol.Command getCommandType() {
         return Protocol.Command.INFO;
     }
-
-    @Override
-    public String commandArg() {
-        return "[section]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "服务信息";
-    }
 }

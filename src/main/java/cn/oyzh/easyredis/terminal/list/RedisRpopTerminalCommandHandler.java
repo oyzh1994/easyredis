@@ -19,16 +19,6 @@ public class RedisRpopTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandArg() {
-        return "key [count]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "从list尾部弹出值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

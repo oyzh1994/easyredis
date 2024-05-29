@@ -17,14 +17,4 @@ public class RedisRenameTerminalCommandHandler extends RedisKeyTerminalCommandHa
         return Protocol.Command.RENAME;
     }
 
-    @Override
-    public String commandArg() {
-        return "key newkey";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "重命名键";
-    }
-
 }

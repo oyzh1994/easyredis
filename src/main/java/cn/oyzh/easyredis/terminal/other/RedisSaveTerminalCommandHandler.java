@@ -16,9 +16,4 @@ public class RedisSaveTerminalCommandHandler extends RedisTerminalCommandHandler
     protected Protocol.Command getCommandType() {
         return Protocol.Command.SAVE;
     }
-
-    @Override
-    public String commandDesc() {
-        return "将数据保存到磁盘";
-    }
 }

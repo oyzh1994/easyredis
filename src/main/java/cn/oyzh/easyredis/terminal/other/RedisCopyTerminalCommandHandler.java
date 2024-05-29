@@ -13,16 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisCopyTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "source destination [DB destination-db] [REPLACE]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "复制键";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.COPY;
     }

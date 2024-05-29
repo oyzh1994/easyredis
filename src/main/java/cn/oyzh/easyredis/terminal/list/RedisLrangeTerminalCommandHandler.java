@@ -19,16 +19,6 @@ public class RedisLrangeTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key start end";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取list指定区间内的值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

@@ -19,16 +19,6 @@ public class RedisZincrbyTerminalCommandHandler extends RedisKeyTerminalCommandH
     }
 
     @Override
-    public String commandArg() {
-        return "key increment member";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "添加zset成员分数";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

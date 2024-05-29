@@ -19,16 +19,6 @@ public class RedisZdiffstoreTerminalCommandHandler extends RedisKeyTerminalComma
     }
 
     @Override
-    public String commandArg() {
-        return "destination numkeys key [key ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取多个zset的差集，并保存到目标zset";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

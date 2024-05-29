@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisGeodistTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key member1 member2 [M | KM | FT | MI]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "计算geo两个坐标的距离";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

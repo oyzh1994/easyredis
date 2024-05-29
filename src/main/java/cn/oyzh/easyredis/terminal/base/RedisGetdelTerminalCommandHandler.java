@@ -16,5 +16,4 @@ public class RedisGetdelTerminalCommandHandler extends RedisKeyTerminalCommandHa
     protected Protocol.Command getCommandType() {
         return Protocol.Command.GETDEL;
     }
-
 }

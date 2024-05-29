@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisZdiffTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "numkeys key [key ...] [WITHSCORES]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取多个zset的差集";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

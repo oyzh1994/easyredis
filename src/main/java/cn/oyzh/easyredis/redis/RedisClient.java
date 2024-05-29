@@ -4721,6 +4721,36 @@ public class RedisClient {
     }
 
     /**
+     * 执行命令
+     *
+     * @param dbIndex       库
+     * @param commandObject 命令对象
+     * @return 结果
+     */
+    public Object execCommand(Integer dbIndex, CommandObject<Object> commandObject) {
+        if (commandObject == null) {
+            return null;
+        }
+        Jedis jedis = this.getResource();
+        try {
+            this.dbIndex(jedis, dbIndex);
+            return jedis.getConnection().executeCommand(commandObject);
+        } finally {
+            this.returnResource(jedis);
+        }
+    }
+
+    /**
+     * 执行命令
+     *
+     * @param commandObject 命令对象
+     * @return 结果
+     */
+    public Object execCommand(CommandObject<Object> commandObject) {
+        return this.execCommand(null, commandObject);
+    }
+
+    /**
      * 获取服务端版本号
      *
      * @return 服务端版本号
@@ -4736,19 +4766,5 @@ public class RedisClient {
      */
     public String infoName() {
         return this.redisInfo.getName();
-    }
-
-    public Object execCommand(Integer dbIndex, CommandObject<Object> commandObject) {
-        Jedis jedis = this.getResource();
-        try {
-            this.dbIndex(jedis, dbIndex);
-            return jedis.getConnection().executeCommand(commandObject);
-        } finally {
-            this.returnResource(jedis);
-        }
-    }
-
-    public Object execCommand(CommandObject<Object> commandObject) {
-        return this.execCommand(null, commandObject);
     }
 }

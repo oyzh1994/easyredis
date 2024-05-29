@@ -13,17 +13,6 @@ import redis.clients.jedis.Protocol;
 @Component
 public class RedisPfmergeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
-
-    @Override
-    public String commandArg() {
-        return "destkey sourcekey [sourcekey...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "合并多个hyperloglog";
-    }
-
     @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;

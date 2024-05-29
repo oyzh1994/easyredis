@@ -19,11 +19,6 @@ public class RedisZcardTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    public String commandDesc() {
-        return "获取zset成员数量";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

@@ -16,30 +16,7 @@ import redis.clients.jedis.Protocol;
 public class RedisBgrewriteaofTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            String msg = terminal.client().bgrewriteaof();
-            result.setResult(RedisTerminalUtil.formatOut(msg));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "BGREWRITEAOF";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.BGREWRITEAOF;
-    }
-
-    @Override
-    public String commandDesc() {
-        return "执行aof文件重写";
     }
 }

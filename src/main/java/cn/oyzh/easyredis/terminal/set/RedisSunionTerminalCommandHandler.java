@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSunionTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key [key...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取多个set的并集";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }

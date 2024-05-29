@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisPfcountTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key [key...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取hyperloglog的统计值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

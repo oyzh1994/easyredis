@@ -16,11 +16,6 @@ import java.util.Set;
 public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> extends RedisTerminalCommandHandler<C> {
 
     @Override
-    public String commandArg() {
-        return "key";
-    }
-
-    @Override
     public boolean completion(String line, RedisTerminalTextArea terminal) {
         String[] words = TerminalUtil.split(line);
         if (words.length >= 1) {

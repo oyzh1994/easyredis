@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.terminal.base;
 
-import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.terminal.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
@@ -16,15 +15,5 @@ public class RedisGetTerminalCommandHandler extends RedisKeyTerminalCommandHandl
     @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.GET;
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取string值";
-    }
-
-    @Override
-    protected RedisKeyType getKeyType() {
-        return RedisKeyType.STRING;
     }
 }

@@ -16,9 +16,4 @@ public class RedisTypeTerminalCommandHandler extends RedisKeyTerminalCommandHand
     protected Protocol.Command getCommandType() {
         return Protocol.Command.TYPE;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取键类型";
-    }
 }

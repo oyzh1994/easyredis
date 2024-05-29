@@ -19,16 +19,6 @@ public class RedisLremTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandArg() {
-        return "key count value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "删除list指定值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

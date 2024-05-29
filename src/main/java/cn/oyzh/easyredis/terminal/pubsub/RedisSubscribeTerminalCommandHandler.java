@@ -12,7 +12,6 @@ import redis.clients.jedis.Protocol;
 @Component
 public class RedisSubscribeTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
-
     @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.SUBSCRIBE;

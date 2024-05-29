@@ -14,21 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisHrandfieldCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandName() {
-        return "HRANDFIELD";
-    }
-
-    @Override
-    public String commandArg() {
-        return "key [count [WITHVALUES]]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "返回随机hash字段";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.HASH;
     }

@@ -17,9 +17,4 @@ public class RedisPersistTerminalCommandHandler extends RedisKeyTerminalCommandH
         return Protocol.Command.PERSIST;
     }
 
-    @Override
-    public String commandDesc() {
-        return "持久化键";
-    }
-
 }

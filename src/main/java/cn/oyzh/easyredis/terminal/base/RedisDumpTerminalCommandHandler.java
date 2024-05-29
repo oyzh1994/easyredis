@@ -16,6 +16,4 @@ public class RedisDumpTerminalCommandHandler extends RedisNKeysTerminalCommandHa
     protected Protocol.Command getCommandType() {
         return Protocol.Command.DUMP;
     }
-
-
 }

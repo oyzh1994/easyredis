@@ -16,9 +16,4 @@ public class RedisPttlTerminalCommandHandler extends RedisKeyTerminalCommandHand
     protected Protocol.Command getCommandType() {
         return Protocol.Command.PTTL;
     }
-
-    @Override
-    public String commandDesc() {
-        return "以毫秒值获取存活时间";
-    }
 }

@@ -19,16 +19,6 @@ public class RedisMsetnxTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key value [key value ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置多个string值，仅键不存在时";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

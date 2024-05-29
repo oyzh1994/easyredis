@@ -24,11 +24,6 @@ public class RedisZrandmemberCommandHandler extends RedisKeyTerminalCommandHandl
     }
 
     @Override
-    public String commandDesc() {
-        return "随机返回zset成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

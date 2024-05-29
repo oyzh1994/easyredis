@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSinterstoreTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "destkey key [key...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取多个set的交集，并保存到目标set";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }

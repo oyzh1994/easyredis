@@ -16,4 +16,5 @@ public class RedisAuthTerminalCommandHandler extends RedisTerminalCommandHandler
     protected Protocol.Command getCommandType() {
         return Protocol.Command.AUTH;
     }
+
 }

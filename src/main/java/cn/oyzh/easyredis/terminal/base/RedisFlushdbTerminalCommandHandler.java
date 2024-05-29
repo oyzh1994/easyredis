@@ -16,9 +16,4 @@ public class RedisFlushdbTerminalCommandHandler extends RedisTerminalCommandHand
     protected Protocol.Command getCommandType() {
         return Protocol.Command.FLUSHDB;
     }
-
-    @Override
-    public String commandDesc() {
-        return "清空数据库";
-    }
 }

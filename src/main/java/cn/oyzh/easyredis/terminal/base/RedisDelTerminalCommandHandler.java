@@ -16,10 +16,4 @@ public class RedisDelTerminalCommandHandler extends RedisNKeysTerminalCommandHan
     protected Protocol.Command getCommandType() {
         return Protocol.Command.DEL;
     }
-
-    @Override
-    public String commandDesc() {
-        return "删除键";
-    }
-
 }

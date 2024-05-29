@@ -14,11 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisZscoreTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "获取zset成员分数";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

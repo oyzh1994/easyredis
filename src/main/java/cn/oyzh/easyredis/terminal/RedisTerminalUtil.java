@@ -32,9 +32,9 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOut(Object value) {
-        // if (value == null) {
-        //     return "";
-        // }
+        if (value == null) {
+            return "";
+        }
         // if (value instanceof Collection) {
         //     return formatOut((Collection<?>) value);
         // }
@@ -127,9 +127,48 @@ public class RedisTerminalUtil {
         return builder.toString();
     }
 
+    /**
+     * 获取命令
+     *
+     * @param command         命令
+     * @param terminalCommand 终端命令
+     * @return 命令对象
+     */
     public CommandObject<Object> getCommand(Protocol.Command command, TerminalCommand terminalCommand) {
         CommandArguments arguments = new CommandArguments(command);
         arguments.addObjects(terminalCommand.argsList());
+        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
+    }
+
+    /**
+     * 获取命令
+     *
+     * @param command 命令
+     * @param args    参数
+     * @return 命令对象
+     */
+    public CommandObject<Object> getCommand(Protocol.Command command, String[] args) {
+        CommandArguments arguments = new CommandArguments(command);
+        if (args != null) {
+            for (String arg : args) {
+                arguments.add(arg);
+            }
+        }
+        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
+    }
+
+    /**
+     * 获取命令
+     *
+     * @param command 命令
+     * @param arg    参数
+     * @return 命令对象
+     */
+    public CommandObject<Object> getCommand(Protocol.Command command, String arg) {
+        CommandArguments arguments = new CommandArguments(command);
+        if (arg != null) {
+            arguments.add(arg);
+        }
         return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
     }
 }

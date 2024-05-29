@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSetnxTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置string值，仅键不存在时";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

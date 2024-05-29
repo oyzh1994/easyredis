@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisZremCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key member [member...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "删除zset成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

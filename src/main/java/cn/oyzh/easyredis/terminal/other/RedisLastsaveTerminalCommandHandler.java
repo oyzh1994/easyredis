@@ -16,9 +16,4 @@ public class RedisLastsaveTerminalCommandHandler extends RedisTerminalCommandHan
     protected Protocol.Command getCommandType() {
         return Protocol.Command.LASTSAVE;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取最后一次保存数据到磁盘的时间";
-    }
 }

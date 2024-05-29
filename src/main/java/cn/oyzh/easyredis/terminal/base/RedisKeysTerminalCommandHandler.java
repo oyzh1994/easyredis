@@ -13,18 +13,7 @@ import redis.clients.jedis.Protocol;
 public class RedisKeysTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "pattern";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "列举键";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.KEYS;
     }
-
 }

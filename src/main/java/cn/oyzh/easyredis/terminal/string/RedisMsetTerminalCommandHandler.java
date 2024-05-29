@@ -12,15 +12,6 @@ import redis.clients.jedis.Protocol;
  */
 @Component
 public class RedisMsetTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
-    @Override
-    public String commandArg() {
-        return "key value [key value ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置多个string值";
-    }
 
     @Override
     protected RedisKeyType getKeyType() {

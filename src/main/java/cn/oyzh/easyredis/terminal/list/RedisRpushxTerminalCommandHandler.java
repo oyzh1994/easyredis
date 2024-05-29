@@ -19,16 +19,6 @@ public class RedisRpushxTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key value [value ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "从右侧推送数据到list(list需要存在)";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

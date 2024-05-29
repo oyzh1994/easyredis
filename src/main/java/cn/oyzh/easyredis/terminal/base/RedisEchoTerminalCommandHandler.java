@@ -13,11 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisEchoTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "打印内容";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.ECHO;
     }

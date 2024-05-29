@@ -19,16 +19,6 @@ public class RedisDecrbyTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key decrement";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "减少string值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

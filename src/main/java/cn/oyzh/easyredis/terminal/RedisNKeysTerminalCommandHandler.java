@@ -16,11 +16,6 @@ import java.util.Set;
 public abstract class RedisNKeysTerminalCommandHandler<C extends TerminalCommand> extends RedisTerminalCommandHandler<C> {
 
     @Override
-    public String commandArg() {
-        return "key [key...]";
-    }
-
-    @Override
     public boolean completion(String line, RedisTerminalTextArea terminal) {
         String[] words = TerminalUtil.split(line);
         if (words.length >= 1) {
@@ -46,17 +41,4 @@ public abstract class RedisNKeysTerminalCommandHandler<C extends TerminalCommand
     protected RedisKeyType getKeyType() {
         return null;
     }
-
-    //
-    // @Override
-    // protected C parseCommand(String line, String[] words) throws RuntimeException {
-    //     RedisNKeysTerminalCommand command = new RedisNKeysTerminalCommand();
-    //     command.keys(ArrUtil.sub(words, 1, words.length - 1));
-    //     return (C) command;
-    // }
-    //
-    // @Override
-    // protected boolean checkArgs(String[] words) {
-    //     return words.length > 1;
-    // }
 }

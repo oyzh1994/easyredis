@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key [count]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "从set头部弹出成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }

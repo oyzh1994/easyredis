@@ -19,16 +19,6 @@ public class RedisZrankTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    public String commandArg() {
-        return "key member";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取zset成员排名";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

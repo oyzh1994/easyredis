@@ -16,9 +16,4 @@ public class RedisTtlTerminalCommandHandler extends RedisKeyTerminalCommandHandl
     protected Protocol.Command getCommandType() {
         return Protocol.Command.TTL;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取键剩余存活时间";
-    }
 }

@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisGeohashTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key [member [member ...]]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取geo坐标hash值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

@@ -16,30 +16,7 @@ import redis.clients.jedis.Protocol;
 public class RedisBgsaveTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextArea terminal) {
-        TerminalExecuteResult result = new TerminalExecuteResult();
-        try {
-            String msg = terminal.client().bgsave();
-            result.setResult(RedisTerminalUtil.formatOut(msg));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result.setException(ex);
-        }
-        return result;
-    }
-
-    @Override
-    public String commandName() {
-        return "BGSAVE";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.BGSAVE;
-    }
-
-    @Override
-    public String commandDesc() {
-        return "将数据异步保存到磁盘";
     }
 }

@@ -16,14 +16,4 @@ public class RedisWaitTerminalCommandHandler extends RedisTerminalCommandHandler
     protected Protocol.Command getCommandType() {
         return Protocol.Command.WAIT;
     }
-
-    @Override
-    public String commandArg() {
-        return "numreplicas timeout";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "等待副本写入";
-    }
 }

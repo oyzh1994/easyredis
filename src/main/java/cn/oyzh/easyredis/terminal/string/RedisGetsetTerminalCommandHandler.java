@@ -13,20 +13,9 @@ import redis.clients.jedis.Protocol;
 @Component
 public class RedisGetsetTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
-
     @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.GETSET;
-    }
-
-    @Override
-    public String commandArg() {
-        return "key value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置string值，并返回旧值";
     }
 
     @Override

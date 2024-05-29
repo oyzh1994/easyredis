@@ -19,11 +19,6 @@ public class RedisDecrTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandDesc() {
-        return "减少string值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

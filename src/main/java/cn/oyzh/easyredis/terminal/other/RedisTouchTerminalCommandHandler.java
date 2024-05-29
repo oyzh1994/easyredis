@@ -16,15 +16,4 @@ public class RedisTouchTerminalCommandHandler extends RedisNKeysTerminalCommandH
     protected Protocol.Command getCommandType() {
         return Protocol.Command.TOUCH;
     }
-
-    @Override
-    public String commandArg() {
-        return "key [key ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "修改键的最后访问时间";
-    }
-
 }

@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisIncrbyfloatTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key increment";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "增加string值，以浮点形式";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

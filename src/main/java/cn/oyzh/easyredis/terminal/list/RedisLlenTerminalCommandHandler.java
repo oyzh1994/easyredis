@@ -19,11 +19,6 @@ public class RedisLlenTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandDesc() {
-        return "获取列表数据个数";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

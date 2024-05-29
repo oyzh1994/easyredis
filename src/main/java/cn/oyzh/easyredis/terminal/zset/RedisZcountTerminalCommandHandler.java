@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisZcountTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key min max";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取zset指定分数区间成员数量";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

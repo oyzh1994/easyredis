@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSetrangeTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key offset value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置string指定位置值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

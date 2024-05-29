@@ -1,8 +1,11 @@
 package cn.oyzh.easyredis.terminal.other;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.Protocol;
 
 /**
@@ -18,12 +21,9 @@ public class RedisSlowlogTerminalCommandHandler extends RedisTerminalCommandHand
     }
 
     @Override
-    public String commandArg() {
-        return "[entries]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取慢查日志";
+    public String commandHelp(RedisTerminalTextArea terminal) {
+        CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
+        Object obj = terminal.client().execCommand(object);
+        return RedisTerminalUtil.formatOut(obj);
     }
 }

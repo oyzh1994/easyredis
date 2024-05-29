@@ -16,9 +16,4 @@ public class RedisRoleTerminalCommandHandler extends RedisTerminalCommandHandler
     protected Protocol.Command getCommandType() {
         return Protocol.Command.ROLE;
     }
-
-    @Override
-    public String commandDesc() {
-        return "获取当前服务的角色";
-    }
 }

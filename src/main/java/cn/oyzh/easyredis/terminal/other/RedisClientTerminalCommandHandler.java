@@ -1,8 +1,12 @@
 package cn.oyzh.easyredis.terminal.other;
 
+import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.Protocol;
 
 /**
@@ -15,6 +19,13 @@ public class RedisClientTerminalCommandHandler extends RedisTerminalCommandHandl
     @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.CLIENT;
+    }
+
+    @Override
+    public String commandHelp(RedisTerminalTextArea terminal) {
+        CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
+        Object obj = terminal.client().execCommand(object);
+        return RedisTerminalUtil.formatOut(obj);
     }
 
 }

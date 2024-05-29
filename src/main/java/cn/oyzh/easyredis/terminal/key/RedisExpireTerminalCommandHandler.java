@@ -16,15 +16,4 @@ public class RedisExpireTerminalCommandHandler extends RedisKeyTerminalCommandHa
     protected Protocol.Command getCommandType() {
         return Protocol.Command.EXPIRE;
     }
-
-    @Override
-    public String commandArg() {
-        return "key seconds [NX | XX | GT | LT]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置过期时间";
-    }
-
 }

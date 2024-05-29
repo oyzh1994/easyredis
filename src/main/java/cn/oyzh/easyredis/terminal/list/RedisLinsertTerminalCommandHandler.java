@@ -19,16 +19,6 @@ public class RedisLinsertTerminalCommandHandler extends RedisKeyTerminalCommandH
     }
 
     @Override
-    public String commandArg() {
-        return "key BEFORE|AFTER pivot value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "往list指定值位置插入值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

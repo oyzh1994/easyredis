@@ -19,16 +19,6 @@ public class RedisBrpopTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    public String commandArg() {
-        return "timeout key [key...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "从list尾部弹出值，直到超时";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

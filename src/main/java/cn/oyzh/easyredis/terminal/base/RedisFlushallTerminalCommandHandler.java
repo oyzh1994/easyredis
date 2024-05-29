@@ -16,9 +16,4 @@ public class RedisFlushallTerminalCommandHandler extends RedisTerminalCommandHan
     protected Protocol.Command getCommandType() {
         return Protocol.Command.FLUSHALL;
     }
-
-    @Override
-    public String commandDesc() {
-        return "清空所有数据";
-    }
 }

@@ -19,16 +19,6 @@ public class RedisIncrbyTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key increment";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "增加string值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

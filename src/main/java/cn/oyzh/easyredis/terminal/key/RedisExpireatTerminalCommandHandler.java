@@ -13,16 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisExpireatTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key unix-time-seconds [NX | XX | GT | LT]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置到期期时间";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.EXPIREAT;
     }

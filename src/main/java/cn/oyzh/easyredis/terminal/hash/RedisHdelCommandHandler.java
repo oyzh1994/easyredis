@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisHdelCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key field [field ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "删除hash字段";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.HASH;
     }

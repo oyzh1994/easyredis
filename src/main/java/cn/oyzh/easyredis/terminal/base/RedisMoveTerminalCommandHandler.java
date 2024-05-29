@@ -18,11 +18,6 @@ public class RedisMoveTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    public String commandDesc() {
-        return "移动键";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.MOVE;
     }

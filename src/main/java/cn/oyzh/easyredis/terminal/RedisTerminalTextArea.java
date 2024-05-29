@@ -11,10 +11,13 @@ import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextArea;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * redis终端文本域
@@ -25,10 +28,15 @@ import lombok.experimental.Accessors;
 public class RedisTerminalTextArea extends TerminalTextArea {
 
     {
+        this.keyHandler(RedisTerminalKeyHandler.INSTANCE);
+        this.helpHandler(RedisTerminalHelpHandler.INSTANCE);
+        this.mouseHandler(RedisTerminalMouseHandler.INSTANCE);
         this.historyHandler(RedisTerminalHistoryHandler.INSTANCE);
         this.completeHandler(RedisTerminalCompleteHandler.INSTANCE);
-        this.keyHandler(RedisTerminalKeyHandler.INSTANCE);
-        this.mouseHandler(RedisTerminalMouseHandler.INSTANCE);
+
+        // 设置内容提示符
+        List<String> commands = TerminalManager.listCommands();
+        super.setContentPrompts(commands);
     }
 
     /**

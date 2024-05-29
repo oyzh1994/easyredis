@@ -17,14 +17,4 @@ public class RedisPexpireatTerminalCommandHandler extends RedisKeyTerminalComman
         return Protocol.Command.PEXPIREAT;
     }
 
-    @Override
-    public String commandArg() {
-        return "key millisecondsTimestamp [condition]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置到期期时间，以毫秒为单位";
-    }
-
 }

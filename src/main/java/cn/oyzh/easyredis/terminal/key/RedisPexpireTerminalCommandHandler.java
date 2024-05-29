@@ -17,14 +17,4 @@ public class RedisPexpireTerminalCommandHandler extends RedisKeyTerminalCommandH
         return Protocol.Command.PEXPIRE;
     }
 
-    @Override
-    public String commandArg() {
-        return "key milliseconds [condition]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置过期时间，以毫秒为单位";
-    }
-
 }

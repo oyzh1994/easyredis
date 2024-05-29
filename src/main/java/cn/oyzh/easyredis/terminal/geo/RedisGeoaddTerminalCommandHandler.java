@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisGeoaddTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key [NX | XX] [CH] longitude latitude member [longitude latitude member ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "添加geo坐标";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

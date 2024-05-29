@@ -19,16 +19,6 @@ public class RedisLindexTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    public String commandArg() {
-        return "key index";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "获取list指定索引处的值";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.LIST;
     }

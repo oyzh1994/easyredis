@@ -13,16 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSetbitTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key offset value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置bit值";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.SETBIT;
     }

@@ -38,11 +38,6 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     }
 
     @Override
-    public String commandDesc() {
-        return "开始连接";
-    }
-
-    @Override
     public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextArea terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {

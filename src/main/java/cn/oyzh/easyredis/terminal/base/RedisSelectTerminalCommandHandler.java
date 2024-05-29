@@ -13,16 +13,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSelectTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "db";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "切换数据库";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.SELECT;
     }

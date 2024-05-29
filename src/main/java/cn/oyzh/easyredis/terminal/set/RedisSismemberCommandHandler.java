@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSismemberCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key member";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "是否set成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }

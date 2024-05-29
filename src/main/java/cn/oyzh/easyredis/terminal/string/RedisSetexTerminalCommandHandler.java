@@ -14,16 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSetexTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key seconds value";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "设置string值并更新ttl";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.STRING;
     }

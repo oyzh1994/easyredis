@@ -14,11 +14,6 @@ import redis.clients.jedis.Protocol;
 public class RedisSrandmemberCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandDesc() {
-        return "随机返回set成员";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.SET;
     }
