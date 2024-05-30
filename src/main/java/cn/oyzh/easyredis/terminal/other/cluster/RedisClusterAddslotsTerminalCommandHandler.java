@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.other;
+package cn.oyzh.easyredis.terminal.other.cluster;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,10 +10,10 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/31
  */
 @Component
-public class RedisClusterTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisClusterAddslotsTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
-    protected Protocol.Command getCommandType() {
-        return Protocol.Command.CLUSTER;
+    public String commandSubName() {
+        return "ADDSLOTS";
     }
 }

@@ -1,9 +1,7 @@
 package cn.oyzh.easyredis.terminal;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
-import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.terminal.command.BaseTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -33,6 +31,9 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
 
     @Override
     public String commandName() {
+        if (this.getCommandType() == null) {
+            return "";
+        }
         return this.getCommandType().name();
     }
 
@@ -47,17 +48,17 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
 
     @Override
     public String commandArg() {
-       return RedisCommandUtil.getCommandArgs(this.commandName());
+        return RedisCommandUtil.getCommandArgs(this.commandName());
     }
 
     @Override
     public String commandDesc() {
-       return RedisCommandUtil.getCommandDesc(this.commandName());
+        return RedisCommandUtil.getCommandDesc(this.commandName());
     }
 
     @Override
     public String commandSupportedVersion() {
-       return RedisCommandUtil.getCommandAvailable(this.commandName());
+        return RedisCommandUtil.getCommandAvailable(this.commandName());
     }
 
     protected abstract Protocol.Command getCommandType();

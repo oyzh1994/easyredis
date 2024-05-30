@@ -1,6 +1,5 @@
-package cn.oyzh.easyredis.terminal.other;
+package cn.oyzh.easyredis.terminal.other.client;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;

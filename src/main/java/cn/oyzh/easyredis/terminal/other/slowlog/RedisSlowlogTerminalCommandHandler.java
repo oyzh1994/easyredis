@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.server;
+package cn.oyzh.easyredis.terminal.other.slowlog;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
@@ -13,11 +13,11 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/21
  */
 @Component
-public class RedisConfigTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisSlowlogTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.CONFIG;
+        return Protocol.Command.SLOWLOG;
     }
 
     @Override
