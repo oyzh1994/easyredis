@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.other;
+package cn.oyzh.easyredis.terminal.other.module;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -10,10 +10,10 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/31
  */
 @Component
-public class RedisLatencyTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisModuleListTerminalCommandHandler extends RedisModuleTerminalCommandHandler {
 
     @Override
-    protected Protocol.Command getCommandType() {
-        return Protocol.Command.LATENCY;
+    public String commandSubName() {
+        return Protocol.Keyword.LIST.name();
     }
 }

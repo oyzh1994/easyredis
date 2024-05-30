@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.other.client;
+package cn.oyzh.easyredis.terminal.other.module;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
@@ -10,14 +10,14 @@ import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
- * @since 2023/7/21
+ * @since 2023/7/31
  */
 @Component
-public class RedisClientTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisModuleTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.CLIENT;
+        return Protocol.Command.MODULE;
     }
 
     @Override
