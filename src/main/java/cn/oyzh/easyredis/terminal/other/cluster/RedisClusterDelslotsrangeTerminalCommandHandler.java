@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
  * @since 2023/7/31
  */
 @Component
-public class RedisClusterSaveconfigepochTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
+public class RedisClusterDelslotsrangeTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
     public String commandSubName() {
-        return "SAVE-CONFIG-EPOCH";
+        return "DELSLOTSRANGE";
     }
 }
