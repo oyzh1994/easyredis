@@ -10,17 +10,21 @@ import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
+import cn.oyzh.fx.plus.controls.tab.FXTab;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageAttribute;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -29,7 +33,6 @@ import redis.clients.jedis.params.ScanParams;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Future;
 
 
 /**
@@ -44,6 +47,33 @@ import java.util.concurrent.Future;
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )
 public class RedisKeyBatchOperationController extends Controller {
+
+    @FXML
+    private FlexTabPane root;
+
+    @FXML
+    private FXTab deleteTab;
+
+    @FXML
+    private FXTab ttlTab;
+
+    @FXML
+    private FXTab clearTab;
+
+    @FXML
+    private FXTab copyTab;
+
+    @FXML
+    private FXTab moveTab;
+
+    @FXML
+    private FXTab countTab;
+
+    @FXML
+    private FXButton copyKeyBtn;
+
+    @FXML
+    private FXButton countKeyBtn;
 
     /**
      * ttl值
@@ -151,9 +181,9 @@ public class RedisKeyBatchOperationController extends Controller {
     private FlexCheckBox replaceOnCopy;
 
     /**
-     * 任务
+     * 异步任务
      */
-    private Future<?> future;
+    private Thread execTask;
 
     /**
      * 删除键
@@ -164,7 +194,7 @@ public class RedisKeyBatchOperationController extends Controller {
         // 扫描参数
         String pattern = StrUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
         if (MessageBox.confirm(I18nHelper.deleteKeys())) {
-            this.future = TaskManager.startDelay(() -> {
+            this.execTask = ThreadUtil.start(() -> {
                 try {
                     this.stage.disable();
                     this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
@@ -204,7 +234,7 @@ public class RedisKeyBatchOperationController extends Controller {
         try {
             this.client.throwSentinelException();
             String pattern = StrUtil.isBlank(this.pattern2.getText()) ? "*" : this.pattern2.getText();
-            this.future = TaskManager.startDelay(() -> {
+            this.execTask = ThreadUtil.start(() -> {
                 try {
                     this.stage.disable();
                     this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
@@ -251,7 +281,7 @@ public class RedisKeyBatchOperationController extends Controller {
         try {
             this.client.throwSentinelException();
             if (MessageBox.confirm(RedisI18nHelper.batchTip3())) {
-                this.future = TaskManager.startDelay(() -> {
+                this.execTask = ThreadUtil.start(() -> {
                     try {
                         this.stage.disable();
                         this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
@@ -285,7 +315,7 @@ public class RedisKeyBatchOperationController extends Controller {
             }
             String pattern = StrUtil.isBlank(this.pattern4.getText()) ? "*" : this.pattern4.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip5())) {
-                this.future = TaskManager.startDelay(() -> {
+                this.execTask = ThreadUtil.start(() -> {
                     try {
                         this.stage.disable();
                         this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
@@ -336,15 +366,19 @@ public class RedisKeyBatchOperationController extends Controller {
             }
             String pattern = StrUtil.isBlank(this.pattern5.getText()) ? "*" : this.pattern5.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip6())) {
-                this.future = TaskManager.startDelay(() -> {
+                this.root.disableOtherTab(this.copyTab);
+                this.execTask = ThreadUtil.start(() -> {
                     try {
-                        this.stage.disable();
+                        this.copyKeyBtn.disable();
                         this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
                         // 扫描键
                         List<String> keys = this.findKeys(this.keys5, pattern);
                         int succCount = 0;
                         int failCount = 0;
                         for (String key : keys) {
+                            if(ThreadUtil.isInterrupted()){
+                               break;
+                            }
                             // 扫描数据
                             boolean result = this.client.copy(this.dbIndex, key, key, targetDBIndex, this.replaceOnCopy.isSelected());
                             if (result) {
@@ -360,7 +394,7 @@ public class RedisKeyBatchOperationController extends Controller {
                         String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
                         MessageBox.info(msg);
                     } finally {
-                        this.stage.enable();
+                        this.copyKeyBtn.enable();
                         this.stage.restoreTitle();
                     }
                 }, 200);
@@ -375,20 +409,33 @@ public class RedisKeyBatchOperationController extends Controller {
      * 统计键
      */
     @FXML
-    private void countKeys() {
-        this.future = TaskManager.startDelay(() -> {
+    private void countKeys(Event event) {
+        this.countKeyBtn.disable();
+        this.root.disableOtherTab(this.countTab);
+        this.execTask = ThreadUtil.start(() -> {
             try {
-                this.stage.disable();
                 this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
                 // 扫描参数
                 String pattern = StrUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
                 // 扫描键
-                this.findKeys(this.keys6, pattern);
+                this.countKeys(this.keys6, pattern);
             } finally {
-                this.stage.enable();
+                this.countKeyBtn.enable();
                 this.stage.restoreTitle();
             }
         }, 200);
+    }
+
+    /**
+     * 停止执行
+     */
+    @FXML
+    private void stopExec() {
+        ThreadUtil.interrupt(this.execTask);
+        this.root.enableTabs();
+        this.stage.restoreTitle();
+        this.copyKeyBtn.enable();
+        this.countKeyBtn.enable();
     }
 
     /**
@@ -411,26 +458,50 @@ public class RedisKeyBatchOperationController extends Controller {
 
     /**
      * 寻找键
-     * @param area 文本域组件
+     *
+     * @param area    文本域组件
      * @param pattern 模式
      * @return 键列表
      */
     private List<String> findKeys(FlexTextArea area, String pattern) {
         List<String> keys = new ArrayList<>();
         String cursor = null;
-        while (true) {
+        while (!ThreadUtil.isInterrupted()) {
             ScanParams params = new ScanParams();
-            params.count(100);
+            params.count(1000);
             params.match(pattern);
             RedisScanSimpleResult result = RedisKeyUtil.scanKeysSimple(this.dbIndex, cursor, params, this.client);
-            if (result.isFinish()) {
-                break;
-            }
             keys.addAll(result.getKeys());
             cursor = result.getCursor();
             area.setTextExt(I18nHelper.found() + ":" + keys.size());
+            if (result.isFinish()) {
+                break;
+            }
         }
         return keys;
+    }
+
+    /**
+     * 统计键
+     *
+     * @param area    文本域组件
+     * @param pattern 模式
+     */
+    private void countKeys(FlexTextArea area, String pattern) {
+        long keySize = 0;
+        String cursor = null;
+        while (!Thread.currentThread().isInterrupted()) {
+            ScanParams params = new ScanParams();
+            params.count(1000);
+            params.match(pattern);
+            RedisScanSimpleResult result = RedisKeyUtil.scanKeysSimple(this.dbIndex, cursor, params, this.client);
+            keySize += result.keySize();
+            cursor = result.getCursor();
+            area.setTextExt(I18nHelper.found() + ":" + keySize);
+            if (result.isFinish()) {
+                break;
+            }
+        }
     }
 
     /**
@@ -503,7 +574,7 @@ public class RedisKeyBatchOperationController extends Controller {
     @Override
     public void onStageHiding(WindowEvent event) {
         super.onStageHiding(event);
-        TaskManager.cancel(this.future);
+        ThreadUtil.interrupt(this.execTask);
     }
 
     @Override

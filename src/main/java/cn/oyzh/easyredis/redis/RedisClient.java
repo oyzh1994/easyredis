@@ -214,8 +214,7 @@ public class RedisClient {
         try {
             // 获取当前角色
             this.role = (String) CollUtil.getFirst(this.role());
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (UnsupportedCommandException | JedisDataException ignored) {
         }
         // cluster集群模式
         if (this.isClusterMode()) {

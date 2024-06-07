@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
+import cn.hutool.core.io.IoUtil;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
@@ -13,6 +14,7 @@ import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.io.ObjectInputStream;
 import java.util.Objects;
 
 /**

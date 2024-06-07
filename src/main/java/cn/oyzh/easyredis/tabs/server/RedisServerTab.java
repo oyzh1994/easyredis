@@ -6,6 +6,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.ServerSVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
+import javafx.event.Event;
 import javafx.scene.Cursor;
 
 /**
@@ -15,12 +16,6 @@ import javafx.scene.Cursor;
  * @since 2023/08/01
  */
 public class RedisServerTab extends DynamicTab {
-
-    {
-        this.setClosable(true);
-        this.setOnCloseRequest(event -> this.closeRefreshTask());
-        this.loadContent();
-    }
 
     @Override
     public RedisServerTabContent controller() {
@@ -83,5 +78,17 @@ public class RedisServerTab extends DynamicTab {
      */
     public RedisClient client() {
         return this.controller().client();
+    }
+
+    @Override
+    protected void onTabClosed(Event event) {
+        super.onTabClosed(event);
+        this.closeRefreshTask();
+    }
+
+    @Override
+    protected void onTabRequest(Event event) {
+        super.onTabRequest(event);
+        this.closeRefreshTask();
     }
 }

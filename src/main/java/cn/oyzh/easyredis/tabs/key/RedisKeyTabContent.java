@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.hutool.core.io.IoUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
@@ -28,6 +29,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -118,7 +121,6 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
      * 初始化键
      */
     protected void initNode() {
-
     }
 
     /**

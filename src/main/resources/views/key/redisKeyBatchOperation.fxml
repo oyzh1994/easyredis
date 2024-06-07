@@ -15,13 +15,14 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
-             realHeight="600">
-    <FXTab text="%base.deleteKey">
+             realHeight="600" fx:id="root">
+    <FXTab fx:id="deleteTab" text="%base.deleteKey">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -38,7 +39,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% -140">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -52,7 +53,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#delKeys" text="%base.delete">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -63,10 +64,10 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.ttl">
+    <FXTab fx:id="ttlTab" text="%base.ttl">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.ttl" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.ttl" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -80,7 +81,7 @@
                 </NumberTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -97,7 +98,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -111,7 +112,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#expireKeys">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -122,10 +123,10 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.clear">
+    <FXTab fx:id="clearTab" text="%base.clear">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.operation" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.operation" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -137,7 +138,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% -140">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -151,7 +152,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#flushDB" text="%base.clear">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -162,10 +163,10 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.move">
+    <FXTab fx:id="moveTab" text="%base.move">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -177,7 +178,7 @@
                 </RedisDBComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -194,7 +195,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -208,7 +209,7 @@
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#moveKeys" text="%base.move">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
                 <CancelButton>
@@ -219,10 +220,10 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.copy">
+    <FXTab fx:id="copyTab" text="%base.copy">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.targetDB" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -239,7 +240,7 @@
                 </FlexCheckBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -256,7 +257,7 @@
                 </FXButton>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -268,23 +269,23 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#copyKeys" text="%base.copy">
+                <SubmitButton fx:id="copyKeyBtn" onAction="#copyKeys" text="%base.copy">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
-                <CancelButton>
+                <StopButton onAction="#stopExec">
                     <HBox.margin>
                         <Insets left="15" top="10"/>
                     </HBox.margin>
-                </CancelButton>
+                </StopButton>
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-    <FXTab text="%base.count">
+    <FXTab fx:id="countTab" text="%base.count">
         <FlexVBox flexWidth="100%" flexHeight="100%">
             <FlexHBox flexWidth="100%" realHeight="50">
-                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
+                <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -296,7 +297,7 @@
                 </ClearableTextField>
             </FlexHBox>
             <FlexHBox flexWidth="100%" flexHeight="100% - 170">
-                <AccentLabel text="%base.keyNum" realHeight="30" realWidth="80">
+                <AccentLabel text="%base.keyNum" realHeight="30" realWidth="100">
                     <HBox.margin>
                         <Insets left="20" top="10"/>
                     </HBox.margin>
@@ -308,16 +309,16 @@
                 </ReadOnlyTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
-                <SubmitButton onAction="#countKeys" text="%base.count">
+                <SubmitButton fx:id="countKeyBtn" onAction="#countKeys" text="%base.count">
                     <HBox.margin>
-                        <Insets left="110" top="10"/>
+                        <Insets left="130" top="10"/>
                     </HBox.margin>
                 </SubmitButton>
-                <CancelButton>
+                <StopButton onAction="#stopExec">
                     <HBox.margin>
                         <Insets left="15" top="10"/>
                     </HBox.margin>
-                </CancelButton>
+                </StopButton>
             </FlexHBox>
         </FlexVBox>
     </FXTab>

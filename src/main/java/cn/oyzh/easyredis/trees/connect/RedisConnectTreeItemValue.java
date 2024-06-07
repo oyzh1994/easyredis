@@ -62,38 +62,40 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
      * 刷新角色组件
      */
     public void flushRole() {
-        // 角色名称
-        String roleName = switch (item.role().toLowerCase()) {
-            case "sentinel" -> I18nHelper.sentinel();
-            case "master" -> I18nHelper.master();
-            case "slave" -> I18nHelper.slave();
-            default -> null;
-        };
-        // 寻找组件
-        FXText role = (FXText) this.lookup("#role");
-        if (roleName == null) {
-            this.removeChild(role);
-        } else {
-            if (role == null) {
-                role = new FXText();
-                role.setId("role");
-                role.setFill(Color.valueOf("#228B22"));
-                this.addChild(role);
-                HBox.setMargin(role, new Insets(0, 0, 0, 3));
+        if (this.item.role() != null) {
+            // 角色名称
+            String roleName = switch (this.item.role().toLowerCase()) {
+                case "sentinel" -> I18nHelper.sentinel();
+                case "master" -> I18nHelper.master();
+                case "slave" -> I18nHelper.slave();
+                default -> null;
+            };
+            // 寻找组件
+            FXText role = (FXText) this.lookup("#role");
+            if (roleName == null) {
+                this.removeChild(role);
+            } else {
+                if (role == null) {
+                    role = new FXText();
+                    role.setId("role");
+                    role.setFill(Color.valueOf("#228B22"));
+                    this.addChild(role);
+                    HBox.setMargin(role, new Insets(0, 0, 0, 3));
+                }
+                String str = "(";
+                if (this.item.isSentinelMode()) {
+                    str += roleName;
+                } else if (this.item.isClusterMode()) {
+                    str += I18nHelper.cluster() + "/" + roleName;
+                } else if (this.item.isMasterMode()) {
+                    str += I18nHelper.master_slave() + "/" + roleName;
+                }
+                if (this.item.isReadonly()) {
+                    str += "/" + I18nHelper.readonly();
+                }
+                str += ")";
+                role.setText(str);
             }
-            String str = "(";
-            if (this.item.isSentinelMode()) {
-                str += roleName;
-            } else if (this.item.isClusterMode()) {
-                str += I18nHelper.cluster() + "/" + roleName;
-            } else if (this.item.isMasterMode()) {
-                str += I18nHelper.master_slave() + "/" + roleName;
-            }
-            if (this.item.isReadonly()) {
-                str += "/" + I18nHelper.readonly();
-            }
-            str += ")";
-            role.setText(str);
         }
     }
 }
