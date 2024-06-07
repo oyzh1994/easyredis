@@ -122,7 +122,7 @@ public class RedisKeyInfoContent implements Initializable {
             this.objectEncoding.setText(this.redisKey.objectedEncodingString());
             Long memoryUsage = this.treeItem.memoryUsage();
             if (memoryUsage == null || memoryUsage < 0) {
-                this.memoryUsage.setText(I18nHelper.unknown());
+                this.memoryUsage.setText("N/A");
             } else if (memoryUsage < 1024) {
                 this.memoryUsage.setText(memoryUsage + "bytes");
             } else if (memoryUsage < 1024 * 1024) {
