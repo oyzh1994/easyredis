@@ -5,9 +5,6 @@ import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import lombok.experimental.UtilityClass;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * redis版本工具类
  *
@@ -16,11 +13,6 @@ import java.util.Map;
  */
 @UtilityClass
 public class RedisVersionUtil {
-
-    /**
-     * 版本缓存
-     */
-    private final static Map<String, Double> VERSION_CACHE = new HashMap<>();
 
     /**
      * 获取支持的版本
@@ -67,19 +59,24 @@ public class RedisVersionUtil {
     public static boolean isSupported(String serverVersion, String version) {
         if (serverVersion != null && version != null) {
             try {
-                Double s1 = VERSION_CACHE.get(serverVersion);
-                Double s2 = VERSION_CACHE.get(version);
-                if (s1 == null) {
-                    serverVersion = serverVersion.toLowerCase().replace("v", "");
-                    s1 = Double.parseDouble(serverVersion.replace(".", ""));
-                    VERSION_CACHE.put(serverVersion, s1);
+                String[] str1 = serverVersion.split("\\.");
+                String[] str2 = version.split("\\.");
+                if (str2.length != 3 && str1.length != str2.length) {
+                    return false;
                 }
-                if (s2 == null) {
-                    version = version.toLowerCase().replace("v", "");
-                    s2 = Double.parseDouble(version.replace(".", ""));
-                    VERSION_CACHE.put(version, s2);
+                String s1 = str1[0];
+                String s11 = str2[0];
+                if (Double.parseDouble(s1) > Double.parseDouble(s11)) {
+                    return true;
                 }
-                return s1 >= s2;
+                String s2 = str1[1];
+                String s22 = str2[1];
+                if (Double.parseDouble(s2) > Double.parseDouble(s22)) {
+                    return true;
+                }
+                String s3 = str1[2];
+                String s33 = str2[2];
+                return Double.parseDouble(s3) >= Double.parseDouble(s33);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

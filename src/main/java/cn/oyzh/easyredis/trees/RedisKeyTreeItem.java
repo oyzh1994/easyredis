@@ -391,4 +391,18 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             ex.printStackTrace();
         }
     }
+
+    /**
+     * 获取内存占用
+     *
+     * @return 内存占用
+     */
+    public Long memoryUsage() {
+        try {
+            return this.client().memoryUsage(this.dbIndex(), this.key());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return -1L;
+        }
+    }
 }

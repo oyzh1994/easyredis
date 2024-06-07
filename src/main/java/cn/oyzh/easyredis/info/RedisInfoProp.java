@@ -151,7 +151,7 @@ public class RedisInfoProp {
      * @param propName 属性名
      * @return 单个Double属性
      */
-    public double getDoubleProp(String group, String propName) {
+    public Double getDoubleProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
             if (CollUtil.isNotEmpty((Iterable<?>) object)) {
@@ -265,7 +265,7 @@ public class RedisInfoProp {
      *
      * @return 每秒入网数据
      */
-    public double getInstantaneousInputKbps() {
+    public Double getInstantaneousInputKbps() {
         return this.getDoubleProp("stats", "instantaneous_input_kbps");
     }
 
@@ -274,7 +274,7 @@ public class RedisInfoProp {
      *
      * @return 每秒出网数据
      */
-    public double getInstantaneousOutputKbps() {
+    public Double getInstantaneousOutputKbps() {
         return this.getDoubleProp("stats", "instantaneous_output_kbps");
     }
 

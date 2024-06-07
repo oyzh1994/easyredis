@@ -223,7 +223,10 @@ public class RedisServerTabContent extends DynamicTabController {
             if (this.propTable.getItems().isEmpty()) {
                 serverItem = new RedisServerItem();
                 serverItem.setServerVersion(infoProp.getRedisVersion());
-                serverItem.setRole((String) CollUtil.getFirst(this.client.role()));
+                try {
+                    serverItem.setRole((String) CollUtil.getFirst(this.client.role()));
+                } catch (Exception ignored) {
+                }
                 this.propTable.getItems().add(serverItem);
             } else {
                 serverItem = this.propTable.getItems().getFirst();

@@ -96,17 +96,17 @@
                         <Insets left="5" top="-5"/>
                     </FlowPane.margin>
                 </ClearableTextField>
+                <ReverseSVGGlyph onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip7" size="16">
+                    <FlowPane.margin>
+                        <Insets left="5"/>
+                    </FlowPane.margin>
+                </ReverseSVGGlyph>
                 <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
                          onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
                     <FlowPane.margin>
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </PageBox>
-                <ReverseSVGGlyph onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip7" size="16">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </ReverseSVGGlyph>
                 <padding>
                     <Insets top="9"/>
                 </padding>

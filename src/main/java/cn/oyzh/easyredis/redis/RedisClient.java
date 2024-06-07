@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
+import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.common.ssh.SSHForwardInfo;
@@ -46,6 +47,7 @@ import redis.clients.jedis.args.BitCountOption;
 import redis.clients.jedis.args.ExpiryOption;
 import redis.clients.jedis.args.GeoUnit;
 import redis.clients.jedis.args.ListPosition;
+import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.params.BitPosParams;
 import redis.clients.jedis.params.GeoAddParams;
 import redis.clients.jedis.params.ScanParams;
@@ -209,17 +211,16 @@ public class RedisClient {
         DefaultJedisClientConfig clientConfig = this.intClientConfig(this.redisInfo.getUser(), this.redisInfo.getPassword());
         // 初始化连接池
         this.initPool(host, clientConfig);
-        // 获取当前角色
-        this.role = (String) CollUtil.getFirst(this.role());
+        try {
+            // 获取当前角色
+            this.role = (String) CollUtil.getFirst(this.role());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         // cluster集群模式
         if (this.isClusterMode()) {
             // 初始化cluster集群
             this.initCluster(host, clientConfig);
-            // } else if (this._isSentinelMode() && this.isRedirectMaster()) {// 哨兵模式并重定向到master
-            //     // 初始化哨兵
-            //     this.initSentinel(host, clientConfig);
-            //     // 获取当前角色
-            //     this.role = (String) CollUtil.getFirst(this.role());
         }
     }
 
@@ -361,40 +362,12 @@ public class RedisClient {
     }
 
     /**
-     * 是否主节点
-     *
-     * @return 结果
-     */
-    public boolean isMaster() {
-        return StrUtil.equalsIgnoreCase("master", this.role);
-    }
-
-    // /**
-    //  * 是否重定向master
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isRedirectMaster() {
-    //     return this.redisInfo.isRedirectMaster();
-    // }
-
-    /**
-     * 是否从节点
-     *
-     * @return 结果
-     */
-    public boolean isSlave() {
-        return StrUtil.equalsIgnoreCase("slave", this.role);
-    }
-
-    /**
      * 是否master集群模式
      *
      * @return 结果
      */
     public boolean isMasterMode() {
         return !this.isClusterMode();
-        // return !this.isClusterMode() && !this.isStandaloneMode();
     }
 
     /**
@@ -403,8 +376,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isSentinelMode() {
-        return this._isSentinelMode();
-        // return this._isSentinelMode() && !this.isRedirectMaster();
+        return StrUtil.equalsIgnoreCase("sentinel", this.role);
     }
 
     /**
@@ -435,15 +407,6 @@ public class RedisClient {
     }
 
     /**
-     * 是否哨兵模式
-     *
-     * @return 结果
-     */
-    private boolean _isSentinelMode() {
-        return StrUtil.equalsIgnoreCase("sentinel", this.role);
-    }
-
-    /**
      * 是否单机模式
      *
      * @return 结果
@@ -459,7 +422,6 @@ public class RedisClient {
      */
     public boolean isReadonly() {
         return this.redisInfo.isReadonly();
-        // return this.redisInfo.isReadonly() || (this.isMasterMode() && this.isSlave());
     }
 
     /**
@@ -545,8 +507,6 @@ public class RedisClient {
             // 已关闭
             if (isClosed) {
                 this.state.set(RedisConnState.CLOSED);
-                // EventUtil.fire(RedisEventTypes.REDIS_CLINE_CLOSED, this);
-                // RedisEventUtil.clientClosed(this);
                 RedisEventUtil.connectionClosed(this);
             }
             // 重置变量
@@ -589,8 +549,6 @@ public class RedisClient {
             return;
         }
         try {
-            // // 关闭旧连接
-            // this.close();
             // 初始化连接池
             this.state.set(RedisConnState.CONNECTING);
             // 初始化客户端
@@ -4651,6 +4609,25 @@ public class RedisClient {
         Jedis jedis = this.getResource();
         try {
             return jedis.slowlogGet(entries);
+        } finally {
+            this.returnResource(jedis);
+        }
+    }
+
+    /**
+     * 获取内存占用
+     *
+     * @param dbIndex db索引
+     * @param key     键
+     * @return 内存占用
+     */
+    public Long memoryUsage(Integer dbIndex, String key) {
+        this.throwSentinelException();
+        RedisVersionUtil.checkSupported(this.getServerVersion(), "memoryUsage");
+        Jedis jedis = this.getResource();
+        try {
+            this.dbIndex(jedis, dbIndex);
+            return jedis.memoryUsage(key);
         } finally {
             this.returnResource(jedis);
         }

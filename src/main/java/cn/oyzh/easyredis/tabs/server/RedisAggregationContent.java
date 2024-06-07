@@ -118,11 +118,13 @@ public class RedisAggregationContent {
             this.networkChart.addChartData(inData);
             this.networkChart.addChartData(outData);
         }
-        double inputBytes = prop.getInstantaneousInputKbps();
-        double outputBytes = prop.getInstantaneousOutputKbps();
-        String time = DATE_FORMAT.format(System.currentTimeMillis());
-        ChartHelper.addOrUpdateData(inData, time, inputBytes, 10);
-        ChartHelper.addOrUpdateData(outData, time, outputBytes, 10);
+        Double inputBytes = prop.getInstantaneousInputKbps();
+        Double outputBytes = prop.getInstantaneousOutputKbps();
+        if (inputBytes != null && outputBytes != null) {
+            String time = DATE_FORMAT.format(System.currentTimeMillis());
+            ChartHelper.addOrUpdateData(inData, time, inputBytes, 10);
+            ChartHelper.addOrUpdateData(outData, time, outputBytes, 10);
+        }
     }
 
     /**
