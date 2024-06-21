@@ -22,11 +22,11 @@ import javafx.fxml.FXML;
  */
 public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTreeItem> {
 
-    /**
-     * 数据大小
-     */
-    @FXML
-    private FXLabel size;
+    // /**
+    //  * 数据大小
+    //  */
+    // @FXML
+    // private FXLabel size;
 
     /**
      * 二进制数据
@@ -50,13 +50,13 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
     protected void initNode() {
         // 数据处理
         this.firstShowData();
-        // 大小
-        Integer size = this.treeItem.size();
-        if (size == null) {
-            this.size.setText(I18nHelper.size() + ": N/A");
-        } else {
-            this.size.setText(I18nHelper.size() + ": " + size + " bytes");
-        }
+        // // 大小
+        // Integer size = this.treeItem.size();
+        // if (size == null) {
+        //     this.size.setText(I18nHelper.size() + ": N/A");
+        // } else {
+        //     this.size.setText(I18nHelper.size() + ": " + size + " bytes");
+        // }
         // 刷新二进制处理
         this.flushBinary();
         // 统计值

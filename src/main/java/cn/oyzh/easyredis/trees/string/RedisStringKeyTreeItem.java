@@ -110,14 +110,14 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, Red
         return this.value.isRawEncoding();
     }
 
-    /**
-     * 获取数据大小
-     *
-     * @return 数据大小
-     */
-    public Integer size() {
-        return this.value.size();
-    }
+    // /**
+    //  * 获取数据大小
+    //  *
+    //  * @return 数据大小
+    //  */
+    // public Integer size() {
+    //     return this.value.size();
+    // }
 
     /**
      * 获取统计值大小

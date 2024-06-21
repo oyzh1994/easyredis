@@ -81,11 +81,11 @@
                         <Insets left="5"/>
                     </FlowPane.margin>
                 </FXLabel>
-                <FXLabel fx:id="size" fontSize="11" style="-fx-text-fill: #c0c0c0">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXLabel>
+                <!-- <FXLabel fx:id="size" fontSize="11" style="-fx-text-fill: #c0c0c0"> -->
+                <!--     <FlowPane.margin> -->
+                <!--         <Insets left="5"/> -->
+                <!--     </FlowPane.margin> -->
+                <!-- </FXLabel> -->
                 <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
                          visible="false"
                          managed="false">

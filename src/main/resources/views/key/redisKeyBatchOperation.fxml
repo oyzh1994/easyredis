@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
-<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
+<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.button.SubmitButton?>
 <?import cn.oyzh.fx.plus.controls.digital.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexHBox?>
@@ -15,7 +15,6 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600" fx:id="root">
@@ -44,11 +43,12 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys1" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys1" flexHeight="100% - 10"
+                             flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#delKeys" text="%base.delete" groupId="exec">
@@ -73,7 +73,8 @@
                     </HBox.margin>
                 </AccentLabel>
                 <NumberTextField realHeight="30" fx:id="ttl" flexWidth="100% -140" tipText="%redis.batch.tip7"
-                                 value="-1" require="true" min="-1" max="9223372036854775807" step="3600" groupId="exec">
+                                 value="-1" require="true" min="-1" max="9223372036854775807" step="3600"
+                                 groupId="exec">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
@@ -102,11 +103,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys2" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys2" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#expireKeys" groupId="exec">
@@ -142,11 +143,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys3" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys3" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#flushDB" text="%base.clear" groupId="exec">
@@ -199,11 +200,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys4" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys4" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#moveKeys" text="%base.move" groupId="exec">
@@ -261,11 +262,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys5" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys5" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#copyKeys" text="%base.copy" groupId="exec">
@@ -301,11 +302,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <ReadOnlyTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% -140">
+                <MsgTextArea fx:id="keys6" flexHeight="100% - 10" flexWidth="100% -140">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </ReadOnlyTextArea>
+                </MsgTextArea>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#countKeys" text="%base.count" groupId="exec">

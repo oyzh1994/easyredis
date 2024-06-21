@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.Controller;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
+import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -24,7 +24,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroup;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
-import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -94,37 +93,37 @@ public class RedisKeyBatchOperationController extends Controller {
      * 删除键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys1;
+    private MsgTextArea keys1;
 
     /**
      * 设置ttl键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys2;
+    private MsgTextArea keys2;
 
     /**
      * 清空库键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys3;
+    private MsgTextArea keys3;
 
     /**
      * 移动键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys4;
+    private MsgTextArea keys4;
 
     /**
      * 复制键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys5;
+    private MsgTextArea keys5;
 
     /**
      * 移动键表达式
      */
     @FXML
-    private ReadOnlyTextArea keys6;
+    private MsgTextArea keys6;
 
     /**
      * db索引
@@ -535,7 +534,8 @@ public class RedisKeyBatchOperationController extends Controller {
         this.moveTargetDB.selectFirst();
         this.copyTargetDB.setDbCount(this.client.databases());
         this.copyTargetDB.selectFirst();
-        this.stage.appendTitle("(" + this.treeItem.info().getName() + "-db" + this.treeItem.dbIndex() + ")");
+        this.stage.setTitleExt(this.stage.getTitleExt() + "-db" + this.treeItem.dbIndex());
+        // this.stage.appendTitle("(" + this.treeItem.info().getName() + "-db" + this.treeItem.dbIndex() + ")");
         this.root.selectedTabChanged((observableValue, tab, t1) -> {
             if (t1 instanceof NodeGroup group) {
                 group.setGroupId("active");

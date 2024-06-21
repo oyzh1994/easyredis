@@ -105,7 +105,7 @@
                         </HBox.margin>
                     </ClearSVGGlyph>
                 </FlexHBox>
-                <RedisMsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%" maxLine="1000"/>
+                <RedisMsgTextArea fx:id="msgArea" flexHeight="100% - 32" flexWidth="100%" lineLimit="1000"/>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>

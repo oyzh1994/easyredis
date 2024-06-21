@@ -48,21 +48,21 @@ public class RedisStringKey extends RedisKey {
         return this.hyLog;
     }
 
-    /**
-     * 获取数据大小
-     *
-     * @return 数据大小
-     */
-    public Integer size() {
-        if (this.value == null) {
-            return null;
-        }
-        if (this.value instanceof String string) {
-            return string.getBytes().length;
-        }
-        if (this.value instanceof byte[] bytes) {
-            return bytes.length;
-        }
-        return null;
-    }
+    // /**
+    //  * 获取数据大小
+    //  *
+    //  * @return 数据大小
+    //  */
+    // public Integer size() {
+    //     if (this.value == null) {
+    //         return null;
+    //     }
+    //     if (this.value instanceof String string) {
+    //         return string.getBytes().length;
+    //     }
+    //     if (this.value instanceof byte[] bytes) {
+    //         return bytes.length;
+    //     }
+    //     return null;
+    // }
 }

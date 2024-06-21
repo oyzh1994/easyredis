@@ -44,8 +44,8 @@ import cn.oyzh.fx.plus.menu.TransportDataMenuItem;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -86,11 +86,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     private final String value;
 
     /**
-     * 键加载标志位
+     * 数据加载完成标志位
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private boolean nodeLoaded;
+    private boolean dataLoaded;
+
+    /**
+     * 数据加载中标志位
+     */
+    @Getter
+    @Accessors(chain = true, fluent = true)
+    private boolean dataLoading;
 
     /**
      * 键过滤模式
@@ -235,8 +242,10 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     @Override
     public void reloadChild() {
-        this.nodeLoaded = false;
-        this._loadChild();
+        if (!this.isWaiting() && !this.dataLoading) {
+            this.dataLoaded = false;
+            this._loadChild();
+        }
     }
 
     @Override
@@ -349,17 +358,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 扫描数据
         while (true) {
             // 计算限制
-            int limit = this.setting.calcLimit(100, count);
-            params.count(limit);
+            int limit = this.setting.calcLimit(1000, count);
             // 处理结束
             if (limit <= 0) {
-                RenderService.submit(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
+                FXUtil.runWait(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
                 break;
             }
+            // 设置加载数量
+            params.count(limit);
             // 扫描数据
             RedisScanResult result = RedisKeyUtil.scanKeys(this.dbIndex, cursor, params, this.client());
             // 渲染数据
-            RenderService.submit(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
+            FXUtil.runWait(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
             // 查询结束
             if (result.isFinish()) {
                 break;
@@ -640,6 +650,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 加载子节点实际业务
      */
     private void _loadChild() {
+        this.dataLoading = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
                     // if (this.isClusterMode()) {
@@ -650,11 +661,14 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     this.loadChild1();
                 })
                 .onError(ex -> {
-                    this.nodeLoaded = false;
+                    this.dataLoaded = false;
                     MessageBox.exception(ex);
                 })
                 .onSuccess(this::flushValue)
-                .onFinish(this::stopWaiting)
+                .onFinish(() -> {
+                    this.stopWaiting();
+                    this.dataLoading = false;
+                })
                 .build();
         // 执行业务
         this.startWaiting(task);
@@ -682,8 +696,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 加载子节点
      */
     public void loadChild() {
-        if (!this.isWaiting() && (!this.nodeLoaded)) {
-            this.nodeLoaded = true;
+        if (!this.isWaiting() && !this.dataLoaded && !this.dataLoading) {
+            this.dataLoaded = true;
             this._loadChild();
         }
     }
