@@ -30,6 +30,9 @@ public class RedisConnectUtil {
                 view.disable();
                 view.waitCursor();
                 view.appendTitle("===" + I18nHelper.connectTesting() + "===");
+                if (info.getName() == null) {
+                    info.setName("测试连接");
+                }
                 RedisClient client = new RedisClient(info);
                 // 开始连接
                 client.start();

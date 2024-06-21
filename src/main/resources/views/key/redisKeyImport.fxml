@@ -37,7 +37,7 @@
     </FlexHBox>
     <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
         <VBox.margin>
-            <Insets left="95"/>
+            <Insets left="110"/>
         </VBox.margin>
     </FlexText>
     <FlexHBox flexWidth="100%" realHeight="50">
@@ -98,7 +98,7 @@
         <ImportButton onAction="#doImport"
                       fx:id="importBtn" disable="true" groupId="exec" iconSizePercent="0.75">
             <HBox.margin>
-                <Insets left="95" top="10"/>
+                <Insets left="110" top="10"/>
             </HBox.margin>
         </ImportButton>
         <StopButton disable="true" fx:id="stopImportBtn" onAction="#stopImport" realHeight="30" iconSizePercent="0.9">
@@ -124,7 +124,7 @@
             </VBox.margin>
         </FlexText>
         <VBox.margin>
-            <Insets left="95"/>
+            <Insets left="110"/>
         </VBox.margin>
     </FlexVBox>
 </FlexVBox>

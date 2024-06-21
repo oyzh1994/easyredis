@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Text?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
-          realHeight="850">
+          realHeight="700">
     <!-- <fx:define> -->
     <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
     <!-- </fx:define> -->
