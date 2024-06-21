@@ -14,16 +14,15 @@
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
-<?import cn.oyzh.fx.plus.handler.StateManager?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="800">
-    <fx:define>
-        <StateManager fx:id="stateManager" managedBindVisible="true"/>
-    </fx:define>
+    <!-- <fx:define> -->
+    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
+    <!-- </fx:define> -->
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.server" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -47,7 +46,7 @@
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="%base.filter" stateManager="$stateManager">
+        <FlexCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -59,13 +58,13 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <ClearableTextField stateManager="$stateManager" fx:id="pattern" realHeight="30.0" flexWidth="100% - 275"
+        <ClearableTextField groupId="exec" fx:id="pattern" realHeight="30.0" flexWidth="100% - 275"
                             text="*">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <FXButton text="%redis.key.tip2" onAction="#showKeys" stateManager="$stateManager">
+        <FXButton text="%redis.key.tip2" onAction="#showKeys" groupId="exec">
             <HBox.margin>
                 <Insets left="3" top="10"/>
             </HBox.margin>
@@ -89,32 +88,32 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="listType" text="LIST">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="setType" text="SET">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="setType" text="SET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="zsetType" text="ZSET">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="hashType" text="HASH">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="streamType" text="STREAM">
+        <FlexCheckBox groupId="exec" fx:id="streamType" text="STREAM">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -126,28 +125,29 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="dictSort" selected="true" text="%base.sortDict">
+        <FlexCheckBox groupId="exec" fx:id="dictSort" selected="true" text="%base.sortDict">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+        <FlexCheckBox groupId="exec" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="applyFilter" text="%base.applyFilter">
+        <FlexCheckBox groupId="exec" fx:id="applyFilter" text="%base.applyFilter">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FXToggleSwitch fx:id="pretty" selected="true" selectedText="%base.enablePretty" unselectedText="%base.disablePretty">
+        <FXToggleSwitch fx:id="pretty" selected="true" selectedText="%base.enablePretty"
+                        unselectedText="%base.disablePretty" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXToggleSwitch>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
+    <FlexHBox flexWidth="100%" flexHeight="100% - 370" fx:id="msgBox">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
@@ -163,7 +163,7 @@
         </FlexVBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <ExportButton fx:id="exportBtn" onAction="#doExport" realHeight="30" iconSizePercent="0.75">
+        <ExportButton fx:id="exportBtn" onAction="#doExport" groupId="exec" realHeight="30" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

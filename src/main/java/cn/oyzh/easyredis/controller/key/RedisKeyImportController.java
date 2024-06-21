@@ -35,10 +35,10 @@ import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -70,11 +70,11 @@ import java.util.stream.Collectors;
 )
 public class RedisKeyImportController extends Controller {
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * redis树键
@@ -143,7 +143,7 @@ public class RedisKeyImportController extends Controller {
     /**
      * 导入操作任务
      */
-    private Thread importTask;
+    private Thread execTask;
 
     /**
      * 导入数据
@@ -244,17 +244,18 @@ public class RedisKeyImportController extends Controller {
         this.counter.reset();
         this.counter.setSum(this.nodeExport.counts());
         // 开始处理
-        this.importBtn.disable();
-        this.stateManager.disable();
+        // this.importBtn.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.importProcessing() + "===");
         // 执行导入
-        this.importTask = ThreadUtil.start(() -> {
+        this.execTask = ThreadUtil.start(() -> {
             try {
                 this.stopImportBtn.enable();
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
-                    if (ThreadUtil.isInterrupted(this.importTask)) {
-                        StaticLog.warn("import cancel!");
+                    if (ThreadUtil.isInterrupted(this.execTask)) {
+                        StaticLog.warn("import canceled!");
                         break;
                     }
                     // 获取数据
@@ -296,8 +297,9 @@ public class RedisKeyImportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.importBtn.enable();
-                this.stateManager.enable();
+                // this.importBtn.enable();
+                // this.stateManager.enable();
+                NodeGroupUtil.enable(this.stage, "exec");
                 this.stopImportBtn.disable();
                 this.stage.restoreTitle();
                 SystemUtil.gcLater();
@@ -414,8 +416,8 @@ public class RedisKeyImportController extends Controller {
      */
     @FXML
     private void stopImport() {
-        ThreadUtil.interrupt(this.importTask);
-        this.importTask = null;
+        ThreadUtil.interrupt(this.execTask);
+        this.execTask = null;
     }
 
     @Override

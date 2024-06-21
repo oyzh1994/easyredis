@@ -19,16 +19,16 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
-    <fx:define>
-        <StateManager fx:id="stateManager" managedBindVisible="true"/>
-    </fx:define>
+    <!-- <fx:define> -->
+    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
+    <!-- </fx:define> -->
     <FlexHBox realHeight="50" flexWidth="100%">
         <AccentLabel text="%base.file" realHeight="30" realWidth="80">
             <HBox.margin>
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FileButton stateManager="$stateManager" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose"
+        <FileButton groupId="exec" tipText="%base.chooseTip" onAction="#chooseFile" text="%base.choose"
                     iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="10" top="10"/>
@@ -49,19 +49,19 @@
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
-        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+        <FXRadioButton groupId="exec" fx:id="skipForExist" toggleGroup="$existStrategy"
                        text="%base.skip" selected="true" userData="0">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+        <FXRadioButton  groupId="exec" fx:id="overrideForExist" toggleGroup="$existStrategy"
                        text="%base.overwrite" userData="1">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+        <FXRadioButton groupId="exec" fx:id="updateForExist" toggleGroup="$existStrategy"
                        text="%base.update" userData="2">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -74,7 +74,7 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+        <FlexCheckBox groupId="exec" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -96,7 +96,7 @@
     </FlexHBox>
     <FlexHBox prefHeight="50" flexWidth="100%">
         <ImportButton onAction="#doImport"
-                      fx:id="importBtn" disable="true" iconSizePercent="0.75">
+                      fx:id="importBtn" disable="true" groupId="exec" iconSizePercent="0.75">
             <HBox.margin>
                 <Insets left="95" top="10"/>
             </HBox.margin>

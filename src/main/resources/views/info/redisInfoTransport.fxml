@@ -23,9 +23,9 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
           realHeight="850">
-    <fx:define>
-        <StateManager fx:id="stateManager" managedBindVisible="true"/>
-    </fx:define>
+    <!-- <fx:define> -->
+    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
+    <!-- </fx:define> -->
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.source" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -47,7 +47,7 @@
                 <Insets left="5" top="10"/>
             </HBox.margin>
         </RedisDBComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="%base.filter" stateManager="$stateManager">
+        <FlexCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -60,12 +60,12 @@
             </HBox.margin>
         </AccentLabel>
         <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*"
-                            stateManager="$stateManager">
+                            groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
         </ClearableTextField>
-        <FXButton text="%redis.key.tip2" onAction="#showKeys" stateManager="$stateManager">
+        <FXButton text="%redis.key.tip2" onAction="#showKeys" groupId="exec">
             <HBox.margin>
                 <Insets left="3" top="10"/>
             </HBox.margin>
@@ -114,19 +114,19 @@
         <fx:define>
             <FXToggleGroup fx:id="existStrategy"/>
         </fx:define>
-        <FXRadioButton stateManager="$stateManager" fx:id="skipForExist" toggleGroup="$existStrategy"
+        <FXRadioButton groupId="exec" fx:id="skipForExist" toggleGroup="$existStrategy"
                        text="%base.skip" selected="true" userData="0">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="overrideForExist" toggleGroup="$existStrategy"
+        <FXRadioButton groupId="exec" fx:id="overrideForExist" toggleGroup="$existStrategy"
                        text="%base.overwrite" userData="1">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FXRadioButton>
-        <FXRadioButton stateManager="$stateManager" fx:id="updateForExist" toggleGroup="$existStrategy"
+        <FXRadioButton groupId="exec" fx:id="updateForExist" toggleGroup="$existStrategy"
                        text="%base.update" userData="2">
             <HBox.margin>
                 <Insets left="10" top="18"/>
@@ -140,12 +140,12 @@
             </HBox.margin>
         </AccentLabel>
         <FlexCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true"
-                      stateManager="$stateManager">
+                      groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="%base.applyFilter" stateManager="$stateManager">
+        <FlexCheckBox fx:id="applyFilter" text="%base.applyFilter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -157,32 +157,32 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="stringType" text="STRING">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="listType" text="LIST">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="setType" text="SET">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="setType" text="SET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="zsetType" text="ZSET">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" selected="true" fx:id="hashType" text="HASH">
+        <FlexCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
         </FlexCheckBox>
-        <FlexCheckBox stateManager="$stateManager" fx:id="streamType" text="STREAM">
+        <FlexCheckBox groupId="exec" fx:id="streamType" text="STREAM">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
@@ -204,7 +204,7 @@
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <TransportButton fx:id="transportBtn" onAction="#doTransport" realHeight="30"
-                         iconSizePercent="0.75">
+                         iconSizePercent="0.75" groupId="exec">
             <HBox.margin>
                 <Insets left="110" top="10"/>
             </HBox.margin>

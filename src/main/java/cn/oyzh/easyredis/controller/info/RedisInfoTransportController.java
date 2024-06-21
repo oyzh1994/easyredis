@@ -31,6 +31,7 @@ import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -57,11 +58,11 @@ import java.util.Set;
 )
 public class RedisInfoTransportController extends Controller {
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * 存在时跳过
@@ -358,8 +359,9 @@ public class RedisInfoTransportController extends Controller {
         this.targetDB.disable();
         this.targetConnect.disable();
         this.transportMsg.clear();
-        this.transportBtn.disable();
-        this.stateManager.disable();
+        // this.transportBtn.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
     }
 
     /**
@@ -378,9 +380,10 @@ public class RedisInfoTransportController extends Controller {
         }
         this.targetDB.enable();
         this.targetConnect.enable();
-        this.transportBtn.enable();
+        // this.transportBtn.enable();
         this.stopTransportBtn.disable();
-        this.stateManager.enable();
+        // this.stateManager.enable();
+        NodeGroupUtil.enable(this.stage, "exec");
         this.stage.restoreTitle();
         SystemUtil.gcLater();
     }

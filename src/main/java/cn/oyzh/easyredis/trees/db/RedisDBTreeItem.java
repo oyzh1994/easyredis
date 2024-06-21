@@ -90,14 +90,14 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private boolean dataLoaded;
+    private transient boolean loaded;
 
     /**
      * 数据加载中标志位
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private boolean dataLoading;
+    private transient boolean loading;
 
     /**
      * 键过滤模式
@@ -242,8 +242,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
 
     @Override
     public void reloadChild() {
-        if (!this.isWaiting() && !this.dataLoading) {
-            this.dataLoaded = false;
+        if (!this.isWaiting() && !this.loading) {
+            this.loaded = false;
             this._loadChild();
         }
     }
@@ -650,7 +650,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 加载子节点实际业务
      */
     private void _loadChild() {
-        this.dataLoading = true;
+        this.loaded = true;
+        this.loading = true;
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
                     // if (this.isClusterMode()) {
@@ -661,13 +662,13 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                     this.loadChild1();
                 })
                 .onError(ex -> {
-                    this.dataLoaded = false;
+                    this.loaded = false;
                     MessageBox.exception(ex);
                 })
                 .onSuccess(this::flushValue)
                 .onFinish(() -> {
+                    this.loading = false;
                     this.stopWaiting();
-                    this.dataLoading = false;
                 })
                 .build();
         // 执行业务
@@ -696,8 +697,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 加载子节点
      */
     public void loadChild() {
-        if (!this.isWaiting() && !this.dataLoaded && !this.dataLoading) {
-            this.dataLoaded = true;
+        if (!this.isWaiting() && !this.loaded && !this.loading) {
             this._loadChild();
         }
     }

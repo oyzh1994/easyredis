@@ -24,15 +24,14 @@ import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.textfield.FlexTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.handler.StateManager;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.stage.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -65,11 +64,11 @@ import java.util.Set;
 )
 public class RedisKeyExportController extends Controller {
 
-    /**
-     * 状态管理器
-     */
-    @FXML
-    private StateManager stateManager;
+    // /**
+    //  * 状态管理器
+    //  */
+    // @FXML
+    // private StateManager stateManager;
 
     /**
      * 服务器
@@ -131,11 +130,11 @@ public class RedisKeyExportController extends Controller {
     @FXML
     private FlexCheckBox filterKeys;
 
-    /**
-     * 导出按钮
-     */
-    @FXML
-    private FlexButton exportBtn;
+    // /**
+    //  * 导出按钮
+    //  */
+    // @FXML
+    // private FlexButton exportBtn;
 
     /**
      * 结束导出按钮
@@ -211,7 +210,7 @@ public class RedisKeyExportController extends Controller {
     /**
      * 导出操作任务
      */
-    private Thread exportTask;
+    private Thread execTask;
 
     /**
      * 过滤内容列表
@@ -249,8 +248,9 @@ public class RedisKeyExportController extends Controller {
         boolean dictSort = this.dictSort.isSelected();
         // 开始处理
         this.exportMsg.clear();
-        this.exportBtn.disable();
-        this.stateManager.disable();
+        // this.exportBtn.disable();
+        // this.stateManager.disable();
+        NodeGroupUtil.disable(this.stage, "exec");
         if (this.db.hasProp("canDisable")) {
             this.db.disable();
         }
@@ -260,7 +260,7 @@ public class RedisKeyExportController extends Controller {
             this.filters = this.filterStore.loadEnable();
         }
         // 执行导出
-        this.exportTask = ThreadUtil.start(() -> {
+        this.execTask = ThreadUtil.start(() -> {
             try {
                 this.stopExportBtn.enable();
                 // 获取键
@@ -280,8 +280,8 @@ public class RedisKeyExportController extends Controller {
                     this.doExport(this.db.getDB(), this.allKeys, allNodes);
                 }
                 // 取消操作
-                if (ThreadUtil.isInterrupted(this.exportTask)) {
-                    StaticLog.warn("export cancel!");
+                if (ThreadUtil.isInterrupted(this.execTask)) {
+                    StaticLog.warn("export canceled!");
                     return;
                 }
                 // 键按词典顺序排序
@@ -322,8 +322,9 @@ public class RedisKeyExportController extends Controller {
                 }
             } finally {
                 // 结束处理
-                this.exportBtn.enable();
-                this.stateManager.enable();
+                // this.exportBtn.enable();
+                // this.stateManager.enable();
+                NodeGroupUtil.enable(this.stage, "exec");
                 this.stopExportBtn.disable();
                 if (this.db.hasProp("canDisable")) {
                     this.db.enable();
@@ -339,8 +340,8 @@ public class RedisKeyExportController extends Controller {
      */
     @FXML
     private void stopExport() {
-        ThreadUtil.interrupt(this.exportTask);
-        this.exportTask = null;
+        ThreadUtil.interrupt(this.execTask);
+        this.execTask = null;
     }
 
     @Override
@@ -435,7 +436,7 @@ public class RedisKeyExportController extends Controller {
                     this.updateStatus(dbIndex, key, 1, null);
                 }
                 // 取消操作
-                if (ThreadUtil.isInterrupted(this.exportTask)) {
+                if (ThreadUtil.isInterrupted(this.execTask)) {
                     break;
                 }
             } catch (Exception ex) {
