@@ -269,6 +269,8 @@ public class SearchController extends SubController {
 
     /**
      * 刷新搜索结果
+     *
+     * @param event 事件
      */
     @Subscribe
     public void flushSearchResult(TreeChildChangedEvent event) {
@@ -282,6 +284,8 @@ public class SearchController extends SubController {
 
     /**
      * 搜索触发
+     *
+     * @param event 事件
      */
     @Subscribe
     public void searchFire(RedisSearchFireEvent event) {

@@ -204,7 +204,17 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     }
 
     /**
-     * 添加分组
+     * 添加连接事件
+     *
+     * @param event 事件
+     */
+    @Subscribe
+    private void addConnect(RedisAddConnectEvent event) {
+        StageUtil.showStage(RedisInfoAddController.class, this.window());
+    }
+
+    /**
+     * 添加分组事件
      *
      * @param event 事件
      */
@@ -229,15 +239,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      * @param event 事件
      */
     @Subscribe
-    private void infoUpdate(RedisInfoUpdatedEvent event) {
+    private void infoUpdated(RedisInfoUpdatedEvent event) {
         this.root().infoUpdate(event.data());
-    }
-
-    /**
-     * 添加连接
-     */
-    @Subscribe
-    private void addConnect(RedisAddConnectEvent event) {
-        StageUtil.showStage(RedisInfoAddController.class, this.window());
     }
 }
