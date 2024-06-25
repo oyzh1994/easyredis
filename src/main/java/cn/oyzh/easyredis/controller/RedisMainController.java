@@ -221,7 +221,8 @@ public class RedisMainController extends ParentController {
     private void onInfoUpdate(RedisInfoUpdatedEvent event) {
         if (this.info == event.data()) {
             this.flushViewTitle(event.data());
-        }    }
+        }
+    }
 
     /**
      * 刷新窗口标题
