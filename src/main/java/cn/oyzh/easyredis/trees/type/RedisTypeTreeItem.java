@@ -4,7 +4,8 @@ import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.fx.plus.menu.AddKeyMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
@@ -120,7 +121,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        AddKeyMenuItem add = new AddKeyMenuItem("12", this::addKey);
+        FXMenuItem add = MenuItemHelper.addKey("12", this::addKey);
         items.add(add);
         return items;
     }

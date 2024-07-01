@@ -21,18 +21,8 @@ import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
-import cn.oyzh.fx.plus.menu.ClearDataMenuItem;
-import cn.oyzh.fx.plus.menu.CloseConnectMenuItem;
-import cn.oyzh.fx.plus.menu.DeleteConnectMenuItem;
-import cn.oyzh.fx.plus.menu.EditConnectMenuItem;
-import cn.oyzh.fx.plus.menu.ExportDataMenuItem;
-import cn.oyzh.fx.plus.menu.ImportDataMenuItem;
-import cn.oyzh.fx.plus.menu.OpenTerminalMenuItem;
-import cn.oyzh.fx.plus.menu.RenameConnectMenuItem;
-import cn.oyzh.fx.plus.menu.RepeatConnectMenuItem;
-import cn.oyzh.fx.plus.menu.ServerInfoMenuItem;
-import cn.oyzh.fx.plus.menu.StartConnectMenuItem;
-import cn.oyzh.fx.plus.menu.TransportDataMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
@@ -183,14 +173,14 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("12", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
-            CloseConnectMenuItem closeConnect = new CloseConnectMenuItem("12", this::closeConnect);
-            EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
-            RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
-            ServerInfoMenuItem server = new ServerInfoMenuItem("12", this::serverInfo);
-            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
-            ImportDataMenuItem importData = new ImportDataMenuItem("12", this::importData);
-            TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
-            ClearDataMenuItem flushAll = new ClearDataMenuItem("12", this::flushAll);
+            FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
+            FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
+            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
+            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
+            FXMenuItem exportData =  MenuItemHelper.exportData("12", this::exportData);
+            FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
+            FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+            FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
 
             items.add(closeConnect);
             items.add(editConnect);
@@ -201,13 +191,13 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             items.add(server);
             items.add(flushAll);
         } else {
-            StartConnectMenuItem connect = new StartConnectMenuItem("12", this::connect);
-            EditConnectMenuItem editConnect = new EditConnectMenuItem("12", this::editConnect);
-            RenameConnectMenuItem renameConnect = new RenameConnectMenuItem("12", this::rename);
-            DeleteConnectMenuItem deleteConnect = new DeleteConnectMenuItem("12", this::delete);
-            RepeatConnectMenuItem repeatConnect = new RepeatConnectMenuItem("12", this::repeatConnect);
-            ExportDataMenuItem exportData = new ExportDataMenuItem("12", this::exportData);
-            TransportDataMenuItem transportData = new TransportDataMenuItem("12", this::transportData);
+            FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
+            FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
+            FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
+            FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
+            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
+            FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
+            FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
 
             items.add(connect);
             items.add(editConnect);
@@ -217,7 +207,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             items.add(transportData);
             items.add(deleteConnect);
         }
-        OpenTerminalMenuItem openTerminal = new OpenTerminalMenuItem("12", this::openTerminal);
+        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
         items.add(openTerminal);
         return items;
     }

@@ -13,10 +13,8 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.CopyKeyMenuItem;
-import cn.oyzh.fx.plus.menu.DeleteKeyMenuItem;
-import cn.oyzh.fx.plus.menu.MoveKeyMenuItem;
-import cn.oyzh.fx.plus.menu.RenameKeyMenuItem;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -118,10 +116,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        RenameKeyMenuItem rename = new RenameKeyMenuItem("12", this::rename);
-        DeleteKeyMenuItem delete = new DeleteKeyMenuItem("12", this::delete);
-        MoveKeyMenuItem moveKey = new MoveKeyMenuItem("12", this::moveKey);
-        CopyKeyMenuItem copyKey = new CopyKeyMenuItem("12", this::copyKey);
+        FXMenuItem rename =  MenuItemHelper.renameKey("12", this::rename);
+        FXMenuItem delete = MenuItemHelper.deleteKey("12", this::delete);
+        FXMenuItem moveKey = MenuItemHelper.moveKey("12", this::moveKey);
+        FXMenuItem copyKey = MenuItemHelper.copyKey("12", this::copyKey);
         items.add(rename);
         items.add(moveKey);
         items.add(copyKey);
