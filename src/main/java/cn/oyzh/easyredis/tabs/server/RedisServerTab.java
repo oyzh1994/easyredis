@@ -87,8 +87,8 @@ public class RedisServerTab extends DynamicTab {
     }
 
     @Override
-    protected void onTabRequest(Event event) {
-        super.onTabRequest(event);
+    protected void onTabCloseRequest(Event event) {
+        super.onTabCloseRequest(event);
         this.closeRefreshTask();
     }
 }
