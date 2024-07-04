@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.search;
 
-import cn.oyzh.fx.plus.search.SearchParam;
+import cn.oyzh.fx.plus.controls.search.SearchParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

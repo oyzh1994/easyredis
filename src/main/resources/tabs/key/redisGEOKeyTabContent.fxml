@@ -4,7 +4,7 @@
 <?import cn.oyzh.easyredis.fx.LongitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.plus.controls.svg.AddFillSVGGlyph?>
