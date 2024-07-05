@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.tabs.key.string;
 
-import cn.hutool.core.io.IoUtil;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
@@ -9,12 +8,11 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
-import java.io.ObjectInputStream;
 import java.util.Objects;
 
 /**
@@ -65,7 +63,7 @@ public class RedisStringKeyTabContent extends RedisKeyTabContent<RedisStringKeyT
      * 数据组件
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     /**
      * redis数据监听器

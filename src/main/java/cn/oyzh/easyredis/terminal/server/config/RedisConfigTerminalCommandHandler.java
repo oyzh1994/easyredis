@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.server.config;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class RedisConfigTerminalCommandHandler extends RedisTerminalCommandHandl
     }
 
     @Override
-    public String commandHelp(RedisTerminalTextArea terminal) {
+    public String commandHelp(RedisTerminalTextTextArea terminal) {
         CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
         Object obj = terminal.client().execCommand(object);
         return RedisTerminalUtil.formatOut(obj);

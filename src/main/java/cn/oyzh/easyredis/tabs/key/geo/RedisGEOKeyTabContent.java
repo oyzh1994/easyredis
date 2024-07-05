@@ -9,16 +9,14 @@ import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
-import cn.oyzh.fx.plus.controls.pane.FlexTitledPane;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
@@ -96,7 +94,7 @@ public class RedisGEOKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTre
      * 数据组件
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     /**
      * 格式

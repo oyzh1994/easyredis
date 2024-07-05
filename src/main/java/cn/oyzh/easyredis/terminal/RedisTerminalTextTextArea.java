@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
 import cn.oyzh.easyredis.dto.RedisConnect;
@@ -11,17 +10,11 @@ import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.thread.ExecutorUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.terminal.TerminalTextArea;
-import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.fx.terminal.TerminalTextTextArea;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * redis终端文本域
@@ -29,7 +22,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTextArea extends TerminalTextArea {
+public class RedisTerminalTextTextArea extends TerminalTextTextArea {
 
     {
         this.keyHandler(RedisTerminalKeyHandler.INSTANCE);

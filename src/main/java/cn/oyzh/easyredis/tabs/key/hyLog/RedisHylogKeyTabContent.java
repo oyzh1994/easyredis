@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
@@ -44,7 +44,7 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
      * 数据
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     @Override
     protected void initNode() {

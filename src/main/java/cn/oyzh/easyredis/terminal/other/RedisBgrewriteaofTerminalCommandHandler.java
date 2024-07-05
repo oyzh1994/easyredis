@@ -1,10 +1,7 @@
 package cn.oyzh.easyredis.terminal.other;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
-import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Protocol;
 

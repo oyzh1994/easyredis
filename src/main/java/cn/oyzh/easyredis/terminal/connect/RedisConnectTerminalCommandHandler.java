@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal.connect;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
@@ -38,7 +38,7 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     }
 
     @Override
-    public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextArea terminal) {
+    public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextTextArea terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
                 terminal.client().close();

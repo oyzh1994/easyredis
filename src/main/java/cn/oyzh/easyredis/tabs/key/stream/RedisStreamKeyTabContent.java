@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.tabs.key.stream;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
-import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
@@ -12,10 +11,9 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -59,7 +57,7 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
      * 数据
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     @Override
     public boolean init(RedisStreamKeyTreeItem treeItem) {

@@ -13,15 +13,13 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lombok.AccessLevel;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,7 +73,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      * 数据组件
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     /**
      * 数据监听器

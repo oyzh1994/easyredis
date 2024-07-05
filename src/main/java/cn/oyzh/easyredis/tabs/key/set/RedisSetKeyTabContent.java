@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.stage.StageUtil;
 import cn.oyzh.fx.plus.stage.StageWrapper;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
-import cn.oyzh.fx.rich.data.RichDataPane;
+import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
@@ -74,7 +74,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
      * 数据组件
      */
     @FXML
-    private RichDataPane nodeData;
+    private RichDataTextAreaPane nodeData;
 
     /**
      * redis数据监听器

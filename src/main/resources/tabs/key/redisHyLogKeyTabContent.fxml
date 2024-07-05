@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
-<?import cn.oyzh.fx.rich.data.RichDataPane?>
+<?import cn.oyzh.fx.rich.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
@@ -97,7 +97,7 @@
                     <Insets top="9"/>
                 </padding>
             </FlexFlowPane>
-            <RichDataPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData" flexHeight="100% - 32" flexWidth="100% - 2"/>
+            <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData" flexHeight="100% - 32" flexWidth="100% - 2"/>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>

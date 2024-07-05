@@ -24,7 +24,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
-<?import cn.oyzh.fx.rich.data.RichDataPane?>
+<?import cn.oyzh.fx.rich.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -161,8 +161,8 @@
                     </FlowPane.margin>
                 </RefreshSVGGlyph>
             </FlexFlowPane>
-            <RichDataPane disable="true" realHeight="80" flexWidth="100%" fontSize="11" fx:id="hashField"
-                          onKeyPressed="#onNodeDataKeyPressed"/>
+            <RichDataTextAreaPane disable="true" realHeight="80" flexWidth="100%" fontSize="11" fx:id="hashField"
+                                  onKeyPressed="#onNodeDataKeyPressed"/>
             <FXSeparator text="%base.fieldValue" flexWidth="100%">
                 <VBox.margin>
                     <Insets top="5"/>
@@ -198,8 +198,8 @@
                     </FlowPane.margin>
                 </RedisFormatComboBox>
             </FlexFlowPane>
-            <RichDataPane disable="true" flexHeight="100% - 575" flexWidth="100% " fontSize="11" fx:id="nodeData"
-                          onKeyPressed="#onNodeDataKeyPressed"/>
+            <RichDataTextAreaPane disable="true" flexHeight="100% - 575" flexWidth="100% " fontSize="11" fx:id="nodeData"
+                                  onKeyPressed="#onNodeDataKeyPressed"/>
         </FlexVBox>
     </FXTab>
     <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
