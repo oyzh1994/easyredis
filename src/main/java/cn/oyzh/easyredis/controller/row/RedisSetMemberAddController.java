@@ -6,12 +6,12 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisSetMemberAdd.fxml"
 )
-public class RedisSetMemberAddController extends Controller {
+public class RedisSetMemberAddController extends StageController {
 
     /**
      * 行数据
@@ -67,7 +67,7 @@ public class RedisSetMemberAddController extends Controller {
             client.sadd(dbIndex, key, rowValue);
             // 发送事件
             RedisEventUtil.setMemberAdded(this.treeItem, key, rowValue);
-            this.closeStage();
+            this.closeWindow();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -113,7 +113,7 @@ public class RedisSetMemberAddController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);

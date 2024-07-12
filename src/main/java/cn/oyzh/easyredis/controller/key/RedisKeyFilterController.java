@@ -5,11 +5,11 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.event.EventUtil;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.controls.search.SearchTextField;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -27,7 +27,7 @@ import javafx.stage.WindowEvent;
         resizeable = false,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyFilter.fxml"
 )
-public class RedisKeyFilterController extends Controller {
+public class RedisKeyFilterController extends StageController {
 
     /**
      * 过滤模式
@@ -50,8 +50,8 @@ public class RedisKeyFilterController extends Controller {
         EventUtil.register(this);
         this.stage.hideOnEscape();
         super.onStageShown(event);
-        this.treeItem = this.getStageProp("treeItem");
-        String pattern = this.getStageProp("pattern");
+        this.treeItem = this.getWindowProp("treeItem");
+        String pattern = this.getWindowProp("pattern");
         if (!StrUtil.isBlank(pattern)) {
             this.keyFilter.setText(pattern);
         }
@@ -69,7 +69,7 @@ public class RedisKeyFilterController extends Controller {
             this.historyStore.addHistory(pattern);
         }
         this.treeItem.doKeyFilter(pattern);
-        this.closeStage();
+        this.closeWindow();
     }
 
     @Override

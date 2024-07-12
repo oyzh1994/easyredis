@@ -9,8 +9,8 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -203,7 +203,7 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
      */
     @FXML
     protected void ttlUpdate() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyTTLController.class, this.treeItem.window());
+        StageWrapper fxView = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

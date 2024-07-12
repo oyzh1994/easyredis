@@ -28,7 +28,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -39,7 +39,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
@@ -68,7 +68,7 @@ import java.util.stream.Collectors;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyImport.fxml"
 )
-public class RedisKeyImportController extends Controller {
+public class RedisKeyImportController extends StageController {
 
     // /**
     //  * 状态管理器
@@ -422,7 +422,7 @@ public class RedisKeyImportController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.client = treeItem.client();
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
@@ -447,7 +447,7 @@ public class RedisKeyImportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.stopImport();
     }
 

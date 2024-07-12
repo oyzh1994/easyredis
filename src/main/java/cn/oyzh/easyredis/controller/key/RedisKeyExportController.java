@@ -18,7 +18,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
@@ -32,7 +32,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.FileChooserUtil;
@@ -62,7 +62,7 @@ import java.util.Set;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
 )
-public class RedisKeyExportController extends Controller {
+public class RedisKeyExportController extends StageController {
 
     // /**
     //  * 状态管理器
@@ -386,7 +386,7 @@ public class RedisKeyExportController extends Controller {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        TreeItem<?> treeItem = this.getStageProp("treeItem");
+        TreeItem<?> treeItem = this.getWindowProp("treeItem");
         if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
             this.client = connectTreeItem.client();
             this.db.addItem(I18nHelper.allDatabase());
@@ -405,7 +405,7 @@ public class RedisKeyExportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.stopExport();
     }
 

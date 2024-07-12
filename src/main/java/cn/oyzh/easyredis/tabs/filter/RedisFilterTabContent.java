@@ -18,7 +18,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
@@ -203,7 +203,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      */
     @FXML
     private void toAdd() {
-        StageUtil.showStage(RedisFilterAddController.class);
+        StageManager.showStage(RedisFilterAddController.class);
     }
 
     /**

@@ -5,13 +5,13 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -28,7 +28,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "filter/redisFilterAdd.fxml"
 )
-public class RedisFilterAddController extends Controller {
+public class RedisFilterAddController extends StageController {
 
     /**
      * 关键字
@@ -77,7 +77,7 @@ public class RedisFilterAddController extends Controller {
                 RedisEventUtil.filterAdded();
                 RedisEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

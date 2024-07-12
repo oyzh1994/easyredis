@@ -15,8 +15,8 @@ import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controller.ParentController;
-import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controller.ParentStageController;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -45,7 +45,7 @@ import java.util.List;
  */
 @Lazy
 @Component
-public class RedisMainController extends ParentController {
+public class RedisMainController extends ParentStageController {
 
     /**
      * 配置对象
@@ -253,8 +253,8 @@ public class RedisMainController extends ParentController {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
         EventUtil.unregister(this.tree);
         EventUtil.unregister(this.tabPane);
         EventUtil.unregister(this.msgArea);
@@ -403,8 +403,8 @@ public class RedisMainController extends ParentController {
     }
 
     @Override
-    public List<SubController> getSubControllers() {
-        List<SubController> list = new ArrayList<>();
+    public List<SubStageController> getSubControllers() {
+        List<SubStageController> list = new ArrayList<>();
         list.add(this.searchController);
         return list;
     }

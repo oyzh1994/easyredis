@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexSlider;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -22,7 +22,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -44,7 +44,7 @@ import java.util.Objects;
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "setting.fxml"
 )
-public class SettingController extends Controller {
+public class SettingController extends StageController {
 
     /**
      * 退出方式
@@ -189,8 +189,8 @@ public class SettingController extends Controller {
     private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     @Override
-    public void onStageShowing(WindowEvent event) {
-        super.onStageShowing(event);
+    public void onWindowShowing(WindowEvent event) {
+        super.onWindowShowing(event);
         // 应用退出处理
         if (this.setting.getExitMode() != null) {
             switch (this.setting.getExitMode()) {
@@ -269,7 +269,7 @@ public class SettingController extends Controller {
         this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
         if (this.settingStore.update(this.setting)) {
             MessageBox.okToast(I18nHelper.operationSuccess() + tips);
-            this.closeStage();
+            this.closeWindow();
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
             // 应用字体配置

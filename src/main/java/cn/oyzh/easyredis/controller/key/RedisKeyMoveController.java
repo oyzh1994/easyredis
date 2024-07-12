@@ -6,14 +6,14 @@ import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.SubmitButton;
 import cn.oyzh.fx.plus.controls.textfield.DisabledTextField;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -30,7 +30,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyMove.fxml"
 )
-public class RedisKeyMoveController extends Controller {
+public class RedisKeyMoveController extends StageController {
 
     /**
      * 键
@@ -101,7 +101,7 @@ public class RedisKeyMoveController extends Controller {
                 }
                 RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
                 MessageBox.okToast(I18nHelper.operationSuccess());
-                this.closeStage();
+                this.closeWindow();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -126,7 +126,7 @@ public class RedisKeyMoveController extends Controller {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.client = this.treeItem.client();
         this.key.setText(this.treeItem.key() + "（db" + this.treeItem.dbIndex() + "）");
         this.targetDB.setDbCount(this.client.databases());
@@ -135,8 +135,8 @@ public class RedisKeyMoveController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
     }
 
     @Override

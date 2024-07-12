@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -19,7 +19,7 @@ import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -36,7 +36,7 @@ import lombok.NonNull;
         iconUrls = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoUpdate.fxml"
 )
-public class RedisInfoUpdateController extends Controller {
+public class RedisInfoUpdateController extends StageController {
 
     /**
      * 只读模式
@@ -310,7 +310,7 @@ public class RedisInfoUpdateController extends Controller {
         if (this.infoStore.update(this.redisInfo)) {
             RedisEventUtil.infoUpdated(this.redisInfo);
             MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeStage();
+            this.closeWindow();
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -379,7 +379,7 @@ public class RedisInfoUpdateController extends Controller {
     @Override
     public void onStageShown(@NonNull WindowEvent event) {
         super.onStageShown(event);
-        this.redisInfo = this.getStageProp("redisInfo");
+        this.redisInfo = this.getWindowProp("redisInfo");
         this.name.setText(this.redisInfo.getName());
         this.user.setText(this.redisInfo.getUser());
         this.hostIp.setText(this.redisInfo.hostIp());

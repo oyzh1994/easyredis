@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.digital.DecimalTextField;
@@ -22,7 +22,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
 )
-public class RedisKeyAddController extends Controller {
+public class RedisKeyAddController extends StageController {
 
     /**
      * 键
@@ -279,7 +279,7 @@ public class RedisKeyAddController extends Controller {
             }
             RedisEventUtil.keyAdded(this.dbItem, keyType, key);
             MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeStage();
+            this.closeWindow();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -522,16 +522,16 @@ public class RedisKeyAddController extends Controller {
         this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.geoBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
         this.stage.hideOnEscape();
         super.onStageShown(event);
-        this.dbItem = this.getStageProp("dbItem");
-        RedisKeyType type = this.getStageProp("type");
+        this.dbItem = this.getWindowProp("dbItem");
+        RedisKeyType type = this.getWindowProp("type");
         this.type.select(type);
         this.client = this.dbItem.client();
         this.key.requestFocus();
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
-        super.onStageHidden(event);
+    public void onWindowHidden(WindowEvent event) {
+        super.onWindowHidden(event);
     }
 
     @Override

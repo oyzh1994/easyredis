@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import lombok.experimental.UtilityClass;
 
 /**

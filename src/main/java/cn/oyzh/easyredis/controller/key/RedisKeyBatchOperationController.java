@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -23,7 +23,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroup;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -45,7 +45,7 @@ import java.util.List;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )
-public class RedisKeyBatchOperationController extends Controller {
+public class RedisKeyBatchOperationController extends StageController {
 
     /**
      * 根节点
@@ -527,7 +527,7 @@ public class RedisKeyBatchOperationController extends Controller {
         super.onStageShown(event);
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.client = this.treeItem.client();
         this.dbIndex = this.treeItem.dbIndex();
         this.moveTargetDB.setDbCount(this.client.databases());
@@ -547,8 +547,8 @@ public class RedisKeyBatchOperationController extends Controller {
     }
 
     @Override
-    public void onStageHiding(WindowEvent event) {
-        super.onStageHiding(event);
+    public void onWindowHiding(WindowEvent event) {
+        super.onWindowHiding(event);
         ThreadUtil.interrupt(this.execTask);
     }
 

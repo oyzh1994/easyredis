@@ -12,7 +12,7 @@ import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.TaskManager;
-import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -37,7 +37,7 @@ import javax.annotation.Resource;
  */
 @Lazy
 @Component
-public class SearchController extends SubController {
+public class SearchController extends SubStageController {
 
     /**
      * 搜索-搜索词

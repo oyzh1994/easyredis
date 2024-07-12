@@ -20,7 +20,7 @@ import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.stage.StageUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.trees.RichTreeView;
 import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeCell;
@@ -210,7 +210,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     @Subscribe
     private void addConnect(RedisAddConnectEvent event) {
-        StageUtil.showStage(RedisInfoAddController.class, this.window());
+        StageManager.showStage(RedisInfoAddController.class, this.window());
     }
 
     /**

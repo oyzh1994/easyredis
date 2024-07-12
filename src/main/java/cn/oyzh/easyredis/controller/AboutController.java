@@ -4,11 +4,11 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.SubController;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -27,7 +27,7 @@ import javax.annotation.Resource;
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "about.fxml"
 )
-public class AboutController extends SubController {
+public class AboutController extends SubStageController {
 
     @FXML
     private FlexText name;

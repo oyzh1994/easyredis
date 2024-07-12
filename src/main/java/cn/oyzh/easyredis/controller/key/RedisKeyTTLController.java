@@ -6,13 +6,13 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.digital.NumberTextField;
 import cn.oyzh.fx.plus.controls.text.FlexLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -31,7 +31,7 @@ import java.sql.Date;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyTTL.fxml"
 )
-public class RedisKeyTTLController extends Controller {
+public class RedisKeyTTLController extends StageController {
 
     /**
      * 当前窗口显示时间
@@ -79,7 +79,7 @@ public class RedisKeyTTLController extends Controller {
             }
             RedisEventUtil.keyTTLUpdated(this.treeItem, ttlValue.longValue());
             MessageBox.okToast(I18nHelper.operationSuccess());
-            this.closeStage();
+            this.closeWindow();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -158,7 +158,7 @@ public class RedisKeyTTLController extends Controller {
         this.showTime = System.currentTimeMillis();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.client = this.treeItem.client();
         Long ttl = this.treeItem.ttl();
         if (ttl == null || ttl <= -1) {

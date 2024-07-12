@@ -18,7 +18,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.common.util.SystemUtil;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
@@ -31,7 +31,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.fxml.FXML;
@@ -55,7 +55,7 @@ import java.util.Set;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoTransport.fxml"
 )
-public class RedisInfoTransportController extends Controller {
+public class RedisInfoTransportController extends StageController {
 
     // /**
     //  * 状态管理器
@@ -556,7 +556,7 @@ public class RedisInfoTransportController extends Controller {
     }
 
     @Override
-    public void onStageHidden(WindowEvent event) {
+    public void onWindowHidden(WindowEvent event) {
         this.transportEnd();
         this.stopTransport();
         this.closeClient();

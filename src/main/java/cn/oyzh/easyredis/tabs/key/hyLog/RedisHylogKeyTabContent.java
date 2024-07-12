@@ -7,8 +7,8 @@ import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
 import com.google.common.eventbus.Subscribe;
@@ -100,7 +100,7 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
      */
     @FXML
     private void addRow() {
-        StageWrapper fxView = StageUtil.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
+        StageWrapper fxView = StageManager.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

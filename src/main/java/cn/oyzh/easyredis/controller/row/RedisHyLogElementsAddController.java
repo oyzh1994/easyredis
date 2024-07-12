@@ -8,12 +8,12 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.plus.controller.Controller;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.stage.StageAttribute;
+import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisHyLogElementsAdd.fxml"
 )
-public class RedisHyLogElementsAddController extends Controller {
+public class RedisHyLogElementsAddController extends StageController {
 
     /**
      * 行数据
@@ -77,7 +77,7 @@ public class RedisHyLogElementsAddController extends Controller {
             }
             // 发送事件
             RedisEventUtil.hyLogElementsAdded(this.treeItem, key, array);
-            this.closeStage();
+            this.closeWindow();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -103,7 +103,7 @@ public class RedisHyLogElementsAddController extends Controller {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.treeItem = this.getStageProp("treeItem");
+        this.treeItem = this.getWindowProp("treeItem");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onStageShown(event);

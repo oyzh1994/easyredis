@@ -6,8 +6,8 @@ import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
-import cn.oyzh.fx.plus.stage.StageUtil;
-import cn.oyzh.fx.plus.stage.StageWrapper;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.window.StageWrapper;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import javafx.scene.control.MenuItem;
@@ -130,7 +130,7 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
      * 添加键
      */
     public void addKey() {
-        StageWrapper fxView = StageUtil.parseStage(RedisKeyAddController.class, this.window());
+        StageWrapper fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
         fxView.setProp("type", this.value);
         fxView.setProp("dbItem", this.parent);
         fxView.display();
