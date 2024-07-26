@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
-<?import cn.oyzh.fx.plus.controls.digital.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
