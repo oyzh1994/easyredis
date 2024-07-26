@@ -39,7 +39,7 @@ import cn.oyzh.fx.plus.menu.BatchOperationMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -187,7 +187,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     @FXML
     private void batchOperation() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -197,7 +197,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     @FXML
     private void transportData() {
-        StageWrapper fxView = StageManager.getStage(RedisInfoTransportController.class);
+        StageAdapter fxView = StageManager.getStage(RedisInfoTransportController.class);
         if (fxView != null) {
             fxView.disappear();
         }
@@ -210,7 +210,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 键过滤
      */
     private void keyFilter() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyFilterController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.setProp("pattern", this.filterPattern);
         fxView.display();
@@ -232,7 +232,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 导出键
      */
     public void exportNode() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -755,7 +755,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 添加键
      */
     public void addKey() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
         fxView.setProp("dbItem", this);
         fxView.display();
     }

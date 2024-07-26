@@ -14,7 +14,7 @@ import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
@@ -190,7 +190,7 @@ public class RedisZSetKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView = StageManager.parseStage(RedisZSetMemberAddController.class);
+        StageAdapter fxView = StageManager.parseStage(RedisZSetMemberAddController.class);
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

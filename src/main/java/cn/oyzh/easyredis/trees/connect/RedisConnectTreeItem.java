@@ -24,7 +24,7 @@ import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -216,7 +216,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 导出zk节点
      */
     public void exportData() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -305,7 +305,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 导入数据
      */
     private void importData() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyImportController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyImportController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -314,7 +314,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 传输数据
      */
     private void transportData() {
-        StageWrapper wrapper = StageManager.getStage(RedisInfoTransportController.class);
+        StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
         if (wrapper != null) {
             wrapper.disappear();
         }
@@ -376,7 +376,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             }
             this.closeConnect();
         }
-        StageWrapper fxView = StageManager.parseStage(RedisInfoUpdateController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisInfoUpdateController.class, this.window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
     }

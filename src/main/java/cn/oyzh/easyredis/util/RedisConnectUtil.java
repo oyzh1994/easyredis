@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -24,7 +24,7 @@ public class RedisConnectUtil {
      * @param view 页面
      * @param info redis信息
      */
-    public static void testConnect(StageWrapper view, RedisInfo info) {
+    public static void testConnect(StageAdapter view, RedisInfo info) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();

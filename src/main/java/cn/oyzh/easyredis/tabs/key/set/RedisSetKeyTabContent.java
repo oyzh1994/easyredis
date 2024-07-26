@@ -12,7 +12,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.data.RichDataType;
@@ -153,7 +153,7 @@ public class RedisSetKeyTabContent extends RedisRowKeyTabContent<RedisSetKeyTree
     @FXML
     @Override
     protected void addRow() {
-        StageWrapper fxView = StageManager.parseStage(RedisSetMemberAddController.class, this.treeItem.window());
+        StageAdapter fxView = StageManager.parseStage(RedisSetMemberAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }

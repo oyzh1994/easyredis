@@ -9,7 +9,7 @@ import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 import org.springframework.context.annotation.Lazy;
@@ -55,7 +55,7 @@ public class HeaderController extends SubStageController {
      */
     @FXML
     private void setting() {
-        StageWrapper wrapper = StageManager.getStage(SettingController.class);
+        StageAdapter wrapper = StageManager.getStage(SettingController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
@@ -94,7 +94,7 @@ public class HeaderController extends SubStageController {
      */
     @FXML
     private void transport() {
-        StageWrapper wrapper = StageManager.getStage(RedisInfoTransportController.class);
+        StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {

@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageWrapper;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
@@ -131,7 +131,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * 移动键
      */
     private void moveKey() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyMoveController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyMoveController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
@@ -140,7 +140,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      * 复制键
      */
     private void copyKey() {
-        StageWrapper fxView = StageManager.parseStage(RedisKeyCopyController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisKeyCopyController.class, this.window());
         fxView.setProp("treeItem", this);
         fxView.display();
     }
