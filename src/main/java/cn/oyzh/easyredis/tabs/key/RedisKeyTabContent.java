@@ -15,7 +15,7 @@ import cn.oyzh.fx.plus.tabs.DynamicTab;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.rich.data.RichDataType;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
