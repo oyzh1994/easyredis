@@ -113,7 +113,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             return;
         }
         RedisInfoExport export = RedisInfoExport.fromConnects(infos);
-        FileExtensionFilter extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
         File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.redis", "base.connect", "base._json"), extensionFilter);
         if (file != null) {
             try {
@@ -147,9 +147,8 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 导入连接
      */
     private void importConnect() {
-        FileExtensionFilter filter1 = new FileExtensionFilter("JSON files", "*.json");
-        FileExtensionFilter filter2 = new FileExtensionFilter("All", "*.*");
-        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1, filter2);
+        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
+        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
         // 解析文件
         this.parseConnect(file);
     }

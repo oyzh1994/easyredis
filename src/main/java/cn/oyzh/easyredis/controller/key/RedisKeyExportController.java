@@ -293,7 +293,7 @@ public class RedisKeyExportController extends StageController {
                 // 导出内容
                 String exportData = RedisExportUtil.nodesToJSON(allNodes, null, prettyFormat);
                 // 文件格式
-                FileExtensionFilter extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+                FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
                 // 处理名称
                 String fileName = "Redis-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
                 if (StrUtil.equals(I18nHelper.allDatabase(), this.db.getValue())) {
