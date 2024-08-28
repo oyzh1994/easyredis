@@ -17,17 +17,17 @@ import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
+import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.file.FileChooserUtil;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.stage.FileChooser;
 import lombok.NonNull;
 
 import java.io.File;
@@ -89,7 +89,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem addConnect =  MenuItemHelper.addConnect("12", this::addConnect);
+        FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
         FXMenuItem exportConnect = MenuItemHelper.exportConnect("12", this::exportConnect);
         FXMenuItem importConnect = MenuItemHelper.importConnect("12", this::importConnect);
         FXMenuItem addGroup = MenuItemHelper.addGroup("12", this::addGroup);
@@ -113,8 +113,8 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             return;
         }
         RedisInfoExport export = RedisInfoExport.fromConnects(infos);
-        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        File file = FileChooserUtil.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.redis", "base.connect", "base._json"), new FileChooser.ExtensionFilter[]{extensionFilter});
+        FileExtensionFilter extensionFilter = new FileExtensionFilter("JSON files", "*.json");
+        File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.redis", "base.connect", "base._json"), extensionFilter);
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
@@ -147,9 +147,9 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 导入连接
      */
     private void importConnect() {
-        FileChooser.ExtensionFilter filter1 = new FileChooser.ExtensionFilter("JSON files", "*.json");
-        FileChooser.ExtensionFilter filter2 = new FileChooser.ExtensionFilter("All", "*.*");
-        File file = FileChooserUtil.choose(I18nHelper.chooseFile(), new FileChooser.ExtensionFilter[]{filter1, filter2});
+        FileExtensionFilter filter1 = new FileExtensionFilter("JSON files", "*.json");
+        FileExtensionFilter filter2 = new FileExtensionFilter("All", "*.*");
+        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1, filter2);
         // 解析文件
         this.parseConnect(file);
     }
@@ -188,7 +188,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
                     if (this.infoStore.add(info)) {
                         this.addConnect(info);
                     } else {
-                        MessageBox.warn(I18nHelper.connect()+ "[" + info.getName() + "]" + I18nHelper.importFail());
+                        MessageBox.warn(I18nHelper.connect() + "[" + info.getName() + "]" + I18nHelper.importFail());
                     }
                 }
                 MessageBox.okToast(I18nHelper.operationSuccess());
