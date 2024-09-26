@@ -20,7 +20,6 @@ import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.CancelConnectMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -170,7 +169,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isConnecting()) {
-            CancelConnectMenuItem cancelConnect = new CancelConnectMenuItem("12", this::cancelConnect);
+            FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);

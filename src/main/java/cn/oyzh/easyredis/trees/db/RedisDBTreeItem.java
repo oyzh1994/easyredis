@@ -35,7 +35,6 @@ import cn.oyzh.fx.common.thread.Task;
 import cn.oyzh.fx.common.thread.TaskBuilder;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.menu.BatchOperationMenuItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -171,7 +170,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         FXMenuItem refresh = MenuItemHelper.refreshData("12", this::reloadChild);
         FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportNode);
         FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-        BatchOperationMenuItem batchOperation = new BatchOperationMenuItem("12", this::batchOperation);
+        FXMenuItem batchOperation = MenuItemHelper.batchOpt("12", this::batchOperation);
 
         items.add(add);
         items.add(keyFilter);
