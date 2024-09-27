@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.tabs.DynamicTab;
@@ -173,9 +174,7 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
      */
     @FXML
     protected void onNodeDataKeyPressed(KeyEvent e) {
-        KeyCode code = e.getCode();
-        // 保存键数据
-        if (code == KeyCode.S && e.isControlDown()) {
+        if (KeyboardUtil.isCtrlS(e)) {
             this.saveKeyData();
             e.consume();
         }
