@@ -17,14 +17,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
-import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -33,16 +26,9 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
  * @author oyzh
  * @since 2023/06/16
  */
-@SpringBootApplication(scanBasePackages = "cn.oyzh",
-        exclude = {
-                AopAutoConfiguration.class,
-                CacheAutoConfiguration.class,
-                DataSourceAutoConfiguration.class,
-                MessageSourceAutoConfiguration.class,
-                TaskExecutionAutoConfiguration.class,
-                TaskSchedulingAutoConfiguration.class,
-                SqlInitializationAutoConfiguration.class,
-        }
+@ComponentScan(
+        lazyInit = true,
+        value = {"cn.oyzh.fx.common", "cn.oyzh.easyredis"}
 )
 @EnableSpringUtil
 public class EasyRedisApp extends SpringApplication implements CommandLineRunner, DisposableBean {
