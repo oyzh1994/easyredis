@@ -56,7 +56,7 @@ public class RedisCmdSpider extends SpringApplication {
 
     private void fetch() throws IOException {
         System.out.println("fetch start---------->");
-        Collection<TerminalCommandHandler> list = TerminalManager.listHandler();
+        Collection<TerminalCommandHandler<?,?>> list = TerminalManager.listHandler();
         List<RedisCommand> list1 = new ArrayList<>();
         Document document = Jsoup.connect(descUrl).get();
         Elements articles = document.getElementsByTag("article");
