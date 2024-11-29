@@ -1,6 +1,9 @@
 package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.util.ObjectComparator;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +20,17 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table("t_key_filter_history")
 public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHistory>, Serializable {
+
+    @Column
+    @PrimaryKey
+    private String uid;
 
     /**
      * 模式
      */
+    @Column
     private String pattern;
 
     @Override

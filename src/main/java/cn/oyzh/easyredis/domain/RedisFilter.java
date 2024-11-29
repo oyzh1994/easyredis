@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.domain;
 import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table("t_filter")
 public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable {
 
     /**
@@ -33,6 +35,7 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
     /**
      * 关键词
      */
+    @Column
     private String kw;
 
     /**
@@ -40,11 +43,13 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
      * true 模糊匹配
      * false 完全匹配
      */
+    @Column
     private boolean partMatch;
 
     /**
      * 是否启用
      */
+    @Column
     private boolean enable;
 
     /**

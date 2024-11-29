@@ -3,7 +3,6 @@
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
-<?import cn.oyzh.fx.plus.controls.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
@@ -17,12 +16,13 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.page.PageBox?>
+<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
              flexHeight="100%"
              rotateGraphic="true"

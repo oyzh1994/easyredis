@@ -4,6 +4,9 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.gui.textfield.search.SearchTextField?>
+<?import cn.oyzh.fx.gui.button.SubmitButton?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyFilterController" realWidth="400" realHeight="110">
     <FlexHBox flexWidth="100%" realHeight="50">

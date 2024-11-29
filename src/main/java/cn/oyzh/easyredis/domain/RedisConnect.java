@@ -5,6 +5,9 @@ import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.ssh.SSHConnect;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -18,6 +21,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/16
  */
+@Table("t_connect")
 public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<RedisConnect>, Serializable {
 
     /**
@@ -25,6 +29,8 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
+    @PrimaryKey
     private String id;
 
     /**
@@ -32,6 +38,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String host;
 
     /**
@@ -39,6 +46,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String name;
 
     /**
@@ -46,6 +54,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String remark;
 
     /**
@@ -53,6 +62,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String groupId;
 
     /**
@@ -60,6 +70,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String user;
 
     /**
@@ -67,6 +78,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Getter
     @Setter
+    @Column
     private String password;
 
     /**
@@ -74,6 +86,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Setter
     @Getter
+    @Column
     private Boolean readonly;
 
     /**
@@ -87,12 +100,14 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 连接超时时间
      */
     @Setter
+    @Column
     private Integer connectTimeOut;
 
     /**
      * 执行超时时间
      */
     @Setter
+    @Column
     private Integer executeTimeOut;
 
     /**
@@ -100,6 +115,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Setter
     @Getter
+    @Column
     private Boolean sshForward;
 
     /**

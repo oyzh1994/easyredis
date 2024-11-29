@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.fx.plus.domain.TreeGroup;
+import cn.oyzh.store.jdbc.Table;
 
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/16
  */
+@Table("t_group")
 public class RedisGroup extends TreeGroup implements ObjectComparator<RedisGroup> {
 
     public RedisGroup() {
