@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
-<?import cn.oyzh.fx.plus.controls.area.MsgTextArea?>
-<?import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.button.CloseButton?>
-<?import cn.oyzh.fx.plus.controls.button.ExportButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.button.StopButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.gui.button.ExportButton?>
+<?import cn.oyzh.fx.gui.button.StopButton?>
+<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.gui.button.CloseButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="700">
-    <!-- <fx:define> -->
-    <!--     <StateManager fx:id="stateManager" managedBindVisible="true"/> -->
-    <!-- </fx:define> -->
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.server" realHeight="30" realWidth="80">
             <HBox.margin>
