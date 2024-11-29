@@ -2,7 +2,8 @@
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.SearchSVGLabel?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
@@ -10,46 +11,54 @@
 <?import cn.oyzh.fx.gui.svg.label.CollapseSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.ExpandSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
-<FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-              fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?>
+<FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
     <!-- <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14"> -->
-    <!--     <FlowPane.margin> -->
+    <!--     <HBox.margin> -->
     <!--         <Insets left="8" top="5" bottom="5"/> -->
-    <!--     </FlowPane.margin> -->
+    <!--     </HBox.margin> -->
     <!-- </SearchSVGLabel> -->
     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </FilterSVGLabel>
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </TransportSVGLabel>
     <SettingSVGLabel onMousePrimaryClicked="#setting" size="14">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </SettingSVGLabel>
-    <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
-        <FlowPane.margin>
+    <MigrationSVGLabel onMousePrimaryClicked="#migration" size="12">
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
+    </MigrationSVGLabel>
+    <AboutSVGLabel onMousePrimaryClicked="#about" size="14">
+        <HBox.margin>
+            <Insets left="10" top="5" bottom="5"/>
+        </HBox.margin>
     </AboutSVGLabel>
     <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </CollapseSVGLabel>
     <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </ExpandSVGLabel>
     <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">
-        <FlowPane.margin>
+        <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
-        </FlowPane.margin>
+        </HBox.margin>
     </QuitSVGLabel>
-</FlexFlowPane>
+</FlexHBox>

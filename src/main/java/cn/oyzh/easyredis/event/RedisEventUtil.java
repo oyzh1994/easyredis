@@ -189,12 +189,12 @@ public class RedisEventUtil {
         EventUtil.post(new TreeChildFilterEvent());
     }
 
-    /**
-     * 树节点变化事件
-     */
-    public static void treeChildChanged() {
-        EventUtil.post(new TreeChildChangedEvent());
-    }
+//    /**
+//     * 树节点变化事件
+//     */
+//    public static void treeChildChanged() {
+//        EventUtil.post(new TreeChildChangedEvent());
+//    }
 
     /**
      * 键添加事件

@@ -72,11 +72,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value(value);
-        // 监听变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            RedisEventUtil.treeChildChanged();
-            this.flushLocal();
-        });
+//        // 监听变化
+//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+//            RedisEventUtil.treeChildChanged();
+//            this.flushLocal();
+//        });
     }
 
     /**
@@ -151,8 +151,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                 }
                 this.setChild(items);
             }
+            this.refresh();
             // 刷新角色
-            BackgroundService.submitFXLater(this::flushRole);
+//            BackgroundService.submitFXLater(this::flushRole);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -161,9 +162,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         return false;
     }
 
-    public void flushRole() {
-        this.getValue().flushRole();
-    }
+//    public void flushRole() {
+//        this.getValue().flushRole();
+//    }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -291,8 +292,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                         }
                         // this.flushGraphic();
                     })
-                    .onFinish(this::stopWaiting)
-                    .onSuccess(this::flushLocal)
+//                    .onFinish(this::stopWaiting)
+//                    .onSuccess(this::flushLocal)
+                    .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .build();
             // 执行连接
@@ -339,15 +341,15 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public void closeConnect(boolean waiting) {
         Runnable func = () -> {
             this.client.close();
-            this.getValue().clearRole();
+//            this.getValue().clearRole();
             this.clearChild();
             // this.flushGraphic();
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onFinish(this::stopWaiting)
-                    .onSuccess(this::flushLocal)
+//                    .onFinish(this::stopWaiting)
+                    .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);

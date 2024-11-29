@@ -59,11 +59,11 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         this.setValue(new RedisRootTreeItemValue());
         // 初始化子节点
         this.initChildes();
-        // 监听变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            RedisEventUtil.treeChildChanged();
-            this.flushLocal();
-        });
+//        // 监听变化
+//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+//            RedisEventUtil.treeChildChanged();
+//            this.flushLocal();
+//        });
     }
 
     /**

@@ -41,7 +41,6 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     public SVGGlyph graphic() {
         if (this.graphic == null) {
             this.graphic = new SVGGlyph("/font/redis.svg", 10);
-            this.graphic.disableTheme();
         }
         return super.graphic();
     }

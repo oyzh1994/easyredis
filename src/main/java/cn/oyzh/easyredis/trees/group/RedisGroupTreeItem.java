@@ -62,11 +62,11 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         this.setValue(new RedisGroupTreeItemValue(this));
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
-        // 监听变化
-        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            RedisEventUtil.treeChildChanged();
-            this.flushLocal();
-        });
+//        // 监听变化
+//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+//            RedisEventUtil.treeChildChanged();
+//            this.flushLocal();
+//        });
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(false);

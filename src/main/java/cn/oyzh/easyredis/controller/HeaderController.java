@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.dto.Project;
+import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.plus.controller.SubStageController;
@@ -11,6 +12,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
 /**
@@ -126,5 +128,10 @@ public class HeaderController extends SubStageController {
         super.onStageShown(event);
         this.treeMutexes.addNodes(this.collapseTree, this.expandTree);
         this.treeMutexes.manageBindVisible();
+    }
+
+    @FXML
+    private void migration() {
+        StageManager.showStage(RedisDataMigrationController.class);
     }
 }
