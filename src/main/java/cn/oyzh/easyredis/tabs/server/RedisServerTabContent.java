@@ -196,7 +196,7 @@ public class RedisServerTabContent extends DynamicTabController {
      */
     private void initRefreshTask() {
         this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
-        StaticLog.debug("RefreshTask started.");
+        JulLog.debug("RefreshTask started.");
     }
 
     /**
@@ -205,7 +205,7 @@ public class RedisServerTabContent extends DynamicTabController {
     public void closeRefreshTask() {
         try {
             ExecutorUtil.cancel(this.refreshTask);
-            StaticLog.debug("RefreshTask closed.");
+            JulLog.debug("RefreshTask closed.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

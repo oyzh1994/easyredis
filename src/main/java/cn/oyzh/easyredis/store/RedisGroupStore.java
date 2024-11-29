@@ -37,7 +37,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_group.json");
-        StaticLog.info("RedisGroupStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisGroupStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.redisGroups = this.load();
     }
 
@@ -81,7 +81,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -94,7 +94,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -107,7 +107,7 @@ public class RedisGroupStore extends ArrayFileStore<RedisGroup> {
                 return this.save(this.redisGroups);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

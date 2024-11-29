@@ -559,7 +559,7 @@ public class RedisClient {
             this.state.set(RedisConnState.CONNECTED);
         } catch (Exception ex) {
             this.state.set(RedisConnState.FAILED);
-            StaticLog.warn("redisClient start error", ex);
+            JulLog.warn("redisClient start error", ex);
             throw new RedisException(ex);
         }
     }

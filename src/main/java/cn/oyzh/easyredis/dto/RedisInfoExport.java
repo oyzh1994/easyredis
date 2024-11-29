@@ -61,7 +61,7 @@ public class RedisInfoExport {
      * @return RedisInfoExport
      */
     public static RedisInfoExport fromJSON(@NonNull String json) {
-        StaticLog.info("json: {}", json);
+        JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObj(json);
         RedisInfoExport export = new RedisInfoExport();
         export.connects = new ArrayList<>();

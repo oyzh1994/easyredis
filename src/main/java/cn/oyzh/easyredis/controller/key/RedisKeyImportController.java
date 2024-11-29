@@ -254,7 +254,7 @@ public class RedisKeyImportController extends StageController {
                 for (Map<String, Object> node : this.nodeExport.getNodes()) {
                     // 取消操作
                     if (ThreadUtil.isInterrupted(this.execTask)) {
-                        StaticLog.warn("import canceled!");
+                        JulLog.warn("import canceled!");
                         break;
                     }
                     // 获取数据

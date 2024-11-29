@@ -5,6 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.fx.common.dto.Paging;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-//@Slf4j
 public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
 
     /**
@@ -34,7 +34,7 @@ public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_filter.json");
-        StaticLog.info("RedisFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisFilterStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -76,7 +76,7 @@ public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
             }
             return true;
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -92,7 +92,7 @@ public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
                 return this.save(filters);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -112,7 +112,7 @@ public class RedisFilterStore extends ArrayFileStore<RedisFilter> {
                 return this.save(filters);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

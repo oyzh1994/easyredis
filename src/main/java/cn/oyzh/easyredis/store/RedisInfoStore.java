@@ -38,7 +38,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_info.json");
-        StaticLog.info("RedisInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
         this.redisInfos = this.load();
         for (RedisInfo RedisInfo : this.redisInfos) {
             if (StrUtil.isBlank(RedisInfo.getId())) {
@@ -75,7 +75,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -88,7 +88,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            StaticLog.warn("update error,err:{}", e.getMessage());
+            JulLog.warn("update error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -101,7 +101,7 @@ public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
                 return this.save(this.redisInfos);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
             return false;
         }
         return true;

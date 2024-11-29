@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.domain;
 
 
-import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.fx.plus.domain.TreeGroup;
 
 import java.util.Objects;
@@ -13,7 +13,7 @@ import java.util.Objects;
 public class RedisGroup extends TreeGroup implements ObjectComparator<RedisGroup> {
 
     public RedisGroup() {
-
+        super();
     }
 
     public RedisGroup(String gid, String name, boolean expand) {

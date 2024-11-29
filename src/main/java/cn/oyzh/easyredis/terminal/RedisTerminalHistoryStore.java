@@ -20,7 +20,7 @@ public class RedisTerminalHistoryStore extends TerminalHistoryStore {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_shell_history.json");
-        StaticLog.info("RedisShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisShellHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
 }

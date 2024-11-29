@@ -25,11 +25,13 @@ public class RedisConst {
     public static final String STORE_PATH = System.getProperty("user.home") + File.separator + ".easyredis" + File.separator;
 
     /**
+     * 缓存保存路径
+     */
+    public static final String CACHE_PATH = STORE_PATH + "cache" + File.separator;
+    
+    /**
      * icon地址
      */
     public final static String ICON_PATH = "/image/redis_no_bg.png";
 
-    static {
-        FXUtil.setAppStorePath(STORE_PATH);
-    }
 }

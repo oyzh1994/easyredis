@@ -1,11 +1,12 @@
 package cn.oyzh.easyredis.domain;
 
-import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RedisFilter implements ObjectComparator<RedisFilter> {
+public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable {
 
     /**
      * 关键词

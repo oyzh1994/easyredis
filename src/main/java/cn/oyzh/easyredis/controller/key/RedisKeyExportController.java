@@ -282,7 +282,7 @@ public class RedisKeyExportController extends StageController {
                 }
                 // 取消操作
                 if (ThreadUtil.isInterrupted(this.execTask)) {
-                    StaticLog.warn("export canceled!");
+                    JulLog.warn("export canceled!");
                     return;
                 }
                 // 键按词典顺序排序

@@ -37,7 +37,7 @@ public class RedisKeyFilterHistoryStore extends ArrayFileStore<RedisKeyFilterHis
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_key_filter_history.json");
-        StaticLog.info("RedisKeyFilterHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisKeyFilterHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -82,7 +82,7 @@ public class RedisKeyFilterHistoryStore extends ArrayFileStore<RedisKeyFilterHis
             // 保存数据
             return this.save(histories);
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -110,7 +110,7 @@ public class RedisKeyFilterHistoryStore extends ArrayFileStore<RedisKeyFilterHis
                 return this.save(histories);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
         }
         return false;
     }

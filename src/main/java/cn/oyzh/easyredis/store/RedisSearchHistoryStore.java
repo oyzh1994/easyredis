@@ -38,7 +38,7 @@ public class RedisSearchHistoryStore extends ArrayFileStore<RedisSearchHistory> 
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_search_history.json");
-        StaticLog.info("RedisSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisSearchHistoryStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class RedisSearchHistoryStore extends ArrayFileStore<RedisSearchHistory> 
             // 保存数据
             return this.save(histories);
         } catch (Exception e) {
-            StaticLog.warn("add error,err:{}", e.getMessage());
+            JulLog.warn("add error,err:{}", e.getMessage());
         }
         return false;
     }
@@ -130,7 +130,7 @@ public class RedisSearchHistoryStore extends ArrayFileStore<RedisSearchHistory> 
                 return this.save(histories);
             }
         } catch (Exception e) {
-            StaticLog.warn("delete error,err:{}", e.getMessage());
+            JulLog.warn("delete error,err:{}", e.getMessage());
         }
         return false;
     }

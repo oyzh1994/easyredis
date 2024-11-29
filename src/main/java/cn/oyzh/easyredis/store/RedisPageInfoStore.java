@@ -31,7 +31,7 @@ public class RedisPageInfoStore extends ObjectFileStore<RedisPageInfo> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "page_info.json");
-        StaticLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("PageInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

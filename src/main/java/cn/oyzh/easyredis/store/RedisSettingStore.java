@@ -31,7 +31,7 @@ public class RedisSettingStore extends ObjectFileStore<RedisSetting> {
 
     {
         this.filePath(RedisConst.STORE_PATH + "redis_setting.json");
-        StaticLog.info("RedisSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+        JulLog.info("RedisSettingStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
     }
 
     @Override

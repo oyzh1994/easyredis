@@ -242,7 +242,7 @@ public class RedisTerminalTextTextArea extends TerminalTextTextArea {
                     this.flushAndMoveCaretEnd();
                     this.enableInput();
                 }
-                StaticLog.info("connState={}", t1);
+                JulLog.info("connState={}", t1);
             };
             this.client().addStateListener(this.stateChangeListener);
         }

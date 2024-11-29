@@ -321,7 +321,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     //         // 扫描数据
     //         RedisScanResult result = RedisKeyUtil.scanKeys(this.dbIndex, cursor, params, this.client());
     //         scanWatch.stop();
-    //         StaticLog.info(scanWatch.prettyPrint(TimeUnit.MILLISECONDS));
+    //         JulLog.info(scanWatch.prettyPrint(TimeUnit.MILLISECONDS));
     //         // 渲染数据
     //         RenderService.submit(() -> this.renderChild(renderWatch, keyItems, result.getKeys(), allKeys, result.isFinish()));
     //         // 查询结束

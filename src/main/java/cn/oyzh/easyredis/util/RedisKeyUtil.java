@@ -594,7 +594,7 @@ public class RedisKeyUtil {
             case RedisKeyType.ZSET -> redisKey = new RedisZSetKey();
             case RedisKeyType.HASH -> redisKey = new RedisHashKey();
             case RedisKeyType.STREAM -> redisKey = new RedisStreamKey();
-            case null, default -> StaticLog.warn("type:{} is not support!", type);
+            case null, default -> JulLog.warn("type:{} is not support!", type);
         }
         // 处理键
         if (redisKey != null) {
