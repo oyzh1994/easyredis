@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
@@ -260,7 +261,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      */
     public void collect() {
         this.info().addCollect(this.dbIndex(), this.key());
-        RedisInfoStore.INSTANCE.update(this.info());
+        RedisConnectJdbcStore.INSTANCE.update(this.info());
     }
 
     /**
@@ -268,7 +269,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      */
     public void unCollect() {
         if (this.info().removeCollect(this.dbIndex(), this.key())) {
-            RedisInfoStore.INSTANCE.update(this.info());
+            RedisConnectJdbcStore.INSTANCE.update(this.info());
             this.doFilter();
         }
     }
@@ -310,7 +311,8 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StrUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
-                this.getValue().name(newKey);
+                // this.getValue().name(newKey);
+                this.refresh();
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {
                 MessageBox.warn(I18nHelper.operationFail());

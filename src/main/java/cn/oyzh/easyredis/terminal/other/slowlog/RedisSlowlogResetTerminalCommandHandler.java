@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.terminal.other.slowlog;
 
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.Protocol;
 
 /**

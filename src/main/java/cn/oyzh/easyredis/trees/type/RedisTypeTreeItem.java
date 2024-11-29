@@ -43,21 +43,21 @@ public class RedisTypeTreeItem extends RedisTreeItem<RedisTypeTreeItemValue> {
         this.setValue(new RedisTypeTreeItemValue(this));
     }
 
-    /**
-     * 刷新值
-     */
-    private void flushValue() {
-        BackgroundService.submitFXLater(() -> {
-            this.getValue().flushNum();
-            this.getValue().flushGraphicColor();
-        });
-    }
+    // /**
+    //  * 刷新值
+    //  */
+    // private void flushValue() {
+    //     BackgroundService.submitFXLater(() -> {
+    //         this.getValue().flushNum();
+    //         this.getValue().flushGraphicColor();
+    //     });
+    // }
 
-    @Override
-    public synchronized void doFilter(RichTreeItemFilter itemFilter) {
-        super.doFilter(itemFilter);
-        this.flushValue();
-    }
+    // @Override
+    // public synchronized void doFilter(RichTreeItemFilter itemFilter) {
+    //     super.doFilter(itemFilter);
+    //     this.flushValue();
+    // }
 
     /**
      * 是否流类型

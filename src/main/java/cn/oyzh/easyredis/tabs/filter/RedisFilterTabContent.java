@@ -117,63 +117,63 @@ public class RedisFilterTabContent extends DynamicTabController {
         this.action.setCellFactory((cell) -> new FXTableCell<>() {
             private HBox hBox;
 
-            @Override
-            public Node initGraphic() {
-                if (this.hBox == null) {
-                    // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
-                    this.hBox = new HBox(del);
-                    HBox.setMargin(del, new Insets(7, 0, 0, 5));
-                }
-                return hBox;
-            }
+            // @Override
+            // public Node initGraphic() {
+            //     if (this.hBox == null) {
+            //         // 删除按钮
+            //         DeleteSVGGlyph del = new DeleteSVGGlyph("14");
+            //         del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
+            //         this.hBox = new HBox(del);
+            //         HBox.setMargin(del, new Insets(7, 0, 0, 5));
+            //     }
+            //     return hBox;
+            // }
         });
 
         // 状态栏初始化
         this.status.setCellFactory((cell) -> new FXTableCell<>() {
-            @Override
-            public FXToggleSwitch initGraphic() {
-                RedisFilterVO filterVO = this.getTableItem();
-                if (filterVO != null) {
-                    EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
-                    toggleSwitch.setFontSize(11);
-                    toggleSwitch.setSelected(filterVO.isEnable());
-                    toggleSwitch.selectedChanged((abs, o, n) -> {
-                        filterVO.setEnable(n);
-                        if (filterStore.update(filterVO)) {
-                            RedisEventUtil.treeChildFilter();
-                        } else {
-                            MessageBox.warn(I18nHelper.operationFail());
-                        }
-                    });
-                    return toggleSwitch;
-                }
-                return null;
-            }
+            // @Override
+            // public FXToggleSwitch initGraphic() {
+            //     RedisFilterVO filterVO = this.getTableItem();
+            //     if (filterVO != null) {
+            //         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+            //         toggleSwitch.setFontSize(11);
+            //         toggleSwitch.setSelected(filterVO.isEnable());
+            //         toggleSwitch.selectedChanged((abs, o, n) -> {
+            //             filterVO.setEnable(n);
+            //             if (filterStore.update(filterVO)) {
+            //                 RedisEventUtil.treeChildFilter();
+            //             } else {
+            //                 MessageBox.warn(I18nHelper.operationFail());
+            //             }
+            //         });
+            //         return toggleSwitch;
+            //     }
+            //     return null;
+            // }
         });
 
         // 匹配模式栏初始化
         this.matchMode.setCellFactory((cell) -> new FXTableCell<>() {
-            @Override
-            public FXToggleSwitch initGraphic() {
-                RedisFilterVO filterVO = this.getTableItem();
-                if (filterVO != null) {
-                    MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
-                    toggleSwitch.fontSize(11);
-                    toggleSwitch.setSelected(filterVO.isPartMatch());
-                    toggleSwitch.selectedChanged((obs, o, n) -> {
-                        filterVO.setPartMatch(n);
-                        if (filterStore.update(filterVO)) {
-                            RedisEventUtil.treeChildFilter();
-                        } else if (filterVO.isEnable()) {
-                            MessageBox.warn(I18nHelper.operationFail());
-                        }
-                    });
-                    return toggleSwitch;
-                }
-                return null;
-            }
+            // @Override
+            // public FXToggleSwitch initGraphic() {
+            //     RedisFilterVO filterVO = this.getTableItem();
+            //     if (filterVO != null) {
+            //         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
+            //         toggleSwitch.fontSize(11);
+            //         toggleSwitch.setSelected(filterVO.isPartMatch());
+            //         toggleSwitch.selectedChanged((obs, o, n) -> {
+            //             filterVO.setPartMatch(n);
+            //             if (filterStore.update(filterVO)) {
+            //                 RedisEventUtil.treeChildFilter();
+            //             } else if (filterVO.isEnable()) {
+            //                 MessageBox.warn(I18nHelper.operationFail());
+            //             }
+            //         });
+            //         return toggleSwitch;
+            //     }
+            //     return null;
+            // }
         });
     }
 

@@ -4,7 +4,6 @@ import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.Protocol;
 

@@ -87,7 +87,7 @@ public class RedisServerInfoContent {
             tableView.getColumns().add(value);
 
             // 双击时，复制列数据
-            TableViewUtil.copyCellOnDoubleClicked(tableView);
+            TableViewUtil.copyCellDataOnDoubleClicked(tableView);
 
             fxTab.setContent(tableView);
             this.tabPane.addTab(fxTab);
@@ -95,7 +95,7 @@ public class RedisServerInfoContent {
             tableView = (FlexTableView<RedisInfoPropItem>) tabOptional.get().getContent();
         }
         for (String key : object.keySet()) {
-            this.initPropItem(tableView, key, object.getStr(key));
+            this.initPropItem(tableView, key, object.getString(key));
         }
     }
 

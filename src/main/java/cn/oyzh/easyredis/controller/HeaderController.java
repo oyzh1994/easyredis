@@ -113,13 +113,13 @@ public class HeaderController extends SubStageController {
         RedisEventUtil.leftExtend();
     }
 
-    /**
-     * 搜索
-     */
-    @FXML
-    private void search() {
-        RedisEventUtil.searchFire();
-    }
+    // /**
+    //  * 搜索
+    //  */
+    // @FXML
+    // private void search() {
+    //     RedisEventUtil.searchFire();
+    // }
 
     @Override
     public void onStageShown(WindowEvent event) {

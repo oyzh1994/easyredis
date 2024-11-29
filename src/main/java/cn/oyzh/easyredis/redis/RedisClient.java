@@ -14,6 +14,8 @@ import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.ssh.SSHConnect;
+import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -196,7 +198,7 @@ public class RedisClient {
         HostAndPort host;
         // ssh端口转发
         if (this.redisInfo.isSSHForward()) {
-            SSHForwardInfo forwardInfo = new SSHForwardInfo();
+            SSHForwardConfig forwardInfo = new SSHForwardConfig();
             forwardInfo.setHost(this.redisInfo.hostIp());
             forwardInfo.setPort(this.redisInfo.hostPort());
             int localPort = this.sshForwarder.forward(forwardInfo);

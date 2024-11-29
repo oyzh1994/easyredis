@@ -96,9 +96,6 @@ public class RedisStoreUtil {
                 if (obj.containsKey("host")) {
                     connect.setHost(obj.getString("host"));
                 }
-                if (obj.containsKey("listen")) {
-                    connect.setListen(obj.getBooleanValue("listen"));
-                }
                 if (obj.containsKey("sshForward")) {
                     connect.setSshForward(obj.getBooleanValue("sshForward"));
                 }

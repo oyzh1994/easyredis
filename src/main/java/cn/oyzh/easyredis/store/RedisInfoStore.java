@@ -24,12 +24,12 @@
 //  * @since 2023/6/23
 //  */
 // //@Slf4j
-// public class RedisInfoStore extends ArrayFileStore<RedisInfo> {
+// public class RedisConnectJdbcStore extends ArrayFileStore<RedisInfo> {
 //
 //     /**
 //      * 当前实例
 //      */
-//     public static final RedisInfoStore INSTANCE = new RedisInfoStore();
+//     public static final RedisConnectJdbcStore INSTANCE = new RedisConnectJdbcStore();
 //
 //     /**
 //      * 已加载的redis键
@@ -38,7 +38,7 @@
 //
 //     {
 //         this.filePath(RedisConst.STORE_PATH + "redis_info.json");
-//         JulLog.info("RedisInfoStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
+//         JulLog.info("RedisConnectJdbcStore filePath:{} charset:{} init {}.", this.filePath(), this.charset(), super.init() ? "success" : "fail");
 //         this.redisInfos = this.load();
 //         for (RedisInfo RedisInfo : this.redisInfos) {
 //             if (StrUtil.isBlank(RedisInfo.getId())) {

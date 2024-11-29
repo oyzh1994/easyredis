@@ -72,17 +72,17 @@ public class RedisPubsubContent {
         this.action.setCellFactory((cell) -> new FXTableCell<>() {
             private HBox hBox;
 
-            @Override
-            public Node initGraphic() {
-                if (this.hBox == null) {
-                    Button subscribe = new Button(I18nHelper.subscribe());
-                    subscribe.setCursor(Cursor.HAND);
-                    subscribe.setOnAction((event) -> subscribe(this.getTableItem()));
-                    this.hBox = new HBox(subscribe);
-                    this.hBox.setSpacing(5);
-                }
-                return hBox;
-            }
+            // @Override
+            // public Node initGraphic() {
+            //     if (this.hBox == null) {
+            //         Button subscribe = new Button(I18nHelper.subscribe());
+            //         subscribe.setCursor(Cursor.HAND);
+            //         subscribe.setOnAction((event) -> subscribe(this.getTableItem()));
+            //         this.hBox = new HBox(subscribe);
+            //         this.hBox.setSpacing(5);
+            //     }
+            //     return hBox;
+            // }
         });
         this.initPubsub();
     }

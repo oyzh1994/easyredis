@@ -301,12 +301,12 @@ public class RedisEventUtil {
     //     EventUtil.post(event);
     // }
 
-    /**
-     * 搜索触发事件
-     */
-    public static void searchFire() {
-        EventUtil.post(new RedisSearchFireEvent());
-    }
+    // /**
+    //  * 搜索触发事件
+    //  */
+    // public static void searchFire() {
+    //     EventUtil.post(new RedisSearchFireEvent());
+    // }
 
     /**
      * 连接已删除事件

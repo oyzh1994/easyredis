@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.terminal;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.fx.common.util.TextUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.util.TerminalUtil;
 

@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.command;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 
 import java.net.URL;
@@ -28,7 +29,7 @@ public class RedisCommandUtil {
             URL url = RedisCommand.class.getResource("/redis_commands.json");
             String json = FileUtil.readString(url, CharsetUtil.CHARSET_UTF_8);
             if (StrUtil.isNotBlank(json)) {
-                COMMANDS.addAll(JSONUtil.toList(json, RedisCommand.class));
+                COMMANDS.addAll(JSONUtil.toBeanList(json, RedisCommand.class));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

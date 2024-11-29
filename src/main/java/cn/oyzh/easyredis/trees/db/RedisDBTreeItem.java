@@ -288,7 +288,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     //             this.removeChild(hides);
     //         }
     //         // 展开节点
-    //         this.extend();
+    //         this.extpend();
     //     } else {
     //         // 清除节点
     //         this.clearChild();
@@ -403,7 +403,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             this.addChild(shows);
         }
         // 展开节点
-        this.extend();
+        this.expend();
         // 结束处理
         if (finish) {
             // 无数据
@@ -598,7 +598,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * @return 真实子节点
      */
     public List<RedisTypeTreeItem> realChildren() {
-        return (List) super.getRealChildren();
+        return (List) super.unfilteredChildren();
     }
 
     /**
@@ -610,7 +610,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
         // 获取已有子节点
         List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
         for (RedisTypeTreeItem item : this.realChildren()) {
-            items.addAll((List) item.getRealChildren());
+            items.addAll((List) item.unfilteredChildren());
         }
         return items;
     }
@@ -623,7 +623,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     public int keySize() {
         int count = 0;
         for (RedisTypeTreeItem item : this.realChildren()) {
-            count += item.getRealChildrenSize();
+            count += item.unfilteredChildrenSize();
         }
         return count;
     }
@@ -635,7 +635,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     public boolean isKeyEmpty() {
         for (RedisTypeTreeItem item : this.realChildren()) {
-            if (!item.getRealChildren().isEmpty()) {
+            if (!item.unfilteredChildren().isEmpty()) {
                 return false;
             }
         }

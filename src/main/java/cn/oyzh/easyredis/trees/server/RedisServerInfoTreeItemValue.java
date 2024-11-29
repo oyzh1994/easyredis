@@ -1,10 +1,9 @@
 package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.InfoSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 
 
 /**
@@ -16,8 +15,8 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 public class RedisServerInfoTreeItemValue extends RedisTreeItemValue {
 
     public RedisServerInfoTreeItemValue() {
-        this.flushGraphic();
-        this.flushText();
+        // this.flushGraphic();
+        // this.flushText();
     }
 
     @Override
@@ -26,11 +25,10 @@ public class RedisServerInfoTreeItemValue extends RedisTreeItemValue {
     }
 
     @Override
-    public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.graphic();
-        if (glyph == null) {
-            glyph = new InfoSVGGlyph("11");
-            this.graphic(glyph);
+    public SVGGlyph graphic() {
+        if (this.graphic == null) {
+            this.graphic = new InfoSVGGlyph("11");
         }
+        return super.graphic();
     }
 }

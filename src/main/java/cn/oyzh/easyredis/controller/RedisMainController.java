@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
 import cn.oyzh.easyredis.fx.RedisMsgTextArea;
+import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
@@ -22,6 +22,7 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.keyboard.KeyHandler;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -43,7 +44,9 @@ public class RedisMainController extends ParentStageController {
     /**
      * 配置对象
      */
-    private final RedisSetting setting = RedisSettingStore.SETTING;
+    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
+
+    private RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
 
     /**
      * 当前激活的redis信息
@@ -62,10 +65,10 @@ public class RedisMainController extends ParentStageController {
     @FXML
     private FlexTabPane tabPaneLeft;
 
-    /**
-     * 大小调整增强
-     */
-    private ResizeEnhance resizeEnhance;
+    // /**
+    //  * 大小调整增强
+    //  */
+    // private ResizeEnhance resizeEnhance;
 
     /**
      * 节点排序(正序)
@@ -133,21 +136,21 @@ public class RedisMainController extends ParentStageController {
     @FXML
     private FlexCheckBox showList;
 
-    /**
-     * 搜索Controller
-     */
-    @FXML
-    private SearchController searchController;
+    // /**
+    //  * 搜索Controller
+    //  */
+    // @FXML
+    // private SearchController searchController;
 
-    /**
-     * 页面信息
-     */
-    private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
-
-    /**
-     * 页面信息储存
-     */
-    private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
+    // /**
+    //  * 页面信息
+    //  */
+    // private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
+    //
+    // /**
+    //  * 页面信息储存
+    //  */
+    // private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
     /**
      * 对子节点排序，正序
@@ -241,7 +244,7 @@ public class RedisMainController extends ParentStageController {
 
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
-            this.resizeMainLeft(this.pageInfo.getMainLeftWidth());
+            this.resizeMainLeft(this.setting.getPageLeftWidth());
         }
     }
 
@@ -265,8 +268,8 @@ public class RedisMainController extends ParentStageController {
      *
      * @param newWidth 新宽度
      */
-    private void resizeMainLeft(Double newWidth) {
-        if (newWidth != null && !Double.isNaN(newWidth)) {
+    private void resizeMainLeft(Float newWidth) {
+        if (newWidth != null && !Float.isNaN(newWidth)) {
             // 设置组件宽
             this.tabPaneLeft.setRealWidth(newWidth);
             this.tabPane.setLayoutX(newWidth);
@@ -286,8 +289,8 @@ public class RedisMainController extends ParentStageController {
      */
     private void savePageResize() {
         if (this.setting.isRememberPageResize()) {
-            this.pageInfo.setMainLeftWidth(this.tabPaneLeft.getMinWidth());
-            this.pageInfoStore.update(this.pageInfo);
+            this.setting.setPageLeftWidth((float) this.tabPaneLeft.getMinWidth());
+            this.settingStore.update(this.setting);
         }
     }
 
@@ -323,25 +326,16 @@ public class RedisMainController extends ParentStageController {
         // redis树变化事件
         this.tree.selectItemChanged(this::treeItemChanged);
         // 文件拖拽初始化
-        this.stage.initDragFile(this.tree.dragContent(), this.tree.root()::dragFile);
+        this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
-        this.resizeEnhance = new ResizeEnhance(this.tabPaneLeft, Cursor.DEFAULT);
-        this.resizeEnhance.minWidth(390d);
-        this.resizeEnhance.maxWidth(800d);
-        this.resizeEnhance.triggerThreshold(8d);
-        this.resizeEnhance.mouseDragged(event -> {
-            double sceneX = event.getSceneX();
-            if (this.resizeEnhance.resizeWidthAble(sceneX)) {
-                // 左侧组件重新布局
-                this.resizeMainLeft(sceneX);
-            }
-        });
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeMainLeft);
+        resizeHelper.widthLimit(390f,800f);
         // 初始化拉伸事件
-        this.tree.setOnMouseMoved(this.resizeEnhance.mouseMoved());
-        this.resizeEnhance.initResizeEvent();
+        this.tree.setOnMouseMoved(resizeHelper.mouseMoved());
+        resizeHelper.initResizeEvent();
 
         // 搜索触发事件
-        KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> RedisEventUtil.searchFire()));
+        // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> RedisEventUtil.searchFire()));
         // 刷新触发事件
         KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
         // 刷新触发事件
@@ -395,12 +389,12 @@ public class RedisMainController extends ParentStageController {
         this.tabPaneLeft.parentAutosize();
     }
 
-    @Override
-    public List<SubStageController> getSubControllers() {
-        List<SubStageController> list = new ArrayList<>();
-        list.add(this.searchController);
-        return list;
-    }
+    // @Override
+    // public List<SubStageController> getSubControllers() {
+    //     List<SubStageController> list = new ArrayList<>();
+    //     list.add(this.searchController);
+    //     return list;
+    // }
 
     /**
      * 清空消息

@@ -250,7 +250,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         try {
             // 清空数据
             this.client().flushAll();
-            for (TreeItem<?> child : this.getRealChildren()) {
+            for (TreeItem<?> child : this.unfilteredChildren()) {
                 if (child instanceof RedisDBTreeItem treeItem) {
                     treeItem.clearChild();
                 }
@@ -287,9 +287,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                             this.canceled = false;
                             this.closeConnect(false);
                         } else if (this.initConnect()) {
-                            this.extend();
+                            this.expend();
                         }
-                        this.flushGraphic();
+                        // this.flushGraphic();
                     })
                     .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)
@@ -341,11 +341,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             this.client.close();
             this.getValue().clearRole();
             this.clearChild();
-            this.flushGraphic();
+            // this.flushGraphic();
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
-                    .onStart(func)
+                    .onStart(func::run)
                     .onFinish(this::stopWaiting)
                     .onSuccess(this::flushLocal)
                     .onError(MessageBox::exception)
@@ -356,14 +356,14 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         }
     }
 
-    @Override
-    public void free() {
-        if (!this.isConnected()) {
-            this.connect();
-        } else {
-            super.free();
-        }
-    }
+    // @Override
+    // public void free() {
+    //     if (!this.isConnected()) {
+    //         this.connect();
+    //     } else {
+    //         super.free();
+    //     }
+    // }
 
     /**
      * 编辑连接
@@ -388,8 +388,8 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         redisInfo.copy(this.value);
         redisInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         redisInfo.setCollects(Collections.emptyList());
-        if (this.infoStore.add(redisInfo)) {
-            this.parent().addConnect(redisInfo);
+        if (this.infoStore.replace(redisInfo)) {
+            this.connectManager().addConnect(redisInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -399,7 +399,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public void delete() {
         if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
-            if (this.parent().delConnectItem(this)) {
+            if (this.connectManager().delConnectItem(this)) {
                 RedisEventUtil.infoDeleted(this.value);
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
@@ -464,7 +464,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * @return 数据库节点
      */
     public RedisDBTreeItem getDatabaseItem(int index) {
-        for (TreeItem<?> child : this.getRealChildren()) {
+        for (TreeItem<?> child : this.unfilteredChildren()) {
             if (child instanceof RedisDBTreeItem treeItem && treeItem.dbIndex() == index) {
                 return treeItem;
             }
@@ -477,7 +477,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @return 父节点
      */
-    public RedisConnectManager parent() {
+    public RedisConnectManager connectManager() {
         Object object = this.getParent();
         if (object instanceof RedisConnectManager connectManager) {
             return connectManager;

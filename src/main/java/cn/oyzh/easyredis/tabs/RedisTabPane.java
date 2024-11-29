@@ -14,6 +14,7 @@ import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
 import cn.oyzh.easyredis.event.TreeChildSelectedEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
@@ -80,7 +81,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      */
     private void flushNodeTab() {
         // 获取设置
-        RedisSetting setting = RedisSettingStore.SETTING;
+        RedisSetting setting = RedisSettingJdbcStore.SETTING;
         // 判断是否需要处理tab限制
         if (setting.isTabUnLimit()) {
             return;

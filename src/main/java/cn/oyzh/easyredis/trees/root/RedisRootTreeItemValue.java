@@ -15,8 +15,8 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 public class RedisRootTreeItemValue extends RedisTreeItemValue {
 
     public RedisRootTreeItemValue() {
-        this.flushGraphic();
-        this.flushText();
+        // this.flushGraphic();
+        // this.flushText();
     }
 
     @Override
@@ -25,10 +25,10 @@ public class RedisRootTreeItemValue extends RedisTreeItemValue {
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.graphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/redis.svg", 10);
-            this.graphic(glyph);
+    public SVGGlyph graphic() {
+        if (this.graphic == null) {
+            this.graphic = new SVGGlyph("/font/redis.svg", 10);
         }
+        return super.graphic();
     }
 }

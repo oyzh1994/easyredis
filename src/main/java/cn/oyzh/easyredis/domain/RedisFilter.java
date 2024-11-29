@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.util.ObjectComparator;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,13 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable {
+
+    /**
+     * id
+     */
+    @Column
+    @PrimaryKey
+    private String uid;
 
     /**
      * 关键词

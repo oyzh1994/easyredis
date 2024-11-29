@@ -2,9 +2,12 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
+import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
+import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.event.EventUtil;
+import cn.oyzh.fx.gui.textfield.search.SearchTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -41,7 +44,7 @@ public class RedisKeyFilterController extends StageController {
     /**
      * 过滤历史储存
      */
-    private final RedisKeyFilterHistoryStore historyStore = RedisKeyFilterHistoryStore.INSTANCE;
+    private final RedisKeyFilterHistoryJdbcStore historyStore = RedisKeyFilterHistoryJdbcStore.INSTANCE;
 
     @Override
     public void onStageShown(WindowEvent event) {
@@ -64,7 +67,9 @@ public class RedisKeyFilterController extends StageController {
     private void keyFilter() {
         String pattern = this.keyFilter.getText();
         if (StrUtil.isNotBlank(pattern) && !"*".equals(pattern)) {
-            this.historyStore.addHistory(pattern);
+            RedisKeyFilterHistory history = new RedisKeyFilterHistory();
+            history.setPattern(pattern);
+            this.historyStore.replace(history);
         }
         this.treeItem.doKeyFilter(pattern);
         this.closeWindow();

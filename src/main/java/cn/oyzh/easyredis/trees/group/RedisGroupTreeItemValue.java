@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.group;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.treeView.FXTreeItem;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -16,31 +17,39 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true, fluent = true)
 public class RedisGroupTreeItemValue extends RedisTreeItemValue {
 
-    private final RedisGroupTreeItem item;
+    // private final RedisGroupTreeItem item;
 
     public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
-        this.item = item;
-        this.flushGraphic();
-        this.flushGraphicColor();
-        this.name(item.value().getName());
+        super(item);
+        // this.flushGraphic();
+        // this.flushGraphicColor();
+        // this.name(item.value().getName());
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.graphic() == null) {
-            GroupSVGGlyph glyph = new GroupSVGGlyph("10");
-            glyph.disableTheme();
-            this.graphic(glyph);
+    protected RedisGroupTreeItem item() {
+        return (RedisGroupTreeItem) super.item();
+    }
+
+    @Override
+    public String name() {
+        return this.item().value().getName();
+    }
+
+    @Override
+    public SVGGlyph graphic() {
+        if (this.graphic == null) {
+            this.graphic = new GroupSVGGlyph("10");
+            this.graphic.disableTheme();
         }
+        return super.graphic();
     }
 
     @Override
-    public void flushGraphicColor() {
-        SVGGlyph glyph = (SVGGlyph) this.graphic();
+    public Color graphicColor() {
         if (this.item.isChildEmpty()) {
-            super.flushGraphicColor();
-        } else {
-            glyph.setColor(Color.DEEPSKYBLUE);
+            return super.graphicColor();
         }
+        return Color.DEEPSKYBLUE;
     }
 }

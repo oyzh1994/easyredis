@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.terminal.program;
 
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.Protocol;
 
 /**

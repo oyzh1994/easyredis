@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHistory> {
+public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHistory>, Serializable {
 
     /**
      * 模式

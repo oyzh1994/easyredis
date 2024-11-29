@@ -65,6 +65,8 @@ public class MainController extends ParentStageController {
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
+    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+
     // /**
     //  * 页面信息储存
     //  */
@@ -192,20 +194,20 @@ public class MainController extends ParentStageController {
         boolean savePageInfo = false;
         // 记住页面大小
         if (this.setting.isRememberPageSize()) {
-            this.pageInfo.setWidth(this.stage.getWidth());
-            this.pageInfo.setHeight(this.stage.getHeight());
-            this.pageInfo.setMaximized(this.stage.isMaximized());
+            this.setting.setPageWidth(this.stage.getWidth());
+            this.setting.setPageHeight(this.stage.getHeight());
+            this.setting.setPageMaximized(this.stage.isMaximized());
             savePageInfo = true;
         }
         // 记住页面位置
         if (this.setting.isRememberPageLocation()) {
-            this.pageInfo.setScreenX(this.stage.getX());
-            this.pageInfo.setScreenY(this.stage.getY());
+            this.setting.setPageScreenX(this.stage.getX());
+            this.setting.setPageScreenY(this.stage.getY());
             savePageInfo = true;
         }
         // 保存页面信息
         if (savePageInfo) {
-            this.pageInfoStore.update(this.pageInfo);
+            this.settingStore.replace(this.setting);
         }
         // 关闭托盘
         TrayManager.destroy();
@@ -217,20 +219,20 @@ public class MainController extends ParentStageController {
         super.onStageInitialize(stage);
         // 设置上次保存的页面大小
         if (this.setting.isRememberPageSize()) {
-            if (this.pageInfo.isMaximized()) {
+            if (this.setting.isPageMaximized()) {
                 this.stage.setMaximized(true);
                 JulLog.debug("view setMaximized");
-            } else if (this.pageInfo.getWidth() != null && this.pageInfo.getHeight() != null) {
-                this.stage.setWidth(this.pageInfo.getWidth());
-                this.stage.setHeight(this.pageInfo.getHeight());
-                JulLog.debug("view setWidth:{} setHeight:{}", this.pageInfo.getWidth(), this.pageInfo.getHeight());
+            } else if (this.setting.getPageWidth() != null && this.setting.getPageHeight() != null) {
+                this.stage.setWidth(this.setting.getPageWidth());
+                this.stage.setHeight(this.setting.getPageHeight());
+                JulLog.debug("view setWidth:{} setHeight:{}", this.setting.getPageWidth(), this.setting.getPageHeight());
             }
         }
         // 设置上次保存的页面位置
-        if (this.setting.isRememberPageLocation() && !this.pageInfo.isMaximized() && this.pageInfo.getScreenX() != null && this.pageInfo.getScreenY() != null) {
-            this.stage.setX(this.pageInfo.getScreenX());
-            this.stage.setY(this.pageInfo.getScreenY());
-            JulLog.debug("view setX:{} setY:{}", this.pageInfo.getScreenX(), this.pageInfo.getScreenY());
+        if (this.setting.isRememberPageLocation() && !this.setting.isPageMaximized() && this.setting.getPageScreenX() != null && this.setting.getPageScreenY() != null) {
+            this.stage.setX(this.setting.getPageScreenX());
+            this.stage.setY(this.setting.getPageScreenY());
+            JulLog.debug("view setX:{} setY:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
         }
     }
 

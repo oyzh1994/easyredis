@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.dto.Project;
+import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import lombok.Getter;
@@ -44,7 +46,7 @@ public class RedisInfoExport {
      */
     public static RedisInfoExport fromConnects(@NonNull List<RedisConnect> redisInfos) {
         RedisInfoExport export = new RedisInfoExport();
-        Project project = SpringUtil.getBean(Project.class);
+        Project project = Project.load();
         export.version = project.getVersion();
         export.connects = redisInfos;
         export.platform = System.getProperty("os.name");
@@ -59,10 +61,10 @@ public class RedisInfoExport {
      */
     public static RedisInfoExport fromJSON(@NonNull String json) {
         JulLog.info("json: {}", json);
-        JSONObject object = JSONUtil.parseObj(json);
+        JSONObject object = JSONUtil.parseObject(json);
         RedisInfoExport export = new RedisInfoExport();
         export.connects = new ArrayList<>();
-        export.version = object.getStr("version");
+        export.version = object.getString("version");
         export.connects = object.getBeanList("connects", RedisConnect.class);
         return export;
     }
@@ -73,6 +75,6 @@ public class RedisInfoExport {
      * @return json字符串
      */
     public String toJSONString() {
-        return JSONUtil.toJsonStr(this);
+        return JSONUtil.toJson(this);
     }
 }

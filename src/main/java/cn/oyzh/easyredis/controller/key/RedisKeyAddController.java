@@ -476,11 +476,11 @@ public class RedisKeyAddController extends StageController {
         String text = this.valueTextArea().getTextTrim();
         try {
             if ("json".equals(this.valueTextArea().getUserData())) {
-                String jsonStr = JSONUtil.toJsonStr(text);
+                String jsonStr = JSONUtil.toJson(text);
                 this.valueTextArea().setText(jsonStr);
                 this.valueTextArea().setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.valueTextArea().getUserData())) {
-                String jsonStr = JSONUtil.toJsonPrettyStr(text);
+                String jsonStr = JSONUtil.toPretty(text);
                 this.valueTextArea().setText(jsonStr);
                 this.valueTextArea().setUserData("json");
             }
