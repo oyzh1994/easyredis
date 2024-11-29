@@ -356,8 +356,9 @@ public class RedisStoreUtil {
     public static boolean checkOlder() {
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "redis_info.json";
+        String file1 = storePath + File.separator + "redis_group.json";
         String done = storePath + File.separator + "done.data";
         String ignore = storePath + File.separator + "ignore.data";
-        return FileUtil.exist(file) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
+        return (FileUtil.exist(file) || FileUtil.exist(file1)) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
     }
 }
