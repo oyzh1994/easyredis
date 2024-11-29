@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
-import lombok.experimental.Accessors;
 
 
 /**
@@ -13,33 +12,40 @@ import lombok.experimental.Accessors;
  */
 public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?, ?>> extends RedisTreeItemValue {
 
-    @Accessors(chain = true, fluent = true)
-    protected final T item;
+    // @Accessors(chain = true, fluent = true)
+    // protected final T item;
 
     public RedisKeyTreeItemValue(T item) {
-        this.item = item;
-        this.flushGraphic();
-        this.flushGraphicColor();
-        this.name(item.key());
+        super(item);
+        //     this.flushGraphic();
+        //     this.flushGraphicColor();
+        //     this.name(item.key());
     }
 
     @Override
-    public void flushGraphic() {
-        if (this.graphic() == null) {
-            SVGGlyph glyph = new SVGGlyph("/font/key.svg", 10);
-            glyph.disableTheme();
-            this.graphic(glyph);
-        }
+    protected RedisKeyTreeItem<?, ?> item() {
+        return (RedisKeyTreeItem<?, ?>) super.item();
     }
 
     @Override
-    public void flushGraphicColor() {
-        if (this.graphic() instanceof SVGGlyph glyph) {
-            if (this.item.dataUnsaved()) {
-                glyph.setColor(Color.ORANGERED);
-            } else {
-                super.flushGraphicColor();
-            }
+    public String name() {
+        return this.item().key();
+    }
+
+    @Override
+    public SVGGlyph graphic() {
+        if (this.graphic == null) {
+            this.graphic = new SVGGlyph("/font/key.svg", 10);
+            this.graphic.disableTheme();
         }
+        return super.graphic();
+    }
+
+    @Override
+    public Color graphicColor() {
+        if (this.item().dataUnsaved()) {
+            return Color.ORANGERED;
+        }
+        return super.graphicColor();
     }
 }

@@ -13,7 +13,7 @@ public class RedisHashKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHashKe
 
     public RedisHashKeyTreeItemValue(RedisHashKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-        item.fieldProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        // item.fieldProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
     }
 }

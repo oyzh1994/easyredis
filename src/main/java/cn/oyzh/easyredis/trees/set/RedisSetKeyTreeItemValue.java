@@ -13,6 +13,6 @@ public class RedisSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisSetKeyT
 
     public RedisSetKeyTreeItemValue(RedisSetKeyTreeItem item) {
         super(item);
-        item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
     }
 }
