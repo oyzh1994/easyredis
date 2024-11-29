@@ -1,7 +1,9 @@
 package cn.oyzh.easyredis.trees.db;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -52,6 +54,28 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
             return super.graphicColor();
         }
         return Color.DARKGREEN;
+    }
+
+    @Override
+    public String extra() {
+        try {
+            String extra = "";
+            int keySize = this.item().keySize();
+            Long totalNum = this.item().dbSize();
+            if (keySize != totalNum) {
+                extra += "(" + keySize + "/" + totalNum + ")";
+            } else {
+                extra += "(" + totalNum + ")";
+            }
+            String filterPattern = this.item().getFilterPattern();
+            if (StringUtil.isNotBlank(filterPattern)) {
+                extra += "[" + I18nHelper.keyFilter() + ":" + filterPattern + "]";
+            }
+            return extra;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return super.extra();
     }
 
     /**
