@@ -1,26 +1,22 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.log.StaticLog;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.common.thread.ExecutorUtil;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Future;
 
@@ -30,9 +26,6 @@ import java.util.concurrent.Future;
  * @author oyzh
  * @since 2023/08/01
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public class RedisServerTabContent extends DynamicTabController {
 
     /**

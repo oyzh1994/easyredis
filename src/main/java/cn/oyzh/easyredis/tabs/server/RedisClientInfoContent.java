@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.info.RedisClientItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import javafx.fxml.FXML;
@@ -10,9 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author oyzh
  * @since 2023/08/01
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public class RedisClientInfoContent {
 
     /**

@@ -17,9 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +27,6 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/08/01
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public class RedisServerInfoContent {
 
     /**

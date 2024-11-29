@@ -1,16 +1,12 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.info.RedisInfoProp;
-import cn.oyzh.fx.common.spring.ScopeType;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 
@@ -20,9 +16,6 @@ import java.text.SimpleDateFormat;
  * @author oyzh
  * @since 2023/08/01
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public class RedisAggregationContent {
 
     /**

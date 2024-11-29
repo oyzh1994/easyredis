@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;

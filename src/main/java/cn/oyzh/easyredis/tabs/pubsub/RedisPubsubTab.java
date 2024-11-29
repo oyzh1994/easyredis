@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.tabs.pubsub;
 
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.Setter;
