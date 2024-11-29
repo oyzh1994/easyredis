@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public class AppTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // AppMain.main(args);
         RedisCmdSpider.main(args);
     }

@@ -2,9 +2,9 @@ package cn.oyzh.easyredis.test;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.common.ssh.SSHForwardInfo;
-import cn.oyzh.fx.common.ssh.SSHForwarder;
+import cn.oyzh.ssh.SSHConnect;
+import cn.oyzh.ssh.SSHForwardConfig;
+import cn.oyzh.ssh.SSHForwarder;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.junit.Test;
@@ -58,12 +58,12 @@ public class SSHTest {
 
     @Test
     public void test1() {
-        SSHConnectInfo connectInfo = new SSHConnectInfo();
+        SSHConnect connectInfo = new SSHConnect();
         connectInfo.setHost("192.168.189.130");
         connectInfo.setUser("root");
         connectInfo.setPassword("123456");
 
-        SSHForwardInfo forwardInfo = new SSHForwardInfo();
+        SSHForwardConfig forwardInfo = new SSHForwardConfig();
         forwardInfo.setPort(6379);
         forwardInfo.setHost("192.168.189.134");
 

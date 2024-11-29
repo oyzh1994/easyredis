@@ -3,26 +3,15 @@ package cn.oyzh.easyredis.test;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
-import cn.oyzh.fx.plus.spring.SpringApplication;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import javafx.stage.Stage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
-import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,19 +23,19 @@ import java.util.Optional;
  * @author oyzh
  * @since 2024/5/29
  */
-@SpringBootApplication(scanBasePackages = "cn.oyzh",
-        exclude = {
-                AopAutoConfiguration.class,
-                CacheAutoConfiguration.class,
-                DataSourceAutoConfiguration.class,
-                MessageSourceAutoConfiguration.class,
-                TaskExecutionAutoConfiguration.class,
-                TaskSchedulingAutoConfiguration.class,
-                SqlInitializationAutoConfiguration.class,
-        }
-)
-@EnableSpringUtil
-public class RedisCmdSpider extends SpringApplication {
+// @SpringBootApplication(scanBasePackages = "cn.oyzh",
+//         exclude = {
+//                 AopAutoConfiguration.class,
+//                 CacheAutoConfiguration.class,
+//                 DataSourceAutoConfiguration.class,
+//                 MessageSourceAutoConfiguration.class,
+//                 TaskExecutionAutoConfiguration.class,
+//                 TaskSchedulingAutoConfiguration.class,
+//                 SqlInitializationAutoConfiguration.class,
+//         }
+// )
+// @EnableSpringUtil
+public class RedisCmdSpider   {
 
     private final String descUrl = "https://redis.io/docs/latest/commands/";
 
@@ -130,22 +119,7 @@ public class RedisCmdSpider extends SpringApplication {
         System.out.println("-------------------------------------->");
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        launchSpring(RedisCmdSpider.class, args);
-    }
-
-    @Override
-    public void destroy() throws Exception {
-
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
+    public static void main(String... args) throws Exception {
         RedisCmdSpider spider = new RedisCmdSpider();
         spider.fetch();
     }
