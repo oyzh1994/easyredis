@@ -1,12 +1,7 @@
 package cn.oyzh.easyredis.trees.db;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.i18n.I18nHelper;
-import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -35,6 +30,11 @@ public class RedisDBTreeItemValue extends RedisTreeItemValue {
     @Override
     protected RedisDBTreeItem item() {
         return (RedisDBTreeItem) super.item();
+    }
+
+    @Override
+    public String name() {
+        return this.item().value();
     }
 
     @Override

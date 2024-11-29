@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
+import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.domain.RedisSSHConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
@@ -77,7 +78,7 @@ public class RedisStoreUtil {
     public static List<RedisConnect> loadConnects() {
         List<RedisConnect> connects = new ArrayList<>();
         String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_info.json";
+        String file = storePath + File.separator + "redis_info.json";
         String json = FileUtil.readUtf8String(file);
         JSONArray array = JSONUtil.parseArray(json);
         if (array == null) {
@@ -148,7 +149,7 @@ public class RedisStoreUtil {
     public static List<RedisFilter> loadFilters() {
         List<RedisFilter> filters = new ArrayList<>();
         String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_filter.json";
+        String file = storePath + File.separator + "redis_filter.json";
         String json = FileUtil.readUtf8String(file);
         JSONArray array = JSONUtil.parseArray(json);
         if (array == null) {
@@ -183,7 +184,7 @@ public class RedisStoreUtil {
     public static List<RedisTerminalHistory> loadTerminalHistory() {
         List<RedisTerminalHistory> histories = new ArrayList<>();
         String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_shell_history.json";
+        String file = storePath + File.separator + "redis_shell_history.json";
         String json = FileUtil.readUtf8String(file);
         JSONArray array = JSONUtil.parseArray(json);
         if (array == null) {
@@ -208,13 +209,42 @@ public class RedisStoreUtil {
     }
 
     /**
+     * 加载旧版本键过滤历史数据
+     *
+     * @return 旧版本键过滤历史数据
+     */
+    public static List<RedisKeyFilterHistory> loadKeyFilterHistory() {
+        List<RedisKeyFilterHistory> histories = new ArrayList<>();
+        String storePath = SysConst.storeDir();
+        String file = storePath + File.separator + "redis_key_filter_history.json";
+        String json = FileUtil.readUtf8String(file);
+        JSONArray array = JSONUtil.parseArray(json);
+        if (array == null) {
+            JulLog.warn("未找到键过滤历史数据");
+        } else {
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                RedisKeyFilterHistory history = new RedisKeyFilterHistory();
+                if (obj.containsKey("uid")) {
+                    history.setUid(obj.getString("uid"));
+                }
+                if (obj.containsKey("pattern")) {
+                    history.setPattern(obj.getString("pattern"));
+                }
+                histories.add(history);
+            }
+        }
+        return histories;
+    }
+
+    /**
      * 加载旧版本设置数据
      *
      * @return 旧版本设置数据
      */
     public static RedisSetting loadSetting() {
         String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_setting.json";
+        String file = storePath + File.separator + "redis_setting.json";
         String json = FileUtil.readUtf8String(file);
         JSONObject object = JSONUtil.parseObject(json);
         RedisSetting setting = new RedisSetting();
@@ -314,9 +344,10 @@ public class RedisStoreUtil {
      */
     public static boolean checkOlder() {
         String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_info.json";
+        String file = storePath + File.separator + "redis_info.json";
         String done = storePath + File.separator + "done.data";
         String ignore = storePath + File.separator + "ignore.data";
         return FileUtil.exist(file) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
     }
+
 }

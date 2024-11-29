@@ -11,6 +11,7 @@ import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
  * @since 2023/7/21
  */
 //@Slf4j
+@Deprecated
 public class RedisTerminalHistoryStore extends TerminalHistoryStore {
 
     /**

@@ -5,6 +5,7 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.controller.SettingController;
+import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
@@ -25,6 +26,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.TerminalConst;
 import cn.oyzh.i18n.I18nManager;
+import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
 
@@ -74,6 +76,15 @@ public class EasyRedisApp extends FXApplication {
             super.init();
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        super.start(primaryStage);
+        // 显示迁移弹窗
+        if (RedisStoreUtil.checkOlder()) {
+            FXUtil.runWait(() -> StageManager.showStage(RedisMigrationTipsController.class), 1000);
         }
     }
 

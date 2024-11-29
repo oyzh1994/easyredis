@@ -2,11 +2,6 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.controls.treeView.FXTreeItem;
-import cn.oyzh.i18n.I18nHelper;
-import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
@@ -38,9 +33,14 @@ public class RedisConnectTreeItemValue extends RedisTreeItemValue {
     }
 
     @Override
+    public String name() {
+        return this.item().value().getName();
+    }
+
+    @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-           this.graphic= new SVGGlyph("/font/redis.svg", 10);
+            this.graphic = new SVGGlyph("/font/redis.svg", 10);
             this.graphic.disableTheme();
         }
         return super.graphic();

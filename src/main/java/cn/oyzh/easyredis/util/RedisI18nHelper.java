@@ -211,4 +211,12 @@ public class RedisI18nHelper {
     public static String connectTip4() {
         return I18nResourceBundle.i18nString(CONNECT_TIP4);
     }
+
+    public static String migrationTip1() {
+        return I18nResourceBundle.i18nString("redis.migration.tip1");
+    }
+
+    public static String migrationTip6() {
+        return I18nResourceBundle.i18nString("redis.migration.tip6");
+    }
 }

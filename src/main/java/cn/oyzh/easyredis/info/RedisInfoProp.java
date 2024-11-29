@@ -86,7 +86,7 @@ public class RedisInfoProp {
     public String getProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+            if (CollUtil.isNotEmpty(object)) {
                 return object.getString(propName);
             }
         }
@@ -120,7 +120,7 @@ public class RedisInfoProp {
     public Integer getIntegerProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+            if (CollUtil.isNotEmpty(object)) {
                 return object.getInt(propName);
             }
         }

@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
@@ -13,8 +14,6 @@ import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.ssh.SSHConnect;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -157,7 +156,7 @@ public class RedisClient {
 
     public RedisClient(@NonNull RedisConnect redisInfo) {
         this.redisInfo = redisInfo;
-        if (redisInfo.isSSHForward()) {
+        if (redisInfo.isSSHForward() && redisInfo.getSshConnect() != null) {
             this.sshForwarder = new SSHForwarder(redisInfo.getSshConnect());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
