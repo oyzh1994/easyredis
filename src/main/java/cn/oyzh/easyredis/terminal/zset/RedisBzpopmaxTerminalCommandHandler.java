@@ -10,7 +10,7 @@ import redis.clients.jedis.Protocol;
  * @author oyzh
  * @since 2023/7/26
  */
-@Component
+
 public class RedisBzpopmaxTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override

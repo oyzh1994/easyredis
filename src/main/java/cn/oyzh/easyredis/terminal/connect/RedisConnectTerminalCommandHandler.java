@@ -1,17 +1,16 @@
 package cn.oyzh.easyredis.terminal.connect;
 
-import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.Protocol;
 
 /**
  * @author oyzh
  * @since 2023/12/13
  */
-@Component
+
 public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override

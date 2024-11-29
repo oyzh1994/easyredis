@@ -8,7 +8,7 @@ import redis.clients.jedis.Protocol;
  * @author oyzh
  * @since 2023/7/31
  */
-@Component
+
 public class RedisEvalTerminalCommandHandler extends cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override

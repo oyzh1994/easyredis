@@ -9,7 +9,7 @@
 //  * @author oyzh
 //  * @since 2023/7/31
 //  */
-// @Component
+// 
 // public class RedisSentinelTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 //
 //     @Override

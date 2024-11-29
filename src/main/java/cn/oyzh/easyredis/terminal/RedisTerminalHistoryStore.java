@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.log.StaticLog;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.fx.terminal.histroy.TerminalHistoryStore;
 
