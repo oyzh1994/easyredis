@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.gui.svg.glyph.AboutSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.CollapseSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.ExpandSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.FilterSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.QuitSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.SearchSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.SettingSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.glyph.TransportSVGLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
+<?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.CollapseSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.ExpandSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
 <FlexFlowPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
               fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14">
-        <FlowPane.margin>
-            <Insets left="8" top="5" bottom="5"/>
-        </FlowPane.margin>
-    </SearchSVGLabel>
+    <!-- <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14"> -->
+    <!--     <FlowPane.margin> -->
+    <!--         <Insets left="8" top="5" bottom="5"/> -->
+    <!--     </FlowPane.margin> -->
+    <!-- </SearchSVGLabel> -->
     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
         <FlowPane.margin>
             <Insets left="10" top="5" bottom="5"/>
