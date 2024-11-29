@@ -7,15 +7,12 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
+import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyzk.ZKConst;
-import cn.oyzh.easyzk.domain.ZKAuth;
-import cn.oyzh.easyzk.domain.ZKConnect;
-import cn.oyzh.easyzk.domain.ZKFilter;
-import cn.oyzh.easyzk.domain.ZKGroup;
-import cn.oyzh.easyzk.domain.ZKSSHConnect;
-import cn.oyzh.easyzk.domain.ZKSetting;
-import cn.oyzh.easyzk.terminal.ZKTerminalHistory;
+import cn.oyzh.easyredis.domain.RedisSSHConnect;
+import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
 import lombok.experimental.UtilityClass;
@@ -77,8 +74,8 @@ public class RedisStoreUtil {
      *
      * @return 旧版本连接数据
      */
-    public static List<ZKConnect> loadConnects() {
-        List<ZKConnect> connects = new ArrayList<>();
+    public static List<RedisConnect> loadConnects() {
+        List<RedisConnect> connects = new ArrayList<>();
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_info.json";
         String json = FileUtil.readUtf8String(file);
@@ -88,7 +85,7 @@ public class RedisStoreUtil {
         } else {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                ZKConnect connect = new ZKConnect();
+                RedisConnect connect = new RedisConnect();
 
                 if (obj.containsKey("id")) {
                     connect.setId(obj.getString("id"));
@@ -117,18 +114,12 @@ public class RedisStoreUtil {
                 if (obj.containsKey("readonly")) {
                     connect.setReadonly(obj.getBooleanValue("readonly"));
                 }
-                if (obj.containsKey("compatibility")) {
-                    connect.setCompatibility(obj.getIntValue("compatibility"));
-                }
-                if (obj.containsKey("sessionTimeOut")) {
-                    connect.setSessionTimeOut(obj.getIntValue("sessionTimeOut"));
-                }
                 if (obj.containsKey("connectTimeOut")) {
                     connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
                 }
                 if (obj.containsKey("sshInfo")) {
                     JSONObject object = obj.getJSONObject("sshInfo");
-                    ZKSSHConnect sshConnect = new ZKSSHConnect();
+                    RedisSSHConnect sshConnect = new RedisSSHConnect();
                     if (object.containsKey("port")) {
                         sshConnect.setPort(object.getInt("port"));
                     }
@@ -157,8 +148,8 @@ public class RedisStoreUtil {
      *
      * @return 旧版本过滤数据
      */
-    public static List<ZKFilter> loadFilters() {
-        List<ZKFilter> filters = new ArrayList<>();
+    public static List<RedisFilter> loadFilters() {
+        List<RedisFilter> filters = new ArrayList<>();
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_filter.json";
         String json = FileUtil.readUtf8String(file);
@@ -168,7 +159,7 @@ public class RedisStoreUtil {
         } else {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                ZKFilter filter = new ZKFilter();
+                RedisFilter filter = new RedisFilter();
                 if (obj.containsKey("kw")) {
                     filter.setKw(obj.getString("kw"));
                 }
@@ -188,47 +179,12 @@ public class RedisStoreUtil {
     }
 
     /**
-     * 加载旧版本认证数据
-     *
-     * @return 旧版本认证数据
-     */
-    public static List<ZKAuth> loadAuths() {
-        List<ZKAuth> auths = new ArrayList<>();
-        String storePath = SysConst.storeDir();
-        String file = storePath + File.separator + "zk_auth.json";
-        String json = FileUtil.readUtf8String(file);
-        JSONArray array = JSONUtil.parseArray(json);
-        if (array == null) {
-            JulLog.warn("未找到认证数据");
-        } else {
-            for (int i = 0; i < array.size(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                ZKAuth auth = new ZKAuth();
-                if (obj.containsKey("uid")) {
-                    auth.setUid(obj.getString("uid"));
-                }
-                if (obj.containsKey("user")) {
-                    auth.setUser(obj.getString("user"));
-                }
-                if (obj.containsKey("password")) {
-                    auth.setPassword(obj.getString("password"));
-                }
-                if (obj.containsKey("enable")) {
-                    auth.setEnable(obj.getBooleanValue("enable"));
-                }
-                auths.add(auth);
-            }
-        }
-        return auths;
-    }
-
-    /**
      * 加载旧版本终端历史数据
      *
      * @return 旧版本终端历史数据
      */
-    public static List<ZKTerminalHistory> loadTerminalHistory() {
-        List<ZKTerminalHistory> histories = new ArrayList<>();
+    public static List<RedisTerminalHistory> loadTerminalHistory() {
+        List<RedisTerminalHistory> histories = new ArrayList<>();
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_shell_history.json";
         String json = FileUtil.readUtf8String(file);
@@ -238,7 +194,7 @@ public class RedisStoreUtil {
         } else {
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                ZKTerminalHistory history = new ZKTerminalHistory();
+                RedisTerminalHistory history = new RedisTerminalHistory();
                 if (obj.containsKey("tid")) {
                     history.setTid(obj.getString("tid"));
                 }
@@ -259,12 +215,12 @@ public class RedisStoreUtil {
      *
      * @return 旧版本设置数据
      */
-    public static ZKSetting loadSetting() {
+    public static RedisSetting loadSetting() {
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "zk_setting.json";
         String json = FileUtil.readUtf8String(file);
         JSONObject object = JSONUtil.parseObject(json);
-        ZKSetting setting = new ZKSetting();
+        RedisSetting setting = new RedisSetting();
         if (object != null) {
             if (object.containsKey("theme")) {
                 setting.setTheme(object.getString("theme"));
@@ -293,9 +249,6 @@ public class RedisStoreUtil {
             if (object.containsKey("exitMode")) {
                 setting.setExitMode(object.getByteValue("exitMode"));
             }
-            if (object.containsKey("loadMode")) {
-                setting.setLoadMode(object.getByteValue("loadMode"));
-            }
             if (object.containsKey("rememberPageSize")) {
                 setting.setRememberPageSize(object.getByteValue("rememberPageSize"));
             }
@@ -304,9 +257,6 @@ public class RedisStoreUtil {
             }
             if (object.containsKey("rememberPageLocation")) {
                 setting.setRememberPageLocation(object.getByteValue("rememberPageLocation"));
-            }
-            if (object.containsKey("authMode")) {
-                setting.setAuthMode(object.getByteValue("authMode"));
             }
             if (object.containsKey("opacity")) {
                 setting.setOpacity(object.getFloatValue("opacity"));

@@ -3,14 +3,11 @@ package cn.oyzh.easyredis.tabs.terminal;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  * redis命令行tab内容组件
@@ -18,9 +15,6 @@ import org.springframework.stereotype.Component;
  * @author oyzh
  * @since 2023/07/21
  */
-@Lazy
-@Component
-@Scope("prototype")
 public class RedisTerminalTabContent extends DynamicTabController {
 
     /**

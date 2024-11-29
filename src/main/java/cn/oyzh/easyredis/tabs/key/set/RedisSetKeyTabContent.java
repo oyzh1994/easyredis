@@ -16,7 +16,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

@@ -1,15 +1,12 @@
 package cn.oyzh.easyredis.tabs.home;
 
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,8 +16,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/6/24
  */
-@Lazy
-@Component
 public class RedisHomeTabContent extends DynamicTabController {
 
     /**
@@ -38,8 +33,7 @@ public class RedisHomeTabContent extends DynamicTabController {
     /**
      * 项目对象
      */
-    @Resource
-    private Project project;
+    private final Project project = Project.load();
 
     @Override
     public void initialize(URL url, ResourceBundle resource) {

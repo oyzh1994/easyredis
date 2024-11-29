@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.info;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONObject;
+import cn.oyzh.common.json.JSONObject;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -44,7 +44,7 @@ public class RedisInfoProp {
                     int index = l.indexOf(":");
                     String propName = l.substring(0, index);
                     String propValue = l.substring(index + 1);
-                    props.get(currGroup.get()).putOpt(propName, propValue);
+                    props.get(currGroup.get()).put(propName, propValue);
                 }
             });
         }
@@ -87,7 +87,7 @@ public class RedisInfoProp {
         if (propName != null) {
             JSONObject object = this.getProps(group);
             if (CollUtil.isNotEmpty((Iterable<?>) object)) {
-                return object.getStr(propName);
+                return object.getString(propName);
             }
         }
         return null;

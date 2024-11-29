@@ -1,26 +1,25 @@
 package cn.oyzh.easyredis.tabs.filter;
 
-import cn.hutool.core.map.MapUtil;
+import cn.oyzh.common.dto.Paging;
 import cn.oyzh.easyredis.controller.filter.RedisFilterAddController;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
-import cn.oyzh.easyredis.store.RedisFilterStore;
-import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.plus.controls.page.PageBox;
-import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
+import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
+import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
-import com.google.common.eventbus.Subscribe;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -28,8 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,8 +37,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/11/27
  */
-@Lazy
-@Component
 public class RedisFilterTabContent extends DynamicTabController {
 
     /**
@@ -100,7 +95,7 @@ public class RedisFilterTabContent extends DynamicTabController {
     /**
      * redis过滤配置储存
      */
-    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
     /**
      * 初始化数据列表
@@ -108,7 +103,7 @@ public class RedisFilterTabContent extends DynamicTabController {
      * @param pageNo 数据页码
      */
     private void initDataList(long pageNo) {
-        this.pageData = this.filterStore.getPage(20, MapUtil.of("searchKeyWord", this.searchKeyWord.getText()));
+        this.pageData = this.filterStore.getPage(20, 10, this.searchKeyWord.getText());
         this.listTable.getItems().clear();
         this.listTable.getItems().addAll(RedisFilterVO.convert(this.pageData.page(pageNo)));
         this.pagePane.setPaging(this.pageData);

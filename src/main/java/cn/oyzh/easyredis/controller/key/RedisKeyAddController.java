@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
@@ -416,7 +416,7 @@ public class RedisKeyAddController extends StageController {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
-        if (!JSONUtil.isTypeJSON(nodeValue)) {
+        if (!JSONUtil.isJson(nodeValue)) {
             MessageBox.warn(RedisI18nHelper.addTip1());
             return false;
         }
@@ -425,7 +425,7 @@ public class RedisKeyAddController extends StageController {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.streamIDValue);
             return false;
         }
-        JSONObject object = JSONUtil.parseObj(nodeValue);
+        JSONObject object = JSONUtil.parseObject(nodeValue);
         if (object.isEmpty()) {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;

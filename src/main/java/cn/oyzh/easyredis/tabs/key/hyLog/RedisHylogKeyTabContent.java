@@ -4,14 +4,14 @@ import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
-import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 
 /**

@@ -4,7 +4,7 @@ package cn.oyzh.easyredis.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexSlider;
@@ -17,15 +17,14 @@ import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
 import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.tabs.TabStrategyComboBox;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.i18n.I18nManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Modality;
@@ -88,17 +87,17 @@ public class SettingController extends StageController {
     @FXML
     private FlexCheckBox pageLocation;
 
-    /**
-     * 标签数量限制
-     */
-    @FXML
-    private NumberTextField tabLimit;
+    // /**
+    //  * 标签数量限制
+    //  */
+    // @FXML
+    // private NumberTextField tabLimit;
 
-    /**
-     * 标签策略
-     */
-    @FXML
-    private TabStrategyComboBox tabStrategy;
+    // /**
+    //  * 标签策略
+    //  */
+    // @FXML
+    // private TabStrategyComboBox tabStrategy;
 
     /**
      * 主题
@@ -181,12 +180,12 @@ public class SettingController extends StageController {
     /**
      * 配置对象
      */
-    private final RedisSetting setting = RedisSettingStore.SETTING;
+    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
     /**
      * 配置持久化对象
      */
-    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
+    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
 
     @Override
     public void onWindowShowing(WindowEvent event) {
@@ -218,9 +217,9 @@ public class SettingController extends StageController {
         this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
         this.bgColor.setColor(StrUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
         this.accentColor.setColor(StrUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
-        // 标签相关处理
-        this.tabLimit.setValue(this.setting.getTabLimit());
-        this.tabStrategy.select(this.setting.getTabStrategy());
+        // // 标签相关处理
+        // this.tabLimit.setValue(this.setting.getTabLimit());
+        // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
         this.fontSize.select(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
@@ -239,9 +238,9 @@ public class SettingController extends StageController {
     @FXML
     private void saveSetting() {
         String locale = this.locale.name();
-        Integer fontSize = this.fontSize.getValue();
+        Byte fontSize = this.fontSize.getValue();
         String fontFamily = this.fontFamily.getValue();
-        Integer fontWeight = this.fontWeight.getWeight();
+        Short fontWeight = this.fontWeight.getWeight();
 
         // 提示文字
         String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
@@ -258,15 +257,15 @@ public class SettingController extends StageController {
         // 区域相关处理
         this.setting.setLocale(locale);
         // 透明度相关处理
-        this.setting.setOpacity(this.opacity.getValue());
+        this.setting.setOpacity((float) this.opacity.getValue());
         // 其他设置
-        this.setting.setRememberPageSize(this.pageSize.isSelected() ? 1 : 0);
-        this.setting.setTabStrategy(this.tabStrategy.getStrategy());
+        this.setting.setRememberPageSize((byte) (this.pageSize.isSelected() ? 1 : 0));
+        // this.setting.setTabStrategy(this.tabStrategy.getStrategy());
         this.setting.setKeyLoadLimit(this.keyLoadLimit.getIntValue());
-        this.setting.setTabLimit(this.tabLimit.getValue().intValue());
-        this.setting.setRememberPageResize(this.pageResize.isSelected() ? 1 : 0);
-        this.setting.setRememberPageLocation(this.pageLocation.isSelected() ? 1 : 0);
-        this.setting.setExitMode(Integer.parseInt(this.exitMode.selectedUserData()));
+        // this.setting.setTabLimit(this.tabLimit.getValue().intValue());
+        this.setting.setRememberPageResize((byte) (this.pageResize.isSelected() ? 1 : 0));
+        this.setting.setRememberPageLocation((byte) (this.pageLocation.isSelected() ? 1 : 0));
+        this.setting.setExitMode(Byte.parseByte(this.exitMode.selectedUserData()));
         if (this.settingStore.update(this.setting)) {
             MessageBox.okToast(I18nHelper.operationSuccess() + tips);
             this.closeWindow();
@@ -275,7 +274,7 @@ public class SettingController extends StageController {
             // 应用字体配置
             FontManager.apply(this.setting.fontConfig());
             // 应用透明度配置
-            OpacityManager.apply(this.opacity.getValue());
+            OpacityManager.apply((float) this.opacity.getValue());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
         } else {
@@ -292,7 +291,7 @@ public class SettingController extends StageController {
      * @param locale     区域
      * @return 结果
      */
-    private String checkConfigForRestart(Integer fontSize, Integer fontWeight, String fontFamily, String locale) {
+    private String checkConfigForRestart(Byte fontSize, Short fontWeight, String fontFamily, String locale) {
         if (!Objects.equals(this.setting.getFontSize(), fontSize) || !Objects.equals(this.setting.getLocale(), locale)
                 || !Objects.equals(this.setting.getFontFamily(), fontFamily) || !Objects.equals(this.setting.getFontWeight(), fontWeight)) {
             return I18nResourceBundle.i18nString("base.restartTip1");

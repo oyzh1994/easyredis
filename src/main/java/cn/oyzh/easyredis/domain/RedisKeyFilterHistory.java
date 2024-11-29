@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.domain;
 
-import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.common.util.ObjectComparator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

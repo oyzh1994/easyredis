@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.info;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.Const;
+import cn.oyzh.common.Const;
 import lombok.Data;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.resps.Slowlog;

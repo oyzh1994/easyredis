@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.tabs.changelog;
 
-import cn.oyzh.fx.plus.controls.svg.ChangelogSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
 import javafx.scene.Cursor;
 
 /**

@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.hutool.core.util.HexUtil;
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.exception.DataTooBigException;
-import cn.oyzh.fx.common.util.StringUtil;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,7 +57,7 @@ public class RedisDataTextArea extends FlexTextArea {
             return rawValue;
         }
         try {
-            return JSONUtil.toJsonPrettyStr(rawValue);
+            return JSONUtil.toPretty(rawValue);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

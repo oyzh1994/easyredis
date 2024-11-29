@@ -6,7 +6,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.controller.SettingController;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
-import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
@@ -61,13 +61,13 @@ public class EasyRedisApp extends FXApplication {
             // 储存初始化
             RedisStoreUtil.init();
             // 应用区域
-            I18nManager.apply(RedisSettingStore.SETTING.getLocale());
+            I18nManager.apply(RedisSettingJdbcStore.SETTING.getLocale());
             // 应用字体
-            FontManager.apply(RedisSettingStore.SETTING.fontConfig());
+            FontManager.apply(RedisSettingJdbcStore.SETTING.fontConfig());
             // 应用主题
-            ThemeManager.apply(RedisSettingStore.SETTING.themeConfig());
+            ThemeManager.apply(RedisSettingJdbcStore.SETTING.themeConfig());
             // 应用透明度
-            OpacityManager.apply(RedisSettingStore.SETTING.getOpacity());
+            OpacityManager.apply(RedisSettingJdbcStore.SETTING.getOpacity());
             // 注册异常处理器
             MessageBox.registerExceptionParser(RedisExceptionParser.INSTANCE);
             // 调用父类

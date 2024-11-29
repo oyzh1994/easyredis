@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
@@ -12,8 +11,8 @@ import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
-import cn.oyzh.fx.plus.event.EventUtil;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
 
@@ -284,23 +283,23 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 搜索开始事件
-     */
-    public static void searchStart(RedisSearchParam searchParam) {
-        RedisSearchStartEvent event = new RedisSearchStartEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 搜索结束事件
-     */
-    public static void searchFinish(RedisSearchParam searchParam) {
-        RedisSearchFinishEvent event = new RedisSearchFinishEvent();
-        event.data(searchParam);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 搜索开始事件
+    //  */
+    // public static void searchStart(RedisSearchParam searchParam) {
+    //     RedisSearchStartEvent event = new RedisSearchStartEvent();
+    //     event.data(searchParam);
+    //     EventUtil.post(event);
+    // }
+    //
+    // /**
+    //  * 搜索结束事件
+    //  */
+    // public static void searchFinish(RedisSearchParam searchParam) {
+    //     RedisSearchFinishEvent event = new RedisSearchFinishEvent();
+    //     event.data(searchParam);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 搜索触发事件

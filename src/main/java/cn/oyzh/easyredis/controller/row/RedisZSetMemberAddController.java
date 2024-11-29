@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.controller.row;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -112,11 +112,11 @@ public class RedisZSetMemberAddController extends StageController {
         String text = this.rowValue.getTextTrim();
         try {
             if ("json".equals(this.rowValue.getUserData())) {
-                String jsonStr = JSONUtil.toJsonStr(this.rowValue);
+                String jsonStr = JSONUtil.toJson(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
-                String jsonStr = JSONUtil.toJsonPrettyStr(this.rowValue);
+                String jsonStr = JSONUtil.toPretty(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("json");
             }

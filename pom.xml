@@ -96,6 +96,14 @@
             <artifactId>jsch</artifactId>
         </dependency>
 
+        <!-- json类库 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- fx打包 -->
         <dependency>
             <groupId>cn.oyzh</groupId>

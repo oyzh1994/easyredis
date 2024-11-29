@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.row;
 
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.easyredis.redis.RedisRow;
 import lombok.Getter;
 import redis.clients.jedis.StreamEntryID;
@@ -29,7 +29,7 @@ public class RedisStreamRow extends RedisRow {
     }
 
     public String getValue() {
-        return JSONUtil.toJsonStr(entry.getFields());
+        return JSONUtil.toJson(entry.getFields());
     }
 
     public StreamEntryID getStreamId() {

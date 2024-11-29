@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.dto;
 
+import cn.oyzh.common.Index;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.fx.common.Index;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

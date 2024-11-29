@@ -1,16 +1,16 @@
 package cn.oyzh.easyredis.controller.row;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -65,11 +65,11 @@ public class RedisStreamMessageAddController extends StageController {
                 MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
-            if (!JSONUtil.isTypeJSON(rowValue)) {
+            if (!JSONUtil.isJson(rowValue)) {
                 MessageBox.warn(RedisI18nHelper.addTip4());
                 return;
             }
-            JSONObject fields = JSONUtil.parseObj(rowValue);
+            JSONObject fields = JSONUtil.parseObject(rowValue);
             if (fields.isEmpty()) {
                 MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
@@ -125,11 +125,11 @@ public class RedisStreamMessageAddController extends StageController {
         String text = this.rowValue.getTextTrim();
         try {
             if ("json".equals(this.rowValue.getUserData())) {
-                String jsonStr = JSONUtil.toJsonStr(this.rowValue);
+                String jsonStr = JSONUtil.toJson(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("text");
             } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
-                String jsonStr = JSONUtil.toJsonPrettyStr(this.rowValue);
+                String jsonStr = JSONUtil.toPretty(this.rowValue);
                 this.rowValue.setText(jsonStr);
                 this.rowValue.setUserData("json");
             }

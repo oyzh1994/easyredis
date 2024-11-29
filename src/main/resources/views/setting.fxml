@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.button.ResetButton?>
-<?import cn.oyzh.fx.plus.controls.button.SaveButton?>
 <?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.FlexSlider?>
@@ -11,17 +8,19 @@
 <?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.AccentLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.plus.font.FontFamilyComboBox?>
 <?import cn.oyzh.fx.plus.font.FontSizeComboBox?>
 <?import cn.oyzh.fx.plus.font.FontWeightComboBox?>
 <?import cn.oyzh.fx.plus.i18n.LocaleComboBox?>
-<?import cn.oyzh.fx.plus.tabs.TabStrategyComboBox?>
 <?import cn.oyzh.fx.plus.theme.ThemeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.button.ResetButton?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
+<?import cn.oyzh.fx.gui.button.SaveButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="350">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
@@ -124,42 +123,42 @@
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.label">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%base.strategy" realHeight="30" realWidth="100">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </TabStrategyComboBox>
-                    <VBox.margin>
-                        <Insets top="10"/>
-                    </VBox.margin>
-                </FlexHBox>
-                <FlexHBox flexWidth="100%" realHeight="50">
-                    <AccentLabel text="%base.limit" realHeight="30" realWidth="100">
-                        <HBox.margin>
-                            <Insets left="20" top="10"/>
-                        </HBox.margin>
-                    </AccentLabel>
-                    <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140"
-                                     realHeight="30"
-                                     tipText="%base.tabLimitTip">
-                        <HBox.margin>
-                            <Insets left="10" top="10"/>
-                        </HBox.margin>
-                    </NumberTextField>
-                    <VBox.margin>
-                        <Insets top="10"/>
-                    </VBox.margin>
-                </FlexHBox>
-            </FlexVBox>
-        </FXTab>
+        <!-- <FXTab text="%base.label"> -->
+        <!--     <FlexVBox flexWidth="100%" flexHeight="100%"> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <AccentLabel text="%base.strategy" realHeight="30" realWidth="100"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <TabStrategyComboBox realHeight="30" flexWidth="100% - 140" initIndex="0" fx:id="tabStrategy"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </TabStrategyComboBox> -->
+        <!--             <VBox.margin> -->
+        <!--                 <Insets top="10"/> -->
+        <!--             </VBox.margin> -->
+        <!--         </FlexHBox> -->
+        <!--         <FlexHBox flexWidth="100%" realHeight="50"> -->
+        <!--             <AccentLabel text="%base.limit" realHeight="30" realWidth="100"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="20" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </AccentLabel> -->
+        <!--             <NumberTextField fx:id="tabLimit" value="1" step="5" min="0" max="1000" flexWidth="100% - 140" -->
+        <!--                              realHeight="30" -->
+        <!--                              tipText="%base.tabLimitTip"> -->
+        <!--                 <HBox.margin> -->
+        <!--                     <Insets left="10" top="10"/> -->
+        <!--                 </HBox.margin> -->
+        <!--             </NumberTextField> -->
+        <!--             <VBox.margin> -->
+        <!--                 <Insets top="10"/> -->
+        <!--             </VBox.margin> -->
+        <!--         </FlexHBox> -->
+        <!--     </FlexVBox> -->
+        <!-- </FXTab> -->
         <FXTab text="%base.font">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <FlexHBox flexWidth="100%" realHeight="50">

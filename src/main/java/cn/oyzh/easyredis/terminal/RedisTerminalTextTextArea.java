@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisConnectInfo;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;

@@ -5,7 +5,6 @@ import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;

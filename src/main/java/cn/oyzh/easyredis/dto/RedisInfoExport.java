@@ -1,12 +1,8 @@
 package cn.oyzh.easyredis.dto;
 
-import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import cn.hutool.log.StaticLog;
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.fx.common.dto.Project;
 import lombok.Getter;
 import lombok.NonNull;
 

@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.json.JSONUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,9 +55,9 @@ public class RedisNodeExport {
      */
     public String toJSONString(boolean prettyFormat) {
         if (prettyFormat) {
-            return JSONUtil.toJsonPrettyStr(this);
+            return JSONUtil.toPretty(this);
         }
-        return JSONUtil.toJsonStr(this);
+        return JSONUtil.toPretty(this);
     }
 
     /**

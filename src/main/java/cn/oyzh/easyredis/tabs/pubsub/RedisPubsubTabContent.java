@@ -3,13 +3,10 @@ package cn.oyzh.easyredis.tabs.pubsub;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPubSub;
 
 /**
@@ -18,9 +15,6 @@ import redis.clients.jedis.JedisPubSub;
  * @author oyzh
  * @since 2023/08/02
  */
-@Lazy
-@Component
-@Scope("prototype")
 public class RedisPubsubTabContent extends DynamicTabController {
 
     /**
