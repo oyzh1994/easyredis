@@ -15,7 +15,7 @@ import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.common.ssh.SSHForwardInfo;
 import cn.oyzh.fx.common.ssh.SSHForwarder;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.thread.ThreadUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;

@@ -22,7 +22,7 @@ import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.tabs.DynamicTabPane;
@@ -148,7 +148,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void terminalOpen(RedisTerminalOpenEvent event) {
         this.initTerminalTab(event.data());
     }
@@ -158,7 +158,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void terminalClose(RedisTerminalCloseEvent event) {
         try {
             // 寻找节点
@@ -194,7 +194,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void pubsubOpen(RedisPubsubOpenEvent event) {
         RedisPubsubTab tab = this.getPubsubTab(event.data());
         if (tab == null) {
@@ -231,7 +231,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void serverMonitor(RedisServerMonitorEvent event) {
         RedisServerTab serverTab = this.getServerTab(event.data());
         if (serverTab == null) {
@@ -331,7 +331,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void treeChildSelected(TreeChildSelectedEvent event) {
         if (event != null && event.data() != null) {
             RedisKeyTab keyTab = this.getKeyTab(event.data());
@@ -351,7 +351,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
         if (event != null && event.data() != null) {
             RedisKeyTab keyTab = this.getKeyTab(event.data());
@@ -372,7 +372,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void keyRenamed(RedisKeyRenamedEvent event) {
         RedisKeyTab<?> tab = this.getKeyTab(event.data());
         if (tab != null && tab.treeItem() == event.data()) {
@@ -386,7 +386,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void ttlUpdated(RedisKeyTTLUpdatedEvent event) {
         RedisKeyTab<?> tab = this.getKeyTab(event.data());
         if (tab != null) {
@@ -399,7 +399,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void connectionClosed(RedisConnectionClosedEvent event) {
         RedisClient client = event.data();
         List<Tab> closeTabs = new ArrayList<>();
@@ -433,7 +433,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void filterMain(RedisFilterMainEvent event) {
         RedisFilterTab tab = this.getFilterTab();
         if (tab == null) {
@@ -448,7 +448,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void changelog(ChangelogEvent event) {
         ChangelogTab tab = this.getTab(ChangelogTab.class);
         if (tab == null) {

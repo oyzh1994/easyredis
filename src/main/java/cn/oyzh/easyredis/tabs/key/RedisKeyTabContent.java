@@ -1,30 +1,26 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.fx.common.spring.ScopeType;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.tabs.DynamicTab;
-import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,9 +31,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/06/21
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> extends DynamicTabController {
 
     /**

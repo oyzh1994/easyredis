@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.fx.common.Const;
 import cn.oyzh.fx.plus.controls.area.MsgTextArea;
-import cn.oyzh.fx.plus.event.EventFormatter;
+import cn.oyzh.event.EventFormatter;
 import cn.oyzh.fx.plus.event.EventListener;
 import com.google.common.eventbus.Subscribe;
 
@@ -12,7 +12,7 @@ import com.google.common.eventbus.Subscribe;
  */
 public class RedisMsgTextArea extends MsgTextArea implements EventListener {
 
-    @Subscribe
+    @EventSubscribe
     private void onEventMsg(EventFormatter formatter) {
         String formatMsg = formatter.eventFormat();
         if (formatMsg != null) {

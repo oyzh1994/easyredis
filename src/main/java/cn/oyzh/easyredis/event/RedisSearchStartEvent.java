@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.search.RedisSearchParam;
-import cn.oyzh.fx.plus.event.Event;
+import cn.oyzh.event.Event;
 
 /**
  * @author oyzh

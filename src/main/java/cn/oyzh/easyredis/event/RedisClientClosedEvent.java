@@ -2,8 +2,8 @@
 //
 // import cn.oyzh.easyredis.domain.RedisInfo;
 // import cn.oyzh.easyredis.redis.RedisClient;
-// import cn.oyzh.fx.plus.event.Event;
-// import cn.oyzh.fx.plus.event.EventFormatter;
+// import cn.oyzh.event.Event;
+// import cn.oyzh.event.EventFormatter;
 //
 // /**
 //  * @author oyzh

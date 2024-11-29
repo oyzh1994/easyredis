@@ -14,7 +14,7 @@ import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
@@ -217,7 +217,7 @@ public class RedisMainController extends ParentStageController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void onInfoUpdate(RedisInfoUpdatedEvent event) {
         if (this.info == event.data()) {
             this.flushViewTitle(event.data());
@@ -382,7 +382,7 @@ public class RedisMainController extends ParentStageController {
     /**
      * 展开左侧
      */
-    @Subscribe
+    @EventSubscribe
     private void leftExtend(RedisLeftExtendEvent event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
@@ -394,7 +394,7 @@ public class RedisMainController extends ParentStageController {
     /**
      * 收缩左侧
      */
-    @Subscribe
+    @EventSubscribe
     private void leftCollapse(RedisLeftCollapseEvent event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);

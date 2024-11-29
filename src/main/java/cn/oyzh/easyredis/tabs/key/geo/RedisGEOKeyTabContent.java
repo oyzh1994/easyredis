@@ -7,11 +7,11 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -271,7 +271,7 @@ public class RedisGEOKeyTabContent extends RedisRowKeyTabContent<RedisZSetKeyTre
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
         if (this.treeItem == event.data()) {
             this.firstPage();

@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -127,7 +127,7 @@ public class RedisStreamKeyTabContent extends RedisRowKeyTabContent<RedisStreamK
      *
      * @param msg 消息
      */
-    @Subscribe
+    @EventSubscribe
     private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();

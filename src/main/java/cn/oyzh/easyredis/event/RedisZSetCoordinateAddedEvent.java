@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.plus.event.Event;
-import cn.oyzh.fx.plus.event.EventFormatter;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.event.Event;
+import cn.oyzh.event.EventFormatter;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

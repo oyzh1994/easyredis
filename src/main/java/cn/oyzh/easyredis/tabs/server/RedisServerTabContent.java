@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.common.spring.ScopeType;
-import cn.oyzh.fx.common.thread.ExecutorUtil;
+import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;

@@ -17,7 +17,7 @@ import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.event.EventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -98,7 +98,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void keyAdded(RedisKeyAddedEvent event) {
         if (event != null && event.data() != null) {
             event.data().onKeyAdded(event.key());
@@ -110,7 +110,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void keyDeleted(RedisKeyDeletedEvent event) {
         if (event != null && event.data() != null) {
             event.data().onKeyDeleted(event.key());
@@ -122,7 +122,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void keyFlushed(RedisKeyFlushedEvent event) {
         if (event != null && event.data() != null) {
             event.data().reloadChild();
@@ -134,7 +134,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void keyCopied(RedisKeyCopiedEvent event) {
         int dbIndex = event.targetDB();
         TreeItem<?> treeItem = event.data();
@@ -155,7 +155,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void onKeyMoved(RedisKeyMovedEvent event) {
         int dbIndex = event.targetDB();
         TreeItem<?> treeItem = event.data();
@@ -177,7 +177,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void searchStart(RedisSearchStartEvent event) {
         this.searching = true;
         this.filter();
@@ -188,7 +188,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void searchFinish(RedisSearchFinishEvent event) {
         this.searching = false;
         this.filter();
@@ -197,7 +197,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     /**
      * 树节点过滤
      */
-    @Subscribe
+    @EventSubscribe
     private void treeChildFilter(TreeChildFilterEvent event) {
         this.itemFilter().initFilters();
         this.filter();
@@ -208,7 +208,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void addConnect(RedisAddConnectEvent event) {
         StageManager.showStage(RedisInfoAddController.class, this.window());
     }
@@ -218,7 +218,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void addGroup(RedisAddGroupEvent event) {
         this.root().addGroup();
     }
@@ -228,7 +228,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void infoAdded(RedisInfoAddedEvent event) {
         this.root().addConnect(event.data());
     }
@@ -238,7 +238,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     private void infoUpdated(RedisInfoUpdatedEvent event) {
         this.root().infoUpdate(event.data());
     }

@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -198,7 +198,7 @@ public class RedisListKeyTabContent extends RedisRowKeyTabContent<RedisListKeyTr
      *
      * @param msg 消息
      */
-    @Subscribe
+    @EventSubscribe
     private void onListRowAdded(RedisListRowAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();

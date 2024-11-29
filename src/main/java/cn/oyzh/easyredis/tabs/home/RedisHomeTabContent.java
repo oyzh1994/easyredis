@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.home;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;

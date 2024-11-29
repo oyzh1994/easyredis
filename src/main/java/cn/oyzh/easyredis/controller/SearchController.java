@@ -9,15 +9,15 @@ import cn.oyzh.easyredis.search.RedisSearchHistoryPopup;
 import cn.oyzh.easyredis.search.RedisSearchParam;
 import cn.oyzh.easyredis.store.RedisSearchHistoryStore;
 import cn.oyzh.easyredis.trees.RedisTreeView;
-import cn.oyzh.fx.common.thread.Task;
-import cn.oyzh.fx.common.thread.TaskBuilder;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.controls.search.SearchResult;
 import cn.oyzh.fx.plus.controls.search.SearchTextField;
@@ -272,7 +272,7 @@ public class SearchController extends SubStageController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void flushSearchResult(TreeChildChangedEvent event) {
         if (this.treeView.searching()) {
             TaskManager.startDelay("redis:search:flushSearchResult", () -> {
@@ -287,7 +287,7 @@ public class SearchController extends SubStageController {
      *
      * @param event 事件
      */
-    @Subscribe
+    @EventSubscribe
     public void searchFire(RedisSearchFireEvent event) {
         if (this.searchMain.isVisible()) {
             this.searchMain.disappear();

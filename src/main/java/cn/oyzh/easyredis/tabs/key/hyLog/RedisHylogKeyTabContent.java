@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -110,7 +110,7 @@ public class RedisHylogKeyTabContent extends RedisKeyTabContent<RedisStringKeyTr
      *
      * @param msg 消息
      */
-    @Subscribe
+    @EventSubscribe
     private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             // 刷新数据

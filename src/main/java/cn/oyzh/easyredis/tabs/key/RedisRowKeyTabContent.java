@@ -1,20 +1,19 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.oyzh.common.dto.Paging;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.redis.RedisRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
-import cn.oyzh.fx.common.dto.Paging;
-import cn.oyzh.fx.common.thread.TaskManager;
+import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
-import cn.oyzh.fx.plus.controls.page.PageBox;
-import cn.oyzh.fx.plus.controls.svg.DeleteSVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 
@@ -176,16 +175,20 @@ public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, 
             private HBox hBox;
 
             @Override
-            public Node initGraphic() {
-                if (this.hBox == null) {
-                    // 删除按钮
-                    DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                    del.setOnMousePrimaryClicked((event) -> deleteRow());
+            protected void updateItem(String item, boolean empty) {
+                if (empty || item == null) {
+                    super.updateItem(item, empty);
+                } else {
+                    if (this.hBox == null) {
+                        // 删除按钮
+                        DeleteSVGGlyph del = new DeleteSVGGlyph("14");
+                        del.setOnMousePrimaryClicked((event) -> deleteRow());
 
-                    this.hBox = new HBox(del);
-                    this.hBox.setPadding(new Insets(5, 0, 0, 5));
+                        this.hBox = new HBox(del);
+                        this.hBox.setPadding(new Insets(5, 0, 0, 5));
+                    }
+                    this.setGraphic(this.hBox);
                 }
-                return this.hBox;
             }
         });
         // 监听列表点击事件

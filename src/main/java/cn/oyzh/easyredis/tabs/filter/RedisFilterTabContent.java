@@ -16,7 +16,7 @@ import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.controls.toggle.MatchToggleSwitch;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -232,7 +232,7 @@ public class RedisFilterTabContent extends DynamicTabController {
     /**
      * 过滤新增事件
      */
-    @Subscribe
+    @EventSubscribe
     private void filterAdded(RedisFilterAddedEvent event) {
         this.initDataList(Integer.MAX_VALUE);
     }

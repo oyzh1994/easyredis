@@ -2,9 +2,9 @@ package cn.oyzh.easyredis.tabs.pubsub;
 
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.common.thread.ThreadUtil;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
 import javafx.fxml.FXML;
 import org.springframework.context.annotation.Lazy;
