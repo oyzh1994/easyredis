@@ -1,12 +1,12 @@
 package cn.oyzh.easyredis.util;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.dto.RedisConnect;
+import cn.oyzh.easyredis.dto.RedisConnectInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.i18n.I18nHelper;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -82,13 +82,13 @@ public class RedisConnectUtil {
      * @param input 输入内容
      * @return 连接
      */
-    public static RedisConnect parse(String input) {
+    public static RedisConnectInfo parse(String input) {
         if (input == null) {
             return null;
         }
         try {
             String[] words = input.split(" ");
-            RedisConnect connect = new RedisConnect();
+            RedisConnectInfo connect = new RedisConnectInfo();
             connect.setInput(input);
             int type = -1;
             for (int i = 0; i < words.length; i++) {
@@ -136,17 +136,17 @@ public class RedisConnectUtil {
     /**
      * 复制连接
      *
-     * @param connect 连接对象
+     * @param connectInfo 连接信息
      * @param info    redis对象
      */
-    public static void copyConnect(RedisConnect connect, RedisInfo info) {
-        if (connect != null && info != null) {
-            info.setUser(connect.getUser());
-            info.setReadonly(connect.isReadonly());
-            info.setPassword(connect.getPassword());
-            info.setConnectTimeOut(connect.getTimeout());
-            info.setExecuteTimeOut(connect.getTimeout());
-            info.setHost(connect.getHost() + ":" + connect.getPort());
+    public static void copyConnect(RedisConnectInfo connectInfo, RedisInfo info) {
+        if (connectInfo != null && info != null) {
+            info.setUser(connectInfo.getUser());
+            info.setReadonly(connectInfo.isReadonly());
+            info.setPassword(connectInfo.getPassword());
+            info.setConnectTimeOut(connectInfo.getTimeout());
+            info.setExecuteTimeOut(connectInfo.getTimeout());
+            info.setHost(connectInfo.getHost() + ":" + connectInfo.getPort());
         }
     }
 }

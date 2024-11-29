@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.terminal;
 
 import cn.hutool.log.StaticLog;
 import cn.oyzh.easyredis.domain.RedisInfo;
-import cn.oyzh.easyredis.dto.RedisConnect;
+import cn.oyzh.easyredis.dto.RedisConnectInfo;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
@@ -43,7 +43,7 @@ public class RedisTerminalTextTextArea extends TerminalTextTextArea {
     /**
      * redis连接
      */
-    private RedisConnect connect;
+    private RedisConnectInfo connect;
 
     /**
      * redis客户端连接状态监听器

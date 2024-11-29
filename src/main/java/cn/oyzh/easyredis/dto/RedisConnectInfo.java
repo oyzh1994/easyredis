@@ -10,7 +10,7 @@ import lombok.Setter;
  * @since 2023/8/10
  */
 @Data
-public class RedisConnect {
+public class RedisConnectInfo {
 
     /**
      * 原始输入内容
