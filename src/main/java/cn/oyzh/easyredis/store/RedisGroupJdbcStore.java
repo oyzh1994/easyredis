@@ -1,0 +1,73 @@
+package cn.oyzh.easyredis.store;
+
+import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.domain.RedisGroup;
+import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.QueryParam;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * zk分组存储
+ *
+ * @author oyzh
+ * @since 2023/5/12
+ */
+public class RedisGroupJdbcStore extends JdbcStore<RedisGroup> {
+
+    /**
+     * 当前实例
+     */
+    public static final RedisGroupJdbcStore INSTANCE = new RedisGroupJdbcStore();
+
+    public List<RedisGroup> load() {
+        return super.selectList();
+    }
+
+    public boolean replace(RedisGroup group) {
+        if (group != null) {
+            if (this.exist(group.getName())) {
+                return this.update(group);
+            }
+            return this.insert(group);
+        }
+        return false;
+    }
+
+    public boolean delete(String name) {
+        if (StringUtil.isNotBlank(name)) {
+            DeleteParam param = new DeleteParam();
+            param.addQueryParam(new QueryParam("name", name));
+            return this.delete(param);
+        }
+        return false;
+    }
+
+    /**
+     * 是否存在此分组信息
+     *
+     * @param name 分组信息
+     * @return 结果
+     */
+    public boolean exist(String name) {
+        if (StringUtil.isNotBlank(name)) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("name", name);
+            return super.exist(params);
+        }
+        return false;
+    }
+
+    @Override
+    protected RedisGroup newModel() {
+        return new RedisGroup();
+    }
+
+    @Override
+    protected Class<RedisGroup> modelClass() {
+        return RedisGroup.class;
+    }
+}
