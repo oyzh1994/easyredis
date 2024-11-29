@@ -8,13 +8,12 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.beans.property.SimpleObjectProperty;
@@ -91,7 +90,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
     public void clearData() {
         if (this.dataProperty != null) {
             this.dataProperty.set(null);
-            this.flushGraphic();
+            // this.flushGraphic();
         }
     }
 

@@ -4,9 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -51,7 +51,7 @@ public class RedisFilterAddController extends StageController {
     /**
      * redis过滤配置储存
      */
-    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
     /**
      * 添加过滤配置
@@ -73,7 +73,7 @@ public class RedisFilterAddController extends StageController {
             filter.setKw(kw);
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.matchMode.isSelected());
-            if (this.filterStore.add(filter)) {
+            if (this.filterStore.replace(filter)) {
                 RedisEventUtil.filterAdded();
                 RedisEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());

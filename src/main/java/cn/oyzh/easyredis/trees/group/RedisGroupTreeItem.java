@@ -7,17 +7,17 @@ import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
-import cn.oyzh.easyredis.store.RedisGroupStore;
-import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
+import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.event.EventHandler;
@@ -49,12 +49,12 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     /**
      * redis信息储存
      */
-    private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
+    private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
 
     /**
      * redis分组储存
      */
-    private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
+    private final RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
 
     public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisTreeView treeView) {
         super(treeView);
@@ -111,9 +111,9 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
             return;
         }
         // 修改名称
-        if (this.groupStore.update(this.value)) {
-            this.getValue().flushText();
-        } else {
+        if (!this.groupStore.update(this.value)) {
+            // this.getValue().flushText();
+        // } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
     }
@@ -198,7 +198,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     @Override
     public List<RedisConnectTreeItem> getConnectItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisConnectTreeItem treeItem) {
                 items.add(treeItem);
             }

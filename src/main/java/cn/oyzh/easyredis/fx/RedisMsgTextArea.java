@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.fx;
 
-import cn.oyzh.fx.common.Const;
-import cn.oyzh.fx.plus.controls.area.MsgTextArea;
+import cn.oyzh.common.Const;
 import cn.oyzh.event.EventFormatter;
-import cn.oyzh.fx.plus.event.EventListener;
-import com.google.common.eventbus.Subscribe;
+import cn.oyzh.event.EventListener;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
 
 /**
  * @author oyzh

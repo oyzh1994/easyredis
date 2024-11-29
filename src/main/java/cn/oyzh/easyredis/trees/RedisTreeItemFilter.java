@@ -1,19 +1,14 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.search.RedisSearchHandler;
-import cn.oyzh.easyredis.search.RedisSearchParam;
-import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.plus.trees.RichTreeItem;
-import cn.oyzh.fx.plus.trees.RichTreeItemFilter;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +18,6 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-@Lazy
-@Component
 public class RedisTreeItemFilter implements RichTreeItemFilter {
 
     /**
@@ -76,11 +69,11 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     @Getter
     private boolean onlyCollect;
 
-    /**
-     * redis主页搜索处理
-     */
-    @Resource
-    private RedisSearchHandler searchHandler;
+    // /**
+    //  * redis主页搜索处理
+    //  */
+    // @Resource
+    // private RedisSearchHandler searchHandler;
 
     /**
      * 过滤内容列表
@@ -90,7 +83,7 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
     /**
      * 过滤配置储存
      */
-    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
     /**
      * 初始化过滤配置
@@ -137,11 +130,11 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
                 return false;
             }
         }
-        // 判断是否满足搜索要求
-        RedisSearchParam param = this.searchHandler.searchParam();
-        if (param != null && !param.isEmpty() && param.isFilterMode()) {
-            return this.searchHandler.getMatchType(item) != null;
-        }
+        // // 判断是否满足搜索要求
+        // RedisSearchParam param = this.searchHandler.searchParam();
+        // if (param != null && !param.isEmpty() && param.isFilterMode()) {
+        //     return this.searchHandler.getMatchType(item) != null;
+        // }
         return true;
     }
 

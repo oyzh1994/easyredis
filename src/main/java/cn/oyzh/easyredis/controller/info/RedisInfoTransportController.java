@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.controller.info;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -10,23 +11,22 @@ import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.fx.common.util.SystemUtil;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.area.MsgTextArea;
-import cn.oyzh.fx.plus.controls.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.text.FXLabel;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
+import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -264,7 +264,7 @@ public class RedisInfoTransportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
     /**
      * 执行传输

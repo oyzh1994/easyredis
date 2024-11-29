@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.fx.plus.SimpleStringConverter;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 
@@ -23,6 +23,6 @@ public class RedisConnectComboBox extends FlexComboBox<RedisConnect> {
                 return o.getName();
             }
         });
-        this.getItems().setAll(RedisInfoStore.INSTANCE.load());
+        this.getItems().setAll(RedisConnectJdbcStore.INSTANCE.load());
     }
 }

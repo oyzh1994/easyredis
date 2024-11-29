@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.fx.plus.trees.RichTreeItemValue;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import lombok.experimental.Accessors;
 
 

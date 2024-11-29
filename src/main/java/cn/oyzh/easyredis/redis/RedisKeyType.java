@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.plus.i18n.I18nManager;
+import cn.oyzh.i18n.I18nManager;
 
 import java.util.Locale;
 

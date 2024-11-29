@@ -10,12 +10,13 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
-import cn.oyzh.easyredis.store.RedisGroupStore;
-import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
+import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -23,7 +24,6 @@ import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -47,12 +47,12 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     /**
      * redis信息储存
      */
-    private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
+    private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
 
     /**
      * redis分组储存
      */
-    private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
+    private final RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
 
     public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
         super(treeView);
@@ -184,7 +184,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             List<RedisConnect> infos = export.getConnects();
             if (CollUtil.isNotEmpty(infos)) {
                 for (RedisConnect info : infos) {
-                    if (this.infoStore.add(info)) {
+                    if (this.infoStore.replace(info)) {
                         this.addConnect(info);
                     } else {
                         MessageBox.warn(I18nHelper.connect() + "[" + info.getName() + "]" + I18nHelper.importFail());
@@ -257,7 +257,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      */
     private List<RedisGroupTreeItem> getGroupItems() {
         List<RedisGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisGroupTreeItem treeItem) {
                 items.add(treeItem);
             }
@@ -281,7 +281,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      */
     public void infoUpdate(RedisConnect info) {
         f1:
-        for (TreeItem<?> item : this.getRealChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.value() == info) {
                     connectTreeItem.value(info);
@@ -303,7 +303,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         RedisGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
             super.addChild(new RedisConnectTreeItem(info, this.getTreeView()));
-            this.extend();
+            this.expend();
         } else {
             groupItem.addConnect(info);
         }
@@ -317,7 +317,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
                 this.infoStore.update(item.value());
             }
             super.addChild(item);
-            this.extend();
+            this.expend();
         }
     }
 
@@ -325,7 +325,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
         if (CollUtil.isNotEmpty(items)) {
             this.addChild((List) items);
-            this.extend();
+            this.expend();
         }
     }
 
@@ -342,7 +342,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<RedisConnectTreeItem> getConnectItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (TreeItem<?> child : this.getRealChildren()) {
+        for (TreeItem<?> child : this.unfilteredChildren()) {
             if (child instanceof RedisConnectTreeItem connectTreeItem) {
                 items.add(connectTreeItem);
             } else if (child instanceof RedisGroupTreeItem groupTreeItem) {
@@ -355,7 +355,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     @Override
     public List<RedisConnectTreeItem> getConnectedItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (Object item : this.getRealChildren()) {
+        for (Object item : this.unfilteredChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);

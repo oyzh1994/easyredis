@@ -2,18 +2,17 @@ package cn.oyzh.easyredis.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
-import javax.annotation.Resource;
 
 /**
  * 关于业务
@@ -47,8 +46,7 @@ public class AboutController extends SubStageController {
     /**
      * 项目信息
      */
-    @Resource
-    private Project project;
+    private final Project project = Project.load();
 
     @Override
     public void onStageShown(WindowEvent event) {

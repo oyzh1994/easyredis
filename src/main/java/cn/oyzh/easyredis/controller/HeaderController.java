@@ -1,21 +1,17 @@
 package cn.oyzh.easyredis.controller;
 
+import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.fx.common.dto.Project;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * 主页头部业务
@@ -23,15 +19,12 @@ import javax.annotation.Resource;
  * @author oyzh
  * @since 2023/06/16
  */
-@Lazy
-@Component
 public class HeaderController extends SubStageController {
 
     /**
      * 项目信息
      */
-    @Resource
-    private Project project;
+    private final Project project = Project.load();
 
     /**
      * 展开redis树

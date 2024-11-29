@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.oyzh.fx.plus.trees.RichTreeCell;
+
+import cn.oyzh.fx.gui.treeView.RichTreeCell;
 
 /**
  * redis树节点工厂

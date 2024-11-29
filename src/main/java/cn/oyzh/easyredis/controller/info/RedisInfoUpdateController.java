@@ -3,18 +3,18 @@ package cn.oyzh.easyredis.controller.info;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisSSHConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisInfoStore;
+import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
+import cn.oyzh.fx.gui.textfield.ClearableTextField;
+import cn.oyzh.fx.gui.textfield.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.area.FlexTextArea;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.textfield.PortTextField;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -196,7 +196,7 @@ public class RedisInfoUpdateController extends StageController {
     /**
      * redis连接储存对象
      */
-    private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
+    private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
 
     /**
      * 获取连接地址
@@ -224,8 +224,8 @@ public class RedisInfoUpdateController extends StageController {
      *
      * @return ssh连接信息
      */
-    private SSHConnectInfo getSSHInfo() {
-        SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
+    private RedisSSHConnect getSSHInfo() {
+        RedisSSHConnect sshConnectInfo = new RedisSSHConnect();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPort(this.sshPort.getIntValue());
@@ -252,7 +252,7 @@ public class RedisInfoUpdateController extends StageController {
             redisInfo.setPassword(this.password.getText());
             redisInfo.setSshForward(this.sshForward.isSelected());
             if (redisInfo.isSSHForward()) {
-                redisInfo.setSshInfo(this.getSSHInfo());
+                redisInfo.setSshConnect(this.getSSHInfo());
             }
             RedisConnectUtil.testConnect(this.stage, redisInfo);
         }
@@ -278,7 +278,7 @@ public class RedisInfoUpdateController extends StageController {
 
         this.redisInfo.setHost(host.trim());
         this.redisInfo.setUser(this.user.getText());
-        this.redisInfo.setSshInfo(this.getSSHInfo());
+        this.redisInfo.setSshConnect(this.getSSHInfo());
         this.redisInfo.setRemark(this.remark.getTextTrim());
         this.redisInfo.setPassword(this.password.getText());
         this.redisInfo.setSshForward(this.sshForward.isSelected());
@@ -398,7 +398,7 @@ public class RedisInfoUpdateController extends StageController {
         //     this.sentinelBox.enable();
         // }
         // ssh连接信息
-        SSHConnectInfo connectInfo = this.redisInfo.getSshInfo();
+        RedisSSHConnect connectInfo = this.redisInfo.getSshConnect();
         if (connectInfo != null) {
             this.sshHost.setText(connectInfo.getHost());
             this.sshUser.setText(connectInfo.getUser());

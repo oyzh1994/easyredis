@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.redis;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.StaticLog;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
@@ -13,9 +13,8 @@ import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
-import cn.oyzh.fx.common.ssh.SSHForwardInfo;
-import cn.oyzh.fx.common.ssh.SSHForwarder;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -157,7 +156,7 @@ public class RedisClient {
     public RedisClient(@NonNull RedisConnect redisInfo) {
         this.redisInfo = redisInfo;
         if (redisInfo.isSSHForward()) {
-            this.sshForwarder = new SSHForwarder(redisInfo.getSshInfo());
+            this.sshForwarder = new SSHForwarder(redisInfo.getSshConnect());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {

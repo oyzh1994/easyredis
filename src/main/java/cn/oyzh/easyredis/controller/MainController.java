@@ -1,29 +1,27 @@
 package cn.oyzh.easyredis.controller;
 
-import cn.hutool.log.StaticLog;
+import cn.oyzh.common.dto.Project;
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.store.RedisPageInfoStore;
-import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.fx.common.dto.Project;
-import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.fx.gui.tray.DesktopTrayItem;
+import cn.oyzh.fx.gui.tray.QuitTrayItem;
+import cn.oyzh.fx.gui.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.controller.ParentStageController;
-import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.tray.DesktopTrayItem;
-import cn.oyzh.fx.plus.tray.QuitTrayItem;
-import cn.oyzh.fx.plus.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
-import javax.annotation.Resource;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
@@ -44,8 +42,7 @@ public class MainController extends ParentStageController {
     /**
      * 项目信息
      */
-    @Resource
-    private Project project;
+    private final Project project = Project.load();
 
     /**
      * 头部页面
@@ -59,20 +56,20 @@ public class MainController extends ParentStageController {
     @FXML
     private RedisMainController redisMainController;
 
-    /**
-     * 页面信息
-     */
-    private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
+    // /**
+    //  * 页面信息
+    //  */
+    // private final RedisPageInfo pageInfo = RedisPageInfoStore.PAGE_INFO;
 
     /**
      * redis相关配置
      */
-    private final RedisSetting setting = RedisSettingStore.SETTING;
+    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    /**
-     * 页面信息储存
-     */
-    private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
+    // /**
+    //  * 页面信息储存
+    //  */
+    // private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
     /**
      * 初始化系统托盘

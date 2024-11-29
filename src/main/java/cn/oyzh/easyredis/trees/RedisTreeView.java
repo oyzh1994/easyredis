@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.trees;
 
-import cn.hutool.extra.spring.SpringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.event.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.RedisAddGroupEvent;
@@ -11,18 +10,16 @@ import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
-import cn.oyzh.easyredis.event.RedisSearchFinishEvent;
-import cn.oyzh.easyredis.event.RedisSearchStartEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.fx.plus.event.EventListener;
+import cn.oyzh.event.EventListener;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.plus.trees.RichTreeView;
-import com.google.common.eventbus.Subscribe;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -50,8 +47,8 @@ public class RedisTreeView extends RichTreeView implements EventListener {
         this.dragContent = "redis_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
         // 初始化根节点
-        super.root(new RedisRootTreeItem(this));
-        this.root().extend();
+        super.setRoot(new RedisRootTreeItem(this));
+        this.getRoot().expend();
     }
 
     @Override
@@ -72,7 +69,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     public RedisTreeItemFilter itemFilter() {
         // 初始化过滤器
         if (this.itemFilter == null) {
-            RedisTreeItemFilter filter = SpringUtil.getBean(RedisTreeItemFilter.class);
+            RedisTreeItemFilter filter = new RedisTreeItemFilter();
             filter.initFilters();
             this.itemFilter = filter;
         }
@@ -80,15 +77,15 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     }
 
     @Override
-    public RedisRootTreeItem root() {
-        return (RedisRootTreeItem) this.getRoot();
+    public RedisRootTreeItem getRoot() {
+        return (RedisRootTreeItem) super.getRoot();
     }
 
     /**
      * 关闭连接
      */
     public void closeConnects() {
-        for (RedisConnectTreeItem treeItem : this.root().getConnectedItems()) {
+        for (RedisConnectTreeItem treeItem : this.getRoot().getConnectedItems()) {
             ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
@@ -172,27 +169,27 @@ public class RedisTreeView extends RichTreeView implements EventListener {
         }
     }
 
-    /**
-     * 搜索开始事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void searchStart(RedisSearchStartEvent event) {
-        this.searching = true;
-        this.filter();
-    }
-
-    /**
-     * 搜索结束事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void searchFinish(RedisSearchFinishEvent event) {
-        this.searching = false;
-        this.filter();
-    }
+    // /**
+    //  * 搜索开始事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void searchStart(RedisSearchStartEvent event) {
+    //     this.searching = true;
+    //     this.filter();
+    // }
+    //
+    // /**
+    //  * 搜索结束事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void searchFinish(RedisSearchFinishEvent event) {
+    //     this.searching = false;
+    //     this.filter();
+    // }
 
     /**
      * 树节点过滤
@@ -220,7 +217,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     @EventSubscribe
     public void addGroup(RedisAddGroupEvent event) {
-        this.root().addGroup();
+        this.getRoot().addGroup();
     }
 
     /**
@@ -230,7 +227,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     @EventSubscribe
     private void infoAdded(RedisInfoAddedEvent event) {
-        this.root().addConnect(event.data());
+        this.getRoot().addConnect(event.data());
     }
 
     /**
@@ -240,6 +237,6 @@ public class RedisTreeView extends RichTreeView implements EventListener {
      */
     @EventSubscribe
     private void infoUpdated(RedisInfoUpdatedEvent event) {
-        this.root().infoUpdate(event.data());
+        this.getRoot().infoUpdate(event.data());
     }
 }

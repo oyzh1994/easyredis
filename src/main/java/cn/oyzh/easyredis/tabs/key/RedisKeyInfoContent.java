@@ -4,17 +4,13 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.common.spring.ScopeType;
+import cn.oyzh.fx.plus.controls.label.FlexLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.text.FlexLabel;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,9 +21,6 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/08/03
  */
-@Lazy
-@Component
-@Scope(ScopeType.PROTOTYPE)
 public class RedisKeyInfoContent implements Initializable {
 
     /**
