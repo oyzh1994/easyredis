@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
@@ -746,7 +746,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      *
      * @return redis信息
      */
-    public RedisInfo info() {
+    public RedisConnect info() {
         return this.parent.value();
     }
 

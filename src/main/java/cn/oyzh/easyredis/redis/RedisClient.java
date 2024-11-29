@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
@@ -133,7 +133,7 @@ public class RedisClient {
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private final RedisInfo redisInfo;
+    private final RedisConnect redisInfo;
 
     /**
      * cluster集群的主节点连接
@@ -154,7 +154,7 @@ public class RedisClient {
         return this.stateProperty().get();
     }
 
-    public RedisClient(@NonNull RedisInfo redisInfo) {
+    public RedisClient(@NonNull RedisConnect redisInfo) {
         this.redisInfo = redisInfo;
         if (redisInfo.isSSHForward()) {
             this.sshForwarder = new SSHForwarder(redisInfo.getSshInfo());

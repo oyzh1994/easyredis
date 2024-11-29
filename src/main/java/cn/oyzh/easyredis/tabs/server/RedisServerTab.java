@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.ServerSVGGlyph;
@@ -67,7 +67,7 @@ public class RedisServerTab extends DynamicTab {
      *
      * @return redis信息
      */
-    public RedisInfo info() {
+    public RedisConnect info() {
         return this.controller().client().redisInfo();
     }
 

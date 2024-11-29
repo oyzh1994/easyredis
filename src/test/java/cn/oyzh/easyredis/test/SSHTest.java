@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.test;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.common.ssh.SSHConnectInfo;
 import cn.oyzh.fx.common.ssh.SSHForwardInfo;
@@ -45,7 +45,7 @@ public class SSHTest {
     @Test
     public void test() {
         goSSH(26371, "192.168.189.130", 22, "root", "123456", "192.168.189.134", 6379);
-        RedisInfo info = new RedisInfo();
+        RedisConnect info = new RedisConnect();
         info.setHost("localhost:26371");
         info.setConnectTimeOut(3000);
         info.setExecuteTimeOut(3000);
@@ -70,7 +70,7 @@ public class SSHTest {
         SSHForwarder forwarder = new SSHForwarder(connectInfo);
         int localPort = forwarder.forward(forwardInfo);
 
-        RedisInfo info = new RedisInfo();
+        RedisConnect info = new RedisConnect();
         info.setHost("127.0.0.1:" + localPort);
         info.setConnectTimeOut(3000);
         info.setExecuteTimeOut(3000);

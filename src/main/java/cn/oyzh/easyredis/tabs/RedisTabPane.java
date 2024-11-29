@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.RedisFilterMainEvent;
@@ -129,7 +129,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      *
      * @param info redis信息
      */
-    public void initTerminalTab(RedisInfo info) {
+    public void initTerminalTab(RedisConnect info) {
         RedisTerminalTab terminalTab = this.getTerminalTab(info);
         if (terminalTab == null) {
             terminalTab = new RedisTerminalTab();
@@ -178,7 +178,7 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
      * @param info redis信息
      * @return 终端tab
      */
-    private RedisTerminalTab getTerminalTab(RedisInfo info) {
+    private RedisTerminalTab getTerminalTab(RedisConnect info) {
         if (info != null) {
             for (Tab tab : this.getTabs()) {
                 if (tab instanceof RedisTerminalTab cmdTab && cmdTab.info() == info) {

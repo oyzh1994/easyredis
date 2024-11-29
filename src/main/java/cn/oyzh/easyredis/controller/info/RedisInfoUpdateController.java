@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.controller.info;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
@@ -53,7 +53,7 @@ public class RedisInfoUpdateController extends StageController {
     /**
      * redis信息
      */
-    private RedisInfo redisInfo;
+    private RedisConnect redisInfo;
 
     /**
      * 名称
@@ -244,7 +244,7 @@ public class RedisInfoUpdateController extends StageController {
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
-            RedisInfo redisInfo = new RedisInfo();
+            RedisConnect redisInfo = new RedisConnect();
             redisInfo.setHost(host);
             redisInfo.setExecuteTimeOut(3);
             redisInfo.setConnectTimeOut(3);

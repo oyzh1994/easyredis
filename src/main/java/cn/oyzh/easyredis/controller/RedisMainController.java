@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.controller;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisPageInfo;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -55,7 +55,7 @@ public class RedisMainController extends ParentStageController {
     /**
      * 当前激活的redis信息
      */
-    private RedisInfo info;
+    private RedisConnect info;
 
     /**
      * 左侧redis树
@@ -229,7 +229,7 @@ public class RedisMainController extends ParentStageController {
      *
      * @param info redis信息
      */
-    private void flushViewTitle(RedisInfo info) {
+    private void flushViewTitle(RedisConnect info) {
         if (info != null) {
             this.stage.appendTitle(" (" + info.getName() + ")");
         } else {

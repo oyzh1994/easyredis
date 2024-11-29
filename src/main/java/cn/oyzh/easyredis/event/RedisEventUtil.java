@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.search.RedisSearchParam;
@@ -64,7 +64,7 @@ public class RedisEventUtil {
      *
      * @param info redis信息
      */
-    public static void terminalClose(RedisInfo info) {
+    public static void terminalClose(RedisConnect info) {
         RedisTerminalCloseEvent event = new RedisTerminalCloseEvent();
         event.data(info);
         EventUtil.post(event);
@@ -241,7 +241,7 @@ public class RedisEventUtil {
      *
      * @param info redis信息
      */
-    public static void infoAdded(RedisInfo info) {
+    public static void infoAdded(RedisConnect info) {
         RedisInfoAddedEvent event = new RedisInfoAddedEvent();
         event.data(info);
         EventUtil.post(event);
@@ -252,7 +252,7 @@ public class RedisEventUtil {
      *
      * @param info Redis信息
      */
-    public static void infoUpdated(RedisInfo info) {
+    public static void infoUpdated(RedisConnect info) {
         RedisInfoUpdatedEvent event = new RedisInfoUpdatedEvent();
         event.data(info);
         EventUtil.post(event);
@@ -270,7 +270,7 @@ public class RedisEventUtil {
      *
      * @param info redis信息
      */
-    public static void terminalOpen(RedisInfo info) {
+    public static void terminalOpen(RedisConnect info) {
         RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
         event.data(info);
         EventUtil.post(event);
@@ -314,7 +314,7 @@ public class RedisEventUtil {
      *
      * @param info Redis信息
      */
-    public static void infoDeleted(RedisInfo info) {
+    public static void infoDeleted(RedisConnect info) {
         RedisInfoDeletedEvent event = new RedisInfoDeletedEvent();
         event.data(info);
         EventUtil.post(event);

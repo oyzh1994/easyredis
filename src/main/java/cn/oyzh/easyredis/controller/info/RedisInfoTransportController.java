@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.controller.info;
 import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.fx.RedisConnectComboBox;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
@@ -126,7 +126,7 @@ public class RedisInfoTransportController extends StageController {
     /**
      * 来源信息
      */
-    private RedisInfo fromInfo;
+    private RedisConnect fromInfo;
 
     /**
      * 来源数据库
@@ -203,7 +203,7 @@ public class RedisInfoTransportController extends StageController {
     /**
      * 当前目标redis对象
      */
-    private RedisInfo targetInfo;
+    private RedisConnect targetInfo;
 
     /**
      * 传输操作任务
@@ -280,8 +280,8 @@ public class RedisInfoTransportController extends StageController {
             MessageBox.tipMsg(RedisI18nHelper.transportTip8(), this.targetConnect);
             return;
         }
-        RedisInfo fromInfo = this.fromConnect.getValue();
-        RedisInfo targetInfo = this.targetConnect.getValue();
+        RedisConnect fromInfo = this.fromConnect.getValue();
+        RedisConnect targetInfo = this.targetConnect.getValue();
         int fIndex = this.fromDB.getDB();
         int tIndex = this.targetDB.getDB();
         if (fromInfo == targetInfo && fIndex == tIndex) {

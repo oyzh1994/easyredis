@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.event.Event;
 import cn.oyzh.fx.plus.event.EventFormatter;
@@ -17,7 +17,7 @@ public class RedisConnectionClosedEvent extends Event<RedisClient> implements Ev
         return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
     }
 
-    public RedisInfo info() {
+    public RedisConnect info() {
         return this.data().redisInfo();
     }
 }

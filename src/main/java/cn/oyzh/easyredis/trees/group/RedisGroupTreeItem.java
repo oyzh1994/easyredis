@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisGroupStore;
@@ -163,7 +163,7 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
     }
 
     @Override
-    public void addConnect(@NonNull RedisInfo redisInfo) {
+    public void addConnect(@NonNull RedisConnect redisInfo) {
         this.addConnectItem(new RedisConnectTreeItem(redisInfo, this.getTreeView()));
     }
 

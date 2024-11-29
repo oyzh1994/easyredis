@@ -4,7 +4,8 @@ import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.fx.common.dto.Project;
 import lombok.Getter;
 import lombok.NonNull;
@@ -37,7 +38,7 @@ public class RedisInfoExport {
      * 导出连接数据
      */
     @Getter
-    private List<RedisInfo> connects;
+    private List<RedisConnect> connects;
 
     /**
      * 从redis连接数据生成
@@ -45,7 +46,7 @@ public class RedisInfoExport {
      * @param redisInfos 连接列表
      * @return RedisInfoExport
      */
-    public static RedisInfoExport fromConnects(@NonNull List<RedisInfo> redisInfos) {
+    public static RedisInfoExport fromConnects(@NonNull List<RedisConnect> redisInfos) {
         RedisInfoExport export = new RedisInfoExport();
         Project project = SpringUtil.getBean(Project.class);
         export.version = project.getVersion();
@@ -66,7 +67,7 @@ public class RedisInfoExport {
         RedisInfoExport export = new RedisInfoExport();
         export.connects = new ArrayList<>();
         export.version = object.getStr("version");
-        export.connects = object.getBeanList("connects", RedisInfo.class);
+        export.connects = object.getBeanList("connects", RedisConnect.class);
         return export;
     }
 

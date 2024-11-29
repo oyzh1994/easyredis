@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import lombok.NonNull;
 
@@ -21,16 +21,16 @@ public interface RedisConnectManager {
      *
      * @param redisInfo 连接信息
      */
-    void addConnect(@NonNull RedisInfo redisInfo);
+    void addConnect(@NonNull RedisConnect redisInfo);
 
     /**
      * 删除多个连接
      *
      * @param redisInfos 连接列表
      */
-    default void addConnects(List<RedisInfo> redisInfos) {
+    default void addConnects(List<RedisConnect> redisInfos) {
         if (CollUtil.isNotEmpty(redisInfos)) {
-            for (RedisInfo redisInfo : redisInfos) {
+            for (RedisConnect redisInfo : redisInfos) {
                 this.addConnect(redisInfo);
             }
         }

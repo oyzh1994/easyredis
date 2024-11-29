@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.terminal;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.fx.plus.tabs.DynamicTabController;
@@ -51,7 +51,7 @@ public class RedisTerminalTabContent extends DynamicTabController {
      *
      * @return 当前redis信息
      */
-    protected RedisInfo info() {
+    protected RedisConnect info() {
         return this.client.redisInfo();
     }
 

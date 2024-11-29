@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.util;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisConnectInfo;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -24,7 +24,7 @@ public class RedisConnectUtil {
      * @param view 页面
      * @param info redis信息
      */
-    public static void testConnect(StageAdapter view, RedisInfo info) {
+    public static void testConnect(StageAdapter view, RedisConnect info) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();
@@ -139,7 +139,7 @@ public class RedisConnectUtil {
      * @param connectInfo 连接信息
      * @param info    redis对象
      */
-    public static void copyConnect(RedisConnectInfo connectInfo, RedisInfo info) {
+    public static void copyConnect(RedisConnectInfo connectInfo, RedisConnect info) {
         if (connectInfo != null && info != null) {
             info.setUser(connectInfo.getUser());
             info.setReadonly(connectInfo.isReadonly());

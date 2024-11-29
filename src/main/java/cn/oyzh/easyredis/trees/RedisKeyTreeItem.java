@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.trees;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
 import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
@@ -162,7 +162,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      *
      * @return redis信息
      */
-    public RedisInfo info() {
+    public RedisConnect info() {
         if (this.dbItem != null) {
             return this.dbItem.info();
         }

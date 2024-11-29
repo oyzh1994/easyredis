@@ -3,12 +3,13 @@ package cn.oyzh.easyredis.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.fx.common.ssh.SSHConnectInfo;
-import cn.oyzh.fx.common.util.ObjectComparator;
+import cn.oyzh.common.util.ObjectComparator;
+import cn.oyzh.ssh.SSHConnect;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/16
  */
-public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisInfo> {
+public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<RedisConnect>, Serializable {
 
     /**
      * 数据id
@@ -68,27 +69,6 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     @Setter
     private String password;
 
-    // /**
-    //  * master用户名
-    //  */
-    // @Getter
-    // @Setter
-    // private String masterUser;
-    //
-    // /**
-    //  * master密码
-    //  */
-    // @Getter
-    // @Setter
-    // private String masterPassword;
-    //
-    // /**
-    //  * 是否重定向到master
-    //  */
-    // @Setter
-    // @Getter
-    // private Boolean redirectMaster;
-
     /**
      * 只读模式
      */
@@ -127,7 +107,7 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
      */
     @Setter
     @Getter
-    private SSHConnectInfo sshInfo;
+    private RedisSSHConnect sshConnect;
 
     /**
      * 复制对象
@@ -135,21 +115,18 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
      * @param info redis信息
      * @return 当前对象
      */
-    public RedisInfo copy(@NonNull RedisInfo info) {
+    public RedisConnect copy(@NonNull RedisConnect info) {
         this.id = info.id;
         this.name = info.name;
         this.host = info.host;
         this.user = info.user;
         this.remark = info.remark;
         this.groupId = info.groupId;
-        this.sshInfo = info.sshInfo;
+        this.sshConnect = info.sshConnect;
         this.readonly = info.readonly;
         this.collects = info.collects;
         this.password = info.password;
         this.sshForward = info.sshForward;
-        // this.masterUser = info.masterUser;
-        // this.redirectMaster = info.redirectMaster;
-        // this.masterPassword = info.masterPassword;
         this.connectTimeOut = info.connectTimeOut;
         return this;
     }
@@ -206,15 +183,6 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
         return dbIndex + "_@coll@_" + key;
     }
 
-    // /**
-    //  * 是否重定向到master
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isRedirectMaster() {
-    //     return BooleanUtil.isTrue(this.redirectMaster);
-    // }
-
     /**
      * 是否只读模式
      *
@@ -270,7 +238,7 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     }
 
     @Override
-    public int compareTo(RedisInfo o) {
+    public int compareTo(RedisConnect o) {
         if (o == null) {
             return 1;
         }
@@ -307,7 +275,7 @@ public class RedisInfo implements Comparable<RedisInfo>, ObjectComparator<RedisI
     }
 
     @Override
-    public boolean compare(RedisInfo t1) {
+    public boolean compare(RedisConnect t1) {
         if (Objects.equals(this, t1)) {
             return true;
         }

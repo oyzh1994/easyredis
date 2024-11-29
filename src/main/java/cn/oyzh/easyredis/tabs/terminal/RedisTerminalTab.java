@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.terminal;
 
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -52,10 +52,10 @@ public class RedisTerminalTab extends DynamicTab {
      *
      * @param info redis信息
      */
-    public void init(RedisInfo info) {
+    public void init(RedisConnect info) {
         try {
             if (info == null) {
-                info = new RedisInfo();
+                info = new RedisConnect();
                 info.setName(I18nHelper.unnamedConnection());
 
             }
@@ -75,7 +75,7 @@ public class RedisTerminalTab extends DynamicTab {
      *
      * @return 当前redis信息
      */
-    public RedisInfo info() {
+    public RedisConnect info() {
         return this.controller().info();
     }
 }

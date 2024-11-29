@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.controller.info;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisInfoStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
@@ -244,7 +244,7 @@ public class RedisInfoAddController extends StageController {
         if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
-            RedisInfo redisInfo = new RedisInfo();
+            RedisConnect redisInfo = new RedisConnect();
             redisInfo.setHost(host);
             redisInfo.setExecuteTimeOut(3);
             redisInfo.setConnectTimeOut(3);
@@ -273,7 +273,7 @@ public class RedisInfoAddController extends StageController {
         }
         try {
             String name = this.name.getTextTrim();
-            RedisInfo redisInfo = new RedisInfo();
+            RedisConnect redisInfo = new RedisConnect();
             redisInfo.setName(name);
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number executeTimeOut = this.executeTimeOut.getValue();

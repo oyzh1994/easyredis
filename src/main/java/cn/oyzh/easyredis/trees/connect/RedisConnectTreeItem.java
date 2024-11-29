@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -50,7 +50,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private RedisInfo value;
+    private RedisConnect value;
 
     /**
      * redis客户端
@@ -69,7 +69,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      */
     private final RedisInfoStore infoStore = RedisInfoStore.INSTANCE;
 
-    public RedisConnectTreeItem(@NonNull RedisInfo value, @NonNull RedisTreeView treeView) {
+    public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value(value);
         // 监听变化
@@ -384,7 +384,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * 复制连接
      */
     private void repeatConnect() {
-        RedisInfo redisInfo = new RedisInfo();
+        RedisConnect redisInfo = new RedisConnect();
         redisInfo.copy(this.value);
         redisInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         redisInfo.setCollects(Collections.emptyList());
@@ -433,7 +433,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      *
      * @param value redis信息
      */
-    public void value(@NonNull RedisInfo value) {
+    public void value(@NonNull RedisConnect value) {
         this.value = value;
         this.client = new RedisClient(value);
         this.setValue(new RedisConnectTreeItemValue(this));

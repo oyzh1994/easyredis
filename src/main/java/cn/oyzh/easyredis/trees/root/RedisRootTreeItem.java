@@ -6,7 +6,7 @@ import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyredis.domain.RedisInfo;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -80,7 +80,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
             this.addChild(list);
         }
         // 初始化连接
-        List<RedisInfo> infos = this.infoStore.load();
+        List<RedisConnect> infos = this.infoStore.load();
         if (CollUtil.isNotEmpty(infos)) {
             this.addConnects(infos);
         }
@@ -107,7 +107,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      * 导出连接
      */
     private void exportConnect() {
-        List<RedisInfo> infos = this.infoStore.load();
+        List<RedisConnect> infos = this.infoStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
@@ -181,9 +181,9 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         try {
             String text = FileUtil.readUtf8String(file);
             RedisInfoExport export = RedisInfoExport.fromJSON(text);
-            List<RedisInfo> infos = export.getConnects();
+            List<RedisConnect> infos = export.getConnects();
             if (CollUtil.isNotEmpty(infos)) {
-                for (RedisInfo info : infos) {
+                for (RedisConnect info : infos) {
                     if (this.infoStore.add(info)) {
                         this.addConnect(info);
                     } else {
@@ -270,7 +270,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      *
      * @param info 连接
      */
-    public void infoAdded(RedisInfo info) {
+    public void infoAdded(RedisConnect info) {
         this.addConnect(info);
     }
 
@@ -279,7 +279,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
      *
      * @param info 连接
      */
-    public void infoUpdate(RedisInfo info) {
+    public void infoUpdate(RedisConnect info) {
         f1:
         for (TreeItem<?> item : this.getRealChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
@@ -299,7 +299,7 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
     }
 
     @Override
-    public void addConnect(@NonNull RedisInfo info) {
+    public void addConnect(@NonNull RedisConnect info) {
         RedisGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
         if (groupItem == null) {
             super.addChild(new RedisConnectTreeItem(info, this.getTreeView()));
