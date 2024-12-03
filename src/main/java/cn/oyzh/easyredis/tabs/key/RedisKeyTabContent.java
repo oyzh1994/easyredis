@@ -213,10 +213,10 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?, ?>> exten
     @Override
     public void onTabClose(DynamicTab tab, Event event) {
         super.onTabClose(tab, event);
-        // 取消当前键的选中
-        if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
-            this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
-        }
+        // // 取消当前键的选中
+        // if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
+        //     this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
+        // }
     }
 
     @Override

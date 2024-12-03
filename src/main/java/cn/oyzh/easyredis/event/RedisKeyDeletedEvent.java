@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyDeletedEvent extends Event<RedisDBTreeItem> implements  EventFormatter {
+public class RedisKeyDeletedEvent extends Event<RedisDatabaseTreeItem> implements  EventFormatter {
 
     private String key;
 

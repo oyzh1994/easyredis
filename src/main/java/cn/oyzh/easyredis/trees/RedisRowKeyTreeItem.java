@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.redis.RedisRow;
 import cn.oyzh.easyredis.redis.RedisRowKey;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,7 +28,7 @@ public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, V extends Redis
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem parent) {
+    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
     }
 

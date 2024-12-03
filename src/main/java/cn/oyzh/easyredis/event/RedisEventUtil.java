@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
@@ -204,7 +204,7 @@ public class RedisEventUtil {
      * @param type 键类型
      * @param key  键名称
      */
-    public static void keyAdded(RedisDBTreeItem item, String type, String key) {
+    public static void keyAdded(RedisDatabaseTreeItem item, String type, String key) {
         RedisKeyAddedEvent event = new RedisKeyAddedEvent();
         event.data(item);
         event.key(key);
@@ -218,7 +218,7 @@ public class RedisEventUtil {
      * @param item redis树节点
      * @param key  键名称
      */
-    public static void keyDeleted(RedisDBTreeItem item, String key) {
+    public static void keyDeleted(RedisDatabaseTreeItem item, String key) {
         RedisKeyDeletedEvent event = new RedisKeyDeletedEvent();
         event.data(item);
         event.key(key);
@@ -230,7 +230,7 @@ public class RedisEventUtil {
      *
      * @param item redis树节点
      */
-    public static void keyFlushed(RedisDBTreeItem item) {
+    public static void keyFlushed(RedisDatabaseTreeItem item) {
         RedisKeyFlushedEvent event = new RedisKeyFlushedEvent();
         event.data(item);
         EventUtil.post(event);

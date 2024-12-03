@@ -1,6 +1,5 @@
-package cn.oyzh.easyredis.trees.connect;
+package cn.oyzh.easyredis.trees.keys;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
@@ -11,8 +10,6 @@ import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
@@ -22,8 +19,6 @@ import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
@@ -34,7 +29,9 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -42,7 +39,6 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.thread.BackgroundService;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -51,15 +47,11 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * redis数据库树节点
@@ -67,7 +59,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author oyzh
  * @since 2023/07/12
  */
-public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeItemValue> {
+public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.RedisDBTreeItemValue> {
 
     /**
      * 当前db索引
@@ -104,21 +96,13 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeIt
     private String filterPattern;
 
     /**
-     * 连接树节点
-     */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    protected RedisConnectTreeItem parent;
-
-    /**
      * 设置
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisDBTreeItem(Integer dbIndex, RedisConnectTreeItem parent) {
-        super(parent.getTreeView());
+    public RedisDatabaseTreeItem(Integer dbIndex, RedisKeysTreeView treeView) {
+        super(treeView);
         super.setFilterable(true);
-        this.parent = parent;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? I18nHelper.keys() : "db" + dbIndex;
         this.setValue(new RedisDBTreeItemValue(this));
@@ -734,13 +718,18 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeIt
         return null;
     }
 
+    @Override
+    public RedisKeysTreeView getTreeView() {
+        return (RedisKeysTreeView)super.getTreeView();
+    }
+
     /**
      * 获取redis客户端
      *
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.parent.client();
+        return this.getTreeView().client();
     }
 
     /**
@@ -749,7 +738,7 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeIt
      * @return redis信息
      */
     public RedisConnect info() {
-        return this.parent.value();
+        return this.client().redisInfo();
     }
 
     /**
@@ -798,8 +787,8 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeIt
 
     @Override
     public int compareTo(Object o) {
-        if (o instanceof RedisDBTreeItem item) {
-            return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(this, item);
+        if (o instanceof RedisDatabaseTreeItem item) {
+            return Comparator.comparingInt(RedisDatabaseTreeItem::dbIndex).compare(this, item);
         }
         return super.compareTo(o);
     }
@@ -811,23 +800,15 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeIt
      * @since 2023/06/22
      */
     @Accessors(chain = true, fluent = true)
-    public static class RedisDBTreeItemValue extends RedisTreeItemValue {
+    public static class RedisDBTreeItemValue extends RichTreeItemValue {
 
-        // /**
-        //  * redis树db节点
-        //  */
-        // private final RedisDBTreeItem item;
-
-        public RedisDBTreeItemValue(RedisDBTreeItem item) {
+        public RedisDBTreeItemValue(RedisDatabaseTreeItem item) {
             super(item);
-            // this.flushGraphic();
-            // this.flushGraphicColor();
-            // this.name(item.value());
         }
 
         @Override
-        protected RedisDBTreeItem item() {
-            return (RedisDBTreeItem) super.item();
+        protected RedisDatabaseTreeItem item() {
+            return (RedisDatabaseTreeItem) super.item();
         }
 
         @Override

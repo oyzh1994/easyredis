@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -14,7 +14,7 @@ import lombok.NonNull;
  */
 public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, RedisKeyTreeItemValue> {
 
-    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDBTreeItem parent) {
+    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
         this.setValue(new RedisStringKeyTreeItemValue(this));
     }

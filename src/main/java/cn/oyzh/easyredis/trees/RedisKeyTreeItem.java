@@ -9,8 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -45,7 +44,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    protected RedisDBTreeItem dbItem;
+    protected RedisDatabaseTreeItem dbItem;
 
     /**
      * 键数据属性
@@ -107,7 +106,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
         return this.dataProperty.get() != null;
     }
 
-    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDBTreeItem dbItem) {
+    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDatabaseTreeItem dbItem) {
         super(dbItem.getTreeView());
         this.dbItem = dbItem;
         this.value = value;
@@ -145,17 +144,17 @@ public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTre
         fxView.display();
     }
 
-    /**
-     * 当前节点的连接节点
-     *
-     * @return 连接节点
-     */
-    public RedisConnectTreeItem connectTreeItem() {
-        if (this.dbItem != null) {
-            return this.dbItem.parent();
-        }
-        return null;
-    }
+    // /**
+    //  * 当前节点的连接节点
+    //  *
+    //  * @return 连接节点
+    //  */
+    // public RedisConnectTreeItem connectTreeItem() {
+    //     if (this.dbItem != null) {
+    //         return this.dbItem.parent();
+    //     }
+    //     return null;
+    // }
 
     /**
      * redis信息

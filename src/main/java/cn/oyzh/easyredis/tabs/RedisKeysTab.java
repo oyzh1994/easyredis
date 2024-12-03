@@ -3,12 +3,15 @@ package cn.oyzh.easyredis.tabs;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
@@ -77,8 +80,19 @@ public class RedisKeysTab extends DynamicTab {
         @Accessors(fluent = true, chain = false)
         private RedisConnectTreeItem treeItem;
 
+        @FXML
+        private RedisKeysTreeView treeView;
+
         public void init(RedisConnectTreeItem treeItem) {
-            this.treeItem = treeItem;
+            try {
+                this.treeItem = treeItem;
+                this.client = treeItem.client();
+                this.treeView.client(this.client);
+                // 加载根节点
+                this.treeView.loadDatabases();
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
         }
 
         public void doSearch(ActionEvent actionEvent) {

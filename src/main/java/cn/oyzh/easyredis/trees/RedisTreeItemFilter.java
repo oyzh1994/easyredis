@@ -119,16 +119,16 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
         //     return !this.excludeStreamType || !treeItem.isStreamType();
         // }
 
-        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            // 仅看收藏
-            if (this.onlyCollect && !treeItem.isCollect()) {
-                return false;
-            }
-            // 过滤键
-            if (RedisKeyUtil.isFiltered(treeItem.key(), this.filters)) {
-                return false;
-            }
-        }
+        // if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+        //     // 仅看收藏
+        //     if (this.onlyCollect && !treeItem.isCollect()) {
+        //         return false;
+        //     }
+        //     // 过滤键
+        //     if (RedisKeyUtil.isFiltered(treeItem.key(), this.filters)) {
+        //         return false;
+        //     }
+        // }
         // // 判断是否满足搜索要求
         // RedisSearchParam param = this.searchHandler.searchParam();
         // if (param != null && !param.isEmpty() && param.isFilterMode()) {

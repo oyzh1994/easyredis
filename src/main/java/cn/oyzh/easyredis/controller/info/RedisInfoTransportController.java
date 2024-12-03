@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -530,7 +530,7 @@ public class RedisInfoTransportController extends StageController {
     public void onStageShown(WindowEvent event) {
         TreeItem<?> treeItem = this.stage.getProp("treeItem");
         // db节点
-        if (treeItem instanceof RedisDBTreeItem dbTreeItem) {
+        if (treeItem instanceof RedisDatabaseTreeItem dbTreeItem) {
             this.fromClient = dbTreeItem.client();
             this.fromInfo = this.fromClient.redisInfo();
             this.fromConnect.select(this.fromInfo);

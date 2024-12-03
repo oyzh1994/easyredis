@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -387,7 +387,7 @@ public class RedisKeyExportController extends StageController {
             this.db.setDbCount(this.client.databases());
             this.db.setProp("canDisable", true);
             this.serverName.setText(connectTreeItem.value().getName());
-        } else if (treeItem instanceof RedisDBTreeItem dbTreeItem) {
+        } else if (treeItem instanceof RedisDatabaseTreeItem dbTreeItem) {
             this.client = dbTreeItem.client();
             this.db.addDB(dbTreeItem.dbIndex());
             this.db.disable();

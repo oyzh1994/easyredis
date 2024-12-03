@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.property.DigitalDecimalProperty;
@@ -154,7 +154,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisDBTreeItem parent) {
+    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
         this.setValue(new RedisZSetKeyTreeItemValue(this));
     }

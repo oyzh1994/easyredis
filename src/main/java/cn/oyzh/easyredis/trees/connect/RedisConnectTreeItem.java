@@ -15,6 +15,7 @@ import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
+import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
@@ -234,7 +235,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             // 清空数据
             this.client().flushAll();
             for (TreeItem<?> child : this.unfilteredChildren()) {
-                if (child instanceof RedisDBTreeItem treeItem) {
+                if (child instanceof RedisDatabaseTreeItem treeItem) {
                     treeItem.clearChild();
                 }
             }
@@ -444,9 +445,9 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
      * @param index 索引
      * @return 数据库节点
      */
-    public RedisDBTreeItem getDatabaseItem(int index) {
+    public RedisDatabaseTreeItem getDatabaseItem(int index) {
         for (TreeItem<?> child : this.unfilteredChildren()) {
-            if (child instanceof RedisDBTreeItem treeItem && treeItem.dbIndex() == index) {
+            if (child instanceof RedisDatabaseTreeItem treeItem && treeItem.dbIndex() == index) {
                 return treeItem;
             }
         }

@@ -6,13 +6,10 @@ import cn.oyzh.easyredis.event.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.RedisInfoAddedEvent;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
-import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
-import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.event.EventListener;
@@ -59,8 +56,8 @@ public class RedisTreeView extends RichTreeView implements EventListener {
             TreeItem<?> item = this.getSelectedItem();
             if (item instanceof RedisConnectTreeItem treeItem) {
                 treeItem.closeConnect();
-            } else if (item instanceof RedisKeyTreeItem<?, ?> nodeTreeItem) {
-                nodeTreeItem.connectTreeItem().closeConnect();
+            // } else if (item instanceof RedisKeyTreeItem<?, ?> nodeTreeItem) {
+            //     nodeTreeItem.connectTreeItem().closeConnect();
             }
         });
     }
@@ -126,48 +123,48 @@ public class RedisTreeView extends RichTreeView implements EventListener {
         }
     }
 
-    /**
-     * 键复制事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void keyCopied(RedisKeyCopiedEvent event) {
-        int dbIndex = event.targetDB();
-        TreeItem<?> treeItem = event.data();
-        RedisDBTreeItem targetDBItem = null;
-        if (treeItem instanceof RedisDBTreeItem dbItem) {
-            dbItem.reloadChild();
-            targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
-        } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
-            targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
-        }
-        if (targetDBItem != null) {
-            targetDBItem.reloadChild();
-        }
-    }
+    // /**
+    //  * 键复制事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void keyCopied(RedisKeyCopiedEvent event) {
+    //     int dbIndex = event.targetDB();
+    //     TreeItem<?> treeItem = event.data();
+    //     RedisDBTreeItem targetDBItem = null;
+    //     if (treeItem instanceof RedisDBTreeItem dbItem) {
+    //         dbItem.reloadChild();
+    //         targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
+    //     } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
+    //         targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
+    //     }
+    //     if (targetDBItem != null) {
+    //         targetDBItem.reloadChild();
+    //     }
+    // }
 
-    /**
-     * 键移动事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void onKeyMoved(RedisKeyMovedEvent event) {
-        int dbIndex = event.targetDB();
-        TreeItem<?> treeItem = event.data();
-        RedisDBTreeItem targetDBItem = null;
-        if (treeItem instanceof RedisDBTreeItem dbItem) {
-            dbItem.reloadChild();
-            targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
-        } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
-            keyTreeItem.remove();
-            targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
-        }
-        if (targetDBItem != null) {
-            targetDBItem.reloadChild();
-        }
-    }
+    // /**
+    //  * 键移动事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void onKeyMoved(RedisKeyMovedEvent event) {
+    //     int dbIndex = event.targetDB();
+    //     TreeItem<?> treeItem = event.data();
+    //     RedisDBTreeItem targetDBItem = null;
+    //     if (treeItem instanceof RedisDBTreeItem dbItem) {
+    //         dbItem.reloadChild();
+    //         targetDBItem = dbItem.parent().getDatabaseItem(dbIndex);
+    //     } else if (treeItem instanceof RedisKeyTreeItem<?, ?> keyTreeItem) {
+    //         keyTreeItem.remove();
+    //         targetDBItem = keyTreeItem.connectTreeItem().getDatabaseItem(dbIndex);
+    //     }
+    //     if (targetDBItem != null) {
+    //         targetDBItem.reloadChild();
+    //     }
+    // }
 
     // /**
     //  * 搜索开始事件
