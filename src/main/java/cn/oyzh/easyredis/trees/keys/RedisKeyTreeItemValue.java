@@ -1,5 +1,6 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.keys;
 
+import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 

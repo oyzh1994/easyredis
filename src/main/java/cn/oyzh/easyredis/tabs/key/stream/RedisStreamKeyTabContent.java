@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
-import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
 import cn.oyzh.i18n.I18nHelper;

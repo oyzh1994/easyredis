@@ -18,13 +18,12 @@ import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
-import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
-import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
-import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
-import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.hash.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.list.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.set.RedisSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.string.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
@@ -38,8 +37,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.thread.BackgroundService;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -59,7 +56,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/07/12
  */
-public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.RedisDBTreeItemValue> {
+public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.RedisDatabaseTreeItemValue> {
 
     /**
      * 当前db索引
@@ -76,20 +73,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     private final String value;
 
     /**
-     * 数据加载完成标志位
-     */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private transient boolean loaded;
-
-    /**
-     * 数据加载中标志位
-     */
-    @Getter
-    @Accessors(chain = true, fluent = true)
-    private transient boolean loading;
-
-    /**
      * 键过滤模式
      */
     @Getter
@@ -102,38 +85,38 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     public RedisDatabaseTreeItem(Integer dbIndex, RedisKeysTreeView treeView) {
         super(treeView);
-        super.setFilterable(true);
+        // super.setFilterable(true);
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? I18nHelper.keys() : "db" + dbIndex;
-        this.setValue(new RedisDBTreeItemValue(this));
-        this.initTypes();
-        this.flushValue();
-        // 监听展开
-        super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            this.loadChild();
-            this.flushLocal();
-        });
+        this.setValue(new RedisDatabaseTreeItemValue(this));
+        // this.initTypes();
+        // this.flushValue();
+        // // 监听展开
+        // super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
+        //     this.loadChild();
+        //     this.flushLocal();
+        // });
     }
 
     /**
      * 初始化类型
      */
     private void initTypes() {
-        List<TreeItem<?>> typeItems = new ArrayList<>();
+        // List<TreeItem<?>> typeItems = new ArrayList<>();
         // for (RedisKeyType keyType : RedisKeyType.values()) {
         //     typeItems.add(new RedisTypeTreeItem(this, keyType));
         // }
-        super.setChild(typeItems);
+        // super.setChild(typeItems);
     }
 
     /**
      * 刷新值
      */
     private void flushValue() {
-        BackgroundService.submitFXLater(() -> {
-            this.getValue().flushNum();
-            this.getValue().flushFilterPattern();
-        });
+        // BackgroundService.submitFXLater(() -> {
+        //     this.getValue().flushNum();
+        //     this.getValue().flushFilterPattern();
+        // });
     }
 
     /**
@@ -224,8 +207,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     @Override
     public void reloadChild() {
-        if (!this.isWaiting() && !this.loading) {
-            this.loaded = false;
+        if (!this.isWaiting() && !this.isLoaded()&&!this.isLoading()) {
             this._loadChild();
         }
     }
@@ -632,24 +614,19 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * 加载子节点实际业务
      */
     private void _loadChild() {
-        this.loaded = true;
-        this.loading = true;
+        this.setLoaded(true);
+        this.setLoading(true);
         Task task = TaskBuilder.newBuilder()
                 .onStart(() -> {
-                    // if (this.isClusterMode()) {
-                    //     this.loadChildByCluster();
-                    // } else {
-                    //     this.loadChildByNormal();
-                    // }
                     this.loadChild1();
                 })
                 .onError(ex -> {
-                    this.loaded = false;
+                    this.setLoaded(false);
                     MessageBox.exception(ex);
                 })
                 .onSuccess(this::flushValue)
                 .onFinish(() -> {
-                    this.loading = false;
+                    this.setLoading(false);
                     this.stopWaiting();
                 })
                 .build();
@@ -679,7 +656,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * 加载子节点
      */
     public void loadChild() {
-        if (!this.isWaiting() && !this.loaded && !this.loading) {
+        if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
             this._loadChild();
         }
     }
@@ -800,9 +777,9 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @since 2023/06/22
      */
     @Accessors(chain = true, fluent = true)
-    public static class RedisDBTreeItemValue extends RichTreeItemValue {
+    public static class RedisDatabaseTreeItemValue extends RichTreeItemValue {
 
-        public RedisDBTreeItemValue(RedisDatabaseTreeItem item) {
+        public RedisDatabaseTreeItemValue(RedisDatabaseTreeItem item) {
             super(item);
         }
 

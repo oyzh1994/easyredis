@@ -1,14 +1,12 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**

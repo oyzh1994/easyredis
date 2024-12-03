@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.keys;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;

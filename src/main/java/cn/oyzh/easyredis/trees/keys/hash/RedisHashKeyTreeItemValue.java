@@ -1,6 +1,6 @@
-package cn.oyzh.easyredis.trees.hash;
+package cn.oyzh.easyredis.trees.keys.hash;
 
-import cn.oyzh.easyredis.trees.RedisKeyTreeItemValue;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItemValue;
 
 
 /**

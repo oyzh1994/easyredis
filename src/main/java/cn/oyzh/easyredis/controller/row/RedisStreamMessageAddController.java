@@ -6,7 +6,7 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 
 /**

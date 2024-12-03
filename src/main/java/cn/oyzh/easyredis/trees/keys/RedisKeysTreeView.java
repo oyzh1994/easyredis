@@ -12,6 +12,7 @@ import cn.oyzh.easyredis.trees.RedisTreeCell;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -42,9 +43,9 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     }
 
     public RedisKeysTreeView() {
-        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
+        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
         this.setRoot(new RedisUnnamedTreeItem(this));
-        // super.setShowRoot(false);
+        super.setShowRoot(false);
     }
 
     @Override
@@ -132,7 +133,6 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
         for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
             items.add(new RedisDatabaseTreeItem(dbIndex, this));
         }
-        this.getRoot().addChild(items);
-        this.refresh();
+        this.getRoot().setChild(items);
     }
 }
