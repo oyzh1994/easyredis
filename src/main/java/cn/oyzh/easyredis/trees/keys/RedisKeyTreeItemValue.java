@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import javafx.scene.paint.Color;
 
@@ -11,7 +12,7 @@ import javafx.scene.paint.Color;
  * @author oyzh
  * @since 2023/07/7
  */
-public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?, ?>> extends RedisTreeItemValue {
+public abstract class RedisKeyTreeItemValue<T extends RedisKeyTreeItem<?, ?>> extends RichTreeItemValue {
 
     // @Accessors(chain = true, fluent = true)
     // protected final T item;

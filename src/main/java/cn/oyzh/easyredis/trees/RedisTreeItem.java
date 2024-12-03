@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 
 /**
@@ -9,7 +10,7 @@ import cn.oyzh.fx.gui.treeView.RichTreeView;
  * @author oyzh
  * @since 2023/06/27
  */
-public abstract class RedisTreeItem<V extends RedisTreeItemValue> extends RichTreeItem<V> {
+public abstract class RedisTreeItem<V extends RichTreeItemValue> extends RichTreeItem<V> {
 
     public RedisTreeItem(RichTreeView treeView) {
         super(treeView);

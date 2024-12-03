@@ -12,7 +12,7 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, RedisKeyTreeItemValue> {
+public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, RedisStringKeyTreeItemValue> {
 
     public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
