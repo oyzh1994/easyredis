@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.string;
 
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
-import cn.oyzh.easyredis.trees.keys.string.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;

@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
-import cn.oyzh.easyredis.trees.keys.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;

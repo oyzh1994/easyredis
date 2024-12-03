@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.geo;
 
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.trees.keys.zset.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 
 /**
  * redis zset键tab

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.stream;
 
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.trees.keys.stream.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 
 /**
  * redis stream键tab

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key.hash;
 
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.trees.keys.hash.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 
 /**
  * redis hash键tab
