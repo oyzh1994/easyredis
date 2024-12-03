@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.trees.hash;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.trees.RedisRowKeyTreeItem;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.NonNull;

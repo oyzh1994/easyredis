@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
+import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeCell;
 import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
 import cn.oyzh.event.EventListener;
@@ -14,7 +15,6 @@ import cn.oyzh.fx.gui.treeView.RichTreeView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
-import lombok.experimental.Accessors;
 
 /**
  * redis树
@@ -22,9 +22,9 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/1/29
  */
-public class RedisKeyTreeView extends RichTreeView implements EventListener {
+public class RedisKeysTreeView extends RichTreeView implements EventListener {
 
-    public RedisKeyTreeView() {
+    public RedisKeysTreeView() {
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
         super.setShowRoot(false);
     }

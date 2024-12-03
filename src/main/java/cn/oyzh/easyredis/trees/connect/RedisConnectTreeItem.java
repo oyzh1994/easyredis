@@ -1,6 +1,9 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
@@ -12,20 +15,14 @@ import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.thread.BackgroundService;
-import javafx.event.EventHandler;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
@@ -72,11 +69,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
     public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value(value);
-//        // 监听变化
-//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-//            RedisEventUtil.treeChildChanged();
-//            this.flushLocal();
-//        });
     }
 
     /**
@@ -140,20 +132,14 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         try {
             // 哨兵模式
             if (this.client.isSentinelMode()) {
-                this.setChild(new RedisServerInfoTreeItem(this));
-            } else if (this.client.isClusterMode()) {// cluster集群模式
-                this.setChild(new RedisDBTreeItem(null, this));
+                RedisServerInfoTreeItem item1 = new RedisServerInfoTreeItem(this.getTreeView());
+                this.setChild(item1);
             } else {// 其他模式
-                int databases = this.client().databases();
-                List<TreeItem<?>> items = new ArrayList<>(databases);
-                for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-                    items.add(new RedisDBTreeItem(dbIndex, this));
-                }
-                this.setChild(items);
+                RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
+                RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
+                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
+                this.setChild(List.of(item1, item2, item3));
             }
-            this.refresh();
-            // 刷新角色
-//            BackgroundService.submitFXLater(this::flushRole);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -161,10 +147,6 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
         }
         return false;
     }
-
-//    public void flushRole() {
-//        this.getValue().flushRole();
-//    }
 
     @Override
     public List<MenuItem> getMenuItems() {
@@ -177,7 +159,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
             FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
-            FXMenuItem exportData =  MenuItemHelper.exportData("12", this::exportData);
+            FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
             FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
@@ -290,10 +272,7 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItemValu
                         } else if (this.initConnect()) {
                             this.expend();
                         }
-                        // this.flushGraphic();
                     })
-//                    .onFinish(this::stopWaiting)
-//                    .onSuccess(this::flushLocal)
                     .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .build();

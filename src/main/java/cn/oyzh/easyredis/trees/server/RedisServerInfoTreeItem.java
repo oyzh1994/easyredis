@@ -1,12 +1,10 @@
 package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import javafx.scene.control.MenuItem;
-import lombok.NonNull;
-
-import java.util.List;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 
 /**
  * redis服务信息树节点
@@ -16,27 +14,25 @@ import java.util.List;
  */
 public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeItemValue> {
 
-    /**
-     * 父节点
-     */
-    private final RedisConnectTreeItem parent;
-
-    public RedisServerInfoTreeItem(@NonNull RedisConnectTreeItem parent ) {
-        super(parent.getTreeView());
-        this.parent = parent;
+    public RedisServerInfoTreeItem(RichTreeView treeView) {
+        super(treeView);
         this.setValue(new RedisServerInfoTreeItemValue());
     }
 
     @Override
-    public List<MenuItem> getMenuItems() {
-        return null;
+    public RedisConnectTreeItem parent() {
+        return (RedisConnectTreeItem) super.parent();
+    }
+
+    public RedisClient client() {
+        return this.parent().client();
     }
 
     /**
      * 显示服务信息
      */
     public void showServerInfo() {
-        RedisEventUtil.serverMonitor(this.parent.client());
+        RedisEventUtil.serverMonitor(this.client());
     }
 
     @Override

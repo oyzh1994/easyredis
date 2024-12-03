@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;

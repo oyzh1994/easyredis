@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.common.thread.ThreadUtil;

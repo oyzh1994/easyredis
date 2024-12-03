@@ -1,7 +1,8 @@
-package cn.oyzh.easyredis.trees.db;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
@@ -22,19 +23,19 @@ import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.string.RedisStringKeyTreeItem;
-import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 import cn.oyzh.easyredis.trees.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -46,6 +47,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -65,7 +67,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author oyzh
  * @since 2023/07/12
  */
-public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
+public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItem.RedisDBTreeItemValue> {
 
     /**
      * 当前db索引
@@ -134,9 +136,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     private void initTypes() {
         List<TreeItem<?>> typeItems = new ArrayList<>();
-        for (RedisKeyType keyType : RedisKeyType.values()) {
-            typeItems.add(new RedisTypeTreeItem(this, keyType));
-        }
+        // for (RedisKeyType keyType : RedisKeyType.values()) {
+        //     typeItems.add(new RedisTypeTreeItem(this, keyType));
+        // }
         super.setChild(typeItems);
     }
 
@@ -337,43 +339,43 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * 正常模式加载子节点
      */
     private void loadChild1() {
-        // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> keyItems = this.keyChildren();
-        // 禁用排序
-        this.setSortable(false);
-        // 当前光标
-        String cursor = null;
-        // 扫描参数
-        String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
-        ScanParams params = new ScanParams();
-        params.match(pattern);
-        // 全部节点
-        List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
-        // 数据计数
-        int count = 0;
-        // 扫描数据
-        while (true) {
-            // 计算限制
-            int limit = this.setting.calcLimit(1000, count);
-            // 处理结束
-            if (limit <= 0) {
-                FXUtil.runWait(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
-                break;
-            }
-            // 设置加载数量
-            params.count(limit);
-            // 扫描数据
-            RedisScanResult result = RedisKeyUtil.scanKeys(this.dbIndex, cursor, params, this.client());
-            // 渲染数据
-            FXUtil.runWait(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
-            // 查询结束
-            if (result.isFinish()) {
-                break;
-            }
-            count += result.keySize();
-            // 更新光标
-            cursor = result.getCursor();
-        }
+        // // 获取已有子节点
+        // List<RedisKeyTreeItem<?, ?>> keyItems = this.keyChildren();
+        // // 禁用排序
+        // this.setSortable(false);
+        // // 当前光标
+        // String cursor = null;
+        // // 扫描参数
+        // String pattern = StrUtil.isBlank(this.filterPattern) ? "*" : this.filterPattern;
+        // ScanParams params = new ScanParams();
+        // params.match(pattern);
+        // // 全部节点
+        // List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
+        // // 数据计数
+        // int count = 0;
+        // // 扫描数据
+        // while (true) {
+        //     // 计算限制
+        //     int limit = this.setting.calcLimit(1000, count);
+        //     // 处理结束
+        //     if (limit <= 0) {
+        //         FXUtil.runWait(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
+        //         break;
+        //     }
+        //     // 设置加载数量
+        //     params.count(limit);
+        //     // 扫描数据
+        //     RedisScanResult result = RedisKeyUtil.scanKeys(this.dbIndex, cursor, params, this.client());
+        //     // 渲染数据
+        //     FXUtil.runWait(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
+        //     // 查询结束
+        //     if (result.isFinish()) {
+        //         break;
+        //     }
+        //     count += result.keySize();
+        //     // 更新光标
+        //     cursor = result.getCursor();
+        // }
     }
 
     /**
@@ -434,12 +436,12 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
     @Override
     public synchronized void addChild(TreeItem<?> item) {
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            for (RedisTypeTreeItem child : this.realChildren()) {
-                if (child.value() == treeItem.type()) {
-                    child.addChild(treeItem);
-                    break;
-                }
-            }
+            // for (RedisTypeTreeItem child : this.realChildren()) {
+            //     if (child.value() == treeItem.type()) {
+            //         child.addChild(treeItem);
+            //         break;
+            //     }
+            // }
         }
     }
 
@@ -479,44 +481,44 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 stream.add(treeItem);
             }
         }
-        for (RedisTypeTreeItem child : this.realChildren()) {
-            if (child.value() == RedisKeyType.STRING) {
-                if (CollUtil.isNotEmpty(string)) {
-                    child.addChild(string);
-                }
-            } else if (child.value() == RedisKeyType.HASH) {
-                if (CollUtil.isNotEmpty(hash)) {
-                    child.addChild(hash);
-                }
-            } else if (child.value() == RedisKeyType.LIST) {
-                if (CollUtil.isNotEmpty(list)) {
-                    child.addChild(list);
-                }
-            } else if (child.value() == RedisKeyType.SET) {
-                if (CollUtil.isNotEmpty(set)) {
-                    child.addChild(set);
-                }
-            } else if (child.value() == RedisKeyType.ZSET) {
-                if (CollUtil.isNotEmpty(zset)) {
-                    child.addChild(zset);
-                }
-            } else if (child.value() == RedisKeyType.STREAM) {
-                if (CollUtil.isNotEmpty(stream)) {
-                    child.addChild(stream);
-                }
-            }
-        }
+        // for (RedisTypeTreeItem child : this.realChildren()) {
+        //     if (child.value() == RedisKeyType.STRING) {
+        //         if (CollUtil.isNotEmpty(string)) {
+        //             child.addChild(string);
+        //         }
+        //     } else if (child.value() == RedisKeyType.HASH) {
+        //         if (CollUtil.isNotEmpty(hash)) {
+        //             child.addChild(hash);
+        //         }
+        //     } else if (child.value() == RedisKeyType.LIST) {
+        //         if (CollUtil.isNotEmpty(list)) {
+        //             child.addChild(list);
+        //         }
+        //     } else if (child.value() == RedisKeyType.SET) {
+        //         if (CollUtil.isNotEmpty(set)) {
+        //             child.addChild(set);
+        //         }
+        //     } else if (child.value() == RedisKeyType.ZSET) {
+        //         if (CollUtil.isNotEmpty(zset)) {
+        //             child.addChild(zset);
+        //         }
+        //     } else if (child.value() == RedisKeyType.STREAM) {
+        //         if (CollUtil.isNotEmpty(stream)) {
+        //             child.addChild(stream);
+        //         }
+        //     }
+        // }
     }
 
     @Override
     public synchronized void removeChild(TreeItem<?> item) {
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
-            for (RedisTypeTreeItem child : this.realChildren()) {
-                if (child.value() == treeItem.type()) {
-                    child.removeChild(treeItem);
-                    break;
-                }
-            }
+            // for (RedisTypeTreeItem child : this.realChildren()) {
+            //     if (child.value() == treeItem.type()) {
+            //         child.removeChild(treeItem);
+            //         break;
+            //     }
+            // }
         }
     }
 
@@ -556,64 +558,64 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
                 stream.add(treeItem);
             }
         }
-        for (RedisTypeTreeItem child : this.realChildren()) {
-            if (child.value() == RedisKeyType.STRING) {
-                if (CollUtil.isNotEmpty(string)) {
-                    child.removeChild(string);
-                }
-            } else if (child.value() == RedisKeyType.HASH) {
-                if (CollUtil.isNotEmpty(hash)) {
-                    child.removeChild(hash);
-                }
-            } else if (child.value() == RedisKeyType.LIST) {
-                if (CollUtil.isNotEmpty(list)) {
-                    child.removeChild(list);
-                }
-            } else if (child.value() == RedisKeyType.SET) {
-                if (CollUtil.isNotEmpty(set)) {
-                    child.removeChild(set);
-                }
-            } else if (child.value() == RedisKeyType.ZSET) {
-                if (CollUtil.isNotEmpty(zset)) {
-                    child.removeChild(zset);
-                }
-            } else if (child.value() == RedisKeyType.STREAM) {
-                if (CollUtil.isNotEmpty(stream)) {
-                    child.removeChild(stream);
-                }
-            }
-        }
+        // for (RedisTypeTreeItem child : this.realChildren()) {
+        //     if (child.value() == RedisKeyType.STRING) {
+        //         if (CollUtil.isNotEmpty(string)) {
+        //             child.removeChild(string);
+        //         }
+        //     } else if (child.value() == RedisKeyType.HASH) {
+        //         if (CollUtil.isNotEmpty(hash)) {
+        //             child.removeChild(hash);
+        //         }
+        //     } else if (child.value() == RedisKeyType.LIST) {
+        //         if (CollUtil.isNotEmpty(list)) {
+        //             child.removeChild(list);
+        //         }
+        //     } else if (child.value() == RedisKeyType.SET) {
+        //         if (CollUtil.isNotEmpty(set)) {
+        //             child.removeChild(set);
+        //         }
+        //     } else if (child.value() == RedisKeyType.ZSET) {
+        //         if (CollUtil.isNotEmpty(zset)) {
+        //             child.removeChild(zset);
+        //         }
+        //     } else if (child.value() == RedisKeyType.STREAM) {
+        //         if (CollUtil.isNotEmpty(stream)) {
+        //             child.removeChild(stream);
+        //         }
+        //     }
+        // }
     }
 
     @Override
     public void clearChild() {
-        for (RedisTypeTreeItem child : this.realChildren()) {
-            child.clearChild();
-        }
+        // for (RedisTypeTreeItem child : this.realChildren()) {
+        //     child.clearChild();
+        // }
     }
 
-    /**
-     * 获取真实子节点
-     *
-     * @return 真实子节点
-     */
-    public List<RedisTypeTreeItem> realChildren() {
-        return (List) super.unfilteredChildren();
-    }
+    // /**
+    //  * 获取真实子节点
+    //  *
+    //  * @return 真实子节点
+    //  */
+    // public List<RedisTypeTreeItem> realChildren() {
+    //     return (List) super.unfilteredChildren();
+    // }
 
-    /**
-     * 获取当前键节点
-     *
-     * @return 当前键节点
-     */
-    public List<RedisKeyTreeItem<?, ?>> keyChildren() {
-        // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
-        for (RedisTypeTreeItem item : this.realChildren()) {
-            items.addAll((List) item.unfilteredChildren());
-        }
-        return items;
-    }
+    // /**
+    //  * 获取当前键节点
+    //  *
+    //  * @return 当前键节点
+    //  */
+    // public List<RedisKeyTreeItem<?, ?>> keyChildren() {
+    //     // 获取已有子节点
+    //     List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
+    //     for (RedisTypeTreeItem item : this.realChildren()) {
+    //         items.addAll((List) item.unfilteredChildren());
+    //     }
+    //     return items;
+    // }
 
     /**
      * 获取当前键数量
@@ -622,9 +624,9 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     public int keySize() {
         int count = 0;
-        for (RedisTypeTreeItem item : this.realChildren()) {
-            count += item.unfilteredChildrenSize();
-        }
+        // for (RedisTypeTreeItem item : this.realChildren()) {
+        //     count += item.unfilteredChildrenSize();
+        // }
         return count;
     }
 
@@ -634,11 +636,11 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      * @return 结果
      */
     public boolean isKeyEmpty() {
-        for (RedisTypeTreeItem item : this.realChildren()) {
-            if (!item.unfilteredChildren().isEmpty()) {
-                return false;
-            }
-        }
+        // for (RedisTypeTreeItem item : this.realChildren()) {
+        //     if (!item.unfilteredChildren().isEmpty()) {
+        //         return false;
+        //     }
+        // }
         return true;
     }
 
@@ -781,14 +783,14 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
      */
     public void onKeyDeleted(String key) {
         try {
-            List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
-            for (RedisKeyTreeItem<?, ?> item : items) {
-                if (Objects.equals(key, item.key())) {
-                    item.removeChild(item);
-                    break;
-                }
-            }
-            this.flushValue();
+            // List<RedisKeyTreeItem<?, ?>> items = this.keyChildren();
+            // for (RedisKeyTreeItem<?, ?> item : items) {
+            //     if (Objects.equals(key, item.key())) {
+            //         item.removeChild(item);
+            //         break;
+            //     }
+            // }
+            // this.flushValue();
         } catch (Exception ex) {
             MessageBox.exception(ex);
         }
@@ -800,5 +802,126 @@ public class RedisDBTreeItem extends RedisTreeItem<RedisDBTreeItemValue> {
             return Comparator.comparingInt(RedisDBTreeItem::dbIndex).compare(this, item);
         }
         return super.compareTo(o);
+    }
+
+    /**
+     * Redis DB值
+     *
+     * @author oyzh
+     * @since 2023/06/22
+     */
+    @Accessors(chain = true, fluent = true)
+    public static class RedisDBTreeItemValue extends RedisTreeItemValue {
+
+        // /**
+        //  * redis树db节点
+        //  */
+        // private final RedisDBTreeItem item;
+
+        public RedisDBTreeItemValue(RedisDBTreeItem item) {
+            super(item);
+            // this.flushGraphic();
+            // this.flushGraphicColor();
+            // this.name(item.value());
+        }
+
+        @Override
+        protected RedisDBTreeItem item() {
+            return (RedisDBTreeItem) super.item();
+        }
+
+        @Override
+        public String name() {
+            return this.item().value();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/database-2-line.svg", 10);
+                this.graphic.disableTheme();
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public Color graphicColor() {
+            if (this.item().isKeyEmpty()) {
+                return super.graphicColor();
+            }
+            return Color.DARKGREEN;
+        }
+
+        @Override
+        public String extra() {
+            try {
+                String extra = "";
+                int keySize = this.item().keySize();
+                Long totalNum = this.item().dbSize();
+                if (keySize != totalNum) {
+                    extra += "(" + keySize + "/" + totalNum + ")";
+                } else {
+                    extra += "(" + totalNum + ")";
+                }
+                String filterPattern = this.item().getFilterPattern();
+                if (StringUtil.isNotBlank(filterPattern)) {
+                    extra += "[" + I18nHelper.keyFilter() + ":" + filterPattern + "]";
+                }
+                return extra;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return super.extra();
+        }
+
+        /**
+         * 刷新节点数量
+         */
+        public void flushNum() {
+            // try {
+            //     Long totalNum = this.item.dbSize();
+            //     // 寻找组件
+            //     FXText text = (FXText) this.lookup("#num");
+            //     if (totalNum == null) {
+            //         this.removeChild(text);
+            //     } else {
+            //         int keySize = this.item.keySize();
+            //         if (text == null) {
+            //             text = new FXText();
+            //             this.addChild(text);
+            //             text.disableTheme();
+            //             text.setId("num");
+            //             text.setFill(Color.valueOf("#228B22"));
+            //             HBox.setMargin(text, new Insets(0, 0, 0, 3));
+            //         }
+            //         if (keySize != totalNum) {
+            //             text.setText("(" + keySize + "-" + totalNum + ")");
+            //         } else {
+            //             text.setText("(" + totalNum + ")");
+            //         }
+            //     }
+            // } catch (Exception ex) {
+            //     ex.printStackTrace();
+            // }
+        }
+
+        /**
+         * 刷新键过滤模式
+         */
+        public void flushFilterPattern() {
+            // // 寻找组件
+            // FXText text = (FXText) this.lookup("#filterPattern");
+            // if (StrUtil.isNotBlank(this.item.getFilterPattern())) {
+            //     if (text == null) {
+            //         text = new FXText();
+            //         text.setId("filterPattern");
+            //         this.addChild(text);
+            //         HBox.setMargin(text, new Insets(0, 0, 0, 3));
+            //     }
+            //     text.setText("[" + I18nHelper.keyFilter() + ":" + this.item.getFilterPattern() + "]");
+            // } else {
+            //     this.removeChild(text);
+            // }
+        }
     }
 }

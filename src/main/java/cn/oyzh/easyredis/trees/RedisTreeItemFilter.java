@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
@@ -95,30 +94,30 @@ public class RedisTreeItemFilter implements RichTreeItemFilter {
 
     @Override
     public boolean test(RichTreeItem<?> item) {
-        if (item instanceof RedisTypeTreeItem treeItem) {
-            // 过滤hash键
-            if (this.excludeHashType && treeItem.isHashType()) {
-                return false;
-            }
-            // 过滤list键
-            if (this.excludeListType && treeItem.isListType()) {
-                return false;
-            }
-            // 过滤set键
-            if (this.excludeSetType && treeItem.isSetType()) {
-                return false;
-            }
-            // 过滤zset键
-            if (this.excludeZSetType && treeItem.isZSetType()) {
-                return false;
-            }
-            // 过滤string键
-            if (this.excludeStringType && treeItem.isStringType()) {
-                return false;
-            }
-            // 过滤stream键
-            return !this.excludeStreamType || !treeItem.isStreamType();
-        }
+        // if (item instanceof RedisTypeTreeItem treeItem) {
+        //     // 过滤hash键
+        //     if (this.excludeHashType && treeItem.isHashType()) {
+        //         return false;
+        //     }
+        //     // 过滤list键
+        //     if (this.excludeListType && treeItem.isListType()) {
+        //         return false;
+        //     }
+        //     // 过滤set键
+        //     if (this.excludeSetType && treeItem.isSetType()) {
+        //         return false;
+        //     }
+        //     // 过滤zset键
+        //     if (this.excludeZSetType && treeItem.isZSetType()) {
+        //         return false;
+        //     }
+        //     // 过滤string键
+        //     if (this.excludeStringType && treeItem.isStringType()) {
+        //         return false;
+        //     }
+        //     // 过滤stream键
+        //     return !this.excludeStreamType || !treeItem.isStreamType();
+        // }
 
         if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
             // 仅看收藏

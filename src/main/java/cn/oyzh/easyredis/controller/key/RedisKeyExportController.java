@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -39,7 +39,6 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 

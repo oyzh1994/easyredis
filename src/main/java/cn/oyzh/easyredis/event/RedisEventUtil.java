@@ -4,7 +4,8 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.db.RedisDBTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 import cn.oyzh.easyredis.trees.hash.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.list.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.set.RedisSetKeyTreeItem;
@@ -454,5 +455,16 @@ public class RedisEventUtil {
         RedisZSetReverseViewEvent event = new RedisZSetReverseViewEvent();
         event.data(item);
         EventUtil.post(event);
+    }
+
+    /**
+     * 连接丢失事件
+     *
+     * @param client zk客户端
+     */
+    public static void connectionOpened(RedisConnectTreeItem client) {
+        RedisConnectOpenedEvent event = new RedisConnectOpenedEvent();
+        event.data(client);
+        EventUtil.postSync(event);
     }
 }
