@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.keys.stream;
 
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamKeyTreeItemValue, RedisStreamRow> {
+public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamKeyTreeItem.RedisStreamKeyTreeItemValue, RedisStreamRow> {
 
     public RedisStreamKeyTreeItem(@NonNull RedisStreamKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
@@ -49,5 +50,18 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, 
             return this.currentRow.getValue();
         }
         return null;
+    }
+
+    /**
+     * Redis set树节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisStreamKeyTreeItemValue extends RedisKeyTreeItemValue<RedisStreamKeyTreeItem> {
+
+        public RedisStreamKeyTreeItemValue(RedisStreamKeyTreeItem item) {
+            super(item);
+        }
     }
 }

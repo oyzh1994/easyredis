@@ -12,7 +12,7 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, RedisStringKeyTreeItemValue> {
+public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, RedisStringKeyTreeItem.RedisStringKeyTreeItemValue> {
 
     public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
@@ -157,5 +157,19 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey, Red
                 ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Redis set树节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisStringKeyTreeItemValue extends RedisKeyTreeItemValue<RedisStringKeyTreeItem> {
+
+        public RedisStringKeyTreeItemValue(RedisStringKeyTreeItem item) {
+            super(item);
+        }
+
     }
 }

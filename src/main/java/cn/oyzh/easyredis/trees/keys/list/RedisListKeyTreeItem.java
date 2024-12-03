@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.keys.list;
 
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey,RedisListKeyTreeItemValue, RedisListRow> {
+public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, RedisListKeyTreeItem.RedisListKeyTreeItemValue, RedisListRow> {
 
     public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
@@ -92,5 +93,19 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey,Redis
             MessageBox.exception(ex);
         }
         return this.value.value();
+    }
+
+    /**
+     * Redis set树节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisListKeyTreeItemValue extends RedisKeyTreeItemValue<RedisListKeyTreeItem> {
+
+        public RedisListKeyTreeItemValue(RedisListKeyTreeItem item) {
+            super(item);
+            // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        }
     }
 }

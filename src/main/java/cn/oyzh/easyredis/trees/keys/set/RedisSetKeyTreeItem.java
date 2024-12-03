@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.keys.set;
 
 import cn.oyzh.easyredis.redis.key.RedisSetKey;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -16,7 +17,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetKeyTreeItemValue, RedisSetRow> {
+public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetKeyTreeItem.RedisSetKeyTreeItemValue, RedisSetRow> {
 
     public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
@@ -97,5 +98,19 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisS
             }
         }
         return false;
+    }
+
+    /**
+     * Redis set树节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisSetKeyTreeItem> {
+
+        public RedisSetKeyTreeItemValue(RedisSetKeyTreeItem item) {
+            super(item);
+            // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        }
     }
 }

@@ -1,6 +1,8 @@
 package cn.oyzh.easyredis.trees.keys;
 
 import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
@@ -26,25 +28,22 @@ import cn.oyzh.easyredis.trees.keys.stream.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.string.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.zset.RedisZSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.paint.Color;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import redis.clients.jedis.params.ScanParams;
 
@@ -212,7 +211,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     @Override
     public void reloadChild() {
-        if (!this.isWaiting() && !this.isLoaded()&&!this.isLoading()) {
+        if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
             this._loadChild();
         }
     }
@@ -579,14 +578,14 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      *
      * @return 当前键节点
      */
-    public List<RedisKeyTreeItem<?,?>> keyChildren() {
+    public List<RedisKeyTreeItem<?, ?>> keyChildren() {
         // // 获取已有子节点
         // List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
         // for (RedisTypeTreeItem item : this.realChildren()) {
         //     items.addAll((List) item.unfilteredChildren());
         // }
         // return items;
-        List list= super.unfilteredChildren();
+        List list = super.unfilteredChildren();
         return list;
     }
 
@@ -699,7 +698,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     @Override
     public RedisKeysTreeView getTreeView() {
-        return (RedisKeysTreeView)super.getTreeView();
+        return (RedisKeysTreeView) super.getTreeView();
     }
 
     /**
@@ -774,8 +773,11 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     @Override
     public void onPrimaryDoubleClick() {
-        super.onPrimaryDoubleClick();
-        this.loadChild();
+        if (!this.isLoaded()) {
+            this.loadChild();
+        } else {
+            super.onPrimaryDoubleClick();
+        }
     }
 
     /**

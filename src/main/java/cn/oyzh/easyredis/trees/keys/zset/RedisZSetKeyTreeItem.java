@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItemValue;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
@@ -19,7 +20,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetKeyTreeItemValue, RedisZSetRow> {
+public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetKeyTreeItem.RedisZSetKeyTreeItemValue, RedisZSetRow> {
 
     /**
      * 分数属性
@@ -293,5 +294,22 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
             return zrank != null;
         }
         return false;
+    }
+
+    /**
+     * Redis zset树节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKeyTreeItem> {
+
+        public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {
+            super(item);
+            // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+            // item.scoreProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+            // item.latitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+            // item.longitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
+        }
     }
 }
