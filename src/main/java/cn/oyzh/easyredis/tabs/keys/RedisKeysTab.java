@@ -1,18 +1,24 @@
-package cn.oyzh.easyredis.tabs;
+package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
+import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -41,7 +47,7 @@ public class RedisKeysTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/redisKeysTab.fxml";
+        return "/tabs/keys/redisKeysTab.fxml";
     }
 
     @Override
@@ -71,6 +77,12 @@ public class RedisKeysTab extends DynamicTab {
      * @since 2024-12-03
      */
     public static class RedisKeysTabController extends DynamicTabController {
+
+        /**
+         * tab节点
+         */
+        @FXML
+        private FlexTabPane tabPane;
 
         @Getter
         @Accessors(fluent = true, chain = false)
@@ -106,5 +118,43 @@ public class RedisKeysTab extends DynamicTab {
 
         public void positionNode(MouseEvent event) {
         }
+
+        @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            // 监听选中变化
+            this.treeView.selectItemChanged(this::initItem);
+        }
+
+        private RedisKeyTreeItem<?> activeItem;
+
+        public void initItem(TreeItem<?> treeItem) {
+            if (treeItem instanceof RedisKeyTreeItem<?> keyTreeItem) {
+                try {
+                    this.activeItem = keyTreeItem;
+                    // 初始化数据
+                    this.initData();
+                    // 触发事件
+                    RedisEventUtil.keySelected(this.activeItem);
+                    // 刷新tab
+                    this.flushTab();
+                    this.tabPane.enable();
+                } catch (Exception ex) {
+                    MessageBox.exception(ex);
+                }
+            } else {
+                // 禁用组件
+                this.tabPane.disable();
+            }
+        }
+
+        private void initData() {
+            if (this.activeItem instanceof RedisStringKeyTreeItem treeItem) {
+                RedisStringKeyTab keyTab = new RedisStringKeyTab();
+                keyTab.init(treeItem);
+                this.tabPane.setTab(keyTab);
+            }
+        }
     }
+
 }

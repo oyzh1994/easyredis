@@ -467,4 +467,7 @@ public class RedisEventUtil {
         event.data(client);
         EventUtil.postSync(event);
     }
+
+    public static void keySelected(RedisKeyTreeItem<?> activeItem) {
+    }
 }
