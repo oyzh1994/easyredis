@@ -13,11 +13,11 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashKeyTreeItem.RedisHashKeyTreeItemValue, RedisHashRow> {
+public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashRow> {
 
     public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
-        this.setValue(new RedisHashKeyTreeItemValue(this));
+        this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     /**
@@ -153,18 +153,4 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, Redi
         return false;
     }
 
-    /**
-     * Redis set树节点值
-     *
-     * @author oyzh
-     * @since 2023/11/21
-     */
-    public static class RedisHashKeyTreeItemValue extends RedisKeyTreeItemValue<RedisHashKeyTreeItem> {
-
-        public RedisHashKeyTreeItemValue(RedisHashKeyTreeItem item) {
-            super(item);
-            // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-            // item.fieldProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-        }
-    }
 }

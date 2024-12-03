@@ -12,11 +12,11 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamKeyTreeItem.RedisStreamKeyTreeItemValue, RedisStreamRow> {
+public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamRow> {
 
     public RedisStreamKeyTreeItem(@NonNull RedisStreamKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
-        this.setValue(new RedisStreamKeyTreeItemValue(this));
+        this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override
@@ -49,16 +49,4 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, 
         return null;
     }
 
-    /**
-     * Redis set树节点值
-     *
-     * @author oyzh
-     * @since 2023/11/21
-     */
-    public static class RedisStreamKeyTreeItemValue extends RedisKeyTreeItemValue<RedisStreamKeyTreeItem> {
-
-        public RedisStreamKeyTreeItemValue(RedisStreamKeyTreeItem item) {
-            super(item);
-        }
-    }
 }

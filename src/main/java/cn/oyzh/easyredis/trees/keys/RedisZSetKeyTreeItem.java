@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetKeyTreeItem.RedisZSetKeyTreeItemValue, RedisZSetRow> {
+public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetRow> {
 
     /**
      * 分数属性
@@ -154,7 +154,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
 
     public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisDatabaseTreeItem parent) {
         super(value, parent);
-        this.setValue(new RedisZSetKeyTreeItemValue(this));
+        this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     /**
@@ -293,20 +293,4 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return false;
     }
 
-    /**
-     * Redis zset树节点值
-     *
-     * @author oyzh
-     * @since 2023/11/21
-     */
-    public static class RedisZSetKeyTreeItemValue extends RedisKeyTreeItemValue<RedisZSetKeyTreeItem> {
-
-        public RedisZSetKeyTreeItemValue(RedisZSetKeyTreeItem item) {
-            super(item);
-            // item.dataProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-            // item.scoreProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-            // item.latitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-            // item.longitudeProperty().addListener((t1, t2, t3) -> this.flushGraphicColor());
-        }
-    }
 }

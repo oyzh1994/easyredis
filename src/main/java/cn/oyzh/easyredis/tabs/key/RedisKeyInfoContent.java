@@ -42,7 +42,7 @@ public class RedisKeyInfoContent implements Initializable {
     /**
      * redis树节点
      */
-    private RedisKeyTreeItem<?, ?> treeItem;
+    private RedisKeyTreeItem<?> treeItem;
 
     /**
      * 编码
@@ -95,7 +95,7 @@ public class RedisKeyInfoContent implements Initializable {
      *
      * @param treeItem redis树键
      */
-    public void init(RedisKeyTreeItem<?, ?> treeItem) {
+    public void init(RedisKeyTreeItem<?> treeItem) {
         // 重置渲染标志位
         this.treeItem = treeItem;
         this.redisKey = treeItem.value();

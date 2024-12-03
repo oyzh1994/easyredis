@@ -22,7 +22,7 @@ public class RedisKeyMovedEvent extends Event<TreeItem<?>> implements EventForma
 
     @Override
     public String eventFormat() {
-        if (this.data() instanceof RedisKeyTreeItem<?, ?> treeItem) {
+        if (this.data() instanceof RedisKeyTreeItem<?> treeItem) {
             return String.format(
                     "[%s] " + I18nHelper.keyMoved() + "[%s-db%s] " + I18nHelper.targetDatabase() + ":%s",
                     treeItem.info().getName(), treeItem.key(), treeItem.dbIndex(), this.targetDB

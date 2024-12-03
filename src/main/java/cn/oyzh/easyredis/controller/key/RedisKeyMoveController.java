@@ -64,7 +64,7 @@ public class RedisKeyMoveController extends StageController {
     /**
      * 树节点
      */
-    private RedisKeyTreeItem<?, ?> treeItem;
+    private RedisKeyTreeItem<?> treeItem;
 
     /**
      * 转移键

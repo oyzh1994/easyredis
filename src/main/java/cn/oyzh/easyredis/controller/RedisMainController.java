@@ -343,7 +343,7 @@ public class RedisMainController extends ParentStageController {
      * @param item 节点
      */
     private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof RedisKeyTreeItem<?, ?> treeItem) {
+        if (item instanceof RedisKeyTreeItem<?> treeItem) {
             this.flushViewTitle(treeItem.info());
             RedisEventUtil.treeChildSelected(treeItem);
         } else if (item instanceof RedisConnectTreeItem treeItem) {

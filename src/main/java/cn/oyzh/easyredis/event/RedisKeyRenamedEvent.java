@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem<?, ?>> implements EventFormatter {
+public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem<?>> implements EventFormatter {
 
     private String oldKey;
 

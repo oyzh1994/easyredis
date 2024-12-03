@@ -30,7 +30,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/30
  */
-public abstract class RedisKeyTreeItem<K extends RedisKey, V extends RedisKeyTreeItemValue> extends RedisTreeItem<V> {
+public abstract class RedisKeyTreeItem<K extends RedisKey> extends RedisTreeItem<RedisKeyTreeItemValue> {
 
     /**
      * redis键

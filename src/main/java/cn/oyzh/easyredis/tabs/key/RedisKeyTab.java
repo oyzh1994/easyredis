@@ -33,7 +33,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends DynamicTab {
+public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
 
     /**
      * 标签打开时间
@@ -130,7 +130,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?, ?>> extends Dyna
         return this.treeItem.value();
     }
 
-    public static <T extends RedisKeyTreeItem<?, ?>> RedisKeyTab<T> ofItem(T item) {
+    public static <T extends RedisKeyTreeItem<?>> RedisKeyTab<T> ofItem(T item) {
         RedisKeyTab<T> tab = null;
         if (item instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {

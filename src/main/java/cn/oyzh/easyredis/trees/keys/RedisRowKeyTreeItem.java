@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2023/06/30
  */
 //@Slf4j
-public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, V extends RedisKeyTreeItemValue, R extends RedisRow> extends RedisKeyTreeItem<K, V> {
+public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, R extends RedisRow> extends RedisKeyTreeItem<K> {
 
     /**
      * 当前行

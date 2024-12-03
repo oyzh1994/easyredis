@@ -26,7 +26,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, ?, R>, R extends RedisRow> extends RedisKeyTabContent<T> {
+public abstract class RedisRowKeyTabContent<T extends RedisRowKeyTreeItem<?, R>, R extends RedisRow> extends RedisKeyTabContent<T> {
 
     /**
      * 分页数据

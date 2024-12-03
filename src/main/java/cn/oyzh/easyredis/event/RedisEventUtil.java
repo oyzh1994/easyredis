@@ -326,7 +326,7 @@ public class RedisEventUtil {
      * @param item redis树节点
      * @param ttl  ttl值
      */
-    public static void keyTTLUpdated(RedisKeyTreeItem<?, ?> item, Long ttl) {
+    public static void keyTTLUpdated(RedisKeyTreeItem<?> item, Long ttl) {
         RedisKeyTTLUpdatedEvent event = new RedisKeyTTLUpdatedEvent();
         event.data(item);
         event.ttl(ttl);
@@ -339,7 +339,7 @@ public class RedisEventUtil {
      * @param item   redis树节点
      * @param oldKey 旧名称
      */
-    public static void keyRenamed(RedisKeyTreeItem<?, ?> item, String oldKey) {
+    public static void keyRenamed(RedisKeyTreeItem<?> item, String oldKey) {
         RedisKeyRenamedEvent event = new RedisKeyRenamedEvent();
         event.data(item);
         event.oldKey(oldKey);
@@ -440,7 +440,7 @@ public class RedisEventUtil {
     /**
      * 树节点选中事件
      */
-    public static void treeChildSelected(RedisKeyTreeItem<?, ?> item) {
+    public static void treeChildSelected(RedisKeyTreeItem<?> item) {
         TreeChildSelectedEvent event = new TreeChildSelectedEvent();
         event.data(item);
         EventUtil.post(event);

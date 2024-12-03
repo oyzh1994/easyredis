@@ -304,7 +304,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     private void loadChild1() {
         // 获取已有子节点
-        List<RedisKeyTreeItem<?, ?>> keyItems = this.keyChildren();
+        List<RedisKeyTreeItem<?>> keyItems = this.keyChildren();
         // 禁用排序
         this.setSortable(false);
         // 当前光标
@@ -350,15 +350,15 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @param allKeys  所有键
      * @param finish   是否结束
      */
-    private void renderChild(List<RedisKeyTreeItem<?, ?>> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
+    private void renderChild(List<RedisKeyTreeItem<?>> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
         allKeys.addAll(keys);
         // 单次查询数据
         List<TreeItem<?>> shows = new ArrayList<>(keys.size());
         for (RedisKey key : keys) {
             // 数据不存在，则添加到集合
-            Optional<RedisKeyTreeItem<?, ?>> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
+            Optional<RedisKeyTreeItem<?>> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
             if (optional.isEmpty()) {
-                RedisKeyTreeItem<?, ?> item = this.initItemByNode(key);
+                RedisKeyTreeItem<?> item = this.initItemByNode(key);
                 if (item != null) {
                     shows.add(item);
                 }
@@ -378,7 +378,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
             } else {// 删除不存在的数据
                 List<TreeItem<?>> hides = new ArrayList<>();
                 // 寻找在树，但是不在库的数据
-                for (RedisKeyTreeItem<?, ?> item : keyItems) {
+                for (RedisKeyTreeItem<?> item : keyItems) {
                     Optional<RedisKey> optional = allKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
                     if (optional.isEmpty()) {
                         hides.add(item);
@@ -572,7 +572,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      *
      * @return 当前键节点
      */
-    public List<RedisKeyTreeItem<?, ?>> keyChildren() {
+    public List<RedisKeyTreeItem<?>> keyChildren() {
         // // 获取已有子节点
         // List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
         // for (RedisTypeTreeItem item : this.realChildren()) {
@@ -662,7 +662,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @param node redis键
      * @return redis树键
      */
-    private RedisKeyTreeItem<?, ?> initItemByNode(RedisKey node) {
+    private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
         if (node instanceof RedisStringKey stringNode) {
             return new RedisStringKeyTreeItem(stringNode, this);
         }

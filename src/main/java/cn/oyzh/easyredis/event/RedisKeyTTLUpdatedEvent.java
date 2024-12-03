@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyTTLUpdatedEvent extends Event<RedisKeyTreeItem<?, ?>> implements  EventFormatter {
+public class RedisKeyTTLUpdatedEvent extends Event<RedisKeyTreeItem<?>> implements  EventFormatter {
 
     private Long ttl;
 
