@@ -32,7 +32,7 @@
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTabContent">
+             fx:controller="cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab.RedisHashKeyTabController">
     <FXTab text="%base.data">
         <graphic>
             <FileSVGGlyph initCursor="DEFAULT" size="13"/>

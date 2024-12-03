@@ -27,7 +27,7 @@
              flexHeight="100%"
              rotateGraphic="true"
              xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTabContent">
+             fx:controller="cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTab.RedisStreamKeyTabController">
     <FXTab text="%base.data">
         <graphic>
             <FileSVGGlyph initCursor="DEFAULT" size="13"/>
