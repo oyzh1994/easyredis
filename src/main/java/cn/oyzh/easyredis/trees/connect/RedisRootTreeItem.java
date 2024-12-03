@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees.root;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
@@ -8,14 +8,11 @@ import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.group.RedisGroupTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -25,7 +22,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;

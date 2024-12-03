@@ -1,9 +1,8 @@
-package cn.oyzh.easyredis.trees.group;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.treeView.FXTreeItem;
 import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 

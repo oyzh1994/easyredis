@@ -1,18 +1,15 @@
-package cn.oyzh.easyredis.trees.group;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeView;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.root.RedisRootTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
