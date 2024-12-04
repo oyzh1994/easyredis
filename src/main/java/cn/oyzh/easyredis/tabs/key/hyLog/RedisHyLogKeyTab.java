@@ -24,6 +24,10 @@ import javafx.fxml.FXML;
  */
 public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
+    public RedisHyLogKeyTab(RedisStringKeyTreeItem treeItem) {
+        super(treeItem);
+    }
+
     @Override
     protected String url() {
         return "/tabs/key/redisHyLogKeyTabContent.fxml";

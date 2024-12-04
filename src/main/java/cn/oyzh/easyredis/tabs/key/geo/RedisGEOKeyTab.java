@@ -38,6 +38,10 @@ import java.util.stream.Collectors;
  */
 public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
+    public RedisGEOKeyTab(RedisZSetKeyTreeItem treeItem) {
+        super(treeItem);
+    }
+
     @Override
     protected String url() {
         return "/tabs/key/redisGEOKeyTabContent.fxml";

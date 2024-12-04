@@ -36,6 +36,10 @@ import java.util.stream.Collectors;
  */
 public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
 
+    public RedisSetKeyTab(RedisSetKeyTreeItem treeItem) {
+        super(treeItem);
+    }
+
     @Override
     protected String url() {
         return  "/tabs/key/redisSetKeyTabContent.fxml";

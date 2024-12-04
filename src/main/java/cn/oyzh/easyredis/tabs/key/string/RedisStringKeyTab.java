@@ -25,6 +25,10 @@ import java.util.Objects;
  */
 public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
+    public RedisStringKeyTab(RedisStringKeyTreeItem treeItem) {
+        super(treeItem);
+    }
+
     @Override
     protected String url() {
         return "/tabs/key/redisStringKeyTabContent.fxml";

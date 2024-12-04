@@ -48,39 +48,64 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
     @Accessors(fluent = true)
     protected T treeItem;
 
-    /**
-     * 执行初始化
-     *
-     * @param treeItem redis树节点
-     */
-    public void init(@NonNull T treeItem) {
-        if (treeItem != this.treeItem) {
-            this.treeItem = treeItem;
-            // 刷新
-            this.flush();
-            // 初始化
-            if (!this.controller().init(treeItem)) {
-                this.disable();
-            }
-            // 判断这个key是否到期
-            if (treeItem.isExpire()) {
-                BackgroundService.submitFXLater(() -> {
-                    String tips = I18nHelper.key() + " [" + treeItem.key() + "] " + I18nHelper.expired() + ", " + I18nHelper.delete() + "?";
-                    if (MessageBox.confirm(tips)) {
-                        treeItem.deleteByExpired();
-                        this.closeTab();
-                    }
-                });
-            }
+    public RedisKeyTab(T treeItem){
+        super();
+        // 刷新
+        this.flush();
+        // 初始化
+        if (!this.controller().init(treeItem)) {
+            this.disable();
+        }
+        // 判断这个key是否到期
+        if (treeItem.isExpire()) {
+            BackgroundService.submitFXLater(() -> {
+                String tips = I18nHelper.key() + " [" + treeItem.key() + "] " + I18nHelper.expired() + ", " + I18nHelper.delete() + "?";
+                if (MessageBox.confirm(tips)) {
+                    treeItem.deleteByExpired();
+                    this.closeTab();
+                }
+            });
         }
     }
 
+    // /**
+    //  * 执行初始化
+    //  *
+    //  * @param treeItem redis树节点
+    //  */
+    // public void init(@NonNull T treeItem) {
+    //     if (treeItem != this.treeItem) {
+    //         this.treeItem = treeItem;
+    //         // 刷新
+    //         this.flush();
+    //         // 初始化
+    //         if (!this.controller().init(treeItem)) {
+    //             this.disable();
+    //         }
+    //         // 判断这个key是否到期
+    //         if (treeItem.isExpire()) {
+    //             BackgroundService.submitFXLater(() -> {
+    //                 String tips = I18nHelper.key() + " [" + treeItem.key() + "] " + I18nHelper.expired() + ", " + I18nHelper.delete() + "?";
+    //                 if (MessageBox.confirm(tips)) {
+    //                     treeItem.deleteByExpired();
+    //                     this.closeTab();
+    //                 }
+    //             });
+    //         }
+    //     }
+    // }
+
+    // @Override
+    // public void flushTitle() {
+    //     // 设置文本
+    //     this.setText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
+    //     // 设置提示文本
+    //     this.setTipText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
+    // }
+
     @Override
-    public void flushTitle() {
-        // 设置文本
-        this.setText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
-        // 设置提示文本
-        this.setTipText(this.treeItem.infoName() + "-db" + this.treeItem.dbIndex() + "-" + this.treeItem.key());
+    protected String getTabTitle() {
+        return I18nHelper.data();
     }
 
     @Override
@@ -132,26 +157,26 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
 
     public static <T extends RedisKeyTreeItem<?>> RedisKeyTab<T> ofItem(T item) {
         RedisKeyTab<T> tab = null;
-        if (item instanceof RedisStringKeyTreeItem item1) {
-            if (item1.isHyLog()) {
-                tab = (RedisKeyTab<T>) new RedisHyLogKeyTab();
+        if (item instanceof RedisStringKeyTreeItem stringKeyTreeItem) {
+            if (stringKeyTreeItem.isHyLog()) {
+                tab = (RedisKeyTab<T>) new RedisHyLogKeyTab(stringKeyTreeItem);
             } else {
-                tab = (RedisKeyTab<T>) new RedisStringKeyTab();
+                tab = (RedisKeyTab<T>) new RedisStringKeyTab(stringKeyTreeItem);
             }
-        } else if (item instanceof RedisListKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisListKeyTab();
-        } else if (item instanceof RedisSetKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisSetKeyTab();
-        } else if (item instanceof RedisZSetKeyTreeItem item1) {
-            if (item1.isGEOView()) {
-                tab = (RedisKeyTab<T>) new RedisGEOKeyTab();
+        } else if (item instanceof RedisListKeyTreeItem listKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisListKeyTab(listKeyTreeItem);
+        } else if (item instanceof RedisSetKeyTreeItem setKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisSetKeyTab(setKeyTreeItem);
+        } else if (item instanceof RedisZSetKeyTreeItem zSetKeyTreeItem) {
+            if (zSetKeyTreeItem.isGEOView()) {
+                tab = (RedisKeyTab<T>) new RedisGEOKeyTab(zSetKeyTreeItem);
             } else {
-                tab = (RedisKeyTab<T>) new RedisZSetKeyTab();
+                tab = (RedisKeyTab<T>) new RedisZSetKeyTab(zSetKeyTreeItem);
             }
-        } else if (item instanceof RedisHashKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisHashKeyTab();
-        } else if (item instanceof RedisStreamKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisStreamKeyTab();
+        } else if (item instanceof RedisHashKeyTreeItem hashKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisHashKeyTab(hashKeyTreeItem);
+        } else if (item instanceof RedisStreamKeyTreeItem streamKeyTreeItem) {
+            tab = (RedisKeyTab<T>) new RedisStreamKeyTab(streamKeyTreeItem);
         }
         return tab;
     }

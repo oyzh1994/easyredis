@@ -1,103 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.FileSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<FlexTabPane styleClass="root" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100%"
-             flexHeight="100%"
-             rotateGraphic="true"
-             xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.tabs.key.hyLog.RedisHyLogKeyTab.RedisHylogKeyTabController">
-    <FXTab text="%base.data">
-        <graphic>
-            <FileSVGGlyph initCursor="DEFAULT" size="13"/>
-        </graphic>
-        <FlexVBox fx:id="root" flexWidth="100%" flexHeight="100%">
-            <FlexFlowPane realHeight="32" flexWidth="100%">
-                <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </CollectSVGGlyph>
-                <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
-                                   onMousePrimaryClicked="#unCollect">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </UnCollectSVGGlyph>
-                <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </RefreshSVGGlyph>
-                <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </RenameKeySVGGlyph>
-                <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteNode">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </DeleteSVGGlyph>
-                <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKeyInfo">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </CopySVGGlyph>
-                <AddFillSVGGlyph size="15" fx:id="addRow" onMousePrimaryClicked="#addRow">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </AddFillSVGGlyph>
-                <FXLabel fx:id="count" tipText="%redis.key.elementCount" fontSize="11">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXLabel>
-                <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
-                         onMousePrimaryClicked="#ttlUpdate">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXLabel>
-                <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
-                         realHeight="15">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXLabel>
-                <!-- <FXLabel fx:id="size" fontSize="11" style="-fx-text-fill: #c0c0c0"> -->
-                <!--     <FlowPane.margin> -->
-                <!--         <Insets left="5"/> -->
-                <!--     </FlowPane.margin> -->
-                <!-- </FXLabel> -->
-                <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
-                         visible="false"
-                         managed="false">
-                    <FlowPane.margin>
-                        <Insets left="5"/>
-                    </FlowPane.margin>
-                </FXLabel>
-                <padding>
-                    <Insets top="9"/>
-                </padding>
-            </FlexFlowPane>
-            <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData" flexHeight="100% - 32" flexWidth="100% - 2"/>
-        </FlexVBox>
-    </FXTab>
-    <!-- <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/> -->
-</FlexTabPane>
+<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="cn.oyzh.easyredis.tabs.key.hyLog.RedisHyLogKeyTab.RedisHylogKeyTabController">
+    <FlexFlowPane realHeight="32" flexWidth="100%">
+        <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </CollectSVGGlyph>
+        <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
+                           onMousePrimaryClicked="#unCollect">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </UnCollectSVGGlyph>
+        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </RefreshSVGGlyph>
+        <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </RenameKeySVGGlyph>
+        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteNode">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </DeleteSVGGlyph>
+        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKeyInfo">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </CopySVGGlyph>
+        <AddFillSVGGlyph size="15" fx:id="addRow" onMousePrimaryClicked="#addRow">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </AddFillSVGGlyph>
+        <FXLabel fx:id="count" tipText="%redis.key.elementCount" fontSize="11">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </FXLabel>
+        <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
+                 onMousePrimaryClicked="#ttlUpdate">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </FXLabel>
+        <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
+                 realHeight="15">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </FXLabel>
+        <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
+                 visible="false"
+                 managed="false">
+            <FlowPane.margin>
+                <Insets left="5"/>
+            </FlowPane.margin>
+        </FXLabel>
+        <padding>
+            <Insets top="9"/>
+        </padding>
+    </FlexFlowPane>
+    <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
+                          flexHeight="100% - 32" flexWidth="100% - 2"/>
+</FlexVBox>

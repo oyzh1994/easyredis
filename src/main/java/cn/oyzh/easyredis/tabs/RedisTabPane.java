@@ -336,8 +336,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
             }
             // 选中节点
             this.select(keyTab);
-            // 初始化节点
-            keyTab.init(event.data());
+            // // 初始化节点
+            // keyTab.init(event.data());
         }
     }
 
@@ -384,8 +384,8 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
             super.addTab(keyTab);
             // 选中节点
             this.select(keyTab);
-            // 初始化节点
-            keyTab.init(event.data());
+            // // 初始化节点
+            // keyTab.init(event.data());
         }
     }
 
