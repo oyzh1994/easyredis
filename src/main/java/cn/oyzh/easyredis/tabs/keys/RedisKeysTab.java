@@ -210,6 +210,11 @@ public class RedisKeysTab extends DynamicTab {
             this.treeView.positionItem();
         }
 
+        @FXML
+        private void refreshNode() {
+            this.treeView.loadItems();
+        }
+
         @Override
         protected void bindListeners() {
             super.bindListeners();

@@ -12,6 +12,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeysTab.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -32,6 +33,11 @@
 
         </RedisKeysTreeView>
         <FlexHBox flexWidth="100%" flexHeight="35">
+            <RefreshSVGGlyph size="17" onMousePrimaryClicked="#refreshNode">
+                <HBox.margin>
+                    <Insets left="5" top="10"/>
+                </HBox.margin>
+            </RefreshSVGGlyph>
             <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                 <HBox.margin>
                     <Insets left="5" top="10"/>

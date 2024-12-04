@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
@@ -16,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyMovedEvent extends Event<RedisKeyTreeItem<?>> implements EventFormatter {
+public class RedisKeysMovedEvent extends Event<RedisDatabaseTreeItem>   {
 
     private int targetDB;
 
@@ -26,13 +27,5 @@ public class RedisKeyMovedEvent extends Event<RedisKeyTreeItem<?>> implements Ev
 
     public RedisConnect redisConnect() {
         return this.data().info();
-    }
-
-    @Override
-    public String eventFormat() {
-        return String.format(
-                "[%s] " + I18nHelper.keyMoved() + "[%s-db%s] " + I18nHelper.targetDatabase() + ":%s",
-                this.redisConnect().getName(), this.data().key(), this.data().dbIndex(), this.targetDB
-        );
     }
 }

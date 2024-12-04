@@ -1,8 +1,6 @@
 package cn.oyzh.easyredis.trees.keys;
 
 import cn.hutool.core.util.StrUtil;
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
@@ -18,7 +16,6 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
@@ -61,38 +58,21 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @return 当前键节点
      */
     public List<RedisKeyTreeItem<?>> keyChildren() {
-        // // 获取已有子节点
-        // List<RedisKeyTreeItem<?, ?>> items = new CopyOnWriteArrayList<>();
-        // for (RedisTypeTreeItem item : this.realChildren()) {
-        //     items.addAll((List) item.unfilteredChildren());
-        // }
-        // return items;
-        List list = super.unfilteredChildren();
-        return list;
+        return (List) super.unfilteredChildren();
     }
 
-    public void loadItems(RedisDatabaseTreeItem dbTreeItem) {
-        this.setLoaded(true);
-        this.setLoading(true);
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> {
-                    this.loadChild1(dbTreeItem);
-                })
-                .onError(ex -> {
-                    this.setLoaded(false);
-                    MessageBox.exception(ex);
-                })
-                .onSuccess(this::refresh)
-                .onFinish(() -> this.setLoading(false))
-                .build();
-        // 执行业务
-        this.startWaiting(task);
+    @Override
+    public RedisKeysTreeView getTreeView() {
+        return (RedisKeysTreeView) super.getTreeView();
     }
 
-    /**
-     * 正常模式加载子节点
-     */
-    public void loadChild1(RedisDatabaseTreeItem dbTreeItem) {
+    public RedisDatabaseTreeItem dbItem() {
+        return this.getTreeView().dbItem();
+    }
+
+    @Override
+    public void loadChild() {
+        RedisDatabaseTreeItem dbItem = this.dbItem();
         // 获取已有子节点
         List<RedisKeyTreeItem<?>> keyItems = this.keyChildren();
         // 禁用排序
@@ -100,7 +80,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         // 当前光标
         String cursor = null;
         // 扫描参数
-        String pattern = StrUtil.isBlank(dbTreeItem.getFilterPattern()) ? "*" : dbTreeItem.getFilterPattern();
+        String pattern = StrUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
         ScanParams params = new ScanParams();
         params.match(pattern);
         // 全部节点
@@ -113,15 +93,15 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             int limit = this.setting.calcLimit(1000, count);
             // 处理结束
             if (limit <= 0) {
-                FXUtil.runWait(() -> this.renderChild(dbTreeItem, keyItems, Collections.emptyList(), allKeys, true));
+                FXUtil.runWait(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
                 break;
             }
             // 设置加载数量
             params.count(limit);
             // 扫描数据
-            RedisScanResult result = RedisKeyUtil.scanKeys(dbTreeItem.dbIndex(), cursor, params, dbTreeItem.client());
+            RedisScanResult result = RedisKeyUtil.scanKeys(dbItem.dbIndex(), cursor, params, dbItem.client());
             // 渲染数据
-            FXUtil.runWait(() -> this.renderChild(dbTreeItem, keyItems, result.getKeys(), allKeys, result.isFinish()));
+            FXUtil.runWait(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
             // 查询结束
             if (result.isFinish()) {
                 break;
@@ -138,29 +118,30 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @param node redis键
      * @return redis树键
      */
-    private RedisKeyTreeItem<?> initItemByNode(RedisKey node, RedisDatabaseTreeItem dbTreeItem) {
+    private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
+        RedisDatabaseTreeItem dbItem = this.dbItem();
         if (node instanceof RedisStringKey stringNode) {
-            return new RedisStringKeyTreeItem(stringNode, dbTreeItem);
+            return new RedisStringKeyTreeItem(stringNode, dbItem);
         }
 
         if (node instanceof RedisListKey listNode) {
-            return new RedisListKeyTreeItem(listNode, dbTreeItem);
+            return new RedisListKeyTreeItem(listNode, dbItem);
         }
 
         if (node instanceof RedisSetKey setNode) {
-            return new RedisSetKeyTreeItem(setNode, dbTreeItem);
+            return new RedisSetKeyTreeItem(setNode, dbItem);
         }
 
         if (node instanceof RedisZSetKey zSetNode) {
-            return new RedisZSetKeyTreeItem(zSetNode, dbTreeItem);
+            return new RedisZSetKeyTreeItem(zSetNode, dbItem);
         }
 
         if (node instanceof RedisHashKey hashNode) {
-            return new RedisHashKeyTreeItem(hashNode, dbTreeItem);
+            return new RedisHashKeyTreeItem(hashNode, dbItem);
         }
 
         if (node instanceof RedisStreamKey streamNode) {
-            return new RedisStreamKeyTreeItem(streamNode, dbTreeItem);
+            return new RedisStreamKeyTreeItem(streamNode, dbItem);
         }
 
         return null;
@@ -174,7 +155,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @param allKeys  所有键
      * @param finish   是否结束
      */
-    private void renderChild(RedisDatabaseTreeItem dbTreeItem, List<RedisKeyTreeItem<?>> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
+    private void renderChild(List<RedisKeyTreeItem<?>> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
         allKeys.addAll(keys);
         // 单次查询数据
         List<TreeItem<?>> shows = new ArrayList<>(keys.size());
@@ -182,7 +163,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             // 数据不存在，则添加到集合
             Optional<RedisKeyTreeItem<?>> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
             if (optional.isEmpty()) {
-                RedisKeyTreeItem<?> item = this.initItemByNode(key, dbTreeItem);
+                RedisKeyTreeItem<?> item = this.initItemByNode(key);
                 if (item != null) {
                     shows.add(item);
                 }

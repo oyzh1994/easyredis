@@ -318,7 +318,7 @@ public class RedisKeyBatchOperationController extends StageController {
                                 this.keys4.appendLine(I18nHelper.moveKey() + ": [" + key + "] " + I18nHelper.fail());
                             }
                         }
-                        RedisEventUtil.keyMoved(this.treeItem, targetDBIndex);
+                        RedisEventUtil.keysMoved(this.treeItem, targetDBIndex);
                         // 提示信息
                         String msg = I18nHelper.success() + ":" + succCount + ", " + I18nHelper.fail() + ":" + failCount;
                         MessageBox.info(msg);

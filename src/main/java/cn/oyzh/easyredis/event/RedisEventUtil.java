@@ -365,8 +365,21 @@ public class RedisEventUtil {
      * @param item     redis树节点
      * @param targetDB 目标库
      */
-    public static void keyMoved(TreeItem<?> item, int targetDB) {
+    public static void keyMoved(RedisKeyTreeItem<?> item, int targetDB) {
         RedisKeyMovedEvent event = new RedisKeyMovedEvent();
+        event.data(item);
+        event.targetDB(targetDB);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 多个键移动事件
+     *
+     * @param item     redis树节点
+     * @param targetDB 目标库
+     */
+    public static void keysMoved(RedisDatabaseTreeItem item, int targetDB) {
+        RedisKeysMovedEvent event = new RedisKeysMovedEvent();
         event.data(item);
         event.targetDB(targetDB);
         EventUtil.post(event);
