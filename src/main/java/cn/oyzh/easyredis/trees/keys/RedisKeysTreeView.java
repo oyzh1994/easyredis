@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
@@ -141,4 +142,24 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     //     }
     //     this.getRoot().setChild(items);
     // }
+
+    @Override
+    public synchronized void sortAsc() {
+        RichTreeItem<?> item = this.getSelectedItem();
+        this.getRoot().sortAsc();
+        if (item != null) {
+            this.select(item);
+        }
+        this.refresh();
+    }
+
+    @Override
+    public synchronized void sortDesc() {
+        RichTreeItem<?> item = this.getSelectedItem();
+        this.getRoot().sortDesc();
+        if (item != null) {
+            this.select(item);
+        }
+        this.refresh();
+    }
 }

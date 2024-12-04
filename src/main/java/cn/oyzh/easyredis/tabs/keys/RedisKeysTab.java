@@ -2,9 +2,9 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox;
+import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
@@ -18,7 +18,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
-import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -100,6 +99,18 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private RedisKeySearchTypeComboBox searchType;
 
+        /**
+         * 节点排序(正序)
+         */
+        @FXML
+        private SVGGlyph sortAsc;
+
+        /**
+         * 节点排序(倒序)
+         */
+        @FXML
+        private SVGGlyph sortDesc;
+
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
@@ -123,13 +134,23 @@ public class RedisKeysTab extends DynamicTab {
             this.treeView.filter();
         }
 
-        public void sortAsc(MouseEvent event) {
+        @FXML
+        private void sortAsc() {
+            this.sortAsc.disappear();
+            this.sortDesc.display();
+            this.treeView.sortAsc();
         }
 
-        public void sortDesc(MouseEvent event) {
+        @FXML
+        private void sortDesc() {
+            this.sortDesc.disappear();
+            this.sortAsc.display();
+            this.treeView.sortDesc();
         }
 
-        public void positionNode(MouseEvent event) {
+        @FXML
+        private void positionNode() {
+            this.treeView.positionItem();
         }
 
         @Override
