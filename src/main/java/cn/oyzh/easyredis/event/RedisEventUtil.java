@@ -472,5 +472,8 @@ public class RedisEventUtil {
     }
 
     public static void treeItemChanged(TreeItem<?> treeItem) {
+        RedisTreeItemChangedEvent event = new RedisTreeItemChangedEvent();
+        event.data(treeItem);
+        EventUtil.postSync(event);
     }
 }

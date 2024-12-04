@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
@@ -20,9 +21,13 @@ public class RedisQueryTreeItem extends RichTreeItem<RedisQueryTreeItem.RedisQue
     }
 
     @Override
-    public RedisConnectTreeItem parent() {
+    public RedisDatabaseTreeItem parent() {
         TreeItem<?> parent = this.getParent();
-        return (RedisConnectTreeItem) parent;
+        return (RedisDatabaseTreeItem) parent;
+    }
+
+    public RedisConnect redisConnect(){
+        return this.parent().info();
     }
 
     @Override

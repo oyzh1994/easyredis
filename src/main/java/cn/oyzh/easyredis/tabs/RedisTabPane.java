@@ -28,10 +28,13 @@ import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
+import cn.oyzh.fx.plus.event.FXEventListener;
+import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,20 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisTabPane extends DynamicTabPane implements EventListener {
+public class RedisTabPane extends DynamicTabPane implements FXEventListener {
+
+    @Override
+    public void onNodeInitialize() {
+        FXEventListener.super.onNodeInitialize();
+        // 刷新触发事件
+        KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+    }
+
+    @Override
+    public void onNodeDestroy() {
+        FXEventListener.super.onNodeDestroy();
+        KeyListener.unListenReleased(this, KeyCode.F5);
+    }
 
     @Override
     protected void initTabPane() {

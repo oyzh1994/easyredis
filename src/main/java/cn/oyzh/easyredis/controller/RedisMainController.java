@@ -1,31 +1,31 @@
 package cn.oyzh.easyredis.controller;
 
+import cn.oyzh.easyredis.controller.main.ConnectController;
+import cn.oyzh.easyredis.controller.main.MessageController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
 import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
-import cn.oyzh.easyredis.fx.RedisMsgTextArea;
+import cn.oyzh.easyredis.event.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.easyredis.trees.connect.RedisDataTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisQueryTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.plus.controller.ParentStageController;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.TreeItem;
-import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,18 +41,18 @@ public class RedisMainController extends ParentStageController {
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    private RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
 
     /**
      * 当前激活的redis信息
      */
     private RedisConnect info;
 
-    /**
-     * 左侧redis树
-     */
-    @FXML
-    public RedisConnectTreeView tree;
+    // /**
+    //  * 左侧redis树
+    //  */
+    // @FXML
+    // public RedisConnectTreeView tree;
 
     /**
      * 左侧组件
@@ -65,71 +65,83 @@ public class RedisMainController extends ParentStageController {
     //  */
     // private ResizeEnhance resizeEnhance;
 
-    /**
-     * 节点排序(正序)
-     */
-    @FXML
-    private SVGGlyph sortAsc;
-
-    /**
-     * 节点排序(倒序)
-     */
-    @FXML
-    private SVGGlyph sortDesc;
-
-    /**
-     * 仅看收藏
-     */
-    @FXML
-    private FlexCheckBox onlyCollect;
+    // /**
+    //  * 节点排序(正序)
+    //  */
+    // @FXML
+    // private SVGGlyph sortAsc;
+    //
+    // /**
+    //  * 节点排序(倒序)
+    //  */
+    // @FXML
+    // private SVGGlyph sortDesc;
+    //
+    // /**
+    //  * 仅看收藏
+    //  */
+    // @FXML
+    // private FlexCheckBox onlyCollect;
 
     /**
      * redis切换面板
      */
     @FXML
-    public RedisTabPane tabPane;
+    private RedisTabPane tabPane;
 
     /**
-     * 消息文本框
+     * redis连接
      */
     @FXML
-    private RedisMsgTextArea msgArea;
+    private ConnectController connectController;
 
     /**
-     * 过滤hash键
+     * redis消息
      */
     @FXML
-    private FlexCheckBox showHash;
+    private MessageController messageController;
 
-    /**
-     * 过滤stream键
-     */
-    @FXML
-    private FlexCheckBox showStream;
-
-    /**
-     * 过滤string键
-     */
-    @FXML
-    private FlexCheckBox showString;
-
-    /**
-     * 过滤set键
-     */
-    @FXML
-    private FlexCheckBox showSet;
-
-    /**
-     * 过滤zset键
-     */
-    @FXML
-    private FlexCheckBox showZSet;
-
-    /**
-     * 过滤list键
-     */
-    @FXML
-    private FlexCheckBox showList;
+    // /**
+    //  * 消息文本框
+    //  */
+    // @FXML
+    // private RedisMsgTextArea msgArea;
+    //
+    // /**
+    //  * 过滤hash键
+    //  */
+    // @FXML
+    // private FlexCheckBox showHash;
+    //
+    // /**
+    //  * 过滤stream键
+    //  */
+    // @FXML
+    // private FlexCheckBox showStream;
+    //
+    // /**
+    //  * 过滤string键
+    //  */
+    // @FXML
+    // private FlexCheckBox showString;
+    //
+    // /**
+    //  * 过滤set键
+    //  */
+    // @FXML
+    // private FlexCheckBox showSet;
+    //
+    // /**
+    //  * 过滤zset键
+    //  */
+    // @FXML
+    // private FlexCheckBox showZSet;
+    //
+    // /**
+    //  * 过滤list键
+    //  */
+    // @FXML
+    // private FlexCheckBox showList;
 
     // /**
     //  * 搜索Controller
@@ -147,33 +159,33 @@ public class RedisMainController extends ParentStageController {
     //  */
     // private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
-    /**
-     * 对子节点排序，正序
-     */
-    @FXML
-    private void sortAsc() {
-        this.sortAsc.disappear();
-        this.sortDesc.display();
-        this.tree.sortAsc();
-    }
-
-    /**
-     * 对子节点排序，倒序
-     */
-    @FXML
-    private void sortDesc() {
-        this.sortDesc.disappear();
-        this.sortAsc.display();
-        this.tree.sortDesc();
-    }
-
-    /**
-     * 打开终端
-     */
-    @FXML
-    private void openTerminal() {
-        RedisEventUtil.terminalOpen();
-    }
+    // /**
+    //  * 对子节点排序，正序
+    //  */
+    // @FXML
+    // private void sortAsc() {
+    //     this.sortAsc.disappear();
+    //     this.sortDesc.display();
+    //     this.tree.sortAsc();
+    // }
+    //
+    // /**
+    //  * 对子节点排序，倒序
+    //  */
+    // @FXML
+    // private void sortDesc() {
+    //     this.sortDesc.disappear();
+    //     this.sortAsc.display();
+    //     this.tree.sortDesc();
+    // }
+    //
+    // /**
+    //  * 打开终端
+    //  */
+    // @FXML
+    // private void openTerminal() {
+    //     RedisEventUtil.terminalOpen();
+    // }
 
     // /**
     //  * 执行过滤
@@ -232,9 +244,9 @@ public class RedisMainController extends ParentStageController {
     @Override
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
-        EventUtil.register(this.tree);
-        EventUtil.register(this.tabPane);
-        EventUtil.register(this.msgArea);
+        // EventUtil.register(this.tree);
+        // EventUtil.register(this.tabPane);
+        // EventUtil.register(this.msgArea);
         // this.filter();
 
         // 设置上次保存的页面拉伸
@@ -246,16 +258,16 @@ public class RedisMainController extends ParentStageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
-        EventUtil.unregister(this.tree);
-        EventUtil.unregister(this.tabPane);
-        EventUtil.unregister(this.msgArea);
-        // 关闭连接
-        this.tree.closeConnects();
+        // EventUtil.unregister(this.tree);
+        // EventUtil.unregister(this.tabPane);
+        // EventUtil.unregister(this.msgArea);
+        // // 关闭连接
+        // this.tree.closeConnects();
         // 保存页面拉伸
         this.savePageResize();
-        // 取消F5按键监听
-        KeyListener.unListenReleased(this.tree, KeyCode.F5);
-        KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
+        // // 取消F5按键监听
+        // KeyListener.unListenReleased(this.tree, KeyCode.F5);
+        // KeyListener.unListenReleased(this.tabPane, KeyCode.F5);
     }
 
     /**
@@ -316,50 +328,64 @@ public class RedisMainController extends ParentStageController {
         // this.showZSet.selectedChanged((obs, o, n) -> this.filter());
         // this.showString.selectedChanged((obs, o, n) -> this.filter());
         // this.showStream.selectedChanged((obs, o, n) -> this.filter());
-        this.sortAsc.managedBindVisible();
-        this.sortDesc.managedBindVisible();
-        // redis树变化事件
-        this.tree.selectItemChanged(this::treeItemChanged);
-        // 文件拖拽初始化
-        this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
+        // this.sortAsc.managedBindVisible();
+        // this.sortDesc.managedBindVisible();
+        // // redis树变化事件
+        // this.tree.selectItemChanged(this::treeItemChanged);
+        // // 文件拖拽初始化
+        // this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT,this::resizeMainLeft);
-        resizeHelper.widthLimit(390f,800f);
-        // 初始化拉伸事件
-        this.tree.setOnMouseMoved(resizeHelper.mouseMoved());
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT, this::resizeMainLeft);
+        resizeHelper.widthLimit(390f, 800f);
+        // // 初始化拉伸事件
+        // this.tree.setOnMouseMoved(resizeHelper.mouseMoved());
         resizeHelper.initResizeEvent();
 
         // 搜索触发事件
         // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> RedisEventUtil.searchFire()));
-        // 刷新触发事件
-        KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
-        // 刷新触发事件
-        KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
+        // // 刷新触发事件
+        // KeyListener.listenReleased(this.tree, KeyCode.F5, keyEvent -> this.tree.reload());
+        // // 刷新触发事件
+        // KeyListener.listenReleased(this.tabPane, KeyCode.F5, keyEvent -> this.tabPane.reload());
     }
 
     /**
      * 树节点变化事件
      *
-     * @param item 节点
+     * @param event 事件
      */
-    private void treeItemChanged(TreeItem<?> item) {
-        if (item instanceof RedisKeyTreeItem<?> treeItem) {
-            this.flushViewTitle(treeItem.info());
-            RedisEventUtil.treeChildSelected(treeItem);
-        } else if (item instanceof RedisConnectTreeItem treeItem) {
+    @EventSubscribe
+    private void treeItemChanged(RedisTreeItemChangedEvent event) {
+        // if (item instanceof RedisKeyTreeItem<?> treeItem) {
+        //     this.flushViewTitle(treeItem.info());
+        //     RedisEventUtil.treeChildSelected(treeItem);
+        // } else if (item instanceof RedisConnectTreeItem treeItem) {
+        //     this.flushViewTitle(treeItem.value());
+        // } else {
+        //     this.flushViewTitle(null);
+        // }
+        if (event.data() instanceof RedisConnectTreeItem treeItem) {
             this.flushViewTitle(treeItem.value());
+        } else if (event.data() instanceof RedisDatabaseTreeItem treeItem) {
+            this.flushViewTitle(treeItem.info());
+        } else if (event.data() instanceof RedisDataTreeItem treeItem) {
+            this.flushViewTitle(treeItem.redisConnect());
+        } else if (event.data() instanceof RedisQueryTreeItem treeItem) {
+            this.flushViewTitle(treeItem.redisConnect());
+        } else if (event.data() instanceof RedisTerminalTreeItem treeItem) {
+            this.flushViewTitle(treeItem.redisConnect());
         } else {
             this.flushViewTitle(null);
         }
     }
 
-    /**
-     * 定位节点
-     */
-    @FXML
-    private void positionNode() {
-        this.tree.scrollTo(this.tree.getSelectedItem());
-    }
+    // /**
+    //  * 定位节点
+    //  */
+    // @FXML
+    // private void positionNode() {
+    //     this.tree.scrollTo(this.tree.getSelectedItem());
+    // }
 
     /**
      * 展开左侧
@@ -391,11 +417,19 @@ public class RedisMainController extends ParentStageController {
     //     return list;
     // }
 
-    /**
-     * 清空消息
-     */
-    @FXML
-    private void clearMsg() {
-        this.msgArea.clear();
+    // /**
+    //  * 清空消息
+    //  */
+    // @FXML
+    // private void clearMsg() {
+    //     this.msgArea.clear();
+    // }
+
+    @Override
+    public List<SubStageController> getSubControllers() {
+        List<SubStageController> list = new ArrayList<>();
+        list.add(this.connectController);
+        list.add(this.messageController);
+        return list;
     }
 }

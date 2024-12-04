@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
@@ -21,14 +22,18 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.Re
     }
 
     @Override
-    public RedisConnectTreeItem parent() {
+    public RedisDatabaseTreeItem parent() {
         TreeItem<?> parent = this.getParent();
-        return (RedisConnectTreeItem) parent;
+        return (RedisDatabaseTreeItem) parent;
+    }
+
+    public RedisConnect redisConnect(){
+        return this.parent().info();
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-        RedisEventUtil.terminalOpen(this.parent().value());
+        RedisEventUtil.terminalOpen(this.redisConnect());
     }
 
     /**

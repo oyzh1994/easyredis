@@ -8,13 +8,11 @@ import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
-import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.TreeCell;
@@ -22,8 +20,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  * redis树
@@ -32,7 +28,7 @@ import lombok.experimental.Accessors;
  * @since 2023/1/29
  */
 // @Accessors(chain = true, fluent = true)
-public class RedisConnectTreeView extends RichTreeView implements EventListener {
+public class RedisConnectTreeView extends RichTreeView implements FXEventListener {
 
     // /**
     //  * 搜索中标志位

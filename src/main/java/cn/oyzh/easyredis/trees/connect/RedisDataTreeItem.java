@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
@@ -23,6 +24,10 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
     public RedisDatabaseTreeItem parent() {
         TreeItem<?> treeItem = super.getParent();
         return (RedisDatabaseTreeItem) treeItem;
+    }
+
+    public RedisConnect redisConnect(){
+        return this.parent().info();
     }
 
     @Override
