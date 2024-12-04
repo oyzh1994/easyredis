@@ -15,6 +15,7 @@ import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -62,6 +63,11 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
 //            RedisEventUtil.treeChildChanged();
 //            this.flushLocal();
 //        });
+    }
+
+    @Override
+    public RedisTreeView getTreeView() {
+        return (RedisTreeView) super.getTreeView();
     }
 
     /**

@@ -81,6 +81,11 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     }
 
     @Override
+    public RedisTreeView getTreeView() {
+        return (RedisTreeView) super.getTreeView();
+    }
+
+    @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
