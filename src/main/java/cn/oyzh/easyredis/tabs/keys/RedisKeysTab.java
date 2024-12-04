@@ -100,8 +100,20 @@ public class RedisKeysTab extends DynamicTab {
         return (RedisKeysTabController) super.controller();
     }
 
+    /**
+     * ttl更新事件
+     */
+    public void flushTTL() {
+        this.controller().flushTTL();
+    }
+
     public RedisDatabaseTreeItem treeItem() {
         return this.controller().treeItem();
+    }
+
+    public int dbIndex() {
+        RedisDatabaseTreeItem treeItem = this.treeItem();
+        return treeItem == null ? -1 : treeItem.dbIndex();
     }
 
     public RedisClient client() {
@@ -278,6 +290,16 @@ public class RedisKeysTab extends DynamicTab {
                 RedisKeyTab<?> keyTab = RedisKeyTab.ofItem(this.activeItem);
                 RedisKeyInfoTab infoTab = new RedisKeyInfoTab(this.activeItem);
                 this.tabPane.setTab(keyTab, infoTab);
+            }
+        }
+
+        /**
+         * 刷新ttl
+         */
+        public void flushTTL() {
+            RedisKeyTab<?> keyTab = this.tabPane.getTab(0);
+            if (keyTab != null) {
+                keyTab.flushTTL();
             }
         }
     }

@@ -28,8 +28,8 @@ public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, R extends Redis
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisDatabaseTreeItem parent) {
-        super(value, parent);
+    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisKeysTreeView treeView) {
+        super(value, treeView);
     }
 
     /**

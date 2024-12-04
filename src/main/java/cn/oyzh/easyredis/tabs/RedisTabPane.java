@@ -5,14 +5,11 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.RedisFilterMainEvent;
-import cn.oyzh.easyredis.event.RedisKeyRenamedEvent;
 import cn.oyzh.easyredis.event.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
-import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
-import cn.oyzh.easyredis.event.TreeChildSelectedEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
@@ -24,7 +21,6 @@ import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
-import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
@@ -33,7 +29,6 @@ import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
@@ -308,20 +303,20 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    /**
-     * 获取键tab
-     *
-     * @param item 树节点
-     * @return 键tab
-     */
-    public RedisKeyTab<?> getKeyTab(TreeItem<?> item) {
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof RedisKeyTab<?> nodeTab && nodeTab.treeItem() == item) {
-                return nodeTab;
-            }
-        }
-        return null;
-    }
+    // /**
+    //  * 获取键tab
+    //  *
+    //  * @param item 树节点
+    //  * @return 键tab
+    //  */
+    // public RedisKeyTab<?> getKeyTab(TreeItem<?> item) {
+    //     for (Tab tab : this.getTabs()) {
+    //         if (tab instanceof RedisKeyTab<?> nodeTab && nodeTab.treeItem() == item) {
+    //             return nodeTab;
+    //         }
+    //     }
+    //     return null;
+    // }
 
     /**
      * 获取键tab列表
@@ -338,25 +333,25 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         return list;
     }
 
-    /**
-     * 初始化节点tab
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    public void treeChildSelected(TreeChildSelectedEvent event) {
-        if (event != null && event.data() != null) {
-            RedisKeyTab keyTab = this.getKeyTab(event.data());
-            if (keyTab == null) {
-                keyTab = RedisKeyTab.ofItem(event.data());
-                super.addTab(keyTab);
-            }
-            // 选中节点
-            this.select(keyTab);
-            // // 初始化节点
-            // keyTab.init(event.data());
-        }
-    }
+    // /**
+    //  * 初始化节点tab
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // public void treeChildSelected(TreeChildSelectedEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         RedisKeyTab keyTab = this.getKeyTab(event.data());
+    //         if (keyTab == null) {
+    //             keyTab = RedisKeyTab.ofItem(event.data());
+    //             super.addTab(keyTab);
+    //         }
+    //         // 选中节点
+    //         this.select(keyTab);
+    //         // // 初始化节点
+    //         // keyTab.init(event.data());
+    //     }
+    // }
 
     private RedisKeysTab getKeysTab(RedisDatabaseTreeItem treeItem) {
         for (Tab tab : this.getTabs()) {
@@ -367,8 +362,17 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         return null;
     }
 
+    private RedisKeysTab getKeysTab(RedisConnect connect, int dbIndex) {
+        for (Tab tab : this.getTabs()) {
+            if (tab instanceof RedisKeysTab tab1 && tab1.redisConnect() == connect && tab1.dbIndex() == dbIndex) {
+                return tab1;
+            }
+        }
+        return null;
+    }
+
     /**
-     * 初始化节点tab
+     * 打开连接事件
      *
      * @param event 事件
      */
@@ -384,40 +388,40 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    /**
-     * zset反转视图时间
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
-        if (event != null && event.data() != null) {
-            RedisKeyTab keyTab = this.getKeyTab(event.data());
-            if (keyTab != null) {
-                keyTab.closeTab();
-            }
-            keyTab = RedisKeyTab.ofItem(event.data());
-            super.addTab(keyTab);
-            // 选中节点
-            this.select(keyTab);
-            // // 初始化节点
-            // keyTab.init(event.data());
-        }
-    }
+    // /**
+    //  * zset反转视图事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         RedisKeyTab keyTab = this.getKeyTab(event.data());
+    //         if (keyTab != null) {
+    //             keyTab.closeTab();
+    //         }
+    //         keyTab = RedisKeyTab.ofItem(event.data());
+    //         super.addTab(keyTab);
+    //         // 选中节点
+    //         this.select(keyTab);
+    //         // // 初始化节点
+    //         // keyTab.init(event.data());
+    //     }
+    // }
 
-    /**
-     * 键更名事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void keyRenamed(RedisKeyRenamedEvent event) {
-        RedisKeyTab<?> tab = this.getKeyTab(event.data());
-        if (tab != null && tab.treeItem() == event.data()) {
-            tab.flushGraphic();
-            tab.flushTitle();
-        }
-    }
+    // /**
+    //  * 键更名事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void keyRenamed(RedisKeyRenamedEvent event) {
+    //     RedisKeyTab<?> tab = this.getKeyTab(event.data());
+    //     if (tab != null && tab.treeItem() == event.data()) {
+    //         tab.flushGraphic();
+    //         tab.flushTitle();
+    //     }
+    // }
 
     /**
      * ttl更新事件
@@ -426,7 +430,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void ttlUpdated(RedisKeyTTLUpdatedEvent event) {
-        RedisKeyTab<?> tab = this.getKeyTab(event.data());
+        RedisKeysTab tab = this.getKeysTab(event.data(), event.dbIndex());
         if (tab != null) {
             tab.flushTTL();
         }

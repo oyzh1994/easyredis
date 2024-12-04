@@ -133,31 +133,24 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @return redis树键
      */
     private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
-        RedisDatabaseTreeItem dbItem = this.dbItem();
         if (node instanceof RedisStringKey stringNode) {
-            return new RedisStringKeyTreeItem(stringNode, dbItem);
+            return new RedisStringKeyTreeItem(stringNode, this.getTreeView());
         }
-
         if (node instanceof RedisListKey listNode) {
-            return new RedisListKeyTreeItem(listNode, dbItem);
+            return new RedisListKeyTreeItem(listNode, this.getTreeView());
         }
-
         if (node instanceof RedisSetKey setNode) {
-            return new RedisSetKeyTreeItem(setNode, dbItem);
+            return new RedisSetKeyTreeItem(setNode, this.getTreeView());
         }
-
         if (node instanceof RedisZSetKey zSetNode) {
-            return new RedisZSetKeyTreeItem(zSetNode, dbItem);
+            return new RedisZSetKeyTreeItem(zSetNode, this.getTreeView());
         }
-
         if (node instanceof RedisHashKey hashNode) {
-            return new RedisHashKeyTreeItem(hashNode, dbItem);
+            return new RedisHashKeyTreeItem(hashNode, this.getTreeView());
         }
-
         if (node instanceof RedisStreamKey streamNode) {
-            return new RedisStreamKeyTreeItem(streamNode, dbItem);
+            return new RedisStreamKeyTreeItem(streamNode, this.getTreeView());
         }
-
         return null;
     }
 

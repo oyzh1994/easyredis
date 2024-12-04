@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.event;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
@@ -15,15 +16,19 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyTTLUpdatedEvent extends Event<RedisKeyTreeItem<?>> implements  EventFormatter {
+public class RedisKeyTTLUpdatedEvent extends Event<RedisConnect> implements  EventFormatter {
 
     private Long ttl;
+
+    private String key;
+
+    private int dbIndex;
 
     @Override
     public String eventFormat() {
         return String.format(
                 "[%s] "+ I18nHelper.ttlUpdated() +"[%s-db%s] ttl:%s",
-                this.data().info().getName(), data().key(), this.data().dbIndex(), this.ttl
+                this.data().getName(), this.key, this.dbIndex, this.ttl
         );
     }
 }

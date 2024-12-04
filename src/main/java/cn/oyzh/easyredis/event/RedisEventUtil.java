@@ -3,10 +3,9 @@ package cn.oyzh.easyredis.event;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
@@ -200,28 +199,31 @@ public class RedisEventUtil {
     /**
      * 键添加事件
      *
-     * @param item redis树节点
+     * @param connect redis连接
      * @param type 键类型
      * @param key  键名称
      */
-    public static void keyAdded(RedisDatabaseTreeItem item, String type, String key) {
+    public static void keyAdded(RedisConnect connect, String type, String key, int dbIndex) {
         RedisKeyAddedEvent event = new RedisKeyAddedEvent();
-        event.data(item);
+        event.data(connect);
         event.key(key);
         event.type(type);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 
     /**
      * 键删除事件
      *
-     * @param item redis树节点
-     * @param key  键名称
+     * @param connect redis连接
+     * @param key     键名称
+     * @param dbIndex 库
      */
-    public static void keyDeleted(RedisDatabaseTreeItem item, String key) {
+    public static void keyDeleted(RedisConnect connect, String key, int dbIndex) {
         RedisKeyDeletedEvent event = new RedisKeyDeletedEvent();
-        event.data(item);
+        event.data(connect);
         event.key(key);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -323,13 +325,15 @@ public class RedisEventUtil {
     /**
      * 键ttl更新事件
      *
-     * @param item redis树节点
+     * @param connect redis树节点
      * @param ttl  ttl值
      */
-    public static void keyTTLUpdated(RedisKeyTreeItem<?> item, Long ttl) {
+    public static void keyTTLUpdated(RedisConnect connect, Long ttl,String key,int dbIndex) {
         RedisKeyTTLUpdatedEvent event = new RedisKeyTTLUpdatedEvent();
-        event.data(item);
+        event.data(connect);
         event.ttl(ttl);
+        event.key(key);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 

@@ -12,9 +12,9 @@ import lombok.NonNull;
  */
 public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
 
-    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisDatabaseTreeItem parent) {
-        super(value, parent);
-        this.setValue(new RedisKeyTreeItemValue(this));
+    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisKeysTreeView treeView) {
+        super(value, treeView);
+        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override

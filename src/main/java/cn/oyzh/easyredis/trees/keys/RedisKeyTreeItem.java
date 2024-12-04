@@ -9,14 +9,14 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.i18n.I18nHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
@@ -40,12 +40,12 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
     @Accessors(fluent = true, chain = true)
     protected K value;
 
-    /**
-     * db树组件
-     */
-    @Getter
-    @Accessors(fluent = true, chain = true)
-    protected RedisDatabaseTreeItem dbItem;
+    // /**
+    //  * db树组件
+    //  */
+    // @Getter
+    // @Accessors(fluent = true, chain = true)
+    // protected RedisDatabaseTreeItem dbItem;
 
     /**
      * 键数据属性
@@ -107,17 +107,19 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
         return this.dataProperty.get() != null;
     }
 
-    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDatabaseTreeItem dbItem) {
-        super(dbItem.getTreeView());
+    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisKeysTreeView treeView) {
+        // super(dbItem.getTreeView());
+        super(treeView);
         super.setFilterable(true);
-        this.dbItem = dbItem;
+        // this.dbItem = dbItem;
         this.value = value;
+        this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        FXMenuItem rename =  MenuItemHelper.renameKey("12", this::rename);
+        FXMenuItem rename = MenuItemHelper.renameKey("12", this::rename);
         FXMenuItem delete = MenuItemHelper.deleteKey("12", this::delete);
         FXMenuItem moveKey = MenuItemHelper.moveKey("12", this::moveKey);
         FXMenuItem copyKey = MenuItemHelper.copyKey("12", this::copyKey);
@@ -158,16 +160,21 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
     //     return null;
     // }
 
+    @Override
+    public RedisKeysTreeView getTreeView() {
+        return (RedisKeysTreeView) super.getTreeView();
+    }
+
     /**
      * redis信息
      *
      * @return redis信息
      */
     public RedisConnect info() {
-        if (this.dbItem != null) {
-            return this.dbItem.info();
-        }
-        return null;
+        // if (this.dbItem != null) {
+        //     return this.dbItem.info();
+        // }
+        return this.getTreeView().redisConnect();
     }
 
     /**
@@ -176,10 +183,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
      * @return redis连接名称
      */
     public String infoName() {
-        if (this.dbItem != null) {
-            return this.info().getName();
-        }
-        return null;
+        // if (this.dbItem != null) {
+        //     return this.info().getName();
+        // }
+        return this.getTreeView().redisConnect().getName();
     }
 
     /**
@@ -188,10 +195,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
      * @return db索引值
      */
     public int dbIndex() {
-        if (this.dbItem != null) {
-            return this.dbItem.dbIndex();
-        }
-        return -1;
+        // if (this.dbItem != null) {
+        //     return this.dbItem.dbIndex();
+        // }
+        return this.getTreeView().dbIndex();
     }
 
     /**
@@ -218,10 +225,10 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
      * @return redis客户端
      */
     public RedisClient client() {
-        if (this.dbItem != null) {
-            return this.dbItem.client();
-        }
-        return null;
+        // if (this.dbItem != null) {
+        //     return this.dbItem.client();
+        // }
+        return this.getTreeView().client();
     }
 
     /**
@@ -288,7 +295,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
             // 移除此键
             this.remove();
             // 发送事件
-            RedisEventUtil.keyDeleted(this.dbItem, this.key());
+            RedisEventUtil.keyDeleted(this.info(), this.key(), this.dbIndex());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

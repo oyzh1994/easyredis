@@ -17,9 +17,9 @@ import java.util.Set;
  */
 public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetRow> {
 
-    public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisDatabaseTreeItem parent) {
-        super(value, parent);
-        this.setValue(new RedisKeyTreeItemValue(this));
+    public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisKeysTreeView treeView) {
+        super(value, treeView);
+        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override

@@ -153,9 +153,9 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisDatabaseTreeItem parent) {
-        super(value, parent);
-        this.setValue(new RedisKeyTreeItemValue(this));
+    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisKeysTreeView treeView) {
+        super(value, treeView);
+        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     /**

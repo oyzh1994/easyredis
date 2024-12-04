@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, RedisListRow> {
 
-    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisDatabaseTreeItem parent) {
-        super(value, parent);
-        this.setValue(new RedisKeyTreeItemValue(this));
+    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisKeysTreeView treeView) {
+        super(value, treeView);
+        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override
