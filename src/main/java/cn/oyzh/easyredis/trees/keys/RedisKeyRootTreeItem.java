@@ -34,13 +34,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisUnnamedTreeItem extends RichTreeItem<RedisUnnamedTreeItem.RedisUnnamedTreeItemValue> {
+public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItem.RedisUnnamedTreeItemValue> {
     /**
      * 设置
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisUnnamedTreeItem(@NonNull RichTreeView treeView) {
+    public RedisKeyRootTreeItem(@NonNull RichTreeView treeView) {
         super(treeView);
         this.setValue(new RedisUnnamedTreeItemValue());
     }
@@ -49,7 +49,7 @@ public class RedisUnnamedTreeItem extends RichTreeItem<RedisUnnamedTreeItem.Redi
 
         @Override
         public String name() {
-            return "库列表";
+            return "";
         }
     }
 
@@ -69,9 +69,7 @@ public class RedisUnnamedTreeItem extends RichTreeItem<RedisUnnamedTreeItem.Redi
         return list;
     }
 
-
     public void loadItems(RedisDatabaseTreeItem dbTreeItem) {
-
         this.setLoaded(true);
         this.setLoading(true);
         Task task = TaskBuilder.newBuilder()

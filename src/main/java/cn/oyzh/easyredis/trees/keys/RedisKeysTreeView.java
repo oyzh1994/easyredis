@@ -37,26 +37,33 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
         return this.dbItem.info();
     }
 
-    public RedisKeysTreeView() {
-        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
-        this.setRoot(new RedisUnnamedTreeItem(this));
+    @Override
+    protected void initTreeView() {
+        super.initTreeView();
+        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
+    }
+
+    @Override
+    protected void initRoot() {
+        super.initRoot();
+        this.setRoot(new RedisKeyRootTreeItem(this));
         super.setShowRoot(false);
     }
 
     @Override
-    public RedisConnectTreeItemFilter itemFilter() {
+    public RedisKeyTreeItemFilter itemFilter() {
         // 初始化过滤器
         if (this.itemFilter == null) {
-            RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
+            RedisKeyTreeItemFilter filter = new RedisKeyTreeItemFilter();
             filter.initFilters();
             this.itemFilter = filter;
         }
-        return (RedisConnectTreeItemFilter) this.itemFilter;
+        return (RedisKeyTreeItemFilter) this.itemFilter;
     }
 
     @Override
-    public RedisUnnamedTreeItem getRoot() {
-        return (RedisUnnamedTreeItem) super.getRoot();
+    public RedisKeyRootTreeItem getRoot() {
+        return (RedisKeyRootTreeItem) super.getRoot();
     }
 
     /**
