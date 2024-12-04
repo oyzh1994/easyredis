@@ -12,17 +12,13 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisKeyInfoTab extends DynamicTab implements Initializable {
+public class RedisKeyInfoTab extends DynamicTab {
 
     public RedisKeyInfoTab(RedisKeyTreeItem<?> treeItem) {
         super();
@@ -53,12 +49,6 @@ public class RedisKeyInfoTab extends DynamicTab implements Initializable {
     @Override
     protected String url() {
         return "/tabs/keys/redisKeyInfoTab.fxml";
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // 选中状态监听
-        this.selectedProperty().addListener((observable, oldValue, newValue) -> this.controller().initObject());
     }
 
     /**
@@ -146,6 +136,7 @@ public class RedisKeyInfoTab extends DynamicTab implements Initializable {
             this.treeItem = treeItem;
             this.redisKey = treeItem.value();
             this.client = treeItem.client();
+            this.initObject();
         }
 
         /**
