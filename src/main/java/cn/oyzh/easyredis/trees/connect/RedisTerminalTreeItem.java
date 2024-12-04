@@ -1,15 +1,19 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
 
 /**
  * @author oyzh
  * @since 2023/1/30
  */
-public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItemValue> {
+public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.RedisTerminalTreeItemValue> {
 
     public RedisTerminalTreeItem(RichTreeView treeView) {
         super(treeView);
@@ -25,5 +29,27 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItemVal
     @Override
     public void onPrimaryDoubleClick() {
         RedisEventUtil.terminalOpen(this.parent().value());
+    }
+
+    /**
+     * zk树节点值
+     *
+     * @author oyzh
+     * @since 2023/4/7
+     */
+    public static class RedisTerminalTreeItemValue extends RichTreeItemValue {
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new TerminalSVGGlyph("10");
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public String name() {
+            return I18nHelper.terminal();
+        }
     }
 }

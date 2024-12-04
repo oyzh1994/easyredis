@@ -12,8 +12,10 @@ import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -38,7 +40,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
+public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItem.RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
      * redis信息储存
@@ -378,6 +380,33 @@ public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItemValue> imp
         if (item instanceof RedisConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    /**
+     * redis 根节点值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisRootTreeItemValue extends RedisTreeItemValue {
+
+        public RedisRootTreeItemValue() {
+            // this.flushGraphic();
+            // this.flushText();
+        }
+
+        @Override
+        public String name() {
+            return I18nHelper.redis();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/redis.svg", 10);
+            }
+            return super.graphic();
         }
     }
 }

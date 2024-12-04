@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;

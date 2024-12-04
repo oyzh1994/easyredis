@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.trees.keys.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;

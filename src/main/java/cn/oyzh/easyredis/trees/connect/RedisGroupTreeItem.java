@@ -9,8 +9,11 @@ import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.easyredis.trees.RedisTreeItem;
+import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -20,6 +23,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -34,7 +38,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> implements RedisConnectManager {
+public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItem.RedisGroupTreeItemValue> implements RedisConnectManager {
 
     /**
      * 分组对象
@@ -221,6 +225,52 @@ public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItemValue> i
         if (item instanceof RedisConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    /**
+     * Redis Group键值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    @Accessors(chain = true, fluent = true)
+    public static class RedisGroupTreeItemValue extends RedisTreeItemValue {
+
+        // private final RedisGroupTreeItem item;
+
+        public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
+            super(item);
+            // this.flushGraphic();
+            // this.flushGraphicColor();
+            // this.name(item.value().getName());
+        }
+
+        @Override
+        protected RedisGroupTreeItem item() {
+            return (RedisGroupTreeItem) super.item();
+        }
+
+        @Override
+        public String name() {
+            return this.item().value().getName();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new GroupSVGGlyph("10");
+                this.graphic.disableTheme();
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public Color graphicColor() {
+            if (this.item.isChildEmpty()) {
+                return super.graphicColor();
+            }
+            return Color.DEEPSKYBLUE;
         }
     }
 }
