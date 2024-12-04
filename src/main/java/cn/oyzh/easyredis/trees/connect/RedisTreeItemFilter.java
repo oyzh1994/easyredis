@@ -1,8 +1,7 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
 import lombok.Getter;

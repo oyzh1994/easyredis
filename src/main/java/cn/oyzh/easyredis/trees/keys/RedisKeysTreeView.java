@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.common.thread.Task;
-import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
@@ -9,24 +7,18 @@ import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
-import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.RedisTreeItemFilter;
+import cn.oyzh.easyredis.trees.connect.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
-import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * redis树

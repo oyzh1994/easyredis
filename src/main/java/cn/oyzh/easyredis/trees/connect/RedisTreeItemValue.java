@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;

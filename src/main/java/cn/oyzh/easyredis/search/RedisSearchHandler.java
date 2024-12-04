@@ -1,7 +1,7 @@
 // package cn.oyzh.easyredis.search;
 //
 // import cn.oyzh.easyredis.trees.RedisTreeItem;
-// import cn.oyzh.easyredis.trees.RedisTreeView;
+// import cn.oyzh.easyredis.trees.connect.RedisTreeView;
 // import cn.oyzh.easyredis.trees.connect.RedisDBTreeItem;
 // import cn.oyzh.easyredis.trees.type.RedisTypeTreeItem;
 // import cn.oyzh.fx.common.util.TextUtil;

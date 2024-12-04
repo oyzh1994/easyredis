@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.event.RedisAddConnectEvent;
@@ -9,8 +9,6 @@ import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;

@@ -8,8 +8,6 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
-import cn.oyzh.easyredis.trees.RedisTreeItemValue;
-import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;

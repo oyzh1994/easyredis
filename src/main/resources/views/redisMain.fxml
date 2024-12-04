@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisMsgTextArea?>
 <?import cn.oyzh.easyredis.tabs.RedisTabPane?>
-<?import cn.oyzh.easyredis.trees.RedisTreeView?>
+<?import cn.oyzh.easyredis.trees.connect.RedisTreeView?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>

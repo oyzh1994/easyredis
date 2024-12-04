@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees.server;
 
-import cn.oyzh.easyredis.trees.RedisTreeItemValue;
+import cn.oyzh.easyredis.trees.connect.RedisTreeItemValue;
 import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
