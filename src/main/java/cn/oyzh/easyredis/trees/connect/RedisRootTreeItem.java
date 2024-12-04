@@ -11,10 +11,10 @@ import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -40,7 +40,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisRootTreeItem extends RedisTreeItem<RedisRootTreeItem.RedisRootTreeItemValue> implements RedisConnectManager {
+public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
      * redis信息储存

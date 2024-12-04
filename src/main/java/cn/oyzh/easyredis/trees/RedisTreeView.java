@@ -14,6 +14,7 @@ import cn.oyzh.easyredis.trees.connect.RedisRootTreeItem;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -42,7 +43,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
 
     public RedisTreeView() {
         this.dragContent = "redis_tree_drag";
-        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RedisTreeCell());
+        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
         // 初始化根节点
         super.setRoot(new RedisRootTreeItem(this));
         this.getRoot().expend();

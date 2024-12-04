@@ -13,12 +13,13 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -43,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/22
  */
-public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItem.RedisConnectTreeItemValue> {
+public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.RedisConnectTreeItemValue> {
 
     /**
      * redis信息
@@ -72,6 +73,11 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItem.Red
     public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisTreeView treeView) {
         super(treeView);
         this.value(value);
+    }
+
+    @Override
+    public RedisTreeView getTreeView() {
+        return (RedisTreeView) super.getTreeView();
     }
 
     /**

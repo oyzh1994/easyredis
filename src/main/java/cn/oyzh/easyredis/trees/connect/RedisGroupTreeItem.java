@@ -8,11 +8,11 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.RedisTreeItemValue;
 import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
@@ -38,7 +38,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class RedisGroupTreeItem extends RedisTreeItem<RedisGroupTreeItem.RedisGroupTreeItemValue> implements RedisConnectManager {
+public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGroupTreeItemValue> implements RedisConnectManager {
 
     /**
      * 分组对象

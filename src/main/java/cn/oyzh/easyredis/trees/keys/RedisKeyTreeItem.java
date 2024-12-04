@@ -9,9 +9,9 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -31,7 +31,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/30
  */
-public abstract class RedisKeyTreeItem<K extends RedisKey> extends RedisTreeItem<RedisKeyTreeItemValue> {
+public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<RedisKeyTreeItemValue> {
 
     /**
      * redis键

@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.trees.server;
 
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.RedisTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 
 /**
@@ -12,7 +12,7 @@ import cn.oyzh.fx.gui.treeView.RichTreeView;
  * @author oyzh
  * @since 2023/8/10
  */
-public class RedisServerInfoTreeItem extends RedisTreeItem<RedisServerInfoTreeItemValue> {
+public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeItemValue> {
 
     public RedisServerInfoTreeItem(RichTreeView treeView) {
         super(treeView);
