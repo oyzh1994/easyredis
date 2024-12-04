@@ -21,6 +21,7 @@ import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.trees.RedisTreeView;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
@@ -89,7 +90,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisDatabaseTreeItem(Integer dbIndex, RedisKeysTreeView treeView) {
+    public RedisDatabaseTreeItem(Integer dbIndex, RedisTreeView treeView) {
         super(treeView);
         // super.setFilterable(true);
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
@@ -211,18 +212,18 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         fxView.display();
     }
 
-    @Override
-    public void reloadChild() {
-        if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
-            this._loadChild();
-        }
-    }
+    // @Override
+    // public void reloadChild() {
+    //     if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
+    //         this._loadChild();
+    //     }
+    // }
 
-    @Override
-    public synchronized void doFilter(RichTreeItemFilter itemFilter) {
-        super.doFilter(itemFilter);
-        this.flushValue();
-    }
+    // @Override
+    // public synchronized void doFilter(RichTreeItemFilter itemFilter) {
+    //     super.doFilter(itemFilter);
+    //     this.flushValue();
+    // }
 
     // /**
     //  * cluster模式加载子节点
@@ -658,10 +659,25 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     /**
      * 加载子节点
      */
+    @Override
     public void loadChild() {
-        if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
-            this._loadChild();
+        // if (!this.isWaiting() && !this.isLoaded() && !this.isLoading()) {
+        //     this._loadChild();
+        // }
+        if (!this.isLoaded()) {
+            try {
+                this.setLoaded(true);
+                RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
+                RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
+                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
+                this.setChild(List.of(item1, item2, item3));
+                this.expend();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                this.setLoaded(false);
+            }
         }
+
     }
 
     /**
@@ -698,9 +714,15 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         return null;
     }
 
+    // @Override
+    // public RedisKeysTreeView getTreeView() {
+    //     return (RedisKeysTreeView) super.getTreeView();
+    // }
+
+
     @Override
-    public RedisKeysTreeView getTreeView() {
-        return (RedisKeysTreeView) super.getTreeView();
+    public RedisConnectTreeItem parent() {
+        return (RedisConnectTreeItem) super.parent();
     }
 
     /**
@@ -709,7 +731,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.getTreeView().client();
+        return this.parent().client();
     }
 
     /**

@@ -23,6 +23,7 @@ import cn.oyzh.easyredis.tabs.keys.RedisKeysTab;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tabs.DynamicTabPane;
@@ -341,9 +342,9 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
         }
     }
 
-    private RedisKeysTab getKeysTab(RedisConnect info) {
+    private RedisKeysTab getKeysTab(RedisDatabaseTreeItem treeItem) {
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof RedisKeysTab tab1 && tab1.redisConnect() == info) {
+            if (tab instanceof RedisKeysTab tab1 && tab1.treeItem() == treeItem) {
                 return tab1;
             }
         }
@@ -358,12 +359,11 @@ public class RedisTabPane extends DynamicTabPane implements EventListener {
     @EventSubscribe
     public void connectOpened(RedisConnectOpenedEvent event) {
         if (event != null && event.data() != null) {
-            RedisKeysTab connectTab = this.getKeysTab(event.redisConnect());
+            RedisKeysTab connectTab = this.getKeysTab(event.data());
             if (connectTab == null) {
                 connectTab = new RedisKeysTab(event.data());
                 super.addTab(connectTab);
             }
-            // 选中节点
             this.select(connectTab);
         }
     }

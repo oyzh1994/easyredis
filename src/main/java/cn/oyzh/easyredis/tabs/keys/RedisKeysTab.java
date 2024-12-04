@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
@@ -27,7 +28,7 @@ import lombok.experimental.Accessors;
  */
 public class RedisKeysTab extends DynamicTab {
 
-    public RedisKeysTab(RedisConnectTreeItem treeItem) {
+    public RedisKeysTab(RedisDatabaseTreeItem treeItem) {
         super();
         super.flush();
         this.controller().init(treeItem);
@@ -58,7 +59,7 @@ public class RedisKeysTab extends DynamicTab {
         return (RedisKeysTabController) super.controller();
     }
 
-    public RedisConnectTreeItem treeItem() {
+    public RedisDatabaseTreeItem treeItem() {
         return this.controller().treeItem();
     }
 
@@ -88,18 +89,18 @@ public class RedisKeysTab extends DynamicTab {
 
         @Getter
         @Accessors(fluent = true, chain = false)
-        private RedisConnectTreeItem treeItem;
+        private RedisDatabaseTreeItem treeItem;
 
         @FXML
         private RedisKeysTreeView treeView;
 
-        public void init(RedisConnectTreeItem treeItem) {
+        public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
                 this.client = treeItem.client();
-                this.treeView.client(this.client);
+                this.treeView.dbItem(this.treeItem);
                 // 加载根节点
-                this.treeView.loadDatabases();
+                this.treeView.loadItems();
             } catch (Exception ex) {
                 MessageBox.exception(ex);
             }

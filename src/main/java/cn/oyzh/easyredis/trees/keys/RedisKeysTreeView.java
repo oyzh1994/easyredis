@@ -1,5 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyCopiedEvent;
@@ -14,6 +16,7 @@ import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -36,10 +39,10 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     @Getter
     @Setter
     @Accessors(fluent = true, chain = false)
-    private RedisClient client;
+    private RedisDatabaseTreeItem dbItem;
 
     public RedisConnect redisConnect() {
-        return this.client.redisInfo();
+        return this.dbItem.info();
     }
 
     public RedisKeysTreeView() {
@@ -127,12 +130,17 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
         this.filter();
     }
 
-    public void loadDatabases() {
-        int databases = this.client().databases();
-        List<TreeItem<?>> items = new ArrayList<>(databases);
-        for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-            items.add(new RedisDatabaseTreeItem(dbIndex, this));
-        }
-        this.getRoot().setChild(items);
+    public void loadItems() {
+        // getRoot().loadItems(this.dbItem);
+        getRoot().loadChild1(this.dbItem);
     }
+    //
+    // public void loadDatabases() {
+    //     int databases = this.client().databases();
+    //     List<TreeItem<?>> items = new ArrayList<>(databases);
+    //     for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
+    //         items.add(new RedisDatabaseTreeItem(dbIndex, this));
+    //     }
+    //     this.getRoot().setChild(items);
+    // }
 }

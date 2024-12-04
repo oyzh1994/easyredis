@@ -135,13 +135,16 @@ public class RedisConnectTreeItem extends RedisTreeItem<RedisConnectTreeItem.Red
         try {
             // 哨兵模式
             if (this.client.isSentinelMode()) {
-                RedisServerInfoTreeItem item1 = new RedisServerInfoTreeItem(this.getTreeView());
-                this.setChild(item1);
+                this.setChild(new RedisServerInfoTreeItem(this.getTreeView()));
+            } else if (this.client.isClusterMode()) {// cluster集群模式
+                this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
             } else {// 其他模式
-                RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
-                RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
-                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
-                this.setChild(List.of(item1, item2, item3));
+                int databases = this.client().databases();
+                List<TreeItem<?>> items = new ArrayList<>(databases);
+                for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
+                    items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
+                }
+                this.setChild(items);
             }
             return true;
         } catch (Exception ex) {

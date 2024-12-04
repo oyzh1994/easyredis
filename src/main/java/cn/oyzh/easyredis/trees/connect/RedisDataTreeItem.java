@@ -20,9 +20,9 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
     }
 
     @Override
-    public RedisConnectTreeItem parent() {
+    public RedisDatabaseTreeItem parent() {
         TreeItem<?> treeItem = super.getParent();
-        return (RedisConnectTreeItem) treeItem;
+        return (RedisDatabaseTreeItem) treeItem;
     }
 
     @Override

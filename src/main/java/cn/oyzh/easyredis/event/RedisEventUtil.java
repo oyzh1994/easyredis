@@ -462,7 +462,7 @@ public class RedisEventUtil {
      *
      * @param client zk客户端
      */
-    public static void connectionOpened(RedisConnectTreeItem client) {
+    public static void connectionOpened(RedisDatabaseTreeItem client) {
         RedisConnectOpenedEvent event = new RedisConnectOpenedEvent();
         event.data(client);
         EventUtil.postSync(event);
