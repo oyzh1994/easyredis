@@ -50,7 +50,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      */
     private final RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
 
-    public RedisRootTreeItem(@NonNull RedisTreeView treeView) {
+    public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
         // 初始化子节点
@@ -63,8 +63,8 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     }
 
     @Override
-    public RedisTreeView getTreeView() {
-        return (RedisTreeView) super.getTreeView();
+    public RedisConnectTreeView getTreeView() {
+        return (RedisConnectTreeView) super.getTreeView();
     }
 
     /**

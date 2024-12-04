@@ -87,7 +87,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisDatabaseTreeItem(Integer dbIndex, RedisTreeView treeView) {
+    public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
         super(treeView);
         // super.setFilterable(true);
         this.dbIndex = dbIndex == null ? 0 : dbIndex;

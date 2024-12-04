@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.fx.RedisMsgTextArea;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisTreeView;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.event.EventSubscribe;
@@ -52,7 +52,7 @@ public class RedisMainController extends ParentStageController {
      * 左侧redis树
      */
     @FXML
-    public RedisTreeView tree;
+    public RedisConnectTreeView tree;
 
     /**
      * 左侧组件

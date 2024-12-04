@@ -16,7 +16,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisTreeItemFilter implements RichTreeItemFilter {
+public class RedisConnectTreeItemFilter implements RichTreeItemFilter {
 
     /**
      * 排除set键

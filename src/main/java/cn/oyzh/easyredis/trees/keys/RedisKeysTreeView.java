@@ -7,8 +7,8 @@ import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
-import cn.oyzh.easyredis.trees.connect.RedisTreeItemFilter;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItemFilter;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
@@ -44,14 +44,14 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     }
 
     @Override
-    public RedisTreeItemFilter itemFilter() {
+    public RedisConnectTreeItemFilter itemFilter() {
         // 初始化过滤器
         if (this.itemFilter == null) {
-            RedisTreeItemFilter filter = new RedisTreeItemFilter();
+            RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
             filter.initFilters();
             this.itemFilter = filter;
         }
-        return (RedisTreeItemFilter) this.itemFilter;
+        return (RedisConnectTreeItemFilter) this.itemFilter;
     }
 
     @Override

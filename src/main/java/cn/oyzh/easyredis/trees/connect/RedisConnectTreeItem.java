@@ -67,14 +67,14 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      */
     private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
 
-    public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisTreeView treeView) {
+    public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisConnectTreeView treeView) {
         super(treeView);
         this.value(value);
     }
 
     @Override
-    public RedisTreeView getTreeView() {
-        return (RedisTreeView) super.getTreeView();
+    public RedisConnectTreeView getTreeView() {
+        return (RedisConnectTreeView) super.getTreeView();
     }
 
     /**

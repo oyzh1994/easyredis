@@ -55,7 +55,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
      */
     private final RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
 
-    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisTreeView treeView) {
+    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisConnectTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new RedisGroupTreeItemValue(this));
@@ -79,8 +79,8 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     }
 
     @Override
-    public RedisTreeView getTreeView() {
-        return (RedisTreeView) super.getTreeView();
+    public RedisConnectTreeView getTreeView() {
+        return (RedisConnectTreeView) super.getTreeView();
     }
 
     @Override

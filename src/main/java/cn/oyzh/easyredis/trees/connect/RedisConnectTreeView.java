@@ -31,7 +31,7 @@ import lombok.experimental.Accessors;
  * @since 2023/1/29
  */
 @Accessors(chain = true, fluent = true)
-public class RedisTreeView extends RichTreeView implements EventListener {
+public class RedisConnectTreeView extends RichTreeView implements EventListener {
 
     /**
      * 搜索中标志位
@@ -39,7 +39,7 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     @Getter
     private volatile boolean searching;
 
-    public RedisTreeView() {
+    public RedisConnectTreeView() {
         this.dragContent = "redis_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
         // 初始化根节点
@@ -62,14 +62,14 @@ public class RedisTreeView extends RichTreeView implements EventListener {
     }
 
     @Override
-    public RedisTreeItemFilter itemFilter() {
+    public RedisConnectTreeItemFilter itemFilter() {
         // 初始化过滤器
         if (this.itemFilter == null) {
-            RedisTreeItemFilter filter = new RedisTreeItemFilter();
+            RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
             filter.initFilters();
             this.itemFilter = filter;
         }
-        return (RedisTreeItemFilter) this.itemFilter;
+        return (RedisConnectTreeItemFilter) this.itemFilter;
     }
 
     @Override

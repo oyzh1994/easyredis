@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisMsgTextArea?>
 <?import cn.oyzh.easyredis.tabs.RedisTabPane?>
-<?import cn.oyzh.easyredis.trees.connect.RedisTreeView?>
+<?import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
@@ -90,7 +90,7 @@
                 </FlexFlowPane>
                 <!-- <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" prefHeight="60" -->
                 <!--             flexWidth="100% - 2"/> -->
-                <RedisTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
+                <RedisConnectTreeView fx:id="tree" flexHeight="100% - 60" flexWidth="100%"/>
             </FlexVBox>
         </FXTab>
         <FXTab text="%base.msg">
