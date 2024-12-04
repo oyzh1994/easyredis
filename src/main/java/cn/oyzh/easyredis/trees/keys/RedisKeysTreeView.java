@@ -39,15 +39,15 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
 
     @Override
     protected void initTreeView() {
-        super.initTreeView();
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
+        super.initTreeView();
     }
 
     @Override
     protected void initRoot() {
-        super.initRoot();
         this.setRoot(new RedisRootKeyTreeItem(this));
         super.setShowRoot(false);
+        super.initRoot();
     }
 
     @Override

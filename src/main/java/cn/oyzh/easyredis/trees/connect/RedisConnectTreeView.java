@@ -36,12 +36,26 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     // @Getter
     // private volatile boolean searching;
 
-    public RedisConnectTreeView() {
+    // public RedisConnectTreeView() {
+    //     this.dragContent = "redis_connect_tree_drag";
+    //     this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
+    //     // 初始化根节点
+    //     super.setRoot(new RedisRootTreeItem(this));
+    //     this.getRoot().expend();
+    // }
+
+    @Override
+    protected void initTreeView() {
         this.dragContent = "redis_connect_tree_drag";
         this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
-        // 初始化根节点
+        super.initTreeView();
+    }
+
+    @Override
+    protected void initRoot() {
         super.setRoot(new RedisRootTreeItem(this));
         this.getRoot().expend();
+        super.initRoot();
     }
 
     @Override
@@ -58,16 +72,16 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
         });
     }
 
-    @Override
-    public RedisConnectTreeItemFilter itemFilter() {
-        // 初始化过滤器
-        if (this.itemFilter == null) {
-            RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
-            // filter.initFilters();
-            this.itemFilter = filter;
-        }
-        return (RedisConnectTreeItemFilter) this.itemFilter;
-    }
+    // @Override
+    // public RedisConnectTreeItemFilter itemFilter() {
+    //     // 初始化过滤器
+    //     if (this.itemFilter == null) {
+    //         RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
+    //         // filter.initFilters();
+    //         this.itemFilter = filter;
+    //     }
+    //     return (RedisConnectTreeItemFilter) this.itemFilter;
+    // }
 
     @Override
     public RedisRootTreeItem getRoot() {
@@ -83,41 +97,41 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
         }
     }
 
-    /**
-     * 键添加事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void keyAdded(RedisKeyAddedEvent event) {
-        if (event != null && event.data() != null) {
-            event.data().onKeyAdded(event.key());
-        }
-    }
-
-    /**
-     * 键删除事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void keyDeleted(RedisKeyDeletedEvent event) {
-        if (event != null && event.data() != null) {
-            event.data().onKeyDeleted(event.key());
-        }
-    }
-
-    /**
-     * 键刷新事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void keyFlushed(RedisKeyFlushedEvent event) {
-        if (event != null && event.data() != null) {
-            event.data().reloadChild();
-        }
-    }
+    // /**
+    //  * 键添加事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void keyAdded(RedisKeyAddedEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         event.data().onKeyAdded(event.key());
+    //     }
+    // }
+    //
+    // /**
+    //  * 键删除事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void keyDeleted(RedisKeyDeletedEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         event.data().onKeyDeleted(event.key());
+    //     }
+    // }
+    //
+    // /**
+    //  * 键刷新事件
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // private void keyFlushed(RedisKeyFlushedEvent event) {
+    //     if (event != null && event.data() != null) {
+    //         event.data().reloadChild();
+    //     }
+    // }
 
     // /**
     //  * 键复制事件
