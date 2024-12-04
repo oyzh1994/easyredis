@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.search;
+package cn.oyzh.easyredis.fx.keys;
 
 import cn.oyzh.fx.plus.controls.textfield.LimitTextField;
 import cn.oyzh.fx.plus.event.AnonymousEvent;

@@ -109,6 +109,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
 
     public RedisKeyTreeItem(@NonNull K value, @NonNull RedisDatabaseTreeItem dbItem) {
         super(dbItem.getTreeView());
+        super.setFilterable(true);
         this.dbItem = dbItem;
         this.value = value;
     }

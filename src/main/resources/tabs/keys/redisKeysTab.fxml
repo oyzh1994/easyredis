@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.search.RedisKeySearchTextField?>
-<?import cn.oyzh.easyredis.search.RedisKeySearchTypeComboBox?>
+<?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
+<?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
 <?import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>

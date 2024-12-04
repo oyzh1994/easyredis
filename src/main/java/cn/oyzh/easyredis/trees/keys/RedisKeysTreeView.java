@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItemFilter;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
@@ -46,7 +45,7 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     @Override
     protected void initRoot() {
         super.initRoot();
-        this.setRoot(new RedisKeyRootTreeItem(this));
+        this.setRoot(new RedisRootKeyTreeItem(this));
         super.setShowRoot(false);
     }
 
@@ -62,8 +61,8 @@ public class RedisKeysTreeView extends RichTreeView implements EventListener {
     }
 
     @Override
-    public RedisKeyRootTreeItem getRoot() {
-        return (RedisKeyRootTreeItem) super.getRoot();
+    public RedisRootKeyTreeItem getRoot() {
+        return (RedisRootKeyTreeItem) super.getRoot();
     }
 
     /**

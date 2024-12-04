@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.search;
+package cn.oyzh.easyredis.fx.keys;
 
 import cn.oyzh.fx.plus.controls.popup.ListViewPopup;
 import cn.oyzh.i18n.I18nHelper;

@@ -20,6 +20,7 @@ import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 import redis.clients.jedis.params.ScanParams;
@@ -34,14 +35,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItem.RedisUnnamedTreeItemValue> {
+public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.RedisUnnamedTreeItemValue> {
     /**
      * 设置
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisKeyRootTreeItem(@NonNull RichTreeView treeView) {
+    public RedisRootKeyTreeItem(@NonNull RichTreeView treeView) {
         super(treeView);
+        super.setFilterable(true);
         this.setValue(new RedisUnnamedTreeItemValue());
     }
 
@@ -49,7 +51,7 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItem.Redi
 
         @Override
         public String name() {
-            return "";
+            return I18nHelper.keys();
         }
     }
 

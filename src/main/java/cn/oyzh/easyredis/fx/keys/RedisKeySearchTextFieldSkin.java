@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.search;
+package cn.oyzh.easyredis.fx.keys;
 
 import cn.oyzh.fx.gui.skin.ClearableTextFieldSkin;
 import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph;

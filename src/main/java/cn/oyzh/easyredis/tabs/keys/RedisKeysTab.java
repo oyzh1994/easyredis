@@ -3,7 +3,8 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField;
+import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
@@ -14,7 +15,6 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -94,6 +94,12 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private RedisKeysTreeView treeView;
 
+        @FXML
+        private RedisKeySearchTextField searchKW;
+
+        @FXML
+        private RedisKeySearchTypeComboBox searchType;
+
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
@@ -106,7 +112,15 @@ public class RedisKeysTab extends DynamicTab {
             }
         }
 
-        public void doSearch(ActionEvent actionEvent) {
+        @FXML
+        private void doSearch() {
+            String kw = this.searchKW.getTextTrim();
+            int mode = this.searchKW.getSelectedIndex();
+            int type = this.searchType.getSelectedIndex();
+            this.treeView.itemFilter().setKw(kw);
+            this.treeView.itemFilter().setType((byte) type);
+            this.treeView.itemFilter().setMatchMode((byte) mode);
+            this.treeView.filter();
         }
 
         public void sortAsc(MouseEvent event) {
@@ -123,6 +137,8 @@ public class RedisKeysTab extends DynamicTab {
             super.bindListeners();
             // 监听选中变化
             this.treeView.selectItemChanged(this::initItem);
+            // 搜索处理
+            this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
         }
 
         private RedisKeyTreeItem<?> activeItem;

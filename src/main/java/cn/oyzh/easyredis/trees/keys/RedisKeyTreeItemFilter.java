@@ -20,13 +20,18 @@ import java.util.List;
 public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
 
     /**
-     * 0. 所有节点
-     * 1. 收藏节点
-     * 2. 持久节点
+     * 0. 所有键
+     * 1. 收藏键
+     * 2. string
+     * 3. list
+     * 4. set
+     * 5. zset
+     * 6. hash
+     * 7. stream
      */
     @Setter
     @Getter
-    private int type;
+    private byte type;
 
     /**
      * 关键字
@@ -43,7 +48,7 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
      */
     @Getter
     @Setter
-    private int matchMode;
+    private byte matchMode;
 
     /**
      * 过滤内容列表
@@ -64,14 +69,38 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
 
     @Override
     public boolean test(RichTreeItem<?> item) {
-            // 根节点不参与过滤
-        if(item instanceof RedisKeyRootTreeItem){
+        // 根节点不参与过滤
+        if (item instanceof RedisRootKeyTreeItem) {
             return true;
         }
         // 根节点直接展示
         if (item instanceof RedisKeyTreeItem<?> treeItem) {
             // 仅收藏
             if (1 == this.type && !treeItem.isCollect()) {
+                return false;
+            }
+            // string
+            if (2 == this.type && !(treeItem instanceof RedisStringKeyTreeItem)) {
+                return false;
+            }
+            // list
+            if (3 == this.type && !(treeItem instanceof RedisListKeyTreeItem)) {
+                return false;
+            }
+            // set
+            if (4 == this.type && !(treeItem instanceof RedisSetKeyTreeItem)) {
+                return false;
+            }
+            // zset
+            if (5 == this.type && !(treeItem instanceof RedisZSetKeyTreeItem)) {
+                return false;
+            }
+            // hash
+            if (6 == this.type && !(treeItem instanceof RedisHashKeyTreeItem)) {
+                return false;
+            }
+            // stream
+            if (7 == this.type && !(treeItem instanceof RedisStreamKeyTreeItem)) {
                 return false;
             }
             String key = treeItem.key();
@@ -96,5 +125,4 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
         }
         return true;
     }
-
 }

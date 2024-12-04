@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.search;
+package cn.oyzh.easyredis.fx.keys;
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
@@ -22,6 +22,7 @@ public class RedisKeySearchTypeComboBox extends FlexComboBox<String> implements 
     public List<String> values(Locale locale) {
         this.clearItems();
         this.addItem(I18nHelper.allKeys());
+        this.addItem(I18nHelper.collectKeys());
         this.addItem("string");
         this.addItem("list");
         this.addItem("set");
