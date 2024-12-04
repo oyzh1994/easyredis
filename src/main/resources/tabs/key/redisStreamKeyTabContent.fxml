@@ -135,5 +135,5 @@
             <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100%" fx:id="streamID"/>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
+    <!-- <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/> -->
 </FlexTabPane>

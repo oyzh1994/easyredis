@@ -3,11 +3,10 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
-import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
@@ -149,10 +148,10 @@ public class RedisKeysTab extends DynamicTab {
         }
 
         private void initData() {
-            if (this.activeItem instanceof RedisStringKeyTreeItem treeItem) {
-                RedisStringKeyTab keyTab = new RedisStringKeyTab();
-                keyTab.init(treeItem);
-                this.tabPane.setTab(keyTab);
+            if (this.activeItem != null) {
+                RedisKeyTab<?> keyTab = RedisKeyTab.ofItem(this.activeItem);
+                RedisKeyInfoTab infoTab = new RedisKeyInfoTab(this.activeItem);
+                this.tabPane.setTab(keyTab, infoTab);
             }
         }
     }

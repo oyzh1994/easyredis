@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
+import cn.oyzh.easyredis.tabs.keys.RedisKeyInfoTab;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
@@ -71,7 +72,7 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> extends 
      * 键信息
      */
     @FXML
-    private RedisKeyInfoContent keyInfoController;
+    private RedisKeyInfoTab.RedisKeyInfoController keyInfoController;
 
     /**
      * 初始化

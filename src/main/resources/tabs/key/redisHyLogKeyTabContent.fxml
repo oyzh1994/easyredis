@@ -99,5 +99,5 @@
             <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData" flexHeight="100% - 32" flexWidth="100% - 2"/>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
+    <!-- <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/> -->
 </FlexTabPane>

@@ -199,5 +199,5 @@
             </LatitudeField>
         </FlexVBox>
     </FXTab>
-    <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/>
+    <!-- <fx:include fx:id="keyInfo" source="redisKeyInfoTabContent.fxml"/> -->
 </FlexTabPane>
