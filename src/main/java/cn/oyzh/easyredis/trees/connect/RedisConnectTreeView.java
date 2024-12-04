@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
@@ -30,18 +31,18 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/1/29
  */
-@Accessors(chain = true, fluent = true)
+// @Accessors(chain = true, fluent = true)
 public class RedisConnectTreeView extends RichTreeView implements EventListener {
 
-    /**
-     * 搜索中标志位
-     */
-    @Getter
-    private volatile boolean searching;
+    // /**
+    //  * 搜索中标志位
+    //  */
+    // @Getter
+    // private volatile boolean searching;
 
     public RedisConnectTreeView() {
-        this.dragContent = "redis_tree_drag";
-        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell());
+        this.dragContent = "redis_connect_tree_drag";
+        this.setCellFactory((Callback<TreeView<?>, TreeCell<?>>) param -> new RichTreeCell<>());
         // 初始化根节点
         super.setRoot(new RedisRootTreeItem(this));
         this.getRoot().expend();
@@ -66,7 +67,7 @@ public class RedisConnectTreeView extends RichTreeView implements EventListener 
         // 初始化过滤器
         if (this.itemFilter == null) {
             RedisConnectTreeItemFilter filter = new RedisConnectTreeItemFilter();
-            filter.initFilters();
+            // filter.initFilters();
             this.itemFilter = filter;
         }
         return (RedisConnectTreeItemFilter) this.itemFilter;
@@ -187,14 +188,14 @@ public class RedisConnectTreeView extends RichTreeView implements EventListener 
     //     this.filter();
     // }
 
-    /**
-     * 树节点过滤
-     */
-    @EventSubscribe
-    private void treeChildFilter(TreeChildFilterEvent event) {
-        this.itemFilter().initFilters();
-        this.filter();
-    }
+    // /**
+    //  * 树节点过滤
+    //  */
+    // @EventSubscribe
+    // private void treeChildFilter(TreeChildFilterEvent event) {
+    //     this.itemFilter().initFilters();
+    //     this.filter();
+    // }
 
     /**
      * 添加连接事件

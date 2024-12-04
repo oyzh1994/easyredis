@@ -470,4 +470,7 @@ public class RedisEventUtil {
 
     public static void keySelected(RedisKeyTreeItem<?> activeItem) {
     }
+
+    public static void treeItemChanged(TreeItem<?> treeItem) {
+    }
 }

@@ -175,33 +175,33 @@ public class RedisMainController extends ParentStageController {
         RedisEventUtil.terminalOpen();
     }
 
-    /**
-     * 执行过滤
-     */
-    private void filter() {
-        TaskManager.startDelay("redis:tree:filter", () -> {
-            this.tree.disable();
-            if (this.onlyCollect.isSelected()) {
-                this.tree.itemFilter().setOnlyCollect(true);
-                this.tree.itemFilter().setExcludeSetType(false);
-                this.tree.itemFilter().setExcludeHashType(false);
-                this.tree.itemFilter().setExcludeListType(false);
-                this.tree.itemFilter().setExcludeZSetType(false);
-                this.tree.itemFilter().setExcludeStringType(false);
-                this.tree.itemFilter().setExcludeStreamType(false);
-            } else {
-                this.tree.itemFilter().setOnlyCollect(false);
-                this.tree.itemFilter().setExcludeSetType(!this.showSet.isSelected());
-                this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
-                this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
-                this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
-                this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
-                this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
-            }
-            this.tree.filter();
-            this.tree.enable();
-        }, 100);
-    }
+    // /**
+    //  * 执行过滤
+    //  */
+    // private void filter() {
+    //     TaskManager.startDelay("redis:tree:filter", () -> {
+    //         this.tree.disable();
+    //         if (this.onlyCollect.isSelected()) {
+    //             this.tree.itemFilter().setOnlyCollect(true);
+    //             this.tree.itemFilter().setExcludeSetType(false);
+    //             this.tree.itemFilter().setExcludeHashType(false);
+    //             this.tree.itemFilter().setExcludeListType(false);
+    //             this.tree.itemFilter().setExcludeZSetType(false);
+    //             this.tree.itemFilter().setExcludeStringType(false);
+    //             this.tree.itemFilter().setExcludeStreamType(false);
+    //         } else {
+    //             this.tree.itemFilter().setOnlyCollect(false);
+    //             this.tree.itemFilter().setExcludeSetType(!this.showSet.isSelected());
+    //             this.tree.itemFilter().setExcludeListType(!this.showList.isSelected());
+    //             this.tree.itemFilter().setExcludeHashType(!this.showHash.isSelected());
+    //             this.tree.itemFilter().setExcludeZSetType(!this.showZSet.isSelected());
+    //             this.tree.itemFilter().setExcludeStringType(!this.showString.isSelected());
+    //             this.tree.itemFilter().setExcludeStreamType(!this.showStream.isSelected());
+    //         }
+    //         this.tree.filter();
+    //         this.tree.enable();
+    //     }, 100);
+    // }
 
     /**
      * redis信息修改事件
@@ -235,7 +235,7 @@ public class RedisMainController extends ParentStageController {
         EventUtil.register(this.tree);
         EventUtil.register(this.tabPane);
         EventUtil.register(this.msgArea);
-        this.filter();
+        // this.filter();
 
         // 设置上次保存的页面拉伸
         if (this.setting.isRememberPageResize()) {
@@ -291,31 +291,31 @@ public class RedisMainController extends ParentStageController {
 
     @Override
     protected void bindListeners() {
-        // 左侧栏业务
-        this.onlyCollect.selectedChanged((obs, o, n) -> {
-            if (n) {
-                this.showSet.disable();
-                this.showZSet.disable();
-                this.showHash.disable();
-                this.showList.disable();
-                this.showString.disable();
-                this.showStream.disable();
-            } else {
-                this.showSet.enable();
-                this.showZSet.enable();
-                this.showHash.enable();
-                this.showList.enable();
-                this.showString.enable();
-                this.showStream.enable();
-            }
-            this.filter();
-        });
-        this.showSet.selectedChanged((obs, o, n) -> this.filter());
-        this.showHash.selectedChanged((obs, o, n) -> this.filter());
-        this.showList.selectedChanged((obs, o, n) -> this.filter());
-        this.showZSet.selectedChanged((obs, o, n) -> this.filter());
-        this.showString.selectedChanged((obs, o, n) -> this.filter());
-        this.showStream.selectedChanged((obs, o, n) -> this.filter());
+        // // 左侧栏业务
+        // this.onlyCollect.selectedChanged((obs, o, n) -> {
+        //     if (n) {
+        //         this.showSet.disable();
+        //         this.showZSet.disable();
+        //         this.showHash.disable();
+        //         this.showList.disable();
+        //         this.showString.disable();
+        //         this.showStream.disable();
+        //     } else {
+        //         this.showSet.enable();
+        //         this.showZSet.enable();
+        //         this.showHash.enable();
+        //         this.showList.enable();
+        //         this.showString.enable();
+        //         this.showStream.enable();
+        //     }
+        //     this.filter();
+        // });
+        // this.showSet.selectedChanged((obs, o, n) -> this.filter());
+        // this.showHash.selectedChanged((obs, o, n) -> this.filter());
+        // this.showList.selectedChanged((obs, o, n) -> this.filter());
+        // this.showZSet.selectedChanged((obs, o, n) -> this.filter());
+        // this.showString.selectedChanged((obs, o, n) -> this.filter());
+        // this.showStream.selectedChanged((obs, o, n) -> this.filter());
         this.sortAsc.managedBindVisible();
         this.sortDesc.managedBindVisible();
         // redis树变化事件

@@ -18,54 +18,54 @@ import java.util.List;
  */
 public class RedisConnectTreeItemFilter implements RichTreeItemFilter {
 
-    /**
-     * 排除set键
-     */
-    @Setter
-    @Getter
-    private boolean excludeSetType;
-
-    /**
-     * 排除list键
-     */
-    @Setter
-    @Getter
-    private boolean excludeListType;
-
-    /**
-     * 排除zset键
-     */
-    @Setter
-    @Getter
-    private boolean excludeZSetType;
-
-    /**
-     * 排除hash键
-     */
-    @Setter
-    @Getter
-    private boolean excludeHashType;
-
-    /**
-     * 排除string键
-     */
-    @Setter
-    @Getter
-    private boolean excludeStringType;
-
-    /**
-     * 排除stream键
-     */
-    @Setter
-    @Getter
-    private boolean excludeStreamType;
-
-    /**
-     * 仅看收藏键
-     */
-    @Setter
-    @Getter
-    private boolean onlyCollect;
+    // /**
+    //  * 排除set键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeSetType;
+    //
+    // /**
+    //  * 排除list键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeListType;
+    //
+    // /**
+    //  * 排除zset键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeZSetType;
+    //
+    // /**
+    //  * 排除hash键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeHashType;
+    //
+    // /**
+    //  * 排除string键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeStringType;
+    //
+    // /**
+    //  * 排除stream键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean excludeStreamType;
+    //
+    // /**
+    //  * 仅看收藏键
+    //  */
+    // @Setter
+    // @Getter
+    // private boolean onlyCollect;
 
     // /**
     //  * redis主页搜索处理
@@ -73,23 +73,23 @@ public class RedisConnectTreeItemFilter implements RichTreeItemFilter {
     // @Resource
     // private RedisSearchHandler searchHandler;
 
-    /**
-     * 过滤内容列表
-     */
-    private final List<RedisFilter> filters = new ArrayList<>();
+    // /**
+    //  * 过滤内容列表
+    //  */
+    // private final List<RedisFilter> filters = new ArrayList<>();
+    //
+    // /**
+    //  * 过滤配置储存
+    //  */
+    // private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
-    /**
-     * 过滤配置储存
-     */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
-
-    /**
-     * 初始化过滤配置
-     */
-    public void initFilters() {
-        this.filters.clear();
-        this.filters.addAll(this.filterStore.loadEnable());
-    }
+    // /**
+    //  * 初始化过滤配置
+    //  */
+    // public void initFilters() {
+    //     this.filters.clear();
+    //     this.filters.addAll(this.filterStore.loadEnable());
+    // }
 
     @Override
     public boolean test(RichTreeItem<?> item) {
