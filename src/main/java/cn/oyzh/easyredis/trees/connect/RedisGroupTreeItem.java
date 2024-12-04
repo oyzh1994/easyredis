@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.i18n.I18nHelper;
@@ -238,7 +239,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
      * @since 2023/11/21
      */
     @Accessors(chain = true, fluent = true)
-    public static class RedisGroupTreeItemValue extends RedisTreeItemValue {
+    public static class RedisGroupTreeItemValue extends RichTreeItemValue {
 
         // private final RedisGroupTreeItem item;
 

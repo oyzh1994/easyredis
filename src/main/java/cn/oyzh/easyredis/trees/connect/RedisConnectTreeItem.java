@@ -17,6 +17,7 @@ import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -492,7 +493,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * @since 2023/08/10
      */
     @Accessors(chain = true, fluent = true)
-    public static class RedisConnectTreeItemValue extends RedisTreeItemValue {
+    public static class RedisConnectTreeItemValue extends RichTreeItemValue {
 
         // /**
         //  * 节点

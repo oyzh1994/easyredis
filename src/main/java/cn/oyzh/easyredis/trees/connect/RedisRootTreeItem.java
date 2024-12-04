@@ -13,6 +13,7 @@ import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
@@ -392,7 +393,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      * @author oyzh
      * @since 2023/11/21
      */
-    public static class RedisRootTreeItemValue extends RedisTreeItemValue {
+    public static class RedisRootTreeItemValue extends RichTreeItemValue {
 
         public RedisRootTreeItemValue() {
             // this.flushGraphic();

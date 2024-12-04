@@ -3,8 +3,12 @@ package cn.oyzh.easyredis.trees.server;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
+import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
 import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.i18n.I18nHelper;
 
 /**
  * redis服务信息树节点
@@ -12,7 +16,7 @@ import cn.oyzh.fx.gui.treeView.RichTreeView;
  * @author oyzh
  * @since 2023/8/10
  */
-public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeItemValue> {
+public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeItem.RedisServerInfoTreeItemValue> {
 
     public RedisServerInfoTreeItem(RichTreeView treeView) {
         super(treeView);
@@ -38,5 +42,32 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
     @Override
     public void onPrimarySingleClick() {
         this.showServerInfo();
+    }
+
+    /**
+     * redis 服务信息值
+     *
+     * @author oyzh
+     * @since 2023/11/21
+     */
+    public static class RedisServerInfoTreeItemValue extends RichTreeItemValue {
+
+        public RedisServerInfoTreeItemValue() {
+            // this.flushGraphic();
+            // this.flushText();
+        }
+
+        @Override
+        public String name() {
+            return I18nHelper.serverInfo();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new InfoSVGGlyph("11");
+            }
+            return super.graphic();
+        }
     }
 }
