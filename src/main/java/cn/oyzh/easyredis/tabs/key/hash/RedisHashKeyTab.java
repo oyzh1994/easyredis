@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
@@ -58,7 +58,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/21
      */
-    public static class RedisHashKeyTabController extends RedisRowKeyTabContent<RedisHashKeyTreeItem, RedisHashRow> {
+    public static class RedisHashKeyTabController extends RedisRowKeyTabController<RedisHashKeyTreeItem, RedisHashRow> {
 
         /**
          * 数据撤销

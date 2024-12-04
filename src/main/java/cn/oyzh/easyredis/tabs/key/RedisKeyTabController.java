@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
-import cn.oyzh.easyredis.tabs.keys.RedisKeyInfoTab;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
@@ -31,7 +30,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> extends DynamicTabController {
+public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> extends DynamicTabController {
 
     /**
      * 根节点
@@ -68,11 +67,11 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> extends 
     @FXML
     protected FXLabel loadTime;
 
-    /**
-     * 键信息
-     */
-    @FXML
-    private RedisKeyInfoTab.RedisKeyInfoController keyInfoController;
+    // /**
+    //  * 键信息
+    //  */
+    // @FXML
+    // private RedisKeyInfoTab.RedisKeyInfoController keyInfoController;
 
     /**
      * 初始化
@@ -94,8 +93,8 @@ public abstract class RedisKeyTabContent<T extends RedisKeyTreeItem<?>> extends 
         this.collect.setVisible(!this.treeItem.isCollect());
         this.unCollect.setVisible(this.treeItem.isCollect());
 
-        // 初始化键信息
-        this.keyInfoController.init(treeItem);
+        // // 初始化键信息
+        // this.keyInfoController.init(treeItem);
 
         // 初始化节点
         this.initNode();

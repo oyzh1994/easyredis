@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
@@ -52,7 +52,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
      * @author oyzh
      * @since 2023/07/07
      */
-    public static class RedisStreamKeyTabController extends RedisRowKeyTabContent<RedisStreamKeyTreeItem, RedisStreamRow> {
+    public static class RedisStreamKeyTabController extends RedisRowKeyTabController<RedisStreamKeyTreeItem, RedisStreamRow> {
 
         /**
          * 消息id

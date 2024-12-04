@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisListKey;
 import cn.oyzh.easyredis.redis.row.RedisListRow;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -56,7 +56,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/21
      */
-    public static class RedisListKeyTabController extends RedisRowKeyTabContent<RedisListKeyTreeItem, RedisListRow> {
+    public static class RedisListKeyTabController extends RedisRowKeyTabController<RedisListKeyTreeItem, RedisListRow> {
 
         /**
          * 数据撤销

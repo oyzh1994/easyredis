@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTabContent;
+import cn.oyzh.easyredis.tabs.key.RedisKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
@@ -45,7 +45,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
      * @author oyzh
      * @since 2024/05/17
      */
-    public static class RedisHylogKeyTabController extends RedisKeyTabContent<RedisStringKeyTreeItem> {
+    public static class RedisHylogKeyTabController extends RedisKeyTabController<RedisStringKeyTreeItem> {
 
         // /**
         //  * 数据大小

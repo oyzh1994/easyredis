@@ -35,11 +35,11 @@ import lombok.experimental.Accessors;
  */
 public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends DynamicTab {
 
-    /**
-     * 标签打开时间
-     */
-    @Getter
-    private final long openedTime = System.currentTimeMillis();
+    // /**
+    //  * 标签打开时间
+    //  */
+    // @Getter
+    // private final long openedTime = System.currentTimeMillis();
 
     /**
      * redis树节点
@@ -94,8 +94,8 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem<?>> extends Dynamic
     }
 
     @Override
-    public RedisKeyTabContent<T> controller() {
-        return (RedisKeyTabContent<T>) super.controller();
+    public RedisKeyTabController<T> controller() {
+        return (RedisKeyTabController<T>) super.controller();
     }
 
     /**
