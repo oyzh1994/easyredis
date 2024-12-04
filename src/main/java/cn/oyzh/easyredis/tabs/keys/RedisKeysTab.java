@@ -1,20 +1,20 @@
 package cn.oyzh.easyredis.tabs.keys;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
-import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -29,28 +29,67 @@ public class RedisKeysTab extends DynamicTab {
 
     public RedisKeysTab(RedisDatabaseTreeItem treeItem) {
         super();
-        super.flush();
         this.controller().init(treeItem);
+        super.flush();
     }
 
     @Override
+    protected String getTabTitle() {
+        String name = this.treeItem().info().getName();
+        Integer dbIndex = this.treeItem().dbIndex();
+        if (dbIndex != null) {
+            name += "@" + dbIndex;
+        }
+        RedisKeyTreeItem<?> keyItem = this.activeItem();
+        if (keyItem != null) {
+            name += "#" + keyItem.key();
+        }
+        return name;
+    }
+
+
+    @Override
     public void flushGraphic() {
+        if (this.treeItem() == null) {
+            return;
+        }
+        SVGGlyph graphic = this.treeItem().itemGraphic();
+        if (graphic == null) {
+            return;
+        }
+        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        if (glyph == null || !StringUtil.notEquals(glyph.getUrl(), graphic.getUrl())) {
+            glyph = graphic.clone();
+            glyph.disableTheme();
+            this.setGraphic(glyph);
+        }
+    }
+
+    @Override
+    public void flushGraphicColor() {
+        SVGGlyph graphic = this.treeItem().itemGraphic();
+        if (graphic == null) {
+            return;
+        }
         SVGGlyph glyph = (SVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new FilterSVGGlyph("12");
-            glyph.setCursor(Cursor.DEFAULT);
-            this.graphic(glyph);
+            return;
         }
+        if (graphic.getColor() != glyph.getColor()) {
+            glyph.setColor(graphic.getColor());
+        }
+    }
+
+    /**
+     * redis键节点
+     */
+    public RedisKeyTreeItem<?> activeItem() {
+        return this.controller().getActiveItem();
     }
 
     @Override
     protected String url() {
         return "/tabs/keys/redisKeysTab.fxml";
-    }
-
-    @Override
-    protected String getTabTitle() {
-        return I18nResourceBundle.i18nString("base.title.filter.main");
     }
 
     @Override
@@ -82,6 +121,12 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private FlexTabPane tabPane;
 
+        /**
+         * 左侧节点
+         */
+        @FXML
+        private FlexVBox leftBox;
+
         @Getter
         @Accessors(fluent = true, chain = false)
         private RedisClient client;
@@ -90,12 +135,24 @@ public class RedisKeysTab extends DynamicTab {
         @Accessors(fluent = true, chain = false)
         private RedisDatabaseTreeItem treeItem;
 
+        /**
+         * 当前激活的节点
+         */
+        @Getter
+        private RedisKeyTreeItem<?> activeItem;
+
         @FXML
         private RedisKeysTreeView treeView;
 
+        /**
+         * 搜索内容
+         */
         @FXML
         private RedisKeySearchTextField searchKW;
 
+        /**
+         * 搜索类型
+         */
         @FXML
         private RedisKeySearchTypeComboBox searchType;
 
@@ -160,9 +217,26 @@ public class RedisKeysTab extends DynamicTab {
             this.treeView.selectItemChanged(this::initItem);
             // 搜索处理
             this.searchType.selectedIndexChanged((observable, oldValue, newValue) -> this.doSearch());
+            // 拉伸辅助
+            NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+            resizeHelper.widthLimit(240f, 750f);
+            resizeHelper.initResizeEvent();
         }
 
-        private RedisKeyTreeItem<?> activeItem;
+        /**
+         * 左侧组件重新布局
+         *
+         * @param newWidth 新宽度
+         */
+        private void resizeLeft(Float newWidth) {
+            if (newWidth != null && !Float.isNaN(newWidth)) {
+                // 设置组件宽
+                this.leftBox.setRealWidth(newWidth);
+                this.tabPane.setLayoutX(newWidth);
+                this.tabPane.setFlexWidth("100% - " + newWidth);
+                this.leftBox.parentAutosize();
+            }
+        }
 
         public void initItem(TreeItem<?> treeItem) {
             if (treeItem instanceof RedisKeyTreeItem<?> keyTreeItem) {
@@ -170,8 +244,8 @@ public class RedisKeysTab extends DynamicTab {
                     this.activeItem = keyTreeItem;
                     // 初始化数据
                     this.initData();
-                    // 触发事件
-                    RedisEventUtil.keySelected(this.activeItem);
+                    // // 触发事件
+                    // RedisEventUtil.keySelected(this.activeItem);
                     // 刷新tab
                     this.flushTab();
                     this.tabPane.enable();

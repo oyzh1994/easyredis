@@ -67,7 +67,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private final int dbIndex;
+    private final Integer dbIndex;
 
     /**
      * 当前值
