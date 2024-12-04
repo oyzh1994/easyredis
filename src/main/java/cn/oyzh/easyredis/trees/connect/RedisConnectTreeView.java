@@ -97,29 +97,29 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
         }
     }
 
-    // /**
-    //  * 键添加事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @EventSubscribe
-    // private void keyAdded(RedisKeyAddedEvent event) {
-    //     if (event != null && event.data() != null) {
-    //         event.data().onKeyAdded(event.key());
-    //     }
-    // }
-    //
-    // /**
-    //  * 键删除事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @EventSubscribe
-    // private void keyDeleted(RedisKeyDeletedEvent event) {
-    //     if (event != null && event.data() != null) {
-    //         event.data().onKeyDeleted(event.key());
-    //     }
-    // }
+    /**
+     * 键添加事件
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    private void keyAdded(RedisKeyAddedEvent event) {
+        if (event != null && event.data() != null) {
+            event.data().onKeyAdded(event.key());
+        }
+    }
+
+    /**
+     * 键删除事件
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    private void keyDeleted(RedisKeyDeletedEvent event) {
+        if (event != null && event.data() != null) {
+            event.data().onKeyDeleted(event.key());
+        }
+    }
     //
     // /**
     //  * 键刷新事件

@@ -8,8 +8,16 @@ import cn.oyzh.easyredis.event.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.RedisKeysMovedEvent;
 import cn.oyzh.easyredis.event.TreeChildFilterEvent;
+import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.key.RedisHashKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisListKey;
+import cn.oyzh.easyredis.redis.key.RedisSetKey;
+import cn.oyzh.easyredis.redis.key.RedisStreamKey;
+import cn.oyzh.easyredis.redis.key.RedisStringKey;
+import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
-import cn.oyzh.event.EventListener;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.treeView.RichTreeCell;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
@@ -37,6 +45,10 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
 
     public Integer dbIndex() {
         return this.dbItem.dbIndex();
+    }
+
+    public RedisClient client() {
+        return this.dbItem.client();
     }
 
     public RedisConnect redisConnect() {
@@ -79,8 +91,8 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void keyAdded(RedisKeyAddedEvent event) {
-        if (event != null && event.data() != null) {
-            event.data().onKeyAdded(event.key());
+        if (event.data() == this.dbItem) {
+            this.getRoot().keyAdded(event.key());
         }
     }
 
@@ -91,8 +103,8 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
      */
     @EventSubscribe
     private void keyDeleted(RedisKeyDeletedEvent event) {
-        if (event != null && event.data() != null) {
-            event.data().onKeyDeleted(event.key());
+        if (event.data() == this.dbItem) {
+            this.getRoot().keyDeleted(event.key());
         }
     }
 
@@ -188,5 +200,33 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
             this.select(item);
         }
         this.refresh();
+    }
+
+    /**
+     * 初始化redis树键
+     *
+     * @param node redis键
+     * @return redis树键
+     */
+    private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
+        if (node instanceof RedisStringKey stringNode) {
+            return new RedisStringKeyTreeItem(stringNode, this.dbItem);
+        }
+        if (node instanceof RedisListKey listNode) {
+            return new RedisListKeyTreeItem(listNode, this.dbItem);
+        }
+        if (node instanceof RedisSetKey setNode) {
+            return new RedisSetKeyTreeItem(setNode, this.dbItem);
+        }
+        if (node instanceof RedisZSetKey zSetNode) {
+            return new RedisZSetKeyTreeItem(zSetNode, this.dbItem);
+        }
+        if (node instanceof RedisHashKey hashNode) {
+            return new RedisHashKeyTreeItem(hashNode, this.dbItem);
+        }
+        if (node instanceof RedisStreamKey streamNode) {
+            return new RedisStreamKeyTreeItem(streamNode, this.dbItem);
+        }
+        return null;
     }
 }

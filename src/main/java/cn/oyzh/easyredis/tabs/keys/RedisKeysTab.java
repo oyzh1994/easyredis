@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField;
 import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox;
@@ -15,6 +16,8 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -192,6 +195,18 @@ public class RedisKeysTab extends DynamicTab {
         }
 
         @FXML
+        private void addNode() {
+            StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
+            fxView.setProp("dbItem", this.treeItem);
+            fxView.display();
+        }
+
+        @FXML
+        private void refreshNode() {
+            this.treeView.loadItems();
+        }
+
+        @FXML
         private void sortAsc() {
             this.sortAsc.disappear();
             this.sortDesc.display();
@@ -208,11 +223,6 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private void positionNode() {
             this.treeView.positionItem();
-        }
-
-        @FXML
-        private void refreshNode() {
-            this.treeView.loadItems();
         }
 
         @Override

@@ -15,7 +15,6 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
@@ -38,10 +37,25 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
-    public RedisRootKeyTreeItem(@NonNull RichTreeView treeView) {
+    public RedisRootKeyTreeItem(@NonNull RedisKeysTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
         this.setValue(new RedisUnnamedTreeItemValue());
+    }
+
+    public void keyAdded(String key) {
+        RedisKeysTreeView treeView = this.getTreeView();
+        RedisKey redisKey = RedisKeyUtil.getKey(treeView.dbIndex(), key, false, false, treeView.client());
+        this.addChild(this.initItemByNode(redisKey));
+    }
+
+    public void keyDeleted(String key) {
+        for (RedisKeyTreeItem<?> keyItem : this.keyChildren()) {
+            if (StrUtil.equals(key, keyItem.key())) {
+                keyItem.remove();
+                break;
+            }
+        }
     }
 
     public static class RedisUnnamedTreeItemValue extends RichTreeItemValue {
