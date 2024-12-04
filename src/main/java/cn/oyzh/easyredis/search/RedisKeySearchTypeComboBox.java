@@ -12,7 +12,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2024/4/19
  */
-public class RedisNodeSearchTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class RedisKeySearchTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);
@@ -21,9 +21,13 @@ public class RedisNodeSearchTypeComboBox extends FlexComboBox<String> implements
     @Override
     public List<String> values(Locale locale) {
         this.clearItems();
-        this.addItem(I18nHelper.allNode());
-        this.addItem(I18nHelper.collectNode());
-        this.addItem(I18nHelper.persistentNode());
+        this.addItem(I18nHelper.allKeys());
+        this.addItem("string");
+        this.addItem("list");
+        this.addItem("set");
+        this.addItem("zset");
+        this.addItem("hash");
+        this.addItem("stream");
         return this.getItems();
     }
 }

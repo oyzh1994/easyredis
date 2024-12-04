@@ -20,7 +20,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2023/10/9
  */
-public class RedisNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
+public class RedisKeySearchTextFieldSkin extends ClearableTextFieldSkin {
 
     /**
      * 搜索历史按钮
@@ -31,7 +31,7 @@ public class RedisNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
      * 搜索历史弹窗
      */
     @Getter
-    protected RedisNodeSearchPopup popup;
+    protected RedisKeySearchPopup popup;
 
     /**
      * 显示历史弹窗组件
@@ -44,7 +44,7 @@ public class RedisNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
                 this.popup.show(this.getSkinnable());
             }
         } else {
-            this.popup = new RedisNodeSearchPopup();
+            this.popup = new RedisKeySearchPopup();
             this.popup.show(this.getSkinnable());
             this.popup.setOnIndexSelected(this::onIndexSelected);
         }
@@ -65,7 +65,7 @@ public class RedisNodeSearchTextFieldSkin extends ClearableTextFieldSkin {
         }
     }
 
-    public RedisNodeSearchTextFieldSkin(TextField textField) {
+    public RedisKeySearchTextFieldSkin(TextField textField) {
         super(textField);
         // 初始化历史按钮
         this.button = new SettingSVGGlyph();

@@ -11,7 +11,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/4/24
  */
-public class RedisNodeSearchPopup extends ListViewPopup<String> {
+public class RedisKeySearchPopup extends ListViewPopup<String> {
 
     @Override
     public List<String> getItems() {

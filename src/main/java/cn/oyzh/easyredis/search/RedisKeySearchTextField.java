@@ -14,7 +14,7 @@ import lombok.Setter;
  * @author oyzh
  * @since 2023/10/24
  */
-public class RedisNodeSearchTextField extends LimitTextField {
+public class RedisKeySearchTextField extends LimitTextField {
 
     {
         this.setPromptText(I18nHelper.contains());
@@ -29,13 +29,13 @@ public class RedisNodeSearchTextField extends LimitTextField {
      *
      * @return 皮肤
      */
-    public RedisNodeSearchTextFieldSkin skin() {
-        return (RedisNodeSearchTextFieldSkin) this.getSkin();
+    public RedisKeySearchTextFieldSkin skin() {
+        return (RedisKeySearchTextFieldSkin) this.getSkin();
     }
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new RedisNodeSearchTextFieldSkin(this) {
+        return new RedisKeySearchTextFieldSkin(this) {
             @Override
             public void onSearch(String text) {
                 super.onSearch(text);
