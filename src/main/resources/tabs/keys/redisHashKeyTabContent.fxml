@@ -26,7 +26,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab.RedisHashKeyTabController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHashKeyTab.RedisHashKeyTabController">
     <FlexFlowPane realHeight="32" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <FlowPane.margin>

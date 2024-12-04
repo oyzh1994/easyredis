@@ -18,7 +18,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
+import cn.oyzh.easyredis.tabs.keys.RedisKeyTab;
 import cn.oyzh.easyredis.tabs.keys.RedisKeysTab;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;

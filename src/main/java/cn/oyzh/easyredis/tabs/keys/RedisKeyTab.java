@@ -1,15 +1,7 @@
-package cn.oyzh.easyredis.tabs.key;
+package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.tabs.key.geo.RedisGEOKeyTab;
-import cn.oyzh.easyredis.tabs.key.hash.RedisHashKeyTab;
-import cn.oyzh.easyredis.tabs.key.hyLog.RedisHyLogKeyTab;
-import cn.oyzh.easyredis.tabs.key.list.RedisListKeyTab;
-import cn.oyzh.easyredis.tabs.key.set.RedisSetKeyTab;
-import cn.oyzh.easyredis.tabs.key.stream.RedisStreamKeyTab;
-import cn.oyzh.easyredis.tabs.key.string.RedisStringKeyTab;
-import cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTab;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
@@ -24,7 +16,6 @@ import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 /**

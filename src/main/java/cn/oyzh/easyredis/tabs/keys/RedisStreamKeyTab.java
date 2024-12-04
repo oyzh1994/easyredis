@@ -1,12 +1,10 @@
-package cn.oyzh.easyredis.tabs.key.stream;
+package cn.oyzh.easyredis.tabs.keys;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
@@ -37,7 +35,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/key/redisStreamKeyTabContent.fxml";
+        return "/tabs/keys/redisStreamKeyTabContent.fxml";
     }
 
     @Override

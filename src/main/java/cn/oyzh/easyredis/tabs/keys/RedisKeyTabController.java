@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.tabs.key;
+package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;

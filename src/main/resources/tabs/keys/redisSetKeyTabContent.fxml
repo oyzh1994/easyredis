@@ -11,25 +11,20 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.ReverseSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.key.zset.RedisZSetKeyTab.RedisZSetKeyTabController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisSetKeyTab.RedisSetKeyTabController">
     <FlexFlowPane realHeight="32" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <FlowPane.margin>
@@ -84,14 +79,8 @@
                 <Insets left="5" top="-5"/>
             </FlowPane.margin>
         </ClearableTextField>
-        <ReverseSVGGlyph fx:id="reverseView" onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip8"
-                         size="16">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </ReverseSVGGlyph>
         <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                 onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
+                 onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
             <FlowPane.margin>
                 <Insets left="5"/>
             </FlowPane.margin>
@@ -104,9 +93,8 @@
                    fixedCellSize="30">
         <columns>
             <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="50%" fx:id="value" text="%base.name"/>
-            <FlexTableColumn flexWidth="30%" fx:id="score" text="%base.score"/>
-            <FlexTableColumn flexWidth="10% - 20" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="80%" fx:id="value" text="%base.value"/>
+            <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
@@ -148,7 +136,7 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </DeleteSVGGlyph>
-        <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
+        <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" fx:id="format"
                              realWidth="120">
             <FlowPane.margin>
                 <Insets left="5" top="-4"/>
@@ -158,24 +146,6 @@
             <Insets top="9"/>
         </padding>
     </FlexFlowPane>
-    <FXSeparator text="%base.member" flexWidth="100%">
-        <VBox.margin>
-            <Insets top="5"/>
-        </VBox.margin>
-    </FXSeparator>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 505"
-                          flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
-        <HBox.margin>
-            <Insets top="5"/>
-        </HBox.margin>
-    </RichDataTextAreaPane>
-    <FXSeparator text="%base.score" flexWidth="100%">
-        <VBox.margin>
-            <Insets top="5"/>
-        </VBox.margin>
-    </FXSeparator>
-    <DecimalTextField scaleLen="5" realHeight="24" flexWidth="100%" fx:id="scoreVal"
-                      tipText="%base.score" value="0" step="5"
-                      disable="true" onKeyPressed="#onNodeDataKeyPressed">
-    </DecimalTextField>
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 402"
+                          flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
 </FlexVBox>

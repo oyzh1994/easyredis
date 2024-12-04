@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.tabs.key.geo;
+package cn.oyzh.easyredis.tabs.keys;
 
 import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.thread.TaskManager;
@@ -7,8 +7,6 @@ import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
-import cn.oyzh.easyredis.tabs.key.RedisKeyTab;
-import cn.oyzh.easyredis.tabs.key.RedisRowKeyTabController;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -44,7 +42,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/key/redisGEOKeyTabContent.fxml";
+        return "/tabs/keys/redisGEOKeyTabContent.fxml";
     }
 
     @Override
