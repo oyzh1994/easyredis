@@ -137,6 +137,12 @@ public class RedisKeysTab extends DynamicTab {
         private FlexTabPane tabPane;
 
         /**
+         * 键信息
+         */
+        @FXML
+        private RedisKeyInfoController keyInfoController;
+
+        /**
          * 左侧节点
          */
         @FXML
@@ -291,13 +297,12 @@ public class RedisKeysTab extends DynamicTab {
         private void initData() {
             if (this.activeItem != null) {
                 RedisKeyTab<?> keyTab = RedisKeyTab.ofItem(this.activeItem);
-                if (this.tabPane.tabSize() == 0 || this.tabPane.tabSize() == 1) {
-                    RedisKeyInfoTab infoTab = new RedisKeyInfoTab(this.activeItem);
-                    this.tabPane.setTab(keyTab, infoTab);
+                if (this.tabPane.tabSize() == 1) {
+                    this.tabPane.addTab(0, keyTab);
+                    this.tabPane.select(keyTab);
                 } else if (this.tabPane.tabSize() == 2) {
                     this.tabPane.setTab(0, keyTab);
-                    RedisKeyInfoTab infoTab = this.tabPane.getTab(1);
-                    infoTab.init(this.activeItem);
+                    this.keyInfoController.init(this.activeItem);
                 }
             }
         }

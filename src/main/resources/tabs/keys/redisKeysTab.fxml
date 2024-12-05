@@ -3,22 +3,21 @@
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
 <?import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortDescSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeysTab.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FlexHBox realHeight="32" flexWidth="100%">
-            <RedisKeySearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType" >
+            <RedisKeySearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
@@ -65,7 +64,6 @@
     <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
-        <FXTab text="%base.data">
-        </FXTab>
+        <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
     </FlexTabPane>
 </FlexHBox>

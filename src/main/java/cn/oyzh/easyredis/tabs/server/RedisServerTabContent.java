@@ -89,7 +89,6 @@ public class RedisServerTabContent extends DynamicTabController {
     @FXML
     private RedisAggregationContent aggregationController;
 
-
     /**
      * 属性表格
      */

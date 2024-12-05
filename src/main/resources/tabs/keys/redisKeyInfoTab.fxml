@@ -5,76 +5,83 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeyInfoTab.RedisKeyInfoController" flexHeight="100%"
-          flexWidth="100%">
-    <FlexFlowPane realHeight="32" flexWidth="100%">
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
-            <FlowPane.margin>
+<FXTab text="%base.info" xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeyInfoController">
+    <graphic>
+        <SVGGlyph url="/font/status.svg" sizeStr="12"/>
+    </graphic>
+    <FlexVBox flexHeight="100%"
+              flexWidth="100%">
+        <FlexFlowPane realHeight="32" flexWidth="100%">
+            <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
+                <FlowPane.margin>
+                    <Insets left="5"/>
+                </FlowPane.margin>
+            </CopySVGGlyph>
+            <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refresh">
+                <FlowPane.margin>
+                    <Insets left="5"/>
+                </FlowPane.margin>
+            </RefreshSVGGlyph>
+            <padding>
+                <Insets top="9"/>
+            </padding>
+        </FlexFlowPane>
+        <FlexVBox flexHeight="100% - 32" flexWidth="100%" fontSize="11">
+            <VBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
-        </CopySVGGlyph>
-        <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refresh">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </RefreshSVGGlyph>
-        <padding>
-            <Insets top="9"/>
-        </padding>
-    </FlexFlowPane>
-    <FlexVBox flexHeight="100% - 32" flexWidth="100%" fontSize="11">
-        <VBox.margin>
-            <Insets left="5"/>
-        </VBox.margin>
-        <FlexHBox flexWidth="100%" realHeight="35">
-            <SuccessLabel text="%base.encoding" realWidth="135" realHeight="30">
+            </VBox.margin>
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <SuccessLabel text="%base.encoding" realWidth="135" realHeight="30">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectEncoding" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
-                    <Insets right="5"/>
+                    <Insets top="5"/>
                 </HBox.margin>
-            </SuccessLabel>
-            <SuccessLabel fx:id="objectEncoding" realHeight="30" flexWidth="100% - 180"/>
-            <HBox.margin>
-                <Insets top="5"/>
-            </HBox.margin>
-        </FlexHBox>
-        <FlexHBox flexWidth="100%" realHeight="35">
-            <SuccessLabel text="%base.idleTime" realWidth="135" realHeight="30">
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <SuccessLabel text="%base.idleTime" realWidth="135" realHeight="30">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectIdletime" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
-                    <Insets right="5"/>
+                    <Insets top="5"/>
                 </HBox.margin>
-            </SuccessLabel>
-            <SuccessLabel fx:id="objectIdletime" realHeight="30" flexWidth="100% - 180"/>
-            <HBox.margin>
-                <Insets top="5"/>
-            </HBox.margin>
-        </FlexHBox>
-        <FlexHBox flexWidth="100%" realHeight="35">
-            <SuccessLabel text="%base.refcount" realWidth="135" realHeight="30">
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <SuccessLabel text="%base.refcount" realWidth="135" realHeight="30">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </SuccessLabel>
+                <SuccessLabel fx:id="objectRefcount" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
-                    <Insets right="5"/>
+                    <Insets top="5"/>
                 </HBox.margin>
-            </SuccessLabel>
-            <SuccessLabel fx:id="objectRefcount" realHeight="30" flexWidth="100% - 180"/>
-            <HBox.margin>
-                <Insets top="5"/>
-            </HBox.margin>
-        </FlexHBox>
-        <FlexHBox flexWidth="100%" realHeight="35">
-            <SuccessLabel text="%base.memoryUsage" realWidth="135" realHeight="30">
+            </FlexHBox>
+            <FlexHBox flexWidth="100%" realHeight="35">
+                <SuccessLabel text="%base.memoryUsage" realWidth="135" realHeight="30">
+                    <HBox.margin>
+                        <Insets right="5"/>
+                    </HBox.margin>
+                </SuccessLabel>
+                <SuccessLabel fx:id="memoryUsage" realHeight="30" flexWidth="100% - 180"/>
                 <HBox.margin>
-                    <Insets right="5"/>
+                    <Insets top="5"/>
                 </HBox.margin>
-            </SuccessLabel>
-            <SuccessLabel fx:id="memoryUsage" realHeight="30" flexWidth="100% - 180"/>
-            <HBox.margin>
-                <Insets top="5"/>
-            </HBox.margin>
-        </FlexHBox>
+            </FlexHBox>
+        </FlexVBox>
     </FlexVBox>
-</FlexVBox>
+</FXTab>
