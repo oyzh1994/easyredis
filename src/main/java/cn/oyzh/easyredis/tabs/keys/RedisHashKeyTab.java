@@ -5,8 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
-import cn.oyzh.easyredis.redis.RedisHashRow;
-import cn.oyzh.easyredis.redis.key.RedisHashKey;
+import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
@@ -47,10 +46,10 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         return (RedisHashKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisHashKey key() {
-        return (RedisHashKey) super.key();
-    }
+    // @Override
+    // public RedisHashKey key() {
+    //     return (RedisHashKey) super.key();
+    // }
 
     /**
      * hash键tab内容组件
@@ -58,7 +57,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/21
      */
-    public static class RedisHashKeyTabController extends RedisRowKeyTabController<RedisHashKeyTreeItem, RedisHashRow> {
+    public static class RedisHashKeyTabController extends RedisRowKeyTabController<RedisHashKeyTreeItem, RedisHashValue.RedisHashRow> {
 
         /**
          * 数据撤销
@@ -210,7 +209,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         }
 
         @Override
-        protected void initRow(RedisHashRow row) {
+        protected void initRow(RedisHashValue.RedisHashRow row) {
             super.initRow(row);
             if (row == null) {
                 this.hashField.clear();
@@ -228,8 +227,8 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         }
 
         @Override
-        protected List<RedisHashRow> getRows() {
-            List<RedisHashRow> rows = this.treeItem.nodeValue();
+        protected List<RedisHashValue.RedisHashRow> getRows() {
+            List<RedisHashValue.RedisHashRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()

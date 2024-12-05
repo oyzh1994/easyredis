@@ -3,8 +3,7 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
-import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.row.RedisStreamRow;
+import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
@@ -41,10 +40,10 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         return (RedisStreamKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisStreamKey key() {
-        return (RedisStreamKey) super.key();
-    }
+    // @Override
+    // public RedisStreamKey key() {
+    //     return (RedisStreamKey) super.key();
+    // }
 
     /**
      * stream键tab内容组件
@@ -52,7 +51,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
      * @author oyzh
      * @since 2023/07/07
      */
-    public static class RedisStreamKeyTabController extends RedisRowKeyTabController<RedisStreamKeyTreeItem, RedisStreamRow> {
+    public static class RedisStreamKeyTabController extends RedisRowKeyTabController<RedisStreamKeyTreeItem, RedisStreamValue.RedisStreamRow> {
 
         /**
          * 消息id
@@ -103,8 +102,8 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         }
 
         @Override
-        protected List<RedisStreamRow> getRows() {
-            List<RedisStreamRow> rows = this.treeItem.nodeValue();
+        protected List<RedisStreamValue.RedisStreamRow> getRows() {
+            List<RedisStreamValue.RedisStreamRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
@@ -124,7 +123,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         }
 
         @Override
-        protected void initRow(RedisStreamRow row) {
+        protected void initRow(RedisStreamValue.RedisStreamRow row) {
             super.initRow(row);
             if (row == null) {
                 this.nodeData.clear();

@@ -3,13 +3,7 @@ package cn.oyzh.easyredis.trees.keys;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
-import cn.oyzh.easyredis.redis.key.RedisHashKey;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.key.RedisSetKey;
-import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -50,7 +44,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     public void keyDeleted(String key) {
-        for (RedisKeyTreeItem<?> keyItem : this.keyChildren()) {
+        for (RedisKeyTreeItem keyItem : this.keyChildren()) {
             if (StringUtil.equals(key, keyItem.key())) {
                 keyItem.remove();
                 break;
@@ -71,7 +65,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      *
      * @return 当前键节点
      */
-    public List<RedisKeyTreeItem<?>> keyChildren() {
+    public List<RedisKeyTreeItem> keyChildren() {
         return (List) super.unfilteredChildren();
     }
 
@@ -88,7 +82,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     public void loadChild() {
         RedisDatabaseTreeItem dbItem = this.dbItem();
         // 获取已有子节点
-        List<RedisKeyTreeItem<?>> keyItems = this.keyChildren();
+        List<RedisKeyTreeItem> keyItems = this.keyChildren();
         // 禁用排序
         this.setSortable(false);
         // 当前光标
@@ -132,24 +126,24 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @param node redis键
      * @return redis树键
      */
-    private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
-        if (node instanceof RedisStringKey stringNode) {
-            return new RedisStringKeyTreeItem(stringNode, this.getTreeView());
+    private RedisKeyTreeItem initItemByNode(RedisKey node) {
+        if (node.isStringKey()) {
+            return new RedisStringKeyTreeItem(node, this.getTreeView());
         }
-        if (node instanceof RedisListKey listNode) {
-            return new RedisListKeyTreeItem(listNode, this.getTreeView());
+        if (node.isListKey()) {
+            return new RedisListKeyTreeItem(node, this.getTreeView());
         }
-        if (node instanceof RedisSetKey setNode) {
-            return new RedisSetKeyTreeItem(setNode, this.getTreeView());
+        if (node.isSetKey()) {
+            return new RedisSetKeyTreeItem(node, this.getTreeView());
         }
-        if (node instanceof RedisZSetKey zSetNode) {
-            return new RedisZSetKeyTreeItem(zSetNode, this.getTreeView());
+        if (node.isZSetKey()) {
+            return new RedisZSetKeyTreeItem(node, this.getTreeView());
         }
-        if (node instanceof RedisHashKey hashNode) {
-            return new RedisHashKeyTreeItem(hashNode, this.getTreeView());
+        if (node.isHashKey()) {
+            return new RedisHashKeyTreeItem(node, this.getTreeView());
         }
-        if (node instanceof RedisStreamKey streamNode) {
-            return new RedisStreamKeyTreeItem(streamNode, this.getTreeView());
+        if (node.isStreamKey()) {
+            return new RedisStreamKeyTreeItem(node, this.getTreeView());
         }
         return null;
     }
@@ -162,15 +156,15 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @param allKeys  所有键
      * @param finish   是否结束
      */
-    private void renderChild(List<RedisKeyTreeItem<?>> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
+    private void renderChild(List<RedisKeyTreeItem> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
         allKeys.addAll(keys);
         // 单次查询数据
         List<TreeItem<?>> shows = new ArrayList<>(keys.size());
         for (RedisKey key : keys) {
             // 数据不存在，则添加到集合
-            Optional<RedisKeyTreeItem<?>> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
+            Optional<RedisKeyTreeItem> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
             if (optional.isEmpty()) {
-                RedisKeyTreeItem<?> item = this.initItemByNode(key);
+                RedisKeyTreeItem item = this.initItemByNode(key);
                 if (item != null) {
                     shows.add(item);
                 }
@@ -190,7 +184,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             } else {// 删除不存在的数据
                 List<TreeItem<?>> hides = new ArrayList<>();
                 // 寻找在树，但是不在库的数据
-                for (RedisKeyTreeItem<?> item : keyItems) {
+                for (RedisKeyTreeItem item : keyItems) {
                     Optional<RedisKey> optional = allKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
                     if (optional.isEmpty()) {
                         hides.add(item);

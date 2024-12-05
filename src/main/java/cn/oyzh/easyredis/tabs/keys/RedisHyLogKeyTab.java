@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
@@ -36,10 +35,10 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         return (RedisHylogKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisStringKey key() {
-        return (RedisStringKey) super.key();
-    }
+    // @Override
+    // public RedisStringKey key() {
+    //     return (RedisStringKey) super.key();
+    // }
 
     /**
      * hyLog键tab内容组件

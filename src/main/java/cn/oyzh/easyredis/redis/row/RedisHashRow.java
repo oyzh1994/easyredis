@@ -1,28 +1,27 @@
-// package cn.oyzh.easyredis.redis.row;
+// package cn.oyzh.easyredis.redis;
 //
-// import cn.oyzh.easyredis.redis.RedisRow;
 // import javafx.beans.property.SimpleStringProperty;
-// import lombok.Getter;
 //
 // /**
+//  * redis hash行
+//  *
 //  * @author oyzh
 //  * @since 2023/6/16
 //  */
-// public class RedisListRow extends RedisRow {
+// public class RedisHashRow extends RedisRow {
 //
 //     /**
-//      * 行号
+//      * 字段
 //      */
-//     @Getter
-//     private int lineIndex;
+//     private SimpleStringProperty fieldProperty;
 //
 //     /**
 //      * 值
 //      */
 //     private SimpleStringProperty valueProperty;
 //
-//     public RedisListRow(int lineIndex, String value) {
-//         this.lineIndex = lineIndex;
+//     public RedisHashRow(String field, String value) {
+//         this.setField(field);
 //         this.setValue(value);
 //     }
 //
@@ -39,5 +38,20 @@
 //
 //     public String getValue() {
 //         return this.valueProperty == null ? null : this.valueProperty.get();
+//     }
+//
+//     public SimpleStringProperty fieldProperty() {
+//         if (this.fieldProperty == null) {
+//             this.fieldProperty = new SimpleStringProperty();
+//         }
+//         return fieldProperty;
+//     }
+//
+//     public void setField(String field) {
+//         this.fieldProperty().setValue(field);
+//     }
+//
+//     public String getField() {
+//         return this.fieldProperty == null ? null : this.fieldProperty.get();
 //     }
 // }

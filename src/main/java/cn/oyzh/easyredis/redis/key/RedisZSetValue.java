@@ -1,7 +1,10 @@
 package cn.oyzh.easyredis.redis.key;
 
+import lombok.Data;
 import lombok.Getter;
+import redis.clients.jedis.GeoCoordinate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +20,56 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
         this.value = value;
     }
 
-    public class RedisZSetRow implements RedisKeyRow {
+    public static RedisZSetValue valueOf(List<String> members, List<Double> scores) {
+        List<RedisZSetRow> rows = new ArrayList<>();
+        if (members != null) {
+            int index = 0;
+            for (String member : members) {
+                rows.add(new RedisZSetRow(index, member, scores.get(index)));
+                index++;
+            }
+        }
+        return new RedisZSetValue(rows);
+    }
 
-        @Getter
+    public static RedisZSetValue valueOfCoordinates(List<String> members, List<GeoCoordinate> coordinates) {
+        List<RedisZSetRow> rows = new ArrayList<>();
+        if (members != null) {
+            int index = 0;
+            for (String member : members) {
+                GeoCoordinate coordinate = coordinates.get(index);
+                rows.add(new RedisZSetRow(index, member, coordinate.getLatitude(), coordinate.getLongitude()));
+                index++;
+            }
+        }
+        return new RedisZSetValue(rows);
+    }
+
+    @Data
+    public static class RedisZSetRow implements RedisKeyRow {
+
+        private int index;
+
+        private String value;
+
         private double score;
 
-        @Getter
-        private String value;
+        private double latitude;
+
+        private double longitude;
+
+        public RedisZSetRow(int index, String value, double score) {
+            this.index = index;
+            this.value = value;
+            this.score = score;
+        }
+
+        public RedisZSetRow(int index, String value, double latitude, double longitude) {
+            this.index = index;
+            this.value = value;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
     }
 }

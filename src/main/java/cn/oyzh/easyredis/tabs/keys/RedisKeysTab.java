@@ -43,7 +43,7 @@ public class RedisKeysTab extends DynamicTab {
         if (dbIndex != null) {
             name += "@" + dbIndex;
         }
-        RedisKeyTreeItem<?> keyItem = this.activeItem();
+        RedisKeyTreeItem keyItem = this.activeItem();
         if (keyItem != null) {
             name += "#" + keyItem.key();
         }
@@ -86,7 +86,7 @@ public class RedisKeysTab extends DynamicTab {
     /**
      * redis键节点
      */
-    public RedisKeyTreeItem<?> activeItem() {
+    public RedisKeyTreeItem activeItem() {
         return this.controller().getActiveItem();
     }
 
@@ -160,7 +160,7 @@ public class RedisKeysTab extends DynamicTab {
          * 当前激活的节点
          */
         @Getter
-        private RedisKeyTreeItem<?> activeItem;
+        private RedisKeyTreeItem activeItem;
 
         @FXML
         private RedisKeysTreeView treeView;
@@ -272,7 +272,7 @@ public class RedisKeysTab extends DynamicTab {
         }
 
         public void initItem(TreeItem<?> treeItem) {
-            if (treeItem instanceof RedisKeyTreeItem<?> keyTreeItem) {
+            if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
                 try {
                     this.activeItem = keyTreeItem;
                     // 初始化数据

@@ -4,8 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
 import cn.oyzh.easyredis.event.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -45,10 +44,10 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         return (RedisListKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisListKey key() {
-        return (RedisListKey) super.key();
-    }
+    // @Override
+    // public RedisListKey key() {
+    //     return (RedisListKey) super.key();
+    // }
 
     /**
      * list键tab内容组件
@@ -56,7 +55,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/21
      */
-    public static class RedisListKeyTabController extends RedisRowKeyTabController<RedisListKeyTreeItem, RedisListRow> {
+    public static class RedisListKeyTabController extends RedisRowKeyTabController<RedisListKeyTreeItem, RedisListValue.RedisListRow> {
 
         /**
          * 数据撤销
@@ -180,8 +179,8 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         }
 
         @Override
-        protected List<RedisListRow> getRows() {
-            List<RedisListRow> rows = this.treeItem.nodeValue();
+        protected List<RedisListValue.RedisListRow> getRows() {
+            List<RedisListValue.RedisListRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
@@ -200,7 +199,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         }
 
         @Override
-        protected void initRow(RedisListRow row) {
+        protected void initRow(RedisListValue.RedisListRow row) {
             super.initRow(row);
             if (row == null) {
                 this.nodeData.clear();

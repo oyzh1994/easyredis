@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -37,10 +36,10 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         return (RedisStringKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisStringKey key() {
-        return (RedisStringKey) super.key();
-    }
+    // @Override
+    // public RedisStringKey key() {
+    //     return (RedisStringKey) super.key();
+    // }
 
     /**
      * string键tab内容组件

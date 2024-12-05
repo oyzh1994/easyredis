@@ -7,7 +7,7 @@ import cn.oyzh.event.Event;
  * @author oyzh
  * @since 2024/05/09
  */
-public class TreeChildSelectedEvent extends Event<RedisKeyTreeItem<?>> {
+public class TreeChildSelectedEvent extends Event<RedisKeyTreeItem> {
 
 
 }

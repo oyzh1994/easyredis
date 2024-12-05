@@ -5,6 +5,12 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import redis.clients.jedis.GeoCoordinate;
+import redis.clients.jedis.resps.StreamEntry;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * redis键
@@ -195,5 +201,62 @@ public class RedisKey implements Comparable<RedisKey> {
      */
     public byte[] keyBinary() {
         return this.key == null ? null : this.key.getBytes();
+    }
+
+    private RedisKeyValue<?> value;
+
+    public void valueOfSet(Set<String> members) {
+        this.value = RedisSetValue.valueOf(members);
+    }
+
+    public void valueOfZSet(List<String> members, List<Double> scores) {
+        this.value = RedisZSetValue.valueOf(members, scores);
+    }
+
+    public void valueOfCoordinates(List<String> members, List<GeoCoordinate> coordinates) {
+        this.value = RedisZSetValue.valueOfCoordinates(members, coordinates);
+    }
+
+    public void valueOfHash(Map<String, String> values) {
+        this.value = RedisHashValue.valueOf(values);
+    }
+
+    public void valueOfList(List<String> elements) {
+        this.value = RedisListValue.valueOf(elements);
+    }
+
+    public void valueOfStream(List<StreamEntry> entries) {
+        this.value = RedisStreamValue.valueOf(entries);
+    }
+
+    public void valueOfString(Object value) {
+        this.value = RedisStringValue.valueOf(value);
+    }
+
+    public RedisSetValue asSetValue() {
+        return (RedisSetValue) this.value;
+    }
+
+    public RedisZSetValue asZSetValue() {
+        return (RedisZSetValue) this.value;
+    }
+
+    public RedisListValue asListValue() {
+        return (RedisListValue) this.value;
+    }
+
+    public RedisHashValue asHashValue() {
+        return (RedisHashValue) this.value;
+    }
+
+    public RedisStringValue asStringValue() {
+        if (this.value == null) {
+            this.value = RedisStringValue.valueOf(null);
+        }
+        return (RedisStringValue) this.value;
+    }
+
+    public RedisStreamValue asStreamValue() {
+        return (RedisStreamValue) this.value;
     }
 }

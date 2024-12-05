@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.easyredis.redis.key.RedisSetKey;
-import cn.oyzh.easyredis.redis.row.RedisSetRow;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -14,9 +14,9 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisSetRow> {
+public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.RedisSetRow> {
 
-    public RedisSetKeyTreeItem(@NonNull RedisSetKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -70,7 +70,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetKey, RedisS
     public void refreshNodeValue() {
         try {
             Set<String> value = this.client().smembers(this.dbIndex(), this.key());
-            this.value.value(value);
+            this.value.valueOfSet(value);
             // 清空未保存的数据
             this.clearData();
         } catch (Exception ex) {

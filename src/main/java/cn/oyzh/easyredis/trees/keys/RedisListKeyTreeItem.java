@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.row.RedisListRow;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -11,9 +11,9 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, RedisListRow> {
+public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.RedisListRow> {
 
-    public RedisListKeyTreeItem(@NonNull RedisListKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisListKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -68,7 +68,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
     @Override
     public void refreshNodeValue() {
         List<String> value = this.client().lrange(this.dbIndex(), this.key());
-        this.value.value(value);
+        this.value.valueOfList(value);
         this.clearData();
     }
 
@@ -81,15 +81,15 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListKey, Redi
     }
 
     @Override
-    public List<RedisListRow> nodeValue() {
+    public List<RedisListValue.RedisListRow> nodeValue() {
         try {
             List<String> value = this.client().lrange(this.dbIndex(), this.key());
-            this.value.value(value);
+            this.value.valueOfList(value);
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return this.value.value();
+        return this.value.asListValue().getValue();
     }
 
 }

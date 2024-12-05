@@ -1,13 +1,15 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.easyredis.redis.RedisRow;
-import cn.oyzh.easyredis.redis.RedisRowKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
  * @since 2023/06/30
  */
 //@Slf4j
-public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, R extends RedisRow> extends RedisKeyTreeItem<K> {
+public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKeyTreeItem {
 
     /**
      * 当前行
@@ -27,7 +29,7 @@ public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, R extends Redis
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull K value, @NonNull RedisKeysTreeView treeView) {
+    public RedisRowKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
     }
 
@@ -70,6 +72,21 @@ public abstract class RedisRowKeyTreeItem<K extends RedisRowKey, R extends Redis
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return this.value.value();
+        if(this.value.isSetKey()){
+            return (List<R>) this.value.asSetValue().getValue();
+        }
+        if(this.value.isZSetKey()){
+            return (List<R>) this.value.asZSetValue().getValue();
+        }
+        if(this.value.isListKey()){
+            return (List<R>) this.value.asListValue().getValue();
+        }
+        if(this.value.isHashKey()){
+            return (List<R>) this.value.asHashValue().getValue();
+        }
+        if(this.value.isStreamKey()){
+            return (List<R>) this.value.asStreamValue().getValue();
+        }
+        return Collections.emptyList();
     }
 }

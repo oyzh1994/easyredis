@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.easyredis.redis.RedisRow;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
@@ -25,7 +25,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<?, R>, R extends RedisRow> extends RedisKeyTabController<T> {
+public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>, R extends RedisKeyRow> extends RedisKeyTabController<T> {
 
     /**
      * 分页数据

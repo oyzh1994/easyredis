@@ -74,7 +74,7 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
             return true;
         }
         // 根节点直接展示
-        if (item instanceof RedisKeyTreeItem<?> treeItem) {
+        if (item instanceof RedisKeyTreeItem treeItem) {
             // 仅收藏
             if (1 == this.type && !treeItem.isCollect()) {
                 return false;

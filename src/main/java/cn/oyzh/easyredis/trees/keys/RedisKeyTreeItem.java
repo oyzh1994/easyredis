@@ -30,14 +30,14 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/30
  */
-public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<RedisKeyTreeItemValue> {
+public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValue> {
 
     /**
      * redis键
      */
     @Getter
     @Accessors(fluent = true, chain = true)
-    protected K value;
+    protected RedisKey value;
 
     // /**
     //  * db树组件
@@ -106,7 +106,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
         return this.dataProperty.get() != null;
     }
 
-    public RedisKeyTreeItem(@NonNull K value, @NonNull RedisKeysTreeView treeView) {
+    public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         // super(dbItem.getTreeView());
         super(treeView);
         super.setFilterable(true);

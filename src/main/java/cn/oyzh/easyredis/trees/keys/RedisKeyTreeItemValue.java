@@ -13,13 +13,13 @@ import javafx.scene.paint.Color;
  */
 public class RedisKeyTreeItemValue extends RichTreeItemValue {
 
-    public RedisKeyTreeItemValue(RedisKeyTreeItem<?> item) {
+    public RedisKeyTreeItemValue(RedisKeyTreeItem item) {
         super(item);
     }
 
     @Override
-    protected RedisKeyTreeItem<?> item() {
-        return (RedisKeyTreeItem<?>) super.item();
+    protected RedisKeyTreeItem item() {
+        return (RedisKeyTreeItem) super.item();
     }
 
     @Override

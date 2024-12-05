@@ -5,8 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -49,10 +48,10 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         return (RedisZSetKeyTabController) super.controller();
     }
 
-    @Override
-    public RedisZSetKey key() {
-        return (RedisZSetKey) super.key();
-    }
+    // @Override
+    // public RedisZSetKey key() {
+    //     return (RedisZSetKey) super.key();
+    // }
 
     /**
      * zset键tab内容组件
@@ -60,7 +59,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/30
      */
-    public static class RedisZSetKeyTabController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetRow> {
+    public static class RedisZSetKeyTabController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
 
         /**
          * 数据撤销
@@ -200,8 +199,8 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         }
 
         @Override
-        protected List<RedisZSetRow> getRows() {
-            List<RedisZSetRow> rows = this.treeItem.nodeValue();
+        protected List<RedisZSetValue.RedisZSetRow> getRows() {
+            List<RedisZSetValue.RedisZSetRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
@@ -220,7 +219,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         }
 
         @Override
-        protected void initRow(RedisZSetRow row) {
+        protected void initRow(RedisZSetValue.RedisZSetRow row) {
             super.initRow(row);
             if (row == null) {
                 this.nodeData.clear();

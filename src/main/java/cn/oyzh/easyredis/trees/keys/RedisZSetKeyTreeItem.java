@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.property.DigitalDecimalProperty;
@@ -17,7 +17,12 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, RedisZSetRow> {
+public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.RedisZSetRow> {
+
+    @Override
+    public RedisZSetValue.RedisZSetRow currentRow() {
+        return super.currentRow();
+    }
 
     /**
      * 分数属性
@@ -146,13 +151,13 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
     private byte showType;
 
     @Override
-    public RedisZSetKeyTreeItem currentRow(RedisZSetRow currentRow) {
+    public RedisZSetKeyTreeItem currentRow(RedisZSetValue.RedisZSetRow currentRow) {
         this.currentRow = currentRow;
         this.clearData();
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisZSetKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisZSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -263,10 +268,10 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetKey, Redi
             List<String> value = this.client().zrange(this.dbIndex(), this.key());
             if (this.isGEOView()) {
                 List<GeoCoordinate> coordinates = this.client().geopos(this.dbIndex(), this.key(), ArrayUtil.toArray(value));
-                this.value.valueOfCoordinate(value, coordinates);
+                this.value.valueOfCoordinates(value, coordinates);
             } else {
                 List<Double> scores = this.client().zmscore_ext(this.dbIndex(), this.key(), ArrayUtil.toArray(value));
-                this.value.valueOfScore(value, scores);
+                this.value.valueOfZSet(value, scores);
             }
             this.clearData();
         } catch (Exception ex) {

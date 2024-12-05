@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> extends DynamicTabController {
+public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends DynamicTabController {
 
     /**
      * 根节点

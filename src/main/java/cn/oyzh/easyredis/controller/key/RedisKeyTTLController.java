@@ -58,7 +58,7 @@ public class RedisKeyTTLController extends StageController {
     /**
      * 树键
      */
-    private RedisKeyTreeItem<?> treeItem;
+    private RedisKeyTreeItem treeItem;
 
     /**
      * 添加redis键

@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.easyredis.redis.RedisHashRow;
-import cn.oyzh.easyredis.redis.key.RedisHashKey;
+import cn.oyzh.easyredis.redis.key.RedisHashValue;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.plus.information.MessageBox;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.NonNull;
@@ -13,9 +13,9 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, RedisHashRow> {
+public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.RedisHashRow> {
 
-    public RedisHashKeyTreeItem(@NonNull RedisHashKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisHashKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -130,7 +130,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashKey, Redi
     @Override
     public void refreshNodeValue() {
         Map<String, String> value = this.client().hgetAll(this.dbIndex(), this.key());
-        this.value.value(value);
+        this.value.valueOfHash(value);
         // 清空未保存的数据
         this.clearData();
     }

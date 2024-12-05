@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.row.RedisStreamRow;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import redis.clients.jedis.resps.StreamEntry;
@@ -12,9 +12,9 @@ import java.util.List;
  * @author oyzh
  * @since 2023/1/30
  */
-public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, RedisStreamRow> {
+public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue.RedisStreamRow> {
 
-    public RedisStreamKeyTreeItem(@NonNull RedisStreamKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisStreamKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -37,7 +37,7 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamKey, 
     @Override
     public void refreshNodeValue() {
         List<StreamEntry> value = this.client().xrange(this.dbIndex(), this.key());
-        this.value.value(value);
+        this.value.valueOfStream(value);
         this.clearData();
     }
 

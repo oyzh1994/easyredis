@@ -11,19 +11,13 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.RedisHashRow;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import cn.oyzh.easyredis.redis.key.RedisHashKey;
+import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.key.RedisSetKey;
-import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.redis.row.RedisListRow;
-import cn.oyzh.easyredis.redis.row.RedisSetRow;
-import cn.oyzh.easyredis.redis.row.RedisStreamRow;
-import cn.oyzh.easyredis.redis.row.RedisZSetRow;
+import cn.oyzh.easyredis.redis.key.RedisListValue;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
+import cn.oyzh.easyredis.redis.key.RedisStreamValue;
+import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
@@ -350,57 +344,66 @@ public class RedisKeyImportController extends StageController {
      */
     private void createNode(String key, int dbIndex, RedisKeyType type, String value, Long ttl) {
         RedisKey redisKey = RedisKeyUtil.deserializeNode(type, value);
-        if (redisKey instanceof RedisStringKey stringNode) {
-            this.client.set(dbIndex, key, (String) stringNode.value());
-        } else if (redisKey instanceof RedisListKey listNode) {
+        if (redisKey == null) {
+            JulLog.warn("redisKey is null");
+            return;
+        }
+        if (redisKey.isStringKey()) {
+            this.client.set(dbIndex, key, (String) redisKey.asStringValue().getValue());
+        } else if (redisKey.isListKey()) {
+            List<RedisListValue.RedisListRow> rows=  redisKey.asListValue().getValue();
             String[] arr;
-            if (CollectionUtil.isEmpty(listNode.value())) {
+            if (CollectionUtil.isEmpty(rows)) {
                 arr = new String[]{""};
             } else {
-                List<String> strings = listNode.value().parallelStream().map(RedisListRow::getValue).collect(Collectors.toList());
+                List<String> strings = rows.parallelStream().map(RedisListValue.RedisListRow::getValue).collect(Collectors.toList());
                 arr = ArrayUtil.toArray(strings);
             }
             this.client.lpush(dbIndex, key, arr);
-        } else if (redisKey instanceof RedisSetKey setNode) {
+        } else if (redisKey.isSetKey()) {
+            List<RedisSetValue.RedisSetRow> rows=  redisKey.asSetValue().getValue();
             String[] arr;
-            if (CollectionUtil.isEmpty(setNode.value())) {
+            if (CollectionUtil.isEmpty(rows)) {
                 arr = new String[]{""};
             } else {
-                List<String> strings = setNode.value().parallelStream().map(RedisSetRow::getValue).collect(Collectors.toList());
+                List<String> strings = rows.parallelStream().map(RedisSetValue.RedisSetRow::getValue).collect(Collectors.toList());
                 arr = ArrayUtil.toArray(strings);
             }
             this.client.sadd(dbIndex, key, arr);
-        } else if (redisKey instanceof RedisZSetKey zSetNode) {
+        } else if (redisKey.isZSetKey()) {
+            List<RedisZSetValue.RedisZSetRow> rows=  redisKey.asZSetValue().getValue();
             Map<String, Double> scoreMembers;
-            if (CollectionUtil.isEmpty(zSetNode.value())) {
+            if (CollectionUtil.isEmpty(rows)) {
                 scoreMembers = new HashMap<>();
             } else {
                 scoreMembers = new HashMap<>();
-                for (RedisZSetRow row : zSetNode.value()) {
+                for (RedisZSetValue.RedisZSetRow row : rows) {
                     scoreMembers.put(row.getValue(), row.getScore());
                 }
             }
             this.client.zadd(dbIndex, key, scoreMembers);
-        } else if (redisKey instanceof RedisHashKey hashNode) {
+        } else if (redisKey.isHashKey()) {
+            List<RedisHashValue.RedisHashRow> rows=  redisKey.asHashValue().getValue();
             Map<String, String> hash;
-            if (CollectionUtil.isEmpty(hashNode.value())) {
+            if (CollectionUtil.isEmpty(rows)) {
                 hash = new HashMap<>();
             } else {
                 hash = new HashMap<>();
-                for (RedisHashRow row : hashNode.value()) {
+                for (RedisHashValue.RedisHashRow row : rows) {
                     hash.put(row.getField(), row.getValue());
                 }
             }
             this.client.hmset(dbIndex, key, hash);
-        } else if (redisKey instanceof RedisStreamKey streamNode) {
-            if (CollectionUtil.isNotEmpty(streamNode.value())) {
-                for (RedisStreamRow row : streamNode.value()) {
+        } else if (redisKey.isStreamKey()) {
+            List<RedisStreamValue.RedisStreamRow> rows=  redisKey.asStreamValue().getValue();
+            if (CollectionUtil.isNotEmpty(rows)) {
+                for (RedisStreamValue.RedisStreamRow row : rows) {
                     this.client.xadd(dbIndex, key, row.getEntry().getID(), row.getEntry().getFields());
                 }
             }
         }
         // 处理ttl
-        if (redisKey != null && ttl != null && this.retainTTL.isSelected()) {
+        if (ttl != null && this.retainTTL.isSelected()) {
             // 持久化
             if (ttl == -1) {
                 this.client.persist(dbIndex, key);

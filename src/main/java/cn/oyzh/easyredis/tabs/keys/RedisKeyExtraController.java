@@ -37,14 +37,14 @@ public class RedisKeyExtraController {
     /**
      * redis键节点
      */
-    private RedisKeyTreeItem<?> treeItem;
+    private RedisKeyTreeItem treeItem;
 
     /**
      * 初始化组件
      *
      * @param treeItem redis树键
      */
-    public void init(RedisKeyTreeItem<?> treeItem) {
+    public void init(RedisKeyTreeItem treeItem) {
         this.treeItem = treeItem;
         this.flushTTL();
         this.flushMemoryUsage();

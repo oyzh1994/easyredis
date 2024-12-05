@@ -1,7 +1,8 @@
 package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -9,9 +10,9 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
+public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
-    public RedisStringKeyTreeItem(@NonNull RedisStringKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisStringKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
         // this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -50,7 +51,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
             } else {
                 val = this.client().get(this.dbIndex(), this.key());
             }
-            this.value.value(val);
+            this.value.valueOfString(val);
             this.flushCount();
             // 清空未保存的数据
             this.clearData();
@@ -66,7 +67,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
             return super.data();
         }
         this.refreshNodeValue();
-        return this.value.value();
+        return this.value.value().getValue();
     }
 
     /**
@@ -122,10 +123,11 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
      * @return 统计值大小
      */
     public boolean isHyLog() {
-        if (this.value.hyLog() == null) {
+        RedisStringValue stringValue = this.value.asStringValue();
+        if (stringValue.getHyLog() == null) {
             this.flushCount();
         }
-        return this.value.isHyLog();
+        return stringValue.getHyLog();
     }
 
     /**
@@ -134,22 +136,24 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
      * @return 统计值
      */
     public Long count() {
-        if (this.value.count() == null) {
+        RedisStringValue stringValue = this.value.asStringValue();
+        if (stringValue.getCount() == null) {
             this.flushCount();
         }
-        return this.value.count();
+        return stringValue.getCount();
     }
 
     /**
      * 刷新统计值
      */
     public void flushCount() {
+        RedisStringValue stringValue = this.value.asStringValue();
         try {
-            this.value.count(this.client().pfcount(this.dbIndex(), this.key()));
-            this.value.hyLog(true);
+            stringValue.setCount(this.client().pfcount(this.dbIndex(), this.key()));
+            stringValue.setHyLog(true);
         } catch (Exception ex) {
             if (StringUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
-                this.value.hyLog(false);
+                stringValue.setHyLog(false);
             } else {
                 ex.printStackTrace();
             }
