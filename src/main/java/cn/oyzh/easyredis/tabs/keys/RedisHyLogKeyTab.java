@@ -28,7 +28,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/keys/redisHyLogKeyTabContent.fxml";
+        return "/tabs/keys/redisHyLogKeyTab.fxml";
     }
 
     @Override

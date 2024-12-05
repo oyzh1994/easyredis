@@ -35,7 +35,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/keys/redisStreamKeyTabContent.fxml";
+        return "/tabs/keys/redisStreamKeyTab.fxml";
     }
 
     @Override

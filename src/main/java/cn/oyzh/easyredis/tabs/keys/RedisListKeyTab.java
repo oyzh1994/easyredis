@@ -39,7 +39,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
 
     @Override
     protected String url() {
-        return  "/tabs/keys/redisListKeyTabContent.fxml";
+        return  "/tabs/keys/redisListKeyTab.fxml";
     }
 
     @Override

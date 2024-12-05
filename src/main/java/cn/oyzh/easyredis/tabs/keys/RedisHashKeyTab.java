@@ -20,8 +20,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +39,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/keys/redisHashKeyTabContent.fxml";
+        return "/tabs/keys/redisHashKeyTab.fxml";
     }
 
     @Override

@@ -42,7 +42,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
     @Override
     protected String url() {
-        return "/tabs/keys/redisGEOKeyTabContent.fxml";
+        return "/tabs/keys/redisGEOKeyTab.fxml";
     }
 
     @Override
