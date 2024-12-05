@@ -59,18 +59,18 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </CopySVGGlyph>
-        <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
-                 onMousePrimaryClicked="#ttlUpdate">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
-        <FXLabel fx:id="loadTime" fontSize="11"
-                 style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
+        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
+        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
+        <!-- <FXLabel fx:id="loadTime" fontSize="11" -->
+        <!--          style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" realHeight="15"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
         <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <FlowPane.margin>
                 <Insets left="5"/>
@@ -187,6 +187,7 @@
             </FlowPane.margin>
         </RedisFormatComboBox>
     </FlexFlowPane>
-    <RichDataTextAreaPane disable="true" flexHeight="100% - 575" flexWidth="100% " fontSize="11" fx:id="nodeData"
+    <RichDataTextAreaPane disable="true" flexHeight="100% - 610" flexWidth="100% " fontSize="11" fx:id="nodeData"
                           onKeyPressed="#onNodeDataKeyPressed"/>
+    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

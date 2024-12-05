@@ -87,18 +87,18 @@
                 <Insets left="5" top="-4"/>
             </FlowPane.margin>
         </RedisFormatComboBox>
-        <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
-                 onMousePrimaryClicked="#ttlUpdate">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
-        <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
-                 realHeight="15">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
+        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
+        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
+        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
+        <!--          realHeight="15"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
         <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
                  visible="false"
                  managed="false">
@@ -110,6 +110,7 @@
             <Insets top="9"/>
         </padding>
     </FlexFlowPane>
-    <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 32"
+    <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 67"
                           flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

@@ -55,23 +55,29 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
      */
     protected T treeItem;
 
-    /**
-     * ttl组件
-     */
-    @FXML
-    protected FXLabel ttl;
-
-    /**
-     * 加载耗时
-     */
-    @FXML
-    protected FXLabel loadTime;
+    // /**
+    //  * ttl组件
+    //  */
+    // @FXML
+    // protected FXLabel ttl;
+    //
+    // /**
+    //  * 加载耗时
+    //  */
+    // @FXML
+    // protected FXLabel loadTime;
 
     // /**
     //  * 键信息
     //  */
     // @FXML
     // private RedisKeyInfoTab.RedisKeyInfoController keyInfoController;
+
+    /**
+     * 键扩展信息
+     */
+    @FXML
+    private RedisKeyExtraController keyExtraController;
 
     /**
      * 初始化
@@ -81,8 +87,11 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
     public boolean init(T treeItem) {
         this.treeItem = treeItem;
 
-        // ttl处理
-        this.flushTTL();
+        // // ttl处理
+        // this.flushTTL();
+
+        // 处理额外信息
+        this.keyExtraController.init(treeItem);
 
         // 键已过期
         if (this.treeItem.isExpire()) {
@@ -99,8 +108,8 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
         // 初始化节点
         this.initNode();
 
-        // 加载耗时处理
-        FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
+        // // 加载耗时处理
+        // FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
         return true;
     }
 
@@ -189,24 +198,26 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
 
     }
 
-    /**
-     * ttl设置
-     */
-    @FXML
-    protected void ttlUpdate() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
-    }
+    // /**
+    //  * ttl设置
+    //  */
+    // @FXML
+    // protected void ttlUpdate() {
+    //     StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
+    //     fxView.setProp("treeItem", this.treeItem);
+    //     fxView.display();
+    // }
 
     /**
      * 刷新ttl
      */
     public void flushTTL() {
-        if (this.ttl.getCursor() != Cursor.HAND) {
-            this.ttl.setCursor(Cursor.HAND);
-        }
-        this.ttl.setText("TTL: " + this.treeItem.ttl());
+        // if (this.ttl.getCursor() != Cursor.HAND) {
+        //     this.ttl.setCursor(Cursor.HAND);
+        // }
+        // this.ttl.setText("TTL: " + this.treeItem.ttl());
+
+        this.keyExtraController.flushTTL();
     }
 
     @Override

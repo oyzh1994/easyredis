@@ -63,18 +63,18 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </CopySVGGlyph>
-        <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
-                 onMousePrimaryClicked="#ttlUpdate">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
-        <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80"
-                 realHeight="15">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </FXLabel>
+        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
+        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
+        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
+        <!--          realHeight="15"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </FXLabel> -->
         <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <FlowPane.margin>
                 <Insets left="5"/>
@@ -164,7 +164,7 @@
             <Insets top="5"/>
         </VBox.margin>
     </FXSeparator>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 565"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 610"
                           flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
         <HBox.margin>
             <Insets top="5"/>
@@ -186,4 +186,5 @@
     <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 10" fx:id="latitudeVal"
                    tipText="%base.latitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
     </LatitudeField>
+    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>
