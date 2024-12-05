@@ -7,7 +7,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 
 /**
  * redis键信息组件
@@ -30,6 +29,12 @@ public class RedisKeyExtraController {
     protected FXLabel loadTime;
 
     /**
+     * 内存占用
+     */
+    @FXML
+    private FXLabel memoryUsage;
+
+    /**
      * redis键节点
      */
     private RedisKeyTreeItem<?> treeItem;
@@ -42,17 +47,22 @@ public class RedisKeyExtraController {
     public void init(RedisKeyTreeItem<?> treeItem) {
         this.treeItem = treeItem;
         this.flushTTL();
-        this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms");
+        this.flushMemoryUsage();
+        this.loadTime.setText(I18nHelper.cost() + " : " + this.treeItem.loadTime() + "ms");
     }
 
     /**
      * 刷新ttl
      */
     public void flushTTL() {
-        if (this.ttl.getCursor() != Cursor.HAND) {
-            this.ttl.setCursor(Cursor.HAND);
-        }
-        this.ttl.setText("TTL: " + this.treeItem.ttl());
+        this.ttl.setText("TTL : " + this.treeItem.ttl());
+    }
+
+    /**
+     * 刷新内存占用信息
+     */
+    public void flushMemoryUsage() {
+        this.memoryUsage.setText(I18nHelper.size() + " : " + this.treeItem.memoryUsageInfo());
     }
 
     /**

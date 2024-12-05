@@ -28,6 +28,11 @@ public class RedisKeyTreeItemValue extends RichTreeItemValue {
     }
 
     @Override
+    public String extra() {
+        return " (" + this.item().type().name() + ")";
+    }
+
+    @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
             this.graphic = new SVGGlyph("/font/key.svg", 10);

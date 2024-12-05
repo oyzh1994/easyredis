@@ -411,4 +411,26 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
             return -1L;
         }
     }
+
+    /**
+     * 获取内存占用信息
+     *
+     * @return 内存占用信息
+     */
+    public String memoryUsageInfo() {
+        Long memoryUsage = this.memoryUsage();
+        if (memoryUsage == null || memoryUsage < 0) {
+            return "N/A";
+        }
+        if (memoryUsage < 1024) {
+            return memoryUsage + "bytes";
+        }
+        if (memoryUsage < 1024 * 1024) {
+            return memoryUsage / 1024.0 + "KB";
+        }
+        if (memoryUsage < 1024 * 1024 * 1024) {
+            return memoryUsage / 1024.0 / 1024 + "MB";
+        }
+        return memoryUsage / 1024.0 / 1024 / 1024 + "GB";
+    }
 }

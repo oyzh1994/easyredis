@@ -58,11 +58,11 @@ public class RedisKeyInfoController extends DynamicTabController {
     @FXML
     private FlexLabel objectRefcount;
 
-    /**
-     * 内存占用
-     */
-    @FXML
-    private FlexLabel memoryUsage;
+    // /**
+    //  * 内存占用
+    //  */
+    // @FXML
+    // private FlexLabel memoryUsage;
 
     /**
      * 复制信息
@@ -73,8 +73,8 @@ public class RedisKeyInfoController extends DynamicTabController {
                 I18nHelper.database() + ": " + this.treeItem.dbIndex() + System.lineSeparator() +
                 I18nHelper.encoding() + ": " + this.redisKey.objectedEncoding() + System.lineSeparator() +
                 I18nHelper.idleTime() + ": " + this.redisKey.objectIdletime() + System.lineSeparator() +
-                I18nHelper.refcount() + ": " + this.redisKey.objectRefcount() + System.lineSeparator() +
-                I18nHelper.memoryUsage() + ": " + this.memoryUsage.getText();
+                I18nHelper.refcount() + ": " + this.redisKey.objectRefcount() + System.lineSeparator() ;
+                // I18nHelper.memoryUsage() + ": " + this.memoryUsage.getText();
         ClipboardUtil.setStringAndTip(builder, "键信息");
     }
 
@@ -110,18 +110,18 @@ public class RedisKeyInfoController extends DynamicTabController {
             this.objectIdletime.setText(this.redisKey.objectIdletimeString());
             this.objectRefcount.setText(this.redisKey.objectRefcountString());
             this.objectEncoding.setText(this.redisKey.objectedEncodingString());
-            Long memoryUsage = this.treeItem.memoryUsage();
-            if (memoryUsage == null || memoryUsage < 0) {
-                this.memoryUsage.setText("N/A");
-            } else if (memoryUsage < 1024) {
-                this.memoryUsage.setText(memoryUsage + "bytes");
-            } else if (memoryUsage < 1024 * 1024) {
-                this.memoryUsage.setText(memoryUsage / 1024.0 + "Kb");
-            } else if (memoryUsage < 1024 * 1024 * 1024) {
-                this.memoryUsage.setText(memoryUsage / 1024.0 / 1024 + "Mb");
-            } else if (memoryUsage < 1024 * 1024 * 1024 * 1024L) {
-                this.memoryUsage.setText(memoryUsage / 1024.0 / 1024 / 1024 + "Gb");
-            }
+            // Long memoryUsage = this.treeItem.memoryUsage();
+            // if (memoryUsage == null || memoryUsage < 0) {
+            //     this.memoryUsage.setText("N/A");
+            // } else if (memoryUsage < 1024) {
+            //     this.memoryUsage.setText(memoryUsage + "bytes");
+            // } else if (memoryUsage < 1024 * 1024) {
+            //     this.memoryUsage.setText(memoryUsage / 1024.0 + "Kb");
+            // } else if (memoryUsage < 1024 * 1024 * 1024) {
+            //     this.memoryUsage.setText(memoryUsage / 1024.0 / 1024 + "Mb");
+            // } else if (memoryUsage < 1024 * 1024 * 1024 * 1024L) {
+            //     this.memoryUsage.setText(memoryUsage / 1024.0 / 1024 / 1024 + "Gb");
+            // }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

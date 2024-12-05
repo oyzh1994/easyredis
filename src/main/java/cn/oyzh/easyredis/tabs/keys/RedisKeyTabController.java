@@ -210,7 +210,6 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
         //     this.ttl.setCursor(Cursor.HAND);
         // }
         // this.ttl.setText("TTL: " + this.treeItem.ttl());
-
         this.keyExtraController.flushTTL();
     }
 
@@ -224,11 +223,18 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem<?>> exten
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
+    protected void bindListeners() {
+        super.bindListeners();
         this.collect.managedBindVisible();
         this.unCollect.managedBindVisible();
     }
+    //
+    // @Override
+    // public void initialize(URL location, ResourceBundle resourceBundle) {
+    //     super.initialize(location, resourceBundle);
+    //     this.collect.managedBindVisible();
+    //     this.unCollect.managedBindVisible();
+    // }
 
     /**
      * 首次显示数据

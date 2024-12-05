@@ -71,17 +71,17 @@
                     <Insets top="5"/>
                 </HBox.margin>
             </FlexHBox>
-            <FlexHBox flexWidth="100%" realHeight="35">
-                <SuccessLabel text="%base.memoryUsage" realWidth="135" realHeight="30">
-                    <HBox.margin>
-                        <Insets right="5"/>
-                    </HBox.margin>
-                </SuccessLabel>
-                <SuccessLabel fx:id="memoryUsage" realHeight="30" flexWidth="100% - 180"/>
-                <HBox.margin>
-                    <Insets top="5"/>
-                </HBox.margin>
-            </FlexHBox>
+            <!-- <FlexHBox flexWidth="100%" realHeight="35"> -->
+            <!--     <SuccessLabel text="%base.memoryUsage" realWidth="135" realHeight="30"> -->
+            <!--         <HBox.margin> -->
+            <!--             <Insets right="5"/> -->
+            <!--         </HBox.margin> -->
+            <!--     </SuccessLabel> -->
+            <!--     <SuccessLabel fx:id="memoryUsage" realHeight="30" flexWidth="100% - 180"/> -->
+            <!--     <HBox.margin> -->
+            <!--         <Insets top="5"/> -->
+            <!--     </HBox.margin> -->
+            <!-- </FlexHBox> -->
         </FlexVBox>
     </FlexVBox>
 </FXTab>
