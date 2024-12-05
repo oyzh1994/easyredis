@@ -12,7 +12,6 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
@@ -86,13 +85,13 @@
             <Insets top="9"/>
         </padding>
     </FlexFlowPane>
-    <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
+    <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="25%" fx:id="id" text="%base.id"/>
-            <FlexTableColumn flexWidth="55%" fx:id="value" text="%base.content"/>
-            <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="25%" text="%base.id" valueName="id"/>
+            <FlexTableColumn flexWidth="45%" text="%base.content" valueName="value"/>
+            <FlexTableColumn flexWidth="15% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FXSeparator text="%base.content" flexWidth="100%">

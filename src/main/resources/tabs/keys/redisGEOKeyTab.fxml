@@ -21,7 +21,6 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
@@ -100,13 +99,13 @@
             <Insets top="9"/>
         </padding>
     </FlexFlowPane>
-    <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
+    <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="30%" fx:id="coordinate" text="%base.name"/>
-            <FlexTableColumn flexWidth="25%" fx:id="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="25%" fx:id="latitude" text="%base.latitude"/>
+            <FlexTableColumn flexWidth="10%" valueName="index" text="%base.No"/>
+            <FlexTableColumn flexWidth="30%" valueName="coordinate" text="%base.name"/>
+            <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
+            <FlexTableColumn flexWidth="25%" valueName="latitude" text="%base.latitude"/>
             <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>

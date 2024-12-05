@@ -62,23 +62,23 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         @FXML
         private ReadOnlyTextField streamID;
 
-        /**
-         * 编号列
-         */
-        @FXML
-        private TableColumn<RedisStreamRow, Integer> index;
-
-        /**
-         * 分数列
-         */
-        @FXML
-        private TableColumn<RedisStreamRow, String> id;
-
-        /**
-         * 值列
-         */
-        @FXML
-        private TableColumn<RedisStreamRow, String> value;
+        // /**
+        //  * 编号列
+        //  */
+        // @FXML
+        // private TableColumn<RedisStreamRow, Integer> index;
+        //
+        // /**
+        //  * 分数列
+        //  */
+        // @FXML
+        // private TableColumn<RedisStreamRow, String> id;
+        //
+        // /**
+        //  * 值列
+        //  */
+        // @FXML
+        // private TableColumn<RedisStreamRow, String> value;
 
         /**
          * 数据
@@ -98,10 +98,10 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // 绑定属性
-            this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+            // // 绑定属性
+            // this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
+            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         }
 
         @Override

@@ -78,17 +78,17 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         @FXML
         private SVGGlyph saveNodeData;
 
-        /**
-         * 编号列
-         */
-        @FXML
-        private TableColumn<RedisListRow, Integer> index;
-
-        /**
-         * 行值列
-         */
-        @FXML
-        private TableColumn<RedisListRow, String> value;
+        // /**
+        //  * 编号列
+        //  */
+        // @FXML
+        // private TableColumn<RedisListRow, Integer> index;
+        //
+        // /**
+        //  * 行值列
+        //  */
+        // @FXML
+        // private TableColumn<RedisListRow, String> value;
 
         /**
          * 格式
@@ -156,9 +156,9 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // 绑定属性
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+            // // 绑定属性
+            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
+            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         }
 
         /**

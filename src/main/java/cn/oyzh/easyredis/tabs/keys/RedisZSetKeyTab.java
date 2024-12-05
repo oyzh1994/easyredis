@@ -95,23 +95,23 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         private DecimalTextField scoreVal;
 
-        /**
-         * 编号列
-         */
-        @FXML
-        private TableColumn<RedisZSetRow, Integer> index;
-
-        /**
-         * 分数列
-         */
-        @FXML
-        private TableColumn<RedisZSetRow, Double> score;
-
-        /**
-         * 值列
-         */
-        @FXML
-        private FlexTableColumn<RedisZSetRow, String> value;
+        // /**
+        //  * 编号列
+        //  */
+        // @FXML
+        // private TableColumn<RedisZSetRow, Integer> index;
+        //
+        // /**
+        //  * 分数列
+        //  */
+        // @FXML
+        // private TableColumn<RedisZSetRow, Double> score;
+        //
+        // /**
+        //  * 值列
+        //  */
+        // @FXML
+        // private FlexTableColumn<RedisZSetRow, String> value;
 
         /**
          * 数据组件
@@ -194,11 +194,11 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             this.firstPage();
             // 显示切换按钮
             this.reverseView.setVisible(this.isSupportGEO());
-            // 绑定属性
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-            this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
-            this.value.setText(I18nHelper.member());
+            // // 绑定属性
+            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
+            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+            // this.score.setCellValueFactory(new PropertyValueFactory<>("score"));
+            // this.value.setText(I18nHelper.member());
             this.scoreVal.addTextChangeListener(this.scoreValListener);
         }
 

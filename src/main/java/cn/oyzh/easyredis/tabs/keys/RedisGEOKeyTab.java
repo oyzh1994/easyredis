@@ -93,29 +93,29 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         private DecimalTextField latitudeVal;
 
-        /**
-         * 编号列
-         */
-        @FXML
-        private TableColumn<RedisZSetRow, Integer> index;
-
-        /**
-         * 经度列
-         */
-        @FXML
-        private TableColumn<RedisZSetRow, Double> longitude;
-
-        /**
-         * 纬度列
-         */
-        @FXML
-        private TableColumn<RedisZSetRow, Double> latitude;
-
-        /**
-         * 坐标列
-         */
-        @FXML
-        private FlexTableColumn<RedisZSetRow, String> coordinate;
+        // /**
+        //  * 编号列
+        //  */
+        // @FXML
+        // private TableColumn<RedisZSetRow, Integer> index;
+        //
+        // /**
+        //  * 经度列
+        //  */
+        // @FXML
+        // private TableColumn<RedisZSetRow, Double> longitude;
+        //
+        // /**
+        //  * 纬度列
+        //  */
+        // @FXML
+        // private TableColumn<RedisZSetRow, Double> latitude;
+        //
+        // /**
+        //  * 坐标列
+        //  */
+        // @FXML
+        // private FlexTableColumn<RedisZSetRow, String> coordinate;
 
         /**
          * 数据组件
@@ -210,10 +210,10 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             // 显示首页
             this.firstPage();
             // 绑定属性
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.coordinate.setCellValueFactory(new PropertyValueFactory<>("value"));
-            this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
-            this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
+            // this.coordinate.setCellValueFactory(new PropertyValueFactory<>("value"));
+            // this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+            // this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
             this.latitudeVal.addTextChangeListener(this.latitudeValListener);
             this.longitudeVal.addTextChangeListener(this.longitudeValListener);
         }

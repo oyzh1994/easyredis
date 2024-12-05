@@ -19,7 +19,6 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
@@ -100,13 +99,13 @@
             <Insets top="9"/>
         </padding>
     </FlexFlowPane>
-    <FlexTableView focusTraversable="true" flexWidth="100% - 2" realHeight="335" fx:id="listTable"
+    <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="50%" fx:id="value" text="%base.name"/>
-            <FlexTableColumn flexWidth="30%" fx:id="score" text="%base.score"/>
-            <FlexTableColumn flexWidth="10% - 20" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="40%" text="%base.member" valueName="value"/>
+            <FlexTableColumn flexWidth="30%" text="%base.score" valueName="score"/>
+            <FlexTableColumn flexWidth="15% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FlexFlowPane disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
