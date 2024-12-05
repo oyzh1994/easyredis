@@ -26,7 +26,6 @@ import cn.oyzh.fx.gui.tabs.DynamicTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
@@ -454,11 +453,11 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
                 closeTabs.add(tab);
             } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
                 closeTabs.add(tab);
+            } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.info()) {
+                closeTabs.add(tab);
             }
         }
-        if (!closeTabs.isEmpty()) {
-            FXUtil.runLater(() -> this.getTabs().removeAll(closeTabs));
-        }
+        this.removeTab(closeTabs);
     }
 
     /**

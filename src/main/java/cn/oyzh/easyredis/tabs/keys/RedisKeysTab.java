@@ -285,11 +285,20 @@ public class RedisKeysTab extends DynamicTab {
             }
         }
 
+        /**
+         * 初始化数据
+         */
         private void initData() {
             if (this.activeItem != null) {
                 RedisKeyTab<?> keyTab = RedisKeyTab.ofItem(this.activeItem);
-                RedisKeyInfoTab infoTab = new RedisKeyInfoTab(this.activeItem);
-                this.tabPane.setTab(keyTab, infoTab);
+                if (this.tabPane.tabSize() == 0 || this.tabPane.tabSize() == 1) {
+                    RedisKeyInfoTab infoTab = new RedisKeyInfoTab(this.activeItem);
+                    this.tabPane.setTab(keyTab, infoTab);
+                } else if (this.tabPane.tabSize() == 2) {
+                    this.tabPane.setTab(0, keyTab);
+                    RedisKeyInfoTab infoTab = this.tabPane.getTab(1);
+                    infoTab.init(this.activeItem);
+                }
             }
         }
 

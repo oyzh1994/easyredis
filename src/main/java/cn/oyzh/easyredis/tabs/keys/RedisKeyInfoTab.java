@@ -23,6 +23,10 @@ public class RedisKeyInfoTab extends DynamicTab {
     public RedisKeyInfoTab(RedisKeyTreeItem<?> treeItem) {
         super();
         super.flush();
+        this.init(treeItem);
+    }
+
+    public void init(RedisKeyTreeItem<?> treeItem) {
         this.controller().init(treeItem);
     }
 
