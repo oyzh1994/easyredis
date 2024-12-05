@@ -1,10 +1,11 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.ArrayUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
@@ -27,7 +28,6 @@ import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -37,13 +37,13 @@ import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -163,7 +163,7 @@ public class RedisKeyImportController extends StageController {
     private void dragFile(DragEvent event) {
         Dragboard dragboard = event.getDragboard();
         List<File> files = dragboard.getFiles();
-        if (CollUtil.isEmpty(files)) {
+        if (CollectionUtil.isEmpty(files)) {
             return;
         }
         if (files.size() != 1) {
@@ -354,25 +354,25 @@ public class RedisKeyImportController extends StageController {
             this.client.set(dbIndex, key, (String) stringNode.value());
         } else if (redisKey instanceof RedisListKey listNode) {
             String[] arr;
-            if (CollUtil.isEmpty(listNode.value())) {
+            if (CollectionUtil.isEmpty(listNode.value())) {
                 arr = new String[]{""};
             } else {
                 List<String> strings = listNode.value().parallelStream().map(RedisListRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(strings, String.class);
+                arr = ArrayUtil.toArray(strings);
             }
             this.client.lpush(dbIndex, key, arr);
         } else if (redisKey instanceof RedisSetKey setNode) {
             String[] arr;
-            if (CollUtil.isEmpty(setNode.value())) {
+            if (CollectionUtil.isEmpty(setNode.value())) {
                 arr = new String[]{""};
             } else {
                 List<String> strings = setNode.value().parallelStream().map(RedisSetRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(strings, String.class);
+                arr = ArrayUtil.toArray(strings);
             }
             this.client.sadd(dbIndex, key, arr);
         } else if (redisKey instanceof RedisZSetKey zSetNode) {
             Map<String, Double> scoreMembers;
-            if (CollUtil.isEmpty(zSetNode.value())) {
+            if (CollectionUtil.isEmpty(zSetNode.value())) {
                 scoreMembers = new HashMap<>();
             } else {
                 scoreMembers = new HashMap<>();
@@ -383,7 +383,7 @@ public class RedisKeyImportController extends StageController {
             this.client.zadd(dbIndex, key, scoreMembers);
         } else if (redisKey instanceof RedisHashKey hashNode) {
             Map<String, String> hash;
-            if (CollUtil.isEmpty(hashNode.value())) {
+            if (CollectionUtil.isEmpty(hashNode.value())) {
                 hash = new HashMap<>();
             } else {
                 hash = new HashMap<>();
@@ -393,7 +393,7 @@ public class RedisKeyImportController extends StageController {
             }
             this.client.hmset(dbIndex, key, hash);
         } else if (redisKey instanceof RedisStreamKey streamNode) {
-            if (CollUtil.isNotEmpty(streamNode.value())) {
+            if (CollectionUtil.isNotEmpty(streamNode.value())) {
                 for (RedisStreamRow row : streamNode.value()) {
                     this.client.xadd(dbIndex, key, row.getEntry().getID(), row.getEntry().getFields());
                 }
@@ -424,7 +424,7 @@ public class RedisKeyImportController extends StageController {
         this.treeItem = this.getWindowProp("treeItem");
         this.client = treeItem.client();
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
-        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StrUtil.isNotBlank(t1)));
+        this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();
         // 文件拖拽相关
         this.stage.scene().setOnDragOver(event1 -> {

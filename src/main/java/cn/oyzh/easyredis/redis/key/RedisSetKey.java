@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.redis.RedisRowKey;
 import cn.oyzh.easyredis.redis.row.RedisSetRow;
 
@@ -22,7 +22,7 @@ public class RedisSetKey extends RedisRowKey<RedisSetRow> {
      */
     public void value(Set<String> value) {
         this.value = new ArrayList<>();
-        if (CollUtil.isNotEmpty(value)) {
+        if (CollectionUtil.isNotEmpty(value)) {
             for (String s : value) {
                 this.value.add(new RedisSetRow(s));
             }

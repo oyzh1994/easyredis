@@ -4,7 +4,6 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
-import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;

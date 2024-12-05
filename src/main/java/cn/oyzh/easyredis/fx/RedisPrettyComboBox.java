@@ -1,10 +1,9 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
-import cn.oyzh.i18n.I18nHelper;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
+import cn.oyzh.i18n.I18nHelper;
 
 import java.util.List;
 import java.util.Locale;

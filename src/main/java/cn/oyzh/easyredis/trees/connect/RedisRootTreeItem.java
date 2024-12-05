@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.file.FileNameUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
@@ -74,7 +74,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     private void initChildes() {
         // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
-        if (CollUtil.isNotEmpty(groups)) {
+        if (CollectionUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>();
             for (RedisGroup group : groups) {
                 list.add(new RedisGroupTreeItem(group, this.getTreeView()));
@@ -83,7 +83,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         }
         // 初始化连接
         List<RedisConnect> infos = this.infoStore.load();
-        if (CollUtil.isNotEmpty(infos)) {
+        if (CollectionUtil.isNotEmpty(infos)) {
             this.addConnects(infos);
         }
     }
@@ -133,14 +133,14 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      * @param files 文件
      */
     public void dragFile(List<File> files) {
-        if (CollUtil.isEmpty(files)) {
+        if (CollectionUtil.isEmpty(files)) {
             return;
         }
         if (files.size() != 1) {
             MessageBox.warn(I18nHelper.onlySupportSingleFile());
             return;
         }
-        File file = CollUtil.getFirst(files);
+        File file = CollectionUtil.getFirst(files);
         // 解析文件
         this.parseConnect(file);
     }
@@ -184,7 +184,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
             String text = FileUtil.readUtf8String(file);
             RedisInfoExport export = RedisInfoExport.fromJSON(text);
             List<RedisConnect> infos = export.getConnects();
-            if (CollUtil.isNotEmpty(infos)) {
+            if (CollectionUtil.isNotEmpty(infos)) {
                 for (RedisConnect info : infos) {
                     if (this.infoStore.replace(info)) {
                         this.addConnect(info);
@@ -219,7 +219,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         }
 
         // 不能为空
-        if (StrUtil.isBlank(groupName)) {
+        if (StringUtil.isBlank(groupName)) {
             MessageBox.warn(I18nHelper.nameCanNotEmpty());
             return;
         }
@@ -244,7 +244,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      * @param groupId 分组id
      */
     private RedisGroupTreeItem getGroupItem(String groupId) {
-        if (StrUtil.isNotBlank(groupId)) {
+        if (StringUtil.isNotBlank(groupId)) {
             List<RedisGroupTreeItem> items = this.getGroupItems();
             Optional<RedisGroupTreeItem> groupTreeItem = items.parallelStream().filter(g -> Objects.equals(g.value().getGid(), groupId)).findAny();
             return groupTreeItem.orElse(null);
@@ -325,7 +325,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
 
     @Override
     public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
-        if (CollUtil.isNotEmpty(items)) {
+        if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.expend();
         }

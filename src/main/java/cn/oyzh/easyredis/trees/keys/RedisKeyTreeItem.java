@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
 import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -11,7 +11,6 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -306,7 +305,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
     public void rename() {
         String newKey = MessageBox.prompt(I18nHelper.contentTip1(), this.value.key());
         // 名称为空或者跟当前名称相同，则忽略
-        if (StrUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
+        if (StringUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
             return;
         }
         // 键已存在
@@ -317,7 +316,7 @@ public abstract class RedisKeyTreeItem<K extends RedisKey> extends RichTreeItem<
         try {
             String oldKey = this.key();
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
-            if (StrUtil.equalsIgnoreCase(result, "OK")) {
+            if (StringUtil.equalsIgnoreCase(result, "OK")) {
                 this.value().key(newKey);
                 // this.getValue().name(newKey);
                 this.refresh();

@@ -1,11 +1,11 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ExecutorUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -216,7 +216,7 @@ public class RedisServerTabContent extends DynamicTabController {
                 serverItem = new RedisServerItem();
                 serverItem.setServerVersion(infoProp.getRedisVersion());
                 try {
-                    serverItem.setRole((String) CollUtil.getFirst(this.client.role()));
+                    serverItem.setRole((String) CollectionUtil.getFirst(this.client.role()));
                 } catch (Exception ignored) {
                 }
                 this.propTable.getItems().add(serverItem);

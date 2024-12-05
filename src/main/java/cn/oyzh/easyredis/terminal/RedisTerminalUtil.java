@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.BuilderFactory;
@@ -59,7 +59,7 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOut(Collection<?> values) {
-        if (CollUtil.isEmpty(values)) {
+        if (CollectionUtil.isEmpty(values)) {
             return "";
         }
         int index = 1;
@@ -77,7 +77,7 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOut(Map<?, ?> values) {
-        if (CollUtil.isEmpty(values)) {
+        if (CollectionUtil.isEmpty(values)) {
             return "";
         }
         List<Object> list = new ArrayList<>();
@@ -95,7 +95,7 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOutStream(List<StreamEntry> values) {
-        if (CollUtil.isEmpty(values)) {
+        if (CollectionUtil.isEmpty(values)) {
             return "";
         }
         int index = 1;
@@ -113,7 +113,7 @@ public class RedisTerminalUtil {
      * @return 结果
      */
     public static String formatOut(List<GeoCoordinate> coordinates) {
-        if (CollUtil.isEmpty(coordinates)) {
+        if (CollectionUtil.isEmpty(coordinates)) {
             return "";
         }
         int index = 1;

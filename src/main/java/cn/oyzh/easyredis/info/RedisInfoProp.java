@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class RedisInfoProp {
      * @param str 数据
      */
     public void parse(String str) {
-        if (StrUtil.isNotBlank(str)) {
+        if (StringUtil.isNotBlank(str)) {
             this.props = new HashMap<>();
             Stream<String> lines = str.lines();
             AtomicReference<String> currGroup = new AtomicReference<>();
@@ -86,7 +86,7 @@ public class RedisInfoProp {
     public String getProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
+            if (CollectionUtil.isNotEmpty(object)) {
                 return object.getString(propName);
             }
         }
@@ -103,7 +103,7 @@ public class RedisInfoProp {
     public int getIntProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+            if (CollectionUtil.isNotEmpty(object)) {
                 return object.getInt(propName);
             }
         }
@@ -120,7 +120,7 @@ public class RedisInfoProp {
     public Integer getIntegerProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty(object)) {
+            if (CollectionUtil.isNotEmpty(object)) {
                 return object.getInt(propName);
             }
         }
@@ -137,7 +137,7 @@ public class RedisInfoProp {
     public long getLongProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+            if (CollectionUtil.isNotEmpty(object)) {
                 return object.getLong(propName);
             }
         }
@@ -154,7 +154,7 @@ public class RedisInfoProp {
     public Double getDoubleProp(String group, String propName) {
         if (propName != null) {
             JSONObject object = this.getProps(group);
-            if (CollUtil.isNotEmpty((Iterable<?>) object)) {
+            if (CollectionUtil.isNotEmpty(object)) {
                 return object.getDouble(propName);
             }
         }
@@ -347,7 +347,7 @@ public class RedisInfoProp {
         if (master0 != null) {
             String[] arr = master0.split(",");
             for (String s : arr) {
-                if (StrUtil.startWithIgnoreCase(s, "name")) {
+                if (StringUtil.startWithIgnoreCase(s, "name")) {
                     return s.split("=")[1];
                 }
             }

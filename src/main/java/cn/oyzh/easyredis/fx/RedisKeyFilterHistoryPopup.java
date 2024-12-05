@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.fx;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
 import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 
@@ -22,7 +22,7 @@ public class RedisKeyFilterHistoryPopup extends SearchHistoryPopup {
     @Override
     public List<String> getHistories() {
         List<String> list = this.historyStore.getPatterns();
-        if (CollUtil.isNotEmpty(list)) {
+        if (CollectionUtil.isNotEmpty(list)) {
             return list.reversed();
         }
         return list;

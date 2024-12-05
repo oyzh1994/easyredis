@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.controller;
 
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.dto.Project;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.text.FlexText;
@@ -54,7 +54,7 @@ public class AboutController extends SubStageController {
         this.version.setText("v" + this.project.getVersion());
         this.updateDate.setText(this.project.getUpdateDate());
         this.copyright.setText(this.project.getCopyright());
-        this.type.setText(StrUtil.equals(this.project.getType(), "build") ? I18nHelper.buildType1() : I18nHelper.buildType2());
+        this.type.setText(StringUtil.equals(this.project.getType(), "build") ? I18nHelper.buildType1() : I18nHelper.buildType2());
         // 设置标题
         this.stage.appendTitle(" " + this.project.getName());
         this.stage.hideOnEscape();

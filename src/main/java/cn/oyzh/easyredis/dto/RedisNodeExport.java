@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.dto;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -77,7 +77,7 @@ public class RedisNodeExport {
      * @return 数据字节数组
      */
     public byte[] getDateBytes(String data, String charset) {
-        if (StrUtil.isBlank(charset)) {
+        if (StringUtil.isBlank(charset)) {
             charset = StandardCharsets.UTF_8.name();
         } else if ("跟随系统".equals(charset)) {
             charset = Charset.defaultCharset().name();

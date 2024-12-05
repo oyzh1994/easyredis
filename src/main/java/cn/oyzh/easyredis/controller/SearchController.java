@@ -221,7 +221,7 @@
 //         try {
 //             // 搜索相关检查
 //             this.searchKW.enable();
-//             if (StrUtil.isBlank(this.searchKW.getText())) {
+//             if (StringUtil.isBlank(this.searchKW.getText())) {
 //                 this.searchNext.disable();
 //                 this.searchResult.setText("");
 //                 this.searchHandler.clear();

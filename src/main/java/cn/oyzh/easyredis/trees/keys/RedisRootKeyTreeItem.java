@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisHashKey;
@@ -51,7 +51,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
 
     public void keyDeleted(String key) {
         for (RedisKeyTreeItem<?> keyItem : this.keyChildren()) {
-            if (StrUtil.equals(key, keyItem.key())) {
+            if (StringUtil.equals(key, keyItem.key())) {
                 keyItem.remove();
                 break;
             }
@@ -94,7 +94,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         // 当前光标
         String cursor = null;
         // 扫描参数
-        String pattern = StrUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
+        String pattern = StringUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
         ScanParams params = new ScanParams();
         params.match(pattern);
         // 全部节点

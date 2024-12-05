@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
@@ -19,8 +19,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -166,9 +164,9 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         protected List<RedisSetRow> getRows() {
             List<RedisSetRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
-            if (StrUtil.isNotEmpty(filterKW)) {
+            if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW))
+                        .filter(r -> StringUtil.containsIgnoreCase(r.getValue(), filterKW))
                         .collect(Collectors.toList());
             }
             return rows;

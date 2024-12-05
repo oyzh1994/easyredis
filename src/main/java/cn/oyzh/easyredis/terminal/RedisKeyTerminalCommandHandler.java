@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -21,7 +21,7 @@ public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> 
         if (words.length >= 1) {
             String key = line.substring(this.commandFullName().length());
             String pattern;
-            if (StrUtil.isBlank(key)) {
+            if (StringUtil.isBlank(key)) {
                 pattern = "*";
             } else if (!key.trim().endsWith("*")) {
                 pattern = key + "*";
@@ -30,9 +30,9 @@ public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> 
             }
             pattern = pattern.trim();
             Set<String> keys = terminal.client().keys(null, pattern, this.getKeyType());
-            if (CollUtil.isNotEmpty(keys)) {
+            if (CollectionUtil.isNotEmpty(keys)) {
                 if (keys.size() == 1) {
-                    terminal.coverInput(words[0] + " " + CollUtil.getFirst(keys));
+                    terminal.coverInput(words[0] + " " + CollectionUtil.getFirst(keys));
                 } else {
                     String textFormat = TextUtil.beautifyFormat(keys, 3, 0);
                     terminal.outputByPrompt(textFormat);

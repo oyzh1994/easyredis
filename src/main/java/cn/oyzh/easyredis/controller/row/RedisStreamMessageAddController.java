@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.controller.row;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -11,10 +11,10 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -61,7 +61,7 @@ public class RedisStreamMessageAddController extends StageController {
         try {
             // 行数据
             String rowValue = this.rowValue.getText();
-            if (StrUtil.isEmpty(rowValue)) {
+            if (StringUtil.isEmpty(rowValue)) {
                 MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }

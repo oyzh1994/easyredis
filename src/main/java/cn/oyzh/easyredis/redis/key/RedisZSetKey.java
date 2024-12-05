@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.redis.RedisRowKey;
 import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import redis.clients.jedis.GeoCoordinate;
@@ -28,7 +28,7 @@ public class RedisZSetKey extends RedisRowKey<RedisZSetRow> {
         } else if (!this.value.isEmpty()) {
             this.value.clear();
         }
-        if (CollUtil.isNotEmpty(value)) {
+        if (CollectionUtil.isNotEmpty(value)) {
             int i = 0;
             for (String member : value) {
                 this.value.add(new RedisZSetRow(member, scores.get(i++)));
@@ -48,7 +48,7 @@ public class RedisZSetKey extends RedisRowKey<RedisZSetRow> {
         } else if (!this.value.isEmpty()) {
             this.value.clear();
         }
-        if (CollUtil.isNotEmpty(value)) {
+        if (CollectionUtil.isNotEmpty(value)) {
             int i = 0;
             for (String member : value) {
                 this.value.add(new RedisZSetRow(member, coordinates.get(i++)));

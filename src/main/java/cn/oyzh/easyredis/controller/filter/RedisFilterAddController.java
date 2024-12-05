@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.controller.filter;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -8,10 +8,10 @@ import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -60,7 +60,7 @@ public class RedisFilterAddController extends StageController {
     private void addFilter() {
         // 获取输入内容
         String kw = this.kw.getText().trim();
-        if (StrUtil.isBlank(kw)) {
+        if (StringUtil.isBlank(kw)) {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.kw);
             return;
         }

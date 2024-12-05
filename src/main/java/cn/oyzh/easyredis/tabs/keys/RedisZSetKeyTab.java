@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
@@ -10,7 +10,6 @@ import cn.oyzh.easyredis.redis.row.RedisZSetRow;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -21,8 +20,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.List;
@@ -206,9 +203,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         protected List<RedisZSetRow> getRows() {
             List<RedisZSetRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
-            if (StrUtil.isNotEmpty(filterKW)) {
+            if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
+                        .filter(r -> StringUtil.containsIgnoreCase(r.getValue(), filterKW) || StringUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
                         .collect(Collectors.toList());
             }
             return rows;

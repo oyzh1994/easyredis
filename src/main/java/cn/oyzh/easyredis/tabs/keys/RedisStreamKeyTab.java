@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisStreamKey;
@@ -15,8 +15,6 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -108,10 +106,10 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         protected List<RedisStreamRow> getRows() {
             List<RedisStreamRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
-            if (StrUtil.isNotEmpty(filterKW)) {
+            if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getValue(), filterKW) ||
-                                StrUtil.containsIgnoreCase(String.valueOf(r.getId()), filterKW))
+                        .filter(r -> StringUtil.containsIgnoreCase(r.getValue(), filterKW) ||
+                                StringUtil.containsIgnoreCase(String.valueOf(r.getId()), filterKW))
                         .collect(Collectors.toList());
             }
             return rows;

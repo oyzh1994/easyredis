@@ -1,15 +1,15 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.info.RedisInfoProp;
 import cn.oyzh.easyredis.info.RedisInfoPropItem;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.util.TableViewUtil;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -63,7 +63,7 @@ public class RedisServerInfoContent {
         if (object == null || object.isEmpty()) {
             return;
         }
-        Optional<Tab> tabOptional = this.tabPane.getTabs().stream().filter(t -> StrUtil.equals(t.getId(), "prop-" + group)).findFirst();
+        Optional<Tab> tabOptional = this.tabPane.getTabs().stream().filter(t -> StringUtil.equals(t.getId(), "prop-" + group)).findFirst();
         FlexTableView<RedisInfoPropItem> tableView;
         if (tabOptional.isEmpty()) {
             FXTab fxTab = new FXTab();
@@ -108,10 +108,10 @@ public class RedisServerInfoContent {
      */
     private void initPropItem(TableView<RedisInfoPropItem> tableView, String name, String value) {
         ObservableList<RedisInfoPropItem> items = tableView.getItems();
-        Optional<RedisInfoPropItem> optional = items.parallelStream().filter(i -> StrUtil.equals(i.getName(), name)).findFirst();
+        Optional<RedisInfoPropItem> optional = items.parallelStream().filter(i -> StringUtil.equals(i.getName(), name)).findFirst();
         if (optional.isEmpty()) {
             tableView.getItems().add(new RedisInfoPropItem(name, value));
-        } else if (!StrUtil.equals(optional.get().getValue(), value)) {
+        } else if (!StringUtil.equals(optional.get().getValue(), value)) {
             optional.get().setValue(value);
         }
     }

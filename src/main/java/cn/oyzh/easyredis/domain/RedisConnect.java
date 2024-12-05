@@ -1,10 +1,9 @@
 package cn.oyzh.easyredis.domain;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.BooleanUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.ObjectComparator;
-import cn.oyzh.ssh.SSHConnect;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
@@ -155,7 +154,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 结果
      */
     public boolean isCollect(int dbIndex, @NonNull String key) {
-        return CollUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
+        return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
     }
 
     /**
@@ -267,7 +266,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 连接ip
      */
     public String hostIp() {
-        if (StrUtil.isBlank(this.host)) {
+        if (StringUtil.isBlank(this.host)) {
             return "";
         }
         return this.host.split(":")[0];
@@ -279,7 +278,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 连接端口
      */
     public int hostPort() {
-        if (StrUtil.isBlank(this.host)) {
+        if (StringUtil.isBlank(this.host)) {
             return -1;
         }
         try {
@@ -304,10 +303,10 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 0:无需认证 1:密码认证 2:用户密码认证
      */
     public int getAuthType() {
-        if (StrUtil.isNotBlank(this.user) && StrUtil.isNotBlank(this.password)) {
+        if (StringUtil.isNotBlank(this.user) && StringUtil.isNotBlank(this.password)) {
             return 2;
         }
-        if (StrUtil.isNotBlank(this.password)) {
+        if (StringUtil.isNotBlank(this.password)) {
             return 1;
         }
         return 0;

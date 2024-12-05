@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.controller.info;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisSSHConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
@@ -13,16 +13,14 @@ import cn.oyzh.fx.gui.textfield.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.ssh.SSHConnect;
-import cn.oyzh.ssh.SSHForwardConfig;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -243,7 +241,7 @@ public class RedisInfoAddController extends StageController {
     private void testConnect() {
         // 检查连接地址
         String host = this.getHost();
-        if (StrUtil.isBlank(host) || StrUtil.isBlank(host.split(":")[0])) {
+        if (StringUtil.isBlank(host) || StringUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
             RedisConnect redisInfo = new RedisConnect();
@@ -270,7 +268,7 @@ public class RedisInfoAddController extends StageController {
             return;
         }
         // 名称未填，则直接以host为名称
-        if (StrUtil.isBlank(this.name.getTextTrim())) {
+        if (StringUtil.isBlank(this.name.getTextTrim())) {
             this.name.setText(host.replace(":", "_"));
         }
         try {

@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Data;
 
 import java.util.stream.Stream;
@@ -16,7 +16,7 @@ public class RedisServerInfo {
 
     public static RedisServerInfo parse(String str) {
         RedisServerInfo serverInfo = new RedisServerInfo();
-        if (StrUtil.isNotBlank(str)) {
+        if (StringUtil.isNotBlank(str)) {
             Stream<String> lines = str.lines();
             lines.forEach(l -> {
                 if (l.startsWith("redis_version:")) {

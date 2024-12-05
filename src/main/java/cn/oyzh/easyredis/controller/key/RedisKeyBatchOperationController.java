@@ -1,7 +1,8 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDBComboBox;
@@ -10,20 +11,19 @@ import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
 import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
 import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroup;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
@@ -170,7 +170,7 @@ public class RedisKeyBatchOperationController extends StageController {
     private void delKeys() {
         this.client.throwSentinelException();
         // 扫描参数
-        String pattern = StrUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
+        String pattern = StringUtil.isBlank(this.pattern1.getText()) ? "*" : this.pattern1.getText();
         if (MessageBox.confirm(I18nHelper.deleteKeys())) {
             this.execTask = ThreadUtil.start(() -> {
                 try {
@@ -213,7 +213,7 @@ public class RedisKeyBatchOperationController extends StageController {
     private void expireKeys() {
         try {
             this.client.throwSentinelException();
-            String pattern = StrUtil.isBlank(this.pattern2.getText()) ? "*" : this.pattern2.getText();
+            String pattern = StringUtil.isBlank(this.pattern2.getText()) ? "*" : this.pattern2.getText();
             this.execTask = ThreadUtil.start(() -> {
                 try {
                     NodeGroupUtil.disable(this.root, "exec");
@@ -294,7 +294,7 @@ public class RedisKeyBatchOperationController extends StageController {
                 MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
-            String pattern = StrUtil.isBlank(this.pattern4.getText()) ? "*" : this.pattern4.getText();
+            String pattern = StringUtil.isBlank(this.pattern4.getText()) ? "*" : this.pattern4.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip5())) {
                 this.execTask = ThreadUtil.start(() -> {
                     try {
@@ -347,7 +347,7 @@ public class RedisKeyBatchOperationController extends StageController {
                 MessageBox.warn(RedisI18nHelper.batchTip4());
                 return;
             }
-            String pattern = StrUtil.isBlank(this.pattern5.getText()) ? "*" : this.pattern5.getText();
+            String pattern = StringUtil.isBlank(this.pattern5.getText()) ? "*" : this.pattern5.getText();
             if (MessageBox.confirm(RedisI18nHelper.batchTip6())) {
                 this.execTask = ThreadUtil.start(() -> {
                     try {
@@ -396,7 +396,7 @@ public class RedisKeyBatchOperationController extends StageController {
                 NodeGroupUtil.disable(this.root, "exec");
                 this.stage.appendTitle("====" + I18nHelper.executeIng() + "====");
                 // 扫描参数
-                String pattern = StrUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
+                String pattern = StringUtil.isBlank(this.pattern6.getText()) ? "*" : this.pattern6.getText();
                 long keySize = 0;
                 String cursor = null;
                 while (!ThreadUtil.isInterrupted()) {
@@ -435,7 +435,7 @@ public class RedisKeyBatchOperationController extends StageController {
      */
     private void showKeys(Collection<String> keys, FlexTextArea area) {
         area.clear();
-        if (CollUtil.isNotEmpty(keys)) {
+        if (CollectionUtil.isNotEmpty(keys)) {
             List<String> texts = new ArrayList<>(keys.size());
             int index = 0;
             for (String key : keys) {

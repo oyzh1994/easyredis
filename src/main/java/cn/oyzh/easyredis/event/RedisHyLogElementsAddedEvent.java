@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.hutool.core.util.ArrayUtil;
+import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;

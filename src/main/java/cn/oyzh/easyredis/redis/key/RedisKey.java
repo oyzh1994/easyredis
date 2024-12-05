@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import lombok.Getter;
 import lombok.Setter;
@@ -185,7 +185,7 @@ public class RedisKey implements Comparable<RedisKey> {
      * @return 结果
      */
     public boolean isRawEncoding() {
-        return StrUtil.equalsIgnoreCase("raw", this.objectedEncoding);
+        return StringUtil.equalsIgnoreCase("raw", this.objectedEncoding);
     }
 
     /**

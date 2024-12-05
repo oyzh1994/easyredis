@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 
 /**
  * redis节点类型
@@ -18,7 +18,7 @@ public enum RedisNodeType {
     STREAM;
 
     public static RedisNodeType valueOfType(String type) {
-        if (StrUtil.isNotBlank(type)) {
+        if (StringUtil.isNotBlank(type)) {
             return switch (type.toLowerCase()) {
                 case "string" -> STRING;
                 case "set" -> SET;

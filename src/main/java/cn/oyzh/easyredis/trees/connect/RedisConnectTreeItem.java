@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
@@ -406,7 +406,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             return;
         }
         // 检查名称
-        if (StrUtil.isBlank(connectName)) {
+        if (StringUtil.isBlank(connectName)) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
             return;
         }

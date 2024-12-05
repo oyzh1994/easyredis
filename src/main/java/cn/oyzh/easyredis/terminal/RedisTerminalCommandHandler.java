@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.fx.terminal.command.BaseTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -40,7 +40,7 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
     @Override
     public String commandHelp(RedisTerminalTextTextArea terminal) {
         StringBuilder builder = new StringBuilder();
-        if (StrUtil.isNotBlank(this.commandArg())) {
+        if (StringUtil.isNotBlank(this.commandArg())) {
             builder.append(" ").append(this.commandArg());
         }
         return builder.isEmpty() ? "" : builder.substring(1);

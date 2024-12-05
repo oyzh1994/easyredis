@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class RedisRemoteInfo {
     }
 
     public int getDBCount() {
-        if (CollUtil.isNotEmpty(this.keyspace)) {
+        if (CollectionUtil.isNotEmpty(this.keyspace)) {
             Optional<Integer> count = this.keyspace.parallelStream().map(RedisDBInfo::getIndex).max(Integer::compareTo);
             return count.map(i -> i + 1).orElse(-1);
         }

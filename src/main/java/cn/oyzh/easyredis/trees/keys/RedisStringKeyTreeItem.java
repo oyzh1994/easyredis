@@ -1,8 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.key.RedisStringKey;
-import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -149,7 +148,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem<RedisStringKey> {
             this.value.count(this.client().pfcount(this.dbIndex(), this.key()));
             this.value.hyLog(true);
         } catch (Exception ex) {
-            if (StrUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
+            if (StringUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
                 this.value.hyLog(false);
             } else {
                 ex.printStackTrace();

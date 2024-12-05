@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.NumberUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.Getter;
@@ -66,8 +66,8 @@ public class RedisServerItem {
             hitRate = "N/A";
         } else if (hits != -1 && misses != -1) {
             double d = 100.0d * hits / (hits + misses);
-            BigDecimal decimal = NumberUtil.round(d, 4);
-            hitRate = decimal.doubleValue() + "%";
+            double decimal = NumberUtil.round(d, 4);
+            hitRate = decimal + "%";
         }
         this.setHitRate(hitRate);
         this.setUptime(uptime + I18nHelper.days());
@@ -168,13 +168,13 @@ public class RedisServerItem {
     }
 
     public void setRole(String role) {
-        if (StrUtil.equalsIgnoreCase("master", role)) {
+        if (StringUtil.equalsIgnoreCase("master", role)) {
             this.role = I18nHelper.master();
             // this.role = "主节点";
-        } else if (StrUtil.equalsIgnoreCase("slave", role)) {
+        } else if (StringUtil.equalsIgnoreCase("slave", role)) {
             this.role = I18nHelper.slave();
             // this.role = "从节点";
-        } else if (StrUtil.equalsIgnoreCase("sentinel", role)) {
+        } else if (StringUtil.equalsIgnoreCase("sentinel", role)) {
             this.role = I18nHelper.sentinel();
             // this.role = "哨兵";
         } else {

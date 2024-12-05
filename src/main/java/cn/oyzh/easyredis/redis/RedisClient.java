@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.redis;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.ArrayUtil;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
@@ -213,7 +213,7 @@ public class RedisClient {
         this.initPool(host, clientConfig);
         try {
             // 获取当前角色
-            this.role = (String) CollUtil.getFirst(this.role());
+            this.role = (String) CollectionUtil.getFirst(this.role());
         } catch (UnsupportedCommandException | JedisDataException ignored) {
         }
         // cluster集群模式
@@ -308,11 +308,11 @@ public class RedisClient {
         // 阻塞超时
         // builder.blockingSocketTimeoutMillis(this.redisInfo.getExecuteTimeOutMs());
         // 连接用户
-        if (StrUtil.isNotBlank(user)) {
+        if (StringUtil.isNotBlank(user)) {
             builder.user(user);
         }
         // 连接密码
-        if (StrUtil.isNotBlank(password)) {
+        if (StringUtil.isNotBlank(password)) {
             builder.password(password);
         }
         return builder.build();
@@ -375,7 +375,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isSentinelMode() {
-        return StrUtil.equalsIgnoreCase("sentinel", this.role);
+        return StringUtil.equalsIgnoreCase("sentinel", this.role);
     }
 
     /**
@@ -411,7 +411,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isStandaloneMode() {
-        return StrUtil.equalsIgnoreCase("standalone", this.infoProp().getRedisMode());
+        return StringUtil.equalsIgnoreCase("standalone", this.infoProp().getRedisMode());
     }
 
     /**
@@ -439,11 +439,12 @@ public class RedisClient {
      */
     private List<ConnectionPool> getClusterMasterPools() {
         Map<String, ConnectionPool> poolMap = this.cluster.getClusterNodes();
-        if (CollUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
+        if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
             this.clusterMasterPools = new ArrayList<>();
             for (ConnectionPool connectionPool : poolMap.values()) {
-                List<Object> role = this.role(connectionPool);
-                if (StrUtil.equalsIgnoreCase("master", (CharSequence) CollUtil.getFirst(role))) {
+                List<Object> roleList = this.role(connectionPool);
+                Object role = CollectionUtil.getFirst(roleList);
+                if (StringUtil.equalsIgnoreCase("master", (String) role)) {
                     this.clusterMasterPools.add(connectionPool);
                 }
             }
@@ -3204,8 +3205,8 @@ public class RedisClient {
      * @return 删除数量
      */
     public long del(Integer dbIndex, Collection<String> keys) {
-        if (CollUtil.isNotEmpty(keys)) {
-            this.del(dbIndex, ArrayUtil.toArray(keys, String.class));
+        if (CollectionUtil.isNotEmpty(keys)) {
+            this.del(dbIndex, ArrayUtil.toArray(keys));
         }
         return -1L;
     }
@@ -3460,7 +3461,7 @@ public class RedisClient {
      * @return 键类型列表
      */
     public List<String> typeMulti(Integer dbIndex, Collection<String> keys) {
-        if (CollUtil.isEmpty(keys)) {
+        if (CollectionUtil.isEmpty(keys)) {
             return Collections.emptyList();
         }
         this.throwSentinelException();
@@ -3616,7 +3617,7 @@ public class RedisClient {
                 this.returnResource(jedis);
             }
         }
-        if (type != null && CollUtil.isNotEmpty(keys)) {
+        if (type != null && CollectionUtil.isNotEmpty(keys)) {
             Set<String> set = new HashSet<>();
             for (String key : keys) {
                 if (type.equalsString(this.type(dbIndex, key))) {
@@ -4162,7 +4163,7 @@ public class RedisClient {
         Map<Integer, Set<String>> keys = new HashMap<>();
         for (int i = 0; i < this.databases(); i++) {
             Set<String> set = this.keys(i, pattern);
-            if (CollUtil.isNotEmpty(set)) {
+            if (CollectionUtil.isNotEmpty(set)) {
                 keys.put(i, set);
             }
         }
@@ -4354,10 +4355,10 @@ public class RedisClient {
     public int databases() {
         if (!this.isClusterMode() && !this.isSentinelMode()) {
             Map<String, String> config = this.configGet("databases");
-            if (CollUtil.isEmpty(config)) {
+            if (CollectionUtil.isEmpty(config)) {
                 this.databases = 16;
             } else {
-                this.databases = Integer.parseInt(CollUtil.getFirst(config.values()));
+                this.databases = Integer.parseInt(CollectionUtil.getFirst(config.values()));
             }
         }
         return this.databases;

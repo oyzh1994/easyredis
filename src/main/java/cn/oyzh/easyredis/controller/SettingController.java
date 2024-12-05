@@ -1,29 +1,29 @@
 package cn.oyzh.easyredis.controller;
 
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.FlexSlider;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
+import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.font.FontSizeComboBox;
 import cn.oyzh.fx.plus.font.FontWeightComboBox;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.i18n.LocaleComboBox;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.opacity.OpacityManager;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.theme.ThemeComboBox;
 import cn.oyzh.fx.plus.theme.ThemeManager;
+import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -214,9 +214,9 @@ public class SettingController extends StageController {
         this.keyLoadLimit.setValue(this.setting.keyLoadLimit());
         // 主题相关处理
         this.theme.select(this.setting.getTheme());
-        this.fgColor.setColor(StrUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
-        this.bgColor.setColor(StrUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
-        this.accentColor.setColor(StrUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
+        this.fgColor.setColor(StringUtil.emptyToDefault(this.setting.getFgColor(), this.theme.getFgColorHex()));
+        this.bgColor.setColor(StringUtil.emptyToDefault(this.setting.getBgColor(), this.theme.getBgColorHex()));
+        this.accentColor.setColor(StringUtil.emptyToDefault(this.setting.getAccentColor(), this.theme.getAccentColorHex()));
         // // 标签相关处理
         // this.tabLimit.setValue(this.setting.getTabLimit());
         // this.tabStrategy.select(this.setting.getTabStrategy());

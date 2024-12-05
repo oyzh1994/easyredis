@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
@@ -53,7 +53,7 @@ public class RedisKeyFilterController extends StageController {
         super.onStageShown(event);
         this.treeItem = this.getWindowProp("treeItem");
         String pattern = this.getWindowProp("pattern");
-        if (!StrUtil.isBlank(pattern)) {
+        if (!StringUtil.isBlank(pattern)) {
             this.keyFilter.setText(pattern);
         }
         this.keyFilter.requestFocus();
@@ -66,7 +66,7 @@ public class RedisKeyFilterController extends StageController {
     @FXML
     private void keyFilter() {
         String pattern = this.keyFilter.getText();
-        if (StrUtil.isNotBlank(pattern) && !"*".equals(pattern)) {
+        if (StringUtil.isNotBlank(pattern) && !"*".equals(pattern)) {
             RedisKeyFilterHistory history = new RedisKeyFilterHistory();
             history.setPattern(pattern);
             this.historyStore.replace(history);

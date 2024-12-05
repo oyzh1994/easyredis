@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.ArrayUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox;
@@ -367,12 +367,12 @@ public class RedisKeyAddController extends StageController {
         String nodeValue = this.valueText();
         // 行数据
         List<String> elements = nodeValue.lines().collect(Collectors.toList());
-        elements = CollUtil.removeBlank(elements);
+        elements = CollectionUtil.removeBlank(elements);
         if (elements.isEmpty()) {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
-        return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) > 0;
+        return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements)) > 0;
     }
 
     /**

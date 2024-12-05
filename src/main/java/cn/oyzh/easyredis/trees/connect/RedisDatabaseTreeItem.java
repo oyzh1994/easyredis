@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
@@ -9,20 +8,6 @@ import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.key.RedisHashKey;
-import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.redis.key.RedisListKey;
-import cn.oyzh.easyredis.redis.key.RedisSetKey;
-import cn.oyzh.easyredis.redis.key.RedisStreamKey;
-import cn.oyzh.easyredis.redis.key.RedisStringKey;
-import cn.oyzh.easyredis.redis.key.RedisZSetKey;
-import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisSetKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.treeView.RichTreeItem;
 import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
@@ -192,7 +177,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @param pattern 模式
      */
     public void doKeyFilter(String pattern) {
-        if (!StrUtil.equals(this.filterPattern, pattern)) {
+        if (!StringUtil.equals(this.filterPattern, pattern)) {
             this.filterPattern = pattern;
             this.reloadChild();
         }

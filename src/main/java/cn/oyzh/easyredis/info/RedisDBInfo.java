@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Data;
 
 /**
@@ -20,7 +20,7 @@ public class RedisDBInfo {
 
     public static RedisDBInfo parse(String str) {
         RedisDBInfo dbInfo = new RedisDBInfo();
-        if (StrUtil.isNotBlank(str)) {
+        if (StringUtil.isNotBlank(str)) {
             str = str.substring(2);
             String indexStr = str.substring(0, str.indexOf(":"));
             dbInfo.index = Integer.parseInt(indexStr);

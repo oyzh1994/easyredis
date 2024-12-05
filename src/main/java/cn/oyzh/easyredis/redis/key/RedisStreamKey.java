@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.redis.RedisRowKey;
 import cn.oyzh.easyredis.redis.row.RedisStreamRow;
 import redis.clients.jedis.resps.StreamEntry;
@@ -23,7 +23,7 @@ public class RedisStreamKey extends RedisRowKey<RedisStreamRow> {
      */
     public void value(List<StreamEntry> value) {
         this.value = new ArrayList<>();
-        if (CollUtil.isNotEmpty(value)) {
+        if (CollectionUtil.isNotEmpty(value)) {
             for (StreamEntry entry : value) {
                 this.value.add(new RedisStreamRow(entry));
             }

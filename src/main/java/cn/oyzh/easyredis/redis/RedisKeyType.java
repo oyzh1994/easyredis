@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis;
 
-import cn.hutool.core.util.StrUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.i18n.I18nManager;
 
 import java.util.Locale;
@@ -55,7 +55,7 @@ public enum RedisKeyType {
     }
 
     public static RedisKeyType valueOfType(String type) {
-        if (StrUtil.isNotBlank(type)) {
+        if (StringUtil.isNotBlank(type)) {
             return switch (type.toLowerCase()) {
                 case "string", "bitmap", "hyperloglog", "hylog" -> STRING;
                 case "set" -> SET;
@@ -76,7 +76,7 @@ public enum RedisKeyType {
      * @return 结果
      */
     public boolean equalsString(String type) {
-        return StrUtil.equalsIgnoreCase(type, this.name());
+        return StringUtil.equalsIgnoreCase(type, this.name());
     }
 
     /**

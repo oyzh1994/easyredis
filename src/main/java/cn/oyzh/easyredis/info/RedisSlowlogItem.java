@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.info;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.Const;
+import cn.oyzh.common.util.StringUtil;
 import lombok.Data;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.resps.Slowlog;
@@ -70,7 +70,7 @@ public class RedisSlowlogItem {
         item.setClientName(slowlog.getClientName());
         item.setExecutionTime(slowlog.getExecutionTime());
         item.setClientHost(slowlog.getClientIpPort());
-        item.setCommand(StrUtil.join(" ", slowlog.getArgs()));
+        item.setCommand(StringUtil.join(" ", slowlog.getArgs()));
         item.setTimeStamp(Const.DATE_FORMAT.format(slowlog.getTimeStamp() * 1000));
         return item;
     }

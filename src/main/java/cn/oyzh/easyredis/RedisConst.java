@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis;
 
-import cn.oyzh.fx.plus.util.FXUtil;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;
@@ -28,7 +27,7 @@ public class RedisConst {
      * 缓存保存路径
      */
     public static final String CACHE_PATH = STORE_PATH + "cache" + File.separator;
-    
+
     /**
      * icon地址
      */

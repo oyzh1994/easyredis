@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
@@ -231,9 +231,9 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         protected List<RedisHashRow> getRows() {
             List<RedisHashRow> rows = this.treeItem.nodeValue();
             String filterKW = this.filter.getText();
-            if (StrUtil.isNotEmpty(filterKW)) {
+            if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
-                        .filter(r -> StrUtil.containsIgnoreCase(r.getField(), filterKW) || StrUtil.containsIgnoreCase(String.valueOf(r.getValue()), filterKW))
+                        .filter(r -> StringUtil.containsIgnoreCase(r.getField(), filterKW) || StringUtil.containsIgnoreCase(String.valueOf(r.getValue()), filterKW))
                         .collect(Collectors.toList());
             }
             return rows;

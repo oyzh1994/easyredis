@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.batch;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
@@ -27,7 +27,7 @@ public class RedisScanSimpleResult {
     private List<String> keys;
 
     public boolean isFinish() {
-        return Objects.equals(this.cursor, ScanParams.SCAN_POINTER_START) || CollUtil.isEmpty(this.keys);
+        return Objects.equals(this.cursor, ScanParams.SCAN_POINTER_START) || CollectionUtil.isEmpty(this.keys);
     }
 
     public int keySize() {

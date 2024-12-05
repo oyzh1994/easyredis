@@ -1,12 +1,12 @@
 package cn.oyzh.easyredis.command;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.util.StringUtil;
 import lombok.experimental.UtilityClass;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class RedisCommandUtil {
     static {
         try {
             URL url = RedisCommand.class.getResource("/redis_commands.json");
-            String json = FileUtil.readString(url, CharsetUtil.CHARSET_UTF_8);
-            if (StrUtil.isNotBlank(json)) {
+            String json = FileUtil.readString(url, StandardCharsets.UTF_8);
+            if (StringUtil.isNotBlank(json)) {
                 COMMANDS.addAll(JSONUtil.toBeanList(json, RedisCommand.class));
             }
         } catch (Exception ex) {
@@ -48,7 +48,7 @@ public class RedisCommandUtil {
     public static RedisCommand getCommand(String command) {
         if (command != null) {
             for (RedisCommand redisCommand : COMMANDS) {
-                if (StrUtil.equalsIgnoreCase(redisCommand.getCommand(), command)) {
+                if (StringUtil.equalsIgnoreCase(redisCommand.getCommand(), command)) {
                     return redisCommand;
                 }
             }
