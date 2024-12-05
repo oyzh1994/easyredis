@@ -10,7 +10,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTabContent">
+          fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTab.RedisFilterTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
         <ClearableTextField realHeight="22" fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip">
             <HBox.margin>

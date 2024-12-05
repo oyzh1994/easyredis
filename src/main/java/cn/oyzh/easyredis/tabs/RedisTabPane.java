@@ -451,8 +451,8 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
             } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
                 pubsubTab.unsubscribe();
                 closeTabs.add(tab);
-            } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
-                closeTabs.add(tab);
+            // } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
+            //     closeTabs.add(tab);
             } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.info()) {
                 closeTabs.add(tab);
             }

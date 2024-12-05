@@ -1,13 +1,20 @@
 package cn.oyzh.easyredis.tabs.pubsub;
 
+import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea;
+import cn.oyzh.i18n.I18nHelper;
+import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import redis.clients.jedis.JedisPubSub;
 
 /**
  * redis发布订阅tab
@@ -78,5 +85,52 @@ public class RedisPubsubTab extends DynamicTab {
 
     public RedisClient client() {
         return this.item.getClient();
+    }
+
+    /**
+     * redis发布订阅内容组件
+     *
+     * @author oyzh
+     * @since 2023/08/02
+     */
+    public static class RedisPubsubTabContent extends DynamicTabController {
+
+        /**
+         * 订阅组件
+         */
+        private JedisPubSub pubSub;
+
+        /**
+         * 文本域
+         */
+        @FXML
+        private ReadOnlyTextArea textArea;
+
+        /**
+         * 初始化
+         *
+         * @param item redis发布订阅键
+         */
+        public void init(RedisPubsubItem item) {
+            this.textArea.appendText(RedisI18nHelper.pubsubTip1() + item.getChannel());
+            this.pubSub = new JedisPubSub() {
+                @Override
+                public void onMessage(String channel, String message) {
+                    textArea.appendLine(I18nHelper.receiveMessage() + ": " + message);
+                }
+            };
+            ThreadUtil.startVirtual(() -> item.getClient().subscribe(this.pubSub, item.getChannel()));
+        }
+
+        /**
+         * 取消订阅
+         */
+        public void unsubscribe() {
+            try {
+                this.pubSub.unsubscribe();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
