@@ -92,23 +92,23 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @FXML
         private SVGGlyph saveNodeData;
 
-        /**
-         * 行号列
-         */
-        @FXML
-        private TableColumn<RedisHashRow, Integer> index;
-
-        /**
-         * 字段列
-         */
-        @FXML
-        private TableColumn<RedisHashRow, String> field;
-
-        /**
-         * 值列
-         */
-        @FXML
-        private TableColumn<RedisHashRow, String> value;
+        // /**
+        //  * 行号列
+        //  */
+        // @FXML
+        // private TableColumn<RedisHashRow, Integer> index;
+        //
+        // /**
+        //  * 字段列
+        //  */
+        // @FXML
+        // private TableColumn<RedisHashRow, String> field;
+        //
+        // /**
+        //  * 值列
+        //  */
+        // @FXML
+        // private TableColumn<RedisHashRow, String> value;
 
         /**
          * 字段名
@@ -205,9 +205,9 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             // 显示首页
             this.firstPage();
             // 绑定属性
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-            this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
+            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
+            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
+            // this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
             this.hashField.addTextChangeListener(this.fieldValListener);
         }
 

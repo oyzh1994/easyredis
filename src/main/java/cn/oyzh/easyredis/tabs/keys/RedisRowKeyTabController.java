@@ -13,9 +13,8 @@ import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
-import javafx.scene.layout.HBox;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +54,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<?, 
      * 行操作列
      */
     @FXML
-    protected TableColumn<R, String> action;
+    protected TableColumn<R, Node> action;
 
     /**
      * 数据操作面板
@@ -127,7 +126,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<?, 
      */
     @FXML
     protected void deleteRow() {
-        if (MessageBox.confirm(I18nHelper.deleteData() + "?")) {
+        if (MessageBox.confirm(I18nHelper.deleteRow() + "?")) {
             if (this.treeItem.deleteRow()) {
                 this.firstPage();
             }
@@ -170,24 +169,23 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<?, 
      * 初始化列表控件
      */
     protected void initTable() {
+
         // 初始化操作栏
         this.action.setCellFactory((cell) -> new FXTableCell<>() {
-            private HBox hBox;
 
             @Override
-            protected void updateItem(String item, boolean empty) {
-                if (empty || item == null) {
-                    super.updateItem(item, empty);
-                } else {
-                    if (this.hBox == null) {
-                        // 删除按钮
-                        DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                        del.setOnMousePrimaryClicked((event) -> deleteRow());
+            public double getLineHeight() {
+                return 30;
+            }
 
-                        this.hBox = new HBox(del);
-                        this.hBox.setPadding(new Insets(5, 0, 0, 5));
-                    }
-                    this.setGraphic(this.hBox);
+            @Override
+            protected void updateItem(Node item, boolean empty) {
+                if (!empty) {
+                    DeleteSVGGlyph delete = new DeleteSVGGlyph("14");
+                    delete.setOnMousePrimaryClicked((event) -> deleteRow());
+                    super.updateItem(delete, false);
+                } else {
+                    super.updateItem(item, true);
                 }
             }
         });

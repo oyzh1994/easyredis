@@ -130,11 +130,11 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </CopySVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </DeleteSVGGlyph>
+        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </DeleteSVGGlyph> -->
         <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
             <FlowPane.margin>
                 <Insets left="5"/>

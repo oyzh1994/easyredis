@@ -144,11 +144,11 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </CopySVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </DeleteSVGGlyph>
+        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </DeleteSVGGlyph> -->
         <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
                              realWidth="120">
             <FlowPane.margin>

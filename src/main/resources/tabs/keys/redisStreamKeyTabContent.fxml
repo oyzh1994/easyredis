@@ -106,11 +106,11 @@
                 <Insets left="5"/>
             </FlowPane.margin>
         </CopySVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
-            <FlowPane.margin>
-                <Insets left="5"/>
-            </FlowPane.margin>
-        </DeleteSVGGlyph>
+        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
+        <!--     <FlowPane.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </FlowPane.margin> -->
+        <!-- </DeleteSVGGlyph> -->
     </FlexFlowPane>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
                           flexHeight="100% - 540"
