@@ -7,12 +7,13 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHyLogKeyTab.RedisHylogKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -52,28 +53,16 @@
                 <Insets left="5"/>
             </HBox.margin>
         </AddFillSVGGlyph>
-        <FXLabel fx:id="count" tipText="%redis.key.elementCount" fontSize="11">
+        <FXLabel prefHeight="22" fx:id="count" tipText="%redis.key.elementCount" fontSize="11">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="-3"/>
             </HBox.margin>
         </FXLabel>
-        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
-        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
-        <!--          realHeight="15"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
+        <FXLabel prefHeight="22" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
                  visible="false"
                  managed="false">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="-3"/>
             </HBox.margin>
         </FXLabel>
         <padding>
@@ -81,6 +70,10 @@
         </padding>
     </FlexHBox>
     <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 67" flexWidth="100% - 2"/>
+                          flexHeight="100% - 67" flexWidth="100% - 4">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </RichDataTextAreaPane>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

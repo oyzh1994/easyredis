@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
@@ -9,6 +9,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
@@ -18,7 +19,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStreamKeyTab.RedisStreamKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -53,23 +53,11 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
-        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
-        <!--          realHeight="15"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
+        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </AddFillSVGGlyph>
+        </AddSVGGlyph>
         <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
             <HBox.margin>
                 <Insets left="5" top="-5"/>
@@ -88,10 +76,10 @@
     <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-            <FlexTableColumn flexWidth="25%" text="%base.id" valueName="id"/>
-            <FlexTableColumn flexWidth="45%" text="%base.content" valueName="value"/>
-            <FlexTableColumn flexWidth="15% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="26%" text="%base.id" valueName="id"/>
+            <FlexTableColumn flexWidth="50%" text="%base.content" valueName="value"/>
+            <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FXSeparator text="%base.content" flexWidth="100%">
@@ -105,21 +93,23 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </DeleteSVGGlyph> -->
     </FlexHBox>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
                           flexHeight="100% - 540"
-                          flexWidth="100%">
+                          flexWidth="100% - 4">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
     </RichDataTextAreaPane>
     <FXSeparator text="%base.id" flexWidth="100%">
         <VBox.margin>
-            <Insets top="5"/>
+            <Insets top="5" left="2"/>
         </VBox.margin>
     </FXSeparator>
-    <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100%" fx:id="streamID"/>
+    <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 4" fx:id="streamID">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </ReadOnlyTextField>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
@@ -15,15 +15,14 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisSetKeyTab.RedisSetKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -120,11 +119,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </DeleteSVGGlyph> -->
         <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" fx:id="format"
                              realWidth="120">
             <HBox.margin>
@@ -136,6 +130,10 @@
         </padding>
     </FlexHBox>
     <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 435"
-                          flexWidth="100% - 2" onKeyPressed="#onKeyDataKeyPressed"/>
+                          flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </RichDataTextAreaPane>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

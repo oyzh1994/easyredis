@@ -12,8 +12,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
-import java.util.Objects;
-
 /**
  * redis string键tab
  *
@@ -36,11 +34,6 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         return (RedisStringKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisStringKey key() {
-    //     return (RedisStringKey) super.key();
-    // }
-
     /**
      * string键tab内容组件
      *
@@ -60,12 +53,6 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
          */
         @FXML
         private SVGGlyph dataRedo;
-
-        // /**
-        //  * 数据大小
-        //  */
-        // @FXML
-        // private FXLabel size;
 
         /**
          * 二进制数据
@@ -94,13 +81,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         /**
          * redis数据监听器
          */
-        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (Objects.equals(newValue, this.treeItem.value().value())) {
-                this.treeItem.clearData();
-            } else {
-                this.treeItem.data(newValue);
-            }
-        };
+        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> this.treeItem.data(newValue);
 
         /**
          * 格式监听器
@@ -120,6 +101,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
                 this.nodeData.setEditable(false);
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
+                this.nodeData.setEditable(true);
             }
         };
 
@@ -128,6 +110,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             if (super.init(treeItem)) {
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
+                // 保存监听
                 this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
@@ -141,15 +124,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         @Override
         protected void initKey() {
             // 数据处理
-            // this.setRawData(this.treeItem.rawValue());
             this.firstShowData();
-            // // 大小
-            // Integer size = this.treeItem.size();
-            // if (size == null) {
-            //     this.size.setText(I18nHelper.size() + ": N/A");
-            // } else {
-            //     this.size.setText(I18nHelper.size() + ": " + size + " bytes");
-            // }
             // 刷新二进制处理
             this.flushBinary();
             // 按钮状态处理
@@ -197,9 +172,8 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         protected void saveKeyValue() {
             if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveKeyValue()) {
-                        this.flushBinary();
-                    }
+                    this.treeItem.saveKeyValue();
+                    this.flushBinary();
                 });
             }
         }
