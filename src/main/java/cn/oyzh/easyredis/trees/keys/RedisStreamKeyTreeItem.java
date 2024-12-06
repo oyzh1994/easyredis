@@ -24,7 +24,7 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue
         try {
             long count = this.client().xdel(this.dbIndex(), this.key(), this.currentRow.getStreamId());
             if (count > 0) {
-                this.nodeValue().remove(this.currentRow);
+                this.rows().remove(this.currentRow);
                 return true;
             }
         } catch (Exception ex) {

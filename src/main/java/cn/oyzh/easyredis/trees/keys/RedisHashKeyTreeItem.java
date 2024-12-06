@@ -116,7 +116,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
         try {
             long count = this.client().hdel(this.dbIndex(), this.key(), this.currentRow.getField());
             if (count > 0) {
-                this.nodeValue().remove(this.currentRow);
+                this.rows().remove(this.currentRow);
                 return true;
             }
             return false;

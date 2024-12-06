@@ -228,7 +228,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
 
         @Override
         protected List<RedisHashValue.RedisHashRow> getRows() {
-            List<RedisHashValue.RedisHashRow> rows = this.treeItem.nodeValue();
+            List<RedisHashValue.RedisHashRow> rows = this.treeItem.rows();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()

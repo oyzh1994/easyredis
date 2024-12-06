@@ -180,7 +180,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
 
         @Override
         protected List<RedisListValue.RedisListRow> getRows() {
-            List<RedisListValue.RedisListRow> rows = this.treeItem.nodeValue();
+            List<RedisListValue.RedisListRow> rows = this.treeItem.rows();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()

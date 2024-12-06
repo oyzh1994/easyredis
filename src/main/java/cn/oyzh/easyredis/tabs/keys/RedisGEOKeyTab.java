@@ -216,7 +216,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
         @Override
         protected List<RedisZSetValue.RedisZSetRow> getRows() {
-            List<RedisZSetValue.RedisZSetRow> rows = this.treeItem.nodeValue();
+            List<RedisZSetValue.RedisZSetRow> rows = this.treeItem.rows();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()

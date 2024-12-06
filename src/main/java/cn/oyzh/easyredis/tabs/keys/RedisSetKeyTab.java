@@ -161,7 +161,7 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
 
         @Override
         protected List<RedisSetValue.RedisSetRow> getRows() {
-            List<RedisSetValue.RedisSetRow> rows = this.treeItem.nodeValue();
+            List<RedisSetValue.RedisSetRow> rows = this.treeItem.rows();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()
@@ -201,7 +201,10 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
                 return;
             }
             if (this.treeItem.isDataUnsaved()) {
-                TaskManager.start(() -> this.treeItem.saveKeyValue());
+                TaskManager.start(() -> {
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                });
             }
         }
 

@@ -45,7 +45,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
         try {
             long count = this.client().lrem(this.dbIndex(), this.key(), this.currentRow.getValue());
             if (count > 0) {
-                this.nodeValue().remove(this.currentRow);
+                this.rows().remove(this.currentRow);
                 return true;
             }
         } catch (Exception ex) {
@@ -81,7 +81,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
     }
 
     @Override
-    public List<RedisListValue.RedisListRow> nodeValue() {
+    public List<RedisListValue.RedisListRow> rows() {
         try {
             List<String> value = this.client().lrange(this.dbIndex(), this.key());
             this.value.valueOfList(value);

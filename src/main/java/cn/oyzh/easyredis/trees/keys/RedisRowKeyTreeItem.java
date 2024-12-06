@@ -64,7 +64,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
      *
      * @return 行列表
      */
-    public List<R> nodeValue() {
+    public List<R> rows() {
         try {
             this.refreshKeyValue();
         } catch (Exception ex) {

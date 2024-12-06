@@ -56,7 +56,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
         try {
             long count = this.client().srem(this.dbIndex(), this.key(), this.currentRow.getValue());
             if (count > 0) {
-                this.nodeValue().remove(this.currentRow);
+                this.rows().remove(this.currentRow);
                 return true;
             }
         } catch (Exception ex) {

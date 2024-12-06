@@ -103,7 +103,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
 
         @Override
         protected List<RedisStreamValue.RedisStreamRow> getRows() {
-            List<RedisStreamValue.RedisStreamRow> rows = this.treeItem.nodeValue();
+            List<RedisStreamValue.RedisStreamRow> rows = this.treeItem.rows();
             String filterKW = this.filter.getText();
             if (StringUtil.isNotEmpty(filterKW)) {
                 rows = rows.parallelStream()

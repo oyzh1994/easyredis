@@ -252,7 +252,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         try {
             long count = this.client().zrem(this.dbIndex(), this.key(), this.currentRow.getValue());
             if (count > 0) {
-                this.nodeValue().remove(this.currentRow);
+                this.rows().remove(this.currentRow);
                 return true;
             }
         } catch (Exception ex) {
