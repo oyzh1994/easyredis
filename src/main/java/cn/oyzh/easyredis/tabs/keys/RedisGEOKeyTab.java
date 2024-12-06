@@ -46,11 +46,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         return (RedisGEOKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisZSetKey key() {
-    //     return (RedisZSetKey) super.key();
-    // }
-
     /**
      * zset键地理坐标tab内容组件
      *
@@ -89,30 +84,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         private DecimalTextField latitudeVal;
 
-        // /**
-        //  * 编号列
-        //  */
-        // @FXML
-        // private TableColumn<RedisZSetRow, Integer> index;
-        //
-        // /**
-        //  * 经度列
-        //  */
-        // @FXML
-        // private TableColumn<RedisZSetRow, Double> longitude;
-        //
-        // /**
-        //  * 纬度列
-        //  */
-        // @FXML
-        // private TableColumn<RedisZSetRow, Double> latitude;
-        //
-        // /**
-        //  * 坐标列
-        //  */
-        // @FXML
-        // private FlexTableColumn<RedisZSetRow, String> coordinate;
-
         /**
          * 数据组件
          */
@@ -124,18 +95,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          */
         @FXML
         private RedisFormatComboBox format;
-
-        /**
-         * 数据监听器
-         */
-        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-                this.treeItem.data(null);
-            } else {
-                this.treeItem.data(newValue);
-            }
-            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
-        };
 
         /**
          * 格式监听器
@@ -159,16 +118,29 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         };
 
         /**
+         * 数据监听器
+         */
+        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setValue(newValue);
+            }
+        };
+
+        /**
          * 经度值监听器
          */
         private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
             Number value = this.longitudeVal.getValue();
-            if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLongitude())) {
-                this.treeItem.longitude(null);
-            } else {
-                this.treeItem.longitude(value.doubleValue());
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
             }
-            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setLongitude(value.doubleValue());
+            }
         };
 
         /**
@@ -176,12 +148,12 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          */
         private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
             Number value = this.latitudeVal.getValue();
-            if (this.treeItem.currentRow() == null || Objects.equals(value.doubleValue(), this.treeItem.currentRow().getLatitude())) {
-                this.treeItem.latitude(null);
-            } else {
-                this.treeItem.latitude(value.doubleValue());
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
             }
-            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setLatitude(value.doubleValue());
+            }
         };
 
         @Override
@@ -190,6 +162,8 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.pageData = null;
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
+                // 保存监听
+                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -205,13 +179,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // 绑定属性
-            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            // this.coordinate.setCellValueFactory(new PropertyValueFactory<>("value"));
-            // this.latitude.setCellValueFactory(new PropertyValueFactory<>("latitude"));
-            // this.longitude.setCellValueFactory(new PropertyValueFactory<>("longitude"));
-            this.latitudeVal.addTextChangeListener(this.latitudeValListener);
-            this.longitudeVal.addTextChangeListener(this.longitudeValListener);
         }
 
         @Override
@@ -241,14 +208,10 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.nodeData.clear();
                 this.nodeData.disable();
                 this.latitudeVal.clear();
-                this.latitudeVal.disable();
                 this.longitudeVal.clear();
-                this.longitudeVal.disable();
             } else {
                 this.latitudeVal.setValue(row.getLatitude());
-                this.latitudeVal.enable();
                 this.longitudeVal.setValue(row.getLongitude());
-                this.longitudeVal.enable();
                 this.nodeData.enable();
                 this.saveNodeData.disable();
                 this.treeItem.clearData();
@@ -264,9 +227,8 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             }
             if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveKeyValue()) {
-                        this.saveNodeData.disable();
-                    }
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
                 });
             }
         }
@@ -274,10 +236,10 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.coordinates() + ": " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
-                    I18nHelper.longitude() + ": " + this.treeItem.currentRow().getLongitude() + System.lineSeparator() +
-                    I18nHelper.latitude() + ": " + this.treeItem.currentRow().getLatitude();
+            String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                    I18nHelper.coordinates() + " : " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
+                    I18nHelper.longitude() + " : " + this.treeItem.currentRow().getLongitude() + System.lineSeparator() +
+                    I18nHelper.latitude() + " : " + this.treeItem.currentRow().getLatitude();
             ClipboardUtil.setStringAndTip(builder);
         }
 
@@ -287,18 +249,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         private void reverseView() {
             this.treeItem.reverseView();
-        }
-
-        /**
-         * zset坐标添加事件
-         *
-         * @param event 事件
-         */
-        @EventSubscribe
-        private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
-            if (this.treeItem == event.data()) {
-                this.firstPage();
-            }
         }
 
         /**
@@ -354,5 +304,30 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             this.nodeData.clear();
             this.nodeData.disable();
         }
+
+        @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            // 绑定属性
+            this.latitudeVal.addTextChangeListener(this.latitudeValListener);
+            this.latitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
+            this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+            this.longitudeVal.addTextChangeListener(this.longitudeValListener);
+            this.longitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
+            this.longitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+        }
+
+        /**
+         * zset坐标添加事件
+         *
+         * @param event 事件
+         */
+        @EventSubscribe
+        private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
+            if (this.treeItem == event.data()) {
+                this.firstPage();
+            }
+        }
+
     }
 }

@@ -111,12 +111,12 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          * 分数监听器
          */
         private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
-            Number scoreVal = this.scoreVal.getValue();
+            Number value = this.scoreVal.getValue();
             if (this.treeItem.data() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
             if (this.treeItem.data() != null) {
-                this.treeItem.data().setScore(scoreVal.doubleValue());
+                this.treeItem.data().setScore(value.doubleValue());
             }
         };
 
@@ -196,12 +196,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.nodeData.clear();
                 this.nodeData.disable();
                 this.scoreVal.clear();
-                this.scoreVal.disable();
             } else {
                 this.scoreVal.setValue(row.getScore());
-                this.scoreVal.enable();
                 this.nodeData.enable();
-                this.saveNodeData.disable();
                 this.treeItem.clearData();
             }
         }
@@ -225,9 +222,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @Override
         protected void copyRow() {
             StringBuilder builder = new StringBuilder();
-            builder.append(I18nHelper.keyName()).append(": ").append(this.treeItem.key()).append(System.lineSeparator());
-            builder.append(I18nHelper.member()).append(": ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.score()).append(": ").append(this.treeItem.currentRow().getScore());
+            builder.append(I18nHelper.keyName()).append(" : ").append(this.treeItem.key()).append(System.lineSeparator());
+            builder.append(I18nHelper.member()).append(" : ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
+                    .append(I18nHelper.score()).append(" : ").append(this.treeItem.currentRow().getScore());
             ClipboardUtil.setStringAndTip(builder.toString());
         }
 
@@ -243,18 +240,6 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         private void reverseView() {
             this.treeItem.reverseView();
-        }
-
-        /**
-         * zset成员添加事件
-         *
-         * @param msg 消息
-         */
-        @EventSubscribe
-        private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
-            if (this.treeItem == msg.data()) {
-                this.firstPage();
-            }
         }
 
         /**
@@ -317,7 +302,20 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             // 绑定属性
             this.reverseView.managedBindVisible();
             this.scoreVal.addTextChangeListener(this.scoreValListener);
+            this.scoreVal.disableProperty().bind(this.nodeData.disabledProperty());
             this.scoreVal.editableProperty().bind(this.nodeData.editableProperty());
+        }
+
+        /**
+         * zset成员添加事件
+         *
+         * @param msg 消息
+         */
+        @EventSubscribe
+        private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
+            if (this.treeItem == msg.data()) {
+                this.firstPage();
+            }
         }
     }
 }
