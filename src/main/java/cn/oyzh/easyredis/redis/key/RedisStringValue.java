@@ -31,11 +31,6 @@ public class RedisStringValue implements RedisKeyValue<Object> {
         this.value = value;
     }
 
-    public RedisStringValue(Object value, Long count) {
-        this.value = value;
-        this.count = count;
-    }
-
     public static RedisStringValue valueOf(Object value) {
         return new RedisStringValue(value);
     }
