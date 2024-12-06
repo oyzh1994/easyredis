@@ -20,7 +20,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +36,7 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
 
     @Override
     protected String url() {
-        return  "/tabs/keys/redisSetKeyTab.fxml";
+        return "/tabs/keys/redisSetKeyTab.fxml";
     }
 
     @Override
@@ -87,11 +86,10 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
          * redis数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-                this.treeItem.clearData();
-            } else {
-                this.treeItem.data(newValue);
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
             }
+            this.treeItem.data().setValue(newValue);
         };
 
         /**
@@ -112,6 +110,7 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
                 this.nodeData.setEditable(false);
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
+                this.nodeData.setEditable(true);
             }
         };
 
@@ -197,18 +196,6 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         }
 
         /**
-         * set成员添加事件
-         *
-         * @param msg 消息
-         */
-        @EventSubscribe
-        private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
-            if (this.treeItem == msg.data()) {
-                this.firstPage();
-            }
-        }
-
-        /**
          * 数据撤销
          */
         @FXML
@@ -260,6 +247,18 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         protected void clearRaw() {
             this.nodeData.clear();
             this.nodeData.disable();
+        }
+
+        /**
+         * set成员添加事件
+         *
+         * @param msg 消息
+         */
+        @EventSubscribe
+        private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
+            if (this.treeItem == msg.data()) {
+                this.firstPage();
+            }
         }
     }
 }

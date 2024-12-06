@@ -18,16 +18,31 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
 
     public RedisSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
-        // this.setValue(new RedisKeyTreeItemValue(this));
+    }
+
+    @Override
+    public RedisSetValue.RedisSetRow data() {
+        return (RedisSetValue.RedisSetRow) super.data();
+    }
+
+    @Override
+    public void data(Object data) {
+        if (data instanceof RedisSetValue.RedisSetRow row) {
+            super.data(row.clone());
+        } else {
+            super.clearData();
+        }
     }
 
     @Override
     public boolean saveKeyValue() {
-        String value = (String) this.data();
+        RedisSetValue.RedisSetRow row = (RedisSetValue.RedisSetRow) this.data();
         try {
-            if (value != null) {
-                this.setKeyValue(value);
-                this.currentRow.setValue(value);
+            if (row != null) {
+                this.setKeyValue(row);
+                // 更新当前行
+                this.currentRow.setValue(row.getValue());
+                // 清除数据
                 this.clearData();
                 return true;
             }
@@ -40,14 +55,20 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
 
     @Override
     protected void setKeyValue(Object value) {
-        try {
-            if (!Objects.equals(value, this.currentRow.getValue())) {
-                this.client().srem(this.dbIndex(), this.key(), this.currentRow.getValue());
+        if (value instanceof RedisSetValue.RedisSetRow row) {
+            try {
+                String rowValue = row.getValue();
+                String currentRowValue = this.currentRow.getValue();
+                // 删除当前成员
+                if (!Objects.equals(rowValue, currentRowValue)) {
+                    this.client().srem(this.dbIndex(), this.key(), currentRowValue);
+                }
+                // 添加成员
+                this.client().sadd(this.dbIndex(), this.key(), rowValue);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
             }
-            this.client().sadd(this.dbIndex(), this.key(), (String) value);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
         }
     }
 
@@ -69,6 +90,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     @Override
     public void refreshKeyValue() {
         try {
+            // 更新数据
             Set<String> value = this.client().smembers(this.dbIndex(), this.key());
             this.value.valueOfSet(value);
             // 清空未保存的数据
@@ -90,8 +112,10 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     @Override
     public boolean checkRowExists() {
         if (this.isDataUnsaved()) {
-            if (!Objects.equals(this.currentRow.getValue(), this.data())) {
-                return this.client().sismember(this.dbIndex(), this.key(), (String) this.data());
+            RedisSetValue.RedisSetRow row = (RedisSetValue.RedisSetRow) this.data();
+            String rowValue = row.getValue();
+            if (!Objects.equals(this.currentRow.getValue(), rowValue)) {
+                return this.client().sismember(this.dbIndex(), this.key(), rowValue);
             }
         }
         return false;

@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2024-12-02
  */
-public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetRow>>{
+public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetRow>> {
 
     @Getter
     private List<RedisSetRow> value;
@@ -41,6 +41,14 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
         private int index;
 
         private String value;
+
+        @Override
+        public RedisSetRow clone() {
+            RedisSetRow row = new RedisSetRow();
+            row.index = this.index;
+            row.value = this.value;
+            return row;
+        }
     }
 
 }
