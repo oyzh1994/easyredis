@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
@@ -17,14 +17,13 @@
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHashKeyTab.RedisHashKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -87,11 +86,11 @@
             <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
-    <FXSeparator text="%base.fieldName" flexWidth="100%">
+    <FXText text="%base.field">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXSeparator>
+    </FXText>
     <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="fieldAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
@@ -100,7 +99,7 @@
             </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" fx:id="fieldUndo" tipText="%base.undoTip1" size="16"
-                      onMousePrimaryClicked="#fleldUndo">
+                      onMousePrimaryClicked="#fieldUndo">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -131,6 +130,9 @@
                 <Insets left="5"/>
             </HBox.margin>
         </RefreshSVGGlyph>
+        <VBox.margin>
+            <Insets top="5" left="2"/>
+        </VBox.margin>
     </FlexHBox>
     <RichDataTextAreaPane disable="true" realHeight="80" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
                           onKeyPressed="#onKeyDataKeyPressed">
@@ -138,11 +140,11 @@
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FXSeparator text="%base.fieldValue" flexWidth="100%">
+    <FXText text="%base.value">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXSeparator>
+    </FXText>
     <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="dataAction">
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
@@ -172,8 +174,11 @@
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </RedisFormatComboBox>
+        <VBox.margin>
+            <Insets top="5" left="2"/>
+        </VBox.margin>
     </FlexHBox>
-    <RichDataTextAreaPane disable="true" flexHeight="100% - 610" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
+    <RichDataTextAreaPane disable="true" flexHeight="100% - 582" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

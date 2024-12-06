@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.trees.keys;
 
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.plus.information.MessageBox;
-import javafx.beans.property.SimpleStringProperty;
 import lombok.NonNull;
 
 import java.util.Map;
@@ -17,24 +17,37 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
 
     public RedisHashKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
-        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
-    /**
-     * 字段属性
-     */
-    private SimpleStringProperty fieldProperty;
+    // /**
+    //  * 字段属性
+    //  */
+    // private SimpleStringProperty fieldProperty;
+    //
+    // /**
+    //  * 获取字段属性
+    //  *
+    //  * @return 字段属性
+    //  */
+    // public SimpleStringProperty fieldProperty() {
+    //     if (this.fieldProperty == null) {
+    //         this.fieldProperty = new SimpleStringProperty();
+    //     }
+    //     return this.fieldProperty;
+    // }
 
-    /**
-     * 获取字段属性
-     *
-     * @return 字段属性
-     */
-    public SimpleStringProperty fieldProperty() {
-        if (this.fieldProperty == null) {
-            this.fieldProperty = new SimpleStringProperty();
+    @Override
+    public RedisHashValue.RedisHashRow data() {
+        return (RedisHashValue.RedisHashRow) super.data();
+    }
+
+    @Override
+    public void data(Object data) {
+        if (data instanceof RedisHashValue.RedisHashRow row) {
+            super.data(row.clone());
+        } else {
+            super.clearData();
         }
-        return this.fieldProperty;
     }
 
     /**
@@ -43,7 +56,11 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
      * @return 字段
      */
     public String field() {
-        return this.fieldProperty == null ? null : this.fieldProperty().get();
+        // return this.fieldProperty == null ? null : this.fieldProperty().get();
+        if (this.data() == null) {
+            return null;
+        }
+        return this.data().getField();
     }
 
     /**
@@ -52,19 +69,22 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
      * @param field 字段
      */
     public void field(String field) {
-        this.fieldProperty().set(field);
+        // this.fieldProperty().set(field);
+        if (this.data() != null) {
+            this.data().setField(field);
+        }
     }
 
-    @Override
-    public boolean isDataUnsaved() {
-        return this.field() != null || super.isDataUnsaved();
-    }
+    // @Override
+    // public boolean isDataUnsaved() {
+    //     return this.field() != null || super.isDataUnsaved();
+    // }
 
-    @Override
-    public void clearData() {
-        this.field(null);
-        super.clearData();
-    }
+    // @Override
+    // public void clearData() {
+    //     this.field(null);
+    //     super.clearData();
+    // }
 
     @Override
     public boolean checkRowExists() {
@@ -78,26 +98,29 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
 
     @Override
     public boolean saveKeyValue() {
-        String value = (String) this.data();
-        if (value == null) {
-            value = this.currentRow.getValue();
-        }
-        String field = this.field();
-        String oldField = this.field();
-        if (field == null) {
-            field = this.currentRow.getField();
-        } else {
-            oldField = this.currentRow.getField();
-        }
+        RedisHashValue.RedisHashRow row = this.data();
+        // if (value == null) {
+        //     value = this.currentRow.getValue();
+        // }
+        // String field = this.field();
+        // String oldField = this.currentRow.getField();
+        // if (field == null) {
+        //     field = this.currentRow.getField();
+        // } else {
+        //     oldField = this.currentRow.getField();
+        // }
         try {
-            this.currentRow.setField(field);
-            this.setKeyValue(value);
-            this.currentRow.setValue(value);
+            // 保存数据
+            this.setKeyValue(row);
+            // 更新行
+            this.currentRow.setField(row.getField());
+            this.currentRow.setValue(row.getValue());
+            // 清除数据
             this.clearData();
-            // 如果字段变化，则删除旧字段
-            if (oldField != null) {
-                this.client().hdel(this.dbIndex(), this.key(), oldField);
-            }
+            // // 如果字段变化，则删除旧字段
+            // if (oldField != null) {
+            //     this.client().hdel(this.dbIndex(), this.key(), oldField);
+            // }
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -108,7 +131,15 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
 
     @Override
     protected void setKeyValue(Object value) {
-        this.client().hset(this.dbIndex(), this.key(), this.currentRow.getField(), (String) value);
+        if (value instanceof RedisHashValue.RedisHashRow row) {
+            String field = row.getField();
+            String oldField = this.currentRow.getField();
+            this.client().hset(this.dbIndex(), this.key(), field, row.getValue());
+            // 删除旧字段
+            if (!StringUtil.equals(field, oldField)) {
+                this.client().hdel(this.dbIndex(), this.key(), oldField);
+            }
+        }
     }
 
     @Override

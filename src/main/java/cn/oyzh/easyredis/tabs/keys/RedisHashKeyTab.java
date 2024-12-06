@@ -46,11 +46,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         return (RedisHashKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisHashKey key() {
-    //     return (RedisHashKey) super.key();
-    // }
-
     /**
      * hash键tab内容组件
      *
@@ -89,24 +84,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @FXML
         private SVGGlyph saveNodeData;
 
-        // /**
-        //  * 行号列
-        //  */
-        // @FXML
-        // private TableColumn<RedisHashRow, Integer> index;
-        //
-        // /**
-        //  * 字段列
-        //  */
-        // @FXML
-        // private TableColumn<RedisHashRow, String> field;
-        //
-        // /**
-        //  * 值列
-        //  */
-        // @FXML
-        // private TableColumn<RedisHashRow, String> value;
-
         /**
          * 字段名
          */
@@ -132,30 +109,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         private FlexHBox fieldAction;
 
         /**
-         * redis数据监听器
-         */
-        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-                this.treeItem.clearData();
-            } else {
-                this.treeItem.data(newValue);
-            }
-        };
-
-        /**
-         * 字段值监听器
-         */
-        private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
-            String value = this.hashField.getText();
-            if (this.treeItem.currentRow() == null || Objects.equals(value, this.treeItem.currentRow().getField())) {
-                this.treeItem.field(null);
-            } else {
-                this.treeItem.field(value);
-            }
-            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
-        };
-
-        /**
          * 格式监听器
          */
         private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
@@ -176,13 +129,38 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             }
         };
 
+        /**
+         * redis数据监听器
+         */
+        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setValue(newValue);
+            }
+        };
+
+        /**
+         * 字段值监听器
+         */
+        private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setField(newValue);
+            }
+        };
+
         @Override
         public boolean init(RedisHashKeyTreeItem treeItem) {
             this.pageData = null;
             if (super.init(treeItem)) {
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                this.treeItem.dataProperty().addListener((t1, t2, newValue) -> this.saveNodeData.setDisable(newValue == null));
+                // 保存监听
+                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -201,11 +179,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // 绑定属性
-            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
-            // this.field.setCellValueFactory(new PropertyValueFactory<>("field"));
-            this.hashField.addTextChangeListener(this.fieldValListener);
         }
 
         @Override
@@ -213,16 +186,16 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             super.initRow(row);
             if (row == null) {
                 this.hashField.clear();
-                this.hashField.disable();
+                // this.hashField.disable();
                 this.nodeData.clear();
                 this.nodeData.disable();
-                this.fieldAction.disable();
+                // this.fieldAction.disable();
             } else {
                 this.hashField.setText(row.getField());
                 this.hashField.forgetHistory();
-                this.hashField.enable();
+                // this.hashField.enable();
                 this.nodeData.enable();
-                this.fieldAction.enable();
+                // this.fieldAction.enable();
             }
         }
 
@@ -275,18 +248,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             ClipboardUtil.setStringAndTip(builder, "行信息");
         }
 
-        /**
-         * hash字段添加事件
-         *
-         * @param event 事件
-         */
-        @EventSubscribe
-        private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
-            if (this.treeItem == event.data()) {
-                this.firstPage();
-            }
-        }
-
         @FXML
         @Override
         protected void saveKeyValue() {
@@ -296,9 +257,11 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             }
             if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveKeyValue()) {
-                        this.saveNodeData.disable();
-                    }
+                    // if (this.treeItem.saveKeyValue()) {
+                    //     this.saveNodeData.disable();
+                    // }
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
                 });
             }
         }
@@ -343,7 +306,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
          * 数据撤销
          */
         @FXML
-        private void fleldUndo() {
+        private void fieldUndo() {
             this.hashField.undo();
             this.hashField.requestFocus();
         }
@@ -391,6 +354,28 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         protected void clearRaw() {
             this.nodeData.clear();
             this.nodeData.disable();
+        }
+
+        @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            // 绑定属性
+            this.hashField.addTextChangeListener(this.fieldValListener);
+            this.hashField.disableProperty().bind(this.nodeData.disabledProperty());
+            this.hashField.editableProperty().bind(this.nodeData.editableProperty());
+            this.fieldAction.disableProperty().bind(this.nodeData.disabledProperty());
+        }
+
+        /**
+         * hash字段添加事件
+         *
+         * @param event 事件
+         */
+        @EventSubscribe
+        private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
+            if (this.treeItem == event.data()) {
+                this.firstPage();
+            }
         }
     }
 }

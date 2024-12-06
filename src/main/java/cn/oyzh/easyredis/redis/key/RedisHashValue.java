@@ -43,5 +43,14 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
         private String field;
 
         private String value;
+
+        @Override
+        public RedisHashRow clone() {
+            RedisHashRow row = new RedisHashRow();
+            row.index = this.index;
+            row.field = this.field;
+            row.value = this.value;
+            return row;
+        }
     }
 }
