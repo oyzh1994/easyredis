@@ -80,9 +80,9 @@
     <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/>
-            <FlexTableColumn flexWidth="70%" text="%base.value" valueName="value"/>
-            <FlexTableColumn flexWidth="15% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="76%" text="%base.value" valueName="value"/>
+            <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">

@@ -260,7 +260,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         }
 
         @Override
-        protected void clearRaw() {
+        protected void clearRow() {
             this.nodeData.clear();
             this.nodeData.disable();
         }

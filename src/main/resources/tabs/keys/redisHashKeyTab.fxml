@@ -83,7 +83,7 @@
             <FlexTableColumn flexWidth="12%" text="%base.No" valueName="index"/>
             <FlexTableColumn flexWidth="40%" text="%base.field" valueName="field"/>
             <FlexTableColumn flexWidth="36%" text="%base.value" valueName="value"/>
-            <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FXText text="%base.field">

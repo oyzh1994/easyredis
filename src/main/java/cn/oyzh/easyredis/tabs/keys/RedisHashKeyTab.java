@@ -351,7 +351,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         }
 
         @Override
-        protected void clearRaw() {
+        protected void clearRow() {
             this.nodeData.clear();
             this.nodeData.disable();
         }

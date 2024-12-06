@@ -11,9 +11,9 @@
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FXSeparator?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -82,30 +82,30 @@
             <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
-    <FXSeparator text="%base.content" flexWidth="100%">
-        <VBox.margin>
-            <Insets top="5"/>
-        </VBox.margin>
-    </FXSeparator>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets top="10" left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
     </FlexHBox>
+    <FXText text="%base.content">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </FXText>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 540"
+                          flexHeight="100% - 494"
                           flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FXSeparator text="%base.id" flexWidth="100%">
+    <FXText text="%base.id">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXSeparator>
+    </FXText>
     <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 4" fx:id="streamID">
         <VBox.margin>
             <Insets left="2"/>

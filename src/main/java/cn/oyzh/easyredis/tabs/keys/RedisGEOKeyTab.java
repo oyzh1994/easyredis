@@ -300,7 +300,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         }
 
         @Override
-        protected void clearRaw() {
+        protected void clearRow() {
             this.nodeData.clear();
             this.nodeData.disable();
         }

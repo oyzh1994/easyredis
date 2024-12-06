@@ -7,7 +7,6 @@ import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
-import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -201,9 +200,10 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
      */
     protected void initRow(R row) {
         this.treeItem.currentRow(row);
-        this.treeItem.data(null);
+        this.treeItem.clearData();
+        // this.treeItem.data(null);
         if (row == null) {
-            this.clearRaw();
+            this.clearRow();
             this.dataAction.disable();
         } else {
             this.firstShowData();
@@ -221,5 +221,5 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     /**
      * 清除行
      */
-    protected abstract void clearRaw();
+    protected abstract void clearRow();
 }

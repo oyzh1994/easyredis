@@ -93,7 +93,7 @@
             <FlexTableColumn flexWidth="28%" valueName="value" text="%base.name"/>
             <FlexTableColumn flexWidth="24%" valueName="longitude" text="%base.longitude"/>
             <FlexTableColumn flexWidth="24%" valueName="latitude" text="%base.latitude"/>
-            <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
