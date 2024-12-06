@@ -119,7 +119,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem> extends DynamicTab
      * 重新载入
      */
     public void reload() {
-        this.controller().reloadNode();
+        this.controller().reloadKey();
     }
 
     /**

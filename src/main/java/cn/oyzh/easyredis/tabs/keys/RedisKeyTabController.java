@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -11,7 +10,6 @@ import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 
@@ -97,7 +95,7 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
         // this.keyInfoController.init(treeItem);
 
         // 初始化节点
-        this.initNode();
+        this.initKey();
 
         // // 加载耗时处理
         // FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
@@ -107,7 +105,7 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     /**
      * 初始化键
      */
-    protected void initNode() {
+    protected void initKey() {
     }
 
     /**
@@ -165,9 +163,9 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
      * @param e 事件
      */
     @FXML
-    protected void onNodeDataKeyPressed(KeyEvent e) {
+    protected void onKeyDataKeyPressed(KeyEvent e) {
         if (KeyboardUtil.isCtrlS(e)) {
-            this.saveKeyData();
+            this.saveKeyValue();
             e.consume();
         }
     }
@@ -176,7 +174,7 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
      * 保存键数据
      */
     @FXML
-    protected void saveKeyData() {
+    protected void saveKeyValue() {
         if (this.treeItem.isDataUnsaved()) {
             ThreadUtil.startVirtual(this.treeItem::saveKeyValue);
         }
@@ -185,38 +183,15 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     /**
      * 重新加载键
      */
-    public void reloadNode() {
+    public void reloadKey() {
 
     }
-
-    // /**
-    //  * ttl设置
-    //  */
-    // @FXML
-    // protected void ttlUpdate() {
-    //     StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
-    //     fxView.setProp("treeItem", this.treeItem);
-    //     fxView.display();
-    // }
 
     /**
      * 刷新ttl
      */
     public void flushTTL() {
-        // if (this.ttl.getCursor() != Cursor.HAND) {
-        //     this.ttl.setCursor(Cursor.HAND);
-        // }
-        // this.ttl.setText("TTL: " + this.treeItem.ttl());
         this.keyExtraController.flushTTL();
-    }
-
-    @Override
-    public void onTabClose(DynamicTab tab, Event event) {
-        super.onTabClose(tab, event);
-        // // 取消当前键的选中
-        // if (this.treeItem.getTreeView().getSelectedItem() == this.treeItem) {
-        //     this.treeItem.getTreeView().select(this.treeItem.connectTreeItem());
-        // }
     }
 
     @Override
@@ -225,13 +200,6 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
         this.collect.managedBindVisible();
         this.unCollect.managedBindVisible();
     }
-    //
-    // @Override
-    // public void initialize(URL location, ResourceBundle resourceBundle) {
-    //     super.initialize(location, resourceBundle);
-    //     this.collect.managedBindVisible();
-    //     this.unCollect.managedBindVisible();
-    // }
 
     /**
      * 首次显示数据
@@ -244,6 +212,5 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
      * @param dataType 数据类型
      */
     protected abstract void showData(RichDataType dataType) ;
-
 
 }

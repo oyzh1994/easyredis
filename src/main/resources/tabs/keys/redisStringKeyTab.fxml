@@ -22,7 +22,7 @@
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStringKeyTab.RedisStringKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
-                      onMousePrimaryClicked="#saveKeyData">
+                      onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -111,6 +111,6 @@
         </padding>
     </FlexHBox>
     <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 67"
-                          flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
+                          flexWidth="100% - 2" onKeyPressed="#onKeyDataKeyPressed"/>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

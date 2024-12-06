@@ -139,7 +139,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         }
 
         @Override
-        protected void initNode() {
+        protected void initKey() {
             // 数据处理
             // this.setRawData(this.treeItem.rawValue());
             this.firstShowData();
@@ -185,7 +185,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             try {
                 this.treeItem.refreshKeyValue();
                 // 数据变更
-                this.initNode();
+                this.initKey();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
@@ -194,7 +194,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
         @FXML
         @Override
-        protected void saveKeyData() {
+        protected void saveKeyValue() {
             if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
                     if (this.treeItem.saveKeyValue()) {

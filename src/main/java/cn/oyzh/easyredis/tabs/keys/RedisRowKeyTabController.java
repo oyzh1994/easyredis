@@ -106,7 +106,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     }
 
     @Override
-    public void reloadNode() {
+    public void reloadKey() {
         // 放弃保存
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;

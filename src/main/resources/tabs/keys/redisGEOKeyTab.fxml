@@ -43,7 +43,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </UnCollectSVGGlyph>
-        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadNode">
+        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -112,7 +112,7 @@
     </FlexTableView>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
-                      onMousePrimaryClicked="#saveKeyData">
+                      onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -165,7 +165,7 @@
         </VBox.margin>
     </FXSeparator>
     <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 610"
-                          flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                          flexWidth="100%" onKeyPressed="#onKeyDataKeyPressed">
         <HBox.margin>
             <Insets top="5"/>
         </HBox.margin>
@@ -176,7 +176,7 @@
         </VBox.margin>
     </FXSeparator>
     <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 10" fx:id="longitudeVal"
-                    tipText="%base.longitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
+                    tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
     </LongitudeField>
     <FXSeparator text="%base.latitude" flexWidth="100%">
         <VBox.margin>
@@ -184,7 +184,7 @@
         </VBox.margin>
     </FXSeparator>
     <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 10" fx:id="latitudeVal"
-                   tipText="%base.latitude" value="0" step="5" onKeyPressed="#onNodeDataKeyPressed">
+                   tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
     </LatitudeField>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

@@ -33,7 +33,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </UnCollectSVGGlyph>
-        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadNode">
+        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>

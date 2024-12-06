@@ -41,7 +41,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </UnCollectSVGGlyph>
-        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadNode">
+        <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -110,7 +110,7 @@
     </FlexTableView>
     <FlexHBox disable="true" realHeight="32" flexWidth="100%" fx:id="dataAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
-                      onMousePrimaryClicked="#saveKeyData">
+                      onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -163,7 +163,7 @@
         </VBox.margin>
     </FXSeparator>
     <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 540"
-                          flexWidth="100%" onKeyPressed="#onNodeDataKeyPressed">
+                          flexWidth="100%" onKeyPressed="#onKeyDataKeyPressed">
         <HBox.margin>
             <Insets top="5"/>
         </HBox.margin>
@@ -175,7 +175,7 @@
     </FXSeparator>
     <DecimalTextField scaleLen="5" realHeight="24" flexWidth="100%" fx:id="scoreVal"
                       tipText="%base.score" value="0" step="5"
-                      disable="true" onKeyPressed="#onNodeDataKeyPressed">
+                      disable="true" onKeyPressed="#onKeyDataKeyPressed">
     </DecimalTextField>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

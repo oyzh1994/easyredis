@@ -148,7 +148,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         }
 
         @Override
-        protected void initNode() {
+        protected void initKey() {
             // 初始化表单
             this.initTable();
             // 显示首页

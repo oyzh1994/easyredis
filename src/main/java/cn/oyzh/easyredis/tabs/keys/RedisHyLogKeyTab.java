@@ -73,7 +73,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         private RichDataTextAreaPane nodeData;
 
         @Override
-        protected void initNode() {
+        protected void initKey() {
             // 数据处理
             this.firstShowData();
             // // 大小
@@ -114,7 +114,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             try {
                 this.treeItem.refreshKeyValue();
                 // 数据变更
-                this.initNode();
+                this.initKey();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
@@ -141,7 +141,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             if (this.treeItem == msg.data()) {
                 // 刷新数据
                 this.treeItem.flushCount();
-                this.initNode();
+                this.initKey();
             }
         }
 

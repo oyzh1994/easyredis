@@ -90,7 +90,7 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         }
 
         @Override
-        protected void initNode() {
+        protected void initKey() {
             // 初始化表单
             this.initTable();
             // 显示首页
