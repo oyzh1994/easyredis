@@ -36,6 +36,10 @@ public class RedisKeysTab extends DynamicTab {
         super.flush();
     }
 
+    public void flushData() {
+        this.controller().initData();
+    }
+
     @Override
     protected String getTabTitle() {
         String name = this.treeItem().info().getName();

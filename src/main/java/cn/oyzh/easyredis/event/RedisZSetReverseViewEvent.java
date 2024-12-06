@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.event;
 
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.Event;
 
@@ -8,4 +9,9 @@ import cn.oyzh.event.Event;
  * @since 2024/5/17
  */
 public class RedisZSetReverseViewEvent extends Event<RedisZSetKeyTreeItem> {
+
+    public RedisDatabaseTreeItem dbItem() {
+        return this.data().getTreeView().dbItem();
+    }
+
 }

@@ -29,6 +29,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisGEOKeyTab.RedisGEOKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -63,18 +64,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
-        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
-        <!--          realHeight="15"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
         <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5"/>
@@ -103,11 +92,11 @@
     <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
                    fixedCellSize="30">
         <columns>
-            <FlexTableColumn flexWidth="10%" valueName="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="30%" valueName="coordinate" text="%base.name"/>
-            <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="25%" valueName="latitude" text="%base.latitude"/>
-            <FlexTableColumn flexWidth="10% - 10" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12%" valueName="index" text="%base.No"/>
+            <FlexTableColumn flexWidth="28%" valueName="value" text="%base.name"/>
+            <FlexTableColumn flexWidth="24%" valueName="longitude" text="%base.longitude"/>
+            <FlexTableColumn flexWidth="24%" valueName="latitude" text="%base.latitude"/>
+            <FlexTableColumn flexWidth="12% - 10" fx:id="action" text="%base.action" sortable="false"/>
         </columns>
     </FlexTableView>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
@@ -144,11 +133,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </DeleteSVGGlyph> -->
         <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
                              realWidth="120">
             <HBox.margin>
@@ -159,32 +143,38 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <FXSeparator text="%base.coordinates" flexWidth="100%">
+    <FXLabel text="%base.coordinates">
         <VBox.margin>
-            <Insets top="5"/>
+            <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXSeparator>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 610"
-                          flexWidth="100%" onKeyPressed="#onKeyDataKeyPressed">
-        <HBox.margin>
-            <Insets top="5"/>
-        </HBox.margin>
+    </FXLabel>
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 542"
+                          flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
     </RichDataTextAreaPane>
-    <FXSeparator text="%base.longitude" flexWidth="100%">
+    <FXLabel text="%base.longitude">
         <VBox.margin>
-            <Insets top="5"/>
+            <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXSeparator>
-    <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 10" fx:id="longitudeVal"
+    </FXLabel>
+    <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
                     tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
-    </LongitudeField>
-    <FXSeparator text="%base.latitude" flexWidth="100%">
         <VBox.margin>
-            <Insets top="5"/>
+            <Insets left="2"/>
         </VBox.margin>
-    </FXSeparator>
-    <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 10" fx:id="latitudeVal"
+    </LongitudeField>
+    <FXLabel text="%base.latitude">
+        <VBox.margin>
+            <Insets top="5" left="2"/>
+        </VBox.margin>
+    </FXLabel>
+    <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
                    tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
     </LatitudeField>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

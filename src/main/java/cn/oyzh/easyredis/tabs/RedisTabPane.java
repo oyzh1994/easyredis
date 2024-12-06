@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
+import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
 import cn.oyzh.easyredis.info.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
@@ -387,26 +388,19 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    // /**
-    //  * zset反转视图事件
-    //  *
-    //  * @param event 事件
-    //  */
-    // @EventSubscribe
-    // public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
-    //     if (event != null && event.data() != null) {
-    //         RedisKeyTab keyTab = this.getKeyTab(event.data());
-    //         if (keyTab != null) {
-    //             keyTab.closeTab();
-    //         }
-    //         keyTab = RedisKeyTab.ofItem(event.data());
-    //         super.addTab(keyTab);
-    //         // 选中节点
-    //         this.select(keyTab);
-    //         // // 初始化节点
-    //         // keyTab.init(event.data());
-    //     }
-    // }
+    /**
+     * zset反转视图事件
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void onRedisZSetReverseView(RedisZSetReverseViewEvent event) {
+        RedisKeysTab keysTab = this.getKeysTab(event.dbItem());
+        if (keysTab != null) {
+            keysTab.flushData();
+            this.select(keysTab);
+        }
+    }
 
     // /**
     //  * 键更名事件
@@ -451,8 +445,8 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
             } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
                 pubsubTab.unsubscribe();
                 closeTabs.add(tab);
-            // } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
-            //     closeTabs.add(tab);
+                // } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
+                //     closeTabs.add(tab);
             } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.info()) {
                 closeTabs.add(tab);
             }
