@@ -244,7 +244,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             }
             if (this.treeItem.dataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveNodeValue()) {
+                    if (this.treeItem.saveKeyValue()) {
                         this.saveNodeData.disable();
                     }
                 });

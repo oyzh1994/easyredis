@@ -112,7 +112,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
         }
         try {
             // 刷新数据
-            this.treeItem.refreshNodeValue();
+            this.treeItem.refreshKeyValue();
             // 跳转到首页
             this.firstPage();
         } catch (Exception ex) {

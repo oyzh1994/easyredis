@@ -235,7 +235,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      *
      * @return 结果
      */
-    public boolean saveNodeValue() {
+    public boolean saveKeyValue() {
         return false;
     }
 
@@ -244,13 +244,13 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      *
      * @param value 值
      */
-    protected void setNodeValue(Object value) {
+    protected void setKeyValue(Object value) {
     }
 
     /**
      * 刷新节点值
      */
-    public void refreshNodeValue() {
+    public void refreshKeyValue() {
     }
 
     /**

@@ -35,7 +35,7 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue
     }
 
     @Override
-    public void refreshNodeValue() {
+    public void refreshKeyValue() {
         List<StreamEntry> value = this.client().xrange(this.dbIndex(), this.key());
         this.value.valueOfStream(value);
         this.clearData();

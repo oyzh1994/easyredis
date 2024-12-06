@@ -183,7 +183,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             }
             // 刷新数据
             try {
-                this.treeItem.refreshNodeValue();
+                this.treeItem.refreshKeyValue();
                 // 数据变更
                 this.initNode();
             } catch (Exception ex) {
@@ -197,7 +197,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         protected void saveKeyData() {
             if (this.treeItem.dataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveNodeValue()) {
+                    if (this.treeItem.saveKeyValue()) {
                         this.flushBinary();
                     }
                 });

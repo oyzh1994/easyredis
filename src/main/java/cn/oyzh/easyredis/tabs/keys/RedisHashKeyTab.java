@@ -296,7 +296,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             }
             if (this.treeItem.dataUnsaved()) {
                 TaskManager.start(() -> {
-                    if (this.treeItem.saveNodeValue()) {
+                    if (this.treeItem.saveKeyValue()) {
                         this.saveNodeData.disable();
                     }
                 });

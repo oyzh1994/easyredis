@@ -112,7 +112,7 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             }
             // 刷新数据
             try {
-                this.treeItem.refreshNodeValue();
+                this.treeItem.refreshKeyValue();
                 // 数据变更
                 this.initNode();
             } catch (Exception ex) {

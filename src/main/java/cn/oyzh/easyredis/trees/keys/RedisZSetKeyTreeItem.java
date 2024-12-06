@@ -198,13 +198,13 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     }
 
     @Override
-    public boolean saveNodeValue() {
+    public boolean saveKeyValue() {
         String value = (String) this.data();
         if (value == null) {
             value = this.currentRow.getValue();
         }
         try {
-            this.setNodeValue(value);
+            this.setKeyValue(value);
             this.currentRow.setValue(value);
             if (this.isGEOView()) {
                 if (this.latitude() != null) {
@@ -228,7 +228,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     }
 
     @Override
-    protected void setNodeValue(Object value) {
+    protected void setKeyValue(Object value) {
         try {
             if (!Objects.equals(value, this.currentRow.getValue())) {
                 this.client().zrem(this.dbIndex(), this.key(), this.currentRow.getValue());
@@ -263,7 +263,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     }
 
     @Override
-    public void refreshNodeValue() {
+    public void refreshKeyValue() {
         try {
             List<String> value = this.client().zrange(this.dbIndex(), this.key());
             if (this.isGEOView()) {

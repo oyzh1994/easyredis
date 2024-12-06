@@ -15,9 +15,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 /**
  * redis键tab内容组件
  *
@@ -181,7 +178,7 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     @FXML
     protected void saveKeyData() {
         if (this.treeItem.dataUnsaved()) {
-            ThreadUtil.startVirtual(this.treeItem::saveNodeValue);
+            ThreadUtil.startVirtual(this.treeItem::saveKeyValue);
         }
     }
 

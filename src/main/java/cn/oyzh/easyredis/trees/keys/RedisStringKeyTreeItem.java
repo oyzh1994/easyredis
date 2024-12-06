@@ -18,12 +18,12 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     }
 
     @Override
-    public boolean saveNodeValue() {
+    public boolean saveKeyValue() {
         Object value = this.data();
         try {
             if (value != null) {
-                this.setNodeValue(value);
-                this.refreshNodeValue();
+                this.setKeyValue(value);
+                this.refreshKeyValue();
                 return true;
             }
         } catch (Exception ex) {
@@ -34,7 +34,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     }
 
     @Override
-    protected void setNodeValue(Object value) {
+    protected void setKeyValue(Object value) {
         if (value instanceof String string) {
             this.client().set(this.dbIndex(), this.key(), string);
         } else if (value instanceof byte[] bytes) {
@@ -43,7 +43,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     }
 
     @Override
-    public void refreshNodeValue() {
+    public void refreshKeyValue() {
         try {
             Object val;
             if (this.isRawEncoding(true)) {
@@ -66,7 +66,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         if (super.dataUnsaved()) {
             return super.data();
         }
-        this.refreshNodeValue();
+        this.refreshKeyValue();
         return this.value.value().getValue();
     }
 

@@ -77,7 +77,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public boolean saveNodeValue() {
+    public boolean saveKeyValue() {
         String value = (String) this.data();
         if (value == null) {
             value = this.currentRow.getValue();
@@ -91,7 +91,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
         }
         try {
             this.currentRow.setField(field);
-            this.setNodeValue(value);
+            this.setKeyValue(value);
             this.currentRow.setValue(value);
             this.clearData();
             // 如果字段变化，则删除旧字段
@@ -107,7 +107,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    protected void setNodeValue(Object value) {
+    protected void setKeyValue(Object value) {
         this.client().hset(this.dbIndex(), this.key(), this.currentRow.getField(), (String) value);
     }
 
@@ -128,7 +128,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public void refreshNodeValue() {
+    public void refreshKeyValue() {
         Map<String, String> value = this.client().hgetAll(this.dbIndex(), this.key());
         this.value.valueOfHash(value);
         // 清空未保存的数据
