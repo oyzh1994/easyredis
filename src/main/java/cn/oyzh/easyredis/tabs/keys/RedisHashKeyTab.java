@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -129,7 +130,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
          * 字段操作
          */
         @FXML
-        private FlexFlowPane fieldAction;
+        private FlexHBox fieldAction;
 
         /**
          * redis数据监听器

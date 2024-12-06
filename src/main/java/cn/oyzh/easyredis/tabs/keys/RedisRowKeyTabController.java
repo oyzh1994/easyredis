@@ -8,6 +8,7 @@ import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.FlexFlowPane;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -60,7 +61,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
      * 数据操作面板
      */
     @FXML
-    protected FlexFlowPane dataAction;
+    protected FlexHBox dataAction;
 
     @Override
     public boolean init(T treeItem) {

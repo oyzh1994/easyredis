@@ -13,103 +13,103 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStringKeyTab.RedisStringKeyTabController">
-    <FlexFlowPane realHeight="32" flexWidth="100%">
+    <FlexHBox realHeight="32" flexWidth="100%">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyData">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="dataRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#dataRedo">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph fx:id="pasteData" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
                        tipText="%base.pasteTip1">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" fx:id="clearData" onMousePrimaryClicked="#clearData">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </ClearSVGGlyph>
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </CollectSVGGlyph>
         <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
                            onMousePrimaryClicked="#unCollect">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </UnCollectSVGGlyph>
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </RefreshSVGGlyph>
         <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </RenameKeySVGGlyph>
         <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteNode">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </DeleteSVGGlyph>
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKeyInfo">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </CopySVGGlyph>
         <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
                              realWidth="120">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5" top="-4"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </RedisFormatComboBox>
         <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
         <!--          onMousePrimaryClicked="#ttlUpdate"> -->
-        <!--     <FlowPane.margin> -->
+        <!--     <HBox.margin> -->
         <!--         <Insets left="5"/> -->
-        <!--     </FlowPane.margin> -->
+        <!--     </HBox.margin> -->
         <!-- </FXLabel> -->
         <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
         <!--          realHeight="15"> -->
-        <!--     <FlowPane.margin> -->
+        <!--     <HBox.margin> -->
         <!--         <Insets left="5"/> -->
-        <!--     </FlowPane.margin> -->
+        <!--     </HBox.margin> -->
         <!-- </FXLabel> -->
         <FXLabel prefHeight="24" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
                  visible="false"
                  managed="false">
-            <FlowPane.margin>
+            <HBox.margin>
                 <Insets left="5"/>
-            </FlowPane.margin>
+            </HBox.margin>
         </FXLabel>
         <padding>
             <Insets top="9"/>
         </padding>
-    </FlexFlowPane>
+    </FlexHBox>
     <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 67"
                           flexWidth="100% - 2" onKeyPressed="#onNodeDataKeyPressed"/>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>

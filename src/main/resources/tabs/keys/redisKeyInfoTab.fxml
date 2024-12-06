@@ -4,11 +4,10 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXTab text="%base.info" xmlns="http://javafx.com/javafx"
@@ -19,21 +18,21 @@
     </graphic>
     <FlexVBox flexHeight="100%"
               flexWidth="100%">
-        <FlexFlowPane realHeight="32" flexWidth="100%">
+        <FlexHBox realHeight="32" flexWidth="100%">
             <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
-                <FlowPane.margin>
+                <HBox.margin>
                     <Insets left="5"/>
-                </FlowPane.margin>
+                </HBox.margin>
             </CopySVGGlyph>
             <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refresh">
-                <FlowPane.margin>
+                <HBox.margin>
                     <Insets left="5"/>
-                </FlowPane.margin>
+                </HBox.margin>
             </RefreshSVGGlyph>
             <padding>
                 <Insets top="9"/>
             </padding>
-        </FlexFlowPane>
+        </FlexHBox>
         <FlexVBox flexHeight="100% - 32" flexWidth="100%" fontSize="11">
             <VBox.margin>
                 <Insets left="5"/>
