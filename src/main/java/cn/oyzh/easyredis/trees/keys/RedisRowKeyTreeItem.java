@@ -88,4 +88,8 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
         }
         return Collections.emptyList();
     }
+
+    public boolean isSelectRow() {
+        return this.currentRow != null;
+    }
 }

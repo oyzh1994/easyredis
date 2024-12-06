@@ -5,16 +5,12 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.keys.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
-import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph;
 import cn.oyzh.fx.gui.textfield.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.TableColumn;
 
 import java.util.Collections;
 import java.util.List;
@@ -126,7 +122,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
      */
     @FXML
     protected void deleteRow() {
-        if (MessageBox.confirm(I18nHelper.deleteRow() + "?")) {
+        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteRow() + "?")) {
             if (this.treeItem.deleteRow()) {
                 this.firstPage();
             }

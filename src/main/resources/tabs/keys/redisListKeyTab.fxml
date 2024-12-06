@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisListKeyTab.RedisListKeyTabController">
-    <FlexHBox realHeight="32" flexWidth="100%">
+    <FlexHBox realHeight="30" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <HBox.margin>
                 <Insets left="5"/>
@@ -57,34 +57,44 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </AddSVGGlyph>
         <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
             <HBox.margin>
                 <Insets left="5" top="-5"/>
             </HBox.margin>
         </ClearableTextField>
+        <padding>
+            <Insets top="7"/>
+        </padding>
+    </FlexHBox>
+    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+                   fixedCellSize="25">
+        <columns>
+            <FlexTableColumn flexWidth="12% - 12" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="88%" text="%base.value" valueName="value"/>
+            <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
+        </columns>
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </FlexTableView>
+    <FlexHBox realHeight="24">
+        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </AddSVGGlyph>
+        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </DeleteSVGGlyph>
         <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
                  onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </PageBox>
-        <padding>
-            <Insets top="9"/>
-        </padding>
     </FlexHBox>
-    <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
-                   fixedCellSize="30">
-        <columns>
-            <FlexTableColumn flexWidth="12%" text="%base.No" valueName="index"/>
-            <FlexTableColumn flexWidth="76%" text="%base.value" valueName="value"/>
-            <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/>
-        </columns>
-    </FlexTableView>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
@@ -134,7 +144,7 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 433"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 410"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
