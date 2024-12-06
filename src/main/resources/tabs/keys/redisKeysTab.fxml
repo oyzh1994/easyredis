@@ -16,47 +16,47 @@
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeysTab.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
-        <FlexHBox realHeight="32" flexWidth="100%">
+        <FlexHBox realHeight="30" flexWidth="100%">
             <RedisKeySearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="searchType">
                 <HBox.margin>
-                    <Insets left="5" top="5"/>
+                    <Insets left="5" top="3"/>
                 </HBox.margin>
             </RedisKeySearchTypeComboBox>
             <RedisKeySearchTextField onAction="#doSearch" onSearch="#doSearch" fx:id="searchKW" realHeight="24"
                                      flexWidth="100% - 105" maxLen="30">
                 <HBox.margin>
-                    <Insets left="5" top="5"/>
+                    <Insets left="5" top="3"/>
                 </HBox.margin>
             </RedisKeySearchTextField>
         </FlexHBox>
-        <RedisKeysTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 67">
+        <RedisKeysTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
 
         </RedisKeysTreeView>
-        <FlexHBox flexWidth="100%" flexHeight="35">
-            <AddSVGGlyph size="15" onMousePrimaryClicked="#addNode">
+        <FlexHBox flexWidth="100%" flexHeight="30">
+            <AddSVGGlyph size="16" onMousePrimaryClicked="#addNode">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </AddSVGGlyph>
             <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refreshNode">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
             <SortAscSVGGlyph fx:id="sortAsc" size="15" onMousePrimaryClicked="#sortAsc">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </SortAscSVGGlyph>
             <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
                               onMousePrimaryClicked="#sortDesc">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </SortDescSVGGlyph>
             <PositioningSVGGlyph size="17" onMousePrimaryClicked="#positionNode">
                 <HBox.margin>
-                    <Insets left="5" top="10"/>
+                    <Insets left="5" top="5"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
         </FlexHBox>

@@ -3,29 +3,27 @@
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FlexHBox flexWidth="100%" flexHeight="35" xmlns="http://javafx.com/javafx"
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
+<FlexHBox flexWidth="100%" flexHeight="30" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml" fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeyExtraController">
     <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
              onMousePrimaryClicked="#ttlUpdate" realHeight="18" cursorType="HAND">
-        <cursor>
-
-        </cursor>
         <HBox.margin>
             <Insets left="5" top="7"/>
         </HBox.margin>
     </FXLabel>
-    <FXLabel tipText="%base.memoryUsage" fx:id="memoryUsage"
-             style="-fx-fill: #1e455e;-fx-text-fill:#1e455e"
-             realHeight="18">
+    <FXText tipText="%base.memoryUsage" fx:id="memoryUsage"
+            style="-fx-fill: #1e455e;-fx-text-fill:#1e455e"
+            realHeight="18">
         <HBox.margin>
             <Insets left="5" top="7"/>
         </HBox.margin>
-    </FXLabel>
-    <FXLabel tipText="%base.loadCost" fx:id="loadTime"
+    </FXText>
+    <FXText tipText="%base.loadCost" fx:id="loadTime"
              style="-fx-fill: #009933;-fx-text-fill:#009933"
              realHeight="18">
         <HBox.margin>
             <Insets left="5" top="7"/>
         </HBox.margin>
-    </FXLabel>
+    </FXText>
 </FlexHBox>

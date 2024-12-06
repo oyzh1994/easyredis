@@ -50,11 +50,11 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     @FXML
     protected FlexTableView<R> listTable;
 
-    /**
-     * 行操作列
-     */
-    @FXML
-    protected TableColumn<R, Node> action;
+    // /**
+    //  * 行操作列
+    //  */
+    // @FXML
+    // protected TableColumn<R, Node> action;
 
     /**
      * 数据操作面板
@@ -170,27 +170,27 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
      */
     protected void initTable() {
 
-        // 初始化操作栏
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
-
-            @Override
-            public double getLineHeight() {
-                return 30;
-            }
-
-            @Override
-            protected void updateItem(Node item, boolean empty) {
-                if (!empty) {
-                    DeleteSVGGlyph delete = new DeleteSVGGlyph("14");
-                    delete.setOnMousePrimaryClicked((event) -> deleteRow());
-                    super.updateItem(delete, false);
-                } else {
-                    super.updateItem(item, true);
-                }
-            }
-        });
+        // // 初始化操作栏
+        // this.action.setCellFactory((cell) -> new FXTableCell<>() {
+        //
+        //     @Override
+        //     public double getLineHeight() {
+        //         return 30;
+        //     }
+        //
+        //     @Override
+        //     protected void updateItem(Node item, boolean empty) {
+        //         if (!empty) {
+        //             DeleteSVGGlyph delete = new DeleteSVGGlyph("14");
+        //             delete.setOnMousePrimaryClicked((event) -> deleteRow());
+        //             super.updateItem(delete, false);
+        //         } else {
+        //             super.updateItem(item, true);
+        //         }
+        //     }
+        // });
         // 监听列表点击事件
-        this.listTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> this.initRow(newValue));
+        this.listTable.selectedItemChanged((observable, oldValue, newValue) -> this.initRow(newValue));
     }
 
     /**

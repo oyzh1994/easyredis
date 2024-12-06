@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
@@ -20,19 +21,19 @@ public class RedisKeyExtraController {
      * ttl组件
      */
     @FXML
-    protected FXLabel ttl;
+    private FXLabel ttl;
 
     /**
      * 加载耗时
      */
     @FXML
-    protected FXLabel loadTime;
+    private FXText loadTime;
 
     /**
      * 内存占用
      */
     @FXML
-    private FXLabel memoryUsage;
+    private FXText memoryUsage;
 
     /**
      * redis键节点

@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStringKeyTab.RedisStringKeyTabController">
-    <FlexHBox realHeight="32" flexWidth="100%">
+    <FlexHBox realHeight="30" flexWidth="100%">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
@@ -96,10 +96,10 @@
             </HBox.margin>
         </FXLabel>
         <padding>
-            <Insets top="9"/>
+            <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 67"
+    <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 60"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
