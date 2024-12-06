@@ -43,7 +43,7 @@ public class RedisKeyTreeItemValue extends RichTreeItemValue {
 
     @Override
     public Color graphicColor() {
-        if (this.item().dataUnsaved()) {
+        if (this.item().isDataUnsaved()) {
             return Color.ORANGERED;
         }
         return super.graphicColor();

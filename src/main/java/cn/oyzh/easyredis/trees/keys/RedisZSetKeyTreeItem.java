@@ -48,11 +48,11 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     }
 
     @Override
-    public boolean dataUnsaved() {
+    public boolean isDataUnsaved() {
         if (this.isGEOView()) {
-            return this.longitude() != null || this.latitude() != null || super.dataUnsaved();
+            return this.longitude() != null || this.latitude() != null || super.isDataUnsaved();
         }
-        return this.score() != null || super.dataUnsaved();
+        return this.score() != null || super.isDataUnsaved();
     }
 
     /**
@@ -291,7 +291,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     @Override
     public boolean checkExists() {
         String data = this.data() == null ? this.currentRow.getValue() : (String) this.data();
-        if (this.dataUnsaved() && !Objects.equals(this.currentRow.getValue(), data)) {
+        if (this.isDataUnsaved() && !Objects.equals(this.currentRow.getValue(), data)) {
             Long zrank = this.client().zrank(this.dbIndex(), this.key(), data);
             return zrank != null;
         }

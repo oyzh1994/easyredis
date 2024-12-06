@@ -164,7 +164,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         @FXML
         private void reloadRow() {
             // 放弃保存
-            if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
             try {

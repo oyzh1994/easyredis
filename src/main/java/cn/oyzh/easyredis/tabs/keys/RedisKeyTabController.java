@@ -177,7 +177,7 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
      */
     @FXML
     protected void saveKeyData() {
-        if (this.treeItem.dataUnsaved()) {
+        if (this.treeItem.isDataUnsaved()) {
             ThreadUtil.startVirtual(this.treeItem::saveKeyValue);
         }
     }

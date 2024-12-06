@@ -152,7 +152,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             } else {
                 this.treeItem.field(value);
             }
-            this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
         };
 
         /**
@@ -252,7 +252,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @FXML
         private void reloadRow() {
             // 放弃保存
-            if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
             try {
@@ -294,7 +294,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
                 MessageBox.warn(I18nHelper.fieldAlreadyExists());
                 return;
             }
-            if (this.treeItem.dataUnsaved()) {
+            if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
                     if (this.treeItem.saveKeyValue()) {
                         this.saveNodeData.disable();

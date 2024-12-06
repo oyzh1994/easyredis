@@ -153,7 +153,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             // 刷新二进制处理
             this.flushBinary();
             // 按钮状态处理
-            this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
             // 如果是raw格式，则选择binary
             if (this.treeItem.isRawEncoding()) {
                 this.format.selectBinary();
@@ -178,7 +178,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         @FXML
         private void reloadData() {
             // 放弃保存
-            if (this.treeItem.dataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
+            if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
             // 刷新数据
@@ -195,7 +195,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         @FXML
         @Override
         protected void saveKeyData() {
-            if (this.treeItem.dataUnsaved()) {
+            if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
                     if (this.treeItem.saveKeyValue()) {
                         this.flushBinary();

@@ -99,7 +99,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      *
      * @return 结果
      */
-    public boolean dataUnsaved() {
+    public boolean isDataUnsaved() {
         if (this.dataProperty == null) {
             return false;
         }

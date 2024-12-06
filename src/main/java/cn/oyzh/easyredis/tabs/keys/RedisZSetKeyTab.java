@@ -130,7 +130,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             } else {
                 this.treeItem.data(newValue);
             }
-            this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
         };
 
         /**
@@ -164,7 +164,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             } else {
                 this.treeItem.score(scoreVal.doubleValue());
             }
-            this.saveNodeData.setDisable(!this.treeItem.dataUnsaved());
+            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
         };
 
         @Override
@@ -242,7 +242,7 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 MessageBox.warn(I18nHelper.dataAlreadyExists());
                 return;
             }
-            if (this.treeItem.dataUnsaved()) {
+            if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> {
                     if (this.treeItem.saveKeyValue()) {
                         this.saveNodeData.disable();

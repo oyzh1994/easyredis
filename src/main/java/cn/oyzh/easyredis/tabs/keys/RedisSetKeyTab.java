@@ -200,7 +200,7 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
                 MessageBox.warn(I18nHelper.dataAlreadyExists());
                 return;
             }
-            if (this.treeItem.dataUnsaved()) {
+            if (this.treeItem.isDataUnsaved()) {
                 TaskManager.start(() -> this.treeItem.saveKeyValue());
             }
         }

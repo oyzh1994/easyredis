@@ -56,8 +56,8 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public boolean dataUnsaved() {
-        return this.field() != null || super.dataUnsaved();
+    public boolean isDataUnsaved() {
+        return this.field() != null || super.isDataUnsaved();
     }
 
     @Override

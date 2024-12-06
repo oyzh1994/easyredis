@@ -63,7 +63,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
     @Override
     public Object rawValue() {
-        if (super.dataUnsaved()) {
+        if (super.isDataUnsaved()) {
             return super.data();
         }
         this.refreshKeyValue();
