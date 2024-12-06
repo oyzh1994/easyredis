@@ -27,9 +27,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisGEOKeyTab.RedisGEOKeyTabController">
-    <FlexHBox realHeight="32" flexWidth="100%">
+    <FlexHBox realHeight="30" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <HBox.margin>
                 <Insets left="5"/>
@@ -61,11 +62,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </AddFillSVGGlyph>
         <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
             <HBox.margin>
                 <Insets left="5" top="-5"/>
@@ -76,26 +72,46 @@
                 <Insets left="5"/>
             </HBox.margin>
         </ReverseSVGGlyph>
-        <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                 onPrevClicked="#prevPage" onNextClicked="#nextPage" realWidth="350">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </PageBox>
         <padding>
-            <Insets top="9"/>
+            <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView flexWidth="100% - 2" realHeight="335" fx:id="listTable"
-                   fixedCellSize="30">
+    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+                   fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="12%" valueName="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="28%" valueName="value" text="%base.name"/>
-            <FlexTableColumn flexWidth="24%" valueName="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="24%" valueName="latitude" text="%base.latitude"/>
-            <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/>
+            <FlexTableColumn flexWidth="12% - 12" valueName="index" text="%base.No"/>
+            <FlexTableColumn flexWidth="38%" valueName="value" text="%base.name"/>
+            <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
+            <FlexTableColumn flexWidth="25%" valueName="latitude" text="%base.latitude"/>
+            <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
         </columns>
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
     </FlexTableView>
+    <FlexHBox realHeight="24">
+        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </CopySVGGlyph>
+        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </AddSVGGlyph>
+        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </DeleteSVGGlyph>
+        <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
+                 onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
+            <HBox.margin>
+                <Insets left="5" top="4"/>
+            </HBox.margin>
+        </PageBox>
+    </FlexHBox>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
@@ -145,7 +161,7 @@
             <Insets top="5" left="2"/>
         </VBox.margin>
     </FXLabel>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 542"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 520"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

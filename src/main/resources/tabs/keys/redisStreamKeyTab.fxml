@@ -75,6 +75,11 @@
         </VBox.margin>
     </FlexTableView>
     <FlexHBox realHeight="24">
+        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </CopySVGGlyph>
         <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -92,20 +97,13 @@
             </HBox.margin>
         </PageBox>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
-            <HBox.margin>
-                <Insets top="10" left="5"/>
-            </HBox.margin>
-        </CopySVGGlyph>
-    </FlexHBox>
     <FXText text="%base.content">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </FXText>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 470"
+                          flexHeight="100% - 440"
                           flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>

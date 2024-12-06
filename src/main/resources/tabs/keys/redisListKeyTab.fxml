@@ -78,6 +78,11 @@
         </VBox.margin>
     </FlexTableView>
     <FlexHBox realHeight="24">
+        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </CopySVGGlyph>
         <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -124,11 +129,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </ClearSVGGlyph>
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </CopySVGGlyph>
         <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
             <HBox.margin>
                 <Insets left="5"/>

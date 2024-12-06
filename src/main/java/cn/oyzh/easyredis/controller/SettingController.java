@@ -238,17 +238,17 @@ public class SettingController extends StageController {
     @FXML
     private void saveSetting() {
         String locale = this.locale.name();
-        Byte fontSize = this.fontSize.getValue();
+        Integer fontSize = this.fontSize.getValue();
         String fontFamily = this.fontFamily.getValue();
         Short fontWeight = this.fontWeight.getWeight();
 
         // 提示文字
-        String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
+        String tips = this.checkConfigForRestart(fontSize.byteValue(), fontWeight, fontFamily, locale);
 
         // 字体相关
-        this.setting.setFontSize(fontSize);
         this.setting.setFontWeight(fontWeight);
         this.setting.setFontFamily(fontFamily);
+        this.setting.setFontSize(fontSize.byteValue());
         // 主题相关
         this.setting.setTheme(this.theme.name());
         this.setting.setBgColor(this.bgColor.getColor());
