@@ -49,7 +49,7 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
         }
 
         public String getValue() {
-            return JSONUtil.toJson(entry.getFields());
+            return JSONUtil.toJson(this.entry.getFields());
         }
 
         @Override

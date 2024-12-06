@@ -45,11 +45,6 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         return (RedisSetKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisSetKey key() {
-    //     return (RedisSetKey) super.key();
-    // }
-
     /**
      * set键tab内容组件
      *
@@ -75,18 +70,6 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
          */
         @FXML
         private SVGGlyph saveNodeData;
-
-        // /**
-        //  * 编号列
-        //  */
-        // @FXML
-        // private TableColumn<RedisSetRow, Integer> index;
-        //
-        // /**
-        //  * 值列
-        //  */
-        // @FXML
-        // private TableColumn<RedisSetRow, String> value;
 
         /**
          * 格式
@@ -154,9 +137,6 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // // 绑定属性
-            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         }
 
         @Override

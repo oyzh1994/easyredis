@@ -42,7 +42,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     }
 
     /**
-     * 重新载入行
+     * 重载行
      *
      * @return 结果
      */
@@ -51,7 +51,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     }
 
     /**
-     * 检查是否存在
+     * 检查行是否存在
      *
      * @return 结果
      */
@@ -60,7 +60,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     }
 
     /**
-     * 键值
+     * 获取行列表
      *
      * @return 行列表
      */
@@ -71,19 +71,19 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        if(this.value.isSetKey()){
+        if (this.value.isSetKey()) {
             return (List<R>) this.value.asSetValue().getValue();
         }
-        if(this.value.isZSetKey()){
+        if (this.value.isZSetKey()) {
             return (List<R>) this.value.asZSetValue().getValue();
         }
-        if(this.value.isListKey()){
+        if (this.value.isListKey()) {
             return (List<R>) this.value.asListValue().getValue();
         }
-        if(this.value.isHashKey()){
+        if (this.value.isHashKey()) {
             return (List<R>) this.value.asHashValue().getValue();
         }
-        if(this.value.isStreamKey()){
+        if (this.value.isStreamKey()) {
             return (List<R>) this.value.asStreamValue().getValue();
         }
         return Collections.emptyList();

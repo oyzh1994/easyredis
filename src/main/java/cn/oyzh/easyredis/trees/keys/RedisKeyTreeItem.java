@@ -39,13 +39,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     @Accessors(fluent = true, chain = true)
     protected RedisKey value;
 
-    // /**
-    //  * db树组件
-    //  */
-    // @Getter
-    // @Accessors(fluent = true, chain = true)
-    // protected RedisDatabaseTreeItem dbItem;
-
     /**
      * 键数据属性
      */
@@ -90,7 +83,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     public void clearData() {
         if (this.dataProperty != null) {
             this.dataProperty.set(null);
-            // this.flushGraphic();
         }
     }
 
@@ -107,10 +99,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     }
 
     public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
-        // super(dbItem.getTreeView());
         super(treeView);
         super.setFilterable(true);
-        // this.dbItem = dbItem;
         this.value = value;
         this.setValue(new RedisKeyTreeItemValue(this));
     }
@@ -147,18 +137,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         fxView.display();
     }
 
-    // /**
-    //  * 当前节点的连接节点
-    //  *
-    //  * @return 连接节点
-    //  */
-    // public RedisConnectTreeItem connectTreeItem() {
-    //     if (this.dbItem != null) {
-    //         return this.dbItem.parent();
-    //     }
-    //     return null;
-    // }
-
     @Override
     public RedisKeysTreeView getTreeView() {
         return (RedisKeysTreeView) super.getTreeView();
@@ -170,9 +148,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return redis信息
      */
     public RedisConnect info() {
-        // if (this.dbItem != null) {
-        //     return this.dbItem.info();
-        // }
         return this.getTreeView().redisConnect();
     }
 
@@ -182,9 +157,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return redis连接名称
      */
     public String infoName() {
-        // if (this.dbItem != null) {
-        //     return this.info().getName();
-        // }
         return this.getTreeView().redisConnect().getName();
     }
 
@@ -194,9 +166,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return db索引值
      */
     public int dbIndex() {
-        // if (this.dbItem != null) {
-        //     return this.dbItem.dbIndex();
-        // }
         return this.getTreeView().dbIndex();
     }
 
@@ -224,9 +193,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return redis客户端
      */
     public RedisClient client() {
-        // if (this.dbItem != null) {
-        //     return this.dbItem.client();
-        // }
         return this.getTreeView().client();
     }
 
