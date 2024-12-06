@@ -36,9 +36,10 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
 
     @Override
     public boolean saveKeyValue() {
-        RedisSetValue.RedisSetRow row = (RedisSetValue.RedisSetRow) this.data();
+        RedisSetValue.RedisSetRow row = this.data();
         try {
             if (row != null) {
+                // 更新数据
                 this.setKeyValue(row);
                 // 更新当前行
                 this.currentRow.setValue(row.getValue());
@@ -112,8 +113,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     @Override
     public boolean checkRowExists() {
         if (this.isDataUnsaved()) {
-            RedisSetValue.RedisSetRow row = (RedisSetValue.RedisSetRow) this.data();
-            String rowValue = row.getValue();
+            String rowValue = this.data().getValue();
             if (!Objects.equals(this.currentRow.getValue(), rowValue)) {
                 return this.client().sismember(this.dbIndex(), this.key(), rowValue);
             }

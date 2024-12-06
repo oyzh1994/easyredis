@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.keys;
 
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
 import cn.oyzh.easyredis.event.RedisListRowAddedEvent;
@@ -19,7 +20,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -36,18 +36,13 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
 
     @Override
     protected String url() {
-        return  "/tabs/keys/redisListKeyTab.fxml";
+        return "/tabs/keys/redisListKeyTab.fxml";
     }
 
     @Override
     public RedisListKeyTabController controller() {
         return (RedisListKeyTabController) super.controller();
     }
-
-    // @Override
-    // public RedisListKey key() {
-    //     return (RedisListKey) super.key();
-    // }
 
     /**
      * list键tab内容组件
@@ -75,18 +70,6 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         @FXML
         private SVGGlyph saveNodeData;
 
-        // /**
-        //  * 编号列
-        //  */
-        // @FXML
-        // private TableColumn<RedisListRow, Integer> index;
-        //
-        // /**
-        //  * 行值列
-        //  */
-        // @FXML
-        // private TableColumn<RedisListRow, String> value;
-
         /**
          * 格式
          */
@@ -103,10 +86,11 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
-            if (this.treeItem.currentRow() == null || Objects.equals(newValue, this.treeItem.currentRow().getValue())) {
-                this.treeItem.clearData();
-            } else {
-                this.treeItem.data(newValue);
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setValue(newValue);
             }
         };
 
@@ -128,6 +112,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
                 this.nodeData.setEditable(false);
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
+                this.nodeData.setEditable(true);
             }
         };
 
@@ -153,9 +138,6 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // // 绑定属性
-            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         }
 
         /**
@@ -211,22 +193,21 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
 
         @FXML
         @Override
+        protected void saveKeyValue() {
+            if (this.treeItem.isDataUnsaved()) {
+                TaskManager.start(() -> {
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                });
+            }
+        }
+
+        @FXML
+        @Override
         protected void copyRow() {
             String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
                     I18nHelper.member() + ": " + this.treeItem.currentRow().getValue();
             ClipboardUtil.setStringAndTip(builder);
-        }
-
-        /**
-         * list行添加事件
-         *
-         * @param msg 消息
-         */
-        @EventSubscribe
-        private void onListRowAdded(RedisListRowAddedEvent msg) {
-            if (this.treeItem == msg.data()) {
-                this.firstPage();
-            }
         }
 
         /**
@@ -281,6 +262,18 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         protected void clearRaw() {
             this.nodeData.clear();
             this.nodeData.disable();
+        }
+
+        /**
+         * list行添加事件
+         *
+         * @param msg 消息
+         */
+        @EventSubscribe
+        private void onListRowAdded(RedisListRowAddedEvent msg) {
+            if (this.treeItem == msg.data()) {
+                this.firstPage();
+            }
         }
     }
 }

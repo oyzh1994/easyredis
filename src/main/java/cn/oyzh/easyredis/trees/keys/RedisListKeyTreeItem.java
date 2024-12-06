@@ -15,16 +15,32 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
 
     public RedisListKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
-        // this.setValue(new RedisKeyTreeItemValue(this));
+    }
+
+    @Override
+    public RedisListValue.RedisListRow data() {
+        return (RedisListValue.RedisListRow) super.data();
+    }
+
+    @Override
+    public void data(Object data) {
+        if (data instanceof RedisListValue.RedisListRow row) {
+            super.data(row.clone());
+        } else {
+            super.clearData();
+        }
     }
 
     @Override
     public boolean saveKeyValue() {
-        String value = (String) this.data();
+        RedisListValue.RedisListRow row = this.data();
         try {
-            if (value != null) {
-                this.setKeyValue(value);
-                this.currentRow.setValue(value);
+            if (row != null) {
+                // 更新数据
+                this.setKeyValue(row);
+                // 更新当前行
+                this.currentRow.setValue(row.getValue());
+                // 清除数据
                 this.clearData();
                 return true;
             }
@@ -37,7 +53,10 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
 
     @Override
     protected void setKeyValue(Object value) {
-        this.client().lset(this.dbIndex(), this.key(), this.currentRow.getIndex() - 1, (String) value);
+        // 更新数据
+        if (value instanceof RedisListValue.RedisListRow row) {
+            this.client().lset(this.dbIndex(), this.key(), row.getIndex() - 1, row.getValue());
+        }
     }
 
     @Override

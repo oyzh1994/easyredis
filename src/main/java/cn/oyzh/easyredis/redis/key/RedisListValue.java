@@ -40,6 +40,14 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
         private int index;
 
         private String value;
+
+        @Override
+        public RedisListRow clone() {
+            RedisListRow row = new RedisListRow();
+            row.index = this.index;
+            row.value = this.value;
+            return row;
+        }
     }
 
 

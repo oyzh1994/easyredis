@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.keys;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
@@ -40,7 +41,11 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     public void keyAdded(String key) {
         RedisKeysTreeView treeView = this.getTreeView();
         RedisKey redisKey = RedisKeyUtil.getKey(treeView.dbIndex(), key, false, false, treeView.client());
-        this.addChild(this.initItemByNode(redisKey));
+        if (redisKey == null) {
+            JulLog.warn("redisKey is null");
+        } else {
+            this.addChild(this.initItemByNode(redisKey));
+        }
     }
 
     public void keyDeleted(String key) {

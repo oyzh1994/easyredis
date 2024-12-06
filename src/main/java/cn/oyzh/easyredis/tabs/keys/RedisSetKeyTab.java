@@ -89,7 +89,9 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
             if (this.treeItem.data() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            this.treeItem.data().setValue(newValue);
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setValue(newValue);
+            }
         };
 
         /**

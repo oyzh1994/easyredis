@@ -22,6 +22,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisListKeyTab.RedisListKeyTabController">
     <FlexHBox realHeight="32" flexWidth="100%">
@@ -56,23 +57,11 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11" -->
-        <!--          onMousePrimaryClicked="#ttlUpdate"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <!-- <FXLabel fx:id="loadTime" fontSize="11" style="-fx-fill: #009933;-fx-text-fill:#009933" maxWidth="80" -->
-        <!--          realHeight="15"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </FXLabel> -->
-        <AddFillSVGGlyph size="16" onMousePrimaryClicked="#addRow">
+        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </AddFillSVGGlyph>
+        </AddSVGGlyph>
         <ClearableTextField fx:id="filter" tipText="%base.filterKWTip" realHeight="22" prefWidth="200">
             <HBox.margin>
                 <Insets left="5" top="-5"/>
@@ -130,11 +119,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <!-- <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow"> -->
-        <!--     <HBox.margin> -->
-        <!--         <Insets left="5"/> -->
-        <!--     </HBox.margin> -->
-        <!-- </DeleteSVGGlyph> -->
         <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
             <HBox.margin>
                 <Insets left="5"/>
@@ -150,7 +134,7 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 437"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 433"
                           flexWidth="100% - 2" onKeyPressed="#onKeyDataKeyPressed"/>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>
