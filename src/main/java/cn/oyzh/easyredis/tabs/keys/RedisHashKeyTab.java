@@ -21,7 +21,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -242,10 +241,12 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            String builder = I18nHelper.keyName()+": " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.fieldName()+ ": " + this.treeItem.currentRow().getField() + System.lineSeparator() +
-                    I18nHelper.fieldValue()+  ": " + this.treeItem.currentRow().getValue();
-            ClipboardUtil.setStringAndTip(builder, "行信息");
+            if (this.treeItem.isSelectRow()) {
+                String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                        I18nHelper.fieldName() + " : " + this.treeItem.currentRow().getField() + System.lineSeparator() +
+                        I18nHelper.fieldValue() + " : " + this.treeItem.currentRow().getValue();
+                ClipboardUtil.setStringAndTip(builder);
+            }
         }
 
         @FXML

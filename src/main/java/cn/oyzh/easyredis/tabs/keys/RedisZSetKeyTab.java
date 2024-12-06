@@ -221,11 +221,12 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            StringBuilder builder = new StringBuilder();
-            builder.append(I18nHelper.keyName()).append(" : ").append(this.treeItem.key()).append(System.lineSeparator());
-            builder.append(I18nHelper.member()).append(" : ").append(this.treeItem.currentRow().getValue()).append(System.lineSeparator())
-                    .append(I18nHelper.score()).append(" : ").append(this.treeItem.currentRow().getScore());
-            ClipboardUtil.setStringAndTip(builder.toString());
+            if (this.treeItem.isSelectRow()) {
+                String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                        I18nHelper.member() + " : " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
+                        I18nHelper.score() + " : " + this.treeItem.currentRow().getScore();
+                ClipboardUtil.setStringAndTip(builder);
+            }
         }
 
         /**

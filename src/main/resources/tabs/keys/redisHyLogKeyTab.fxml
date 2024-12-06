@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
@@ -9,11 +9,11 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHyLogKeyTab.RedisHylogKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -48,21 +48,21 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <AddFillSVGGlyph size="15" fx:id="addRow" onMousePrimaryClicked="#addRow">
+        <AddSVGGlyph size="16" fx:id="addRow" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </AddFillSVGGlyph>
+        </AddSVGGlyph>
         <FXText realHeight="22" fx:id="count" tipText="%redis.key.elementCount" fontSize="11">
             <HBox.margin>
-                <Insets left="5" top="-3"/>
+                <Insets left="5" top="1"/>
             </HBox.margin>
         </FXText>
         <FXText realHeight="22" fontSize="11" text="%base.binary" style="-fx-fill: green" fx:id="binary"
-                 visible="false"
-                 managed="false">
+                visible="false"
+                managed="false">
             <HBox.margin>
-                <Insets left="5" top="-3"/>
+                <Insets left="5" top="1"/>
             </HBox.margin>
         </FXText>
         <padding>

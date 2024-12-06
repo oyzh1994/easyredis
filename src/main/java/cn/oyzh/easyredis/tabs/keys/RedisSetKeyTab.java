@@ -193,9 +193,11 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.member() + ": " + this.treeItem.currentRow().getValue();
-            ClipboardUtil.setStringAndTip(builder, "成员信息");
+            if (this.treeItem.isSelectRow()) {
+                String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                        I18nHelper.member() + " : " + this.treeItem.currentRow().getValue();
+                ClipboardUtil.setStringAndTip(builder);
+            }
         }
 
         /**

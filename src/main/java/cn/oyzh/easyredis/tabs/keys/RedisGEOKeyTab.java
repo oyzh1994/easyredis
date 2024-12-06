@@ -21,7 +21,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -236,11 +235,13 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.coordinates() + " : " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
-                    I18nHelper.longitude() + " : " + this.treeItem.currentRow().getLongitude() + System.lineSeparator() +
-                    I18nHelper.latitude() + " : " + this.treeItem.currentRow().getLatitude();
-            ClipboardUtil.setStringAndTip(builder);
+            if (this.treeItem.isSelectRow()) {
+                String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                        I18nHelper.coordinates() + " : " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
+                        I18nHelper.longitude() + " : " + this.treeItem.currentRow().getLongitude() + System.lineSeparator() +
+                        I18nHelper.latitude() + " : " + this.treeItem.currentRow().getLatitude();
+                ClipboardUtil.setStringAndTip(builder);
+            }
         }
 
         /**

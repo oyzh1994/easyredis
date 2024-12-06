@@ -140,10 +140,12 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         @FXML
         @Override
         protected void copyRow() {
-            String builder = I18nHelper.keyName() + ": " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.messageId() + ": " + this.treeItem.currentRow().getId() + System.lineSeparator() +
-                    I18nHelper.content() + ": " + this.treeItem.currentRow().getValue();
-            ClipboardUtil.setStringAndTip(builder, "消息");
+            if (this.treeItem.isSelectRow()) {
+                String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
+                        I18nHelper.messageId() + " : " + this.treeItem.currentRow().getId() + System.lineSeparator() +
+                        I18nHelper.content() + " : " + this.treeItem.currentRow().getValue();
+                ClipboardUtil.setStringAndTip(builder);
+            }
         }
 
         /**

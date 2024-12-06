@@ -101,11 +101,6 @@
             </HBox.margin>
         </PageBox>
     </FlexHBox>
-    <FXText text="%base.field">
-        <VBox.margin>
-            <Insets top="5" left="2"/>
-        </VBox.margin>
-    </FXText>
     <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="fieldAction">
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
@@ -144,17 +139,17 @@
             <Insets top="5" left="2"/>
         </VBox.margin>
     </FlexHBox>
+    <FXText text="%base.field">
+        <VBox.margin>
+            <Insets  left="2"/>
+        </VBox.margin>
+    </FXText>
     <RichDataTextAreaPane disable="true" realHeight="80" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FXText text="%base.value">
-        <VBox.margin>
-            <Insets top="5" left="2"/>
-        </VBox.margin>
-    </FXText>
     <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="dataAction">
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
@@ -188,7 +183,12 @@
             <Insets top="5" left="2"/>
         </VBox.margin>
     </FlexHBox>
-    <RichDataTextAreaPane disable="true" flexHeight="100% - 560" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
+    <FXText text="%base.value">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </FXText>
+    <RichDataTextAreaPane disable="true" flexHeight="100% - 549" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

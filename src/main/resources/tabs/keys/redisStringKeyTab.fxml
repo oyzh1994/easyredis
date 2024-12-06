@@ -92,7 +92,7 @@
                 visible="false"
                 managed="false">
             <HBox.margin>
-                <Insets left="5" top="-3"/>
+                <Insets left="5" top="1"/>
             </HBox.margin>
         </FXText>
         <padding>
