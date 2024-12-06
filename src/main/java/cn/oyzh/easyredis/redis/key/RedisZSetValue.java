@@ -25,8 +25,7 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
         if (members != null) {
             int index = 0;
             for (String member : members) {
-                rows.add(new RedisZSetRow(index, member, scores.get(index)));
-                index++;
+                rows.add(new RedisZSetRow(member, scores.get(index++)));
             }
         }
         return new RedisZSetValue(rows);
@@ -37,9 +36,8 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
         if (members != null) {
             int index = 0;
             for (String member : members) {
-                GeoCoordinate coordinate = coordinates.get(index);
-                rows.add(new RedisZSetRow(index, member, coordinate.getLatitude(), coordinate.getLongitude()));
-                index++;
+                GeoCoordinate coordinate = coordinates.get(index++);
+                rows.add(new RedisZSetRow(member, coordinate.getLatitude(), coordinate.getLongitude()));
             }
         }
         return new RedisZSetValue(rows);
@@ -48,7 +46,7 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
     @Data
     public static class RedisZSetRow implements RedisKeyRow {
 
-        private int index;
+        private byte index;
 
         private String value;
 
@@ -61,14 +59,12 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
         public RedisZSetRow() {
         }
 
-        public RedisZSetRow(int index, String value, double score) {
-            this.index = index;
+        public RedisZSetRow(String value, double score) {
             this.value = value;
             this.score = score;
         }
 
-        public RedisZSetRow(int index, String value, double latitude, double longitude) {
-            this.index = index;
+        public RedisZSetRow(String value, double latitude, double longitude) {
             this.value = value;
             this.latitude = latitude;
             this.longitude = longitude;
@@ -77,7 +73,6 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
         @Override
         public RedisZSetRow clone() {
             RedisZSetRow row = new RedisZSetRow();
-            row.index = this.index;
             row.value = this.value;
             row.score = this.score;
             row.latitude = this.latitude;

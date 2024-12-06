@@ -153,11 +153,11 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
         List<R> rows = this.getRows();
         this.pageData = new Paging<>(rows, 10);
         List<R> pageRows = this.pageData.page(pageNo);
-        int index = 1;
+        byte index = 1;
         for (R row : pageRows) {
             row.setIndex(index++);
         }
-        this.listTable.getItems().setAll(pageRows);
+        this.listTable.setItem(pageRows);
         this.pagePane.setPaging(this.pageData);
     }
 

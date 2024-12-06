@@ -82,17 +82,6 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         @FXML
         private RichDataTextAreaPane nodeData;
 
-        /**
-         * 数据监听器
-         */
-        private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
-            if (this.treeItem.data() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.data() != null) {
-                this.treeItem.data().setValue(newValue);
-            }
-        };
 
         /**
          * 格式监听器
@@ -113,6 +102,18 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
                 this.nodeData.setEditable(true);
+            }
+        };
+
+        /**
+         * 数据监听器
+         */
+        private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
+            if (this.treeItem.data() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.data() != null) {
+                this.treeItem.data().setValue(newValue);
             }
         };
 

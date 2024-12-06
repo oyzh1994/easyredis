@@ -6,9 +6,9 @@ package cn.oyzh.easyredis.redis.key;
  */
 public interface RedisKeyRow extends Cloneable {
 
-    int getIndex();
+    byte getIndex();
 
-    void setIndex(int index);
+    void setIndex(byte index);
 
     String getValue();
 

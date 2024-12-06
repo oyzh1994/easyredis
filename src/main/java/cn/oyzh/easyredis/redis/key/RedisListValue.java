@@ -1,9 +1,7 @@
 package cn.oyzh.easyredis.redis.key;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,29 +22,30 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     public static RedisListValue valueOf(List<String> elements) {
         List<RedisListRow> rows = new ArrayList<>();
         if (elements != null) {
-            int index = 0;
             for (String element : elements) {
-                rows.add(new RedisListRow(index++, element));
+                rows.add(new RedisListRow(element));
             }
         }
         return new RedisListValue(rows);
     }
 
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class RedisListRow implements RedisKeyRow {
 
-        private int index;
+        private byte index;
 
         private String value;
 
+        public RedisListRow() {
+        }
+
+        public RedisListRow(String value) {
+            this.value = value;
+        }
+
         @Override
         public RedisListRow clone() {
-            RedisListRow row = new RedisListRow();
-            row.index = this.index;
-            row.value = this.value;
-            return row;
+            return new RedisListRow(this.value);
         }
     }
 }

@@ -156,28 +156,28 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem> extends DynamicTab
         return this.treeItem.value();
     }
 
-    public static <T extends RedisKeyTreeItem> RedisKeyTab<T> ofItem(T item) {
-        RedisKeyTab<T> tab = null;
+    public static  RedisKeyTab<?> ofItem(RedisKeyTreeItem item) {
+        RedisKeyTab<?> tab = null;
         if (item instanceof RedisStringKeyTreeItem stringKeyTreeItem) {
             if (stringKeyTreeItem.isHyLog()) {
-                tab = (RedisKeyTab<T>) new RedisHyLogKeyTab(stringKeyTreeItem);
+                tab = new RedisHyLogKeyTab(stringKeyTreeItem);
             } else {
-                tab = (RedisKeyTab<T>) new RedisStringKeyTab(stringKeyTreeItem);
+                tab = new RedisStringKeyTab(stringKeyTreeItem);
             }
         } else if (item instanceof RedisListKeyTreeItem listKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisListKeyTab(listKeyTreeItem);
+            tab = new RedisListKeyTab(listKeyTreeItem);
         } else if (item instanceof RedisSetKeyTreeItem setKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisSetKeyTab(setKeyTreeItem);
+            tab = new RedisSetKeyTab(setKeyTreeItem);
         } else if (item instanceof RedisZSetKeyTreeItem zSetKeyTreeItem) {
             if (zSetKeyTreeItem.isGEOView()) {
-                tab = (RedisKeyTab<T>) new RedisGEOKeyTab(zSetKeyTreeItem);
+                tab = new RedisGEOKeyTab(zSetKeyTreeItem);
             } else {
-                tab = (RedisKeyTab<T>) new RedisZSetKeyTab(zSetKeyTreeItem);
+                tab = new RedisZSetKeyTab(zSetKeyTreeItem);
             }
         } else if (item instanceof RedisHashKeyTreeItem hashKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisHashKeyTab(hashKeyTreeItem);
+            tab = new RedisHashKeyTab(hashKeyTreeItem);
         } else if (item instanceof RedisStreamKeyTreeItem streamKeyTreeItem) {
-            tab = (RedisKeyTab<T>) new RedisStreamKeyTab(streamKeyTreeItem);
+            tab = new RedisStreamKeyTab(streamKeyTreeItem);
         }
         return tab;
     }
