@@ -55,7 +55,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
      *
      * @return 结果
      */
-    public boolean checkExists() {
+    public boolean checkRowExists() {
         return false;
     }
 

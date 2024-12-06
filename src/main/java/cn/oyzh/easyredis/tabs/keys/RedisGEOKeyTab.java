@@ -258,7 +258,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @FXML
         @Override
         protected void saveKeyData() {
-            if (this.treeItem.checkExists()) {
+            if (this.treeItem.checkRowExists()) {
                 MessageBox.warn(I18nHelper.dataAlreadyExists());
                 return;
             }

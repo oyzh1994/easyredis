@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.FlexFlowPane;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -291,7 +290,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @FXML
         @Override
         protected void saveKeyData() {
-            if (this.treeItem.checkExists()) {
+            if (this.treeItem.checkRowExists()) {
                 MessageBox.warn(I18nHelper.fieldAlreadyExists());
                 return;
             }

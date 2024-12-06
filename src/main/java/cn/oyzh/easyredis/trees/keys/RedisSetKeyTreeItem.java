@@ -88,7 +88,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     }
 
     @Override
-    public boolean checkExists() {
+    public boolean checkRowExists() {
         if (this.isDataUnsaved()) {
             if (!Objects.equals(this.currentRow.getValue(), this.data())) {
                 return this.client().sismember(this.dbIndex(), this.key(), (String) this.data());

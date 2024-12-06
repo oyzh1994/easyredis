@@ -67,7 +67,7 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public boolean checkExists() {
+    public boolean checkRowExists() {
         String field1 = this.field();
         String field2 = this.currentRow.getField();
         if (field1 != null && !Objects.equals(field1, field2)) {
