@@ -20,7 +20,6 @@
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
@@ -28,6 +27,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisGEOKeyTab.RedisGEOKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -156,33 +156,33 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <FXLabel text="%base.coordinates">
+    <FXText text="%base.coordinates">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXLabel>
+    </FXText>
     <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 520"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FXLabel text="%base.longitude">
+    <FXText text="%base.longitude">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXLabel>
+    </FXText>
     <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
                     tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </LongitudeField>
-    <FXLabel text="%base.latitude">
+    <FXText text="%base.latitude">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXLabel>
+    </FXText>
     <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
                    tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>

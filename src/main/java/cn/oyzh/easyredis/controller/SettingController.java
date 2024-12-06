@@ -221,7 +221,7 @@ public class SettingController extends StageController {
         // this.tabLimit.setValue(this.setting.getTabLimit());
         // this.tabStrategy.select(this.setting.getTabStrategy());
         // 字体相关处理
-        this.fontSize.select(this.setting.getFontSize());
+        this.fontSize.selectSize(this.setting.getFontSize());
         this.fontFamily.select(this.setting.getFontFamily());
         this.fontWeight.selectWeight(this.setting.getFontWeight());
         // 区域相关处理
@@ -238,17 +238,17 @@ public class SettingController extends StageController {
     @FXML
     private void saveSetting() {
         String locale = this.locale.name();
-        Integer fontSize = this.fontSize.getValue();
+        Byte fontSize = this.fontSize.byteValue();
         String fontFamily = this.fontFamily.getValue();
         Short fontWeight = this.fontWeight.getWeight();
 
         // 提示文字
-        String tips = this.checkConfigForRestart(fontSize.byteValue(), fontWeight, fontFamily, locale);
+        String tips = this.checkConfigForRestart(fontSize, fontWeight, fontFamily, locale);
 
         // 字体相关
         this.setting.setFontWeight(fontWeight);
         this.setting.setFontFamily(fontFamily);
-        this.setting.setFontSize(fontSize.byteValue());
+        this.setting.setFontSize(fontSize);
         // 主题相关
         this.setting.setTheme(this.theme.name());
         this.setting.setBgColor(this.bgColor.getColor());

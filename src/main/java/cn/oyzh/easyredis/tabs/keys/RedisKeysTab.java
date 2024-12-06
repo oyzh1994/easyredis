@@ -304,6 +304,7 @@ public class RedisKeysTab extends DynamicTab {
                 if (this.tabPane.tabSize() == 1) {
                     this.tabPane.addTab(0, keyTab);
                     this.tabPane.select(keyTab);
+                    this.keyInfoController.init(this.activeItem);
                 } else if (this.tabPane.tabSize() == 2) {
                     this.tabPane.setTab(0, keyTab);
                     this.keyInfoController.init(this.activeItem);

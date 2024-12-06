@@ -18,7 +18,6 @@
 <?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.textfield.DecimalTextField?>
@@ -27,6 +26,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisZSetKeyTab.RedisZSetKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -150,22 +150,22 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <FXLabel text="%base.member">
+    <FXText text="%base.member">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXLabel>
+    </FXText>
     <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 475"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FXLabel text="%base.score">
+    <FXText text="%base.score">
         <VBox.margin>
             <Insets top="5" left="2"/>
         </VBox.margin>
-    </FXLabel>
+    </FXText>
     <DecimalTextField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="scoreVal"
                       tipText="%base.score" value="0" step="5"
                       disable="true" onKeyPressed="#onKeyDataKeyPressed">

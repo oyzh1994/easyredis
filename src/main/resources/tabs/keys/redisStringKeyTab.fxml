@@ -14,7 +14,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -88,13 +88,13 @@
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </RedisFormatComboBox>
-        <FXLabel prefHeight="22" fontSize="11" text="%base.binary" style="-fx-text-fill: green" fx:id="binary"
-                 visible="false"
-                 managed="false">
+        <FXText realHeight="22" fontSize="11" text="%base.binary" style="-fx-fill: green" fx:id="binary"
+                visible="false"
+                managed="false">
             <HBox.margin>
                 <Insets left="5" top="-3"/>
             </HBox.margin>
-        </FXLabel>
+        </FXText>
         <padding>
             <Insets top="7"/>
         </padding>

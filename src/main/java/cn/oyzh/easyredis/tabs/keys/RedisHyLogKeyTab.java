@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
 import cn.oyzh.easyredis.event.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -35,11 +35,6 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         return (RedisHylogKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisStringKey key() {
-    //     return (RedisStringKey) super.key();
-    // }
-
     /**
      * hyLog键tab内容组件
      *
@@ -48,23 +43,17 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
      */
     public static class RedisHylogKeyTabController extends RedisKeyTabController<RedisStringKeyTreeItem> {
 
-        // /**
-        //  * 数据大小
-        //  */
-        // @FXML
-        // private FXLabel size;
-
         /**
          * 二进制数据
          */
         @FXML
-        private FXLabel binary;
+        private FXText binary;
 
         /**
          * 统计值
          */
         @FXML
-        private FXLabel count;
+        private FXText count;
 
         /**
          * 数据
@@ -76,13 +65,6 @@ public class RedisHyLogKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         protected void initKey() {
             // 数据处理
             this.firstShowData();
-            // // 大小
-            // Integer size = this.treeItem.size();
-            // if (size == null) {
-            //     this.size.setText(I18nHelper.size() + ": N/A");
-            // } else {
-            //     this.size.setText(I18nHelper.size() + ": " + size + " bytes");
-            // }
             // 刷新二进制处理
             this.flushBinary();
             // 统计值

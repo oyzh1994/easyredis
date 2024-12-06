@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
-<?import cn.oyzh.fx.gui.svg.glyph.SearchSVGLabel?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.AboutSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.CollapseSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.ExpandSVGLabel?>
-<?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.gui.svg.label.FilterSVGLabel?>
 <?import cn.oyzh.fx.gui.svg.label.MigrationSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?>
+<?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
     <!-- <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14"> -->

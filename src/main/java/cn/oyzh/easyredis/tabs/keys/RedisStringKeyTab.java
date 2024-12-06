@@ -3,8 +3,8 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
@@ -58,7 +58,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
          * 二进制数据
          */
         @FXML
-        private FXLabel binary;
+        private FXText binary;
 
         /**
          * 数据保存按钮
