@@ -49,6 +49,4 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
             return row;
         }
     }
-
-
 }

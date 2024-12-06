@@ -3206,7 +3206,7 @@ public class RedisClient {
      */
     public long del(Integer dbIndex, Collection<String> keys) {
         if (CollectionUtil.isNotEmpty(keys)) {
-            this.del(dbIndex, ArrayUtil.toArray(keys));
+            this.del(dbIndex, ArrayUtil.toArray(keys, String.class));
         }
         return -1L;
     }

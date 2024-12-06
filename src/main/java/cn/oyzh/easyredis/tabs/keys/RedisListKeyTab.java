@@ -122,7 +122,8 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
             if (super.init(treeItem)) {
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                this.treeItem.dataProperty().addListener((t1, t2, newValue) -> this.saveNodeData.setDisable(newValue == null));
+                // 保存监听
+                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

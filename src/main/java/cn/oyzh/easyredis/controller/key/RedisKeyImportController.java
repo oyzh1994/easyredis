@@ -357,7 +357,7 @@ public class RedisKeyImportController extends StageController {
                 arr = new String[]{""};
             } else {
                 List<String> strings = rows.parallelStream().map(RedisListValue.RedisListRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(strings);
+                arr = ArrayUtil.toArray(strings, String.class);
             }
             this.client.lpush(dbIndex, key, arr);
         } else if (redisKey.isSetKey()) {
@@ -367,7 +367,7 @@ public class RedisKeyImportController extends StageController {
                 arr = new String[]{""};
             } else {
                 List<String> strings = rows.parallelStream().map(RedisSetValue.RedisSetRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(strings);
+                arr = ArrayUtil.toArray(strings, String.class);
             }
             this.client.sadd(dbIndex, key, arr);
         } else if (redisKey.isZSetKey()) {

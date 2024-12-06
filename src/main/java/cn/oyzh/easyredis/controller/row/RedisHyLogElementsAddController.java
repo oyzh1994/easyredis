@@ -70,7 +70,7 @@ public class RedisHyLogElementsAddController extends StageController {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            String[] array = ArrayUtil.toArray(elements);
+            String[] array = ArrayUtil.toArray(elements, String.class);
             if (client.pfadd(dbIndex, key, array) <= 0) {
                 MessageBox.warn(RedisI18nHelper.addTip3());
                 return;

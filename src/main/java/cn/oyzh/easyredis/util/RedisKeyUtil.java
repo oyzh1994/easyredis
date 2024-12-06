@@ -297,7 +297,7 @@ public class RedisKeyUtil {
                 arr = new String[]{""};
             } else {
                 List<String> list = rows.parallelStream().map(RedisListValue.RedisListRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(list);
+                arr = ArrayUtil.toArray(list, String.class);
             }
             client.lpush(dbIndex, key, arr);
         } else if (node.isSetKey()) {// set
@@ -308,7 +308,7 @@ public class RedisKeyUtil {
                 arr = new String[]{""};
             } else {
                 List<String> list = rows.parallelStream().map(RedisSetValue.RedisSetRow::getValue).collect(Collectors.toList());
-                arr = ArrayUtil.toArray(list);
+                arr = ArrayUtil.toArray(list, String.class);
             }
             client.sadd(dbIndex, key, arr);
         } else if (node.isZSetKey()) {// zset
@@ -372,7 +372,7 @@ public class RedisKeyUtil {
             node.valueOfSet(value);
         } else if (node.isZSetKey()) { // zset
             List<String> value = client.zrange(dbIndex, key);
-            List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value));
+            List<Double> scores = client.zmscore_ext(dbIndex, key, ArrayUtil.toArray(value, String.class));
             node.valueOfZSet(value, scores);
         } else if (node.isStreamKey()) {// stream
             node.valueOfStream(client.xrange(dbIndex, key));

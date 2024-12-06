@@ -75,12 +75,12 @@
             <artifactId>fx-terminal</artifactId>
         </dependency>
 
-        <!-- &lt;!&ndash; 加密工具类库 &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>cn.hutool</groupId> -->
-        <!--     <artifactId>hutool-crypto</artifactId> -->
-        <!--     <version>${hutool.version}</version> -->
-        <!-- </dependency> -->
+        <!-- 加密工具类库 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
         <!-- redis客户端 -->
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->

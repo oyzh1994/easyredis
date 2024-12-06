@@ -372,7 +372,7 @@ public class RedisKeyAddController extends StageController {
             MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.valueTextArea());
             return false;
         }
-        return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements)) > 0;
+        return this.client.pfadd(dbIndex, key, ArrayUtil.toArray(elements, String.class)) > 0;
     }
 
     /**
