@@ -66,10 +66,10 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView flexWidth="100% - 4" realHeight="335" fx:id="listTable"
+    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="12%" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="12% - 12" text="%base.No" valueName="index"/>
             <FlexTableColumn flexWidth="88%" text="%base.member" valueName="value"/>
             <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
         </columns>
@@ -77,7 +77,7 @@
             <Insets left="2"/>
         </VBox.margin>
     </FlexTableView>
-    <FlexHBox realHeight="30">
+    <FlexHBox realHeight="24">
         <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -139,7 +139,7 @@
             <Insets top="9"/>
         </padding>
     </FlexHBox>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 455"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 410"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

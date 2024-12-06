@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHyLogKeyTab.RedisHylogKeyTabController">
-    <FlexHBox realHeight="32" flexWidth="100%">
+    <FlexHBox realHeight="30" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <HBox.margin>
                 <Insets left="5"/>
@@ -66,11 +66,11 @@
             </HBox.margin>
         </FXLabel>
         <padding>
-            <Insets top="9"/>
+            <Insets top="7"/>
         </padding>
     </FlexHBox>
     <RichDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 67" flexWidth="100% - 4">
+                          flexHeight="100% - 60" flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
