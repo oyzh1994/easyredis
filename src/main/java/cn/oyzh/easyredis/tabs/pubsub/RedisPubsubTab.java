@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea;
+import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;

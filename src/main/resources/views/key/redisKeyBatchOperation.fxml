@@ -3,7 +3,7 @@
 <?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
@@ -11,10 +11,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600" fx:id="root">

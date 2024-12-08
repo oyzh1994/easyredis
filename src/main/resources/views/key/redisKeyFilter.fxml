@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.textfield.search.SearchTextField?>
+<?import cn.oyzh.fx.gui.text.field.search.SearchTextField?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"

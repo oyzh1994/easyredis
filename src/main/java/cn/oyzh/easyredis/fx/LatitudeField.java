@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.fx;
 
 
-import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
+import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.i18n.I18nHelper;
 
 /**

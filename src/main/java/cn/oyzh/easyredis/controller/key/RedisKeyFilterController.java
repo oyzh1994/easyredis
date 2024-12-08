@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventUtil;
-import cn.oyzh.fx.gui.textfield.search.SearchTextField;
+import cn.oyzh.fx.gui.text.field.search.SearchTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;

@@ -6,7 +6,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"

@@ -3,9 +3,9 @@
 <?import cn.oyzh.easyredis.tabs.RedisTabPane?>
 <?import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
-<?import cn.oyzh.fx.plus.controls.FlexFlowPane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>

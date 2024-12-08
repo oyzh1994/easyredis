@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
 <?import cn.oyzh.fx.gui.button.FileButton?>
-<?import cn.oyzh.fx.plus.controls.textarea.MsgTextArea?>
+<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.gui.button.ImportButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
 <?import cn.oyzh.fx.gui.button.CloseButton?>

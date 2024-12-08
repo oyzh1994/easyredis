@@ -12,7 +12,7 @@ import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.gui.textfield.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;

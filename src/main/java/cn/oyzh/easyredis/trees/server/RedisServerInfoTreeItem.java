@@ -4,9 +4,9 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
-import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.fx.gui.treeView.RichTreeItemValue;
-import cn.oyzh.fx.gui.treeView.RichTreeView;
+import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 

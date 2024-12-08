@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.textfield.DecimalTextField;
+import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;

@@ -9,7 +9,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>

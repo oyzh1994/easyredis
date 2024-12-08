@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.textarea.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
 <ReadOnlyTextArea styleClass="root" flexHeight="100%" fx:id="textArea" fontSize="12" editable="false" flexWidth="100%"
                   xmlns="http://javafx.com/javafx"
                   xmlns:fx="http://javafx.com/fxml"

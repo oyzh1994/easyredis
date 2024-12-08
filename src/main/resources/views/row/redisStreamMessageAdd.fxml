@@ -8,11 +8,11 @@
 <?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.textfield.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController" realWidth="750"
           realHeight="550">

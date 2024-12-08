@@ -4,8 +4,8 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.gui.treeView.RichTreeItem;
-import cn.oyzh.fx.gui.treeView.RichTreeItemFilter;
+import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeItemFilter;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -28,7 +28,7 @@ import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
-import cn.oyzh.fx.plus.controls.textarea.MsgTextArea;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;

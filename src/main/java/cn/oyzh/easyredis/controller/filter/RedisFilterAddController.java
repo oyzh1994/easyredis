@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.fx.gui.textfield.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;

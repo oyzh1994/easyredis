@@ -11,7 +11,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisSetMemberAddController" realWidth="750" realHeight="550">
     <FlexHBox flexWidth="100%" flexHeight="100% - 95">

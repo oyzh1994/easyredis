@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.FlexPane?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>

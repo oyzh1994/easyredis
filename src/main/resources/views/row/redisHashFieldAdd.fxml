@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.textarea.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
           realHeight="550">

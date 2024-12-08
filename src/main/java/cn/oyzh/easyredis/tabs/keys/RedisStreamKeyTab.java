@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.textfield.ReadOnlyTextField;
+import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;

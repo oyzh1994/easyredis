@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.label.FlexLabel;
-import cn.oyzh.fx.plus.controls.textfield.NumberTextField;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;

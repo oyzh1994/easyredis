@@ -4,7 +4,7 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.HexUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.exception.DataTooBigException;
-import cn.oyzh.fx.plus.controls.textarea.FlexTextArea;
+import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import lombok.Getter;
 import lombok.Setter;
 

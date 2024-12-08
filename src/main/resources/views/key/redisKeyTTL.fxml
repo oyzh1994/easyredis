@@ -3,7 +3,7 @@
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.textfield.NumberTextField?>
+<?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.geometry.Insets?>
