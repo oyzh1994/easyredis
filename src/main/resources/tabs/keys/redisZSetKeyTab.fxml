@@ -79,10 +79,8 @@
     <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="12% - 12" text="%base.No" valueName="index"/>
-            <FlexTableColumn flexWidth="58%" text="%base.member" valueName="value"/>
-            <FlexTableColumn flexWidth="30%" text="%base.score" valueName="score"/>
-            <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
+            <FlexTableColumn flexWidth="70%" text="%base.member" valueName="value"/>
+            <FlexTableColumn flexWidth="30% - 12" text="%base.score" valueName="score"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>

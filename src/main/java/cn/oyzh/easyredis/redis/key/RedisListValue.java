@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,8 +28,9 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     public static RedisListValue valueOf(List<String> elements) {
         List<RedisListRow> rows = new ArrayList<>();
         if (elements != null) {
+            int index = 0;
             for (String element : elements) {
-                rows.add(new RedisListRow(element));
+                rows.add(new RedisListRow(index++, element));
             }
         }
         return new RedisListValue(rows);
@@ -69,16 +69,16 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     public static class RedisListRow implements RedisKeyRow {
 
         @Getter
-        @Setter
-        private byte index;
+        private final int index;
 
-        public RedisListRow(String value) {
+        public RedisListRow(int index, String value) {
+            this.index = index;
             this.setValue(value);
         }
 
         @Override
         public void setValue(String value) {
-            RedisCacheUtil.cacheValue(this.hashCode(), value,"value");
+            RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
         }
 
         @Override
@@ -88,7 +88,7 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
 
         @Override
         public RedisListRow clone() {
-            return new RedisListRow(this.getValue());
+            return new RedisListRow(this.index, this.getValue());
         }
     }
 }

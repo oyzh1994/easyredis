@@ -41,23 +41,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     protected RedisKey value;
 
     /**
-     * 键数据属性
-     */
-    private SimpleObjectProperty<Object> dataProperty;
-
-    /**
-     * 获取未保存的键数据属性
-     *
-     * @return 未保存的键数据属性
-     */
-    public SimpleObjectProperty<Object> dataProperty() {
-        if (this.dataProperty == null) {
-            this.dataProperty = new SimpleObjectProperty<>();
-        }
-        return this.dataProperty;
-    }
-
-    /**
      * 设置键数据
      *
      * @param data 未键数据

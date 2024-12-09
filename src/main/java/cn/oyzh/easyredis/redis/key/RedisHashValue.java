@@ -68,10 +68,6 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
 
     public static class RedisHashRow implements RedisKeyRow {
 
-        @Getter
-        @Setter
-        private byte index;
-
         public RedisHashRow(String field, String value) {
             this.setField(field);
             this.setValue(value);
@@ -88,7 +84,6 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
         @Override
         public void setValue(String value) {
             RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
-
         }
 
         @Override

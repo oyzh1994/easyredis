@@ -71,10 +71,6 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
 
     public static class RedisStreamRow implements RedisKeyRow {
 
-        @Getter
-        @Setter
-        private byte index;
-
         public RedisStreamRow(StreamEntry entry) {
             this.setId(entry.getID().toString());
             this.setValue(JSONUtil.toJson(entry.getFields()));

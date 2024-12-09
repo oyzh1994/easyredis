@@ -113,6 +113,7 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.nodeData.setEditable(false);
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
+                this.nodeData.setEditable(true);
             }
         };
 

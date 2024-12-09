@@ -83,10 +83,6 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
 
         @Getter
         @Setter
-        private byte index;
-
-        @Getter
-        @Setter
         private double score;
 
         @Getter

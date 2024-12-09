@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
 import java.nio.charset.StandardCharsets;
 
 /**
- * zk缓存工具类
+ * redis缓存工具类
  *
  * @author oyzh
  * @since 2024-11-25
@@ -21,9 +21,11 @@ public class RedisCacheUtil {
     }
 
     /**
-     * 缓存值
+     * 缓存数据
      *
      * @param hashCode hash码
+     * @param value    数据
+     * @param suffix   尾缀
      * @return 缓存结果
      */
     public static boolean cacheValue(int hashCode, Object value, String suffix) {
@@ -54,10 +56,11 @@ public class RedisCacheUtil {
     }
 
     /**
-     * 加载未保存数据
+     * 加载数据
      *
      * @param hashCode hash码
-     * @return 未保存数据
+     * @param suffix   尾缀
+     * @return 数据
      */
     public static Object loadValue(int hashCode, String suffix) {
         try {
@@ -81,9 +84,10 @@ public class RedisCacheUtil {
     }
 
     /**
-     * 删除未保存数据
+     * 删除数据
      *
      * @param hashCode hash码
+     * @param suffix   尾缀
      */
     public static boolean deleteValue(int hashCode, String suffix) {
         try {
@@ -98,9 +102,10 @@ public class RedisCacheUtil {
     }
 
     /**
-     * 删除未保存数据
+     * 是否存在数据
      *
      * @param hashCode hash码
+     * @param suffix   尾缀
      */
     public static boolean hasValue(int hashCode, String suffix) {
         try {
@@ -112,5 +117,4 @@ public class RedisCacheUtil {
         }
         return false;
     }
-
 }

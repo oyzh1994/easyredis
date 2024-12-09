@@ -79,10 +79,9 @@
     <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="12% - 12" valueName="index" text="%base.No"/>
-            <FlexTableColumn flexWidth="38%" valueName="value" text="%base.name"/>
+            <FlexTableColumn flexWidth="50%" valueName="value" text="%base.name"/>
             <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="25%" valueName="latitude" text="%base.latitude"/>
+            <FlexTableColumn flexWidth="25% - 12" valueName="latitude" text="%base.latitude"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
