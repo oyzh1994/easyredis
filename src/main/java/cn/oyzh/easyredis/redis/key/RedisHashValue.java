@@ -34,6 +34,11 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
     }
 
     @Override
+    public boolean hasValue() {
+        return false;
+    }
+
+    @Override
     public void setValue(List<RedisHashRow> value) {
 
     }
@@ -41,6 +46,16 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
     @Override
     public Object getUnSavedValue() {
         return null;
+    }
+
+    @Override
+    public void clearUnSavedValue() {
+
+    }
+
+    @Override
+    public boolean hasUnSavedValue() {
+        return false;
     }
 
     @Override

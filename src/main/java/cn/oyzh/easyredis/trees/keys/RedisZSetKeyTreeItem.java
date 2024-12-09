@@ -232,34 +232,25 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     }
 
     @Override
-    public boolean saveKeyValue() {
+    public void saveKeyValue() {
         RedisZSetValue.RedisZSetRow value = this.data();
-        // if (value == null) {
-        //     value = this.currentRow.getValue();
-        // }
         try {
             this.setKeyValue(value);
             this.currentRow.setValue(value.getValue());
             if (this.isGEOView()) {
-                // if (this.latitude() != null) {
                 this.currentRow.setLatitude(value.getLatitude());
-                // }
-                // if (this.longitude() != null) {
                 this.currentRow.setLongitude(value.getLongitude());
-                // }
             } else {
-                // if (this.score() != null) {
                 this.currentRow.setScore(value.getScore());
-                // }
             }
             // 清除旧数据
             this.clearData();
-            return true;
+            // 刷新节点
+            this.refresh();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return false;
     }
 
     @Override

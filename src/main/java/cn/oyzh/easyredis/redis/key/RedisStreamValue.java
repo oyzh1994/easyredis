@@ -39,6 +39,11 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
     }
 
     @Override
+    public boolean hasValue() {
+        return false;
+    }
+
+    @Override
     public void setValue(List<RedisStreamRow> value) {
 
     }
@@ -46,6 +51,16 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
     @Override
     public Object getUnSavedValue() {
         return null;
+    }
+
+    @Override
+    public void clearUnSavedValue() {
+
+    }
+
+    @Override
+    public boolean hasUnSavedValue() {
+        return false;
     }
 
     @Override

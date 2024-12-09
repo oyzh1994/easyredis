@@ -35,7 +35,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     }
 
     @Override
-    public boolean saveKeyValue() {
+    public void saveKeyValue() {
         RedisSetValue.RedisSetRow row = this.data();
         try {
             if (row != null) {
@@ -45,13 +45,13 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
                 this.currentRow.setValue(row.getValue());
                 // 清除数据
                 this.clearData();
-                return true;
+                // 刷新节点
+                this.refresh();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return false;
     }
 
     @Override

@@ -53,6 +53,7 @@ public class RedisStringValue implements RedisKeyValue<Object> {
         return RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
     }
 
+    @Override
     public boolean hasValue() {
         return RedisCacheUtil.hasValue(this.hashCode(), (byte) 0);
     }
@@ -60,6 +61,16 @@ public class RedisStringValue implements RedisKeyValue<Object> {
     @Override
     public Object getUnSavedValue() {
         return RedisCacheUtil.loadValue(this.hashCode(), (byte) 1);
+    }
+
+    @Override
+    public void clearUnSavedValue() {
+        RedisCacheUtil.deleteValue(this.hashCode(), (byte) 1);
+    }
+
+    @Override
+    public boolean hasUnSavedValue() {
+        return RedisCacheUtil.hasValue(this.hashCode(), (byte) 1);
     }
 
     @Override

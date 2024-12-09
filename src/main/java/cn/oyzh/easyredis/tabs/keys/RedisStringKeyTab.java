@@ -103,15 +103,19 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         /**
          * redis数据监听器
          */
-        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> this.treeItem.data(newValue);
+        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+            // 设置数据
+            this.treeItem.data(newValue);
+            // 保存监听
+            this.saveNodeData.enable();
+        };
 
         @Override
         public boolean init(RedisStringKeyTreeItem treeItem) {
             if (super.init(treeItem)) {
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                // 保存监听
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
+
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -156,10 +160,10 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
                 return;
             }
-            // 刷新数据
             try {
+                // 刷新数据
                 this.treeItem.refreshKeyValue();
-                // 数据变更
+                // 初始化数据
                 this.initKey();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -174,6 +178,8 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
                 TaskManager.start(() -> {
                     this.treeItem.saveKeyValue();
                     this.flushBinary();
+                    // 保存监听
+                    this.saveNodeData.disable();
                 });
             }
         }
@@ -216,14 +222,13 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
 
         @Override
         protected void firstShowData() {
-            this.nodeData.showData(this.treeItem.rawValue());
-            // 首次设置数据要清除历史
+            this.nodeData.showData(this.treeItem.data());
             this.nodeData.forgetHistory();
         }
 
         @Override
         protected void showData(RichDataType dataType) {
-            this.nodeData.showData(dataType, this.treeItem.rawValue());
+            this.nodeData.showData(dataType, this.treeItem.data());
         }
     }
 }

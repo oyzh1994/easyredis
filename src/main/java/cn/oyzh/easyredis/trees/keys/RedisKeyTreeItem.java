@@ -63,7 +63,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @param data 未键数据
      */
     public void data(Object data) {
-        this.dataProperty().set(data);
+        // this.dataProperty().set(data);
+        this.keyValue().setUnSavedValue(data);
     }
 
     /**
@@ -72,19 +73,36 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 键数据
      */
     public Object data() {
-        if (this.dataProperty == null) {
-            return null;
+        // if (this.dataProperty == null) {
+        //     return null;
+        // }
+        // return this.dataProperty.get();
+        Object data;
+        if (this.isDataUnsaved()) {
+            data = this.unsavedValue();
+        } else {
+            data = this.rawValue();
         }
-        return this.dataProperty.get();
+        return data;
     }
 
     /**
      * 清除键数据
      */
     public void clearData() {
-        if (this.dataProperty != null) {
-            this.dataProperty.set(null);
-        }
+        // if (this.dataProperty != null) {
+        //     this.dataProperty.set(null);
+        // }
+        this.keyValue().clearUnSavedValue();
+    }
+
+    /**
+     * 数据是否未保存
+     *
+     * @return 结果
+     */
+    public Object unsavedValue() {
+        return this.keyValue().getUnSavedValue();
     }
 
     /**
@@ -93,10 +111,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 结果
      */
     public boolean isDataUnsaved() {
-        if (this.dataProperty == null) {
-            return false;
-        }
-        return this.dataProperty.get() != null;
+        RedisKeyValue<?> keyValue = this.keyValue();
+        return keyValue != null && keyValue.hasUnSavedValue();
     }
 
     public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
@@ -198,16 +214,14 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     }
 
     /**
-     * 保存节点值
+     * 保存键值
      *
-     * @return 结果
      */
-    public boolean saveKeyValue() {
-        return false;
+    public void saveKeyValue() {
     }
 
     /**
-     * 设置节点值
+     * 设置键值
      *
      * @param value 值
      */
@@ -215,7 +229,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     }
 
     /**
-     * 刷新节点值
+     * 刷新键值
      */
     public void refreshKeyValue() {
     }

@@ -97,18 +97,8 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public boolean saveKeyValue() {
+    public void saveKeyValue() {
         RedisHashValue.RedisHashRow row = this.data();
-        // if (value == null) {
-        //     value = this.currentRow.getValue();
-        // }
-        // String field = this.field();
-        // String oldField = this.currentRow.getField();
-        // if (field == null) {
-        //     field = this.currentRow.getField();
-        // } else {
-        //     oldField = this.currentRow.getField();
-        // }
         try {
             // 保存数据
             this.setKeyValue(row);
@@ -117,16 +107,12 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
             this.currentRow.setValue(row.getValue());
             // 清除数据
             this.clearData();
-            // // 如果字段变化，则删除旧字段
-            // if (oldField != null) {
-            //     this.client().hdel(this.dbIndex(), this.key(), oldField);
-            // }
-            return true;
+            // 刷新节点
+            this.refresh();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return false;
     }
 
     @Override

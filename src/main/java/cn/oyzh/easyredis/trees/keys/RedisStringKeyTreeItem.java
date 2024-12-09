@@ -17,25 +17,24 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     }
 
     @Override
-    public boolean saveKeyValue() {
+    public void saveKeyValue() {
         Object value = this.data();
         try {
             if (value != null) {
                 this.setKeyValue(value);
-                // this.refreshKeyValue();
                 // 更新值
                 this.keyValue().setValue(value);
                 // 刷新统计值
                 this.flushCount();
                 // 清除缓存
                 this.clearData();
-                return true;
+                // 刷新节点
+                this.refresh();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return false;
     }
 
     @Override
