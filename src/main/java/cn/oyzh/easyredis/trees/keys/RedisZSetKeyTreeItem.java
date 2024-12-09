@@ -126,7 +126,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
      * 反转显示类型
      */
     public void reverseView() {
-        this.showType = (byte) (this.isGEOView() ? 0 : 1);
+        this.showType = (byte) (this.isCoordinateView() ? 0 : 1);
         RedisEventUtil.zSetReverseView(this);
     }
 
@@ -135,7 +135,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
      *
      * @return 结果
      */
-    public boolean isGEOView() {
+    public boolean isCoordinateView() {
         return this.showType == 1;
     }
 
@@ -144,7 +144,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
      *
      * @return 结果
      */
-    public boolean isSupportGEO() {
+    public boolean isSupportCoordinate() {
         return RedisVersionUtil.isCommandSupported(this.getServerVersion(), "geopos");
     }
 
@@ -163,7 +163,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         try {
             this.setKeyValue(value);
             this.currentRow.setValue(value.getValue());
-            if (this.isGEOView()) {
+            if (this.isCoordinateView()) {
                 this.currentRow.setLatitude(value.getLatitude());
                 this.currentRow.setLongitude(value.getLongitude());
             } else {
@@ -190,7 +190,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
                     this.client().zrem(this.dbIndex(), this.key(), this.currentRow.getValue());
                 }
                 // 新增坐标
-                if (this.isGEOView()) {
+                if (this.isCoordinateView()) {
                     this.client().geoadd(this.dbIndex(), this.key(), rowLongitude, rowLatitude, rowValue);
                 } else {// 新增成员
                     this.client().zadd(this.dbIndex(), this.key(), rowScore, rowValue);
@@ -221,7 +221,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
     public void refreshKeyValue() {
         try {
             List<String> value = this.client().zrange(this.dbIndex(), this.key());
-            if (this.isGEOView()) {
+            if (this.isCoordinateView()) {
                 List<GeoCoordinate> coordinates = this.client().geopos(this.dbIndex(), this.key(), ArrayUtil.toArray(value, String.class));
                 this.value.valueOfCoordinates(value, coordinates);
             } else {

@@ -163,25 +163,6 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         };
 
         @Override
-        public boolean init(RedisHashKeyTreeItem treeItem) {
-            this.pageData = null;
-            if (super.init(treeItem)) {
-                // 格式监听
-                this.format.selectedItemChanged(this.formatListener);
-                // 值处理
-                this.nodeData.addTextChangeListener(this.dataListener);
-                this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-                this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-                // 字段处理
-                this.hashField.addTextChangeListener(this.fieldValListener);
-                this.hashField.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldUndo.setDisable(!t1));
-                this.hashField.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldRedo.setDisable(!t1));
-                return true;
-            }
-            return false;
-        }
-
-        @Override
         protected void initKey() {
             // 初始化表单
             this.initTable();
@@ -385,6 +366,16 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         @Override
         protected void bindListeners() {
             super.bindListeners();
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
+            // 值处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+            // 字段处理
+            this.hashField.addTextChangeListener(this.fieldValListener);
+            this.hashField.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldUndo.setDisable(!t1));
+            this.hashField.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldRedo.setDisable(!t1));
             this.hashField.disableProperty().bind(this.nodeData.disabledProperty());
             this.hashField.editableProperty().bind(this.nodeData.editableProperty());
             this.fieldAction.disableProperty().bind(this.nodeData.disabledProperty());

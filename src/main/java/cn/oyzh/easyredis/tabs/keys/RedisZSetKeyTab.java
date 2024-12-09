@@ -22,6 +22,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -106,8 +107,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
-            // 保存监听
-            this.saveNodeData.enable();
+            if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+                this.saveNodeData.enable();
+            }
         };
 
         /**
@@ -121,8 +123,10 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setScore(value.doubleValue());
             }
-            // 保存监听
-            this.saveNodeData.enable();
+            RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
+            if (!Objects.equals(row.getScore(), value.doubleValue())) {
+                this.saveNodeData.enable();
+            }
         };
 
         /**
@@ -148,30 +152,13 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         };
 
         @Override
-        public boolean init(RedisZSetKeyTreeItem treeItem) {
-            if (super.init(treeItem)) {
-                this.pageData = null;
-                // 格式监听
-                this.format.selectedItemChanged(this.formatListener);
-                // 分数处理
-                this.scoreVal.addTextChangeListener(this.scoreValListener);
-                // 键数据处理
-                this.nodeData.addTextChangeListener(this.dataListener);
-                this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-                this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-                return true;
-            }
-            return false;
-        }
-
-        @Override
         protected void initKey() {
             // 初始化表单
             this.initTable();
             // 显示首页
             this.firstPage();
             // 显示切换按钮
-            this.reverseView.setVisible(this.isSupportGEO());
+            this.reverseView.setVisible(this.isSupportCoordinate());
         }
 
         @Override
@@ -241,10 +228,13 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          *
          * @return 结果
          */
-        private boolean isSupportGEO() {
-            return this.treeItem.isSupportGEO();
+        private boolean isSupportCoordinate() {
+            return this.treeItem.isSupportCoordinate();
         }
 
+        /**
+         * 反转视图
+         */
         @FXML
         private void reverseView() {
             this.treeItem.reverseView();
@@ -330,10 +320,18 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         @Override
         protected void bindListeners() {
             super.bindListeners();
-            // 绑定属性
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
+            // 切换视图
             this.reverseView.managedBindVisible();
+            // 分数处理
+            this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.scoreVal.disableProperty().bind(this.nodeData.disabledProperty());
             this.scoreVal.editableProperty().bind(this.nodeData.editableProperty());
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
 
         /**

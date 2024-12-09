@@ -160,24 +160,6 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         };
 
         @Override
-        public boolean init(RedisZSetKeyTreeItem treeItem) {
-            if (super.init(treeItem)) {
-                this.pageData = null;
-                // 格式监听
-                this.format.selectedItemChanged(this.formatListener);
-                // 坐标处理
-                this.latitudeVal.addTextChangeListener(this.latitudeValListener);
-                this.longitudeVal.addTextChangeListener(this.longitudeValListener);
-                // 键数据处理
-                this.nodeData.addTextChangeListener(this.dataListener);
-                this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-                this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-                return true;
-            }
-            return false;
-        }
-
-        @Override
         protected void initKey() {
             // 初始化表单
             this.initTable();
@@ -342,6 +324,15 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
             this.longitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
             this.longitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
+            // 坐标处理
+            this.latitudeVal.addTextChangeListener(this.latitudeValListener);
+            this.longitudeVal.addTextChangeListener(this.longitudeValListener);
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
 
         /**
