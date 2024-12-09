@@ -56,11 +56,6 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         this.setValue(new RedisRootTreeItemValue());
         // 初始化子节点
         this.initChildes();
-//        // 监听变化
-//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-//            RedisEventUtil.treeChildChanged();
-//            this.flushLocal();
-//        });
     }
 
     @Override
@@ -394,11 +389,6 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      * @since 2023/11/21
      */
     public static class RedisRootTreeItemValue extends RichTreeItemValue {
-
-        public RedisRootTreeItemValue() {
-            // this.flushGraphic();
-            // this.flushText();
-        }
 
         @Override
         public String name() {

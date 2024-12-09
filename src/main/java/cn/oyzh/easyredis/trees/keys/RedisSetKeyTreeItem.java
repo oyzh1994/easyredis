@@ -36,6 +36,11 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     }
 
     @Override
+    public RedisSetValue.RedisSetRow unsavedValue() {
+        return (RedisSetValue.RedisSetRow) super.unsavedValue();
+    }
+
+    @Override
     public void saveKeyValue() {
         RedisSetValue.RedisSetRow row = this.data();
         try {

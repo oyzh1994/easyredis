@@ -106,9 +106,9 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
          * redis数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            this.treeItem.data(newValue);
             if (!Objects.equals(this.treeItem.rawData(), newValue)) {
                 this.saveNodeData.enable();
+                this.treeItem.data(newValue);
             }
         };
 

@@ -37,6 +37,11 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         }
     }
 
+    @Override
+    public RedisZSetValue.RedisZSetRow  unsavedValue() {
+        return (RedisZSetValue.RedisZSetRow) super.unsavedValue();
+    }
+
     /**
      * 获取分数
      *

@@ -32,6 +32,11 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
     }
 
     @Override
+    public RedisListValue.RedisListRow unsavedValue() {
+        return (RedisListValue.RedisListRow) super.unsavedValue();
+    }
+
+    @Override
     public void saveKeyValue() {
         RedisListValue.RedisListRow row = this.data();
         try {

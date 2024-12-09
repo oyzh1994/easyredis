@@ -101,14 +101,12 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setValue(newValue);
-            }
             if (!Objects.equals(this.treeItem.rawData(), newValue)) {
                 this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setValue(newValue);
             }
         };
 
@@ -117,15 +115,13 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          */
         private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
             Number value = this.scoreVal.getValue();
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setScore(value.doubleValue());
-            }
             RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-            if (!Objects.equals(row.getScore(), value.doubleValue())) {
+            if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
                 this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setScore(value.doubleValue());
             }
         };
 

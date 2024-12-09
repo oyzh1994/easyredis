@@ -135,14 +135,12 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
          * redis数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setValue(newValue);
-            }
             if (!Objects.equals(this.treeItem.rawData(), newValue)) {
                 this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setValue(newValue);
             }
         };
 
@@ -150,15 +148,13 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
          * 字段值监听器
          */
         private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setField(newValue);
-            }
             RedisHashValue.RedisHashRow row = this.treeItem.rawValue();
             if (!Objects.equals(row.getField(), newValue)) {
                 this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setField(newValue);
             }
         };
 

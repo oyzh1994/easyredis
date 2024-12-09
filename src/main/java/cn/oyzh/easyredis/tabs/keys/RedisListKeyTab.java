@@ -110,14 +110,12 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setValue(newValue);
-            }
             if (!Objects.equals(this.treeItem.rawData(), newValue)) {
                 this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setValue(newValue);
             }
         };
 

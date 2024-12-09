@@ -239,6 +239,17 @@ public class RedisEventUtil {
     }
 
     /**
+     * 键过滤事件
+     *
+     * @param item redis树节点
+     */
+    public static void keyFiltered(RedisDatabaseTreeItem item) {
+        RedisKeyFilteredEvent event = new RedisKeyFilteredEvent();
+        event.data(item);
+        EventUtil.post(event);
+    }
+
+    /**
      * 连接已新增事件
      *
      * @param info redis信息

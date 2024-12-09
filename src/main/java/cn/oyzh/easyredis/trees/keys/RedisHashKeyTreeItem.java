@@ -33,6 +33,11 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
         }
     }
 
+    @Override
+    public RedisHashValue.RedisHashRow unsavedValue() {
+        return (RedisHashValue.RedisHashRow) super.unsavedValue();
+    }
+
     /**
      * 获取字段
      *

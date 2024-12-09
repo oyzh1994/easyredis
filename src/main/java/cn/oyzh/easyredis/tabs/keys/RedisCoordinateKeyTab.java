@@ -22,6 +22,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -122,41 +123,43 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
+            if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+                this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setValue(newValue);
             }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.data().setValue(newValue);
-            }
-            this.saveNodeData.enable();
         };
 
         /**
          * 经度值监听器
          */
         private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
+            Number value = this.longitudeVal.getValue();
+            RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
+            if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
+                this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setLongitude(value.doubleValue());
             }
-            if (this.treeItem.unsavedValue() != null) {
-                Number value = this.longitudeVal.getValue();
-                this.treeItem.data().setLongitude(value.doubleValue());
-            }
-            this.saveNodeData.enable();
         };
 
         /**
          * 纬度值监听器
          */
         private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
+            Number value = this.longitudeVal.getValue();
+            RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
+            if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
+                this.saveNodeData.enable();
+                if (this.treeItem.unsavedValue() == null) {
+                    this.treeItem.data(this.treeItem.currentRow());
+                }
+                this.treeItem.unsavedValue().setLatitude(value.doubleValue());
             }
-            if (this.treeItem.unsavedValue() != null) {
-                Number value = this.latitudeVal.getValue();
-                this.treeItem.data().setLatitude(value.doubleValue());
-            }
-            this.saveNodeData.enable();
         };
 
         @Override

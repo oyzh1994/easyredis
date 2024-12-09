@@ -62,11 +62,6 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         this.setValue(new RedisGroupTreeItemValue(this));
         // 判断是否展开
         this.setExpanded(this.value.isExpand());
-//        // 监听变化
-//        super.addEventHandler(childrenModificationEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-//            RedisEventUtil.treeChildChanged();
-//            this.flushLocal();
-//        });
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
             this.value.setExpand(false);
@@ -117,8 +112,6 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         }
         // 修改名称
         if (!this.groupStore.update(this.value)) {
-            // this.getValue().flushText();
-        // } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
     }
@@ -241,13 +234,8 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     @Accessors(chain = true, fluent = true)
     public static class RedisGroupTreeItemValue extends RichTreeItemValue {
 
-        // private final RedisGroupTreeItem item;
-
         public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
             super(item);
-            // this.flushGraphic();
-            // this.flushGraphicColor();
-            // this.name(item.value().getName());
         }
 
         @Override
