@@ -45,8 +45,6 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
                 this.currentRow.setValue(row.getValue());
                 // 清除数据
                 this.clearData();
-                // 刷新节点
-                this.refresh();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

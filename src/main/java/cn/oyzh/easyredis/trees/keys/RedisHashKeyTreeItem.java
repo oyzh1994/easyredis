@@ -19,23 +19,6 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
         super(value, treeView);
     }
 
-    // /**
-    //  * 字段属性
-    //  */
-    // private SimpleStringProperty fieldProperty;
-    //
-    // /**
-    //  * 获取字段属性
-    //  *
-    //  * @return 字段属性
-    //  */
-    // public SimpleStringProperty fieldProperty() {
-    //     if (this.fieldProperty == null) {
-    //         this.fieldProperty = new SimpleStringProperty();
-    //     }
-    //     return this.fieldProperty;
-    // }
-
     @Override
     public RedisHashValue.RedisHashRow data() {
         return (RedisHashValue.RedisHashRow) super.data();
@@ -56,7 +39,6 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
      * @return 字段
      */
     public String field() {
-        // return this.fieldProperty == null ? null : this.fieldProperty().get();
         if (this.data() == null) {
             return null;
         }
@@ -69,22 +51,10 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
      * @param field 字段
      */
     public void field(String field) {
-        // this.fieldProperty().set(field);
         if (this.data() != null) {
             this.data().setField(field);
         }
     }
-
-    // @Override
-    // public boolean isDataUnsaved() {
-    //     return this.field() != null || super.isDataUnsaved();
-    // }
-
-    // @Override
-    // public void clearData() {
-    //     this.field(null);
-    //     super.clearData();
-    // }
 
     @Override
     public boolean checkRowExists() {
@@ -107,8 +77,6 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
             this.currentRow.setValue(row.getValue());
             // 清除数据
             this.clearData();
-            // 刷新节点
-            this.refresh();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

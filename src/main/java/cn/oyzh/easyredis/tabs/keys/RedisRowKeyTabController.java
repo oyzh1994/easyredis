@@ -197,13 +197,11 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     protected void initRow(R row) {
         this.treeItem.currentRow(row);
         this.treeItem.clearData();
-        // this.treeItem.data(null);
         if (row == null) {
             this.clearRow();
             this.dataAction.disable();
         } else {
             this.firstShowData();
-            // this.setRawData(this.treeItem.rawValue());
             this.dataAction.enable();
         }
     }

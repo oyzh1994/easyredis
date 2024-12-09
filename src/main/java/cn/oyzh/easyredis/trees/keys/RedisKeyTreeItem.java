@@ -73,10 +73,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 键数据
      */
     public Object data() {
-        // if (this.dataProperty == null) {
-        //     return null;
-        // }
-        // return this.dataProperty.get();
         Object data;
         if (this.isDataUnsaved()) {
             data = this.unsavedValue();
@@ -90,10 +86,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 清除键数据
      */
     public void clearData() {
-        // if (this.dataProperty != null) {
-        //     this.dataProperty.set(null);
-        // }
         this.keyValue().clearUnSavedValue();
+        this.refresh();
     }
 
     /**

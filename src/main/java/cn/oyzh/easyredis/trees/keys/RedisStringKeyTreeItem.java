@@ -28,8 +28,6 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
                 this.flushCount();
                 // 清除缓存
                 this.clearData();
-                // 刷新节点
-                this.refresh();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
