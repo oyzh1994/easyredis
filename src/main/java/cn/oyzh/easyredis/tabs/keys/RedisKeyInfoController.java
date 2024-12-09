@@ -72,7 +72,7 @@ public class RedisKeyInfoController extends DynamicTabController {
                 I18nHelper.encoding() + " : " + this.redisKey.objectedEncoding() + System.lineSeparator() +
                 I18nHelper.idleTime() + " : " + this.redisKey.objectIdletime() + System.lineSeparator() +
                 I18nHelper.refcount() + " : " + this.redisKey.objectRefcount() + System.lineSeparator();
-        ClipboardUtil.setStringAndTip(builder, "键信息");
+        ClipboardUtil.setStringAndTip(builder);
     }
 
     /**
@@ -93,6 +93,10 @@ public class RedisKeyInfoController extends DynamicTabController {
         this.treeItem = treeItem;
         this.redisKey = treeItem.value();
         this.client = treeItem.client();
+        // 选中时则更新
+        if (this.root.isSelected()) {
+            this.initObject();
+        }
     }
 
     /**

@@ -4,8 +4,6 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
@@ -27,17 +25,17 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     @FXML
     protected FlexVBox root;
 
-    /**
-     * 收藏
-     */
-    @FXML
-    protected SVGGlyph collect;
-
-    /**
-     * 取消收藏
-     */
-    @FXML
-    protected SVGGlyph unCollect;
+    // /**
+    //  * 收藏
+    //  */
+    // @FXML
+    // protected SVGGlyph collect;
+    //
+    // /**
+    //  * 取消收藏
+    //  */
+    // @FXML
+    // protected SVGGlyph unCollect;
 
     /**
      * 树节点
@@ -66,9 +64,9 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
             return false;
         }
 
-        // 收藏处理
-        this.collect.setVisible(!this.treeItem.isCollect());
-        this.unCollect.setVisible(this.treeItem.isCollect());
+        // // 收藏处理
+        // this.collect.setVisible(!this.treeItem.isCollect());
+        // this.unCollect.setVisible(this.treeItem.isCollect());
 
         // 初始化节点
         this.initKey();
@@ -101,25 +99,25 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
         this.treeItem.rename();
     }
 
-    /**
-     * 收藏
-     */
-    @FXML
-    protected void collect() {
-        this.treeItem.collect();
-        this.collect.disappear();
-        this.unCollect.display();
-    }
-
-    /**
-     * 取消收藏
-     */
-    @FXML
-    protected void unCollect() {
-        this.treeItem.unCollect();
-        this.collect.display();
-        this.unCollect.disappear();
-    }
+    // /**
+    //  * 收藏
+    //  */
+    // @FXML
+    // protected void collect() {
+    //     this.treeItem.collect();
+    //     this.collect.disappear();
+    //     this.unCollect.display();
+    // }
+    //
+    // /**
+    //  * 取消收藏
+    //  */
+    // @FXML
+    // protected void unCollect() {
+    //     this.treeItem.unCollect();
+    //     this.collect.display();
+    //     this.unCollect.disappear();
+    // }
 
     /**
      * 数据组件键盘按下事件
@@ -158,12 +156,12 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
         this.keyExtraController.flushTTL();
     }
 
-    @Override
-    protected void bindListeners() {
-        super.bindListeners();
-        this.collect.managedBindVisible();
-        this.unCollect.managedBindVisible();
-    }
+    // @Override
+    // protected void bindListeners() {
+    //     super.bindListeners();
+    //     this.collect.managedBindVisible();
+    //     this.unCollect.managedBindVisible();
+    // }
 
     /**
      * 首次显示数据

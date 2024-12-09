@@ -14,6 +14,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.CollectPane?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeysTab.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -44,6 +45,11 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </DeleteSVGGlyph>
+            <CollectPane fx:id="collectPane" size="16" onMousePrimaryClicked="#collectKey">
+                <HBox.margin>
+                    <Insets left="5" top="5"/>
+                </HBox.margin>
+            </CollectPane>
             <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refreshKey">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

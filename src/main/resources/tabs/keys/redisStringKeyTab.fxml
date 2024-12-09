@@ -51,17 +51,17 @@
                 <Insets left="5"/>
             </HBox.margin>
         </ClearSVGGlyph>
-        <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </CollectSVGGlyph>
-        <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15"
-                           onMousePrimaryClicked="#unCollect">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </UnCollectSVGGlyph>
+        <!-- <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </CollectSVGGlyph> -->
+        <!-- <UnCollectSVGGlyph visible="false" managed="false" fx:id="unCollect" size="15" -->
+        <!--                    onMousePrimaryClicked="#unCollect"> -->
+        <!--     <HBox.margin> -->
+        <!--         <Insets left="5"/> -->
+        <!--     </HBox.margin> -->
+        <!-- </UnCollectSVGGlyph> -->
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
             <HBox.margin>
                 <Insets left="5"/>

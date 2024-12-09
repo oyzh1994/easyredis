@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
+import cn.oyzh.fx.gui.svg.CollectPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -21,6 +22,7 @@ import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -201,6 +203,12 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private SVGGlyph sortDesc;
 
+        /**
+         * 收藏面板
+         */
+        @FXML
+        private CollectPane collectPane;
+
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
@@ -235,6 +243,19 @@ public class RedisKeysTab extends DynamicTab {
         private void deleteKey() {
             if (this.activeItem != null) {
                 this.activeItem.delete();
+            }
+        }
+
+        @FXML
+        private void collectKey(MouseEvent event) {
+            if (this.activeItem != null) {
+                if (this.collectPane.isCollect()) {
+                    this.activeItem.unCollect();
+                    this.collectPane.unCollect();
+                } else {
+                    this.activeItem.collect();
+                    this.collectPane.collect();
+                }
             }
         }
 
@@ -290,14 +311,21 @@ public class RedisKeysTab extends DynamicTab {
             }
         }
 
-        public void initItem(TreeItem<?> treeItem) {
+        /**
+         * 初始化节点
+         *
+         * @param treeItem
+         */
+        private void initItem(TreeItem<?> treeItem) {
             if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
                 try {
+                    // 设置激活节点
                     this.activeItem = keyTreeItem;
                     // 初始化数据
                     this.initData();
                     // 刷新tab
                     this.flushTab();
+                    // 启用组件
                     this.tabPane.enable();
                 } catch (Exception ex) {
                     MessageBox.exception(ex);
@@ -322,6 +350,7 @@ public class RedisKeysTab extends DynamicTab {
                     this.tabPane.setTab(0, keyTab);
                     this.keyInfoController.init(this.activeItem);
                 }
+                this.collectPane.setCollect(this.activeItem.isCollect());
             }
         }
 
