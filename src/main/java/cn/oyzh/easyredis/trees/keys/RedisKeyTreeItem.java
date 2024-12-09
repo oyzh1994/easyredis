@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisKeyValue;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -398,5 +399,31 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
             return memoryUsage / 1024.0 / 1024 + "MB";
         }
         return memoryUsage / 1024.0 / 1024 / 1024 + "GB";
+    }
+
+    /**
+     * 是否raw格式
+     *
+     * @return 结果
+     */
+    public boolean isRawEncoding() {
+        return this.isRawEncoding(false);
+    }
+
+    /**
+     * 是否raw格式
+     *
+     * @param flushEncoding 刷新编码
+     * @return 结果
+     */
+    public boolean isRawEncoding(boolean flushEncoding) {
+        if (this.value.objectedEncoding() == null || flushEncoding) {
+            this.value.objectedEncoding(this.client().objectEncoding(this.dbIndex(), this.key()));
+        }
+        return this.value.isRawEncoding();
+    }
+
+    public RedisKeyValue<?> keyValue() {
+        return this.value.value();
     }
 }

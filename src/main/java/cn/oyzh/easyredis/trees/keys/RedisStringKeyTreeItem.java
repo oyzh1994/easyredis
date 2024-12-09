@@ -14,7 +14,6 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
     public RedisStringKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
-        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override
@@ -23,7 +22,13 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         try {
             if (value != null) {
                 this.setKeyValue(value);
-                this.refreshKeyValue();
+                // this.refreshKeyValue();
+                // 更新值
+                this.keyValue().setValue(value);
+                // 刷新统计值
+                this.flushCount();
+                // 清除缓存
+                this.clearData();
                 return true;
             }
         } catch (Exception ex) {
@@ -45,14 +50,23 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     @Override
     public void refreshKeyValue() {
         try {
-            Object val;
-            if (this.isRawEncoding(true)) {
-                val = this.client().get(this.dbIndex(), this.keyBinary());
-            } else {
-                val = this.client().get(this.dbIndex(), this.key());
+            RedisStringValue stringValue = this.keyValue();
+            // 刷新值
+            if (stringValue == null || !stringValue.hasValue()) {
+                // 原始格式
+                if (this.isRawEncoding(true)) {
+                    byte[] val = this.client().get(this.dbIndex(), this.keyBinary());
+                    this.value.valueOfString(val);
+                } else {// 字符串格式
+                    String val = this.client().get(this.dbIndex(), this.key());
+                    this.value.valueOfString(val);
+                }
+                stringValue = this.keyValue();
             }
-            this.value.valueOfString(val);
-            this.flushCount();
+            // 刷新统计值
+            if (stringValue.getCount() == null) {
+                this.flushCount();
+            }
             // 清空未保存的数据
             this.clearData();
         } catch (Exception ex) {
@@ -85,37 +99,6 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         }
         return false;
     }
-
-    /**
-     * 是否raw格式
-     *
-     * @return 结果
-     */
-    public boolean isRawEncoding() {
-        return this.isRawEncoding(false);
-    }
-
-    /**
-     * 是否raw格式
-     *
-     * @param flushEncoding 刷新编码
-     * @return 结果
-     */
-    public boolean isRawEncoding(boolean flushEncoding) {
-        if (this.value.objectedEncoding() == null || flushEncoding) {
-            this.value.objectedEncoding(this.client().objectEncoding(this.dbIndex(), this.key()));
-        }
-        return this.value.isRawEncoding();
-    }
-
-    // /**
-    //  * 获取数据大小
-    //  *
-    //  * @return 数据大小
-    //  */
-    // public Integer size() {
-    //     return this.value.size();
-    // }
 
     /**
      * 获取统计值大小
@@ -160,4 +143,8 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         }
     }
 
+    @Override
+    public RedisStringValue keyValue() {
+        return (RedisStringValue) super.keyValue();
+    }
 }

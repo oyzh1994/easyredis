@@ -79,11 +79,6 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         private RichDataTextAreaPane nodeData;
 
         /**
-         * redis数据监听器
-         */
-        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> this.treeItem.data(newValue);
-
-        /**
          * 格式监听器
          */
         private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
@@ -104,6 +99,11 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
                 this.nodeData.setEditable(true);
             }
         };
+
+        /**
+         * redis数据监听器
+         */
+        private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> this.treeItem.data(newValue);
 
         @Override
         public boolean init(RedisStringKeyTreeItem treeItem) {

@@ -1,8 +1,12 @@
 package cn.oyzh.easyredis.redis.key;
 
+import cn.oyzh.common.json.JSONArray;
+import cn.oyzh.common.json.JSONObject;
+import cn.oyzh.common.json.JSONUtil;
 import lombok.Data;
 import lombok.Getter;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +19,9 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
 
     @Getter
     private List<RedisSetRow> value;
+
+    public RedisSetValue() {
+    }
 
     public RedisSetValue(List<RedisSetRow> value) {
         this.value = value;
@@ -29,6 +36,27 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
         }
         return new RedisSetValue(rows);
     }
+
+    // @Override
+    // public byte[] serialize() {
+    //     JSONObject obj = new JSONObject();
+    //     if (this.value != null) {
+    //         obj.put("value", this.value);
+    //     }
+    //     return obj.toJSONBBytes();
+    // }
+    //
+    // @Override
+    // public RedisSetValue deserialize(byte[] bytes) {
+    //     String str = new String(bytes, StandardCharsets.UTF_8);
+    //     JSONObject object = JSONUtil.parseObject(str);
+    //     JSONArray value = object.getJSONArray("value");
+    //     if (value == null) {
+    //         return null;
+    //     }
+    //     this.value = value.toBeanList(RedisSetRow.class);
+    //     return this;
+    // }
 
     @Data
     public static class RedisSetRow implements RedisKeyRow {

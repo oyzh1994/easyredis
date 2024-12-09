@@ -29,6 +29,11 @@ public class RedisConst {
     public static final String CACHE_PATH = STORE_PATH + "cache" + File.separator;
 
     /**
+     * 键缓存路径
+     */
+    public static final String KEY_CACHE_PATH = CACHE_PATH + "key_cache" + File.separator;
+
+    /**
      * icon地址
      */
     public final static String ICON_PATH = "/image/redis_no_bg.png";

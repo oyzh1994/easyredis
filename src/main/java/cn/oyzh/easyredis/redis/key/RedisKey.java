@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,55 +19,70 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/6/16
  */
-@Getter
-@Accessors(chain = true, fluent = true)
+
 public class RedisKey implements Comparable<RedisKey> {
 
     /**
      * db索引
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private int dbIndex;
 
     /**
      * 加载耗时
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private short loadTime;
 
     /**
      * ttl值
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private Long ttl;
 
     /**
      * key名称
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private String key;
 
     /**
      * 键类型
      */
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private RedisKeyType type;
 
     /**
      * 空闲时间
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private Long objectIdletime;
 
     /**
      * 引用数量
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private Long objectRefcount;
 
     /**
      * 编码值
      */
     @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private String objectedEncoding;
 
     /**
@@ -77,15 +93,6 @@ public class RedisKey implements Comparable<RedisKey> {
     public void type(RedisKeyType type) {
         this.type = type;
     }
-//
-//    /**
-//     * 设置键类型
-//     *
-//     * @param type 键类型
-//     */
-//    public void type(String type) {
-//        this.type = RedisKeyType.valueOfType(type);
-//    }
 
     /**
      * 是否string键
@@ -131,15 +138,6 @@ public class RedisKey implements Comparable<RedisKey> {
     public boolean isHashKey() {
         return RedisKeyType.HASH == this.type;
     }
-
-//    /**
-//     * 是否hyperLogLog键
-//     *
-//     * @return 结果
-//     */
-//    public boolean isHyLogKey() {
-//        return RedisKeyType.HYPERLOGLOG == this.type;
-//    }
 
     /**
      * 是否stream键
@@ -203,60 +201,86 @@ public class RedisKey implements Comparable<RedisKey> {
         return this.key == null ? null : this.key.getBytes();
     }
 
+    @Setter
+    @Getter
+    @Accessors(chain = true, fluent = true)
     private RedisKeyValue<?> value;
 
+    // public void value(RedisKeyValue<?> value) {
+    //     this.value = value;
+    //     // RedisCacheUtil.cacheKeyValue(this.hashCode(), this.key, value);
+    // }
+
+    // public RedisKeyValue<?> value() {
+    //     return RedisCacheUtil.loadKeyValue(this.hashCode(), this.key);
+    // }
+
     public void valueOfSet(Set<String> members) {
-        this.value = RedisSetValue.valueOf(members);
+        // this.value = RedisSetValue.valueOf(members);
+        this.value(RedisSetValue.valueOf(members));
     }
 
     public void valueOfZSet(List<String> members, List<Double> scores) {
-        this.value = RedisZSetValue.valueOf(members, scores);
+        // this.value = RedisZSetValue.valueOf(members, scores);
+        this.value(RedisZSetValue.valueOf(members, scores));
     }
 
     public void valueOfCoordinates(List<String> members, List<GeoCoordinate> coordinates) {
-        this.value = RedisZSetValue.valueOfCoordinates(members, coordinates);
+        // this.value = RedisZSetValue.valueOfCoordinates(members, coordinates);
+        this.value(RedisZSetValue.valueOfCoordinates(members, coordinates));
     }
 
     public void valueOfHash(Map<String, String> values) {
-        this.value = RedisHashValue.valueOf(values);
+        // this.value = RedisHashValue.valueOf(values);
+        this.value(RedisHashValue.valueOf(values));
     }
 
     public void valueOfList(List<String> elements) {
-        this.value = RedisListValue.valueOf(elements);
+        // this.value = RedisListValue.valueOf(elements);
+        this.value(RedisListValue.valueOf(elements));
     }
 
     public void valueOfStream(List<StreamEntry> entries) {
-        this.value = RedisStreamValue.valueOf(entries);
+        // this.value = RedisStreamValue.valueOf(entries);
+        this.value(RedisStreamValue.valueOf(entries));
     }
 
-    public void valueOfString(Object value) {
-        this.value = RedisStringValue.valueOf(value);
+    public void valueOfString(String value) {
+        // this.value = RedisStringValue.valueOf(value);
+        this.value(RedisStringValue.valueOf(value));
+    }
+
+    public void valueOfString(byte[] value) {
+        // this.value = RedisStringValue.valueOf(value);
+        this.value(RedisStringValue.valueOf(value));
     }
 
     public RedisSetValue asSetValue() {
-        return (RedisSetValue) this.value;
+        return (RedisSetValue) this.value();
     }
 
     public RedisZSetValue asZSetValue() {
-        return (RedisZSetValue) this.value;
+        return (RedisZSetValue) this.value();
     }
 
     public RedisListValue asListValue() {
-        return (RedisListValue) this.value;
+        return (RedisListValue) this.value();
     }
 
     public RedisHashValue asHashValue() {
-        return (RedisHashValue) this.value;
+        return (RedisHashValue) this.value();
     }
 
     public RedisStringValue asStringValue() {
-        if (this.value == null) {
-            this.value = RedisStringValue.valueOf(null);
+        RedisKeyValue<?> value = this.value();
+        if (value == null) {
+            value = new RedisStringValue();
+            this.value(value);
         }
-        return (RedisStringValue) this.value;
+        return (RedisStringValue) value;
     }
 
     public RedisStreamValue asStreamValue() {
-        return (RedisStreamValue) this.value;
+        return (RedisStreamValue) this.value();
     }
 }
