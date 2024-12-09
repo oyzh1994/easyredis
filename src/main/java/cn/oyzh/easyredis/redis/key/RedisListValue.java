@@ -1,12 +1,10 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.oyzh.common.json.JSONArray;
-import cn.oyzh.common.json.JSONObject;
-import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,12 @@ import java.util.List;
 public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisListRow>> {
 
     @Getter
+    @Setter
     private List<RedisListRow> value;
+
+    @Setter
+    @Getter
+    private RedisListValue.RedisListRow unSavedRow;
 
     public RedisListValue() {
     }
@@ -38,72 +41,57 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
 
     @Override
     public boolean hasValue() {
-        return false;
-    }
-
-    @Override
-    public void setValue(List<RedisListRow> value) {
-
+        return this.value != null && !this.value.isEmpty();
     }
 
     @Override
     public Object getUnSavedValue() {
-        return null;
+        return this.unSavedRow;
     }
 
     @Override
     public void clearUnSavedValue() {
-
+        if (this.unSavedRow != null) {
+            this.unSavedRow.setValue(null);
+            this.unSavedRow = null;
+        }
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return false;
+        return this.unSavedRow != null && this.unSavedRow.getValue() != null;
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-
+        if (unSavedValue instanceof RedisListRow) {
+            this.unSavedRow = (RedisListRow) unSavedValue;
+        }
     }
 
-    // @Override
-    // public byte[] serialize() {
-    //     JSONObject obj = new JSONObject();
-    //     if (this.value != null) {
-    //         obj.put("value", this.value);
-    //     }
-    //     return obj.toJSONBBytes();
-    // }
-    //
-    // @Override
-    // public RedisListValue deserialize(byte[] bytes) {
-    //     String str = new String(bytes, StandardCharsets.UTF_8);
-    //     JSONObject object = JSONUtil.parseObject(str);
-    //     JSONArray value = object.getJSONArray("value");
-    //     if (value == null) {
-    //         return null;
-    //     }
-    //     this.value =value.toBeanList(RedisListRow.class);
-    //     return this;
-    // }
-
-    @Data
     public static class RedisListRow implements RedisKeyRow {
 
+        @Getter
+        @Setter
         private byte index;
 
-        private String value;
-
-        public RedisListRow() {
+        public RedisListRow(String value) {
+            this.setValue(value);
         }
 
-        public RedisListRow(String value) {
-            this.value = value;
+        @Override
+        public void setValue(String value) {
+            RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
+        }
+
+        @Override
+        public String getValue() {
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
         }
 
         @Override
         public RedisListRow clone() {
-            return new RedisListRow(this.value);
+            return new RedisListRow(this.getValue());
         }
     }
 }

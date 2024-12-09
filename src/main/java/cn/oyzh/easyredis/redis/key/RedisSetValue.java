@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,6 +55,7 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
     public void clearUnSavedValue() {
         if (this.unSavedRow != null) {
             this.unSavedRow.setValue(null);
+            this.unSavedRow = null;
         }
     }
 
@@ -81,14 +83,14 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
 
         @Override
         public void setValue(String value) {
-            JulLog.info("setValue {}={}", this.hashCode(), value);
+            // JulLog.info("setValue {}={}", this.hashCode(), value);
             RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
         }
 
         @Override
         public String getValue() {
             String value = (String) RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
-            JulLog.info("getValue {}={}", this.hashCode(), value);
+            // JulLog.info("getValue {}={}", this.hashCode(), value);
             return value;
         }
 

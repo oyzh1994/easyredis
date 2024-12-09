@@ -82,7 +82,6 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         @FXML
         private RichDataTextAreaPane nodeData;
 
-
         /**
          * 格式监听器
          */
@@ -109,12 +108,13 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
+            this.saveNodeData.enable();
         };
 
         @Override
@@ -123,8 +123,6 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
             if (super.init(treeItem)) {
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                // 保存监听
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -200,6 +198,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
                 TaskManager.start(() -> {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
+                    this.saveNodeData.disable();
                 });
             }
         }
@@ -209,7 +208,7 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         protected void copyRow() {
             if (this.treeItem.isSelectRow()) {
                 String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
-                        I18nHelper.member() + " : " + this.treeItem.currentRow().getValue();
+                        I18nHelper.element() + " : " + this.treeItem.currentRow().getValue();
                 ClipboardUtil.setStringAndTip(builder);
             }
         }
@@ -252,14 +251,20 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
 
         @Override
         protected void firstShowData() {
-            this.nodeData.showData(this.treeItem.rawValue());
-            // 首次设置数据要清除历史
-            this.nodeData.forgetHistory();
+            RedisListValue.RedisListRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+                this.nodeData.forgetHistory();
+                this.saveNodeData.disable();
+            }
         }
 
         @Override
         protected void showData(RichDataType dataType) {
-            this.nodeData.showData(dataType, this.treeItem.rawValue());
+            RedisListValue.RedisListRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(dataType, row.getValue());
+            }
         }
 
         @Override

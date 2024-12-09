@@ -42,8 +42,6 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
                 this.currentRow.setValue(row.getValue());
                 // 清除数据
                 this.clearData();
-                // 刷新节点
-                this.refresh();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,29 +84,20 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
 
     @Override
     public void refreshKeyValue() {
-        List<String> value = this.client().lrange(this.dbIndex(), this.key());
-        this.value.valueOfList(value);
-        this.clearData();
-    }
-
-    @Override
-    public String rawValue() {
-        if (this.currentRow != null) {
-            return this.currentRow.getValue();
-        }
-        return null;
-    }
-
-    @Override
-    public List<RedisListValue.RedisListRow> rows() {
         try {
+            // 更新数据
             List<String> value = this.client().lrange(this.dbIndex(), this.key());
             this.value.valueOfList(value);
+            // 清空未保存的数据
+            this.clearData();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
-        return this.value.asListValue().getValue();
     }
 
+    @Override
+    public Object rawValue() {
+        return this.currentRow;
+    }
 }
