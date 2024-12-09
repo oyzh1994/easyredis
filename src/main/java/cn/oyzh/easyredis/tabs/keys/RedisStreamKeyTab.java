@@ -40,11 +40,6 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         return (RedisStreamKeyTabController) super.controller();
     }
 
-    // @Override
-    // public RedisStreamKey key() {
-    //     return (RedisStreamKey) super.key();
-    // }
-
     /**
      * stream键tab内容组件
      *
@@ -58,24 +53,6 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
          */
         @FXML
         private ReadOnlyTextField streamID;
-
-        // /**
-        //  * 编号列
-        //  */
-        // @FXML
-        // private TableColumn<RedisStreamRow, Integer> index;
-        //
-        // /**
-        //  * 分数列
-        //  */
-        // @FXML
-        // private TableColumn<RedisStreamRow, String> id;
-        //
-        // /**
-        //  * 值列
-        //  */
-        // @FXML
-        // private TableColumn<RedisStreamRow, String> value;
 
         /**
          * 数据
@@ -95,10 +72,6 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
             this.initTable();
             // 显示首页
             this.firstPage();
-            // // 绑定属性
-            // this.id.setCellValueFactory(new PropertyValueFactory<>("id"));
-            // this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            // this.value.setCellValueFactory(new PropertyValueFactory<>("value"));
         }
 
         @Override
@@ -162,14 +135,19 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
 
         @Override
         protected void firstShowData() {
-            this.nodeData.showData(this.treeItem.rawValue());
-            // 首次设置数据要清除历史
-            this.nodeData.forgetHistory();
+            RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+                this.nodeData.forgetHistory();
+            }
         }
 
         @Override
         protected void showData(RichDataType dataType) {
-            this.nodeData.showData(dataType, this.treeItem.rawValue());
+            RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
+            if (row != null) {
+                this.nodeData.showData(dataType, row.getValue());
+            }
         }
 
         @Override

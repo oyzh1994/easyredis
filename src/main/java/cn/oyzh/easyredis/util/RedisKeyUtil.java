@@ -342,7 +342,7 @@ public class RedisKeyUtil {
             List<RedisStreamValue.RedisStreamRow> rows = value.getValue();
             if (CollectionUtil.isNotEmpty(rows)) {
                 for (RedisStreamValue.RedisStreamRow row : rows) {
-                    client.xadd(dbIndex, key, row.getEntry().getID(), row.getEntry().getFields());
+                    client.xadd(dbIndex, key, row.getStreamId(), row.getFields());
                 }
             }
         }

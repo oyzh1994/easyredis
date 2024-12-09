@@ -1,17 +1,16 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.oyzh.common.json.JSONArray;
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import lombok.Data;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
+import lombok.Setter;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.resps.StreamEntry;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author oyzh
@@ -20,7 +19,11 @@ import java.util.List;
 public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.RedisStreamRow>> {
 
     @Getter
+    @Setter
     private List<RedisStreamRow> value;
+
+    @Getter
+    private RedisStreamRow unSavedRow;
 
     public RedisStreamValue(List<RedisStreamRow> value) {
         this.value = value;
@@ -42,60 +45,64 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
     }
 
     @Override
-    public void setValue(List<RedisStreamRow> value) {
-
-    }
-
-    @Override
     public Object getUnSavedValue() {
-        return null;
+        return this.unSavedRow;
     }
 
     @Override
     public void clearUnSavedValue() {
-
+        if (this.unSavedRow != null) {
+            this.unSavedRow.setValue(null);
+            this.unSavedRow = null;
+        }
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return false;
+        return this.unSavedRow != null && this.unSavedRow.getValue() != null;
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-
+        if (unSavedValue instanceof RedisStreamRow) {
+            this.unSavedRow = (RedisStreamRow) unSavedValue;
+        }
     }
 
-    @Data
     public static class RedisStreamRow implements RedisKeyRow {
 
+        @Getter
+        @Setter
         private byte index;
 
-        private StreamEntry entry;
-
-        public RedisStreamRow() {
-
+        public RedisStreamRow(StreamEntry entry) {
+            this.setId(entry.getID().toString());
+            this.setValue(JSONUtil.toJson(entry.getFields()));
         }
 
-        public RedisStreamRow(StreamEntry entry) {
-            this.entry = entry;
+        public void setId(String id) {
+            RedisCacheUtil.cacheValue(this.hashCode(), id, "id");
         }
 
         public String getId() {
-            return this.entry.getID().toString();
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "id");
         }
 
         public String getValue() {
-            return JSONUtil.toJson(this.entry.getFields());
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "value");
         }
 
         @Override
         public void setValue(String value) {
-            throw new UnsupportedOperationException();
+            RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
         }
 
         public StreamEntryID getStreamId() {
-            return this.entry.getID();
+            return new StreamEntryID(this.getId());
+        }
+
+        public Map<String, String> getFields() {
+            return JSONUtil.parseObject(this.getValue()).toBean(Map.class);
         }
     }
 }

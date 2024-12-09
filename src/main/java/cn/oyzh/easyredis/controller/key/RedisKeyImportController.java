@@ -398,7 +398,7 @@ public class RedisKeyImportController extends StageController {
             List<RedisStreamValue.RedisStreamRow> rows=  redisKey.asStreamValue().getValue();
             if (CollectionUtil.isNotEmpty(rows)) {
                 for (RedisStreamValue.RedisStreamRow row : rows) {
-                    this.client.xadd(dbIndex, key, row.getEntry().getID(), row.getEntry().getFields());
+                    this.client.xadd(dbIndex, key, row.getStreamId(), row.getFields());
                 }
             }
         }

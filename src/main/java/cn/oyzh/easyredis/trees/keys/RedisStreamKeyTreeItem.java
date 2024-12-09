@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -17,7 +18,6 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue
 
     public RedisStreamKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
         super(value, treeView);
-        // this.setValue(new RedisKeyTreeItemValue(this));
     }
 
     @Override
@@ -46,5 +46,4 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue
     public RedisStreamValue.RedisStreamRow rawValue() {
         return this.currentRow;
     }
-
 }
