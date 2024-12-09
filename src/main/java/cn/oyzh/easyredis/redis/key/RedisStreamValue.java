@@ -38,26 +38,20 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
         return new RedisStreamValue(rows);
     }
 
-    // @Override
-    // public byte[] serialize() {
-    //     JSONObject obj = new JSONObject();
-    //     if (this.value != null) {
-    //         obj.put("value", this.value);
-    //     }
-    //     return obj.toJSONBBytes();
-    // }
-    //
-    // @Override
-    // public RedisStreamValue deserialize(byte[] bytes) {
-    //     String str = new String(bytes, StandardCharsets.UTF_8);
-    //     JSONObject object = JSONUtil.parseObject(str);
-    //     JSONArray value = object.getJSONArray("value");
-    //     if (value == null) {
-    //         return null;
-    //     }
-    //     this.value = value.toBeanList(RedisStreamRow.class);
-    //     return this;
-    // }
+    @Override
+    public void setValue(List<RedisStreamRow> value) {
+
+    }
+
+    @Override
+    public Object getUnSavedValue() {
+        return null;
+    }
+
+    @Override
+    public void setUnSavedValue(Object unSavedValue) {
+
+    }
 
     @Data
     public static class RedisStreamRow implements RedisKeyRow {

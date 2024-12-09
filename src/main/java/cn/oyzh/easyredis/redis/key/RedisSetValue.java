@@ -37,26 +37,20 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
         return new RedisSetValue(rows);
     }
 
-    // @Override
-    // public byte[] serialize() {
-    //     JSONObject obj = new JSONObject();
-    //     if (this.value != null) {
-    //         obj.put("value", this.value);
-    //     }
-    //     return obj.toJSONBBytes();
-    // }
-    //
-    // @Override
-    // public RedisSetValue deserialize(byte[] bytes) {
-    //     String str = new String(bytes, StandardCharsets.UTF_8);
-    //     JSONObject object = JSONUtil.parseObject(str);
-    //     JSONArray value = object.getJSONArray("value");
-    //     if (value == null) {
-    //         return null;
-    //     }
-    //     this.value = value.toBeanList(RedisSetRow.class);
-    //     return this;
-    // }
+    @Override
+    public void setValue(List<RedisSetRow> value) {
+
+    }
+
+    @Override
+    public Object getUnSavedValue() {
+        return null;
+    }
+
+    @Override
+    public void setUnSavedValue(Object unSavedValue) {
+
+    }
 
     @Data
     public static class RedisSetRow implements RedisKeyRow {

@@ -36,6 +36,21 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
         return new RedisListValue(rows);
     }
 
+    @Override
+    public void setValue(List<RedisListRow> value) {
+
+    }
+
+    @Override
+    public Object getUnSavedValue() {
+        return null;
+    }
+
+    @Override
+    public void setUnSavedValue(Object unSavedValue) {
+
+    }
+
     // @Override
     // public byte[] serialize() {
     //     JSONObject obj = new JSONObject();

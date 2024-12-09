@@ -50,23 +50,16 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     @Override
     public void refreshKeyValue() {
         try {
-            RedisStringValue stringValue = this.keyValue();
-            // 刷新值
-            if (stringValue == null || !stringValue.hasValue()) {
-                // 原始格式
-                if (this.isRawEncoding(true)) {
-                    byte[] val = this.client().get(this.dbIndex(), this.keyBinary());
-                    this.value.valueOfString(val);
-                } else {// 字符串格式
-                    String val = this.client().get(this.dbIndex(), this.key());
-                    this.value.valueOfString(val);
-                }
-                stringValue = this.keyValue();
+            // 原始格式
+            if (this.isRawEncoding(true)) {
+                byte[] val = this.client().get(this.dbIndex(), this.keyBinary());
+                this.value.valueOfString(val);
+            } else {// 字符串格式
+                String val = this.client().get(this.dbIndex(), this.key());
+                this.value.valueOfString(val);
             }
             // 刷新统计值
-            if (stringValue.getCount() == null) {
-                this.flushCount();
-            }
+            this.flushCount();
             // 清空未保存的数据
             this.clearData();
         } catch (Exception ex) {
@@ -77,11 +70,14 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
     @Override
     public Object rawValue() {
-        if (super.isDataUnsaved()) {
-            return super.data();
+        RedisStringValue rawValue = this.value.asStringValue();
+        if (rawValue == null || !rawValue.hasValue()) {
+            // 刷新值
+            this.refreshKeyValue();
+            // 刷新统计值
+            this.flushCount();
         }
-        this.refreshKeyValue();
-        return this.value.value().getValue();
+        return this.keyValue().getValue();
     }
 
     /**

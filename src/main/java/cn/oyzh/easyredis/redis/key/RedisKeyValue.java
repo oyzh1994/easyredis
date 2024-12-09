@@ -12,6 +12,12 @@ public interface RedisKeyValue<V> {
 
     V getValue();
 
+    void setValue(V value);
+
+    Object getUnSavedValue();
+
+    void setUnSavedValue(Object unSavedValue);
+
     // byte[] serialize();
     //
     // RedisKeyValue<?> deserialize(byte[] bytes);
