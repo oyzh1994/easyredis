@@ -47,11 +47,6 @@
                 <Insets left="5"/>
             </HBox.margin>
         </RenameKeySVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteKey">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </DeleteSVGGlyph>
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKey">
             <HBox.margin>
                 <Insets left="5"/>

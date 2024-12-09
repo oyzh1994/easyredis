@@ -102,16 +102,6 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     }
 
     /**
-     * 删除键
-     */
-    @FXML
-    protected void deleteKey() {
-        if (MessageBox.confirm(I18nHelper.delete() + " [" + this.treeItem.key() + "]", I18nHelper.areYouSure())) {
-            this.treeItem.delete();
-        }
-    }
-
-    /**
      * 收藏
      */
     @FXML

@@ -54,7 +54,6 @@ public class RedisKeysTab extends DynamicTab {
         return name;
     }
 
-
     @Override
     public void flushGraphic() {
         if (this.treeItem() == null) {
@@ -152,10 +151,16 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private FlexVBox leftBox;
 
+        /**
+         * redis客户端
+         */
         @Getter
         @Accessors(fluent = true, chain = false)
         private RedisClient client;
 
+        /**
+         * db树节点
+         */
         @Getter
         @Accessors(fluent = true, chain = false)
         private RedisDatabaseTreeItem treeItem;
@@ -166,6 +171,9 @@ public class RedisKeysTab extends DynamicTab {
         @Getter
         private RedisKeyTreeItem activeItem;
 
+        /**
+         * 节点数
+         */
         @FXML
         private RedisKeysTreeView treeView;
 
@@ -217,14 +225,21 @@ public class RedisKeysTab extends DynamicTab {
         }
 
         @FXML
-        private void addNode() {
+        private void addKey() {
             StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
             fxView.setProp("dbItem", this.treeItem);
             fxView.display();
         }
 
         @FXML
-        private void refreshNode() {
+        private void deleteKey() {
+            if (this.activeItem != null) {
+                this.activeItem.delete();
+            }
+        }
+
+        @FXML
+        private void refreshKey() {
             this.treeView.loadItems();
         }
 
@@ -281,8 +296,6 @@ public class RedisKeysTab extends DynamicTab {
                     this.activeItem = keyTreeItem;
                     // 初始化数据
                     this.initData();
-                    // // 触发事件
-                    // RedisEventUtil.keySelected(this.activeItem);
                     // 刷新tab
                     this.flushTab();
                     this.tabPane.enable();
@@ -322,5 +335,4 @@ public class RedisKeysTab extends DynamicTab {
             }
         }
     }
-
 }

@@ -170,6 +170,9 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
         this.filter();
     }
 
+    /**
+     * 加载节点
+     */
     public void loadItems() {
         this.getRoot().loadChild();
     }
@@ -193,33 +196,4 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
         }
         this.refresh();
     }
-
-    // /**
-    //  * 初始化redis树键
-    //  *
-    //  * @param node redis键
-    //  * @return redis树键
-    //  */
-    // private RedisKeyTreeItem<?> initItemByNode(RedisKey node) {
-    //     if (node instanceof RedisStringKey stringNode) {
-    //         return new RedisStringKeyTreeItem(stringNode, this.dbItem);
-    //     }
-    //     if (node instanceof RedisListKey listNode) {
-    //         return new RedisListKeyTreeItem(listNode, this.dbItem);
-    //     }
-    //     if (node instanceof RedisSetKey setNode) {
-    //         return new RedisSetKeyTreeItem(setNode, this.dbItem);
-    //     }
-    //     if (node instanceof RedisZSetKey zSetNode) {
-    //         return new RedisZSetKeyTreeItem(zSetNode, this.dbItem);
-    //     }
-    //     if (node instanceof RedisHashKey hashNode) {
-    //         return new RedisHashKeyTreeItem(hashNode, this.dbItem);
-    //     }
-    //     if (node instanceof RedisStreamKey streamNode) {
-    //         return new RedisStreamKeyTreeItem(streamNode, this.dbItem);
-    //     }
-    //     return null;
-    // }
-
 }

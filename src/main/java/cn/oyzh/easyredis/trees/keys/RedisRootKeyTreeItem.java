@@ -202,7 +202,6 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             }
             // 启用排序并执行排序
             allKeys.clear();
-            // this.getValue().flushNum();
             this.setSortable(true);
             this.sort();
         }
