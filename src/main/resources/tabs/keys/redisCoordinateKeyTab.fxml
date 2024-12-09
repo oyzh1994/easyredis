@@ -29,7 +29,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisGEOKeyTab.RedisGEOKeyTabController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisCoordinateKeyTab.RedisCoordinateKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect">
             <HBox.margin>

@@ -29,20 +29,20 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/11/21
  */
-public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
+public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
-    public RedisGEOKeyTab(RedisZSetKeyTreeItem treeItem) {
+    public RedisCoordinateKeyTab(RedisZSetKeyTreeItem treeItem) {
         super(treeItem);
     }
 
     @Override
     protected String url() {
-        return "/tabs/keys/redisGEOKeyTab.fxml";
+        return "/tabs/keys/redisCoordinateKeyTab.fxml";
     }
 
     @Override
-    public RedisGEOKeyTabController controller() {
-        return (RedisGEOKeyTabController) super.controller();
+    public RedisCoordinateKeyTabController controller() {
+        return (RedisCoordinateKeyTabController) super.controller();
     }
 
     /**
@@ -51,7 +51,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
      * @author oyzh
      * @since 2023/06/30
      */
-    public static class RedisGEOKeyTabController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
+    public static class RedisCoordinateKeyTabController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
 
         /**
          * 数据撤销

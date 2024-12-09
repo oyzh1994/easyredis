@@ -170,7 +170,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem> extends DynamicTab
             tab = new RedisSetKeyTab(setKeyTreeItem);
         } else if (item instanceof RedisZSetKeyTreeItem zSetKeyTreeItem) {
             if (zSetKeyTreeItem.isGEOView()) {
-                tab = new RedisGEOKeyTab(zSetKeyTreeItem);
+                tab = new RedisCoordinateKeyTab(zSetKeyTreeItem);
             } else {
                 tab = new RedisZSetKeyTab(zSetKeyTreeItem);
             }
