@@ -63,12 +63,6 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
         private RichDataTextAreaPane nodeData;
 
         @Override
-        public boolean init(RedisStreamKeyTreeItem treeItem) {
-            this.pageData = null;
-            return super.init(treeItem);
-        }
-
-        @Override
         protected void initKey() {
             // 初始化表单
             this.initTable();

@@ -21,6 +21,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -115,23 +116,10 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
             if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
-            this.saveNodeData.enable();
-        };
-
-        @Override
-        public boolean init(RedisSetKeyTreeItem treeItem) {
-            this.pageData = null;
-            if (super.init(treeItem)) {
-                // 格式监听
-                this.format.selectedItemChanged(this.formatListener);
-                // 键数据处理
-                this.nodeData.addTextChangeListener(this.dataListener);
-                this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-                this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-                return true;
+            if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+                this.saveNodeData.enable();
             }
-            return false;
-        }
+        };
 
         @Override
         protected void initKey() {
@@ -275,6 +263,17 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
         protected void clearRow() {
             this.nodeData.clear();
             this.nodeData.disable();
+        }
+
+        @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
 
         /**

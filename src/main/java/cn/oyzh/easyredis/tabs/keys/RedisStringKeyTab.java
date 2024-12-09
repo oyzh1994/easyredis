@@ -12,6 +12,8 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.util.Objects;
+
 /**
  * redis string键tab
  *
@@ -104,26 +106,11 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
          * redis数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            // 设置数据
             this.treeItem.data(newValue);
-            // 保存监听
-            this.saveNodeData.enable();
-        };
-
-        @Override
-        public boolean init(RedisStringKeyTreeItem treeItem) {
-            if (super.init(treeItem)) {
-                // 格式监听
-                this.format.selectedItemChanged(this.formatListener);
-
-                // 键数据处理
-                this.nodeData.addTextChangeListener(this.dataListener);
-                this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
-                this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
-                return true;
+            if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+                this.saveNodeData.enable();
             }
-            return false;
-        }
+        };
 
         @Override
         protected void initKey() {
@@ -229,6 +216,17 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         @Override
         protected void showData(RichDataType dataType) {
             this.nodeData.showData(dataType, this.treeItem.data());
+        }
+
+        @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            // 格式监听
+            this.format.selectedItemChanged(this.formatListener);
+            // 键数据处理
+            this.nodeData.addTextChangeListener(this.dataListener);
+            this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
+            this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
         }
     }
 }
