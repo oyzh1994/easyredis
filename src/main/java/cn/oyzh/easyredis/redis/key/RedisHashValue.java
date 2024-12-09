@@ -1,7 +1,9 @@
 package cn.oyzh.easyredis.redis.key;
 
-import lombok.Data;
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,11 @@ import java.util.Map;
 public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHashRow>> {
 
     @Getter
+    @Setter
     private List<RedisHashRow> value;
 
-    public RedisHashValue() {
-    }
+    @Getter
+    private RedisHashRow unSavedRow;
 
     public RedisHashValue(List<RedisHashRow> value) {
         this.value = value;
@@ -35,55 +38,67 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
 
     @Override
     public boolean hasValue() {
-        return false;
-    }
-
-    @Override
-    public void setValue(List<RedisHashRow> value) {
-
+        return CollectionUtil.isNotEmpty(this.value);
     }
 
     @Override
     public Object getUnSavedValue() {
-        return null;
+        return this.unSavedRow;
     }
 
     @Override
     public void clearUnSavedValue() {
-
+        if (this.unSavedRow != null) {
+            this.unSavedRow.setValue(null);
+            this.unSavedRow = null;
+        }
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return false;
+        return this.unSavedRow != null && this.unSavedRow.getValue() != null;
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-
+        if (unSavedValue instanceof RedisHashRow) {
+            this.unSavedRow = (RedisHashRow) unSavedValue;
+        }
     }
 
-    @Data
     public static class RedisHashRow implements RedisKeyRow {
 
+        @Getter
+        @Setter
         private byte index;
 
-        private String field;
+        public RedisHashRow(String field, String value) {
+            this.setField(field);
+            this.setValue(value);
+        }
 
-        private String value;
+        public void setField(String field) {
+            RedisCacheUtil.cacheValue(this.hashCode(), field, "field");
+        }
 
-        public RedisHashRow() {
+        public String getField() {
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "field");
+        }
+
+        @Override
+        public void setValue(String value) {
+            RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
 
         }
 
-        public RedisHashRow(String field, String value) {
-            this.field = field;
-            this.value = value;
+        @Override
+        public String getValue() {
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "value");
         }
 
         @Override
         public RedisHashRow clone() {
-            return new RedisHashRow(this.field, this.value);
+            return new RedisHashRow(this.getField(), this.getValue());
         }
     }
 }

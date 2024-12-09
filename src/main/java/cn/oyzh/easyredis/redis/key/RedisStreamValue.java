@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.redis.key;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import lombok.Data;
 import lombok.Getter;
 import redis.clients.jedis.StreamEntryID;
@@ -21,9 +22,6 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
     @Getter
     private List<RedisStreamRow> value;
 
-    public RedisStreamValue() {
-    }
-
     public RedisStreamValue(List<RedisStreamRow> value) {
         this.value = value;
     }
@@ -40,7 +38,7 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
 
     @Override
     public boolean hasValue() {
-        return false;
+        return CollectionUtil.isNotEmpty(this.value);
     }
 
     @Override

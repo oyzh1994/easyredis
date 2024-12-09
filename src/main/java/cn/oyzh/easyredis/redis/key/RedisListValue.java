@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Data;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     private List<RedisListRow> value;
 
     @Getter
-    private RedisListValue.RedisListRow unSavedRow;
+    private RedisListRow unSavedRow;
 
     public RedisListValue(List<RedisListRow> value) {
         this.value = value;
@@ -37,7 +38,7 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
 
     @Override
     public boolean hasValue() {
-        return this.value != null && !this.value.isEmpty();
+        return CollectionUtil.isNotEmpty(this.value);
     }
 
     @Override

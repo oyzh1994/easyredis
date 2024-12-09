@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,7 +51,7 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
 
     @Override
     public boolean hasValue() {
-        return this.value != null && !this.value.isEmpty();
+        return CollectionUtil.isNotEmpty(this.value);
     }
 
     @Override

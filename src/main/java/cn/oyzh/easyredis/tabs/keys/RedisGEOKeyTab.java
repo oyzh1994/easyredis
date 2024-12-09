@@ -303,7 +303,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         protected void showData(RichDataType dataType) {
             RedisZSetValue.RedisZSetRow row = this.treeItem.data();
             if (row != null) {
-                this.nodeData.showData(row.getValue());
+                this.nodeData.showData(dataType, row.getValue());
             }
         }
 

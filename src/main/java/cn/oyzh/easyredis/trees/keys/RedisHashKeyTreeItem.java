@@ -121,11 +121,8 @@ public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.Red
     }
 
     @Override
-    public String rawValue() {
-        if (this.currentRow != null) {
-            return this.currentRow.getValue();
-        }
-        return null;
+    public RedisHashValue.RedisHashRow rawValue() {
+        return this.currentRow;
     }
 
     @Override
