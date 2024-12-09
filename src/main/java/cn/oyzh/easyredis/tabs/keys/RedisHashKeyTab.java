@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -21,6 +22,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -139,7 +141,9 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
-            this.saveNodeData.enable();
+            if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+                this.saveNodeData.enable();
+            }
         };
 
         /**
@@ -152,7 +156,10 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setField(newValue);
             }
-            this.saveNodeData.enable();
+            RedisHashValue.RedisHashRow row = this.treeItem.rawValue();
+            if (!Objects.equals(row.getField(), newValue)) {
+                this.saveNodeData.enable();
+            }
         };
 
         @Override
@@ -350,6 +357,22 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             RedisHashValue.RedisHashRow row = this.treeItem.data();
             if (row != null) {
                 this.nodeData.showData(dataType, row.getValue());
+            }
+        }
+
+        @FXML
+        @Override
+        protected void deleteRow() {
+            if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteField() + "?")) {
+                RedisKeyRow row = this.treeItem.currentRow();
+                if (this.treeItem.deleteRow()) {
+                    // 移除
+                    if (this.listTable.getItemSize() > 1) {
+                        this.listTable.removeItem(row);
+                    } else {// 刷新
+                        this.firstPage();
+                    }
+                }
             }
         }
 

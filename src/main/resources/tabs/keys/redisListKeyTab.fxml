@@ -69,7 +69,7 @@
     <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="12% - 12" text="%base.No" valueName="index"/>
+            <FlexTableColumn flexWidth="12% - 12" text="%base.index" valueName="index"/>
             <FlexTableColumn flexWidth="88%" text="%base.value" valueName="value"/>
         </columns>
         <VBox.margin>

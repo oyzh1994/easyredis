@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.event.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
@@ -251,6 +252,22 @@ public class RedisSetKeyTab extends RedisKeyTab<RedisSetKeyTreeItem> {
             RedisSetValue.RedisSetRow row = this.treeItem.data();
             if (row != null) {
                 this.nodeData.showData(dataType, row.getValue());
+            }
+        }
+
+        @FXML
+        @Override
+        protected void deleteRow() {
+            if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMessage() + "?")) {
+                RedisKeyRow row = this.treeItem.currentRow();
+                if (this.treeItem.deleteRow()) {
+                    // 移除
+                    if (this.listTable.getItemSize() > 1) {
+                        this.listTable.removeItem(row);
+                    } else {// 刷新
+                        this.firstPage();
+                    }
+                }
             }
         }
 

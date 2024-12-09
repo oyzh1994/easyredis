@@ -12,7 +12,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -114,29 +113,19 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     /**
      * 删除行
      */
-    @FXML
-    protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteRow() + "?")) {
-            if (this.treeItem.deleteRow()) {
-                this.firstPage();
-            }
-        }
-    }
+    protected abstract void deleteRow();
 
     /**
      * 添加行
      */
-    protected void addRow() {
-    }
+    protected abstract void addRow();
 
     /**
-     * 获取数据行
+     * 获取行列表
      *
-     * @return 数据行
+     * @return 行列表
      */
-    protected List<R> getRows() {
-        return Collections.emptyList();
-    }
+    protected abstract List<R> getRows();
 
     /**
      * 初始化分页
@@ -147,10 +136,6 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
         List<R> rows = this.getRows();
         this.pageData = new Paging<>(rows, 10);
         List<R> pageRows = this.pageData.page(pageNo);
-        // byte index = 1;
-        // for (R row : pageRows) {
-        //     row.setIndex(index++);
-        // }
         this.listTable.setItem(pageRows);
         this.pagePane.setPaging(this.pageData);
     }
@@ -184,7 +169,7 @@ public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>,
     /**
      * 复制行
      */
-    protected abstract void copyRow() ;
+    protected abstract void copyRow();
 
     /**
      * 清除行

@@ -140,4 +140,9 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
     public RedisStringValue keyValue() {
         return (RedisStringValue) super.keyValue();
     }
+
+    @Override
+    public Object rawData() {
+        return this.rawValue();
+    }
 }

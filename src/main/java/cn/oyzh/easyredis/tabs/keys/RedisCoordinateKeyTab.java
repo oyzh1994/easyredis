@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
 import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.fx.RedisFormatComboBox;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
@@ -164,6 +165,9 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.pageData = null;
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
+                // 坐标处理
+                this.latitudeVal.addTextChangeListener(this.latitudeValListener);
+                this.longitudeVal.addTextChangeListener(this.longitudeValListener);
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -308,6 +312,22 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             }
         }
 
+        @FXML
+        @Override
+        protected void deleteRow() {
+            if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteCoordinate() + "?")) {
+                RedisKeyRow row = this.treeItem.currentRow();
+                if (this.treeItem.deleteRow()) {
+                    // 移除
+                    if (this.listTable.getItemSize() > 1) {
+                        this.listTable.removeItem(row);
+                    } else {// 刷新
+                        this.firstPage();
+                    }
+                }
+            }
+        }
+
         @Override
         protected void clearRow() {
             this.nodeData.clear();
@@ -318,10 +338,8 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
         protected void bindListeners() {
             super.bindListeners();
             // 绑定属性
-            this.latitudeVal.addTextChangeListener(this.latitudeValListener);
             this.latitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
             this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
-            this.longitudeVal.addTextChangeListener(this.longitudeValListener);
             this.longitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
             this.longitudeVal.editableProperty().bind(this.nodeData.editableProperty());
         }

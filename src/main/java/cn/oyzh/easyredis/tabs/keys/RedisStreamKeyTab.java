@@ -3,10 +3,12 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.RedisStreamMessageAddedEvent;
+import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -147,6 +149,22 @@ public class RedisStreamKeyTab extends RedisKeyTab<RedisStreamKeyTreeItem> {
             RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
             if (row != null) {
                 this.nodeData.showData(dataType, row.getValue());
+            }
+        }
+
+        @FXML
+        @Override
+        protected void deleteRow() {
+            if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMessage() + "?")) {
+                RedisKeyRow row = this.treeItem.currentRow();
+                if (this.treeItem.deleteRow()) {
+                    // 移除
+                    if (this.listTable.getItemSize() > 1) {
+                        this.listTable.removeItem(row);
+                    } else {// 刷新
+                        this.firstPage();
+                    }
+                }
             }
         }
 

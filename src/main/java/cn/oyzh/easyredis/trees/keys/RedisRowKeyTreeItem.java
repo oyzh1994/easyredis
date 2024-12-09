@@ -92,4 +92,9 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     public boolean isSelectRow() {
         return this.currentRow != null;
     }
+
+    @Override
+    public Object rawData() {
+        return this.currentRow == null ? null : this.currentRow.getValue();
+    }
 }

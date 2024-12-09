@@ -17,7 +17,6 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
 import lombok.NonNull;
@@ -417,4 +416,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     public RedisKeyValue<?> keyValue() {
         return this.value.value();
     }
+
+    public abstract Object rawData();
 }
