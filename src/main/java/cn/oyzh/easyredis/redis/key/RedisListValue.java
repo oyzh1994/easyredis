@@ -18,12 +18,8 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     @Setter
     private List<RedisListRow> value;
 
-    @Setter
     @Getter
     private RedisListValue.RedisListRow unSavedRow;
-
-    public RedisListValue() {
-    }
 
     public RedisListValue(List<RedisListRow> value) {
         this.value = value;
@@ -81,12 +77,12 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
 
         @Override
         public void setValue(String value) {
-            RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
+            RedisCacheUtil.cacheValue(this.hashCode(), value,"value");
         }
 
         @Override
         public String getValue() {
-            return (String) RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "value");
         }
 
         @Override

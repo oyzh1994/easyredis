@@ -45,36 +45,36 @@ public class RedisStringValue implements RedisKeyValue<Object> {
 
     @Override
     public void setValue(Object value) {
-        RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
+        RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
     }
 
     @Override
     public Object getValue() {
-        return RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
+        return RedisCacheUtil.loadValue(this.hashCode(), "value");
     }
 
     @Override
     public boolean hasValue() {
-        return RedisCacheUtil.hasValue(this.hashCode(), (byte) 0);
+        return RedisCacheUtil.hasValue(this.hashCode(), "value");
     }
 
     @Override
     public Object getUnSavedValue() {
-        return RedisCacheUtil.loadValue(this.hashCode(), (byte) 1);
+        return RedisCacheUtil.loadValue(this.hashCode(), "unsaved");
     }
 
     @Override
     public void clearUnSavedValue() {
-        RedisCacheUtil.deleteValue(this.hashCode(), (byte) 1);
+        RedisCacheUtil.deleteValue(this.hashCode(), "unsaved");
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return RedisCacheUtil.hasValue(this.hashCode(), (byte) 1);
+        return RedisCacheUtil.hasValue(this.hashCode(), "unsaved");
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-        RedisCacheUtil.cacheValue(this.hashCode(), unSavedValue, (byte) 1);
+        RedisCacheUtil.cacheValue(this.hashCode(), unSavedValue, "unsaved");
     }
 }

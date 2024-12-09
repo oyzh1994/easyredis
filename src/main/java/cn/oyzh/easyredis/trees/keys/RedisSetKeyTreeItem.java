@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
+import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -101,7 +102,7 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     }
 
     @Override
-    public Object rawValue() {
+    public RedisSetValue.RedisSetRow rawValue() {
         return this.currentRow;
     }
 

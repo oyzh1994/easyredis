@@ -8,8 +8,8 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -120,39 +120,41 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
+            this.saveNodeData.enable();
         };
 
         /**
          * 经度值监听器
          */
         private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
-            Number value = this.longitudeVal.getValue();
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
+                Number value = this.longitudeVal.getValue();
                 this.treeItem.data().setLongitude(value.doubleValue());
             }
+            this.saveNodeData.enable();
         };
 
         /**
          * 纬度值监听器
          */
         private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
-            Number value = this.latitudeVal.getValue();
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
+                Number value = this.latitudeVal.getValue();
                 this.treeItem.data().setLatitude(value.doubleValue());
             }
+            this.saveNodeData.enable();
         };
 
         @Override
@@ -161,8 +163,6 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.pageData = null;
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                // 保存监听
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -228,6 +228,7 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 TaskManager.start(() -> {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
+                    this.saveNodeData.disable();
                 });
             }
         }
@@ -290,14 +291,20 @@ public class RedisGEOKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
         @Override
         protected void firstShowData() {
-            this.nodeData.showData(this.treeItem.rawValue());
-            // 首次设置数据要清除历史
-            this.nodeData.forgetHistory();
+            RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+                this.nodeData.forgetHistory();
+                this.saveNodeData.disable();
+            }
         }
 
         @Override
         protected void showData(RichDataType dataType) {
-            this.nodeData.showData(dataType, this.treeItem.rawValue());
+            RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+            }
         }
 
         @Override

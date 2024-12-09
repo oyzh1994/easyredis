@@ -1,7 +1,8 @@
 package cn.oyzh.easyredis.redis.key;
 
-import lombok.Data;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
+import lombok.Setter;
 import redis.clients.jedis.GeoCoordinate;
 
 import java.util.ArrayList;
@@ -14,10 +15,11 @@ import java.util.List;
 public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZSetRow>> {
 
     @Getter
+    @Setter
     private List<RedisZSetRow> value;
 
-    public RedisZSetValue() {
-    }
+    @Getter
+    private RedisZSetRow unSavedRow;
 
     public RedisZSetValue(List<RedisZSetRow> value) {
         this.value = value;
@@ -48,68 +50,83 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
 
     @Override
     public boolean hasValue() {
-        return false;
-    }
-
-    @Override
-    public void setValue(List<RedisZSetRow> value) {
-
+        return this.value != null && !this.value.isEmpty();
     }
 
     @Override
     public Object getUnSavedValue() {
-        return null;
+        return this.unSavedRow;
     }
 
     @Override
     public void clearUnSavedValue() {
-
+        if (this.unSavedRow != null) {
+            this.unSavedRow.setValue(null);
+            this.unSavedRow = null;
+        }
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return false;
+        return this.unSavedRow != null && this.unSavedRow.getValue() != null;
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-
+        if (unSavedValue instanceof RedisZSetRow) {
+            this.unSavedRow = (RedisZSetRow) unSavedValue;
+        }
     }
 
-    @Data
     public static class RedisZSetRow implements RedisKeyRow {
 
+        @Getter
+        @Setter
         private byte index;
 
-        private String value;
-
+        @Getter
+        @Setter
         private double score;
 
+        @Getter
+        @Setter
         private double latitude;
 
+        @Getter
+        @Setter
         private double longitude;
 
         public RedisZSetRow() {
         }
 
         public RedisZSetRow(String value, double score) {
-            this.value = value;
+            this.setValue(value);
             this.score = score;
         }
 
         public RedisZSetRow(String value, double latitude, double longitude) {
-            this.value = value;
+            this.setValue(value);
             this.latitude = latitude;
             this.longitude = longitude;
         }
 
         @Override
+        public void setValue(String value) {
+            RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
+        }
+
+        @Override
+        public String getValue() {
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "value");
+        }
+
+        @Override
         public RedisZSetRow clone() {
             RedisZSetRow row = new RedisZSetRow();
-            row.value = this.value;
             row.score = this.score;
             row.latitude = this.latitude;
             row.longitude = this.longitude;
+            row.setValue(this.getValue());
             return row;
         }
     }

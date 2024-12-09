@@ -96,7 +96,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 结果
      */
     public Object unsavedValue() {
-        return this.keyValue().getUnSavedValue();
+        RedisKeyValue<?> keyValue = this.keyValue();
+        return keyValue == null ? null : keyValue.getUnSavedValue();
     }
 
     /**
@@ -209,7 +210,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
 
     /**
      * 保存键值
-     *
      */
     public void saveKeyValue() {
     }

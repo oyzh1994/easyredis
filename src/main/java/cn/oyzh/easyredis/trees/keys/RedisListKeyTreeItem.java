@@ -97,7 +97,7 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
     }
 
     @Override
-    public Object rawValue() {
+    public RedisListValue.RedisListRow rawValue() {
         return this.currentRow;
     }
 }

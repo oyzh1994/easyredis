@@ -83,7 +83,6 @@
             <FlexTableColumn flexWidth="38%" valueName="value" text="%base.name"/>
             <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
             <FlexTableColumn flexWidth="25%" valueName="latitude" text="%base.latitude"/>
-            <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
         </columns>
         <VBox.margin>
             <Insets left="2"/>

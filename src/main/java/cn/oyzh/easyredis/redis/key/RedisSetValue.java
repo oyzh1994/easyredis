@@ -20,7 +20,6 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
     @Setter
     private List<RedisSetRow> value;
 
-    @Setter
     @Getter
     private RedisSetRow unSavedRow;
 
@@ -83,15 +82,12 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
 
         @Override
         public void setValue(String value) {
-            // JulLog.info("setValue {}={}", this.hashCode(), value);
-            RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
+            RedisCacheUtil.cacheValue(this.hashCode(), value, "value");
         }
 
         @Override
         public String getValue() {
-            String value = (String) RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
-            // JulLog.info("getValue {}={}", this.hashCode(), value);
-            return value;
+            return (String) RedisCacheUtil.loadValue(this.hashCode(), "value");
         }
 
         @Override

@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
+import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 import redis.clients.jedis.resps.StreamEntry;
@@ -42,11 +43,8 @@ public class RedisStreamKeyTreeItem extends RedisRowKeyTreeItem<RedisStreamValue
     }
 
     @Override
-    public String rawValue() {
-        if (this.currentRow != null) {
-            return this.currentRow.getValue();
-        }
-        return null;
+    public RedisStreamValue.RedisStreamRow rawValue() {
+        return this.currentRow;
     }
 
 }

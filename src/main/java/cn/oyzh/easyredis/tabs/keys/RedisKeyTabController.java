@@ -44,24 +44,6 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
      */
     protected T treeItem;
 
-    // /**
-    //  * ttl组件
-    //  */
-    // @FXML
-    // protected FXLabel ttl;
-    //
-    // /**
-    //  * 加载耗时
-    //  */
-    // @FXML
-    // protected FXLabel loadTime;
-
-    // /**
-    //  * 键信息
-    //  */
-    // @FXML
-    // private RedisKeyInfoTab.RedisKeyInfoController keyInfoController;
-
     /**
      * 键扩展信息
      */
@@ -76,9 +58,6 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
     public boolean init(T treeItem) {
         this.treeItem = treeItem;
 
-        // // ttl处理
-        // this.flushTTL();
-
         // 处理额外信息
         this.keyExtraController.init(treeItem);
 
@@ -91,14 +70,9 @@ public abstract class RedisKeyTabController<T extends RedisKeyTreeItem> extends 
         this.collect.setVisible(!this.treeItem.isCollect());
         this.unCollect.setVisible(this.treeItem.isCollect());
 
-        // // 初始化键信息
-        // this.keyInfoController.init(treeItem);
-
         // 初始化节点
         this.initKey();
 
-        // // 加载耗时处理
-        // FXUtil.runWait(() -> this.loadTime.setText(I18nHelper.cost() + ":" + this.treeItem.loadTime() + "ms"));
         return true;
     }
 

@@ -20,28 +20,16 @@ public class RedisCacheUtil {
         return RedisConst.KEY_CACHE_PATH + hashCode;
     }
 
-    private static String valueType(byte valueType) {
-        return switch (valueType) {
-            case 0:
-                yield "value";
-            case 1:
-                yield "unsaved";
-            default:
-                yield "unsaved";
-        };
-    }
-
     /**
      * 缓存值
      *
      * @param hashCode hash码
      * @return 缓存结果
      */
-    public static boolean cacheValue(int hashCode, Object value, byte valueType) {
+    public static boolean cacheValue(int hashCode, Object value, String suffix) {
         if (value != null) {
             try {
                 String baseDir = baseDir(hashCode);
-                String suffix = valueType(valueType);
                 String fileName = baseDir + "." + suffix;
                 FileUtil.touch(fileName);
                 byte type = 0;
@@ -62,7 +50,7 @@ public class RedisCacheUtil {
                 ex.printStackTrace();
             }
         }
-        return deleteValue(hashCode, valueType);
+        return deleteValue(hashCode, suffix);
     }
 
     /**
@@ -71,10 +59,9 @@ public class RedisCacheUtil {
      * @param hashCode hash码
      * @return 未保存数据
      */
-    public static Object loadValue(int hashCode, byte valueType) {
+    public static Object loadValue(int hashCode, String suffix) {
         try {
             String baseDir = RedisConst.KEY_CACHE_PATH + hashCode;
-            String suffix = valueType(valueType);
             String fileName = baseDir + "." + suffix;
             if (FileUtil.exist(fileName)) {
                 byte[] bytes = FileUtil.readBytes(fileName);
@@ -98,10 +85,9 @@ public class RedisCacheUtil {
      *
      * @param hashCode hash码
      */
-    public static boolean deleteValue(int hashCode, byte valueType) {
+    public static boolean deleteValue(int hashCode, String suffix) {
         try {
             String baseDir = baseDir(hashCode);
-            String suffix = valueType(valueType);
             String fileName = baseDir + "." + suffix;
             FileUtil.del(fileName);
             return true;
@@ -116,10 +102,9 @@ public class RedisCacheUtil {
      *
      * @param hashCode hash码
      */
-    public static boolean hasValue(int hashCode, byte valueType) {
+    public static boolean hasValue(int hashCode, String suffix) {
         try {
             String baseDir = baseDir(hashCode);
-            String suffix = valueType(valueType);
             String fileName = baseDir + "." + suffix;
             return FileUtil.exist(fileName);
         } catch (Exception ex) {

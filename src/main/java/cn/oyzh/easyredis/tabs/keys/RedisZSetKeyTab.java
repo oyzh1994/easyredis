@@ -8,8 +8,8 @@ import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -99,12 +99,14 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          * 数据监听器
          */
         private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setValue(newValue);
             }
+            // 保存监听
+            this.saveNodeData.enable();
         };
 
         /**
@@ -112,12 +114,14 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
          */
         private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
             Number value = this.scoreVal.getValue();
-            if (this.treeItem.data() == null) {
+            if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
             }
-            if (this.treeItem.data() != null) {
+            if (this.treeItem.unsavedValue() != null) {
                 this.treeItem.data().setScore(value.doubleValue());
             }
+            // 保存监听
+            this.saveNodeData.enable();
         };
 
         /**
@@ -148,8 +152,6 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 this.pageData = null;
                 // 格式监听
                 this.format.selectedItemChanged(this.formatListener);
-                // 保存监听
-                this.treeItem.dataProperty().addListener((observable, oldValue, newValue) -> this.saveNodeData.setDisable(newValue == null));
                 // 键数据处理
                 this.nodeData.addTextChangeListener(this.dataListener);
                 this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -214,6 +216,8 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 TaskManager.start(() -> {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
+                    // 保存监听
+                    this.saveNodeData.disable();
                 });
             }
         }
@@ -281,14 +285,21 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
 
         @Override
         protected void firstShowData() {
-            this.nodeData.showData(this.treeItem.rawValue());
-            // 首次设置数据要清除历史
-            this.nodeData.forgetHistory();
+            RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+                this.nodeData.forgetHistory();
+                // 保存监听
+                this.saveNodeData.disable();
+            }
         }
 
         @Override
         protected void showData(RichDataType dataType) {
-            this.nodeData.showData(dataType, this.treeItem.rawValue());
+            RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+            if (row != null) {
+                this.nodeData.showData(row.getValue());
+            }
         }
 
         @Override
