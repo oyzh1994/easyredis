@@ -101,11 +101,8 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
     }
 
     @Override
-    public String rawValue() {
-        if (this.currentRow != null) {
-            return this.currentRow.getValue();
-        }
-        return null;
+    public Object rawValue() {
+        return this.currentRow;
     }
 
     @Override

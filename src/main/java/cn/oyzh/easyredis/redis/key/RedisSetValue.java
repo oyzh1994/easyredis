@@ -1,12 +1,10 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.oyzh.common.json.JSONArray;
-import cn.oyzh.common.json.JSONObject;
-import cn.oyzh.common.json.JSONUtil;
-import lombok.Data;
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +16,12 @@ import java.util.Set;
 public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetRow>> {
 
     @Getter
+    @Setter
     private List<RedisSetRow> value;
+
+    @Setter
+    @Getter
+    private RedisSetRow unSavedRow;
 
     public RedisSetValue() {
     }
@@ -39,52 +42,59 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
 
     @Override
     public boolean hasValue() {
-        return false;
-    }
-
-    @Override
-    public void setValue(List<RedisSetRow> value) {
-
+        return this.value != null && !this.value.isEmpty();
     }
 
     @Override
     public Object getUnSavedValue() {
-        return null;
+        return this.unSavedRow;
     }
 
     @Override
     public void clearUnSavedValue() {
-
+        if (this.unSavedRow != null) {
+            this.unSavedRow.setValue(null);
+        }
     }
 
     @Override
     public boolean hasUnSavedValue() {
-        return false;
+        return this.unSavedRow != null && this.unSavedRow.getValue() != null;
     }
 
     @Override
     public void setUnSavedValue(Object unSavedValue) {
-
+        if (unSavedValue instanceof RedisSetRow) {
+            this.unSavedRow = (RedisSetRow) unSavedValue;
+        }
     }
 
-    @Data
     public static class RedisSetRow implements RedisKeyRow {
 
+        @Getter
+        @Setter
         private byte index;
 
-        private String value;
-
-        public RedisSetRow() {
+        public RedisSetRow(String value) {
+            this.setValue(value);
         }
 
-        public RedisSetRow(String value) {
-            this.value = value;
+        @Override
+        public void setValue(String value) {
+            JulLog.info("setValue {}={}", this.hashCode(), value);
+            RedisCacheUtil.cacheValue(this.hashCode(), value, (byte) 0);
+        }
+
+        @Override
+        public String getValue() {
+            String value = (String) RedisCacheUtil.loadValue(this.hashCode(), (byte) 0);
+            JulLog.info("getValue {}={}", this.hashCode(), value);
+            return value;
         }
 
         @Override
         public RedisSetRow clone() {
-            return new RedisSetRow(this.value);
+            return new RedisSetRow(this.getValue());
         }
     }
-
 }

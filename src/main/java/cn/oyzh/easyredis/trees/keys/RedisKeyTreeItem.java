@@ -63,8 +63,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @param data 未键数据
      */
     public void data(Object data) {
-        // this.dataProperty().set(data);
         this.keyValue().setUnSavedValue(data);
+        this.refresh();
     }
 
     /**

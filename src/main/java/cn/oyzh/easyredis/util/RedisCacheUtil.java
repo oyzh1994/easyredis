@@ -1,14 +1,11 @@
 package cn.oyzh.easyredis.util;
 
-import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
 import lombok.experimental.UtilityClass;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * zk缓存工具类
@@ -30,7 +27,7 @@ public class RedisCacheUtil {
             case 1:
                 yield "unsaved";
             default:
-                throw new IllegalStateException("Unexpected value: " + valueType);
+                yield "unsaved";
         };
     }
 
@@ -55,12 +52,6 @@ public class RedisCacheUtil {
                 } else if (value instanceof byte[] s) {
                     bytes = s;
                     type = 2;
-                } else if (value instanceof Collection) {
-                    bytes = JSONUtil.toJson(value).getBytes(StandardCharsets.UTF_8);
-                    type = 3;
-                } else if (value instanceof Map<?, ?>) {
-                    bytes = JSONUtil.toJson(value).getBytes(StandardCharsets.UTF_8);
-                    type = 4;
                 }
                 byte[] bytes1 = new byte[bytes.length + 1];
                 ArrayUtil.copy(bytes, bytes1);
@@ -94,35 +85,6 @@ public class RedisCacheUtil {
                 }
                 if (type == 2) {
                     return bytes1;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 加载未保存数据
-     *
-     * @param hashCode hash码
-     * @return 未保存数据
-     */
-    public static Object loadValue(int hashCode, Class<?> clazz) {
-        try {
-            String baseDir = RedisConst.KEY_CACHE_PATH + hashCode;
-            String fileName = baseDir + ".value";
-            if (FileUtil.exist(fileName)) {
-                byte[] bytes = FileUtil.readBytes(fileName);
-                byte type = bytes[bytes.length - 1];
-                byte[] bytes1 = ArrayUtil.copy(bytes, bytes.length - 1);
-                if (type == 3) {
-                    String json = new String(bytes1, StandardCharsets.UTF_8);
-                    return JSONUtil.parseArray(json).toBeanList(clazz);
-                }
-                if (type == 4) {
-                    String json = new String(bytes1, StandardCharsets.UTF_8);
-                    return JSONUtil.parseObject(json).toBean(clazz);
                 }
             }
         } catch (Exception ex) {

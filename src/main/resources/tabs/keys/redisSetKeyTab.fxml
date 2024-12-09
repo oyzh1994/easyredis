@@ -71,7 +71,6 @@
         <columns>
             <FlexTableColumn flexWidth="12% - 12" text="%base.No" valueName="index"/>
             <FlexTableColumn flexWidth="88%" text="%base.member" valueName="value"/>
-            <!-- <FlexTableColumn flexWidth="12% - 12" fx:id="action" text="%base.action" sortable="false"/> -->
         </columns>
         <VBox.margin>
             <Insets left="2"/>
