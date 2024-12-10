@@ -4,12 +4,14 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.handler.RedisDataExportHandler;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
@@ -208,8 +210,11 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 导出zk节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
-        fxView.setProp("treeItem", this);
+        // StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
+        // fxView.setProp("treeItem", this);
+        // fxView.display();
+        StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
+        fxView.setProp("connect", this.value);
         fxView.display();
     }
 

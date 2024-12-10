@@ -6,6 +6,8 @@
 <?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ExportSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
+<?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
@@ -19,6 +21,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.data.RedisDataExportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -89,7 +92,60 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step2" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
+        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
+            <FlexLabel text="%base.database" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <RedisDatabaseComboBox fx:id="db" realHeight="30" flexWidth="100% - 80">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </RedisDatabaseComboBox>
+            <FlexLabel text="%base.filter" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FlexHBox realHeight="30">
+                <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 178" text="*">
+                    <HBox.margin>
+                        <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </ClearableTextField>
+                <FXButton text="%redis.key.tip2" onAction="#showKeys">
+                    <HBox.margin>
+                        <Insets left="3" top="10"/>
+                    </HBox.margin>
+                </FXButton>
+            </FlexHBox>
+            <FlexLabel text="%redis.key.tip1" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 240" flexWidth="100% - 80">
+                <VBox.margin>
+                    <Insets left="30" top="10"/>
+                </VBox.margin>
+            </ReadOnlyTextArea>
+        </FlexVBox>
+        <FlexHBox flexWidth="100%" realHeight="50">
+            <PrevStepButton onAction="#showStep1" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="30" top="10"/>
+                </HBox.margin>
+            </PrevStepButton>
+            <NextStepButton onAction="#showStep3" realHeight="30" iconSizePercent="0.75">
+                <HBox.margin>
+                    <Insets left="15" top="10"/>
+                </HBox.margin>
+            </NextStepButton>
+        </FlexHBox>
+    </FlexVBox>
+    <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
                 <VBox.margin>
@@ -113,76 +169,58 @@
                     <Insets left="30" top="20"/>
                 </VBox.margin>
             </FlexLabel>
-            <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXCheckBox>
-            <FlexLabel text="%base.prefix" realHeight="30" fontWeight="BOLD">
-                <VBox.margin>
-                    <Insets left="30" top="20"/>
-                </VBox.margin>
-            </FlexLabel>
-            <fx:define>
-                <FXToggleGroup fx:id="prefix"/>
-            </fx:define>
             <FXHBox>
-                <FXRadioButton groupId="txt" userData="" toggleGroup="$prefix" text="%base.none" disable="true">
+                <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
                     <HBox.margin>
                         <Insets left="30" top="10"/>
                     </HBox.margin>
-                </FXRadioButton>
-                <FXRadioButton groupId="txt" userData="set" toggleGroup="$prefix" text="set" disable="true">
+                </FXCheckBox>
+                <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </FXRadioButton>
-                <FXRadioButton groupId="txt" userData="create" toggleGroup="$prefix" text="create" selected="true"
-                               disable="true">
+                </FXCheckBox>
+            </FXHBox>
+            <FlexLabel text="%base.keyType" realHeight="30" fontWeight="BOLD">
+                <VBox.margin>
+                    <Insets left="30" top="20"/>
+                </VBox.margin>
+            </FlexLabel>
+            <FXHBox>
+                <FXCheckBox selected="true" fx:id="stringType" text="STRING">
+                    <HBox.margin>
+                        <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox selected="true" fx:id="listType" text="LIST">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </FXRadioButton>
+                </FXCheckBox>
+                <FXCheckBox selected="true" fx:id="setType" text="SET">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox selected="true" fx:id="zsetType" text="ZSET">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox selected="true" fx:id="hashType" text="HASH">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox fx:id="streamType" text="STREAM">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
             </FXHBox>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
-            <PrevStepButton onAction="#showStep1" groupId="exec" realHeight="30" iconSizePercent="0.75">
-                <HBox.margin>
-                    <Insets left="30" top="10"/>
-                </HBox.margin>
-            </PrevStepButton>
-            <NextStepButton onAction="#showStep3" realHeight="30" iconSizePercent="0.75">
-                <HBox.margin>
-                    <Insets left="15" top="10"/>
-                </HBox.margin>
-            </NextStepButton>
-        </FlexHBox>
-    </FlexVBox>
-    <FlexVBox fx:id="step3" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
-        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.nodePath" realHeight="30" fontWeight="BOLD">
-                <VBox.margin>
-                    <Insets left="30" top="20"/>
-                </VBox.margin>
-            </FlexLabel>
-            <FXText fx:id="nodePath">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXText>
-            <FlexLabel text="%base.charset" realHeight="30" fontWeight="BOLD">
-                <VBox.margin>
-                    <Insets left="30" top="20"/>
-                </VBox.margin>
-            </FlexLabel>
-            <CharsetComboBox fx:id="charset" realHeight="25">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </CharsetComboBox>
-        </FlexVBox>
-        <FlexHBox flexWidth="100%" realHeight="50">
-            <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
+            <PrevStepButton onAction="#showStep2"  realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
                 </HBox.margin>
@@ -194,7 +232,7 @@
             </NextStepButton>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="step4" flexHeight="100% - 100" flexWidth="100%" managedBindVisible="true" visible="false">
+    <FlexVBox fx:id="step4" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="exportMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">
@@ -209,7 +247,7 @@
             </FXLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
-            <PrevStepButton onAction="#showStep3" groupId="exec" realHeight="30" iconSizePercent="0.75">
+            <PrevStepButton onAction="#showStep4" groupId="exec" realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
                 </HBox.margin>

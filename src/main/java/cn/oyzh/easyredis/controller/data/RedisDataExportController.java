@@ -2,16 +2,20 @@ package cn.oyzh.easyredis.controller.data;
 
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.FileNameUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.handler.RedisDataExportHandler;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisClientUtil;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
+import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -33,6 +37,10 @@ import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -96,28 +104,76 @@ public class RedisDataExportController extends StageController {
     private FXText fileName;
 
     /**
-     * 节点路径
-     */
-    @FXML
-    private FXText nodePath;
-
-    /**
-     * 字符集
-     */
-    @FXML
-    private CharsetComboBox charset;
-
-    /**
      * 选择文件
      */
     @FXML
     private FXButton selectFile;
 
     /**
+     * 保留ttl
+     */
+    @FXML
+    private FXCheckBox retainTTL;
+
+    /**
      * 适用过滤配置
      */
     @FXML
     private FXCheckBox applyFilter;
+
+    /**
+     * 受影响的键
+     */
+    @FXML
+    private ReadOnlyTextArea keys;
+
+    /**
+     * 数据库
+     */
+    @FXML
+    private RedisDatabaseComboBox db;
+
+    /**
+     * 键模式
+     */
+    @FXML
+    private ClearableTextField pattern;
+
+    /**
+     * string类型
+     */
+    @FXML
+    private FXCheckBox stringType;
+
+    /**
+     * list类型
+     */
+    @FXML
+    private FXCheckBox listType;
+
+    /**
+     * stream类型
+     */
+    @FXML
+    private FXCheckBox streamType;
+
+    /**
+     * set类型
+     */
+    @FXML
+    private FXCheckBox setType;
+
+    /**
+     * zset类型
+     */
+    @FXML
+    private FXCheckBox zsetType;
+
+    /**
+     * hash类型
+     */
+    @FXML
+    private FXCheckBox hashType;
 
     /**
      * 结束导出按钮
@@ -138,9 +194,9 @@ public class RedisDataExportController extends StageController {
     private MsgTextArea exportMsg;
 
     /*
-     * 导出路径
+     * 导出库
      */
-    private String exportPath;
+    private Integer dbIndex;
 
     /**
      * 当前zk对象
@@ -208,11 +264,9 @@ public class RedisDataExportController extends StageController {
         // 客户端
         this.exportHandler.client(this.client);
         // 节点路径
-        this.exportHandler.nodePath(this.exportPath);
+        this.exportHandler.database(this.dbIndex);
         // 导出文件
         this.exportHandler.filePath(this.exportFile.getPath());
-        // 字符集
-        this.exportHandler.charset(this.charset.getCharsetName());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
             this.exportHandler.filters(this.filterStore.loadEnable());
@@ -273,15 +327,6 @@ public class RedisDataExportController extends StageController {
         });
     }
 
-    // @Override
-    // public void onStageInitialize(StageAdapter stage) {
-    //     super.onStageInitialize(stage);
-    //     this.step1.managedBindVisible();
-    //     this.step2.managedBindVisible();
-    //     this.step3.managedBindVisible();
-    //     this.step4.managedBindVisible();
-    // }
-
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
@@ -315,38 +360,11 @@ public class RedisDataExportController extends StageController {
 
     @FXML
     private void showStep2() {
-        this.step1.disappear();
-        this.step3.disappear();
-        this.step4.disappear();
-        String fileType = this.format.selectedUserData();
-        if (FileNameUtil.isTxtType(fileType)) {
-            NodeGroupUtil.enable(this.stage, "txt");
-        } else {
-            NodeGroupUtil.disable(this.stage, "txt");
-        }
-        this.step2.display();
-    }
-
-    @FXML
-    private void showStep3() {
-        if (this.exportFile == null) {
-            this.selectFile.requestFocus();
-            MessageBox.warn(I18nHelper.pleaseSelectFile());
-            return;
-        }
-        this.step1.disappear();
-        this.step2.disappear();
-        this.step4.disappear();
-        this.step3.display();
-    }
-
-    @FXML
-    private void showStep4() {
         try {
+            this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
+            this.getStage().disable();
             // 检查客户端
             if (this.client == null || this.client.isClosed()) {
-                this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
-                this.getStage().disable();
                 DownLatch latch = DownLatch.of();
                 ThreadUtil.start(() -> {
                     try {
@@ -363,15 +381,45 @@ public class RedisDataExportController extends StageController {
                     return;
                 }
             }
-
-            this.step1.disappear();
-            this.step2.disappear();
-            this.step3.disappear();
-            this.step4.display();
+            // 初始化数据库
+            this.db.clearItems();
+            if (this.dbIndex != null) {
+                this.db.addItem("db" + this.dbIndex);
+                this.db.selectFirst();
+            } else {
+                this.db.addItem(I18nHelper.allDatabase());
+                this.db.setDbCount(this.client.databases());
+                this.db.selectFirst();
+            }
         } finally {
-            this.getStage().restoreTitle();
-            this.getStage().enable();
+            this.restoreTitle();
+            this.enable();
         }
+        this.step1.disappear();
+        this.step3.disappear();
+        this.step4.disappear();
+        this.step2.display();
+    }
+
+    @FXML
+    private void showStep3() {
+        this.step1.disappear();
+        this.step2.disappear();
+        this.step4.disappear();
+        this.step3.display();
+    }
+
+    @FXML
+    private void showStep4() {
+        if (this.exportFile == null) {
+            this.selectFile.requestFocus();
+            MessageBox.warn(I18nHelper.pleaseSelectFile());
+            return;
+        }
+        this.step1.disappear();
+        this.step2.disappear();
+        this.step3.disappear();
+        this.step4.display();
     }
 
     /**
@@ -381,7 +429,7 @@ public class RedisDataExportController extends StageController {
     private void selectFile() {
         String fileType = this.format.selectedUserData();
         FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
-        String fileName = "Zookeeper-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
+        String fileName = "Redis-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {
             // 删除文件
@@ -398,9 +446,39 @@ public class RedisDataExportController extends StageController {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         this.connect = this.getWindowProp("connect");
-        this.exportPath = this.getWindowProp("nodePath");
-        this.nodePath.setText(this.exportPath);
+        this.dbIndex = this.getWindowProp("dbIndex");
     }
 
-
+    /**
+     * 显示受影响的键
+     */
+    @FXML
+    private void showKeys() {
+        this.keys.clear();
+        if (this.db.getDB() == -1) {
+            Map<Integer, Set<String>> fullKeys = this.client.fullKeys(this.pattern.getText());
+            if (CollectionUtil.isNotEmpty(fullKeys)) {
+                List<String> texts = new ArrayList<>(fullKeys.size());
+                int index = 0;
+                for (Map.Entry<Integer, Set<String>> entry : fullKeys.entrySet()) {
+                    int db = entry.getKey();
+                    for (String key : entry.getValue()) {
+                        texts.add("(db" + db + ")" + ++index + ". " + key);
+                    }
+                    texts.add("\n");
+                }
+                this.keys.appendLines(texts);
+            }
+        } else {
+            Set<String> allKeys = this.client.allKeys(this.db.getDB(), this.pattern.getText());
+            if (CollectionUtil.isNotEmpty(allKeys)) {
+                List<String> texts = new ArrayList<>(allKeys.size());
+                int index = 0;
+                for (String key : allKeys) {
+                    texts.add(++index + ". " + key);
+                }
+                this.keys.appendLines(texts);
+            }
+        }
+    }
 }

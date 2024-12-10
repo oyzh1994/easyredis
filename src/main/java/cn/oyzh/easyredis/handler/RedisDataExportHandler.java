@@ -38,9 +38,11 @@ public class RedisDataExportHandler extends DataHandler {
     private RedisClient client;
 
     /**
-     * 节点路径
+     * 数据库
+     * null 全部
+     * 其他 指定库
      */
-    private String nodePath;
+    private Integer database;
 
     /**
      * 过滤内容列表
@@ -77,7 +79,7 @@ public class RedisDataExportHandler extends DataHandler {
                 try {
                     writer.writeRecords(batchList);
                     for (FileRecord record : batchList) {
-                        this.message("export node[" + record.get(0) + "] success");
+                        this.message("export key[" + record.get(0) + "] success");
                     }
                     this.processedIncr(batchList.size());
                     batchList.clear();
@@ -90,9 +92,9 @@ public class RedisDataExportHandler extends DataHandler {
                 // 写入头
                 writer.writeHeader();
                 // 节点过滤
-                Predicate<String> filter = path -> {
-                    if (RedisKeyUtil.isFiltered(path, this.filters)) {
-                        this.message("node[" + path + "] is filtered, skip it");
+                Predicate<String> filter = key -> {
+                    if (RedisKeyUtil.isFiltered(key, this.filters)) {
+                        this.message("key[" + key + "] is filtered, skip it");
                         this.processedSkip();
                         return false;
                     }
@@ -100,7 +102,7 @@ public class RedisDataExportHandler extends DataHandler {
                 };
 
                 // 获取节点成功
-                BiConsumer<String, byte[]> success = (path, bytes) -> {
+                BiConsumer<String, byte[]> success = (key, bytes) -> {
                     try {
                         this.checkInterrupt();
                     } catch (InterruptedException e) {
@@ -108,7 +110,7 @@ public class RedisDataExportHandler extends DataHandler {
                     }
                     // 记录
                     FileRecord record = new FileRecord();
-                    record.put(0, path);
+                    record.put(0, key);
                     record.put(1, new String(bytes, StandardCharsets.UTF_8));
                     // 添加到集合
                     batchList.add(record);
@@ -119,7 +121,7 @@ public class RedisDataExportHandler extends DataHandler {
                     }
                 };
                 // 获取节点失败
-                BiConsumer<String, Exception> error = (path, ex) -> {
+                BiConsumer<String, Exception> error = (key, ex) -> {
                     if (ex instanceof RuntimeException) {
                         ex = (Exception) ex.getCause();
                     } else {
@@ -129,7 +131,7 @@ public class RedisDataExportHandler extends DataHandler {
                     if (ex instanceof InterruptedException) {
                         return;
                     }
-                    this.message("export node[" + path + "] failed");
+                    this.message("export key[" + key + "] failed");
                     this.processedDecr();
                 };
             } finally {
@@ -149,7 +151,6 @@ public class RedisDataExportHandler extends DataHandler {
         if (prefix.isBlank()) {
             this.config.prefix(null);
         } else {
-
             this.config.prefix(prefix + " ");
         }
     }

@@ -18,6 +18,18 @@
     </properties>
 
     <dependencies>
+        <!-- Apache POI -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
         <!-- &lt;!&ndash; Spring boot &ndash;&gt; -->
         <!-- <dependency> -->
         <!--     <groupId>org.springframework.boot</groupId> -->
