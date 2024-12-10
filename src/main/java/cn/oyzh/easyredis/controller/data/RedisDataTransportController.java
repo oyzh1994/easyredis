@@ -293,6 +293,31 @@ public class RedisDataTransportController extends StageController {
         } else {
             this.transportHandler.filters(null);
         }
+        // 键类型
+        List<String> keyTypes = new ArrayList<>();
+        if (this.setType.isSelected()) {
+            keyTypes.add("set");
+        }
+        if (this.zsetType.isSelected()) {
+            keyTypes.add("zset");
+        }
+        if (this.listType.isSelected()) {
+            keyTypes.add("zset");
+        }
+        if (this.hashType.isSelected()) {
+            keyTypes.add("hash");
+        }
+        if (this.streamType.isSelected()) {
+            keyTypes.add("stream");
+        }
+        if (this.stringType.isSelected()) {
+            keyTypes.add("string");
+        }
+        this.transportHandler.keyTypes(keyTypes);
+        // 查询模式
+        this.transportHandler.pattern(this.pattern.getText());
+        // 保留ttl
+        this.transportHandler.retainTTL(this.retainTTL.isSelected());
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.transportInProgress() + "===");

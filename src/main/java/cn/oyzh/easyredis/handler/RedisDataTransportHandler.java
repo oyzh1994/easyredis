@@ -1,11 +1,16 @@
 package cn.oyzh.easyredis.handler;
 
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author oyzh
@@ -41,93 +46,145 @@ public class RedisDataTransportHandler extends DataHandler {
     private List<RedisFilter> filters;
 
     /**
-     * 来源字符集
+     * 来源数据库
      */
     @Accessors(fluent = true, chain = true)
     private int sourceDatabase;
 
     /**
-     * 目标字符集
+     * 目标数据库
      */
     @Accessors(fluent = true, chain = true)
     private int targetDatabase;
+
+    /**
+     * 键类型
+     */
+    @Accessors(fluent = true, chain = true)
+    private List<String> keyTypes;
+
+    /**
+     * 保留ttl
+     */
+    @Accessors(fluent = true, chain = true)
+    private boolean retainTTL;
+
+    /**
+     * 查询模式
+     */
+    @Accessors(fluent = true, chain = true)
+    private String pattern = "*";
 
     /**
      * 执行传输
      */
     public void doTransport() throws Exception {
         this.message("Transport Starting");
-        this.doTransport("/");
+        Set<String> allKeys = this.sourceClient.allKeys(this.sourceDatabase, this.pattern);
+        this.doTransport(this.sourceDatabase, this.targetDatabase, allKeys);
         this.message("Transport Finished");
     }
 
     /**
      * 执行传输
      *
-     * @param path 节点路径
-     * @throws InterruptedException 异常
+     * @param fromDBIndex   来源数据库索引
+     * @param targetDBIndex 目标数据库索引
+     * @param keys          键列表
      */
-    private void doTransport(String path) throws InterruptedException {
-        // String decodePath = ZKNodeUtil.decodePath(path);
-        // try {
-        //     // 检查中断
-        //     this.checkInterrupt();
-        //     // 获取节点
-        //     Stat stat = this.sourceClient.checkExists(path);
-        //     byte[] bytes = this.sourceClient.getData(path);
-        //
-        //     // 节点查询失败
-        //     if (stat == null || bytes == null) {
-        //         this.message("node[" + decodePath + "] does not exist");
-        //         this.processedDecr();
-        //         return;
-        //     }
-        //
-        //     // 临时节点跳过
-        //     if (stat.getEphemeralOwner() > 0) {
-        //         this.message("node[" + decodePath + "] is ephemeral, skip it");
-        //         this.processedSkip();
-        //         return;
-        //     }
-        //
-        //     // 过滤处理
-        //     if (ZKNodeUtil.isFiltered(decodePath, this.filters)) {
-        //         this.message("node[" + decodePath + "] is filtered, skip it");
-        //         this.processedSkip();
-        //         return;
-        //     }
-        //
-        //     // 节点存在
-        //     if (this.targetClient.exists(path)) {
-        //         // 跳过
-        //         if (StringUtil.equals(this.existsPolicy, "0")) {
-        //             this.message("node[" + decodePath + "] is exist, skip it");
-        //             this.processedSkip();
-        //         } else if (StringUtil.equals(this.existsPolicy, "1")) { // 更新
-        //             bytes = TextUtil.changeCharset(bytes, this.sourceCharset, this.targetCharset);
-        //             this.targetClient.setData(path, bytes);
-        //             this.message("node[" + decodePath + "] is exist, update it");
-        //             this.processedIncr();
-        //         }
-        //     } else {// 创建
-        //         bytes = TextUtil.changeCharset(bytes, this.sourceCharset, this.targetCharset);
-        //         this.targetClient.createIncludeParents(path, bytes, CreateMode.PERSISTENT);
-        //         this.message("node[" + decodePath + "] not exist, create it");
-        //         this.processedIncr();
-        //     }
-        //     // 获取子节点
-        //     List<String> subs = this.sourceClient.getChildren(path);
-        //     // 递归传输节点
-        //     for (String sub : subs) {
-        //         this.checkInterrupt();
-        //         this.doTransport(ZKNodeUtil.concatPath(path, sub));
-        //     }
-        // } catch (InterruptedException ex) {
-        //     throw ex;
-        // } catch (Exception ex) {
-        //     this.message("node[" + decodePath + "] transport fail, error[" + ex.getMessage() + "]");
-        //     this.processedDecr();
-        // }
+    private void doTransport(int fromDBIndex, int targetDBIndex, Set<String> keys) throws InterruptedException {
+        for (String key : keys) {
+            // 取消操作
+            this.checkInterrupt();
+            // 被过滤
+            if (RedisKeyUtil.isFiltered(key, this.filters)) {
+                this.message("key[ " + key + "] is filtered, skip it");
+                this.processedSkip();
+                continue;
+            }
+            // 获取键
+            RedisKey redisKey = RedisKeyUtil.getKey(fromDBIndex, key, this.retainTTL, true, this.sourceClient);
+            // 获取键失败
+            if (redisKey == null) {
+                this.message("key[ " + key + "] does not exist");
+                this.processedIncr();
+                continue;
+            }
+            // 键被排除
+            if (this.isExclude(redisKey)) {
+                this.message("key[ " + key + "] is exclude, skip it");
+                this.processedSkip();
+                continue;
+            }
+            // 键不存在，创建
+            if (!this.targetClient.exists(targetDBIndex, key)) {
+                this.createKey(redisKey, targetDBIndex);
+                this.processedIncr();
+                this.message("key[ " + key + "] is not exists, create it");
+                continue;
+            }
+            // 键存在，跳过
+            if (StringUtil.equals(this.existsPolicy, "0")) {
+                this.processedSkip();
+                this.message("key[ " + key + "] is exists, skip it");
+                continue;
+            }
+            // 键存在，更新
+            this.targetClient.del(targetDBIndex, key);
+            this.createKey(redisKey, targetDBIndex);
+            this.processedIncr();
+            this.message("key[ " + key + "] is exists, update it");
+        }
     }
+
+    /**
+     * 是否被排除
+     *
+     * @param node 键
+     * @return 结果
+     */
+    private boolean isExclude(RedisKey node) {
+        if (CollectionUtil.isEmpty(this.keyTypes)) {
+            return true;
+        }
+        if (!this.keyTypes.contains("list") && node.isListKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("set") && node.isSetKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("zset") && node.isZSetKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("hash") && node.isHashKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("stream") && node.isStreamKey()) {
+            return true;
+        }
+        return !this.keyTypes.contains("string") && node.isStringKey();
+    }
+
+    /**
+     * 创建键
+     *
+     * @param redisKey      redis键
+     * @param targetDBIndex 目标数据库索引
+     */
+    private void createKey(RedisKey redisKey, int targetDBIndex) {
+        if (redisKey != null) {
+            RedisKeyUtil.createNode(redisKey, targetDBIndex, this.targetClient);
+            String key = redisKey.key();
+            Long ttl = redisKey.ttl();
+            if (ttl != null && this.retainTTL) {
+                if (ttl >= 0) {
+                    this.targetClient.expire(targetDBIndex, key, ttl, null);
+                } else if (ttl == -1) {
+                    this.targetClient.persist(targetDBIndex, key);
+                }
+            }
+        }
+    }
+
 }
 
