@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * @author oyzh
@@ -114,8 +114,12 @@ public class RedisDataExportHandler extends DataHandler {
                 // 写入头
                 writer.writeHeader();
                 // 节点过滤
-                Predicate<RedisKey> filter = redisKey -> {
-                    String key = redisKey.key();
+                BiPredicate<String, RedisKey> filter = (key, redisKey) -> {
+                    if (redisKey == null) {
+                        this.message("key[" + key + "] don't exist");
+                        this.processedDecr();
+                        return false;
+                    }
                     if (this.isExclude(redisKey)) {
                         this.message("key[" + key + "] is exclude, skip it");
                         this.processedSkip();
@@ -183,23 +187,40 @@ public class RedisDataExportHandler extends DataHandler {
         this.message("Export Finished");
     }
 
-    private void doExport(Consumer<RedisKey> success, BiConsumer<String, Exception> error, Predicate<RedisKey> filter) throws InterruptedException {
+    /**
+     * 执行导出
+     *
+     * @param success 成功操作
+     * @param error   异常操作
+     * @param filter  过滤操作
+     */
+    private void doExport(Consumer<RedisKey> success, BiConsumer<String, Exception> error, BiPredicate<String, RedisKey> filter) {
         BiConsumer<Integer, Set<String>> export = (dbIndex, keys) -> {
             for (String key : keys) {
-                // 获取键
-                RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL, true, this.client);
-                if (filter.test(redisKey)) {
-                    success.accept(redisKey);
+                try {
+                    // 获取键
+                    RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL, true, this.client);
+                    // 执行过滤
+                    if (filter.test(key, redisKey)) {
+                        // 判断是否统计值
+                        if (redisKey.isStringKey()) {
+                            redisKey.asStringValue().setHyLog(RedisKeyUtil.isHylog(dbIndex, key, this.client));
+                        }
+                        success.accept(redisKey);
+                    }
+                } catch (Exception ex) {
+                    error.accept(key, ex);
                 }
             }
         };
+        // 所有库
         if (this.database == null) {
             int dbCount = this.client.databases();
             for (int i = 0; i < dbCount; i++) {
                 Set<String> keys = this.client.allKeys(i, this.pattern);
                 export.accept(i, keys);
             }
-        } else {
+        } else {// 指定库
             Set<String> keys = this.client.allKeys(this.database, this.pattern);
             export.accept(this.database, keys);
         }

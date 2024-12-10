@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -76,5 +77,20 @@ public class RedisStringValue implements RedisKeyValue<Object> {
     @Override
     public void setUnSavedValue(Object unSavedValue) {
         RedisCacheUtil.cacheValue(this.hashCode(), unSavedValue, "unsaved");
+    }
+
+    public boolean isHyLog() {
+        return this.count != null || BooleanUtil.isTrue(this.hyLog);
+    }
+
+    public String stringValue() {
+        Object value = this.getValue();
+        if (value instanceof String s) {
+            return s;
+        }
+        if (value instanceof byte[] bytes) {
+            return new String(bytes);
+        }
+        return "";
     }
 }

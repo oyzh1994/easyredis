@@ -19,6 +19,7 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
+import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import lombok.NonNull;
@@ -85,7 +86,11 @@ public class RedisKeyUtil {
     public static String serializeNode(RedisKey redisKey) {
         // string
         if (redisKey.isStringKey()) {
-            return (String) redisKey.asStringValue().getValue();
+            RedisStringValue stringValue = redisKey.asStringValue();
+            if (stringValue.isHyLog()) {
+                return "";
+            }
+            return stringValue.stringValue();
         }
 
         // list
@@ -631,6 +636,45 @@ public class RedisKeyUtil {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取键统计值
+     *
+     * @param dbIndex 数据库索引
+     * @param key     键
+     * @param client  redis客户端
+     * @return 统计值
+     */
+    public static Long count(Integer dbIndex, String key, RedisClient client) {
+        try {
+            return client.pfcount(dbIndex, key);
+        } catch (Exception ex) {
+            if (!StringUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 是否统计值
+     *
+     * @param dbIndex 数据库索引
+     * @param key     键
+     * @param client  redis客户端
+     * @return 结果
+     */
+    public static boolean isHylog(Integer dbIndex, String key, RedisClient client) {
+        try {
+            client.pfcount(dbIndex, key);
+            return true;
+        } catch (Exception ex) {
+            if (!StringUtil.containsAny(ex.getMessage(), "WRONGTYPE Key is not a valid HyperLogLog string value")) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
     }
 
     /**
