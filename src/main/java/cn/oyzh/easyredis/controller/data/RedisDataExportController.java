@@ -12,7 +12,6 @@ import cn.oyzh.easyredis.handler.RedisDataExportHandler;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisClientUtil;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
@@ -263,8 +262,13 @@ public class RedisDataExportController extends StageController {
         this.exportHandler.fileType(fileType);
         // 客户端
         this.exportHandler.client(this.client);
-        // 节点路径
-        this.exportHandler.database(this.dbIndex);
+        // 数据库
+        if (this.dbIndex != null) {
+            this.exportHandler.database(this.dbIndex);
+        } else {
+            int index = this.db.getSelectedIndex();
+            this.exportHandler.database(index == 0 ? null : index - 1);
+        }
         // 导出文件
         this.exportHandler.filePath(this.exportFile.getPath());
         // 适用过滤
@@ -273,6 +277,31 @@ public class RedisDataExportController extends StageController {
         } else {
             this.exportHandler.filters(null);
         }
+        // 键类型
+        List<String> keyTypes = new ArrayList<>();
+        if (this.setType.isSelected()) {
+            keyTypes.add("set");
+        }
+        if (this.zsetType.isSelected()) {
+            keyTypes.add("zset");
+        }
+        if (this.listType.isSelected()) {
+            keyTypes.add("zset");
+        }
+        if (this.hashType.isSelected()) {
+            keyTypes.add("hash");
+        }
+        if (this.streamType.isSelected()) {
+            keyTypes.add("stream");
+        }
+        if (this.stringType.isSelected()) {
+            keyTypes.add("string");
+        }
+        this.exportHandler.keyTypes(keyTypes);
+        // 查询模式
+        this.exportHandler.pattern(this.pattern.getText());
+        // 保留ttl
+        this.exportHandler.retainTTL(this.retainTTL.isSelected());
         // 前缀
         if (FileNameUtil.isTxtType(fileType)) {
             this.exportHandler.prefix(this.prefix.selectedUserData());

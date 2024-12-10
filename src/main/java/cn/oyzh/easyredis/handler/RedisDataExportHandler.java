@@ -1,9 +1,11 @@
 package cn.oyzh.easyredis.handler;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.store.file.FileColumns;
 import cn.oyzh.store.file.FileHelper;
@@ -16,7 +18,9 @@ import lombok.experimental.Accessors;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -50,6 +54,21 @@ public class RedisDataExportHandler extends DataHandler {
     private List<RedisFilter> filters;
 
     /**
+     * 键类型
+     */
+    private List<String> keyTypes;
+
+    /**
+     * 保留ttl
+     */
+    private boolean retainTTL;
+
+    /**
+     * 查询模式
+     */
+    private String pattern = "*";
+
+    /**
      * 批量处理大小
      */
     private int batchSize = 20;
@@ -67,8 +86,11 @@ public class RedisDataExportHandler extends DataHandler {
     public void doExport() throws Exception {
         this.message("Export Starting");
         FileColumns columns = new FileColumns();
-        columns.addColumn("path");
-        columns.addColumn("data");
+        columns.addColumn("key");
+        columns.addColumn("value");
+        columns.addColumn("dbIndex");
+        columns.addColumn("type");
+        columns.addColumn("ttl");
         // 获取写入器
         TypeFileWriter writer = FileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
@@ -92,7 +114,13 @@ public class RedisDataExportHandler extends DataHandler {
                 // 写入头
                 writer.writeHeader();
                 // 节点过滤
-                Predicate<String> filter = key -> {
+                Predicate<RedisKey> filter = redisKey -> {
+                    String key = redisKey.key();
+                    if (this.isExclude(redisKey)) {
+                        this.message("key[" + key + "] is exclude, skip it");
+                        this.processedSkip();
+                        return false;
+                    }
                     if (RedisKeyUtil.isFiltered(key, this.filters)) {
                         this.message("key[" + key + "] is filtered, skip it");
                         this.processedSkip();
@@ -102,16 +130,23 @@ public class RedisDataExportHandler extends DataHandler {
                 };
 
                 // 获取节点成功
-                BiConsumer<String, byte[]> success = (key, bytes) -> {
+                Consumer<RedisKey> success = redisKey -> {
                     try {
                         this.checkInterrupt();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+                    String key = redisKey.key();
                     // 记录
                     FileRecord record = new FileRecord();
+                    String value = RedisKeyUtil.serializeNode(redisKey);
                     record.put(0, key);
-                    record.put(1, new String(bytes, StandardCharsets.UTF_8));
+                    record.put(1, value);
+                    record.put(2, redisKey.dbIndex());
+                    record.put(3, redisKey.typeName());
+                    if (redisKey.ttl() != null) {
+                        record.put(4, redisKey.ttl());
+                    }
                     // 添加到集合
                     batchList.add(record);
 
@@ -134,6 +169,7 @@ public class RedisDataExportHandler extends DataHandler {
                     this.message("export key[" + key + "] failed");
                     this.processedDecr();
                 };
+                this.doExport(success, error, filter);
             } finally {
                 // 写入尾
                 writeBatch.run();
@@ -145,6 +181,56 @@ public class RedisDataExportHandler extends DataHandler {
             JulLog.error("未找到可用的写入器，文件类型:{}", this.fileType);
         }
         this.message("Export Finished");
+    }
+
+    private void doExport(Consumer<RedisKey> success, BiConsumer<String, Exception> error, Predicate<RedisKey> filter) throws InterruptedException {
+        BiConsumer<Integer, Set<String>> export = (dbIndex, keys) -> {
+            for (String key : keys) {
+                // 获取键
+                RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL, true, this.client);
+                if (filter.test(redisKey)) {
+                    success.accept(redisKey);
+                }
+            }
+        };
+        if (this.database == null) {
+            int dbCount = this.client.databases();
+            for (int i = 0; i < dbCount; i++) {
+                Set<String> keys = this.client.allKeys(i, this.pattern);
+                export.accept(i, keys);
+            }
+        } else {
+            Set<String> keys = this.client.allKeys(this.database, this.pattern);
+            export.accept(this.database, keys);
+        }
+    }
+
+    /**
+     * 是否被排除
+     *
+     * @param node 键
+     * @return 结果
+     */
+    private boolean isExclude(RedisKey node) {
+        if (CollectionUtil.isEmpty(this.keyTypes)) {
+            return true;
+        }
+        if (!this.keyTypes.contains("list") && node.isListKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("set") && node.isSetKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("zset") && node.isZSetKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("hash") && node.isHashKey()) {
+            return true;
+        }
+        if (!this.keyTypes.contains("stream") && node.isStreamKey()) {
+            return true;
+        }
+        return !this.keyTypes.contains("string") && node.isStringKey();
     }
 
     public void prefix(String prefix) {

@@ -247,7 +247,7 @@
             </FXLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
-            <PrevStepButton onAction="#showStep4" groupId="exec" realHeight="30" iconSizePercent="0.75">
+            <PrevStepButton onAction="#showStep3" groupId="exec" realHeight="30" iconSizePercent="0.75">
                 <HBox.margin>
                     <Insets left="30" top="10"/>
                 </HBox.margin>

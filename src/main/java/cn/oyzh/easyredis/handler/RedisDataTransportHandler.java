@@ -17,18 +17,17 @@ import java.util.Set;
  * @since 2024/10/15
  */
 @Setter
+@Accessors(fluent = true, chain = true)
 public class RedisDataTransportHandler extends DataHandler {
 
     /**
      * 来源客户端
      */
-    @Accessors(fluent = true, chain = true)
     protected RedisClient sourceClient;
 
     /**
      * 目标客户端
      */
-    @Accessors(fluent = true, chain = true)
     protected RedisClient targetClient;
 
     /**
@@ -36,43 +35,36 @@ public class RedisDataTransportHandler extends DataHandler {
      * 0 跳过
      * 1 更新
      */
-    @Accessors(fluent = true, chain = true)
     private String existsPolicy;
 
     /**
      * 过滤内容列表
      */
-    @Accessors(fluent = true, chain = true)
     private List<RedisFilter> filters;
 
     /**
      * 来源数据库
      */
-    @Accessors(fluent = true, chain = true)
     private int sourceDatabase;
 
     /**
      * 目标数据库
      */
-    @Accessors(fluent = true, chain = true)
     private int targetDatabase;
 
     /**
      * 键类型
      */
-    @Accessors(fluent = true, chain = true)
     private List<String> keyTypes;
 
     /**
      * 保留ttl
      */
-    @Accessors(fluent = true, chain = true)
     private boolean retainTTL;
 
     /**
      * 查询模式
      */
-    @Accessors(fluent = true, chain = true)
     private String pattern = "*";
 
     /**

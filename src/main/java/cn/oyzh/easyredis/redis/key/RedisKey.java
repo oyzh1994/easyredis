@@ -283,4 +283,8 @@ public class RedisKey implements Comparable<RedisKey> {
     public RedisStreamValue asStreamValue() {
         return (RedisStreamValue) this.value();
     }
+
+    public String typeName(){
+        return this.type.name();
+    }
 }
