@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
@@ -107,13 +108,18 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     @FXML
     private void transportData() {
-        StageAdapter fxView = StageManager.getStage(RedisInfoTransportController.class);
-        if (fxView != null) {
-            fxView.disappear();
-        }
-        fxView = StageManager.parseStage(RedisInfoTransportController.class);
-        fxView.setProp("treeItem", this);
-        fxView.display();
+        // StageAdapter fxView = StageManager.getStage(RedisInfoTransportController.class);
+        // if (fxView != null) {
+        //     fxView.disappear();
+        // }
+        // fxView = StageManager.parseStage(RedisInfoTransportController.class);
+        // fxView.setProp("treeItem", this);
+        // fxView.display();
+
+        StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
+        adapter.setProp("sourceInfo", this.info());
+        adapter.setProp("dbIndex", this.dbIndex);
+        adapter.display();
     }
 
     /**

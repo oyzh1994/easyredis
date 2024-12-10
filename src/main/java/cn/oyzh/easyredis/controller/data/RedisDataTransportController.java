@@ -250,6 +250,11 @@ public class RedisDataTransportController extends StageController {
     private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
 
     /**
+     * 预选的db索引
+     */
+    private Integer presetDbIndex;
+
+    /**
      * 执行传输
      */
     @FXML
@@ -262,8 +267,7 @@ public class RedisDataTransportController extends StageController {
         // 生成传输处理器
         if (this.transportHandler == null) {
             this.transportHandler = new RedisDataTransportHandler();
-            this.transportHandler
-                    .messageHandler(str -> this.transportMsg.appendLine(str))
+            this.transportHandler.messageHandler(str -> this.transportMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
@@ -410,6 +414,12 @@ public class RedisDataTransportController extends StageController {
             this.sourceInfo.select(sourceInfo);
             this.sourceInfo.disable();
         }
+        // 预选的db
+        Integer dbIndex = this.stage.getProp("dbIndex");
+        if (dbIndex != null) {
+            this.presetDbIndex = dbIndex;
+            this.sourceDatabase.disable();
+        }
         this.stage.hideOnEscape();
     }
 
@@ -431,6 +441,11 @@ public class RedisDataTransportController extends StageController {
         FXUtil.runLater(() -> this.transportStatus.setText(this.counter.unknownFormat()));
     }
 
+    /**
+     * 初始化来源连接
+     *
+     * @param sourceInfo 来源连接
+     */
     private void initSourceDatabase(RedisConnect sourceInfo) {
         if (this.sourceClient != null) {
             this.sourceClient.close();
@@ -453,19 +468,28 @@ public class RedisDataTransportController extends StageController {
                 this.sourceClient.close();
                 this.sourceClient = null;
                 this.sourceInfo.requestFocus();
-                MessageBox.warn(I18nHelper.connectInitFail());
+                MessageBox.warn(sourceInfo.getName() + " " + I18nHelper.connectInitFail());
                 return;
             }
 
             // 初始化数据库
             this.sourceDatabase.setDbCount(this.sourceClient.databases());
-            this.sourceDatabase.selectFirst();
+            if (this.presetDbIndex == null) {
+                this.sourceDatabase.selectFirst();
+            } else {
+                this.sourceDatabase.select(this.presetDbIndex);
+            }
         } finally {
             this.restoreTitle();
             this.enable();
         }
     }
 
+    /**
+     * 初始化目标连接
+     *
+     * @param targetInfo 目标连接
+     */
     private void initTargetDatabase(RedisConnect targetInfo) {
         if (this.targetClient != null) {
             this.targetClient.close();
@@ -488,7 +512,7 @@ public class RedisDataTransportController extends StageController {
                 this.targetClient.close();
                 this.targetClient = null;
                 this.targetInfo.requestFocus();
-                MessageBox.warn(I18nHelper.connectInitFail());
+                MessageBox.warn(targetInfo.getName() + " " + I18nHelper.connectInitFail());
                 return;
             }
 
@@ -544,19 +568,22 @@ public class RedisDataTransportController extends StageController {
             return;
         }
 
-        if (sourceInfo.compare(targetInfo)) {
+        // 检查连接和库，不能是同一个连接的同一个库
+        int sourceDb = this.sourceDatabase.getDB();
+        int targetDb = this.targetDatabase.getDB();
+        if (sourceInfo.compare(targetInfo) && sourceDb == targetDb) {
             this.sourceInfo.requestFocus();
-            MessageBox.warn(I18nHelper.connectionsCannotBeTheSame());
+            MessageBox.warn(I18nHelper.databasesCannotBeTheSame());
             return;
         }
 
         if (this.sourceClient == null || this.sourceClient.isClosed()) {
-            MessageBox.warn(I18nHelper.sourceConnectNotConnected());
+            MessageBox.warn(sourceInfo.getName() + " " + I18nHelper.connectFail());
             return;
         }
 
         if (this.targetClient == null || this.targetClient.isClosed()) {
-            MessageBox.warn(I18nHelper.targetConnectNotConnected());
+            MessageBox.warn(targetInfo.getName() + " " + I18nHelper.connectFail());
             return;
         }
 

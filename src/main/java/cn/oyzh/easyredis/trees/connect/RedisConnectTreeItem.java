@@ -5,7 +5,6 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
-import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
