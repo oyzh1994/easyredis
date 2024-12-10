@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
-import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -79,7 +79,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         FXMenuItem add = MenuItemHelper.addKey("12", this::addKey);
         FXMenuItem keyFilter = MenuItemHelper.keyFilter("12", this::keyFilter);
         // FXMenuItem refresh = MenuItemHelper.refreshData("12", this::reloadChild);
-        FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportNode);
+        FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
         FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
         FXMenuItem batchOperation = MenuItemHelper.batchOpt("12", this::batchOperation);
 
@@ -148,9 +148,13 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     /**
      * 导出键
      */
-    public void exportNode() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
-        fxView.setProp("treeItem", this);
+    public void exportData() {
+        // StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
+        // fxView.setProp("treeItem", this);
+        // fxView.display();
+        StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
+        fxView.setProp("connect", this.info());
+        fxView.setProp("dbIndex", this.dbIndex);
         fxView.display();
     }
 
@@ -226,7 +230,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     /**
      * 键添加事件
-     *
      */
     public void onKeyAdded() {
         this.flushDbSize();
@@ -235,7 +238,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     /**
      * 键删除事件
-     *
      */
     public void onKeyDeleted() {
         this.flushDbSize();

@@ -1,549 +1,549 @@
-package cn.oyzh.easyredis.controller.key;
-
-import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileUtil;
-import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.common.util.SystemUtil;
-import cn.oyzh.easyredis.RedisConst;
-import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.exception.RedisExceptionParser;
-import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
-import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
-import cn.oyzh.easyredis.util.RedisExportUtil;
-import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.gui.text.field.ClearableTextField;
-import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.gui.text.area.MsgTextArea;
-import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
-import cn.oyzh.fx.plus.controls.text.field.FlexTextField;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupUtil;
-import cn.oyzh.fx.plus.util.Counter;
-import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.i18n.I18nHelper;
-import javafx.fxml.FXML;
-import javafx.scene.control.TreeItem;
-import javafx.stage.Modality;
-import javafx.stage.WindowEvent;
-
-import java.io.File;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-
-/**
- * redis键导出业务
- *
- * @author oyzh
- * @since 2023/07/07
- */
-@StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
-)
-public class RedisKeyExportController extends StageController {
-
-    /**
-     * 服务器
-     */
-    @FXML
-    private FlexTextField serverName;
-
-    /**
-     * 数据库
-     */
-    @FXML
-    private RedisDatabaseComboBox db;
-
-    /**
-     * 按词典导出
-     */
-    @FXML
-    private FXCheckBox dictSort;
-
-    /**
-     * 保留ttl
-     */
-    @FXML
-    private FXCheckBox retainTTL;
-
-    /**
-     * 适用过滤配置
-     */
-    @FXML
-    private FXCheckBox applyFilter;
-
-    /**
-     * 美化选项
-     */
-    @FXML
-    private FXToggleSwitch pretty;
-
-    /**
-     * 消息组件
-     */
-    @FXML
-    private FlexHBox msgBox;
-
-    /**
-     * 键相关组件1
-     */
-    @FXML
-    private FlexHBox keysBox1;
-
-    /**
-     * 键相关组件2
-     */
-    @FXML
-    private FlexHBox keysBox2;
-
-    /**
-     * 键过滤
-     */
-    @FXML
-    private FXCheckBox filterKeys;
-
-    // /**
-    //  * 导出按钮
-    //  */
-    // @FXML
-    // private FlexButton exportBtn;
-
-    /**
-     * 结束导出按钮
-     */
-    @FXML
-    private FlexButton stopExportBtn;
-
-    /**
-     * 导出状态
-     */
-    @FXML
-    private FXLabel exportStatus;
-
-    /**
-     * 导出消息
-     */
-    @FXML
-    private MsgTextArea exportMsg;
-
-    /**
-     * 键模式
-     */
-    @FXML
-    private ClearableTextField pattern;
-
-    /**
-     * 受影响的键
-     */
-    @FXML
-    private ReadOnlyTextArea keys;
-
-    /**
-     * redis客户端
-     */
-    private RedisClient client;
-
-    /**
-     * 排除string类型
-     */
-    @FXML
-    private FXCheckBox stringType;
-
-    /**
-     * 排除list类型
-     */
-    @FXML
-    private FXCheckBox listType;
-
-    /**
-     * 排除stream类型
-     */
-    @FXML
-    private FXCheckBox streamType;
-
-    /**
-     * 排除set类型
-     */
-    @FXML
-    private FXCheckBox setType;
-
-    /**
-     * 排除zset类型
-     */
-    @FXML
-    private FXCheckBox zsetType;
-
-    /**
-     * 排除hash类型
-     */
-    @FXML
-    private FXCheckBox hashType;
-
-    /**
-     * 导出操作任务
-     */
-    private Thread execTask;
-
-    /**
-     * 过滤内容列表
-     */
-    private List<RedisFilter> filters;
-
-    /**
-     * 计数器
-     */
-    private final Counter counter = new Counter();
-
-    /**
-     * 过滤配置储存
-     */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
-
-    /**
-     * 当前db键列表
-     */
-    private Set<String> allKeys;
-
-    /**
-     * 全部db键列表
-     */
-    private Map<Integer, Set<String>> fullKeys;
-
-    /**
-     * 执行导出
-     */
-    @FXML
-    private void doExport() {
-        // 重置参数
-        this.counter.reset();
-        this.exportMsg.clear();
-        boolean dictSort = this.dictSort.isSelected();
-        // 开始处理
-        this.exportMsg.clear();
-        // this.exportBtn.disable();
-        // this.stateManager.disable();
-        NodeGroupUtil.disable(this.stage, "exec");
-        if (this.db.hasProp("canDisable")) {
-            this.db.disable();
-        }
-        this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
-        // 适用过滤
-        if (this.applyFilter.isSelected()) {
-            this.filters = this.filterStore.loadEnable();
-        }
-        // 执行导出
-        this.execTask = ThreadUtil.start(() -> {
-            try {
-                this.stopExportBtn.enable();
-                // 获取键
-                List<RedisKey> allNodes = new ArrayList<>();
-                // 导出所有
-                if (this.db.getDB() == -1) {
-                    if (CollectionUtil.isEmpty(this.fullKeys)) {
-                        this.fullKeys = this.client.fullKeys(this.pattern.getText());
-                    }
-                    for (Map.Entry<Integer, Set<String>> entry : this.fullKeys.entrySet()) {
-                        this.doExport(entry.getKey(), entry.getValue(), allNodes);
-                    }
-                } else {// 导出当前库
-                    if (CollectionUtil.isEmpty(this.allKeys)) {
-                        this.allKeys = this.client.allKeys(this.db.getDB(), this.pattern.getText());
-                    }
-                    this.doExport(this.db.getDB(), this.allKeys, allNodes);
-                }
-                // 取消操作
-                if (ThreadUtil.isInterrupted(this.execTask)) {
-                    JulLog.warn("export canceled!");
-                    return;
-                }
-                // 键按词典顺序排序
-                if (dictSort) {
-                    allNodes.sort(RedisKey::compareTo);
-                }
-                boolean prettyFormat = this.pretty.isSelected();
-                // 导出内容
-                String exportData = RedisExportUtil.nodesToJSON(allNodes, null, prettyFormat);
-                // 文件格式
-                FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
-                // 处理名称
-                String fileName = "Redis-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
-                if (StringUtil.equals(I18nHelper.allDatabase(), this.db.getValue())) {
-                    fileName += ".json";
-                } else {
-                    fileName += "-db" + this.db.getValue() + ".json";
-                }
-                // 收尾工作
-                this.updateStatus(I18nHelper.fileProcessing());
-                File file = FileChooserHelper.save(I18nHelper.exportData(), fileName, extensionFilter);
-                // 保存文件
-                if (file != null) {
-                    FileUtil.writeUtf8String(exportData, file);
-                    this.updateStatus(I18nHelper.operationSuccess());
-                    MessageBox.okToast(I18nHelper.operationSuccess());
-                } else {
-                    this.updateStatus(I18nHelper.operationCancel());
-                }
-            } catch (Exception e) {
-                if (e.getClass().isAssignableFrom(InterruptedException.class)) {
-                    this.updateStatus(I18nHelper.operationCancel());
-                    MessageBox.okToast(I18nHelper.operationCancel());
-                } else {
-                    e.printStackTrace();
-                    this.updateStatus(I18nHelper.operationFail());
-                    MessageBox.warn(I18nHelper.operationFail());
-                }
-            } finally {
-                // 结束处理
-                // this.exportBtn.enable();
-                // this.stateManager.enable();
-                NodeGroupUtil.enable(this.stage, "exec");
-                this.stopExportBtn.disable();
-                if (this.db.hasProp("canDisable")) {
-                    this.db.enable();
-                }
-                this.stage.restoreTitle();
-                SystemUtil.gcLater();
-            }
-        });
-    }
-
-    /**
-     * 结束导出
-     */
-    @FXML
-    private void stopExport() {
-        ThreadUtil.interrupt(this.execTask);
-        this.execTask = null;
-    }
-
-    @Override
-    protected void bindListeners() {
-        // this.pretty.managedBindVisible();
-        // this.keysBox1.managedBindVisible();
-        // this.keysBox2.managedBindVisible();
-
-        // db索引变化
-        this.db.selectedIndexChanged((observable, oldValue, newValue) -> {
-            this.keys.clear();
-            this.allKeys = null;
-            this.fullKeys = null;
-        });
-
-        // 键模式输入变化
-        this.pattern.addTextChangeListener((observable, oldValue, newValue) -> {
-            this.keys.clear();
-            this.allKeys = null;
-            this.fullKeys = null;
-        });
-
-        // 键过滤选中变化
-        this.filterKeys.selectedChanged((observable, oldValue, newValue) -> {
-            if (newValue) {
-                this.keysBox1.display();
-                this.keysBox2.display();
-                this.msgBox.setFlexHeight("100% - 600");
-            } else {
-                this.keys.clear();
-                this.allKeys = null;
-                this.fullKeys = null;
-                this.pattern.setText("*");
-                this.keysBox1.disappear();
-                this.keysBox2.disappear();
-                this.msgBox.setFlexHeight("100% - 400");
-            }
-            this.keysBox1.parentAutosize();
-        });
-    }
-
-    @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
-        TreeItem<?> treeItem = this.getWindowProp("treeItem");
-        if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
-            this.client = connectTreeItem.client();
-            this.db.addItem(I18nHelper.allDatabase());
-            this.db.setDbCount(this.client.databases());
-            this.db.setProp("canDisable", true);
-            this.serverName.setText(connectTreeItem.value().getName());
-        } else if (treeItem instanceof RedisDatabaseTreeItem dbTreeItem) {
-            this.client = dbTreeItem.client();
-            this.db.addDB(dbTreeItem.dbIndex());
-            this.db.disable();
-            this.db.removeProp("canDisable");
-            this.serverName.setText(dbTreeItem.info().getName());
-        }
-        this.db.selectFirst();
-        this.stage.hideOnEscape();
-    }
-
-    @Override
-    public void onWindowHidden(WindowEvent event) {
-        this.stopExport();
-    }
-
-    /**
-     * 执行导出
-     *
-     * @param dbIndex  数据库索引
-     * @param keys     键列表
-     * @param allNodes 键节点列表
-     */
-    private void doExport(int dbIndex, Set<String> keys, List<RedisKey> allNodes) {
-        for (String key : keys) {
-            try {
-                // 被过滤
-                if (this.applyFilter.isSelected() && RedisKeyUtil.isFiltered(key, this.filters)) {
-                    this.updateStatus(dbIndex, key, 2, null);
-                    continue;
-                }
-                // 获取键
-                RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL.isSelected(), true, this.client);
-                // 失败
-                if (redisKey == null) {
-                    this.updateStatus(dbIndex, key, 0, null);
-                } else if (this.isExclude(redisKey)) { // 被排除
-                    this.updateStatus(dbIndex, key, 3, null);
-                } else {// 添加到集合
-                    allNodes.add(redisKey);
-                    this.updateStatus(dbIndex, key, 1, null);
-                }
-                // 取消操作
-                if (ThreadUtil.isInterrupted(this.execTask)) {
-                    break;
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                this.updateStatus(dbIndex, key, 0, ex);
-            }
-        }
-    }
-
-    /**
-     * 是否被排除
-     *
-     * @param node 键
-     * @return 结果
-     */
-    private boolean isExclude(RedisKey node) {
-        if (!this.listType.isSelected() && node.isListKey()) {
-            return true;
-        }
-        if (!this.setType.isSelected() && node.isSetKey()) {
-            return true;
-        }
-        if (!this.zsetType.isSelected() && node.isZSetKey()) {
-            return true;
-        }
-        if (!this.hashType.isSelected() && node.isHashKey()) {
-            return true;
-        }
-        if (!this.streamType.isSelected() && node.isStreamKey()) {
-            return true;
-        }
-        return !this.stringType.isSelected() && node.isStringKey();
-    }
-
-    /**
-     * 更新状态
-     *
-     * @param key    路径
-     * @param status 状态 0:失败 1:成功 2:过滤 3:排除
-     * @param ex     异常信息
-     */
-    private void updateStatus(int dbIndex, String key, int status, Exception ex) {
-        key = URLDecoder.decode(key, StandardCharsets.UTF_8);
-        String msg;
-        if (status == 1) {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
-            this.counter.updateSuccess();
-        } else if (status == 2) {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip1();
-            this.counter.updateIgnore();
-        } else if (status == 3) {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip2();
-            this.counter.updateIgnore();
-        } else {
-            msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();
-            if (ex != null) {
-                msg += "，" + I18nHelper.errorInfo() + "：" + RedisExceptionParser.INSTANCE.apply(ex);
-            }
-            this.counter.updateFail();
-        }
-        this.exportMsg.appendLine(msg);
-        this.updateStatus(null);
-    }
-
-    /**
-     * 更新状态
-     *
-     * @param extraMsg 额外信息
-     */
-    private void updateStatus(String extraMsg) {
-        if (extraMsg != null) {
-            this.counter.setExtraMsg(extraMsg);
-        }
-        FXUtil.runLater(() -> this.exportStatus.setText(this.counter.unknownFormat()));
-    }
-
-    /**
-     * 显示受影响的键
-     */
-    @FXML
-    private void showKeys() {
-        this.keys.clear();
-        if (this.db.getDB() == -1) {
-            this.fullKeys = this.client.fullKeys(this.pattern.getText());
-            if (CollectionUtil.isNotEmpty(this.fullKeys)) {
-                List<String> texts = new ArrayList<>(this.fullKeys.size());
-                int index = 0;
-                for (Map.Entry<Integer, Set<String>> entry : this.fullKeys.entrySet()) {
-                    texts.add("db" + entry.getKey() + "  ========================>");
-                    for (String key : entry.getValue()) {
-                        ++index;
-                        texts.add("(" + index + " " + key);
-                    }
-                    texts.add("\n");
-                }
-                this.keys.appendLines(texts);
-            }
-        } else {
-            this.allKeys = this.client.allKeys(this.db.getDB(), this.pattern.getText());
-            if (CollectionUtil.isNotEmpty(this.allKeys)) {
-                List<String> texts = new ArrayList<>(this.allKeys.size());
-                int index = 0;
-                for (String key : this.allKeys) {
-                    ++index;
-                    texts.add("(" + index + " " + key);
-                }
-                this.keys.appendLines(texts);
-            }
-        }
-    }
-
-    @Override
-    public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.export");
-    }
-}
+// package cn.oyzh.easyredis.controller.key;
+//
+// import cn.oyzh.common.log.JulLog;
+// import cn.oyzh.common.thread.ThreadUtil;
+// import cn.oyzh.common.util.CollectionUtil;
+// import cn.oyzh.common.util.FileUtil;
+// import cn.oyzh.common.util.StringUtil;
+// import cn.oyzh.common.util.SystemUtil;
+// import cn.oyzh.easyredis.RedisConst;
+// import cn.oyzh.easyredis.domain.RedisFilter;
+// import cn.oyzh.easyredis.exception.RedisExceptionParser;
+// import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
+// import cn.oyzh.easyredis.redis.RedisClient;
+// import cn.oyzh.easyredis.redis.key.RedisKey;
+// import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+// import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
+// import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+// import cn.oyzh.easyredis.util.RedisExportUtil;
+// import cn.oyzh.easyredis.util.RedisI18nHelper;
+// import cn.oyzh.easyredis.util.RedisKeyUtil;
+// import cn.oyzh.fx.gui.text.field.ClearableTextField;
+// import cn.oyzh.fx.plus.controller.StageController;
+// import cn.oyzh.fx.plus.controls.box.FlexHBox;
+// import cn.oyzh.fx.plus.controls.button.FlexButton;
+// import cn.oyzh.fx.plus.controls.button.FXCheckBox;
+// import cn.oyzh.fx.plus.controls.label.FXLabel;
+// import cn.oyzh.fx.gui.text.area.MsgTextArea;
+// import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
+// import cn.oyzh.fx.plus.controls.text.field.FlexTextField;
+// import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+// import cn.oyzh.fx.plus.file.FileChooserHelper;
+// import cn.oyzh.fx.plus.file.FileExtensionFilter;
+// import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+// import cn.oyzh.fx.plus.information.MessageBox;
+// import cn.oyzh.fx.plus.node.NodeGroupUtil;
+// import cn.oyzh.fx.plus.util.Counter;
+// import cn.oyzh.fx.plus.util.FXUtil;
+// import cn.oyzh.fx.plus.window.StageAttribute;
+// import cn.oyzh.i18n.I18nHelper;
+// import javafx.fxml.FXML;
+// import javafx.scene.control.TreeItem;
+// import javafx.stage.Modality;
+// import javafx.stage.WindowEvent;
+//
+// import java.io.File;
+// import java.net.URLDecoder;
+// import java.nio.charset.StandardCharsets;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Map;
+// import java.util.Set;
+//
+//
+// /**
+//  * redis键导出业务
+//  *
+//  * @author oyzh
+//  * @since 2023/07/07
+//  */
+// @StageAttribute(
+//         iconUrls = RedisConst.ICON_PATH,
+//         modality = Modality.WINDOW_MODAL,
+//         value = RedisConst.FXML_BASE_PATH + "key/redisKeyExport.fxml"
+// )
+// public class RedisKeyExportController extends StageController {
+//
+//     /**
+//      * 服务器
+//      */
+//     @FXML
+//     private FlexTextField serverName;
+//
+//     /**
+//      * 数据库
+//      */
+//     @FXML
+//     private RedisDatabaseComboBox db;
+//
+//     /**
+//      * 按词典导出
+//      */
+//     @FXML
+//     private FXCheckBox dictSort;
+//
+//     /**
+//      * 保留ttl
+//      */
+//     @FXML
+//     private FXCheckBox retainTTL;
+//
+//     /**
+//      * 适用过滤配置
+//      */
+//     @FXML
+//     private FXCheckBox applyFilter;
+//
+//     /**
+//      * 美化选项
+//      */
+//     @FXML
+//     private FXToggleSwitch pretty;
+//
+//     /**
+//      * 消息组件
+//      */
+//     @FXML
+//     private FlexHBox msgBox;
+//
+//     /**
+//      * 键相关组件1
+//      */
+//     @FXML
+//     private FlexHBox keysBox1;
+//
+//     /**
+//      * 键相关组件2
+//      */
+//     @FXML
+//     private FlexHBox keysBox2;
+//
+//     /**
+//      * 键过滤
+//      */
+//     @FXML
+//     private FXCheckBox filterKeys;
+//
+//     // /**
+//     //  * 导出按钮
+//     //  */
+//     // @FXML
+//     // private FlexButton exportBtn;
+//
+//     /**
+//      * 结束导出按钮
+//      */
+//     @FXML
+//     private FlexButton stopExportBtn;
+//
+//     /**
+//      * 导出状态
+//      */
+//     @FXML
+//     private FXLabel exportStatus;
+//
+//     /**
+//      * 导出消息
+//      */
+//     @FXML
+//     private MsgTextArea exportMsg;
+//
+//     /**
+//      * 键模式
+//      */
+//     @FXML
+//     private ClearableTextField pattern;
+//
+//     /**
+//      * 受影响的键
+//      */
+//     @FXML
+//     private ReadOnlyTextArea keys;
+//
+//     /**
+//      * redis客户端
+//      */
+//     private RedisClient client;
+//
+//     /**
+//      * 排除string类型
+//      */
+//     @FXML
+//     private FXCheckBox stringType;
+//
+//     /**
+//      * 排除list类型
+//      */
+//     @FXML
+//     private FXCheckBox listType;
+//
+//     /**
+//      * 排除stream类型
+//      */
+//     @FXML
+//     private FXCheckBox streamType;
+//
+//     /**
+//      * 排除set类型
+//      */
+//     @FXML
+//     private FXCheckBox setType;
+//
+//     /**
+//      * 排除zset类型
+//      */
+//     @FXML
+//     private FXCheckBox zsetType;
+//
+//     /**
+//      * 排除hash类型
+//      */
+//     @FXML
+//     private FXCheckBox hashType;
+//
+//     /**
+//      * 导出操作任务
+//      */
+//     private Thread execTask;
+//
+//     /**
+//      * 过滤内容列表
+//      */
+//     private List<RedisFilter> filters;
+//
+//     /**
+//      * 计数器
+//      */
+//     private final Counter counter = new Counter();
+//
+//     /**
+//      * 过滤配置储存
+//      */
+//     private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+//
+//     /**
+//      * 当前db键列表
+//      */
+//     private Set<String> allKeys;
+//
+//     /**
+//      * 全部db键列表
+//      */
+//     private Map<Integer, Set<String>> fullKeys;
+//
+//     /**
+//      * 执行导出
+//      */
+//     @FXML
+//     private void doExport() {
+//         // 重置参数
+//         this.counter.reset();
+//         this.exportMsg.clear();
+//         boolean dictSort = this.dictSort.isSelected();
+//         // 开始处理
+//         this.exportMsg.clear();
+//         // this.exportBtn.disable();
+//         // this.stateManager.disable();
+//         NodeGroupUtil.disable(this.stage, "exec");
+//         if (this.db.hasProp("canDisable")) {
+//             this.db.disable();
+//         }
+//         this.stage.appendTitle("===" + I18nHelper.exportProcessing() + "===");
+//         // 适用过滤
+//         if (this.applyFilter.isSelected()) {
+//             this.filters = this.filterStore.loadEnable();
+//         }
+//         // 执行导出
+//         this.execTask = ThreadUtil.start(() -> {
+//             try {
+//                 this.stopExportBtn.enable();
+//                 // 获取键
+//                 List<RedisKey> allNodes = new ArrayList<>();
+//                 // 导出所有
+//                 if (this.db.getDB() == -1) {
+//                     if (CollectionUtil.isEmpty(this.fullKeys)) {
+//                         this.fullKeys = this.client.fullKeys(this.pattern.getText());
+//                     }
+//                     for (Map.Entry<Integer, Set<String>> entry : this.fullKeys.entrySet()) {
+//                         this.doExport(entry.getKey(), entry.getValue(), allNodes);
+//                     }
+//                 } else {// 导出当前库
+//                     if (CollectionUtil.isEmpty(this.allKeys)) {
+//                         this.allKeys = this.client.allKeys(this.db.getDB(), this.pattern.getText());
+//                     }
+//                     this.doExport(this.db.getDB(), this.allKeys, allNodes);
+//                 }
+//                 // 取消操作
+//                 if (ThreadUtil.isInterrupted(this.execTask)) {
+//                     JulLog.warn("export canceled!");
+//                     return;
+//                 }
+//                 // 键按词典顺序排序
+//                 if (dictSort) {
+//                     allNodes.sort(RedisKey::compareTo);
+//                 }
+//                 boolean prettyFormat = this.pretty.isSelected();
+//                 // 导出内容
+//                 String exportData = RedisExportUtil.nodesToJSON(allNodes, null, prettyFormat);
+//                 // 文件格式
+//                 FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
+//                 // 处理名称
+//                 String fileName = "Redis-" + I18nHelper.connect() + this.client.infoName() + "-" + I18nHelper.exportData();
+//                 if (StringUtil.equals(I18nHelper.allDatabase(), this.db.getValue())) {
+//                     fileName += ".json";
+//                 } else {
+//                     fileName += "-db" + this.db.getValue() + ".json";
+//                 }
+//                 // 收尾工作
+//                 this.updateStatus(I18nHelper.fileProcessing());
+//                 File file = FileChooserHelper.save(I18nHelper.exportData(), fileName, extensionFilter);
+//                 // 保存文件
+//                 if (file != null) {
+//                     FileUtil.writeUtf8String(exportData, file);
+//                     this.updateStatus(I18nHelper.operationSuccess());
+//                     MessageBox.okToast(I18nHelper.operationSuccess());
+//                 } else {
+//                     this.updateStatus(I18nHelper.operationCancel());
+//                 }
+//             } catch (Exception e) {
+//                 if (e.getClass().isAssignableFrom(InterruptedException.class)) {
+//                     this.updateStatus(I18nHelper.operationCancel());
+//                     MessageBox.okToast(I18nHelper.operationCancel());
+//                 } else {
+//                     e.printStackTrace();
+//                     this.updateStatus(I18nHelper.operationFail());
+//                     MessageBox.warn(I18nHelper.operationFail());
+//                 }
+//             } finally {
+//                 // 结束处理
+//                 // this.exportBtn.enable();
+//                 // this.stateManager.enable();
+//                 NodeGroupUtil.enable(this.stage, "exec");
+//                 this.stopExportBtn.disable();
+//                 if (this.db.hasProp("canDisable")) {
+//                     this.db.enable();
+//                 }
+//                 this.stage.restoreTitle();
+//                 SystemUtil.gcLater();
+//             }
+//         });
+//     }
+//
+//     /**
+//      * 结束导出
+//      */
+//     @FXML
+//     private void stopExport() {
+//         ThreadUtil.interrupt(this.execTask);
+//         this.execTask = null;
+//     }
+//
+//     @Override
+//     protected void bindListeners() {
+//         // this.pretty.managedBindVisible();
+//         // this.keysBox1.managedBindVisible();
+//         // this.keysBox2.managedBindVisible();
+//
+//         // db索引变化
+//         this.db.selectedIndexChanged((observable, oldValue, newValue) -> {
+//             this.keys.clear();
+//             this.allKeys = null;
+//             this.fullKeys = null;
+//         });
+//
+//         // 键模式输入变化
+//         this.pattern.addTextChangeListener((observable, oldValue, newValue) -> {
+//             this.keys.clear();
+//             this.allKeys = null;
+//             this.fullKeys = null;
+//         });
+//
+//         // 键过滤选中变化
+//         this.filterKeys.selectedChanged((observable, oldValue, newValue) -> {
+//             if (newValue) {
+//                 this.keysBox1.display();
+//                 this.keysBox2.display();
+//                 this.msgBox.setFlexHeight("100% - 600");
+//             } else {
+//                 this.keys.clear();
+//                 this.allKeys = null;
+//                 this.fullKeys = null;
+//                 this.pattern.setText("*");
+//                 this.keysBox1.disappear();
+//                 this.keysBox2.disappear();
+//                 this.msgBox.setFlexHeight("100% - 400");
+//             }
+//             this.keysBox1.parentAutosize();
+//         });
+//     }
+//
+//     @Override
+//     public void onStageShown(WindowEvent event) {
+//         super.onStageShown(event);
+//         TreeItem<?> treeItem = this.getWindowProp("treeItem");
+//         if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
+//             this.client = connectTreeItem.client();
+//             this.db.addItem(I18nHelper.allDatabase());
+//             this.db.setDbCount(this.client.databases());
+//             this.db.setProp("canDisable", true);
+//             this.serverName.setText(connectTreeItem.value().getName());
+//         } else if (treeItem instanceof RedisDatabaseTreeItem dbTreeItem) {
+//             this.client = dbTreeItem.client();
+//             this.db.addDB(dbTreeItem.dbIndex());
+//             this.db.disable();
+//             this.db.removeProp("canDisable");
+//             this.serverName.setText(dbTreeItem.info().getName());
+//         }
+//         this.db.selectFirst();
+//         this.stage.hideOnEscape();
+//     }
+//
+//     @Override
+//     public void onWindowHidden(WindowEvent event) {
+//         this.stopExport();
+//     }
+//
+//     /**
+//      * 执行导出
+//      *
+//      * @param dbIndex  数据库索引
+//      * @param keys     键列表
+//      * @param allNodes 键节点列表
+//      */
+//     private void doExport(int dbIndex, Set<String> keys, List<RedisKey> allNodes) {
+//         for (String key : keys) {
+//             try {
+//                 // 被过滤
+//                 if (this.applyFilter.isSelected() && RedisKeyUtil.isFiltered(key, this.filters)) {
+//                     this.updateStatus(dbIndex, key, 2, null);
+//                     continue;
+//                 }
+//                 // 获取键
+//                 RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL.isSelected(), true, this.client);
+//                 // 失败
+//                 if (redisKey == null) {
+//                     this.updateStatus(dbIndex, key, 0, null);
+//                 } else if (this.isExclude(redisKey)) { // 被排除
+//                     this.updateStatus(dbIndex, key, 3, null);
+//                 } else {// 添加到集合
+//                     allNodes.add(redisKey);
+//                     this.updateStatus(dbIndex, key, 1, null);
+//                 }
+//                 // 取消操作
+//                 if (ThreadUtil.isInterrupted(this.execTask)) {
+//                     break;
+//                 }
+//             } catch (Exception ex) {
+//                 ex.printStackTrace();
+//                 this.updateStatus(dbIndex, key, 0, ex);
+//             }
+//         }
+//     }
+//
+//     /**
+//      * 是否被排除
+//      *
+//      * @param node 键
+//      * @return 结果
+//      */
+//     private boolean isExclude(RedisKey node) {
+//         if (!this.listType.isSelected() && node.isListKey()) {
+//             return true;
+//         }
+//         if (!this.setType.isSelected() && node.isSetKey()) {
+//             return true;
+//         }
+//         if (!this.zsetType.isSelected() && node.isZSetKey()) {
+//             return true;
+//         }
+//         if (!this.hashType.isSelected() && node.isHashKey()) {
+//             return true;
+//         }
+//         if (!this.streamType.isSelected() && node.isStreamKey()) {
+//             return true;
+//         }
+//         return !this.stringType.isSelected() && node.isStringKey();
+//     }
+//
+//     /**
+//      * 更新状态
+//      *
+//      * @param key    路径
+//      * @param status 状态 0:失败 1:成功 2:过滤 3:排除
+//      * @param ex     异常信息
+//      */
+//     private void updateStatus(int dbIndex, String key, int status, Exception ex) {
+//         key = URLDecoder.decode(key, StandardCharsets.UTF_8);
+//         String msg;
+//         if (status == 1) {
+//             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.success();
+//             this.counter.updateSuccess();
+//         } else if (status == 2) {
+//             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip1();
+//             this.counter.updateIgnore();
+//         } else if (status == 3) {
+//             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + RedisI18nHelper.exportTip2();
+//             this.counter.updateIgnore();
+//         } else {
+//             msg = I18nHelper.exportKey() + "：" + key + " [db" + dbIndex + "] " + I18nHelper.fail();
+//             if (ex != null) {
+//                 msg += "，" + I18nHelper.errorInfo() + "：" + RedisExceptionParser.INSTANCE.apply(ex);
+//             }
+//             this.counter.updateFail();
+//         }
+//         this.exportMsg.appendLine(msg);
+//         this.updateStatus(null);
+//     }
+//
+//     /**
+//      * 更新状态
+//      *
+//      * @param extraMsg 额外信息
+//      */
+//     private void updateStatus(String extraMsg) {
+//         if (extraMsg != null) {
+//             this.counter.setExtraMsg(extraMsg);
+//         }
+//         FXUtil.runLater(() -> this.exportStatus.setText(this.counter.unknownFormat()));
+//     }
+//
+//     /**
+//      * 显示受影响的键
+//      */
+//     @FXML
+//     private void showKeys() {
+//         this.keys.clear();
+//         if (this.db.getDB() == -1) {
+//             this.fullKeys = this.client.fullKeys(this.pattern.getText());
+//             if (CollectionUtil.isNotEmpty(this.fullKeys)) {
+//                 List<String> texts = new ArrayList<>(this.fullKeys.size());
+//                 int index = 0;
+//                 for (Map.Entry<Integer, Set<String>> entry : this.fullKeys.entrySet()) {
+//                     texts.add("db" + entry.getKey() + "  ========================>");
+//                     for (String key : entry.getValue()) {
+//                         ++index;
+//                         texts.add("(" + index + " " + key);
+//                     }
+//                     texts.add("\n");
+//                 }
+//                 this.keys.appendLines(texts);
+//             }
+//         } else {
+//             this.allKeys = this.client.allKeys(this.db.getDB(), this.pattern.getText());
+//             if (CollectionUtil.isNotEmpty(this.allKeys)) {
+//                 List<String> texts = new ArrayList<>(this.allKeys.size());
+//                 int index = 0;
+//                 for (String key : this.allKeys) {
+//                     ++index;
+//                     texts.add("(" + index + " " + key);
+//                 }
+//                 this.keys.appendLines(texts);
+//             }
+//         }
+//     }
+//
+//     @Override
+//     public String getViewTitle() {
+//         return I18nResourceBundle.i18nString("base.title.export");
+//     }
+// }

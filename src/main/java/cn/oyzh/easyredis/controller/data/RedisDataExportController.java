@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller.data;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileNameUtil;
 import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -242,8 +241,7 @@ public class RedisDataExportController extends StageController {
         // 生成迁移处理器
         if (this.exportHandler == null) {
             this.exportHandler = new RedisDataExportHandler();
-            this.exportHandler
-                    .messageHandler(str -> this.exportMsg.appendLine(str))
+            this.exportHandler.messageHandler(str -> this.exportMsg.appendLine(str))
                     .processedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
@@ -302,10 +300,6 @@ public class RedisDataExportController extends StageController {
         this.exportHandler.pattern(this.pattern.getText());
         // 保留ttl
         this.exportHandler.retainTTL(this.retainTTL.isSelected());
-        // 前缀
-        if (FileNameUtil.isTxtType(fileType)) {
-            this.exportHandler.prefix(this.prefix.selectedUserData());
-        }
         // 执行导出
         this.execTask = ThreadUtil.start(() -> {
             try {
@@ -411,14 +405,15 @@ public class RedisDataExportController extends StageController {
                 }
             }
             // 初始化数据库
-            this.db.clearItems();
-            if (this.dbIndex != null) {
-                this.db.addItem("db" + this.dbIndex);
-                this.db.selectFirst();
-            } else {
-                this.db.addItem(I18nHelper.allDatabase());
-                this.db.setDbCount(this.client.databases());
-                this.db.selectFirst();
+            if (this.db.isItemEmpty()) {
+                if (this.dbIndex != null) {
+                    this.db.addItem("db" + this.dbIndex);
+                    this.db.selectFirst();
+                } else {
+                    this.db.addItem(I18nHelper.allDatabase());
+                    this.db.setDbCount(this.client.databases());
+                    this.db.selectFirst();
+                }
             }
         } finally {
             this.restoreTitle();
