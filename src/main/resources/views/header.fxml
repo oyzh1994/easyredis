@@ -47,7 +47,7 @@
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </CollapseSVGLabel>
-    <ExpandSVGLabel visible="false" managed="false" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
+    <ExpandSVGLabel visible="false" managedBindVisible="true" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
         <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>

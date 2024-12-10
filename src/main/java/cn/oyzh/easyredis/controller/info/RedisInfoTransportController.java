@@ -410,8 +410,8 @@ public class RedisInfoTransportController extends StageController {
 
     @Override
     protected void bindListeners() {
-        this.keysBox1.managedBindVisible();
-        this.keysBox2.managedBindVisible();
+        // this.keysBox1.managedBindVisible();
+        // this.keysBox2.managedBindVisible();
 
         // 键模式变化
         this.pattern.addTextChangeListener((observable, oldValue, newValue) -> {

@@ -318,8 +318,8 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
             super.bindListeners();
             // 格式监听
             this.format.selectedItemChanged(this.formatListener);
-            // 切换视图
-            this.reverseView.managedBindVisible();
+            // // 切换视图
+            // this.reverseView.managedBindVisible();
             // 分数处理
             this.scoreVal.addTextChangeListener(this.scoreValListener);
             this.scoreVal.disableProperty().bind(this.nodeData.disabledProperty());

@@ -3,7 +3,9 @@
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
 <?import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView?>
+<?import cn.oyzh.fx.gui.svg.CollectPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
@@ -13,8 +15,6 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.CollectPane?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisKeysTab.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -60,7 +60,7 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </SortAscSVGGlyph>
-            <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+            <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false"
                               onMousePrimaryClicked="#sortDesc">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

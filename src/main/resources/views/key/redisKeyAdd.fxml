@@ -3,22 +3,22 @@
 <?import cn.oyzh.easyredis.fx.LatitudeField?>
 <?import cn.oyzh.easyredis.fx.LongitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
+<?import cn.oyzh.fx.gui.button.SubmitButton?>
+<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.DecimalTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
-<?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.gui.button.CancelButton?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="680"
           fx:id="root">
@@ -47,7 +47,7 @@
             </HBox.margin>
         </ClearableTextField>
     </FlexHBox>
-    <FlexVBox fx:id="zSetBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="zSetBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" realHeight="50">
             <AccentLabel text="%base.score" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -92,7 +92,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="bitBox" flexWidth="100%" flexHeight="100" visible="false" managed="false">
+    <FlexVBox fx:id="bitBox" flexWidth="100%" flexHeight="100" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" realHeight="50">
             <AccentLabel text="%base.subscript" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -119,7 +119,7 @@
             </FXToggleSwitch>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="geoBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="geoBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" realHeight="50">
             <AccentLabel text="%base.longitude" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -176,7 +176,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="hashBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="hashBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" flexHeight="50%">
             <AccentLabel text="%base.fieldName" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -220,7 +220,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="streamBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="streamBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" realHeight="50">
             <AccentLabel text="%base.messageId" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -265,7 +265,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
             <AccentLabel text="%base.member" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -296,7 +296,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="setBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="setBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
             <AccentLabel text="%base.member" realHeight="30" realWidth="80">
                 <HBox.margin>
@@ -327,7 +327,7 @@
             </FlexVBox>
         </FlexHBox>
     </FlexVBox>
-    <FlexVBox fx:id="hylogBox" flexWidth="100%" flexHeight="100% - 240" visible="false" managed="false">
+    <FlexVBox fx:id="hylogBox" flexWidth="100%" flexHeight="100% - 240" managedBindVisible="true" visible="false">
         <FlexHBox flexWidth="100%" flexHeight="100%">
             <AccentLabel text="%base.elements" realHeight="30" realWidth="80">
                 <HBox.margin>

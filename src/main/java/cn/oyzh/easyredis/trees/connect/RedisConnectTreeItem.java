@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;
@@ -304,13 +305,17 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 传输数据
      */
     private void transportData() {
-        StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
-        if (wrapper != null) {
-            wrapper.disappear();
-        }
-        wrapper = StageManager.parseStage(RedisInfoTransportController.class);
-        wrapper.setProp("treeItem", this);
-        wrapper.display();
+        // StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
+        // if (wrapper != null) {
+        //     wrapper.disappear();
+        // }
+        // wrapper = StageManager.parseStage(RedisInfoTransportController.class);
+        // wrapper.setProp("treeItem", this);
+        // wrapper.display();
+
+        StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
+        adapter.setProp("sourceInfo", this.value);
+        adapter.display();
     }
 
     /**

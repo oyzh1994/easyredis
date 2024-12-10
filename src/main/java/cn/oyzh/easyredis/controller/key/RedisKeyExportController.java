@@ -340,9 +340,9 @@ public class RedisKeyExportController extends StageController {
 
     @Override
     protected void bindListeners() {
-        this.pretty.managedBindVisible();
-        this.keysBox1.managedBindVisible();
-        this.keysBox2.managedBindVisible();
+        // this.pretty.managedBindVisible();
+        // this.keysBox1.managedBindVisible();
+        // this.keysBox2.managedBindVisible();
 
         // db索引变化
         this.db.selectedIndexChanged((observable, oldValue, newValue) -> {

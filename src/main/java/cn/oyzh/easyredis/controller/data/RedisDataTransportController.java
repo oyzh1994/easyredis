@@ -94,13 +94,13 @@ public class RedisDataTransportController extends StageController {
     private RedisConnectComboBox sourceInfo;
 
     /**
-     * 来源字符集
+     * 来源数据库
      */
     @FXML
     private RedisDatabaseComboBox sourceDatabase;
 
     /**
-     * 来源字符集名称
+     * 来源数据库名称
      */
     @FXML
     private FlexLabel sourceDatabaseName;
@@ -112,13 +112,13 @@ public class RedisDataTransportController extends StageController {
     private RedisConnectComboBox targetInfo;
 
     /**
-     * 目标字符集
+     * 目标数据库
      */
     @FXML
     private RedisDatabaseComboBox targetDatabase;
 
     /**
-     * 目标字符集名称
+     * 目标数据库名称
      */
     @FXML
     private FlexLabel targetDatabaseName;
@@ -431,7 +431,6 @@ public class RedisDataTransportController extends StageController {
         FXUtil.runLater(() -> this.transportStatus.setText(this.counter.unknownFormat()));
     }
 
-
     private void initSourceDatabase(RedisConnect sourceInfo) {
         if (this.sourceClient != null) {
             this.sourceClient.close();
@@ -501,7 +500,6 @@ public class RedisDataTransportController extends StageController {
             this.enable();
         }
     }
-
 
     @Override
     public String getViewTitle() {

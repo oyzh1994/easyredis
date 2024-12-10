@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.ConnectionSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SortAscSVGGlyph?>
@@ -9,7 +10,6 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView?>
 <FXTab xmlns:fx="http://javafx.com/fxml/1"
        fx:controller="cn.oyzh.easyredis.controller.main.ConnectController" text="%base.connection">
     <graphic>
@@ -28,7 +28,7 @@
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </SortAscSVGGlyph>
-            <SortDescSVGGlyph fx:id="sortDesc" size="15" visible="false" managed="false"
+            <SortDescSVGGlyph fx:id="sortDesc" size="15" managedBindVisible="true" visible="false"
                               onMousePrimaryClicked="#sortDesc">
                 <HBox.margin>
                     <Insets left="5" top="10"/>

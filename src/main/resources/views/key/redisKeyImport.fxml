@@ -31,7 +31,7 @@
             </HBox.margin>
         </FileButton>
     </FlexHBox>
-    <FlexText fx:id="scriptInfo" visible="false" managed="false" fontSize="11">
+    <FlexText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>
