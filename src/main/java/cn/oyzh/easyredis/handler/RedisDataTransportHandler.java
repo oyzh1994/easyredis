@@ -94,7 +94,7 @@ public class RedisDataTransportHandler extends DataHandler {
      */
     private void doTransport(int fromDBIndex, int targetDBIndex, Set<String> keys) throws InterruptedException {
         for (String key : keys) {
-            // 取消操作
+            // 检查操作
             this.checkInterrupt();
             // 被过滤
             if (RedisKeyUtil.isFiltered(key, this.filters)) {
@@ -173,7 +173,7 @@ public class RedisDataTransportHandler extends DataHandler {
      */
     private void createKey(RedisKey redisKey, int targetDBIndex) {
         if (redisKey != null) {
-            RedisKeyUtil.createNode(redisKey, targetDBIndex, this.targetClient);
+            RedisKeyUtil.createKey(redisKey, targetDBIndex, this.targetClient);
             String key = redisKey.key();
             Long ttl = redisKey.ttl();
             if (ttl != null && this.retainTTL) {

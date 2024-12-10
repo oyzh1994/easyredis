@@ -649,7 +649,7 @@ public class RedisInfoTransportController extends StageController {
      */
     private void createNode(RedisKey node, int targetDBIndex) {
         if (node != null) {
-            RedisKeyUtil.createNode(node, targetDBIndex, this.targetClient);
+            RedisKeyUtil.createKey(node, targetDBIndex, this.targetClient);
             String key = node.key();
             Long ttl = node.ttl();
             if (ttl != null && this.retainTTL.isSelected()) {

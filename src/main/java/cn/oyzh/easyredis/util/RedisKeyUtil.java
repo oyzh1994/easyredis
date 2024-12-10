@@ -281,7 +281,7 @@ public class RedisKeyUtil {
      * @param dbIndex db索引
      * @param client  redis客户端
      */
-    public static void createNode(RedisKey node, Integer dbIndex, RedisClient client) {
+    public static void createKey(RedisKey node, Integer dbIndex, RedisClient client) {
         if (node == null || client == null) {
             return;
         }
