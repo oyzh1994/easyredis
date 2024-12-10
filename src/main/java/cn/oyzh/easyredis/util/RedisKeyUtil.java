@@ -7,6 +7,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
@@ -87,8 +88,8 @@ public class RedisKeyUtil {
         // string
         if (redisKey.isStringKey()) {
             RedisStringValue stringValue = redisKey.asStringValue();
-            if (stringValue.isHyLog()) {
-                return "";
+            if (redisKey.isRawEncoding()) {
+                return "b'" + TextUtil.byteToBitStr(stringValue.bytesValue()) + "'";
             }
             return stringValue.stringValue();
         }

@@ -93,4 +93,15 @@ public class RedisStringValue implements RedisKeyValue<Object> {
         }
         return "";
     }
+
+    public byte[] bytesValue() {
+        Object value = this.getValue();
+        if (value instanceof String s) {
+            return s.getBytes();
+        }
+        if (value instanceof byte[] bytes) {
+            return bytes;
+        }
+        return new byte[0];
+    }
 }

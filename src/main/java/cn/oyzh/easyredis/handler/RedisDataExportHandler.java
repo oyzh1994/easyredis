@@ -202,9 +202,9 @@ public class RedisDataExportHandler extends DataHandler {
                     RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL, true, this.client);
                     // 执行过滤
                     if (filter.test(key, redisKey)) {
-                        // 判断是否统计值
+                        // 查询对象编码
                         if (redisKey.isStringKey()) {
-                            redisKey.asStringValue().setHyLog(RedisKeyUtil.isHylog(dbIndex, key, this.client));
+                            redisKey.objectedEncoding(this.client.objectEncoding(dbIndex, key));
                         }
                         success.accept(redisKey);
                     }
