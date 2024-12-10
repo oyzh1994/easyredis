@@ -1,235 +1,235 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyredis.fx.RedisConnectComboBox?>
-<?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
-<?import cn.oyzh.fx.gui.button.CloseButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.gui.button.StopButton?>
-<?import cn.oyzh.fx.gui.button.TransportButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850"
-          realHeight="700">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.source" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <RedisConnectComboBox fx:id="fromConnect" realHeight="30" flexWidth="100% - 345">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </RedisConnectComboBox>
-        <FXLabel text="%base.database" prefWidth="65">
-            <HBox.margin>
-                <Insets left="10" top="20"/>
-            </HBox.margin>
-        </FXLabel>
-        <RedisDatabaseComboBox disable="true" fx:id="fromDB" realHeight="30" prefWidth="80" initIndex="1">
-            <HBox.margin>
-                <Insets left="5" top="10"/>
-            </HBox.margin>
-        </RedisDatabaseComboBox>
-        <FXCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" visible="false">
-        <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*"
-                            groupId="exec">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </ClearableTextField>
-        <FXButton text="%redis.key.tip2" onAction="#showKeys" groupId="exec">
-            <HBox.margin>
-                <Insets left="3" top="10"/>
-            </HBox.margin>
-        </FXButton>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" visible="false">
-        <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 10" flexWidth="100% - 180">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </ReadOnlyTextArea>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.target" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <RedisConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 345">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </RedisConnectComboBox>
-        <FXLabel text="%base.database" prefWidth="65">
-            <HBox.margin>
-                <Insets left="10" top="20"/>
-            </HBox.margin>
-        </FXLabel>
-        <RedisDatabaseComboBox disable="true" fx:id="targetDB" realHeight="30" prefWidth="80" initIndex="1">
-            <HBox.margin>
-                <Insets left="5" top="10"/>
-            </HBox.margin>
-        </RedisDatabaseComboBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyExists" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <fx:define>
-            <FXToggleGroup fx:id="existStrategy"/>
-        </fx:define>
-        <FXRadioButton groupId="exec" fx:id="skipForExist" toggleGroup="$existStrategy"
-                       text="%base.skip" selected="true" userData="0">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton groupId="exec" fx:id="overrideForExist" toggleGroup="$existStrategy"
-                       text="%base.overwrite" userData="1">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton groupId="exec" fx:id="updateForExist" toggleGroup="$existStrategy"
-                       text="%base.update" userData="2">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXRadioButton>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true"
-                      groupId="exec">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox fx:id="applyFilter" text="%base.applyFilter" groupId="exec">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyType" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FXCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox groupId="exec" selected="true" fx:id="setType" text="SET">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox groupId="exec" fx:id="streamType" text="STREAM">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
-        <AccentLabel text="%base.process" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexVBox flexWidth="100% - 180" flexHeight="100%">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-            <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100%" flexHeight="100% - 20"/>
-            <FXLabel fx:id="transportStatus"/>
-        </FlexVBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <TransportButton fx:id="transportBtn" onAction="#doTransport" realHeight="30"
-                         iconSizePercent="0.75" groupId="exec">
-            <HBox.margin>
-                <Insets left="110" top="10"/>
-            </HBox.margin>
-        </TransportButton>
-        <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport" realHeight="30"
-                    iconSizePercent="0.9">
-            <HBox.margin>
-                <Insets left="15" top="10"/>
-            </HBox.margin>
-        </StopButton>
-        <CloseButton>
-            <HBox.margin>
-                <Insets left="15" top="10"/>
-            </HBox.margin>
-        </CloseButton>
-    </FlexHBox>
-    <FlexVBox flexWidth="100%" fontSize="12">
-        <FXLabel text="%base.tip" textFill="#666">
-            <VBox.margin>
-                <Insets top="20"/>
-            </VBox.margin>
-        </FXLabel>
-        <Text fill="#666" text="%redis.info.transport.tip1">
-            <VBox.margin>
-                <Insets top="10"/>
-            </VBox.margin>
-        </Text>
-        <VBox.margin>
-            <Insets left="110"/>
-        </VBox.margin>
-    </FlexVBox>
-</FlexVBox>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <?import cn.oyzh.easyredis.fx.RedisConnectComboBox?> -->
+<!-- <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?> -->
+<!-- <?import cn.oyzh.fx.gui.button.CloseButton?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXButton?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?> -->
+<!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
+<!-- <?import cn.oyzh.fx.gui.button.TransportButton?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?> -->
+<!-- <?import javafx.geometry.Insets?> -->
+<!-- <?import javafx.scene.layout.HBox?> -->
+<!-- <?import javafx.scene.layout.VBox?> -->
+<!-- <?import javafx.scene.text.Text?> -->
+<!-- <?import cn.oyzh.fx.gui.label.AccentLabel?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
+<!-- <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?> -->
+<!-- <?import cn.oyzh.fx.gui.text.area.MsgTextArea?> -->
+<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!--           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850" -->
+<!--           realHeight="700"> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <AccentLabel text="%base.source" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <RedisConnectComboBox fx:id="fromConnect" realHeight="30" flexWidth="100% - 345"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </RedisConnectComboBox> -->
+<!--         <FXLabel text="%base.database" prefWidth="65"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="20"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXLabel> -->
+<!--         <RedisDatabaseComboBox disable="true" fx:id="fromDB" realHeight="30" prefWidth="80" initIndex="1"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </RedisDatabaseComboBox> -->
+<!--         <FXCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" managedBindVisible="true" visible="false"> -->
+<!--         <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 275" text="*" -->
+<!--                             groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </ClearableTextField> -->
+<!--         <FXButton text="%redis.key.tip2" onAction="#showKeys" groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="3" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXButton> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" managedBindVisible="true" visible="false"> -->
+<!--         <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 10" flexWidth="100% - 180"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </ReadOnlyTextArea> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <AccentLabel text="%base.target" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <RedisConnectComboBox fx:id="targetConnect" realHeight="30" flexWidth="100% - 345"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </RedisConnectComboBox> -->
+<!--         <FXLabel text="%base.database" prefWidth="65"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="20"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXLabel> -->
+<!--         <RedisDatabaseComboBox disable="true" fx:id="targetDB" realHeight="30" prefWidth="80" initIndex="1"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="5" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </RedisDatabaseComboBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <AccentLabel text="%base.keyExists" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <fx:define> -->
+<!--             <FXToggleGroup fx:id="existStrategy"/> -->
+<!--         </fx:define> -->
+<!--         <FXRadioButton groupId="exec" fx:id="skipForExist" toggleGroup="$existStrategy" -->
+<!--                        text="%base.skip" selected="true" userData="0"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXRadioButton> -->
+<!--         <FXRadioButton groupId="exec" fx:id="overrideForExist" toggleGroup="$existStrategy" -->
+<!--                        text="%base.overwrite" userData="1"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXRadioButton> -->
+<!--         <FXRadioButton groupId="exec" fx:id="updateForExist" toggleGroup="$existStrategy" -->
+<!--                        text="%base.update" userData="2"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXRadioButton> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <AccentLabel text="%base.options" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true" -->
+<!--                       groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox fx:id="applyFilter" text="%base.applyFilter" groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <AccentLabel text="%base.keyType" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <FXCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox groupId="exec" selected="true" fx:id="setType" text="SET"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--         <FXCheckBox groupId="exec" fx:id="streamType" text="STREAM"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="18"/> -->
+<!--             </HBox.margin> -->
+<!--         </FXCheckBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox"> -->
+<!--         <AccentLabel text="%base.process" realHeight="30" realWidth="80"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="20" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </AccentLabel> -->
+<!--         <FlexVBox flexWidth="100% - 180" flexHeight="100%"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="10" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--             <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100%" flexHeight="100% - 20"/> -->
+<!--             <FXLabel fx:id="transportStatus"/> -->
+<!--         </FlexVBox> -->
+<!--     </FlexHBox> -->
+<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         <TransportButton fx:id="transportBtn" onAction="#doTransport" realHeight="30" -->
+<!--                          iconSizePercent="0.75" groupId="exec"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="110" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </TransportButton> -->
+<!--         <StopButton disable="true" fx:id="stopTransportBtn" onAction="#stopTransport" realHeight="30" -->
+<!--                     iconSizePercent="0.9"> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="15" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </StopButton> -->
+<!--         <CloseButton> -->
+<!--             <HBox.margin> -->
+<!--                 <Insets left="15" top="10"/> -->
+<!--             </HBox.margin> -->
+<!--         </CloseButton> -->
+<!--     </FlexHBox> -->
+<!--     <FlexVBox flexWidth="100%" fontSize="12"> -->
+<!--         <FXLabel text="%base.tip" textFill="#666"> -->
+<!--             <VBox.margin> -->
+<!--                 <Insets top="20"/> -->
+<!--             </VBox.margin> -->
+<!--         </FXLabel> -->
+<!--         <Text fill="#666" text="%redis.info.transport.tip1"> -->
+<!--             <VBox.margin> -->
+<!--                 <Insets top="10"/> -->
+<!--             </VBox.margin> -->
+<!--         </Text> -->
+<!--         <VBox.margin> -->
+<!--             <Insets left="110"/> -->
+<!--         </VBox.margin> -->
+<!--     </FlexVBox> -->
+<!-- </FlexVBox> -->

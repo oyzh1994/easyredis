@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
-import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.controller.key.RedisKeyExportController;

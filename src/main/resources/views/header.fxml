@@ -22,11 +22,11 @@
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </TransportSVGLabel>
-    <TransportSVGLabel onMousePrimaryClicked="#transport1" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </TransportSVGLabel>
+    <!-- <TransportSVGLabel onMousePrimaryClicked="#transport1" size="12"> -->
+    <!--     <HBox.margin> -->
+    <!--         <Insets left="10" top="5" bottom="5"/> -->
+    <!--     </HBox.margin> -->
+    <!-- </TransportSVGLabel> -->
     <SettingSVGLabel onMousePrimaryClicked="#setting" size="14">
         <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
