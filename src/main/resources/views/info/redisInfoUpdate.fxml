@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
@@ -63,11 +63,11 @@
                             <Insets left="20" top="10"/>
                         </HBox.margin>
                     </AccentLabel>
-                    <FlexCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
+                    <FXCheckBox text="%base.readonlyMode" tipText="%base.readonlyModeTip" fx:id="readonly">
                         <HBox.margin>
                             <Insets left="10" top="16"/>
                         </HBox.margin>
-                    </FlexCheckBox>
+                    </FXCheckBox>
                 </FlexHBox>
             </FlexVBox>
         </FXTab>
@@ -193,12 +193,12 @@
         <!--                     <Insets left="5" top="10"/> -->
         <!--                 </HBox.margin> -->
         <!--             </ClearableTextField> -->
-        <!--             <FlexCheckBox fx:id="redirectMaster" text="重定向哨兵" fontSize="11" -->
+        <!--             <FXCheckBox fx:id="redirectMaster" text="重定向哨兵" fontSize="11" -->
         <!--                           tipText="发现redis连接是哨兵角色，则重定向到master连接"> -->
         <!--                 <HBox.margin> -->
         <!--                     <Insets left="5" top="20"/> -->
         <!--                 </HBox.margin> -->
-        <!--             </FlexCheckBox> -->
+        <!--             </FXCheckBox> -->
         <!--         </FlexHBox> -->
         <!--         <FlexHBox flexWidth="100%" realHeight="50" fx:id="sentinelBox" disable="true"> -->
         <!--             <AccentLabel realHeight="30" realWidth="80" text="哨兵配置" styleClass="accent"> -->

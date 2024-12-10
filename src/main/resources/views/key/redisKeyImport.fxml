@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
@@ -70,11 +70,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox groupId="exec" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+        <FXCheckBox groupId="exec" fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="360">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">

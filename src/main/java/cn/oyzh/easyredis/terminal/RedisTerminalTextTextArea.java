@@ -184,7 +184,7 @@ public class RedisTerminalTextTextArea extends TerminalTextTextArea {
         ExecutorUtil.start(() -> {
             try {
                 this.intStatListener();
-                this.client.start(db);
+                this.client.startDatabase(db);
             } catch (Exception ex) {
                 this.onError(RedisExceptionParser.INSTANCE.apply(ex));
             } finally {

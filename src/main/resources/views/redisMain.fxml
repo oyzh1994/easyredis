@@ -2,7 +2,7 @@
 <?import cn.oyzh.easyredis.fx.RedisMsgTextArea?>
 <?import cn.oyzh.easyredis.tabs.RedisTabPane?>
 <?import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.pane.FlexFlowPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
@@ -52,41 +52,41 @@
         <!--             </PositioningSVGGlyph> -->
         <!--         </FlexHBox> -->
         <!--         &lt;!&ndash; <FlexFlowPane realHeight="30" flexWidth="100%"> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="str" fontSize="9" fx:id="showString" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="str" fontSize="9" fx:id="showString" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="10" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="set" fontSize="9" fx:id="showSet" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="set" fontSize="9" fx:id="showSet" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="zset" fontSize="9" fx:id="showZSet" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="zset" fontSize="9" fx:id="showZSet" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="list" fontSize="9" fx:id="showList" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="list" fontSize="9" fx:id="showList" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="hash" fontSize="9" fx:id="showHash" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="hash" fontSize="9" fx:id="showHash" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="stream" fontSize="9" fx:id="showStream" selected="true"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="stream" fontSize="9" fx:id="showStream" selected="true"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     <FlexCheckBox text="%base.onlyCollect" fx:id="onlyCollect" fontSize="9"> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     <FXCheckBox text="%base.onlyCollect" fx:id="onlyCollect" fontSize="9"> &ndash;&gt; -->
         <!--         &lt;!&ndash;         <FlowPane.margin> &ndash;&gt; -->
         <!--         &lt;!&ndash;             <Insets left="5" top="5"/> &ndash;&gt; -->
         <!--         &lt;!&ndash;         </FlowPane.margin> &ndash;&gt; -->
-        <!--         &lt;!&ndash;     </FlexCheckBox> &ndash;&gt; -->
+        <!--         &lt;!&ndash;     </FXCheckBox> &ndash;&gt; -->
         <!--         &lt;!&ndash; </FlexFlowPane> &ndash;&gt; -->
         <!--         &lt;!&ndash; <fx:include visible="false" managed="false" fx:id="search" source="search.fxml" prefHeight="60" &ndash;&gt; -->
         <!--         &lt;!&ndash;             flexWidth="100% - 2"/> &ndash;&gt; -->

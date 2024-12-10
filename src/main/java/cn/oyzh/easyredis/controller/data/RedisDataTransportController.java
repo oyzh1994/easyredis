@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.controller.data;
 
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -12,6 +13,8 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisClientUtil;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
+import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -24,12 +27,15 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -64,6 +70,12 @@ public class RedisDataTransportController extends StageController {
     private FlexVBox step3;
 
     /**
+     * 第四步
+     */
+    @FXML
+    private FlexVBox step4;
+
+    /**
      * 来源信息名称
      */
     @FXML
@@ -91,7 +103,7 @@ public class RedisDataTransportController extends StageController {
      * 来源字符集名称
      */
     @FXML
-    private FlexLabel sourceCharsetName;
+    private FlexLabel sourceDatabaseName;
 
     /**
      * 目标信息
@@ -109,7 +121,7 @@ public class RedisDataTransportController extends StageController {
      * 目标字符集名称
      */
     @FXML
-    private FlexLabel targetCharsetName;
+    private FlexLabel targetDatabaseName;
 
     /**
      * 来源主机
@@ -158,10 +170,64 @@ public class RedisDataTransportController extends StageController {
     private FXToggleGroup existsPolicy;
 
     /**
+     * 保留ttl
+     */
+    @FXML
+    private FXCheckBox retainTTL;
+
+    /**
      * 适用过滤配置
      */
     @FXML
     private FXCheckBox applyFilter;
+
+    /**
+     * 受影响的键
+     */
+    @FXML
+    private ReadOnlyTextArea keys;
+
+    /**
+     * 键模式
+     */
+    @FXML
+    private ClearableTextField pattern;
+
+    /**
+     * string类型
+     */
+    @FXML
+    private FXCheckBox stringType;
+
+    /**
+     * list类型
+     */
+    @FXML
+    private FXCheckBox listType;
+
+    /**
+     * stream类型
+     */
+    @FXML
+    private FXCheckBox streamType;
+
+    /**
+     * set类型
+     */
+    @FXML
+    private FXCheckBox setType;
+
+    /**
+     * zset类型
+     */
+    @FXML
+    private FXCheckBox zsetType;
+
+    /**
+     * hash类型
+     */
+    @FXML
+    private FXCheckBox hashType;
 
     /**
      * 传输操作任务
@@ -276,40 +342,36 @@ public class RedisDataTransportController extends StageController {
             if (newValue != null) {
                 this.sourceHost.setText(newValue.getHost());
                 this.sourceInfoName.setText(newValue.getName());
+                this.initSourceDatabase(newValue);
             } else {
                 this.sourceHost.clear();
                 this.sourceInfoName.clear();
-            }
-            if (this.sourceClient != null) {
-                this.sourceClient.close();
-                this.sourceClient = null;
+                this.sourceDatabase.clearItems();
             }
         });
         this.targetInfo.selectedItemChanged((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 this.targetHost.setText(newValue.getHost());
                 this.targetInfoName.setText(newValue.getName());
+                this.initTargetDatabase(newValue);
             } else {
                 this.targetHost.clear();
                 this.targetInfoName.clear();
-            }
-            if (this.targetClient != null) {
-                this.targetClient.close();
-                this.targetClient = null;
+                this.targetDatabase.clearItems();
             }
         });
         this.sourceDatabase.selectedItemChanged((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                this.sourceCharsetName.setText(newValue);
+                this.sourceDatabaseName.setText(newValue);
             } else {
-                this.sourceCharsetName.clear();
+                this.sourceDatabaseName.clear();
             }
         });
         this.targetDatabase.selectedItemChanged((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                this.targetCharsetName.setText(newValue);
+                this.targetDatabaseName.setText(newValue);
             } else {
-                this.targetCharsetName.clear();
+                this.targetDatabaseName.clear();
             }
         });
     }
@@ -344,17 +406,98 @@ public class RedisDataTransportController extends StageController {
         FXUtil.runLater(() -> this.transportStatus.setText(this.counter.unknownFormat()));
     }
 
+
+    private void initSourceDatabase(RedisConnect sourceInfo) {
+        if (this.sourceClient != null) {
+            this.sourceClient.close();
+            this.sourceClient = null;
+            this.sourceDatabase.clearItems();
+        }
+        this.appendTitle("===" + I18nHelper.connectIng() + "===");
+        this.disable();
+        try {
+            DownLatch latch = DownLatch.of();
+            ThreadUtil.start(() -> {
+                try {
+                    this.sourceClient = RedisClientUtil.newClient(sourceInfo);
+                    this.sourceClient.start(2500);
+                } finally {
+                    latch.countDown();
+                }
+            });
+            if (!latch.await(3000) || !this.sourceClient.isConnected()) {
+                this.sourceClient.close();
+                this.sourceClient = null;
+                this.sourceInfo.requestFocus();
+                MessageBox.warn(I18nHelper.connectInitFail());
+                return;
+            }
+
+            // 初始化数据库
+            this.sourceDatabase.setDbCount(this.sourceClient.databases());
+            this.sourceDatabase.selectFirst();
+        } finally {
+            this.restoreTitle();
+            this.enable();
+        }
+    }
+
+    private void initTargetDatabase(RedisConnect targetInfo) {
+        if (this.targetClient != null) {
+            this.targetClient.close();
+            this.targetClient = null;
+            this.targetDatabase.clearItems();
+        }
+        this.appendTitle("===" + I18nHelper.connectIng() + "===");
+        this.disable();
+        try {
+            DownLatch latch = DownLatch.of();
+            ThreadUtil.start(() -> {
+                try {
+                    this.targetClient = RedisClientUtil.newClient(targetInfo);
+                    this.targetClient.start(2500);
+                } finally {
+                    latch.countDown();
+                }
+            });
+            if (!latch.await(3000) || !this.targetClient.isConnected()) {
+                this.targetClient.close();
+                this.targetClient = null;
+                this.targetInfo.requestFocus();
+                MessageBox.warn(I18nHelper.connectInitFail());
+                return;
+            }
+
+            // 初始化数据库
+            this.targetDatabase.setDbCount(this.targetClient.databases());
+            this.targetDatabase.selectFirst();
+        } finally {
+            this.restoreTitle();
+            this.enable();
+        }
+    }
+
+
     @Override
     public String getViewTitle() {
         return I18nHelper.transportTitle();
     }
 
-    @Override
-    public void onStageInitialize(StageAdapter stage) {
-        super.onStageInitialize(stage);
-        this.step1.managedBindVisible();
-        this.step2.managedBindVisible();
-        this.step3.managedBindVisible();
+    /**
+     * 显示受影响的键
+     */
+    @FXML
+    private void showKeys() {
+        this.keys.clear();
+        Set<String> allKeys = this.sourceClient.allKeys(this.sourceDatabase.getDB(), this.pattern.getText());
+        if (CollectionUtil.isNotEmpty(allKeys)) {
+            List<String> texts = new ArrayList<>(allKeys.size());
+            int index = 0;
+            for (String key : allKeys) {
+                texts.add(++index + ". " + key);
+            }
+            this.keys.appendLines(texts);
+        }
     }
 
     @FXML
@@ -365,79 +508,49 @@ public class RedisDataTransportController extends StageController {
 
     @FXML
     private void showStep2() {
-        try {
-            RedisConnect sourceInfo = this.sourceInfo.getSelectedItem();
-            RedisConnect targetInfo = this.targetInfo.getSelectedItem();
-            if (sourceInfo == null) {
-                this.sourceInfo.requestFocus();
-                MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
-                return;
-            }
-            if (targetInfo == null) {
-                this.targetInfo.requestFocus();
-                MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
-                return;
-            }
-
-            if (sourceInfo.compare(targetInfo)) {
-                this.sourceInfo.requestFocus();
-                MessageBox.warn(I18nHelper.connectionsCannotBeTheSame());
-                return;
-            }
-
-            this.getStage().appendTitle("===" + I18nHelper.connectIng() + "===");
-            this.getStage().disable();
-
-            if (this.sourceClient == null || this.sourceClient.isClosed()) {
-                DownLatch latch = DownLatch.of();
-                ThreadUtil.start(() -> {
-                    try {
-                        this.sourceClient = RedisClientUtil.newClient(sourceInfo);
-                        this.sourceClient.start(2500);
-                    } finally {
-                        latch.countDown();
-                    }
-                });
-                if (!latch.await(3000) || !this.sourceClient.isConnected()) {
-                    this.sourceClient.close();
-                    this.sourceClient = null;
-                    this.sourceInfo.requestFocus();
-                    MessageBox.warn(I18nHelper.connectInitFail());
-                    return;
-                }
-            }
-
-            if (this.targetClient == null || this.targetClient.isClosed()) {
-                DownLatch latch = DownLatch.of();
-                ThreadUtil.start(() -> {
-                    try {
-                        this.targetClient = RedisClientUtil.newClient(targetInfo);
-                        this.targetClient.start(2500);
-                    } finally {
-                        latch.countDown();
-                    }
-                });
-                if (!latch.await(3000) || !this.targetClient.isConnected()) {
-                    this.targetClient.close();
-                    this.targetClient = null;
-                    this.targetInfo.requestFocus();
-                    MessageBox.warn(I18nHelper.connectInitFail());
-                    return;
-                }
-            }
-
-            this.step1.disappear();
-            this.step3.disappear();
-            this.step2.display();
-        } finally {
-            this.getStage().restoreTitle();
-            this.getStage().enable();
+        RedisConnect sourceInfo = this.sourceInfo.getSelectedItem();
+        RedisConnect targetInfo = this.targetInfo.getSelectedItem();
+        if (sourceInfo == null) {
+            this.sourceInfo.requestFocus();
+            MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
+            return;
         }
+        if (targetInfo == null) {
+            this.targetInfo.requestFocus();
+            MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
+            return;
+        }
+
+        if (sourceInfo.compare(targetInfo)) {
+            this.sourceInfo.requestFocus();
+            MessageBox.warn(I18nHelper.connectionsCannotBeTheSame());
+            return;
+        }
+
+        if (this.sourceClient == null || this.sourceClient.isClosed()) {
+            MessageBox.warn(I18nHelper.sourceConnectNotConnected());
+            return;
+        }
+
+        if (this.targetClient == null || this.targetClient.isClosed()) {
+            MessageBox.warn(I18nHelper.targetConnectNotConnected());
+            return;
+        }
+
+        this.step1.disappear();
+        this.step3.disappear();
+        this.step2.display();
     }
 
     @FXML
     private void showStep3() {
         this.step2.disappear();
         this.step3.display();
+    }
+
+    @FXML
+    private void showStep4() {
+        this.step3.disappear();
+        this.step4.display();
     }
 }

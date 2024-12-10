@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
@@ -73,19 +73,19 @@ public class SettingController extends StageController {
      * 记住页面大小
      */
     @FXML
-    private FlexCheckBox pageSize;
+    private FXCheckBox pageSize;
 
     /**
      * 记住页面拉伸
      */
     @FXML
-    private FlexCheckBox pageResize;
+    private FXCheckBox pageResize;
 
     /**
      * 记住页面位置
      */
     @FXML
-    private FlexCheckBox pageLocation;
+    private FXCheckBox pageLocation;
 
     // /**
     //  * 标签数量限制

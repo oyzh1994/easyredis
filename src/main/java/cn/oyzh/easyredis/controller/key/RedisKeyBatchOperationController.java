@@ -13,7 +13,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
@@ -156,7 +156,7 @@ public class RedisKeyBatchOperationController extends StageController {
      * 复制时替换
      */
     @FXML
-    private FlexCheckBox replaceOnCopy;
+    private FXCheckBox replaceOnCopy;
 
     /**
      * 异步任务

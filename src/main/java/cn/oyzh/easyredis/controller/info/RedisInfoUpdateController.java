@@ -11,7 +11,7 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
@@ -42,7 +42,7 @@ public class RedisInfoUpdateController extends StageController {
      * 只读模式
      */
     @FXML
-    private FlexCheckBox readonly;
+    private FXCheckBox readonly;
 
     /**
      * tab组件
@@ -107,7 +107,7 @@ public class RedisInfoUpdateController extends StageController {
     //  * 重定向到master
     //  */
     // @FXML
-    // private FlexCheckBox redirectMaster;
+    // private FXCheckBox redirectMaster;
 
     /**
      * 连接端口

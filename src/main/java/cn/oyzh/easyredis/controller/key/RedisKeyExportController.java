@@ -22,7 +22,7 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
@@ -80,19 +80,19 @@ public class RedisKeyExportController extends StageController {
      * 按词典导出
      */
     @FXML
-    private FlexCheckBox dictSort;
+    private FXCheckBox dictSort;
 
     /**
      * 保留ttl
      */
     @FXML
-    private FlexCheckBox retainTTL;
+    private FXCheckBox retainTTL;
 
     /**
      * 适用过滤配置
      */
     @FXML
-    private FlexCheckBox applyFilter;
+    private FXCheckBox applyFilter;
 
     /**
      * 美化选项
@@ -122,7 +122,7 @@ public class RedisKeyExportController extends StageController {
      * 键过滤
      */
     @FXML
-    private FlexCheckBox filterKeys;
+    private FXCheckBox filterKeys;
 
     // /**
     //  * 导出按钮
@@ -169,37 +169,37 @@ public class RedisKeyExportController extends StageController {
      * 排除string类型
      */
     @FXML
-    private FlexCheckBox stringType;
+    private FXCheckBox stringType;
 
     /**
      * 排除list类型
      */
     @FXML
-    private FlexCheckBox listType;
+    private FXCheckBox listType;
 
     /**
      * 排除stream类型
      */
     @FXML
-    private FlexCheckBox streamType;
+    private FXCheckBox streamType;
 
     /**
      * 排除set类型
      */
     @FXML
-    private FlexCheckBox setType;
+    private FXCheckBox setType;
 
     /**
      * 排除zset类型
      */
     @FXML
-    private FlexCheckBox zsetType;
+    private FXCheckBox zsetType;
 
     /**
      * 排除hash类型
      */
     @FXML
-    private FlexCheckBox hashType;
+    private FXCheckBox hashType;
 
     /**
      * 导出操作任务

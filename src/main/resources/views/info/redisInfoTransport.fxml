@@ -2,7 +2,7 @@
 <?import cn.oyzh.easyredis.fx.RedisConnectComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <?import cn.oyzh.fx.gui.button.CloseButton?>
-<?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
@@ -43,11 +43,11 @@
                 <Insets left="5" top="10"/>
             </HBox.margin>
         </RedisDatabaseComboBox>
-        <FlexCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
+        <FXCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" visible="false">
         <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80">
@@ -135,17 +135,17 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true"
+        <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true"
                       groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox fx:id="applyFilter" text="%base.applyFilter" groupId="exec">
+        </FXCheckBox>
+        <FXCheckBox fx:id="applyFilter" text="%base.applyFilter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.keyType" realHeight="30" realWidth="80">
@@ -153,36 +153,36 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <FlexCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING">
+        <FXCheckBox groupId="exec" selected="true" fx:id="stringType" text="STRING">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST">
+        </FXCheckBox>
+        <FXCheckBox groupId="exec" selected="true" fx:id="listType" text="LIST">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox groupId="exec" selected="true" fx:id="setType" text="SET">
+        </FXCheckBox>
+        <FXCheckBox groupId="exec" selected="true" fx:id="setType" text="SET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET">
+        </FXCheckBox>
+        <FXCheckBox groupId="exec" selected="true" fx:id="zsetType" text="ZSET">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH">
+        </FXCheckBox>
+        <FXCheckBox groupId="exec" selected="true" fx:id="hashType" text="HASH">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
-        <FlexCheckBox groupId="exec" fx:id="streamType" text="STREAM">
+        </FXCheckBox>
+        <FXCheckBox groupId="exec" fx:id="streamType" text="STREAM">
             <HBox.margin>
                 <Insets left="10" top="18"/>
             </HBox.margin>
-        </FlexCheckBox>
+        </FXCheckBox>
     </FlexHBox>
     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox">
         <AccentLabel text="%base.process" realHeight="30" realWidth="80">

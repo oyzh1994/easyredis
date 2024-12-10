@@ -12,17 +12,17 @@
 <?import javafx.scene.layout.HBox?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
-    <!-- <SearchSVGLabel onMousePrimaryClicked="#search" tipText="%base.searchTip5" size="14"> -->
-    <!--     <HBox.margin> -->
-    <!--         <Insets left="8" top="5" bottom="5"/> -->
-    <!--     </HBox.margin> -->
-    <!-- </SearchSVGLabel> -->
     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
         <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </FilterSVGLabel>
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
+        <HBox.margin>
+            <Insets left="10" top="5" bottom="5"/>
+        </HBox.margin>
+    </TransportSVGLabel>
+    <TransportSVGLabel onMousePrimaryClicked="#transport1" size="12">
         <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>

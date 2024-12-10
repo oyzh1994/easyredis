@@ -23,7 +23,7 @@ import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
@@ -85,13 +85,13 @@ public class RedisInfoTransportController extends StageController {
      * 保留ttl
      */
     @FXML
-    private FlexCheckBox retainTTL;
+    private FXCheckBox retainTTL;
 
     /**
      * 适用过滤配置
      */
     @FXML
-    private FlexCheckBox applyFilter;
+    private FXCheckBox applyFilter;
 
     /**
      * 传输按钮
@@ -150,37 +150,37 @@ public class RedisInfoTransportController extends StageController {
      * 排除string类型
      */
     @FXML
-    private FlexCheckBox stringType;
+    private FXCheckBox stringType;
 
     /**
      * 排除list类型
      */
     @FXML
-    private FlexCheckBox listType;
+    private FXCheckBox listType;
 
     /**
      * 排除stream类型
      */
     @FXML
-    private FlexCheckBox streamType;
+    private FXCheckBox streamType;
 
     /**
      * 排除set类型
      */
     @FXML
-    private FlexCheckBox setType;
+    private FXCheckBox setType;
 
     /**
      * 排除zset类型
      */
     @FXML
-    private FlexCheckBox zsetType;
+    private FXCheckBox zsetType;
 
     /**
      * 排除hash类型
      */
     @FXML
-    private FlexCheckBox hashType;
+    private FXCheckBox hashType;
 
     /**
      * 当前传输redis对象
@@ -248,7 +248,7 @@ public class RedisInfoTransportController extends StageController {
      * 键过滤
      */
     @FXML
-    private FlexCheckBox filterKeys;
+    private FXCheckBox filterKeys;
 
     /**
      * 当前db键列表

@@ -25,7 +25,7 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
-import cn.oyzh.fx.plus.controls.button.FlexCheckBox;
+import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
@@ -108,7 +108,7 @@ public class RedisKeyImportController extends StageController {
      * 保留ttl
      */
     @FXML
-    private FlexCheckBox retainTTL;
+    private FXCheckBox retainTTL;
 
     /**
      * 导入按钮

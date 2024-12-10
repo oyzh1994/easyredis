@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
+import cn.oyzh.easyredis.controller.info.RedisInfoTransportController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
@@ -99,6 +100,19 @@ public class HeaderController extends SubStageController {
             wrapper.toFront();
         } else {
             StageManager.showStage(RedisDataTransportController.class);
+        }
+    }
+
+    /**
+     * 传输数据
+     */
+    @FXML
+    private void transport1() {
+        StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
+        if (wrapper != null) {
+            wrapper.toFront();
+        } else {
+            StageManager.showStage(RedisInfoTransportController.class);
         }
     }
 

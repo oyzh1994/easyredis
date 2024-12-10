@@ -193,7 +193,7 @@ public class RedisClient {
     /**
      * 初始化客户端
      */
-    private void initClient() {
+    private void initClient(int connectTimeout) {
         HostAndPort host;
         // ssh端口转发
         if (this.redisInfo.isSSHForward()) {
@@ -208,7 +208,7 @@ public class RedisClient {
             host = new HostAndPort(this.redisInfo.hostIp(), this.redisInfo.hostPort());
         }
         // 客户端配置
-        DefaultJedisClientConfig clientConfig = this.intClientConfig(this.redisInfo.getUser(), this.redisInfo.getPassword());
+        DefaultJedisClientConfig clientConfig = RedisClientUtil.newConfig(this.redisInfo.getUser(), this.redisInfo.getPassword(), connectTimeout, this.redisInfo.executeTimeOutMs());
         // 初始化连接池
         this.initPool(host, clientConfig);
         try {
@@ -288,34 +288,6 @@ public class RedisClient {
         this.intPoolConfig(poolConfig);
         // 生成连接池
         this.pool = new JedisPool(poolConfig, host, clientConfig);
-    }
-
-    /**
-     * 初始化客户端配置
-     *
-     * @param user     用户
-     * @param password 密码
-     */
-    private DefaultJedisClientConfig intClientConfig(String user, String password) {
-        // master配置处理
-        DefaultJedisClientConfig.Builder builder = DefaultJedisClientConfig.builder();
-        // 超时
-        builder.timeoutMillis(this.redisInfo.connectTimeOutMs());
-        // socket超时
-        builder.socketTimeoutMillis(this.redisInfo.executeTimeOutMs());
-        // 连接超时
-        builder.connectionTimeoutMillis(this.redisInfo.connectTimeOutMs());
-        // 阻塞超时
-        // builder.blockingSocketTimeoutMillis(this.redisInfo.getExecuteTimeOutMs());
-        // 连接用户
-        if (StringUtil.isNotBlank(user)) {
-            builder.user(user);
-        }
-        // 连接密码
-        if (StringUtil.isNotBlank(password)) {
-            builder.password(password);
-        }
-        return builder.build();
     }
 
     /**
@@ -536,7 +508,14 @@ public class RedisClient {
      * 开始连接客户端
      */
     public void start() {
-        this.start(0);
+        this.startDatabase(0, this.redisInfo.connectTimeOutMs());
+    }
+
+    /**
+     * 开始连接客户端
+     */
+    public void start(int connectTimeout) {
+        this.startDatabase(0, connectTimeout);
     }
 
     /**
@@ -544,7 +523,17 @@ public class RedisClient {
      *
      * @param dbIndex 默认db索引
      */
-    public void start(int dbIndex) {
+    public void startDatabase(int dbIndex) {
+        this.startDatabase(dbIndex, this.redisInfo.connectTimeOutMs());
+    }
+
+    /**
+     * 开始连接客户端
+     *
+     * @param dbIndex        默认db索引
+     * @param connectTimeout 连接超时
+     */
+    public void startDatabase(int dbIndex, int connectTimeout) {
         if (this.isConnected() || this.isConnecting()) {
             return;
         }
@@ -552,7 +541,7 @@ public class RedisClient {
             // 初始化连接池
             this.state.set(RedisConnState.CONNECTING);
             // 初始化客户端
-            this.initClient();
+            this.initClient(connectTimeout);
             // 初始化数据库
             if (!this.isClusterMode() && !this.isSentinelMode()) {
                 this.select(dbIndex);
