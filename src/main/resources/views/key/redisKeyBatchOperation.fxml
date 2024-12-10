@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
@@ -171,11 +171,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <RedisDBComboBox fx:id="moveTargetDB" realHeight="30" prefWidth="120" initIndex="1" groupId="exec">
+                <RedisDatabaseComboBox fx:id="moveTargetDB" realHeight="30" prefWidth="120" initIndex="1" groupId="exec">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </RedisDBComboBox>
+                </RedisDatabaseComboBox>
             </FlexHBox>
             <FlexHBox flexWidth="100%" realHeight="50">
                 <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="100">
@@ -228,11 +228,11 @@
                         <Insets left="20" top="10"/>
                     </HBox.margin>
                 </AccentLabel>
-                <RedisDBComboBox fx:id="copyTargetDB" realHeight="30" prefWidth="120" initIndex="1" groupId="exec">
+                <RedisDatabaseComboBox fx:id="copyTargetDB" realHeight="30" prefWidth="120" initIndex="1" groupId="exec">
                     <HBox.margin>
                         <Insets left="10" top="10"/>
                     </HBox.margin>
-                </RedisDBComboBox>
+                </RedisDatabaseComboBox>
                 <FlexCheckBox fx:id="replaceOnCopy" text="%redis.batch.tip8" groupId="exec">
                     <HBox.margin>
                         <Insets left="5" top="20"/>

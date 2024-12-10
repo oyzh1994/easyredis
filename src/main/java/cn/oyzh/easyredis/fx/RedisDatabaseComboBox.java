@@ -9,7 +9,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2023/07/07
  */
-public class RedisDBComboBox extends FlexComboBox<String> {
+public class RedisDatabaseComboBox extends FlexComboBox<String> {
 
     @Getter
     private int dbCount;

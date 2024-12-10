@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.easyredis.fx.RedisDBComboBox?>
+<?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <?import cn.oyzh.fx.plus.controls.button.FlexCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
@@ -38,11 +38,11 @@
                 <Insets left="20" top="10"/>
             </HBox.margin>
         </AccentLabel>
-        <RedisDBComboBox fx:id="db" realHeight="30" flexWidth="100% - 180">
+        <RedisDatabaseComboBox fx:id="db" realHeight="30" flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="10" top="10"/>
             </HBox.margin>
-        </RedisDBComboBox>
+        </RedisDatabaseComboBox>
         <FlexCheckBox fx:id="filterKeys" text="%base.filter" groupId="exec">
             <HBox.margin>
                 <Insets left="10" top="18"/>

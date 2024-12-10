@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.fx.RedisConnectComboBox;
-import cn.oyzh.easyredis.fx.RedisDBComboBox;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
@@ -132,7 +132,7 @@ public class RedisInfoTransportController extends StageController {
      * 来源数据库
      */
     @FXML
-    private RedisDBComboBox fromDB;
+    private RedisDatabaseComboBox fromDB;
 
     /**
      * 目标连接
@@ -144,7 +144,7 @@ public class RedisInfoTransportController extends StageController {
      * 目标数据库
      */
     @FXML
-    private RedisDBComboBox targetDB;
+    private RedisDatabaseComboBox targetDB;
 
     /**
      * 排除string类型
@@ -499,7 +499,7 @@ public class RedisInfoTransportController extends StageController {
      * @param comboBox 下拉框组件
      * @param client   redis客户端
      */
-    private void initDBList(RedisDBComboBox comboBox, RedisClient client) {
+    private void initDBList(RedisDatabaseComboBox comboBox, RedisClient client) {
         try {
             this.stage.disable();
             this.stage.appendTitle(I18nHelper.connectInitIng());

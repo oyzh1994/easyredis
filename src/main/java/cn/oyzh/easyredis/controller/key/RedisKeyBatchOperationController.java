@@ -5,7 +5,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.fx.RedisDBComboBox;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.batch.RedisScanSimpleResult;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
@@ -144,13 +144,13 @@ public class RedisKeyBatchOperationController extends StageController {
      * 移动目标库
      */
     @FXML
-    private RedisDBComboBox moveTargetDB;
+    private RedisDatabaseComboBox moveTargetDB;
 
     /**
      * 复制目标库
      */
     @FXML
-    private RedisDBComboBox copyTargetDB;
+    private RedisDatabaseComboBox copyTargetDB;
 
     /**
      * 复制时替换

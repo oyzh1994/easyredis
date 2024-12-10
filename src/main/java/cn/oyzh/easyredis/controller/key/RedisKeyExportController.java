@@ -9,7 +9,7 @@ import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
-import cn.oyzh.easyredis.fx.RedisDBComboBox;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
@@ -74,7 +74,7 @@ public class RedisKeyExportController extends StageController {
      * 数据库
      */
     @FXML
-    private RedisDBComboBox db;
+    private RedisDatabaseComboBox db;
 
     /**
      * 按词典导出

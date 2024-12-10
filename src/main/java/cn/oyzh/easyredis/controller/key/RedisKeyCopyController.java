@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.fx.RedisDBComboBox;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
@@ -48,7 +48,7 @@ public class RedisKeyCopyController extends StageController {
      * 目标数据库
      */
     @FXML
-    private RedisDBComboBox targetDB;
+    private RedisDatabaseComboBox targetDB;
 
     /**
      * redis客户端
