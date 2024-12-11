@@ -7,7 +7,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
@@ -78,6 +77,16 @@ public class RedisKeyUtil {
         return false;
     }
 
+    // /**
+    //  * 序列化键
+    //  *
+    //  * @param redisKey redis键
+    //  * @return 序列化内容
+    //  */
+    // public static String serializeNode(RedisKey redisKey) {
+    //     return serializeNode(redisKey, true);
+    // }
+
     /**
      * 序列化键
      *
@@ -85,17 +94,15 @@ public class RedisKeyUtil {
      * @return 序列化内容
      */
     public static String serializeNode(RedisKey redisKey) {
+        String result = null;
         // string
         if (redisKey.isStringKey()) {
             RedisStringValue stringValue = redisKey.asStringValue();
-            // if (redisKey.isRawEncoding()) {
+            // if (redisKey.isRawEncoding() && binaryAsHex) {
             //     return "0x'" + TextUtil.bytesToHexStr(stringValue.bytesValue()) + "'";
             // }
-            return stringValue.stringValue();
-        }
-
-        // list
-        if (redisKey.isListKey()) {
+            result = JSONUtil.toJson(stringValue.getValue());
+        } else if (redisKey.isListKey()) { // list
             RedisListValue value = redisKey.asListValue();
             List<RedisListValue.RedisListRow> rows = value.getValue();
             if (CollectionUtil.isEmpty(rows)) {
@@ -107,11 +114,8 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONUtil.toJson(list);
-        }
-
-        // set
-        if (redisKey.isSetKey()) {
+            result = JSONUtil.toJson(list);
+        } else if (redisKey.isSetKey()) {  // set
             RedisSetValue value = redisKey.asSetValue();
             List<RedisSetValue.RedisSetRow> rows = value.getValue();
             if (CollectionUtil.isEmpty(rows)) {
@@ -123,11 +127,8 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONUtil.toJson(list);
-        }
-
-        // zset
-        if (redisKey.isZSetKey()) {
+            result = JSONUtil.toJson(list);
+        } else if (redisKey.isZSetKey()) {   // zset
             RedisZSetValue value = redisKey.asZSetValue();
             List<RedisZSetValue.RedisZSetRow> rows = value.getValue();
             if (CollectionUtil.isEmpty(rows)) {
@@ -140,11 +141,8 @@ public class RedisKeyUtil {
                 map.put("score", row.getScore());
                 list.add(map);
             }
-            return JSONUtil.toJson(list);
-        }
-
-        // stream
-        if (redisKey.isStreamKey()) {
+            result = JSONUtil.toJson(list);
+        } else if (redisKey.isStreamKey()) {  // stream
             RedisStreamValue value = redisKey.asStreamValue();
             List<RedisStreamValue.RedisStreamRow> rows = value.getValue();
             if (CollectionUtil.isEmpty(rows)) {
@@ -157,11 +155,8 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONUtil.toJson(list);
-        }
-
-        // hash
-        if (redisKey.isHashKey()) {
+            result = JSONUtil.toJson(list);
+        } else if (redisKey.isHashKey()) {   // hash
             RedisHashValue value = redisKey.asHashValue();
             List<RedisHashValue.RedisHashRow> rows = value.getValue();
             if (CollectionUtil.isEmpty(rows)) {
@@ -174,9 +169,9 @@ public class RedisKeyUtil {
                 map.put("value", row.getValue());
                 list.add(map);
             }
-            return JSONUtil.toJson(list);
+            result = JSONUtil.toJson(list);
         }
-        return null;
+        return result;
     }
 
     /**
@@ -573,6 +568,21 @@ public class RedisKeyUtil {
      * @return redis键
      */
     public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
+        return getKey(dbIndex, key, ttl, false, loadValue, client);
+    }
+
+    /**
+     * 获取键
+     *
+     * @param dbIndex        db索引
+     * @param key            键
+     * @param ttl            是否获取ttl
+     * @param objectEncoding 是否获取对象编码
+     * @param loadValue      是否加载值
+     * @param client         redis客户端
+     * @return redis键
+     */
+    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean objectEncoding, boolean loadValue, RedisClient client) {
         // 开始时间
         long start = System.currentTimeMillis();
         // 初始化键
@@ -583,6 +593,10 @@ public class RedisKeyUtil {
         // ttl
         if (ttl) {
             redisKey.ttl(client.ttl(dbIndex, key));
+        }
+        // 对象编码
+        if (objectEncoding) {
+            redisKey.objectedEncoding(client.objectEncoding(dbIndex, key));
         }
         // 值
         if (loadValue) {

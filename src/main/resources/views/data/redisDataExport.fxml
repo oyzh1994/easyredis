@@ -72,11 +72,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXRadioButton>
-            <FXRadioButton userData="txt" toggleGroup="$format" text="%base.txtType">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXRadioButton>
+            <!-- <FXRadioButton userData="txt" toggleGroup="$format" text="%base.txtType"> -->
+            <!--     <VBox.margin> -->
+            <!--         <Insets left="30" top="10"/> -->
+            <!--     </VBox.margin> -->
+            <!-- </FXRadioButton> -->
             <FXRadioButton userData="html" toggleGroup="$format" text="%base.htmlType">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -172,6 +172,11 @@
                 <FXCheckBox fx:id="includeTitle" text="%base.includeTitle" selected="true" disable="true">
                     <HBox.margin>
                         <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox fx:id="compress" text="%base.compressContent" selected="true">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true">

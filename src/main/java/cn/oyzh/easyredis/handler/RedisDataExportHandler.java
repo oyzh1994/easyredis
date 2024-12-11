@@ -1,7 +1,9 @@
 package cn.oyzh.easyredis.handler;
 
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.util.FileNameUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -72,7 +74,7 @@ public class RedisDataExportHandler extends DataHandler {
     /**
      * 批量处理大小
      */
-    private int batchSize = 10;
+    private int batchSize = 5;
 
     /**
      * 导出配置
@@ -143,6 +145,7 @@ public class RedisDataExportHandler extends DataHandler {
                     String key = redisKey.key();
                     // 记录
                     FileRecord record = new FileRecord();
+                    // 序列化键值
                     String value = RedisKeyUtil.serializeNode(redisKey);
                     record.put(0, key);
                     record.put(1, value);
@@ -195,6 +198,7 @@ public class RedisDataExportHandler extends DataHandler {
      * @param filter  过滤操作
      */
     private void doExport(Consumer<RedisKey> success, BiConsumer<String, Exception> error, BiPredicate<String, RedisKey> filter) {
+        // 导出业务处理
         BiConsumer<Integer, Set<String>> export = (dbIndex, keys) -> {
             for (String key : keys) {
                 try {
@@ -202,10 +206,10 @@ public class RedisDataExportHandler extends DataHandler {
                     RedisKey redisKey = RedisKeyUtil.getKey(dbIndex, key, this.retainTTL, true, this.client);
                     // 执行过滤
                     if (filter.test(key, redisKey)) {
-                        // 查询对象编码
-                        if (redisKey.isStringKey()) {
-                            redisKey.objectedEncoding(this.client.objectEncoding(dbIndex, key));
-                        }
+                        // // 查询对象编码
+                        // if (redisKey.isStringKey()) {
+                        //     redisKey.objectedEncoding(this.client.objectEncoding(dbIndex, key));
+                        // }
                         success.accept(redisKey);
                     }
                 } catch (Exception ex) {
@@ -280,6 +284,10 @@ public class RedisDataExportHandler extends DataHandler {
 
     public void includeTitle(boolean includeTitle) {
         this.config.includeTitle(includeTitle);
+    }
+
+    public void compress(boolean compress) {
+        this.config.compress(compress);
     }
 }
 

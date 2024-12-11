@@ -121,6 +121,12 @@ public class RedisDataExportController extends StageController {
     private FXCheckBox includeTitle;
 
     /**
+     * 压缩
+     */
+    @FXML
+    private FXCheckBox compress;
+
+    /**
      * 适用过滤配置
      */
     @FXML
@@ -307,6 +313,8 @@ public class RedisDataExportController extends StageController {
         this.exportHandler.pattern(this.pattern.getText());
         // 保留ttl
         this.exportHandler.retainTTL(this.retainTTL.isSelected());
+        // 压缩
+        this.exportHandler.compress(this.compress.isEnable() && this.compress.isSelected());
         // 包含标题
         this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
         // 执行导出
@@ -442,6 +450,11 @@ public class RedisDataExportController extends StageController {
             this.includeTitle.enable();
         } else {
             this.includeTitle.disable();
+        }
+        if (StringUtil.equalsAny(fileType, "xml", "json")) {
+            this.compress.enable();
+        } else {
+            this.compress.disable();
         }
         this.step1.disappear();
         this.step2.disappear();
