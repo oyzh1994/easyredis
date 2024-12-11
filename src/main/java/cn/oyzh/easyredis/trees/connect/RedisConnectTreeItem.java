@@ -5,6 +5,7 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
+import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
 import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
@@ -189,6 +190,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
             FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
+            FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
 
             items.add(connect);
@@ -196,6 +198,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             items.add(renameConnect);
             items.add(repeatConnect);
             items.add(exportData);
+            items.add(importData);
             items.add(transportData);
             items.add(deleteConnect);
         }
@@ -298,8 +301,11 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyImportController.class, this.window());
-        fxView.setProp("treeItem", this);
+        // StageAdapter fxView = StageManager.parseStage(RedisKeyImportController.class, this.window());
+        // fxView.setProp("treeItem", this);
+        // fxView.display();
+        StageAdapter fxView = StageManager.parseStage(RedisDataImportController.class);
+        fxView.setProp("connect", this.client.redisInfo());
         fxView.display();
     }
 

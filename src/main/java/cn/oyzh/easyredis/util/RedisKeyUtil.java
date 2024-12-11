@@ -199,6 +199,8 @@ public class RedisKeyUtil {
             RedisKey node = new RedisKey();
             List<String> list = new ArrayList<>();
             if (StringUtil.isNotBlank(value)) {
+                // 去除转义字符
+                value = value.replace("\\\"", "\"");
                 JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     list.add(array.getJSONObject(i).getString("value"));
@@ -213,6 +215,8 @@ public class RedisKeyUtil {
             RedisKey node = new RedisKey();
             Set<String> list = new HashSet<>();
             if (StringUtil.isNotBlank(value)) {
+                // 去除转义字符
+                value= value.replace("\\\"", "\"");
                 JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     list.add(array.getJSONObject(i).getString("value"));
@@ -228,6 +232,8 @@ public class RedisKeyUtil {
             List<String> list1 = new ArrayList<>();
             List<Double> list2 = new ArrayList<>();
             if (StringUtil.isNotBlank(value)) {
+                // 去除转义字符
+                value = value.replace("\\\"", "\"");
                 JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = array.getJSONObject(i);
@@ -244,10 +250,16 @@ public class RedisKeyUtil {
             RedisKey node = new RedisKey();
             Map<String, String> map = new HashMap<>();
             if (StringUtil.isNotBlank(value)) {
-                JSONArray array = JSONUtil.parseArray(value);
-                for (int i = 0; i < array.size(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-                    map.put(object.getString("field"), object.getString("value"));
+                // 去除转义字符
+                // value = value.replace("\\\"", "\"");
+                try {
+                    JSONArray array = JSONUtil.parseArray(value);
+                    for (int i = 0; i < array.size(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+                        map.put(object.getString("field"), object.getString("value"));
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
                 }
             }
             node.valueOfHash(map);
@@ -259,6 +271,8 @@ public class RedisKeyUtil {
             RedisKey node = new RedisKey();
             List<StreamEntry> list = new ArrayList<>();
             if (StringUtil.isNotBlank(value)) {
+                // 去除转义字符
+                value = value.replace("\\\"", "\"");
                 JSONArray array = JSONUtil.parseArray(value);
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject object = array.getJSONObject(i);

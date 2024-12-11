@@ -29,7 +29,7 @@
                     <Insets left="30" top="20"/>
                 </HBox.margin>
             </ImportSVGGlyph>
-            <FXText realHeight="25" text="%zk.import.tip1" fontSize="15">
+            <FXText realHeight="25" text="%redis.import.tip1" fontSize="15">
                 <HBox.margin>
                     <Insets left="15" top="30"/>
                 </HBox.margin>
@@ -136,42 +136,6 @@
         </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
-        <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <InfoLabel text="%base.connection">
-                <VBox.margin>
-                    <Insets left="30" top="20"/>
-                </VBox.margin>
-            </InfoLabel>
-            <FXText fx:id="connectionName">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </FXText>
-            <InfoLabel text="%base.charset">
-                <VBox.margin>
-                    <Insets left="30" top="20"/>
-                </VBox.margin>
-            </InfoLabel>
-            <CharsetComboBox fx:id="charset" realHeight="25">
-                <VBox.margin>
-                    <Insets left="30" top="10"/>
-                </VBox.margin>
-            </CharsetComboBox>
-        </FlexVBox>
-        <FlexHBox flexWidth="100%" realHeight="50">
-            <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
-                <HBox.margin>
-                    <Insets left="30" top="10"/>
-                </HBox.margin>
-            </PrevStepButton>
-            <NextStepButton onAction="#showStep4" realHeight="30" iconSizePercent="0.75">
-                <HBox.margin>
-                    <Insets left="15" top="10"/>
-                </HBox.margin>
-            </NextStepButton>
-        </FlexHBox>
-    </FlexVBox>
-    <FlexVBox fx:id="step4" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexWidth="100%" flexHeight="100% - 60">
             <MsgTextArea lineLimit="500" limitPolicy="4" fx:id="importMsg" flexWidth="100% - 60"
                          flexHeight="100% - 30">

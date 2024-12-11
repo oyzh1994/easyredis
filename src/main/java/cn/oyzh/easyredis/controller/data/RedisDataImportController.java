@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.handler.RedisDataImportHandler;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisClientUtil;
-import cn.oyzh.fx.gui.combobox.CharsetComboBox;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -69,12 +68,6 @@ public class RedisDataImportController extends StageController {
     private FlexVBox step3;
 
     /**
-     * 第四步
-     */
-    @FXML
-    private FlexVBox step4;
-
-    /**
      * 导入文件
      */
     private File importFile;
@@ -90,18 +83,6 @@ public class RedisDataImportController extends StageController {
      */
     @FXML
     private FXText fileName;
-
-    /**
-     * 连接名
-     */
-    @FXML
-    private FXText connectionName;
-
-    /**
-     * 字符集
-     */
-    @FXML
-    private CharsetComboBox charset;
 
     /**
      * 存在时忽略
@@ -202,8 +183,6 @@ public class RedisDataImportController extends StageController {
         this.importHandler.ignoreExist(this.ignoreExist.isSelected());
         // 导入文件
         this.importHandler.filePath(this.importFile.getPath());
-        // 字符集
-        this.importHandler.charset(this.charset.getCharsetName());
         // 数据行开始
         if (this.dataRowStarts.isEnable()) {
             this.importHandler.dataRowStarts(this.dataRowStarts.getIntValue());
@@ -287,7 +266,6 @@ public class RedisDataImportController extends StageController {
     private void showStep1() {
         this.step2.disappear();
         this.step3.disappear();
-        this.step4.disappear();
         this.step1.display();
     }
 
@@ -295,7 +273,6 @@ public class RedisDataImportController extends StageController {
     private void showStep2() {
         this.step1.disappear();
         this.step3.disappear();
-        this.step4.disappear();
         String fileType = this.format.selectedUserData();
         // 检查是否支持跳行
         if (StringUtil.equalsAny(fileType, "excel", "csv")) {
@@ -308,26 +285,19 @@ public class RedisDataImportController extends StageController {
 
     @FXML
     private void showStep3() {
+        // 检查文件
         if (this.importFile == null) {
             this.selectFile.requestFocus();
             MessageBox.warn(I18nHelper.pleaseSelectFile());
             return;
         }
+        // 检查客户端
+        if (!this.doConnect()) {
+            return;
+        }
         this.step1.disappear();
         this.step2.disappear();
-        this.step4.disappear();
         this.step3.display();
-    }
-
-    @FXML
-    private void showStep4() {
-        // 检查客户端
-        if (this.doConnect()) {
-            this.step1.disappear();
-            this.step2.disappear();
-            this.step3.disappear();
-            this.step4.display();
-        }
     }
 
     /**
@@ -383,7 +353,6 @@ public class RedisDataImportController extends StageController {
     public void onStageShown(WindowEvent event) {
         super.onStageShown(event);
         this.connect = this.getWindowProp("connect");
-        this.connectionName.setText(this.connect.getName());
     }
 
     /**

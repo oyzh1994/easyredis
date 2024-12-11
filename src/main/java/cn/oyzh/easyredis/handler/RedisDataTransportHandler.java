@@ -177,6 +177,5 @@ public class RedisDataTransportHandler extends DataHandler {
             }
         }
     }
-
 }
 
