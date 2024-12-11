@@ -437,8 +437,8 @@ public class RedisDataExportController extends StageController {
     @FXML
     private void showStep3() {
         // 检查是否支持标题
-        String format = this.format.selectedUserData();
-        if (StringUtil.equalsAny(format, "xls", "xlsx", "csv")) {
+        String fileType = this.format.selectedUserData();
+        if (StringUtil.equalsAny(fileType, "xls", "xlsx", "csv")) {
             this.includeTitle.enable();
         } else {
             this.includeTitle.disable();
