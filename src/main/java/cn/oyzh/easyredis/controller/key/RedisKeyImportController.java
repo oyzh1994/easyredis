@@ -70,10 +70,10 @@ public class RedisKeyImportController extends StageController {
     // @FXML
     // private StateManager stateManager;
 
-    /**
-     * redis树键
-     */
-    private RedisConnectTreeItem treeItem;
+    // /**
+    //  * redis树键
+    //  */
+    // private RedisConnectTreeItem treeItem;
 
     /**
      * redis客户端
@@ -424,8 +424,9 @@ public class RedisKeyImportController extends StageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        this.treeItem = this.getWindowProp("treeItem");
-        this.client = treeItem.client();
+        // this.treeItem = this.getWindowProp("treeItem");
+        // this.client = treeItem.client();
+        this.client = this.getWindowProp("client");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();
