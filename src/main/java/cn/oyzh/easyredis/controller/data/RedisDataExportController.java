@@ -469,7 +469,13 @@ public class RedisDataExportController extends StageController {
     private void selectFile() {
         String fileType = this.format.selectedUserData();
         FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
-        String fileName = "Redis-" + this.connect.getName() + "-" + I18nHelper.exportData() + "." + fileType;
+        String fileName = "Redis-" + this.connect.getName();
+        if (this.dbIndex != null) {
+            fileName += "-db" + this.dbIndex;
+        } else if (this.db.getSelectedIndex() != 0) {
+            fileName += "-db" + (this.db.getSelectedIndex() - 1);
+        }
+        fileName += "-" + I18nHelper.exportData() + "." + fileType;
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {
             // 删除文件
