@@ -14,14 +14,13 @@
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.data.RedisDataExportController" realWidth="800" realHeight="600">
     <FlexHBox flexWidth="100%" realHeight="80">
@@ -40,11 +39,11 @@
     </FlexHBox>
     <FlexVBox fx:id="step1" flexHeight="100% - 80" flexWidth="100%">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.fileFormat" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.fileFormat">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <fx:define>
                 <FXToggleGroup fx:id="format"/>
             </fx:define>
@@ -94,21 +93,21 @@
     </FlexVBox>
     <FlexVBox fx:id="step2" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.database" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.database">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <RedisDatabaseComboBox fx:id="db" realHeight="30" flexWidth="100% - 80">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </RedisDatabaseComboBox>
-            <FlexLabel text="%base.filter" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.filter">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FlexHBox realHeight="30">
                 <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 178" text="*">
                     <HBox.margin>
@@ -121,11 +120,11 @@
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
-            <FlexLabel text="%redis.key.tip1" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%redis.key.tip1">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 240" flexWidth="100% - 80">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -147,11 +146,11 @@
     </FlexVBox>
     <FlexVBox fx:id="step3" flexHeight="100% - 80" flexWidth="100%" managedBindVisible="true" visible="false">
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
-            <FlexLabel text="%base.filePath" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.filePath">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FlexHBox flexWidth="100%">
                 <FXButton fx:id="selectFile" onAction="#selectFile" text="%base.select">
                     <HBox.margin>
@@ -164,11 +163,11 @@
                     </HBox.margin>
                 </FXText>
             </FlexHBox>
-            <FlexLabel text="%base.options" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.options">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FXHBox>
                 <FXCheckBox fx:id="includeTitle" text="%base.includeTitle" selected="true" disable="true">
                     <HBox.margin>
@@ -186,11 +185,11 @@
                     </HBox.margin>
                 </FXCheckBox>
             </FXHBox>
-            <FlexLabel text="%base.keyType" realHeight="30" fontWeight="BOLD">
+            <InfoLabel text="%base.keyType">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
                 </VBox.margin>
-            </FlexLabel>
+            </InfoLabel>
             <FXHBox>
                 <FXCheckBox selected="true" fx:id="stringType" text="STRING">
                     <HBox.margin>
@@ -245,11 +244,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FXLabel fx:id="exportStatus" realHeight="30">
+            <InfoLabel fx:id="exportStatus" realHeight="30">
                 <VBox.margin>
                     <Insets left="30"/>
                 </VBox.margin>
-            </FXLabel>
+            </InfoLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep3" groupId="exec" realHeight="30" iconSizePercent="0.75">

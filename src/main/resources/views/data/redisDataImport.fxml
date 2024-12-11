@@ -4,7 +4,6 @@
 <?import cn.oyzh.fx.gui.button.OldButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>
-<?import cn.oyzh.fx.gui.combobox.CharsetComboBox?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ImportSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
@@ -14,7 +13,6 @@
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
@@ -143,11 +141,11 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FXLabel fx:id="importStatus" realHeight="30">
+            <InfoLabel fx:id="importStatus" realHeight="30">
                 <VBox.margin>
                     <Insets left="30"/>
                 </VBox.margin>
-            </FXLabel>
+            </InfoLabel>
         </FlexVBox>
         <FlexHBox flexWidth="100%" realHeight="50">
             <PrevStepButton onAction="#showStep2" groupId="exec" realHeight="30" iconSizePercent="0.75">
