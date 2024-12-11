@@ -97,7 +97,7 @@ public class RedisDataImportHandler extends DataHandler {
                                 this.processedSkip();
                                 continue;
                             }
-                            Integer dbIndex = (Integer) record.getValue(2, Integer.class);
+                            Number dbIndex = (Number) record.getValue(2, Integer.class);
                             if (dbIndex == null) {
                                 this.message("dbIndex of key: " + key + " is invalid");
                                 this.processedSkip();
@@ -106,11 +106,11 @@ public class RedisDataImportHandler extends DataHandler {
                             // 获取数据
                             String value = (String) record.get(1);
                             String type = (String) record.get(3);
-                            Integer ttl = (Integer) record.getValue(4, Long.class);
+                            Number ttl = (Number) record.getValue(4, Long.class);
                             RedisKeyType keyType = RedisKeyType.valueOfType(type);
                             // 创建键
-                            if (!this.client.exists(dbIndex, key)) {
-                                this.createKey(key, dbIndex, keyType, value, ttl);
+                            if (!this.client.exists(dbIndex.intValue(), key)) {
+                                this.createKey(key, dbIndex.intValue(), keyType, value, ttl.longValue());
                                 this.processedIncr();
                                 this.message("key[ " + key + "] is not exists, create it");
                                 continue;
@@ -122,9 +122,9 @@ public class RedisDataImportHandler extends DataHandler {
                                 continue;
                             }
                             // 更新
-                            this.client.rename(dbIndex, key, key + "_backup");
-                            this.createKey(key, dbIndex, keyType, value, ttl);
-                            this.client.del(dbIndex, key + "_backup");
+                            this.client.rename(dbIndex.intValue(), key, key + "_backup");
+                            this.createKey(key, dbIndex.intValue(), keyType, value, ttl.longValue());
+                            this.client.del(dbIndex.intValue(), key + "_backup");
                             this.processedIncr();
                             this.message("key[ " + key + "] is exists, update it");
                         } catch (Exception ex) {
@@ -173,7 +173,7 @@ public class RedisDataImportHandler extends DataHandler {
      * @param value   值
      * @param ttl     到期时间
      */
-    private void createKey(String key, int dbIndex, RedisKeyType type, String value, Integer ttl) {
+    private void createKey(String key, int dbIndex, RedisKeyType type, String value, Long ttl) {
         RedisKey redisKey = RedisKeyUtil.deserializeNode(type, value);
         if (redisKey == null) {
             JulLog.warn("redisKey is null");
