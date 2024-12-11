@@ -89,7 +89,7 @@ public class RedisKeyUtil {
         if (redisKey.isStringKey()) {
             RedisStringValue stringValue = redisKey.asStringValue();
             if (redisKey.isRawEncoding()) {
-                return "b'" + TextUtil.byteToBitStr(stringValue.bytesValue()) + "'";
+                return "0x'" + TextUtil.bytesToHexStr(stringValue.bytesValue()) + "'";
             }
             return stringValue.stringValue();
         }

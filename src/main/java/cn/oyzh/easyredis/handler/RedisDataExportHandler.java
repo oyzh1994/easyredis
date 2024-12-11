@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.file.FileColumns;
 import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileRecord;
@@ -86,11 +87,11 @@ public class RedisDataExportHandler extends DataHandler {
     public void doExport() throws Exception {
         this.message("Export Starting");
         FileColumns columns = new FileColumns();
-        columns.addColumn("key");
-        columns.addColumn("value");
-        columns.addColumn("dbIndex");
-        columns.addColumn("type");
-        columns.addColumn("ttl");
+        columns.addColumn("key", I18nHelper.key());
+        columns.addColumn("value", I18nHelper.value());
+        columns.addColumn("dbIndex", I18nHelper.database());
+        columns.addColumn("type", I18nHelper.type());
+        columns.addColumn("ttl", I18nHelper.ttl());
         // 获取写入器
         TypeFileWriter writer = FileHelper.initWriter(this.fileType, this.config, columns);
         if (writer != null) {
@@ -132,7 +133,6 @@ public class RedisDataExportHandler extends DataHandler {
                     }
                     return true;
                 };
-
                 // 获取节点成功
                 Consumer<RedisKey> success = redisKey -> {
                     try {
@@ -276,6 +276,10 @@ public class RedisDataExportHandler extends DataHandler {
 
     public void txtIdentifier(Character txtIdentifier) {
         this.config.txtIdentifier(txtIdentifier);
+    }
+
+    public void includeTitle(boolean includeTitle) {
+        this.config.includeTitle(includeTitle);
     }
 }
 

@@ -170,9 +170,14 @@
                 </VBox.margin>
             </FlexLabel>
             <FXHBox>
-                <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+                <FXCheckBox fx:id="includeTitle" text="%base.includeTitle" selected="true" disable="true">
                     <HBox.margin>
                         <Insets left="30" top="10"/>
+                    </HBox.margin>
+                </FXCheckBox>
+                <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
+                    <HBox.margin>
+                        <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">

@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
@@ -112,6 +113,12 @@ public class RedisDataExportController extends StageController {
      */
     @FXML
     private FXCheckBox retainTTL;
+
+    /**
+     * 包含标题
+     */
+    @FXML
+    private FXCheckBox includeTitle;
 
     /**
      * 适用过滤配置
@@ -300,6 +307,8 @@ public class RedisDataExportController extends StageController {
         this.exportHandler.pattern(this.pattern.getText());
         // 保留ttl
         this.exportHandler.retainTTL(this.retainTTL.isSelected());
+        // 包含标题
+        this.exportHandler.includeTitle(this.includeTitle.isEnable() && this.includeTitle.isSelected());
         // 执行导出
         this.execTask = ThreadUtil.start(() -> {
             try {
@@ -427,6 +436,13 @@ public class RedisDataExportController extends StageController {
 
     @FXML
     private void showStep3() {
+        // 检查是否支持标题
+        String format = this.format.selectedUserData();
+        if (StringUtil.equalsAny(format, "xls", "xlsx", "csv")) {
+            this.includeTitle.enable();
+        } else {
+            this.includeTitle.disable();
+        }
         this.step1.disappear();
         this.step2.disappear();
         this.step4.disappear();
