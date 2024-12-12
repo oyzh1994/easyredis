@@ -10,6 +10,9 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30">
     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
@@ -22,6 +25,11 @@
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </TransportSVGLabel>
+    <ToolsSVGLabel onMousePrimaryClicked="#tool" size="13">
+        <HBox.margin>
+            <Insets left="10" top="5" bottom="5"/>
+        </HBox.margin>
+    </ToolsSVGLabel>
     <!-- <TransportSVGLabel onMousePrimaryClicked="#transport1" size="12"> -->
     <!--     <HBox.margin> -->
     <!--         <Insets left="10" top="5" bottom="5"/> -->
@@ -42,19 +50,29 @@
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </AboutSVGLabel>
-    <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </CollapseSVGLabel>
-    <ExpandSVGLabel visible="false" managedBindVisible="true" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12">
-        <HBox.margin>
-            <Insets left="10" top="5" bottom="5"/>
-        </HBox.margin>
-    </ExpandSVGLabel>
+    <!-- <CollapseSVGLabel fx:id="collapseTree" onMousePrimaryClicked="#collapseTree" size="12"> -->
+    <!--     <HBox.margin> -->
+    <!--         <Insets left="10" top="5" bottom="5"/> -->
+    <!--     </HBox.margin> -->
+    <!-- </CollapseSVGLabel> -->
+    <!-- <ExpandSVGLabel visible="false" managedBindVisible="true" fx:id="expandTree" onMousePrimaryClicked="#expandTree" size="12"> -->
+    <!--     <HBox.margin> -->
+    <!--         <Insets left="10" top="5" bottom="5"/> -->
+    <!--     </HBox.margin> -->
+    <!-- </ExpandSVGLabel> -->
     <QuitSVGLabel onMousePrimaryClicked="#quit" size="12">
         <HBox.margin>
             <Insets left="10" top="5" bottom="5"/>
         </HBox.margin>
     </QuitSVGLabel>
+    <Layout1SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout1" size="12">
+        <HBox.margin>
+            <Insets top="7" left="35"/>
+        </HBox.margin>
+    </Layout1SVGGlyph>
+    <Layout2SVGGlyph sizeStr="16" onMousePrimaryClicked="#layout2" size="12">
+        <HBox.margin>
+            <Insets top="7" left="10"/>
+        </HBox.margin>
+    </Layout2SVGGlyph>
 </FlexHBox>

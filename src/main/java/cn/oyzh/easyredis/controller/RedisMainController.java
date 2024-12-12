@@ -16,6 +16,8 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisQueryTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.event.Layout1Event;
+import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -387,11 +389,34 @@ public class RedisMainController extends ParentStageController {
     //     this.tree.scrollTo(this.tree.getSelectedItem());
     // }
 
+    // /**
+    //  * 展开左侧
+    //  */
+    // @EventSubscribe
+    // private void leftExtend(RedisLeftExtendEvent event) {
+    //     this.tabPaneLeft.display();
+    //     double w = this.tabPaneLeft.getMinWidth();
+    //     this.tabPane.setLayoutX(w);
+    //     this.tabPane.setFlexWidth("100% - " + w);
+    //     this.tabPaneLeft.parentAutosize();
+    // }
+    //
+    // /**
+    //  * 收缩左侧
+    //  */
+    // @EventSubscribe
+    // private void leftCollapse(RedisLeftCollapseEvent event) {
+    //     this.tabPaneLeft.disappear();
+    //     this.tabPane.setLayoutX(0);
+    //     this.tabPane.setFlexWidth("100%");
+    //     this.tabPaneLeft.parentAutosize();
+    // }
+
     /**
-     * 展开左侧
+     * 布局2
      */
     @EventSubscribe
-    private void leftExtend(RedisLeftExtendEvent event) {
+    private void layout2(Layout2Event event) {
         this.tabPaneLeft.display();
         double w = this.tabPaneLeft.getMinWidth();
         this.tabPane.setLayoutX(w);
@@ -400,10 +425,10 @@ public class RedisMainController extends ParentStageController {
     }
 
     /**
-     * 收缩左侧
+     * 布局1
      */
     @EventSubscribe
-    private void leftCollapse(RedisLeftCollapseEvent event) {
+    private void layout1(Layout1Event event) {
         this.tabPaneLeft.disappear();
         this.tabPane.setLayoutX(0);
         this.tabPane.setFlexWidth("100%");
