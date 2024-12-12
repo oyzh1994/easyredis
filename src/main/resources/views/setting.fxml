@@ -32,7 +32,7 @@
                     </VBox.margin>
                 </InfoLabel>
                 <NumberTextField step="1000" fx:id="keyLoadLimit" minVal="0" value="10000"
-                                 tipText="%redis.setting.tip2">
+                                 tipText="%redis.setting.tip2" flexWidth="100% - 180" prefHeight="25">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
