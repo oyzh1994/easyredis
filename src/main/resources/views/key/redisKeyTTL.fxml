@@ -1,112 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.fx.gui.button.CancelButton?>
-<?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.button.FXButton?>
+<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyTTLController" realWidth="600" realHeight="320">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.ttl" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <NumberTextField fx:id="ttl" flexWidth="100%" value="-1"
-                         require="true" min="-1" max="9223372036854775807" step="3600">
-            <HBox.margin>
-                <Insets left="5" top="10"/>
-            </HBox.margin>
-        </NumberTextField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.additional" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
+          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyTTLController" realWidth="600" realHeight="480">
+    <InfoLabel text="%base.ttl">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <NumberTextField fx:id="ttl" flexWidth="100% - 180" value="-1" prefHeight="25"
+                     require="true" min="-1" max="9223372036854775807" step="3600">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </NumberTextField>
+    <InfoLabel text="%base.additional">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox flexWidth="100%">
         <FXButton text="%redis.ttl.tip3" onMousePrimaryClicked="#appendWith1M">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="30" top="5"/>
             </HBox.margin>
         </FXButton>
         <FXButton text="%redis.ttl.tip4" onMousePrimaryClicked="#appendWith1H">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
         </FXButton>
         <FXButton text="%redis.ttl.tip5" onMousePrimaryClicked="#appendWith1D">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
         </FXButton>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%redis.ttl.tip6" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
+    <InfoLabel text="%redis.ttl.tip6">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox flexWidth="100%">
         <FXButton text="%redis.ttl.tip7" onMousePrimaryClicked="#expireAt1M">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="30" top="5"/>
             </HBox.margin>
         </FXButton>
         <FXButton text="%redis.ttl.tip8" onMousePrimaryClicked="#expireAt1H">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
         </FXButton>
         <FXButton text="%redis.ttl.tip9" onMousePrimaryClicked="#expireAt1D">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
         </FXButton>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%redis.ttl.tip10" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
+    <InfoLabel text="%redis.ttl.tip10">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox flexWidth="100%">
         <FXButton text="%redis.ttl.tip11" onMousePrimaryClicked="#resetTTL">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="30" top="5"/>
             </HBox.margin>
         </FXButton>
         <FXButton text="%redis.ttl.tip12" onMousePrimaryClicked="#persistKey">
             <HBox.margin>
-                <Insets left="5" top="10"/>
+                <Insets left="10" top="5"/>
             </HBox.margin>
         </FXButton>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.preview" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexLabel fx:id="expirePreview" realHeight="30" flexWidth="100% - 140">
-            <HBox.margin>
-                <Insets left="5" top="18"/>
-            </HBox.margin>
-        </FlexLabel>
-    </FlexHBox>
+    <InfoLabel text="%base.preview">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexLabel fx:id="expirePreview" prefHeight="25" flexWidth="100% - 140">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </FlexLabel>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#ttlSetting">
             <HBox.margin>
-                <Insets left="125" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>
