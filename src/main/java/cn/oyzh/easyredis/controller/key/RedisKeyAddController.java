@@ -101,10 +101,10 @@ public class RedisKeyAddController extends StageController {
     private FlexVBox hylogBox;
 
     /**
-     * geo组件
+     * coordinate组件
      */
     @FXML
-    private FlexVBox geoBox;
+    private FlexVBox coordinateBox;
 
     /**
      * 字段名
@@ -200,8 +200,8 @@ public class RedisKeyAddController extends StageController {
             textArea = (FlexTextArea) this.setBox.lookup("FlexTextArea");
         } else if (this.hashBox.isVisible()) {
             textArea = (FlexTextArea) this.hashBox.lookup("FlexTextArea");
-        } else if (this.geoBox.isVisible()) {
-            textArea = (FlexTextArea) this.geoBox.lookup("FlexTextArea");
+        } else if (this.coordinateBox.isVisible()) {
+            textArea = (FlexTextArea) this.coordinateBox.lookup("FlexTextArea");
         } else {
             textArea = (FlexTextArea) this.streamBox.lookup("FlexTextArea");
         }
@@ -507,7 +507,7 @@ public class RedisKeyAddController extends StageController {
             } else if (newValue.intValue() == 6) {
                 this.mutexes.visible(this.hylogBox);
             } else if (newValue.intValue() == 7) {
-                this.mutexes.visible(this.geoBox);
+                this.mutexes.visible(this.coordinateBox);
             } else if (newValue.intValue() == 8) {
                 this.mutexes.visible(this.bitBox);
             }
@@ -519,7 +519,7 @@ public class RedisKeyAddController extends StageController {
     public void onStageShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.mutexes.manageBindVisible();
-        this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.geoBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
+        this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.coordinateBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
         this.stage.hideOnEscape();
         super.onStageShown(event);
         this.dbItem = this.getWindowProp("dbItem");

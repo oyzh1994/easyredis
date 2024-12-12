@@ -47,19 +47,9 @@ public class RedisKeyTypeComboBox extends FlexComboBox<String> implements I18nSe
         for (RedisKeyType value : RedisKeyType.values()) {
             this.getItems().add(value.name());
         }
-        // if (I18nManager.currentLocale() == Locale.SIMPLIFIED_CHINESE) {
-        //     this.getItems().add("HYPERLOGLOG(统计值)");
-        //     this.getItems().add("GEO(地理坐标)");
-        //     this.getItems().add("BITMAP(位图)");
-        // } else if (I18nManager.currentLocale() == Locale.TRADITIONAL_CHINESE) {
-        //     this.getItems().add("HYPERLOGLOG(統計值)");
-        //     this.getItems().add("GEO(地理坐標)");
-        //     this.getItems().add("BITMAP(位圖)");
-        // } else {
-            this.getItems().add("HYPERLOGLOG");
-            this.getItems().add("GEO");
-            this.getItems().add("BITMAP");
-        // }
+        this.getItems().add("HYPERLOGLOG");
+        this.getItems().add("COORDINATE");
+        this.getItems().add("BITMAP");
         return this.getItems();
     }
 }
