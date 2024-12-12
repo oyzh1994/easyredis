@@ -2,71 +2,71 @@
 
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController" realWidth="750"
           realHeight="550">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.messageId" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <ClearableTextField flexWidth="100% - 180" fx:id="streamID" tipText="%redis.row.tip2" text="*" require="true">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </ClearableTextField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" flexHeight="100% - 145">
-        <AccentLabel text="%base.content" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%redis.row.tip1"
-                      flexWidth="100% - 180">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </FlexTextArea>
-        <FlexVBox flexHeight="100%">
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
-        </FlexVBox>
-    </FlexHBox>
+    <InfoLabel text="%base.messageId">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <ClearableTextField flexWidth="100% - 180" fx:id="streamID" tipText="%redis.row.tip2" text="*" require="true">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </ClearableTextField>
+    <FlexVBox flexWidth="100%" flexHeight="100% - 145">
+        <InfoLabel text="%base.content">
+            <VBox.margin>
+                <Insets left="30" top="10"/>
+            </VBox.margin>
+        </InfoLabel>
+        <FlexHBox flexHeight="100% - 45" flexWidth="100%">
+            <FlexTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.row.tip1"
+                          flexWidth="100% - 180">
+                <HBox.margin>
+                    <Insets left="30" top="5"/>
+                </HBox.margin>
+            </FlexTextArea>
+            <FlexVBox flexHeight="100%">
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </JSONSVGGlyph>
+            </FlexVBox>
+        </FlexHBox>
+    </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>

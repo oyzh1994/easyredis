@@ -4,11 +4,11 @@
 <?import cn.oyzh.easyredis.fx.LongitudeField?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -16,15 +16,15 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController" realWidth="750"
           realHeight="550">
-    <FlexHBox flexWidth="100%" flexHeight="100% - 195">
-        <AccentLabel text="%base.coordinates" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.coordinates">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox flexWidth="100%" flexHeight="100% - 270">
+        <FlexTextArea fx:id="rowValue" flexHeight="100%" tipText="%base.contentTip1" flexWidth="100% - 180">
             <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%base.contentTip1" flexWidth="100% - 180">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
+                <Insets left="30" top="5"/>
             </HBox.margin>
         </FlexTextArea>
         <FlexVBox>
@@ -40,39 +40,35 @@
             </ClearSVGGlyph>
         </FlexVBox>
     </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.longitude" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <LongitudeField realHeight="30" flexWidth="100% - 180" fx:id="longitude" value="0" step="5">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </LongitudeField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.latitude" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <LatitudeField realHeight="30" flexWidth="100% - 180" fx:id="latitude" value="0" step="5">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </LatitudeField>
-    </FlexHBox>
+    <InfoLabel text="%base.longitude">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <LongitudeField realHeight="30" flexWidth="100% - 180" fx:id="longitude" value="0" step="5">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </LongitudeField>
+    <InfoLabel text="%base.latitude">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <LatitudeField realHeight="30" flexWidth="100% - 180" fx:id="latitude" value="0" step="5">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </LatitudeField>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="110" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>

@@ -2,28 +2,28 @@
 
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController" realWidth="750"
           realHeight="550">
-    <FlexHBox flexWidth="100%" flexHeight="100% - 95">
-        <AccentLabel text="%base.element" realHeight="30" realWidth="80">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FlexTextArea fx:id="rowValue" flexHeight="100% - 25" tipText="%redis.key.tip6"
+    <InfoLabel text="%base.element">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FlexHBox flexWidth="100%" flexHeight="100% - 120">
+        <FlexTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
                       flexWidth="100% - 180">
             <HBox.margin>
-                <Insets left="10" top="10"/>
+                <Insets left="30" top="5"/>
             </HBox.margin>
         </FlexTextArea>
         <FlexVBox>
@@ -42,12 +42,12 @@
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
-                <Insets left="100" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>
