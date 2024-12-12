@@ -9,6 +9,7 @@
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTab.RedisFilterTabContent">
     <FlexHBox realHeight="50" flexWidth="100%">
@@ -17,11 +18,11 @@
                 <Insets left="5" top="-4"/>
             </HBox.margin>
         </ClearableTextField>
-        <AddFillSVGGlyph size="14" onMousePrimaryClicked="#toAdd">
+        <AddSVGGlyph size="14" onMousePrimaryClicked="#toAdd">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </AddFillSVGGlyph>
+        </AddSVGGlyph>
         <PageBox fx:id="pagePane" onNextClicked="#nextPage" onPrevClicked="#prevPage" realHeight="22" realWidth="300">
             <HBox.margin>
                 <Insets left="5" top="-3"/>
