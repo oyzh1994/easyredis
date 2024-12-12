@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
+<?import cn.oyzh.fx.gui.button.CancelButton?>
+<?import cn.oyzh.fx.gui.button.SubmitButton?>
+<?import cn.oyzh.fx.gui.label.InfoLabel?>
+<?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.gui.text.field.DisabledTextField?>
+<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.label.AccentLabel?>
-<?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.gui.button.CancelButton?>
+<?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyMoveController" realWidth="480"
-          realHeight="220">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.keyName" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 180">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </DisabledTextField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.targetDB" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <RedisDatabaseComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 180">
-            <HBox.margin>
-                <Insets left="10" top="10"/>
-            </HBox.margin>
-        </RedisDatabaseComboBox>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <AccentLabel text="%base.options" realHeight="30" realWidth="100">
-            <HBox.margin>
-                <Insets left="20" top="10"/>
-            </HBox.margin>
-        </AccentLabel>
-        <FXCheckBox selected="true" fx:id="retainTTL" text="%redis.key.move.options1">
-            <HBox.margin>
-                <Insets left="10" top="18"/>
-            </HBox.margin>
-        </FXCheckBox>
-    </FlexHBox>
+          realHeight="300">
+    <InfoLabel text="%base.keyName">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <DisabledTextField fx:id="key" realHeight="30.0" flexWidth="100% - 180">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </DisabledTextField>
+    <InfoLabel text="%base.targetDB" realHeight="30" realWidth="100">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <RedisDatabaseComboBox fx:id="targetDB" realHeight="30.0" flexWidth="100% - 180">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </RedisDatabaseComboBox>
+    <InfoLabel text="%base.options" realHeight="30" realWidth="100">
+        <VBox.margin>
+            <Insets left="30" top="10"/>
+        </VBox.margin>
+    </InfoLabel>
+    <FXCheckBox selected="true" fx:id="retainTTL" text="%redis.key.move.options1">
+        <VBox.margin>
+            <Insets left="30" top="5"/>
+        </VBox.margin>
+    </FXCheckBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#moveKey" fx:id="submit" text="%base.move">
             <HBox.margin>
-                <Insets left="130" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>
