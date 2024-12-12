@@ -14,7 +14,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyCopyController" realWidth="400"
           realHeight="300">
-    <InfoLabel text="%base.keyName" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.keyName" >
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -24,7 +24,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </DisabledTextField>
-    <InfoLabel text="%base.targetDB" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.targetDB" >
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -34,7 +34,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </RedisDatabaseComboBox>
-    <InfoLabel text="%base.options" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.options" >
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
