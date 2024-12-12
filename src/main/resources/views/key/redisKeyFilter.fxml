@@ -13,19 +13,19 @@
         <SearchTextField fx:id="keyFilter" onSearch="#keyFilter" realHeight="30.0" flexWidth="100% - 65"
                          tipText="%redis.filter.tip1" require="true" text="*">
             <HBox.margin>
-                <Insets left="10" top="10"/>
+                <Insets left="30" top="10"/>
             </HBox.margin>
         </SearchTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#keyFilter">
             <HBox.margin>
-                <Insets left="38" top="10"/>
+                <Insets left="30" top="20"/>
             </HBox.margin>
         </SubmitButton>
         <CancelButton>
             <HBox.margin>
-                <Insets left="15" top="10"/>
+                <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
     </FlexHBox>
