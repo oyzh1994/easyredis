@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.filter.RedisFilterAddController" realWidth="750" realHeight="300">
-    <InfoLabel text="%base.kw" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.kw">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -22,7 +22,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </ClearableTextField>
-    <InfoLabel text="%base.matchMode" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.matchMode">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -32,7 +32,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </FXToggleSwitch>
-    <InfoLabel text="%base.enableConfig" realHeight="30" realWidth="80">
+    <InfoLabel text="%base.enableConfig">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>

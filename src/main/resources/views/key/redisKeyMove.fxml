@@ -24,7 +24,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </DisabledTextField>
-    <InfoLabel text="%base.targetDB" realHeight="30" realWidth="100">
+    <InfoLabel text="%base.targetDB" >
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
@@ -34,7 +34,7 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </RedisDatabaseComboBox>
-    <InfoLabel text="%base.options" realHeight="30" realWidth="100">
+    <InfoLabel text="%base.options" >
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>

@@ -22,7 +22,7 @@
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel realHeight="30" realWidth="100" text="%base.name">
+                <InfoLabel  text="%base.name">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -33,7 +33,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.host">
+                <InfoLabel  text="%base.host">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -44,7 +44,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.port">
+                <InfoLabel  text="%base.port">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -54,7 +54,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </PortTextField>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.options">
+                <InfoLabel  text="%base.options">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -68,7 +68,7 @@
         </FXTab>
         <FXTab text="%base.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
+                <InfoLabel  text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -86,7 +86,7 @@
                         </HBox.margin>
                     </FXLabel>
                 </FlexHBox>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.executeTimeout">
+                <InfoLabel  text="%base.executeTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -104,7 +104,7 @@
                         </HBox.margin>
                     </FXLabel>
                 </FlexHBox>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.remark">
+                <InfoLabel  text="%base.remark">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -119,7 +119,7 @@
         </FXTab>
         <FXTab text="%base.auth">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel realHeight="30" realWidth="100" text="%base.userName">
+                <InfoLabel  text="%base.userName">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -130,7 +130,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.password">
+                <InfoLabel  text="%base.password">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -146,7 +146,7 @@
         </FXTab>
         <FXTab text="%base.ssh">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel realHeight="30" realWidth="100" text="%base.enableSSHChannel">
+                <InfoLabel  text="%base.enableSSHChannel">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -156,7 +156,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </SwitchToggleSwitch>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.host">
+                <InfoLabel  text="%base.host">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -174,7 +174,7 @@
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.connectTimeout">
+                <InfoLabel  text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -185,7 +185,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </NumberTextField>
-                <InfoLabel realHeight="30" realWidth="100" text="%base.sshInfo">
+                <InfoLabel  text="%base.sshInfo">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>

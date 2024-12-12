@@ -141,7 +141,7 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </MsgTextArea>
-            <InfoLabel fx:id="importStatus" realHeight="30">
+            <InfoLabel fx:id="importStatus">
                 <VBox.margin>
                     <Insets left="30"/>
                 </VBox.margin>
