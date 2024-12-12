@@ -188,29 +188,29 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.filter">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FlexHBox>
                 <ClearableTextField fx:id="pattern" realHeight="30" flexWidth="100% - 175" text="*">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </ClearableTextField>
                 <FXButton text="%redis.key.tip2" onAction="#showKeys">
                     <HBox.margin>
-                        <Insets left="3" top="10"/>
+                        <Insets left="3" top="5"/>
                     </HBox.margin>
                 </FXButton>
             </FlexHBox>
             <InfoLabel text="%redis.key.tip1">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <ReadOnlyTextArea fx:id="keys" flexHeight="100% - 200" flexWidth="100% - 80">
                 <VBox.margin>
-                    <Insets left="30" top="10"/>
+                    <Insets left="30" top="5"/>
                 </VBox.margin>
             </ReadOnlyTextArea>
         </FlexVBox>
@@ -231,7 +231,7 @@
         <FlexVBox flexHeight="100% - 60" flexWidth="100%">
             <InfoLabel text="%base.nodeExists">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <fx:define>
@@ -240,66 +240,66 @@
             <FXHBox>
                 <FXRadioButton userData="0" toggleGroup="$existsPolicy" text="%base.skip" selected="true">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
                 <FXRadioButton userData="1" toggleGroup="$existsPolicy" text="%base.update">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXRadioButton>
             </FXHBox>
             <InfoLabel text="%base.options">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXHBox>
                 <FXCheckBox fx:id="retainTTL" text="%redis.transport.tip10" selected="true">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="applyFilter" text="%base.applyFilter">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
             </FXHBox>
             <InfoLabel text="%base.keyType">
                 <VBox.margin>
-                    <Insets left="30" top="20"/>
+                    <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
             <FXHBox>
                 <FXCheckBox selected="true" fx:id="stringType" text="STRING">
                     <HBox.margin>
-                        <Insets left="30" top="10"/>
+                        <Insets left="30" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox selected="true" fx:id="listType" text="LIST">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox selected="true" fx:id="setType" text="SET">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox selected="true" fx:id="zsetType" text="ZSET">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox selected="true" fx:id="hashType" text="HASH">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
                 <FXCheckBox fx:id="streamType" text="STREAM">
                     <HBox.margin>
-                        <Insets left="10" top="10"/>
+                        <Insets left="10" top="5"/>
                     </HBox.margin>
                 </FXCheckBox>
             </FXHBox>
