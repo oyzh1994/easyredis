@@ -21,6 +21,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHashKeyTab.RedisHashKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -141,37 +142,33 @@
         </VBox.margin>
     </RichDataTextAreaPane>
     <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="dataAction">
+        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
+            <HBox.margin>
+                <Insets left="7" top="5"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="dataRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#dataRedo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </ClearSVGGlyph>
-        <RichDataTypeComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
-                             realWidth="120">
-            <HBox.margin>
-                <Insets left="5" top="-4"/>
-            </HBox.margin>
-        </RichDataTypeComboBox>
-        <VBox.margin>
-            <Insets top="5" left="2"/>
-        </VBox.margin>
     </FlexHBox>
     <FXText text="%base.value">
         <VBox.margin>

@@ -242,7 +242,8 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
         protected void firstShowData() {
             RedisListValue.RedisListRow row = this.treeItem.data();
             if (row != null) {
-                this.nodeData.showData(row.getValue());
+                RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+                this.format.setValue(dataType);
                 this.nodeData.forgetHistory();
                 this.saveNodeData.disable();
             }
