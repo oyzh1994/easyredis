@@ -17,6 +17,7 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
 
     public RedisDataTreeItem(RichTreeView treeView) {
         super(treeView);
+        super.setSortable(false);
         this.setValue(new RedisDataTreeItemValue());
     }
 
