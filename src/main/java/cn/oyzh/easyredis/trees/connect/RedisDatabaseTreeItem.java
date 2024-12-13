@@ -62,6 +62,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
 
     public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
         super(treeView);
+        super.setSortable(false);
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? I18nHelper.keys() : "db" + dbIndex;
         this.setValue(new RedisDatabaseTreeItemValue(this));

@@ -17,7 +17,6 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
 
     public RedisDataTreeItem(RichTreeView treeView) {
         super(treeView);
-        super.setSortable(false);
         this.setValue(new RedisDataTreeItemValue());
     }
 
@@ -27,13 +26,30 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
         return (RedisDatabaseTreeItem) treeItem;
     }
 
-    public RedisConnect redisConnect(){
+    public RedisConnect redisConnect() {
         return this.parent().info();
+    }
+
+    private void setOpening(boolean opening) {
+        super.getBitValue().set(7, opening);
+    }
+
+    private boolean isOpening() {
+        return super.getBitValue().get(7);
     }
 
     @Override
     public void onPrimaryDoubleClick() {
-        super.startWaiting(() -> RedisEventUtil.connectionOpened(this.parent()));
+        if (!this.isOpening()) {
+            this.setOpening(true);
+            super.startWaiting(() -> {
+                try {
+                    RedisEventUtil.connectionOpened(this.parent());
+                } finally {
+                    this.setOpening(false);
+                }
+            });
+        }
     }
 
     /**
