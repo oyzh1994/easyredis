@@ -123,6 +123,9 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             // 如果是raw格式，则选择binary
             if (this.treeItem.isRawEncoding()) {
                 this.format.selectBinary();
+            } else {// 自动匹配
+                RichDataType dataType = this.nodeData.showDetectData(this.treeItem.data());
+                this.format.selectObj(dataType);
             }
         }
 

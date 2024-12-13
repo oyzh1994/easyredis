@@ -19,33 +19,38 @@
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStringKeyTab.RedisStringKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
+        <RichDataTypeComboBox prefHeight="22" fx:id="format">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="dataRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#dataRedo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph fx:id="pasteData" sizeStr="14,16" onMousePrimaryClicked="#pasteData"
                        tipText="%base.pasteTip1">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" fx:id="clearData" onMousePrimaryClicked="#clearData">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </ClearSVGGlyph>
         <!-- <CollectSVGGlyph fx:id="collect" size="15" onMousePrimaryClicked="#collect"> -->
@@ -61,34 +66,28 @@
         <!-- </UnCollectSVGGlyph> -->
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </RefreshSVGGlyph>
         <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </RenameKeySVGGlyph>
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKey">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="7"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <RichDataTypeComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
-                              realWidth="120">
-            <HBox.margin>
-                <Insets left="5" top="-4"/>
-            </HBox.margin>
-        </RichDataTypeComboBox>
         <FXText realHeight="22" fontSize="11" text="%base.binary" style="-fx-fill: green" fx:id="binary"
                 managedBindVisible="true" visible="false">
             <HBox.margin>
-                <Insets left="5" top="1"/>
+                <Insets left="5" top="8"/>
             </HBox.margin>
         </FXText>
-        <padding>
-            <Insets top="7"/>
-        </padding>
+        <!-- <padding> -->
+        <!--     <Insets top="7"/> -->
+        <!-- </padding> -->
     </FlexHBox>
     <RichDataTextAreaPane fontSize="11" fx:id="nodeData" flexHeight="100% - 60"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
