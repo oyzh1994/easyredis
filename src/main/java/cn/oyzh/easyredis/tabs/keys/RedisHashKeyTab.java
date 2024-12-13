@@ -140,7 +140,9 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setValue(newValue);
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setValue(newValue);
+                }
             }
         };
 
@@ -154,7 +156,9 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setField(newValue);
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setField(newValue);
+                }
             }
         };
 

@@ -128,7 +128,9 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setValue(newValue);
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setValue(newValue);
+                }
             }
         };
 
@@ -143,7 +145,9 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setLongitude(value.doubleValue());
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setLongitude(value.doubleValue());
+                }
             }
         };
 
@@ -158,7 +162,9 @@ public class RedisCoordinateKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setLatitude(value.doubleValue());
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setLatitude(value.doubleValue());
+                }
             }
         };
 

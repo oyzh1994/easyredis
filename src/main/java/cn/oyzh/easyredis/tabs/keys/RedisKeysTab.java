@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
+import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -191,23 +192,29 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private RedisKeySearchTypeComboBox searchType;
 
-        /**
-         * 节点排序(正序)
-         */
-        @FXML
-        private SVGGlyph sortAsc;
-
-        /**
-         * 节点排序(倒序)
-         */
-        @FXML
-        private SVGGlyph sortDesc;
+        // /**
+        //  * 节点排序(正序)
+        //  */
+        // @FXML
+        // private SVGGlyph sortAsc;
+        //
+        // /**
+        //  * 节点排序(倒序)
+        //  */
+        // @FXML
+        // private SVGGlyph sortDesc;
 
         /**
          * 收藏面板
          */
         @FXML
         private CollectSVGPane collectPane;
+
+        /**
+         * 排序面板
+         */
+        @FXML
+        private SortSVGPane sortPane;
 
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
@@ -264,19 +271,19 @@ public class RedisKeysTab extends DynamicTab {
             this.treeView.loadItems();
         }
 
-        @FXML
-        private void sortAsc() {
-            this.sortAsc.disappear();
-            this.sortDesc.display();
-            this.treeView.sortAsc();
-        }
-
-        @FXML
-        private void sortDesc() {
-            this.sortDesc.disappear();
-            this.sortAsc.display();
-            this.treeView.sortDesc();
-        }
+        // @FXML
+        // private void sortAsc() {
+        //     this.sortAsc.disappear();
+        //     this.sortDesc.display();
+        //     this.treeView.sortAsc();
+        // }
+        //
+        // @FXML
+        // private void sortDesc() {
+        //     this.sortDesc.disappear();
+        //     this.sortAsc.display();
+        //     this.treeView.sortDesc();
+        // }
 
         @FXML
         private void positionNode() {
@@ -314,7 +321,7 @@ public class RedisKeysTab extends DynamicTab {
         /**
          * 初始化节点
          *
-         * @param treeItem
+         * @param treeItem 节点
          */
         private void initItem(TreeItem<?> treeItem) {
             if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
@@ -361,6 +368,17 @@ public class RedisKeysTab extends DynamicTab {
             RedisKeyTab<?> keyTab = this.tabPane.getTab(0);
             if (keyTab != null) {
                 keyTab.flushTTL();
+            }
+        }
+
+        @FXML
+        private void sortTree() {
+            if (this.sortPane.isAsc()) {
+                this.treeView.sortAsc();
+                this.sortPane.desc();
+            } else {
+                this.treeView.sortDesc();
+                this.sortPane.asc();
             }
         }
     }

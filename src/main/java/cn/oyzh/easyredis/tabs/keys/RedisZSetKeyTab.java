@@ -106,7 +106,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setValue(newValue);
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setValue(newValue);
+                }
             }
         };
 
@@ -121,7 +123,9 @@ public class RedisZSetKeyTab extends RedisKeyTab<RedisZSetKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setScore(value.doubleValue());
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setScore(value.doubleValue());
+                }
             }
         };
 

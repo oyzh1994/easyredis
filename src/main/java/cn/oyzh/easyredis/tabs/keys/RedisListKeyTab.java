@@ -115,7 +115,9 @@ public class RedisListKeyTab extends RedisKeyTab<RedisListKeyTreeItem> {
                 if (this.treeItem.unsavedValue() == null) {
                     this.treeItem.data(this.treeItem.currentRow());
                 }
-                this.treeItem.unsavedValue().setValue(newValue);
+                if (this.treeItem.unsavedValue() != null) {
+                    this.treeItem.unsavedValue().setValue(newValue);
+                }
             }
         };
 
