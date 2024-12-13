@@ -3,7 +3,7 @@
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
 <?import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView?>
-<?import cn.oyzh.fx.gui.svg.CollectPane?>
+<?import cn.oyzh.fx.gui.svg.pane.CollectSVGPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
@@ -45,11 +45,11 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </DeleteSVGGlyph>
-            <CollectPane fx:id="collectPane" size="16" onMousePrimaryClicked="#collectKey">
+            <CollectSVGPane fx:id="collectPane" size="16" onMousePrimaryClicked="#collectKey">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
                 </HBox.margin>
-            </CollectPane>
+            </CollectSVGPane>
             <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refreshKey">
                 <HBox.margin>
                     <Insets left="5" top="5"/>

@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
-import cn.oyzh.fx.gui.svg.CollectPane;
+import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -207,7 +207,7 @@ public class RedisKeysTab extends DynamicTab {
          * 收藏面板
          */
         @FXML
-        private CollectPane collectPane;
+        private CollectSVGPane collectPane;
 
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
