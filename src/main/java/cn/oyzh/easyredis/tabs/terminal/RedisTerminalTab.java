@@ -2,12 +2,18 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 /**
  * redis终端tab
@@ -28,8 +34,8 @@ public class RedisTerminalTab extends DynamicTab {
     }
 
     @Override
-    public RedisTerminalTabContent controller() {
-        return (RedisTerminalTabContent) super.controller();
+    public RedisTerminalTabController controller() {
+        return (RedisTerminalTabController) super.controller();
     }
 
     @Override
@@ -77,5 +83,47 @@ public class RedisTerminalTab extends DynamicTab {
      */
     public RedisConnect info() {
         return this.controller().info();
+    }
+
+    /**
+     * redis命令行tab内容组件
+     *
+     * @author oyzh
+     * @since 2023/07/21
+     */
+    public static class RedisTerminalTabController extends DynamicTabController {
+
+        /**
+         * redis客户端
+         */
+        @Getter
+        @Accessors(chain = true, fluent = true)
+        private RedisClient client;
+
+        /**
+         * redis命令行文本域
+         */
+        @FXML
+        private RedisTerminalTextTextArea terminal;
+
+        /**
+         * 设置redis客户端
+         *
+         * @param client redis客户端
+         */
+        public void client(@NonNull RedisClient client) {
+            this.client = client;
+            this.terminal.init(client);
+        }
+
+        /**
+         * redis信息
+         *
+         * @return 当前redis信息
+         */
+        protected RedisConnect info() {
+            return this.client.redisInfo();
+        }
+
     }
 }

@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTabController" flexHeight="100%"
+          fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTab.RedisServerTabController" flexHeight="100%"
           flexWidth="100%">
     <FlexTableView flexWidth="100%" realHeight="80" fx:id="propTable">
         <columns>

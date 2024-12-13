@@ -3,5 +3,5 @@
 <RedisTerminalTextTextArea styleClass="root" flexHeight="100%" fx:id="terminal" fontSize="12" editable="false" flexWidth="100%"
                            xmlns="http://javafx.com/javafx"
                            xmlns:fx="http://javafx.com/fxml"
-                           fx:controller="cn.oyzh.easyredis.tabs.terminal.RedisTerminalTabContent">
+                           fx:controller="cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab.RedisTerminalTabController">
 </RedisTerminalTextTextArea>
