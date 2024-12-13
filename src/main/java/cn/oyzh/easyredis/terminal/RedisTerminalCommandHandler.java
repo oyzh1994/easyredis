@@ -14,7 +14,6 @@ import redis.clients.jedis.Protocol;
  */
 public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, RedisTerminalTextTextArea> {
 
-
     @Override
     public TerminalExecuteResult execute(C command, RedisTerminalTextTextArea terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();

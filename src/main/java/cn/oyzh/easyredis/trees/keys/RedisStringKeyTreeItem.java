@@ -77,21 +77,21 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         return this.keyValue().getValue();
     }
 
-    /**
-     * 数据是否太长
-     *
-     * @return 结果
-     */
-    public boolean isDataTooLong() {
-        Object o = this.data();
-        if (o instanceof String s) {
-            return s.length() > 1024 * 1024;
-        }
-        if (o instanceof byte[] bytes) {
-            return bytes.length > 1024 * 1024;
-        }
-        return false;
-    }
+    // /**
+    //  * 数据是否太长
+    //  *
+    //  * @return 结果
+    //  */
+    // public boolean isDataTooLong() {
+    //     Object o = this.data();
+    //     if (o instanceof String s) {
+    //         return s.length() > 1024 * 1024;
+    //     }
+    //     if (o instanceof byte[] bytes) {
+    //         return bytes.length > 1024 * 1024;
+    //     }
+    //     return false;
+    // }
 
     /**
      * 获取统计值大小

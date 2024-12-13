@@ -69,7 +69,7 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </FXCheckBox>
-            <FXCheckBox fx:id="keyFilters" text="键过滤历史" selected="true">
+            <FXCheckBox fx:id="keyFilters" text="%redis.migration.tip7" selected="true">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
