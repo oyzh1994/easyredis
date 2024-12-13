@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -72,7 +72,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
          * 格式
          */
         @FXML
-        private RedisFormatComboBox format;
+        private RichDataTypeComboBox format;
 
         /**
          * 数据组件
@@ -83,7 +83,7 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
         /**
          * 格式监听器
          */
-        private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
+        private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
             if (this.format.isStringFormat()) {
                 this.showData(RichDataType.STRING);
                 this.nodeData.setEditable(true);

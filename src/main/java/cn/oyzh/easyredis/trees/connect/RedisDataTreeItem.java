@@ -31,11 +31,11 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
     }
 
     private void setOpening(boolean opening) {
-        super.getBitValue().set(7, opening);
+        super.bitValue().set(7, opening);
     }
 
     private boolean isOpening() {
-        return super.getBitValue().get(7);
+        return super.bitValue().get(7);
     }
 
     @Override

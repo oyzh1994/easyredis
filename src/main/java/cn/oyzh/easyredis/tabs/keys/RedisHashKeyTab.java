@@ -4,7 +4,6 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.RedisHashFieldAddedEvent;
-import cn.oyzh.easyredis.fx.RedisFormatComboBox;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
@@ -17,6 +16,7 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -101,7 +101,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
          * 格式
          */
         @FXML
-        private RedisFormatComboBox format;
+        private RichDataTypeComboBox format;
 
         /**
          * 字段操作
@@ -112,7 +112,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         /**
          * 格式监听器
          */
-        private final ChangeListener<String> formatListener = (t1, t2, t3) -> {
+        private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
             if (this.format.isStringFormat()) {
                 this.showData(RichDataType.STRING);
                 this.nodeData.setEditable(true);

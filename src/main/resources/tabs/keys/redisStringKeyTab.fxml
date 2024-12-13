@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
@@ -16,6 +15,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStringKeyTab.RedisStringKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -74,12 +74,12 @@
                 <Insets left="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
-                             realWidth="120">
+        <RichDataTypeComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
+                              realWidth="120">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
-        </RedisFormatComboBox>
+        </RichDataTypeComboBox>
         <FXText realHeight="22" fontSize="11" text="%base.binary" style="-fx-fill: green" fx:id="binary"
                 managedBindVisible="true" visible="false">
             <HBox.margin>

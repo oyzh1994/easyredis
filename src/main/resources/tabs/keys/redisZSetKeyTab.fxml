@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisFormatComboBox?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
@@ -13,20 +11,19 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ReverseSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
+<?import cn.oyzh.fx.gui.text.field.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.gui.text.field.DecimalTextField?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisZSetKeyTab.RedisZSetKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -133,12 +130,12 @@
                 <Insets left="5"/>
             </HBox.margin>
         </ClearSVGGlyph>
-        <RedisFormatComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
-                             realWidth="120">
+        <RichDataTypeComboBox prefHeight="22" fontSize="9" initIndex="0" tipText="%base.format" fx:id="format"
+                              realWidth="120">
             <HBox.margin>
                 <Insets left="5" top="-4"/>
             </HBox.margin>
-        </RedisFormatComboBox>
+        </RichDataTypeComboBox>
         <padding>
             <Insets top="9"/>
         </padding>
