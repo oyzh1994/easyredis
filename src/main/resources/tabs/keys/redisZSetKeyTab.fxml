@@ -104,7 +104,7 @@
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
-                <Insets left="7" top="5"/>
+                <Insets left="5" top="5"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
@@ -138,10 +138,10 @@
     </FlexHBox>
     <FXText text="%base.member">
         <VBox.margin>
-            <Insets top="5" left="2"/>
+            <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 475"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 469"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
@@ -149,7 +149,7 @@
     </RichDataTextAreaPane>
     <FXText text="%base.score">
         <VBox.margin>
-            <Insets top="5" left="2"/>
+            <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
     <DecimalTextField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="scoreVal"

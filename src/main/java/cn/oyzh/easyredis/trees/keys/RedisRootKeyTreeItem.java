@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
@@ -39,12 +40,16 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     public void keyAdded(String key) {
-        RedisKeysTreeView treeView = this.getTreeView();
-        RedisKey redisKey = RedisKeyUtil.getKey(treeView.dbIndex(), key, false, false, treeView.client());
-        if (redisKey == null) {
-            JulLog.warn("redisKey is null");
-        } else {
-            this.addChild(this.initItemByNode(redisKey));
+        try {
+            RedisKeysTreeView treeView = this.getTreeView();
+            RedisKey redisKey = treeView == null ? null : RedisKeyUtil.getKey(treeView.dbIndex(), key, false, false, treeView.client());
+            if (redisKey == null) {
+                JulLog.warn("redisKey is null");
+            } else {
+                this.addChild(this.initItemByNode(redisKey));
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 

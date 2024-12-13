@@ -21,10 +21,10 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisCoordinateKeyTab.RedisCoordinateKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -105,7 +105,7 @@
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
-                <Insets left="7" top="5"/>
+                <Insets left="5" top="5"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
@@ -144,10 +144,10 @@
     </FlexHBox>
     <FXText text="%base.coordinates">
         <VBox.margin>
-            <Insets top="5" left="2"/>
+            <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 520"
+    <RichDataTextAreaPane disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 514"
                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
@@ -155,7 +155,7 @@
     </RichDataTextAreaPane>
     <FXText text="%base.longitude">
         <VBox.margin>
-            <Insets top="5" left="2"/>
+            <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
     <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
@@ -166,7 +166,7 @@
     </LongitudeField>
     <FXText text="%base.latitude">
         <VBox.margin>
-            <Insets top="5" left="2"/>
+            <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
     <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"

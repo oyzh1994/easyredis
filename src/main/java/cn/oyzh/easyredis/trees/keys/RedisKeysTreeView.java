@@ -36,7 +36,7 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
     @Accessors(fluent = true, chain = false)
     private RedisDatabaseTreeItem dbItem;
 
-    public Integer dbIndex() {
+    public int dbIndex() {
         return this.dbItem.dbIndex();
     }
 

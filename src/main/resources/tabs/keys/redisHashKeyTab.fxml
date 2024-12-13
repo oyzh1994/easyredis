@@ -18,10 +18,10 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHashKeyTab.RedisHashKeyTabController">
     <FlexHBox realHeight="30" flexWidth="100%">
@@ -92,47 +92,49 @@
             </HBox.margin>
         </PageBox>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="fieldAction">
+    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="fieldAction">
+        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="fieldFormat">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" fx:id="fieldUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#fieldUndo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="fieldRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#fieldRedo">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteField" tipText="%base.pasteTip1">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearFiled">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </ClearSVGGlyph>
         <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="9"/>
             </HBox.margin>
         </RefreshSVGGlyph>
-        <VBox.margin>
-            <Insets top="5" left="2"/>
-        </VBox.margin>
     </FlexHBox>
     <FXText text="%base.field">
         <VBox.margin>
-            <Insets  left="2"/>
+            <Insets left="5"/>
         </VBox.margin>
     </FXText>
     <RichDataTextAreaPane disable="true" realHeight="80" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
@@ -141,10 +143,10 @@
             <Insets left="2"/>
         </VBox.margin>
     </RichDataTextAreaPane>
-    <FlexHBox disable="true" realHeight="24" flexWidth="100%" fx:id="dataAction">
+    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
-                <Insets left="7" top="5"/>
+                <Insets left="5" top="5"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
@@ -172,7 +174,7 @@
     </FlexHBox>
     <FXText text="%base.value">
         <VBox.margin>
-            <Insets left="2"/>
+            <Insets left="5"/>
         </VBox.margin>
     </FXText>
     <RichDataTextAreaPane disable="true" flexHeight="100% - 549" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"

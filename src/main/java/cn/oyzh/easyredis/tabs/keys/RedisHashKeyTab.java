@@ -104,6 +104,12 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
         private RichDataTypeComboBox format;
 
         /**
+         * 字段格式
+         */
+        @FXML
+        private RichDataTypeComboBox fieldFormat;
+
+        /**
          * 字段操作
          */
         @FXML
@@ -128,6 +134,23 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             } else if (this.format.isRawFormat()) {
                 this.showData(RichDataType.RAW);
                 this.nodeData.setEditable(true);
+            }
+        };
+
+        /**
+         * 字段格式监听器
+         */
+        private final ChangeListener<RichDataType> fieldFormatListener = (t1, t2, t3) -> {
+            if (this.fieldFormat.isStringFormat()) {
+                this.showData(RichDataType.STRING);
+            } else if (this.fieldFormat.isJsonFormat()) {
+                this.showData(RichDataType.JSON);
+            } else if (this.fieldFormat.isBinaryFormat()) {
+                this.showData(RichDataType.BINARY);
+            } else if (this.fieldFormat.isHexFormat()) {
+                this.showData(RichDataType.HEX);
+            } else if (this.fieldFormat.isRawFormat()) {
+                this.showData(RichDataType.RAW);
             }
         };
 
@@ -331,6 +354,10 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
                 this.format.setValue(dataType);
                 this.nodeData.forgetHistory();
                 this.saveNodeData.disable();
+
+                // 字段格式
+                RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
+                this.fieldFormat.setValue(fieldDataType);
             }
         }
 
@@ -369,6 +396,7 @@ public class RedisHashKeyTab extends RedisKeyTab<RedisHashKeyTreeItem> {
             super.bindListeners();
             // 格式监听
             this.format.selectedItemChanged(this.formatListener);
+            this.fieldFormat.selectedItemChanged(this.fieldFormatListener);
             // 值处理
             this.nodeData.addTextChangeListener(this.dataListener);
             this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
