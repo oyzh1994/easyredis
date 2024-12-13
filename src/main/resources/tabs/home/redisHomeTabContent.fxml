@@ -15,7 +15,7 @@
 <FlexPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="cn.oyzh.easyredis.tabs.home.RedisHomeTab.RedisHomeTabContent">
-    <ImageView fitWidth="240" fitHeight="240" layoutX="35" layoutY="95">
+    <ImageView fitWidth="200" fitHeight="200" layoutX="35" layoutY="95">
         <Image url="/image/redis_no_bg.png"/>
     </ImageView>
     <FlexVBox flexWidth="100% - 300" realHeight="210" layoutX="260" layoutY="100">

@@ -38,4 +38,9 @@ public class RedisConst {
      */
     public final static String ICON_PATH = "/image/redis_no_bg.png";
 
+    /**
+     * 托盘icon地址
+     */
+    public final static String TRAY_ICON_PATH = "/image/redis_24.png";
+
 }

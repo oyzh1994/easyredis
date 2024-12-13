@@ -106,7 +106,6 @@ public class EasyRedisApp extends FXApplication {
 
     @Override
     protected void initSystemTray() {
-
         if (!TrayManager.supported()) {
             JulLog.warn("tray is not supported.");
             return;
@@ -116,7 +115,7 @@ public class EasyRedisApp extends FXApplication {
         }
         try {
             // 初始化
-            TrayManager.init(this.appIcon());
+            TrayManager.init(RedisConst.TRAY_ICON_PATH);
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
