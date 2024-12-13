@@ -22,8 +22,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="400">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 60">
+          fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="420">
+    <FlexTabPane flexWidth="100%" flexHeight="100% - 70">
         <FXTab text="%base.redis">
             <FlexVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%redis.setting.tip1">

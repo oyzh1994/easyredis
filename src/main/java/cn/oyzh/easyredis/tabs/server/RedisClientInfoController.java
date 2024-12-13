@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisClientInfoContent {
+public class RedisClientInfoController {
 
     /**
      * redis客户端

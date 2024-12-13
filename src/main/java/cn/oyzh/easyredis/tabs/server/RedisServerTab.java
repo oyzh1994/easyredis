@@ -18,8 +18,8 @@ import javafx.scene.Cursor;
 public class RedisServerTab extends DynamicTab {
 
     @Override
-    public RedisServerTabContent controller() {
-        return (RedisServerTabContent) super.controller();
+    public RedisServerTabController controller() {
+        return (RedisServerTabController) super.controller();
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/08/02
  */
-public class RedisPubsubContent {
+public class RedisPubsubController {
 
     /**
      * redis客户端

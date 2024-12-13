@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.fx.gui.page.PageBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddFillSVGGlyph?>
-<?import cn.oyzh.fx.gui.page.PageBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTab.RedisFilterTabContent">
+          fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTab.RedisFilterTabController">
     <FlexHBox realHeight="50" flexWidth="100%">
         <ClearableTextField fx:id="searchKeyWord" realWidth="280" tipText="%base.searchKWTip" prefHeight="25">
             <HBox.margin>

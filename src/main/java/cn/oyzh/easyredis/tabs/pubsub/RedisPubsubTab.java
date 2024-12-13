@@ -39,8 +39,8 @@ public class RedisPubsubTab extends DynamicTab {
     private RedisPubsubItem item;
 
     @Override
-    public RedisPubsubTabContent controller() {
-        return (RedisPubsubTabContent) super.controller();
+    public RedisPubsubTabController controller() {
+        return (RedisPubsubTabController) super.controller();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RedisPubsubTab extends DynamicTab {
      * @author oyzh
      * @since 2023/08/02
      */
-    public static class RedisPubsubTabContent extends DynamicTabController {
+    public static class RedisPubsubTabController extends DynamicTabController {
 
         /**
          * 订阅组件

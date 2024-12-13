@@ -5,8 +5,6 @@ import cn.oyzh.easyredis.controller.main.MessageController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
-import cn.oyzh.easyredis.event.RedisLeftCollapseEvent;
-import cn.oyzh.easyredis.event.RedisLeftExtendEvent;
 import cn.oyzh.easyredis.event.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
@@ -26,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.stage.WindowEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -381,44 +378,13 @@ public class RedisMainController extends ParentStageController {
         }
     }
 
-    // /**
-    //  * 定位节点
-    //  */
-    // @FXML
-    // private void positionNode() {
-    //     this.tree.scrollTo(this.tree.getSelectedItem());
-    // }
-
-    // /**
-    //  * 展开左侧
-    //  */
-    // @EventSubscribe
-    // private void leftExtend(RedisLeftExtendEvent event) {
-    //     this.tabPaneLeft.display();
-    //     double w = this.tabPaneLeft.getMinWidth();
-    //     this.tabPane.setLayoutX(w);
-    //     this.tabPane.setFlexWidth("100% - " + w);
-    //     this.tabPaneLeft.parentAutosize();
-    // }
-    //
-    // /**
-    //  * 收缩左侧
-    //  */
-    // @EventSubscribe
-    // private void leftCollapse(RedisLeftCollapseEvent event) {
-    //     this.tabPaneLeft.disappear();
-    //     this.tabPane.setLayoutX(0);
-    //     this.tabPane.setFlexWidth("100%");
-    //     this.tabPaneLeft.parentAutosize();
-    // }
-
     /**
      * 布局2
      */
     @EventSubscribe
     private void layout2(Layout2Event event) {
         this.tabPaneLeft.display();
-        double w = this.tabPaneLeft.getMinWidth();
+        double w = this.tabPaneLeft.realWidth();
         this.tabPane.setLayoutX(w);
         this.tabPane.setFlexWidth("100% - " + w);
         this.tabPaneLeft.parentAutosize();
@@ -435,26 +401,8 @@ public class RedisMainController extends ParentStageController {
         this.tabPaneLeft.parentAutosize();
     }
 
-    // @Override
-    // public List<SubStageController> getSubControllers() {
-    //     List<SubStageController> list = new ArrayList<>();
-    //     list.add(this.searchController);
-    //     return list;
-    // }
-
-    // /**
-    //  * 清空消息
-    //  */
-    // @FXML
-    // private void clearMsg() {
-    //     this.msgArea.clear();
-    // }
-
     @Override
     public List<SubStageController> getSubControllers() {
-        List<SubStageController> list = new ArrayList<>();
-        list.add(this.connectController);
-        list.add(this.messageController);
-        return list;
+        return List.of(this.connectController, this.messageController);
     }
 }

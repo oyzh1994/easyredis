@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisServerInfoContent {
+public class RedisServerInfoController {
 
     /**
      * tab面板

@@ -69,7 +69,7 @@ public class RedisFilterTab extends DynamicTab {
      * @author oyzh
      * @since 2023/11/27
      */
-    public static class RedisFilterTabContent extends DynamicTabController {
+    public static class RedisFilterTabController extends DynamicTabController {
 
         /**
          * 分页组件

@@ -21,7 +21,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisSlowlogContent {
+public class RedisSlowlogController {
 
     /**
      * redis客户端

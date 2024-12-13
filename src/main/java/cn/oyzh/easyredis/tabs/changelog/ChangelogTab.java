@@ -53,7 +53,7 @@ public class ChangelogTab extends DynamicTab {
      * @author oyzh
      * @since 2024/05/08
      */
-    public static class ChangelogTabContent extends DynamicTabController {
+    public static class ChangelogTabController extends DynamicTabController {
 
         /**
          * 更新日志

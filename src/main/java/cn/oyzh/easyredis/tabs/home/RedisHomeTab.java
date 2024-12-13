@@ -54,7 +54,7 @@ public class RedisHomeTab extends DynamicTab {
      * @author oyzh
      * @since 2023/6/24
      */
-    public static class RedisHomeTabContent extends DynamicTabController {
+    public static class RedisHomeTabController extends DynamicTabController {
 
         /**
          * 软件信息
