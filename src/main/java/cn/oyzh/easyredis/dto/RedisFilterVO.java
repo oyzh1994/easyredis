@@ -2,6 +2,10 @@ package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.Index;
 import cn.oyzh.easyredis.domain.RedisFilter;
+import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
+import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -52,5 +56,42 @@ public class RedisFilterVO extends RedisFilter implements Index {
             voList.add(copy(list.get(i), i + 1));
         }
         return voList;
+    }
+
+    /**
+     * 过滤储存
+     */
+    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+
+    /**
+     * 匹配模式控件
+     */
+    public MatchToggleSwitch getMatchModeControl() {
+        MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
+        toggleSwitch.fontSize(11);
+        toggleSwitch.setSelected(this.isPartMatch());
+        toggleSwitch.selectedChanged((obs, o, n) -> {
+            this.setPartMatch(n);
+            if (this.filterStore.replace(this)) {
+                RedisEventUtil.treeChildFilter();
+            }
+        });
+        return toggleSwitch;
+    }
+
+    /**
+     * 状态控件
+     */
+    public EnabledToggleSwitch getStatusControl() {
+        EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
+        toggleSwitch.setFontSize(11);
+        toggleSwitch.setSelected(this.isEnable());
+        toggleSwitch.selectedChanged((abs, o, n) -> {
+            this.setEnable(n);
+            if (this.filterStore.replace(this)) {
+                RedisEventUtil.treeChildFilter();
+            }
+        });
+        return toggleSwitch;
     }
 }

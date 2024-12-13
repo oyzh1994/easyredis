@@ -13,19 +13,13 @@ import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +39,7 @@ public class RedisFilterTab extends DynamicTab {
 
     @Override
     public void flushGraphic() {
-        SVGGlyph glyph = (SVGGlyph) this.getGraphic();
+        FilterSVGGlyph glyph = (FilterSVGGlyph) this.getGraphic();
         if (glyph == null) {
             glyph = new FilterSVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
@@ -55,11 +49,11 @@ public class RedisFilterTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/filter/redisFilterTabContent.fxml";
+        return "/tabs/filter/redisFilterTab.fxml";
     }
 
     @Override
-    protected String getTabTitle() {
+    public String getTabTitle() {
         return I18nResourceBundle.i18nString("base.title.filter.main");
     }
 
@@ -87,37 +81,7 @@ public class RedisFilterTab extends DynamicTab {
          * 数据列表
          */
         @FXML
-        private TableView<RedisFilter> listTable;
-
-        /**
-         * 数据索id列
-         */
-        @FXML
-        private TableColumn<RedisFilterVO, String> index;
-
-        /**
-         * 关键词列
-         */
-        @FXML
-        private TableColumn<RedisFilterVO, String> kw;
-
-        /**
-         * 数据状态列
-         */
-        @FXML
-        private FlexTableColumn<RedisFilterVO, String> status;
-
-        /**
-         * 匹配模式列
-         */
-        @FXML
-        private FlexTableColumn<RedisFilterVO, String> matchMode;
-
-        /**
-         * 数据操作列
-         */
-        @FXML
-        private FlexTableColumn<RedisFilterVO, String> action;
+        private FXTableView<RedisFilterVO> listTable;
 
         /**
          * 分页数据
@@ -135,102 +99,42 @@ public class RedisFilterTab extends DynamicTab {
          * @param pageNo 数据页码
          */
         private void initDataList(long pageNo) {
-            this.pageData = this.filterStore.getPage(20, 10, this.searchKeyWord.getText());
-            this.listTable.getItems().clear();
-            this.listTable.getItems().addAll(RedisFilterVO.convert(this.pageData.page(pageNo)));
+            if (this.pageData != null) {
+                pageNo = this.pageData.fixPageNo(pageNo);
+            }
+            this.pageData = this.filterStore.getPage(pageNo, 20, this.searchKeyWord.getText());
+            this.listTable.setItem(RedisFilterVO.convert(this.pageData.dataList()));
             this.pagePane.setPaging(this.pageData);
         }
 
         /**
-         * 初始化列表控件
+         * 添加过滤
          */
-        private void initTable() {
-            // 操作栏初始化
-            this.action.setCellFactory((cell) -> new FXTableCell<>() {
-                private HBox hBox;
-
-                // @Override
-                // public Node initGraphic() {
-                //     if (this.hBox == null) {
-                //         // 删除按钮
-                //         DeleteSVGGlyph del = new DeleteSVGGlyph("14");
-                //         del.setOnMousePrimaryClicked((event) -> deleteInfo(this.getTableItem()));
-                //         this.hBox = new HBox(del);
-                //         HBox.setMargin(del, new Insets(7, 0, 0, 5));
-                //     }
-                //     return hBox;
-                // }
-            });
-
-            // 状态栏初始化
-            this.status.setCellFactory((cell) -> new FXTableCell<>() {
-                // @Override
-                // public FXToggleSwitch initGraphic() {
-                //     RedisFilterVO filterVO = this.getTableItem();
-                //     if (filterVO != null) {
-                //         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
-                //         toggleSwitch.setFontSize(11);
-                //         toggleSwitch.setSelected(filterVO.isEnable());
-                //         toggleSwitch.selectedChanged((abs, o, n) -> {
-                //             filterVO.setEnable(n);
-                //             if (filterStore.update(filterVO)) {
-                //                 RedisEventUtil.treeChildFilter();
-                //             } else {
-                //                 MessageBox.warn(I18nHelper.operationFail());
-                //             }
-                //         });
-                //         return toggleSwitch;
-                //     }
-                //     return null;
-                // }
-            });
-
-            // 匹配模式栏初始化
-            this.matchMode.setCellFactory((cell) -> new FXTableCell<>() {
-                // @Override
-                // public FXToggleSwitch initGraphic() {
-                //     RedisFilterVO filterVO = this.getTableItem();
-                //     if (filterVO != null) {
-                //         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
-                //         toggleSwitch.fontSize(11);
-                //         toggleSwitch.setSelected(filterVO.isPartMatch());
-                //         toggleSwitch.selectedChanged((obs, o, n) -> {
-                //             filterVO.setPartMatch(n);
-                //             if (filterStore.update(filterVO)) {
-                //                 RedisEventUtil.treeChildFilter();
-                //             } else if (filterVO.isEnable()) {
-                //                 MessageBox.warn(I18nHelper.operationFail());
-                //             }
-                //         });
-                //         return toggleSwitch;
-                //     }
-                //     return null;
-                // }
-            });
+        @FXML
+        private void add() {
+            StageManager.showStage(RedisFilterAddController.class);
         }
 
         /**
-         * 删除redis信息
-         *
-         * @param info redis信息
+         * 删除过滤
          */
-        private void deleteInfo(RedisFilter info) {
+        @FXML
+        private void delete() {
+            RedisFilter filter = this.listTable.getSelectedItem();
+            if (filter == null) {
+                return;
+            }
             if (MessageBox.confirm(I18nHelper.deleteData())) {
-                if (this.filterStore.delete(info)) {
+                if (this.filterStore.delete(filter.getKw())) {
                     RedisEventUtil.treeChildFilter();
-                    this.firstPage();
+                    this.listTable.removeItem(filter);
+                    if (this.listTable.isItemEmpty()) {
+                        this.firstPage();
+                    }
                 } else {
                     MessageBox.warn(I18nHelper.operationFail());
                 }
             }
-        }
-
-        /**
-         * 添加redis信息
-         */
-        @FXML
-        private void toAdd() {
-            StageManager.showStage(RedisFilterAddController.class);
         }
 
         /**
@@ -265,13 +169,14 @@ public class RedisFilterTab extends DynamicTab {
         }
 
         @Override
+        protected void bindListeners() {
+            super.bindListeners();
+            this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
+        }
+
+        @Override
         public void initialize(URL url, ResourceBundle resources) {
             super.initialize(url, resources);
-            this.kw.setCellValueFactory(new PropertyValueFactory<>("kw"));
-            this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-            this.searchKeyWord.addTextChangeListener((observableValue, s, t1) -> this.firstPage());
-            // 初始化表单
-            this.initTable();
             // 显示首页
             this.firstPage();
         }
