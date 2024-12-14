@@ -162,7 +162,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        if (this.isConnecting()) {
+        if (this.isWaiting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);
         } else if (this.isConnected()) {
@@ -174,6 +174,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
             FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
+            FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
             items.add(closeConnect);
             items.add(editConnect);
@@ -183,6 +184,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             items.add(transportData);
             items.add(server);
             items.add(flushAll);
+            items.add(openTerminal);
         } else {
             FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
@@ -192,6 +194,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+            FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
             items.add(connect);
             items.add(editConnect);
@@ -201,9 +204,8 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             items.add(importData);
             items.add(transportData);
             items.add(deleteConnect);
+            items.add(openTerminal);
         }
-        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
-        items.add(openTerminal);
         return items;
     }
 
