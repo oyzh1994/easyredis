@@ -24,7 +24,7 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/27
  */
 @StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "row/redisZSetCoordinateAdd.fxml"
 )

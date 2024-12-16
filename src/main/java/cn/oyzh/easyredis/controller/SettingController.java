@@ -39,7 +39,7 @@ import java.util.Objects;
  * @since 2023/06/16
  */
 @StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = RedisConst.FXML_BASE_PATH + "setting.fxml"
 )

@@ -33,7 +33,7 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "main.fxml"
 )
 public class MainController extends ParentStageController {

@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
  * @since 2023/07/19
  */
 @StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyImport.fxml"
 )

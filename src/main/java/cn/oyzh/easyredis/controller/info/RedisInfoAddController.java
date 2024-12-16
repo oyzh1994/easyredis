@@ -33,7 +33,7 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
 )
 public class RedisInfoAddController extends StageController {

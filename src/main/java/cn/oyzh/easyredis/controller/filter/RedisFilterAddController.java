@@ -24,8 +24,8 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/30
  */
 @StageAttribute(
-        resizeable = false,
-        iconUrls = RedisConst.ICON_PATH,
+        resizable = false,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "filter/redisFilterAdd.fxml"
 )

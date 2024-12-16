@@ -41,7 +41,7 @@ import java.util.List;
  * @since 2020/10/09
  */
 @StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = RedisConst.FXML_BASE_PATH + "key/redisKeyBatchOperation.fxml"
 )

@@ -33,7 +33,7 @@ import lombok.NonNull;
  */
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "info/redisInfoUpdate.fxml"
 )
 public class RedisInfoUpdateController extends StageController {

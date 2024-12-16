@@ -30,7 +30,7 @@ import javafx.stage.WindowEvent;
  * @since 2024/11/25
  */
 @StageAttribute(
-        iconUrls = RedisConst.ICON_PATH,
+        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.VIEW_PATH + "data/redisDataMigration.fxml"
 )
