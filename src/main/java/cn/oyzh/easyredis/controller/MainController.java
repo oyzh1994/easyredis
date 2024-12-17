@@ -5,15 +5,12 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
-import cn.oyzh.fx.gui.tray.DesktopTrayItem;
-import cn.oyzh.fx.gui.tray.QuitTrayItem;
-import cn.oyzh.fx.gui.tray.SettingTrayItem;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.titlebar.TitleBar;
 import cn.oyzh.fx.plus.tray.TrayManager;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -21,8 +18,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
-import java.awt.event.MouseEvent;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,6 +29,8 @@ import java.util.List;
  */
 @StageAttribute(
         usePrimary = true,
+        fullScreenAble = true,
+        alwaysOnTopAble = true,
         iconUrl = RedisConst.ICON_PATH,
         value = RedisConst.FXML_BASE_PATH + "main.fxml"
 )
@@ -43,11 +41,11 @@ public class MainController extends ParentStageController {
      */
     private final Project project = Project.load();
 
-    /**
-     * 头部页面
-     */
-    @FXML
-    private HeaderController headerController;
+    // /**
+    //  * 头部页面
+    //  */
+    // @FXML
+    // private HeaderController headerController;
 
     /**
      * redis主页业务
@@ -65,6 +63,9 @@ public class MainController extends ParentStageController {
      */
     private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
 
+    /**
+     * 设置存储
+     */
     private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
 
     // /**
@@ -72,77 +73,78 @@ public class MainController extends ParentStageController {
     //  */
     // private final RedisPageInfoStore pageInfoStore = RedisPageInfoStore.INSTANCE;
 
-    /**
-     * 初始化系统托盘
-     */
-    private void initSystemTray() {
-        if (!TrayManager.supported()) {
-            JulLog.warn("tray is not supported.");
-            return;
-        }
-        if (!TrayManager.exist()) {
-            try {
-                // 初始化
-                TrayManager.init(RedisConst.ICON_PATH);
-                // 设置标题
-                TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
-                // 打开主页
-                TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
-                // 打开设置
-                TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
-                // 退出程序
-                TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
-                    JulLog.warn("exit app by tray.");
-                    StageManager.exit();
-                }));
-                // 鼠标事件
-                TrayManager.onMouseClicked(e -> {
-                    // 单击鼠标主键，显示主页
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        this.showMain();
-                    }
-                });
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+    // /**
+    //  * 初始化系统托盘
+    //  */
+    // private void initSystemTray() {
+    //     if (!TrayManager.supported()) {
+    //         JulLog.warn("tray is not supported.");
+    //         return;
+    //     }
+    //     if (!TrayManager.exist()) {
+    //         try {
+    //             // 初始化
+    //             TrayManager.init(RedisConst.ICON_PATH);
+    //             // 设置标题
+    //             TrayManager.setTitle(this.project.getName() + " v" + this.project.getVersion());
+    //             // 打开主页
+    //             TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
+    //             // 打开设置
+    //             TrayManager.addMenuItem(new SettingTrayItem("12", this::showSetting));
+    //             // 退出程序
+    //             TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
+    //                 JulLog.warn("exit app by tray.");
+    //                 StageManager.exit();
+    //             }));
+    //             // 鼠标事件
+    //             TrayManager.onMouseClicked(e -> {
+    //                 // 单击鼠标主键，显示主页
+    //                 if (e.getButton() == MouseEvent.BUTTON1) {
+    //                     this.showMain();
+    //                 }
+    //             });
+    //         } catch (Exception ex) {
+    //             ex.printStackTrace();
+    //         }
+    //     }
+    // }
 
-    /**
-     * 显示设置
-     */
-    private void showSetting() {
-        FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(SettingController.class);
-            if (wrapper != null) {
-                JulLog.info("front setting.");
-                wrapper.toFront();
-            } else {
-                JulLog.info("show setting.");
-                StageManager.showStage(SettingController.class, this.stage);
-            }
-        });
-    }
-
-    /**
-     * 显示主页
-     */
-    private void showMain() {
-        FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(MainController.class);
-            if (wrapper != null) {
-                JulLog.info("front main.");
-                wrapper.toFront();
-            } else {
-                JulLog.info("show main.");
-                StageManager.showStage(MainController.class);
-            }
-        });
-    }
+    // /**
+    //  * 显示设置
+    //  */
+    // private void showSetting() {
+    //     FXUtil.runLater(() -> {
+    //         StageAdapter wrapper = StageManager.getStage(SettingController.class);
+    //         if (wrapper != null) {
+    //             JulLog.info("front setting.");
+    //             wrapper.toFront();
+    //         } else {
+    //             JulLog.info("show setting.");
+    //             StageManager.showStage(SettingController.class, this.stage);
+    //         }
+    //     });
+    // }
+    //
+    // /**
+    //  * 显示主页
+    //  */
+    // private void showMain() {
+    //     FXUtil.runLater(() -> {
+    //         StageAdapter wrapper = StageManager.getStage(MainController.class);
+    //         if (wrapper != null) {
+    //             JulLog.info("front main.");
+    //             wrapper.toFront();
+    //         } else {
+    //             JulLog.info("show main.");
+    //             StageManager.showStage(MainController.class);
+    //         }
+    //     });
+    // }
 
     @Override
     public List<? extends StageController> getSubControllers() {
-        return Arrays.asList(this.redisMainController, this.headerController);
+        // return Arrays.asList(this.redisMainController, this.headerController);
+        return Collections.singletonList(this.redisMainController);
     }
 
     @Override
@@ -177,17 +179,17 @@ public class MainController extends ParentStageController {
         this.stage.setTitleExt(this.project.getName() + "-v" + this.project.getVersion());
     }
 
-    @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
-        try {
-            this.initSystemTray();
-            TrayManager.show();
-        } catch (Exception ex) {
-            JulLog.warn("不支持系统托盘!");
-            ex.printStackTrace();
-        }
-    }
+    // @Override
+    // public void onStageShown(WindowEvent event) {
+    //     super.onStageShown(event);
+    //     try {
+    //         this.initSystemTray();
+    //         TrayManager.show();
+    //     } catch (Exception ex) {
+    //         JulLog.warn("不支持系统托盘!");
+    //         ex.printStackTrace();
+    //     }
+    // }
 
     @Override
     public void onSystemExit() {
@@ -233,6 +235,16 @@ public class MainController extends ParentStageController {
             this.stage.setX(this.setting.getPageScreenX());
             this.stage.setY(this.setting.getPageScreenY());
             JulLog.debug("view setX:{} setY:{}", this.setting.getPageScreenX(), this.setting.getPageScreenY());
+        }
+    }
+
+    @Override
+    public void onStageShown(WindowEvent event) {
+        super.onStageShown(event);
+        TitleBar titleBar = this.stage.getTitleBar();
+        // 加载标题
+        if (titleBar != null && !titleBar.isHasContent()) {
+            titleBar.loadContent("/views/header2.fxml");
         }
     }
 

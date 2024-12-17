@@ -3,7 +3,7 @@
 <?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <FlexPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100%" flexHeight="100% - 30">
+          fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100%" flexHeight="100%">
     <FlexTabPane flexHeight="100%" realWidth="440" rotateGraphic="true" side="LEFT" fx:id="tabPaneLeft">
         <!-- <FXTab text="%base.connection"> -->
         <!--     <graphic> -->

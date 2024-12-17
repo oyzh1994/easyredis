@@ -4,13 +4,12 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.fx.plus.controller.SubStageController;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 
 /**
  * 主页头部业务
@@ -18,30 +17,12 @@ import javafx.scene.input.MouseEvent;
  * @author oyzh
  * @since 2023/06/16
  */
-@Deprecated
-public class HeaderController extends SubStageController {
+public class HeaderController2 extends StageController {
 
     /**
      * 项目信息
      */
     private final Project project = Project.load();
-
-    // /**
-    //  * 展开redis树
-    //  */
-    // @FXML
-    // private SVGLabel expandTree;
-    //
-    // /**
-    //  * 收缩redis树
-    //  */
-    // @FXML
-    // private SVGLabel collapseTree;
-
-    // /**
-    //  * redis树互斥器
-    //  */
-    // private final NodeMutexes treeMutexes = new NodeMutexes();
 
     /**
      * 设置
@@ -87,12 +68,6 @@ public class HeaderController extends SubStageController {
      */
     @FXML
     private void transport() {
-        // StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
-        // if (wrapper != null) {
-        //     wrapper.toFront();
-        // } else {
-        //     StageManager.showStage(RedisInfoTransportController.class);
-        // }
         StageAdapter wrapper = StageManager.getStage(RedisDataTransportController.class);
         if (wrapper != null) {
             wrapper.toFront();
@@ -100,52 +75,6 @@ public class HeaderController extends SubStageController {
             StageManager.showStage(RedisDataTransportController.class);
         }
     }
-
-    // /**
-    //  * 传输数据
-    //  */
-    // @FXML
-    // private void transport1() {
-    //     StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
-    //     if (wrapper != null) {
-    //         wrapper.toFront();
-    //     } else {
-    //         StageManager.showStage(RedisInfoTransportController.class);
-    //     }
-    // }
-
-    // /**
-    //  * 收缩左侧redis树
-    //  */
-    // @FXML
-    // private void collapseTree() {
-    //     this.treeMutexes.visible(this.expandTree);
-    //     RedisEventUtil.leftCollapse();
-    // }
-    //
-    // /**
-    //  * 展开左侧redis树
-    //  */
-    // @FXML
-    // private void expandTree() {
-    //     this.treeMutexes.visible(this.collapseTree);
-    //     RedisEventUtil.leftExtend();
-    // }
-
-    // /**
-    //  * 搜索
-    //  */
-    // @FXML
-    // private void search() {
-    //     RedisEventUtil.searchFire();
-    // }
-
-    // @Override
-    // public void onStageShown(WindowEvent event) {
-    //     super.onStageShown(event);
-    //     this.treeMutexes.addNodes(this.collapseTree, this.expandTree);
-    //     this.treeMutexes.manageBindVisible();
-    // }
 
     /**
      * 工具箱
@@ -177,6 +106,4 @@ public class HeaderController extends SubStageController {
     private void migration() {
         StageManager.showStage(RedisDataMigrationController.class);
     }
-
-
 }
