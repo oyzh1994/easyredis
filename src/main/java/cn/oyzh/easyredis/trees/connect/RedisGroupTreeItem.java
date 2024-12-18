@@ -225,6 +225,10 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         }
     }
 
+    public String getGid() {
+        return this.value.getGid();
+    }
+
     /**
      * Redis Group键值
      *

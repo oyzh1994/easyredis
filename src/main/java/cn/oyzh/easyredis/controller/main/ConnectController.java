@@ -4,11 +4,9 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.plus.controller.SubStageController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
 
@@ -116,5 +114,15 @@ public class ConnectController extends SubStageController {
             this.tree.sortDesc();
             this.sortPane.asc();
         }
+    }
+
+    @FXML
+    private void importConnect() {
+        this.tree.getRoot().importConnect();
+    }
+
+    @FXML
+    private void exportConnect() {
+        this.tree.getRoot().exportConnect();
     }
 }

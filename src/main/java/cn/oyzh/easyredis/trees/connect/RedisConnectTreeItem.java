@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
-import cn.oyzh.easyredis.controller.key.RedisKeyImportController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -499,6 +498,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     @Override
     public void onPrimaryDoubleClick() {
         this.connect();
+    }
+
+    public String getId() {
+        return this.value.getId();
     }
 
     /**

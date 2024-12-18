@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.file.FileNameUtil;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.FileUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -54,33 +54,13 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
-        // 初始化子节点
-        this.initChildes();
+        // 加载子节点
+        this.loadChild();
     }
 
     @Override
     public RedisConnectTreeView getTreeView() {
         return (RedisConnectTreeView) super.getTreeView();
-    }
-
-    /**
-     * 初始化子节点
-     */
-    private void initChildes() {
-        // 初始化分组
-        List<RedisGroup> groups = this.groupStore.load();
-        if (CollectionUtil.isNotEmpty(groups)) {
-            List<TreeItem<?>> list = new ArrayList<>();
-            for (RedisGroup group : groups) {
-                list.add(new RedisGroupTreeItem(group, this.getTreeView()));
-            }
-            this.addChild(list);
-        }
-        // 初始化连接
-        List<RedisConnect> infos = this.infoStore.load();
-        if (CollectionUtil.isNotEmpty(infos)) {
-            this.addConnects(infos);
-        }
     }
 
     @Override
@@ -103,7 +83,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     /**
      * 导出连接
      */
-    private void exportConnect() {
+    public void exportConnect() {
         List<RedisConnect> infos = this.infoStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
@@ -115,9 +95,9 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         if (file != null) {
             try {
                 FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
             } catch (Exception ex) {
-                MessageBox.warn(I18nHelper.operationFail());
+                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
             }
         }
     }
@@ -143,7 +123,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     /**
      * 导入连接
      */
-    private void importConnect() {
+    public void importConnect() {
         FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
         File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
         // 解析文件
@@ -167,7 +147,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
             MessageBox.warn(I18nHelper.notSupportFolder());
             return;
         }
-        if (!FileNameUtil.isType(file.getName(), "json")) {
+        if (!FileNameUtil.isJsonType(FileNameUtil.extName(file.getName()))) {
             MessageBox.warn(I18nHelper.invalidFormat());
             return;
         }
@@ -181,17 +161,18 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
             List<RedisConnect> infos = export.getConnects();
             if (CollectionUtil.isNotEmpty(infos)) {
                 for (RedisConnect info : infos) {
-                    if (this.infoStore.replace(info)) {
-                        this.addConnect(info);
-                    } else {
-                        MessageBox.warn(I18nHelper.connect() + "[" + info.getName() + "]" + I18nHelper.importFail());
+                    if (!this.infoStore.replace(info)) {
+                        MessageBox.warn(I18nHelper.connect() + " : " + info.getName() + " " + I18nHelper.importFail());
                     }
                 }
-                MessageBox.okToast(I18nHelper.operationSuccess());
+                // 重新加载节点
+                this.loadChild();
+                // 提示成功
+                MessageBox.okToast(I18nHelper.importConnectionSuccess());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.operationException());
+            MessageBox.exception(ex, I18nHelper.importConnectionFail());
         }
     }
 
@@ -379,6 +360,42 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         if (item instanceof RedisConnectTreeItem connectTreeItem) {
             connectTreeItem.remove();
             this.addConnectItem(connectTreeItem);
+        }
+    }
+
+    @Override
+    public void loadChild() {
+        // 初始化分组
+        List<RedisGroup> groups = this.groupStore.load();
+        if (CollectionUtil.isNotEmpty(groups)) {
+            List<RedisGroupTreeItem> groupItems = this.getGroupItems();
+            List<TreeItem<?>> list = new ArrayList<>();
+            f1:
+            for (RedisGroup group : groups) {
+                for (RedisGroupTreeItem groupItem : groupItems) {
+                    if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
+                        continue f1;
+                    }
+                }
+                list.add(new RedisGroupTreeItem(group, this.getTreeView()));
+            }
+            this.addChild(list);
+        }
+        // 初始化连接
+        List<RedisConnect> connects = this.infoStore.load();
+        if (CollectionUtil.isNotEmpty(connects)) {
+            List<RedisConnectTreeItem> connectItems = this.getConnectItems();
+            List<RedisConnect> list = new ArrayList<>();
+            f1:
+            for (RedisConnect connect : connects) {
+                for (RedisConnectTreeItem connectItem : connectItems) {
+                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
+                        continue f1;
+                    }
+                }
+                list.add(connect);
+            }
+            this.addConnects(list);
         }
     }
 

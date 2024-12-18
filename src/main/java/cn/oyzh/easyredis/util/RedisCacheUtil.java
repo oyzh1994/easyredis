@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.util;
 
 import cn.oyzh.common.util.ArrayUtil;
-import cn.oyzh.common.util.FileUtil;
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.easyredis.RedisConst;
 import lombok.experimental.UtilityClass;
 
