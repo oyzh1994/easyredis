@@ -7,6 +7,7 @@ import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -60,13 +61,13 @@ public class RedisHomeTab extends DynamicTab {
          * 软件信息
          */
         @FXML
-        private FXLabel softInfo;
+        private FXText softInfo;
 
         /**
          * 环境信息
          */
         @FXML
-        private FXLabel jdkInfo;
+        private FXText jdkInfo;
 
         /**
          * 项目对象
