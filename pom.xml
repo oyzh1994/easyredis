@@ -154,9 +154,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.1.4</version>
+                <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
                     <mainClass>cn.oyzh.easyredis.EasyRedisApp</mainClass>
+                    <layout>jar</layout>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
