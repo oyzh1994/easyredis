@@ -25,7 +25,7 @@ public class RedisSSHConnectJdbcStore extends JdbcStore<RedisSSHConnect> {
     public boolean replace(RedisSSHConnect model) {
         String iid = model.getIid();
         if (super.exist(iid)) {
-            super.update(model);
+            return super.update(model);
         }
         return this.insert(model);
     }
