@@ -19,9 +19,9 @@ public class RedisProcessUtil {
     public static void restartApplication() {
         // jar中
         if (JarUtil.isInJar()) {
-            ProcessUtil.restartApplication("org.springframework.boot.loader.JarLauncher", 10, StageManager::exit);
+            ProcessUtil.restartApplication("org.springframework.boot.loader.JarLauncher", 100, StageManager::exit);
         } else {// 正常环境
-            ProcessUtil. restartApplication(EasyRedisBootstrap.class, 10, StageManager::exit);
+            ProcessUtil. restartApplication(EasyRedisBootstrap.class, 100, StageManager::exit);
         }
     }
 }
