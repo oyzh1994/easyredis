@@ -187,11 +187,11 @@ public class RedisInfoUpdateController extends StageController {
     @FXML
     private FlexHBox sshAuthBox;
 
-    /**
-     * ssh超时组件
-     */
-    @FXML
-    private FlexHBox sshTimeoutBox;
+    // /**
+    //  * ssh超时组件
+    //  */
+    // @FXML
+    // private FlexHBox sshTimeoutBox;
 
     /**
      * redis连接储存对象
@@ -367,11 +367,11 @@ public class RedisInfoUpdateController extends StageController {
             if (newValue) {
                 this.sshAuthBox.enable();
                 this.sshHostBox.enable();
-                this.sshTimeoutBox.enable();
+                this.sshTimeout.enable();
             } else {
                 this.sshAuthBox.disable();
                 this.sshHostBox.disable();
-                this.sshTimeoutBox.disable();
+                this.sshTimeout.disable();
             }
         });
     }
