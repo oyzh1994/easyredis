@@ -29,7 +29,7 @@ public class RedisGroupJdbcStore extends JdbcStore<RedisGroup> {
 
     public boolean replace(RedisGroup group) {
         if (group != null) {
-            if (this.exist(group.getName())) {
+            if (this.exist(group.getName()) || super.exist(group.getGid())) {
                 return this.update(group);
             }
             return this.insert(group);

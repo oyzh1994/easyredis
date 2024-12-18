@@ -103,16 +103,16 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
             return;
         }
         // 检查是否存在
-        String name = this.value.getName();
-        this.value.setName(groupName);
-        if (this.groupStore.exist(this.value)) {
-            this.value.setName(name);
-            MessageBox.warn(I18nHelper.contentAlreadyExists());
+        if (this.groupStore.exist(groupName)) {
+            MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
         // 修改名称
-        if (!this.groupStore.update(this.value)) {
+        this.value.setName(groupName);
+        if (!this.groupStore.replace(this.value)) {
             MessageBox.warn(I18nHelper.operationFail());
+        } else {
+            this.refresh();
         }
     }
 
