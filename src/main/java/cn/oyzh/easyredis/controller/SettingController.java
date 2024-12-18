@@ -5,12 +5,13 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.util.RedisProcessUtil;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.picker.FlexColorPicker;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
+import cn.oyzh.fx.plus.controls.text.FlexSlider;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.font.FontFamilyComboBox;
 import cn.oyzh.fx.plus.font.FontManager;
@@ -267,7 +268,9 @@ public class SettingController extends StageController {
         this.setting.setRememberPageLocation((byte) (this.pageLocation.isSelected() ? 1 : 0));
         this.setting.setExitMode(Byte.parseByte(this.exitMode.selectedUserData()));
         if (this.settingStore.update(this.setting)) {
-            MessageBox.okToast(I18nHelper.operationSuccess() + tips);
+            // 执行提示
+            MessageBox.okToast(I18nHelper.operationSuccess());
+            // 关闭窗口
             this.closeWindow();
             // 应用区域配置
             I18nManager.apply(this.setting.getLocale());
@@ -277,6 +280,10 @@ public class SettingController extends StageController {
             OpacityManager.apply((float) this.opacity.getValue());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
+            // 提示不为空，说明需要重启，则执行重启
+            if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
+                RedisProcessUtil.restartApplication();
+            }
         } else {
             MessageBox.warnToast(I18nHelper.operationFail());
         }

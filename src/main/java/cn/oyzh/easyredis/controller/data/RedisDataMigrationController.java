@@ -5,17 +5,19 @@ import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.handler.RedisDataMigrationHandler;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.easyredis.util.RedisProcessUtil;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -181,6 +183,10 @@ public class RedisDataMigrationController extends StageController {
                 RedisStoreUtil.doneMigration();
                 // 更新状态
                 this.updateStatus(I18nHelper.migrationFinished());
+                // 重启应用
+                if (MessageBox.confirm(RedisI18nHelper.migrationTip8())) {
+                    RedisProcessUtil.restartApplication();
+                }
             } catch (Exception ex) {
                 if (ex.getClass().isAssignableFrom(InterruptedException.class)) {
                     this.updateStatus(I18nHelper.operationCancel());
