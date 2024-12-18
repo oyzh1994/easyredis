@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
+import cn.oyzh.easyredis.controller.connect.RedisInfoAddController;
 import cn.oyzh.easyredis.event.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.RedisInfoAddedEvent;

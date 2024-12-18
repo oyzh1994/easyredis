@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.controller.info;
+package cn.oyzh.easyredis.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
@@ -34,7 +34,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         iconUrl = RedisConst.ICON_PATH,
-        value = RedisConst.FXML_BASE_PATH + "info/redisInfoAdd.fxml"
+        value = RedisConst.FXML_BASE_PATH + "connect/redisConnectAdd.fxml"
 )
 public class RedisInfoAddController extends StageController {
 

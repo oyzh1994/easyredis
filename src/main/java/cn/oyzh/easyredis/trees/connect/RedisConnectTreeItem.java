@@ -7,7 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
-import cn.oyzh.easyredis.controller.info.RedisInfoUpdateController;
+import cn.oyzh.easyredis.controller.connect.RedisInfoUpdateController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;

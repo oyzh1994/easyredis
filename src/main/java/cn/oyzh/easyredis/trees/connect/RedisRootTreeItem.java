@@ -4,7 +4,7 @@ import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.info.RedisInfoAddController;
+import cn.oyzh.easyredis.controller.connect.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
