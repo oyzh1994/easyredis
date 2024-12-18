@@ -18,7 +18,7 @@
     </properties>
 
     <dependencies>
-        <!-- Apache POI -->
+        <!-- excel解析 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -56,32 +56,37 @@
         <!--     </exclusions> -->
         <!-- </dependency> -->
 
+        <!-- 存储模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>store</artifactId>
         </dependency>
 
+        <!-- 事件模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>event</artifactId>
         </dependency>
 
+        <!-- i18n模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>i18n</artifactId>
         </dependency>
 
+        <!-- ssh模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>ssh</artifactId>
         </dependency>
 
+        <!-- fx-gui模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-gui</artifactId>
         </dependency>
 
-        <!-- 自定义类库，终端相关 -->
+        <!-- fx-终端模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
             <artifactId>fx-terminal</artifactId>
@@ -109,6 +114,7 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- 内存数据库 -->
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -123,6 +129,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 测试 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
