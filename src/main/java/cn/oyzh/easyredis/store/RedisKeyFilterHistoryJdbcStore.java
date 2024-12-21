@@ -5,7 +5,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 2023/07/19
  */
 //@Slf4j
-public class RedisKeyFilterHistoryJdbcStore extends JdbcStore<RedisKeyFilterHistory> {
+public class RedisKeyFilterHistoryJdbcStore extends JdbcStandardStore<RedisKeyFilterHistory> {
 
     /**
      * 最大历史数量

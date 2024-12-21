@@ -1,14 +1,14 @@
 package cn.oyzh.easyredis.store;
 
 import cn.oyzh.easyredis.domain.RedisSSHConnect;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 /**
  * @author oyzh
  * @since 2024/09/26
  */
-public class RedisSSHConnectJdbcStore extends JdbcStore<RedisSSHConnect> {
+public class RedisSSHConnectJdbcStore extends JdbcStandardStore<RedisSSHConnect> {
 
     /**
      * 当前实例

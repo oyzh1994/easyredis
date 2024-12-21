@@ -4,7 +4,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSSHConnect;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class RedisConnectJdbcStore extends JdbcStore<RedisConnect> {
+public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
 
     /**
      * 当前实例

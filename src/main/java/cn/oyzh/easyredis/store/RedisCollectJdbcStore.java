@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.store;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisCollect;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/09/26
  */
-public class RedisCollectJdbcStore extends JdbcStore<RedisCollect> {
+public class RedisCollectJdbcStore extends JdbcStandardStore<RedisCollect> {
 
     /**
      * 当前实例

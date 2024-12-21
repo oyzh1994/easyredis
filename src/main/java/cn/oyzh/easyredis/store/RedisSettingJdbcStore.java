@@ -1,14 +1,14 @@
 package cn.oyzh.easyredis.store;
 
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 
 
 /**
  * @author oyzh
  * @since 2024/09/23
  */
-public class RedisSettingJdbcStore extends JdbcStore<RedisSetting> {
+public class RedisSettingJdbcStore extends JdbcStandardStore<RedisSetting> {
 
     /**
      * 当前实例

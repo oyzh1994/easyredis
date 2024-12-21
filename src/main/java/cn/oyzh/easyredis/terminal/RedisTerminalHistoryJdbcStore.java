@@ -1,12 +1,12 @@
 package cn.oyzh.easyredis.terminal;
 
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 
 /**
  * @author oyzh
  * @since 2024-11-25
  */
-public class RedisTerminalHistoryJdbcStore extends JdbcStore<RedisTerminalHistory> {
+public class RedisTerminalHistoryJdbcStore extends JdbcStandardStore<RedisTerminalHistory> {
 
     /**
      * 当前实例

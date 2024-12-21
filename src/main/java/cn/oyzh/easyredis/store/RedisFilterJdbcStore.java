@@ -5,7 +5,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.store.jdbc.DeleteParam;
-import cn.oyzh.store.jdbc.JdbcStore;
+import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class RedisFilterJdbcStore extends JdbcStore<RedisFilter> {
+public class RedisFilterJdbcStore extends JdbcStandardStore<RedisFilter> {
 
     /**
      * 当前实例
