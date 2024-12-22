@@ -4,7 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
-import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
+import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.gui.text.field.search.SearchTextField;
@@ -44,7 +44,7 @@ public class RedisKeyFilterController extends StageController {
     /**
      * 过滤历史储存
      */
-    private final RedisKeyFilterHistoryJdbcStore historyStore = RedisKeyFilterHistoryJdbcStore.INSTANCE;
+    private final RedisKeyFilterHistoryStore historyStore = RedisKeyFilterHistoryStore.INSTANCE;
 
     @Override
     public void onStageShown(WindowEvent event) {

@@ -252,7 +252,7 @@ public class RedisInfoUpdateController extends StageController {
             redisInfo.setPassword(this.password.getText());
             redisInfo.setSshForward(this.sshForward.isSelected());
             if (redisInfo.isSSHForward()) {
-                redisInfo.setSshConnect(this.getSSHInfo());
+                redisInfo.setSshConfig(this.getSSHInfo());
             }
             RedisConnectUtil.testConnect(this.stage, redisInfo);
         }
@@ -278,7 +278,7 @@ public class RedisInfoUpdateController extends StageController {
 
         this.redisInfo.setHost(host.trim());
         this.redisInfo.setUser(this.user.getText());
-        this.redisInfo.setSshConnect(this.getSSHInfo());
+        this.redisInfo.setSshConfig(this.getSSHInfo());
         this.redisInfo.setRemark(this.remark.getTextTrim());
         this.redisInfo.setPassword(this.password.getText());
         this.redisInfo.setSshForward(this.sshForward.isSelected());
@@ -398,7 +398,7 @@ public class RedisInfoUpdateController extends StageController {
         //     this.sentinelBox.enable();
         // }
         // ssh连接信息
-        RedisSSHConfig connectInfo = this.redisInfo.getSshConnect();
+        RedisSSHConfig connectInfo = this.redisInfo.getSshConfig();
         if (connectInfo != null) {
             this.sshHost.setText(connectInfo.getHost());
             this.sshUser.setText(connectInfo.getUser());

@@ -252,7 +252,7 @@ public class RedisInfoAddController extends StageController {
             redisInfo.setPassword(this.password.getText());
             redisInfo.setSshForward(this.sshForward.isSelected());
             if (redisInfo.isSSHForward()) {
-                redisInfo.setSshConnect(this.getSSHInfo());
+                redisInfo.setSshConfig(this.getSSHInfo());
             }
             RedisConnectUtil.testConnect(this.stage, redisInfo);
         }
@@ -280,7 +280,7 @@ public class RedisInfoAddController extends StageController {
 
             redisInfo.setHost(host);
             redisInfo.setUser(this.user.getText());
-            redisInfo.setSshConnect(this.getSSHInfo());
+            redisInfo.setSshConfig(this.getSSHInfo());
             redisInfo.setRemark(this.remark.getTextTrim());
             redisInfo.setPassword(this.password.getText());
             redisInfo.setReadonly(this.readonly.isSelected());

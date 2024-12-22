@@ -137,7 +137,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.user = info.user;
         this.remark = info.remark;
         this.groupId = info.groupId;
-        this.sshConnect = info.sshConnect;
+        this.sshConfig = info.sshConfig;
         this.readonly = info.readonly;
         this.collects = info.collects;
         this.password = info.password;

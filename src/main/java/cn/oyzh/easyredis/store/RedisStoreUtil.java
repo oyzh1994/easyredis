@@ -117,23 +117,23 @@ public class RedisStoreUtil {
                     }
                     if (obj.containsKey("sshInfo")) {
                         JSONObject object = obj.getJSONObject("sshInfo");
-                        RedisSSHConfig sshConnect = new RedisSSHConfig();
+                        RedisSSHConfig sshConfig = new RedisSSHConfig();
                         if (object.containsKey("port")) {
-                            sshConnect.setPort(object.getInt("port"));
+                            sshConfig.setPort(object.getInt("port"));
                         }
                         if (object.containsKey("host")) {
-                            sshConnect.setHost(object.getString("host"));
+                            sshConfig.setHost(object.getString("host"));
                         }
                         if (object.containsKey("user")) {
-                            sshConnect.setUser(object.getString("user"));
+                            sshConfig.setUser(object.getString("user"));
                         }
                         if (object.containsKey("timeout")) {
-                            sshConnect.setTimeout(object.getInt("timeout"));
+                            sshConfig.setTimeout(object.getInt("timeout"));
                         }
                         if (object.containsKey("password")) {
-                            sshConnect.setPassword(object.getString("password"));
+                            sshConfig.setPassword(object.getString("password"));
                         }
-                        connect.setSshConnect(sshConnect);
+                        connect.setSshConfig(sshConfig);
                     }
                     connects.add(connect);
                 }

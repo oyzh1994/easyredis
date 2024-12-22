@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
+import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.fx.plus.controls.popup.SearchHistoryPopup;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class RedisKeyFilterHistoryPopup extends SearchHistoryPopup {
     /**
      * 过滤历史储存
      */
-    private final RedisKeyFilterHistoryJdbcStore historyStore = RedisKeyFilterHistoryJdbcStore.INSTANCE;
+    private final RedisKeyFilterHistoryStore historyStore = RedisKeyFilterHistoryStore.INSTANCE;
 
     @Override
     public List<String> getHistories() {
