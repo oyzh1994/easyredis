@@ -13,18 +13,18 @@ import java.util.List;
  * @author oyzh
  * @since 2024/09/26
  */
-public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
+public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
 
     /**
      * 当前实例
      */
-    public static final RedisConnectJdbcStore INSTANCE = new RedisConnectJdbcStore();
+    public static final RedisConnectStore INSTANCE = new RedisConnectStore();
 
     public List<RedisConnect> load() {
         List<RedisConnect> list = super.selectList();
         // 处理ssh信息
         for (RedisConnect info : list) {
-            info.setSshConnect(RedisSSHConfigStore.INSTANCE.find(info.getId()));
+            info.setSshConfig(RedisSSHConfigStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -39,8 +39,8 @@ public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
             }
 
             // ssh信息处理
-            RedisSSHConfig connect = info.getSshConnect();
-            if (info.getSshConnect() != null) {
+            RedisSSHConfig connect = info.getSshConfig();
+            if (info.getSshConfig() != null) {
                 RedisSSHConfigStore.INSTANCE.replace(connect);
             } else {
                 DeleteParam param = new DeleteParam();
@@ -52,18 +52,13 @@ public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
             List<String> collects = info.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    RedisCollectJdbcStore.INSTANCE.replace(info.getId(), collect);
+                    RedisCollectStore.INSTANCE.replace(info.getId(), collect);
                 }
             } else {
-                RedisCollectJdbcStore.INSTANCE.delete(info.getId());
+                RedisCollectStore.INSTANCE.delete(info.getId());
             }
         }
         return result;
-    }
-
-    @Override
-    protected RedisConnect newModel() {
-        return new RedisConnect();
     }
 
     @Override

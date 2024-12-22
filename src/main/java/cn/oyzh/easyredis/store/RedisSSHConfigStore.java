@@ -31,11 +31,6 @@ public class RedisSSHConfigStore extends JdbcStandardStore<RedisSSHConfig> {
     }
 
     @Override
-    protected RedisSSHConfig newModel() {
-        return new RedisSSHConfig();
-    }
-
-    @Override
     protected Class<RedisSSHConfig> modelClass() {
         return RedisSSHConfig.class;
     }

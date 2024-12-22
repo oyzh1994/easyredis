@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemFilter;
@@ -58,7 +58,7 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
     /**
      * 过滤配置储存
      */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
      * 初始化过滤配置

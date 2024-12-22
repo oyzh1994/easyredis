@@ -20,7 +20,6 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/07/19
  */
-//@Slf4j
 public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilterHistory> {
 
     /**
@@ -31,7 +30,7 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
     /**
      * 当前实例
      */
-    public static final RedisKeyFilterHistoryJdbcStore INSTANCE = new RedisKeyFilterHistoryJdbcStore();
+    public static final RedisKeyFilterHistoryStore INSTANCE = new RedisKeyFilterHistoryStore();
 
     public List<RedisKeyFilterHistory> load() {
         return super.selectList();
@@ -79,11 +78,6 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected RedisKeyFilterHistory newModel() {
-        return new RedisKeyFilterHistory();
     }
 
     @Override

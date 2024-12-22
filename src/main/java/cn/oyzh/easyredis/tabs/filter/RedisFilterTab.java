@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.RedisFilterAddedEvent;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph;
@@ -91,7 +91,7 @@ public class RedisFilterTab extends DynamicTab {
         /**
          * redis过滤配置储存
          */
-        private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+        private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
         /**
          * 初始化数据列表

@@ -17,12 +17,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2024/09/24
  */
-public class RedisFilterJdbcStore extends JdbcStandardStore<RedisFilter> {
+public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
 
     /**
      * 当前实例
      */
-    public static final RedisFilterJdbcStore INSTANCE = new RedisFilterJdbcStore();
+    public static final RedisFilterStore INSTANCE = new RedisFilterStore();
 
     public List<RedisFilter> load() {
         return super.selectList();
@@ -80,11 +80,6 @@ public class RedisFilterJdbcStore extends JdbcStandardStore<RedisFilter> {
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected RedisFilter newModel() {
-        return new RedisFilter();
     }
 
     @Override

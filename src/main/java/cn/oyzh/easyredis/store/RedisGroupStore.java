@@ -16,12 +16,12 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/5/12
  */
-public class RedisGroupJdbcStore extends JdbcStandardStore<RedisGroup> {
+public class RedisGroupStore extends JdbcStandardStore<RedisGroup> {
 
     /**
      * 当前实例
      */
-    public static final RedisGroupJdbcStore INSTANCE = new RedisGroupJdbcStore();
+    public static final RedisGroupStore INSTANCE = new RedisGroupStore();
 
     public List<RedisGroup> load() {
         return super.selectList();
@@ -59,11 +59,6 @@ public class RedisGroupJdbcStore extends JdbcStandardStore<RedisGroup> {
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected RedisGroup newModel() {
-        return new RedisGroup();
     }
 
     @Override

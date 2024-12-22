@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisTreeItemChangedEvent;
-import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisDataTreeItem;
@@ -38,9 +38,12 @@ public class RedisMainController extends ParentStageController {
     /**
      * 配置对象
      */
-    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
+    private final RedisSetting setting = RedisSettingStore.SETTING;
 
-    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+    /**
+     * 配置存储
+     */
+    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     /**
      * 当前激活的redis信息

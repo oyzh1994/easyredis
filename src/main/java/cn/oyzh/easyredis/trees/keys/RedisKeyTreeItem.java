@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisKeyValue;
-import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
+import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -225,7 +225,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      */
     public void collect() {
         this.info().addCollect(this.dbIndex(), this.key());
-        RedisConnectJdbcStore.INSTANCE.update(this.info());
+        RedisConnectStore.INSTANCE.update(this.info());
     }
 
     /**
@@ -233,7 +233,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      */
     public void unCollect() {
         if (this.info().removeCollect(this.dbIndex(), this.key())) {
-            RedisConnectJdbcStore.INSTANCE.update(this.info());
+            RedisConnectStore.INSTANCE.update(this.info());
             this.doFilter();
         }
     }

@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/09/26
  */
-public class RedisCollectJdbcStore extends JdbcStandardStore<RedisCollect> {
+public class RedisCollectStore extends JdbcStandardStore<RedisCollect> {
 
     /**
      * 当前实例
      */
-    public static final RedisCollectJdbcStore INSTANCE = new RedisCollectJdbcStore();
+    public static final RedisCollectStore INSTANCE = new RedisCollectStore();
 
     public List<String> list(String iid) {
         QueryParam param = new QueryParam();
@@ -72,11 +72,6 @@ public class RedisCollectJdbcStore extends JdbcStandardStore<RedisCollect> {
             return super.exist(params);
         }
         return false;
-    }
-
-    @Override
-    protected RedisCollect newModel() {
-        return new RedisCollect();
     }
 
     @Override

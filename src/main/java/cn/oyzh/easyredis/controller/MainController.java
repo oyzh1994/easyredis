@@ -4,7 +4,7 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -61,12 +61,12 @@ public class MainController extends ParentStageController {
     /**
      * redis相关配置
      */
-    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
+    private final RedisSetting setting = RedisSettingStore.SETTING;
 
     /**
      * 设置存储
      */
-    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     // /**
     //  * 页面信息储存

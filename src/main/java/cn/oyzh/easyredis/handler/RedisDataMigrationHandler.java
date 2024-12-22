@@ -5,11 +5,11 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
-import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
-import cn.oyzh.easyredis.store.RedisKeyFilterHistoryJdbcStore;
-import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.store.RedisConnectStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.easyredis.store.RedisGroupStore;
+import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistoryJdbcStore;
@@ -59,17 +59,17 @@ public class RedisDataMigrationHandler extends DataHandler {
     private String dataPolicy;
 
 
-    private RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
+    private RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
 
-    private RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
+    private RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
 
-    private RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+    private RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
-    private RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+    private RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     private RedisTerminalHistoryJdbcStore terminalHistoryStore = RedisTerminalHistoryJdbcStore.INSTANCE;
 
-    private RedisKeyFilterHistoryJdbcStore keyFilterHistoryJdbcStore = RedisKeyFilterHistoryJdbcStore.INSTANCE;
+    private RedisKeyFilterHistoryStore keyFilterHistoryJdbcStore = RedisKeyFilterHistoryStore.INSTANCE;
 
     /**
      * 执行传输

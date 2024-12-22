@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.handler.RedisDataExportHandler;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisClientUtil;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
@@ -232,7 +232,7 @@ public class RedisDataExportController extends StageController {
     /**
      * 过滤配置储存
      */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
      * 导出处理器

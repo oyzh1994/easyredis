@@ -4,7 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -52,7 +52,7 @@ public class RedisFilterAddController extends StageController {
     /**
      * redis过滤配置储存
      */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
      * 添加过滤配置

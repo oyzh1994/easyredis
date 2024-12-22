@@ -41,5 +41,4 @@ public class RedisSettingStore extends JdbcKeyValueStore<RedisSetting> {
     protected Class<RedisSetting> modelClass() {
         return RedisSetting.class;
     }
-
 }

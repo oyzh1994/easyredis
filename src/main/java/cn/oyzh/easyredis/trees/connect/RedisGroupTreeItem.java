@@ -6,8 +6,8 @@ import cn.oyzh.easyredis.controller.connect.RedisInfoAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
-import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
-import cn.oyzh.easyredis.store.RedisGroupJdbcStore;
+import cn.oyzh.easyredis.store.RedisConnectStore;
+import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -49,12 +49,12 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     /**
      * redis信息储存
      */
-    private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
+    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
 
     /**
      * redis分组储存
      */
-    private final RedisGroupJdbcStore groupStore = RedisGroupJdbcStore.INSTANCE;
+    private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
 
     public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisConnectTreeView treeView) {
         super(treeView);

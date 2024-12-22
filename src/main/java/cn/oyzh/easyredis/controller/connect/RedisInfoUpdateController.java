@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
+import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -196,7 +196,7 @@ public class RedisInfoUpdateController extends StageController {
     /**
      * redis连接储存对象
      */
-    private final RedisConnectJdbcStore infoStore = RedisConnectJdbcStore.INSTANCE;
+    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
 
     /**
      * 获取连接地址

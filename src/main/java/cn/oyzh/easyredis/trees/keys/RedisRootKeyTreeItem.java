@@ -5,7 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.batch.RedisScanResult;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -31,7 +31,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     /**
      * 设置
      */
-    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
+    private final RedisSetting setting = RedisSettingStore.SETTING;
 
     public RedisRootKeyTreeItem(@NonNull RedisKeysTreeView treeView) {
         super(treeView);

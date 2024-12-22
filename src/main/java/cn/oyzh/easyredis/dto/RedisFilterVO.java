@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.dto;
 import cn.oyzh.common.Index;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisFilterJdbcStore;
+import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
 import lombok.Data;
@@ -61,7 +61,7 @@ public class RedisFilterVO extends RedisFilter implements Index {
     /**
      * 过滤储存
      */
-    private final RedisFilterJdbcStore filterStore = RedisFilterJdbcStore.INSTANCE;
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
     /**
      * 匹配模式控件

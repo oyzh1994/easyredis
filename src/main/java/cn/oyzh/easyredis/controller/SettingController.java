@@ -4,7 +4,7 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.store.RedisSettingJdbcStore;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisProcessUtil;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -181,12 +181,12 @@ public class SettingController extends StageController {
     /**
      * 配置对象
      */
-    private final RedisSetting setting = RedisSettingJdbcStore.SETTING;
+    private final RedisSetting setting = RedisSettingStore.SETTING;
 
     /**
      * 配置持久化对象
      */
-    private final RedisSettingJdbcStore settingStore = RedisSettingJdbcStore.INSTANCE;
+    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
     @Override
     public void onWindowShowing(WindowEvent event) {
