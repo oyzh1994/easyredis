@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @Table("t_ssh_info")
 @EqualsAndHashCode(callSuper = true)
-public class RedisSSHConnect extends SSHConnect implements Serializable {
+public class RedisSSHConfig extends SSHConnect implements Serializable {
 
     /**
      * 连接id

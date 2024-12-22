@@ -4,7 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyredis.domain.RedisSSHConnect;
+import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisConnectJdbcStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
@@ -224,8 +224,8 @@ public class RedisInfoAddController extends StageController {
      *
      * @return ssh连接信息
      */
-    private RedisSSHConnect getSSHInfo() {
-        RedisSSHConnect sshConnectInfo = new RedisSSHConnect();
+    private RedisSSHConfig getSSHInfo() {
+        RedisSSHConfig sshConnectInfo = new RedisSSHConfig();
         sshConnectInfo.setHost(this.sshHost.getText());
         sshConnectInfo.setUser(this.sshUser.getText());
         sshConnectInfo.setPassword(this.sshPassword.getText());

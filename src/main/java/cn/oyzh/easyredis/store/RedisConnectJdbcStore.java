@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.store;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.domain.RedisSSHConnect;
+import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
@@ -24,7 +24,7 @@ public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
         List<RedisConnect> list = super.selectList();
         // 处理ssh信息
         for (RedisConnect info : list) {
-            info.setSshConnect(RedisSSHConnectJdbcStore.INSTANCE.find(info.getId()));
+            info.setSshConnect(RedisSSHConfigStore.INSTANCE.find(info.getId()));
         }
         return list;
     }
@@ -39,13 +39,13 @@ public class RedisConnectJdbcStore extends JdbcStandardStore<RedisConnect> {
             }
 
             // ssh信息处理
-            RedisSSHConnect connect = info.getSshConnect();
+            RedisSSHConfig connect = info.getSshConnect();
             if (info.getSshConnect() != null) {
-                RedisSSHConnectJdbcStore.INSTANCE.replace(connect);
+                RedisSSHConfigStore.INSTANCE.replace(connect);
             } else {
                 DeleteParam param = new DeleteParam();
                 param.addQueryParam(new QueryParam("iid", info.getId()));
-                RedisSSHConnectJdbcStore.INSTANCE.delete(connect);
+                RedisSSHConfigStore.INSTANCE.delete(connect);
             }
 
             // 收藏处理

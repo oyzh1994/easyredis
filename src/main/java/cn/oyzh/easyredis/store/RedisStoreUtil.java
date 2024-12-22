@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
-import cn.oyzh.easyredis.domain.RedisSSHConnect;
+import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
 import cn.oyzh.store.jdbc.JdbcConst;
@@ -117,7 +117,7 @@ public class RedisStoreUtil {
                     }
                     if (obj.containsKey("sshInfo")) {
                         JSONObject object = obj.getJSONObject("sshInfo");
-                        RedisSSHConnect sshConnect = new RedisSSHConnect();
+                        RedisSSHConfig sshConnect = new RedisSSHConfig();
                         if (object.containsKey("port")) {
                             sshConnect.setPort(object.getInt("port"));
                         }

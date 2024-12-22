@@ -122,7 +122,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Setter
     @Getter
-    private RedisSSHConnect sshConnect;
+    private RedisSSHConfig sshConfig;
 
     /**
      * 复制对象

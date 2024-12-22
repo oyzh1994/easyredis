@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 2023/07/19
  */
 //@Slf4j
-public class RedisKeyFilterHistoryJdbcStore extends JdbcStandardStore<RedisKeyFilterHistory> {
+public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilterHistory> {
 
     /**
      * 最大历史数量
