@@ -97,15 +97,15 @@ public class EasyRedisApp extends FXApplication {
         StageManager.showStage(MainController.class);
     }
 
-    @Override
-    protected String appIcon() {
-        return RedisConst.ICON_PATH;
-    }
-
-    @Override
-    protected String appName() {
-        return PROJECT.getName();
-    }
+    // @Override
+    // protected String appIcon() {
+    //     return RedisConst.ICON_PATH;
+    // }
+    //
+    // @Override
+    // protected String appName() {
+    //     return PROJECT.getName();
+    // }
 
     @Override
     protected void initSystemTray() {
