@@ -12,6 +12,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
@@ -42,7 +43,7 @@ import java.util.stream.Collectors;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "key/redisKeyAdd.fxml"
+        value = FXConst.FXML_PATH + "key/redisKeyAdd.fxml"
 )
 public class RedisKeyAddController extends StageController {
 

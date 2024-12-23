@@ -4,6 +4,7 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -24,7 +25,7 @@ import javafx.stage.WindowEvent;
         resizable = false,
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "about.fxml"
+        value = FXConst.FXML_PATH + "about.fxml"
 )
 public class AboutController extends SubStageController {
 

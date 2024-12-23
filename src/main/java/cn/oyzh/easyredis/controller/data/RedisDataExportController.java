@@ -15,6 +15,7 @@ import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -51,7 +52,7 @@ import java.util.Set;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "data/redisDataExport.fxml"
+        value = FXConst.FXML_PATH + "data/redisDataExport.fxml"
 )
 public class RedisDataExportController extends StageController {
 

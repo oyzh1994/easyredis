@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
@@ -26,7 +27,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "row/redisZSetCoordinateAdd.fxml"
+        value = FXConst.FXML_PATH + "row/redisZSetCoordinateAdd.fxml"
 )
 public class RedisZSetCoordinateAddController extends StageController {
 

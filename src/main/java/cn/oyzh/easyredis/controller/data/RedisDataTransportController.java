@@ -47,7 +47,7 @@ import java.util.Set;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.VIEW_PATH + "data/redisDataTransport.fxml"
+        value = FXConst.FXML_PATH + "data/redisDataTransport.fxml"
 )
 public class RedisDataTransportController extends StageController {
 

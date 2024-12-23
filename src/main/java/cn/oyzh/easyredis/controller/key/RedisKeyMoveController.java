@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.button.SubmitButton;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.gui.text.field.DisabledTextField;
@@ -28,7 +29,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "key/redisKeyMove.fxml"
+        value = FXConst.FXML_PATH + "key/redisKeyMove.fxml"
 )
 public class RedisKeyMoveController extends StageController {
 

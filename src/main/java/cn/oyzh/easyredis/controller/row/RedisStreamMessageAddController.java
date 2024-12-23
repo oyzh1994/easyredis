@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -32,7 +33,7 @@ import java.util.Map;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "row/redisStreamMessageAdd.fxml"
+        value = FXConst.FXML_PATH + "row/redisStreamMessageAdd.fxml"
 )
 public class RedisStreamMessageAddController extends StageController {
 

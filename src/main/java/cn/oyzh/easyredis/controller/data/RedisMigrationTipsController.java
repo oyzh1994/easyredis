@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.VIEW_PATH + "data/redisMigrationTips.fxml"
+        value = FXConst.FXML_PATH + "data/redisMigrationTips.fxml"
 )
 public class RedisMigrationTipsController extends StageController {
 

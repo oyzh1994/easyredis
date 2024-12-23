@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventUtil;
 import cn.oyzh.fx.gui.text.field.search.SearchTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -26,7 +27,7 @@ import javafx.stage.WindowEvent;
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         resizable = false,
-        value = RedisConst.FXML_BASE_PATH + "key/redisKeyFilter.fxml"
+        value = FXConst.FXML_PATH + "key/redisKeyFilter.fxml"
 )
 public class RedisKeyFilterController extends StageController {
 

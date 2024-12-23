@@ -21,6 +21,7 @@ import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.util.RedisExportUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
 import cn.oyzh.fx.plus.controls.button.FlexButton;
@@ -59,7 +60,7 @@ import java.util.stream.Collectors;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "key/redisKeyImport.fxml"
+        value = FXConst.FXML_PATH + "key/redisKeyImport.fxml"
 )
 public class RedisKeyImportController extends StageController {
 

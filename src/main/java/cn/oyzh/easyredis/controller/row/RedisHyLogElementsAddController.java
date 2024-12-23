@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "row/redisHyLogElementsAdd.fxml"
+        value = FXConst.FXML_PATH + "row/redisHyLogElementsAdd.fxml"
 )
 public class RedisHyLogElementsAddController extends StageController {
 

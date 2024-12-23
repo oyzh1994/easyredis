@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -34,7 +35,7 @@ import lombok.NonNull;
 @StageAttribute(
         modality = Modality.WINDOW_MODAL,
         iconUrl = RedisConst.ICON_PATH,
-        value = RedisConst.FXML_BASE_PATH + "connect/redisConnectUpdate.fxml"
+        value = FXConst.FXML_PATH + "connect/redisConnectUpdate.fxml"
 )
 public class RedisInfoUpdateController extends StageController {
 

@@ -7,6 +7,7 @@ import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisProcessUtil;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -42,7 +43,7 @@ import java.util.Objects;
 @StageAttribute(
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "setting.fxml"
+        value = FXConst.FXML_PATH + "setting.fxml"
 )
 public class SettingController extends StageController {
 

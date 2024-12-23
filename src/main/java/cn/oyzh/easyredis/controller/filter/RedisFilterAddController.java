@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -27,7 +28,7 @@ import javafx.stage.WindowEvent;
         resizable = false,
         iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
-        value = RedisConst.FXML_BASE_PATH + "filter/redisFilterAdd.fxml"
+        value = FXConst.FXML_PATH + "filter/redisFilterAdd.fxml"
 )
 public class RedisFilterAddController extends StageController {
 

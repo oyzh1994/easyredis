@@ -5,6 +5,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -32,7 +33,7 @@ import java.util.List;
         fullScreenAble = true,
         alwaysOnTopAble = true,
         iconUrl = RedisConst.ICON_PATH,
-        value = RedisConst.FXML_BASE_PATH + "main.fxml"
+        value = FXConst.FXML_PATH + "main.fxml"
 )
 public class MainController extends ParentStageController {
 
@@ -244,7 +245,7 @@ public class MainController extends ParentStageController {
         TitleBar titleBar = this.stage.getTitleBar();
         // 加载标题
         if (titleBar != null && !titleBar.isHasContent()) {
-            titleBar.loadContent("/views/header2.fxml");
+            titleBar.loadContent("/fxml/header2.fxml");
         }
     }
 
