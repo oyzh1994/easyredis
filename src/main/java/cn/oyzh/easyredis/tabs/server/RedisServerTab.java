@@ -309,7 +309,7 @@ public class RedisServerTab extends DynamicTab {
                         serverItem.setRole((String) CollectionUtil.getFirst(this.client.role()));
                     } catch (Exception ignored) {
                     }
-                    this.propTable.getItems().add(serverItem);
+                    this.propTable.addItem(serverItem);
                 } else {
                     serverItem = this.propTable.getItems().getFirst();
                 }
