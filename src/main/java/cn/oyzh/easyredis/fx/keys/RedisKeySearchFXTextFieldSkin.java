@@ -20,7 +20,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2023/10/9
  */
-public class RedisKeySearchTextFieldSkin extends ClearableTextFieldSkin {
+public class RedisKeySearchFXTextFieldSkin extends ClearableTextFieldSkin {
 
     /**
      * 搜索历史按钮
@@ -65,7 +65,7 @@ public class RedisKeySearchTextFieldSkin extends ClearableTextFieldSkin {
         }
     }
 
-    public RedisKeySearchTextFieldSkin(TextField textField) {
+    public RedisKeySearchFXTextFieldSkin(TextField textField) {
         super(textField);
         // 初始化历史按钮
         this.button = new SettingSVGGlyph();

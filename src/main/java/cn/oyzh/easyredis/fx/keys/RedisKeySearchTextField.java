@@ -29,13 +29,13 @@ public class RedisKeySearchTextField extends LimitTextField {
      *
      * @return 皮肤
      */
-    public RedisKeySearchTextFieldSkin skin() {
-        return (RedisKeySearchTextFieldSkin) this.getSkin();
+    public RedisKeySearchFXTextFieldSkin skin() {
+        return (RedisKeySearchFXTextFieldSkin) this.getSkin();
     }
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new RedisKeySearchTextFieldSkin(this) {
+        return new RedisKeySearchFXTextFieldSkin(this) {
             @Override
             public void onSearch(String text) {
                 super.onSearch(text);
