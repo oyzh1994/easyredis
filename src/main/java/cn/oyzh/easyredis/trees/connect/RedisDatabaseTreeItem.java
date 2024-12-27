@@ -263,13 +263,11 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     }
 
     @Override
-    public void onNodeDestroy() {
-
-    }
-
-    @Override
     public void onNodeInitialize() {
-        this.flushDbSize();
+        if (!NodeLifeCycle.super.isNodeInitialize()) {
+            NodeLifeCycle.super.onNodeInitialize();
+            this.flushDbSize();
+        }
     }
 
     /**

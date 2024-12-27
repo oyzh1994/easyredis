@@ -44,9 +44,11 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
 
     @Override
     public void onNodeInitialize() {
-        FXEventListener.super.onNodeInitialize();
-        // 刷新触发事件
-        KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+        if (!FXEventListener.super.isNodeInitialize()) {
+            FXEventListener.super.onNodeInitialize();
+            // 刷新触发事件
+            KeyListener.listenReleased(this, KeyCode.F5, keyEvent -> this.reload());
+        }
     }
 
     @Override
