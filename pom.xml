@@ -21,40 +21,15 @@
         <!-- excel解析 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>${poi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.virtuald</groupId>
+                    <artifactId>curvesapi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <!-- &lt;!&ndash; Spring boot &ndash;&gt; -->
-        <!-- <dependency> -->
-        <!--     <groupId>org.springframework.boot</groupId> -->
-        <!--     <artifactId>spring-boot-starter</artifactId> -->
-        <!--     <exclusions> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>jakarta.annotation</groupId> -->
-        <!--             <artifactId>jakarta.annotation-api</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.yaml</groupId> -->
-        <!--             <artifactId>snakeyaml</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-to-slf4j &ndash;&gt; -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.apache.logging.log4j</groupId> -->
-        <!--             <artifactId>log4j-to-slf4j</artifactId> -->
-        <!--         </exclusion> -->
-        <!--         &lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j &ndash;&gt; -->
-        <!--         <exclusion> -->
-        <!--             <groupId>org.slf4j</groupId> -->
-        <!--             <artifactId>jul-to-slf4j</artifactId> -->
-        <!--         </exclusion> -->
-        <!--     </exclusions> -->
-        <!-- </dependency> -->
 
         <!-- 存储模块 -->
         <dependency>
