@@ -277,10 +277,10 @@ public class SettingController extends StageController {
             I18nManager.apply(this.setting.getLocale());
             // 应用字体配置
             FontManager.apply(this.setting.fontConfig());
-            // 应用透明度配置
-            OpacityManager.apply((float) this.opacity.getValue());
             // 应用主题配置
             ThemeManager.apply(this.setting.themeConfig());
+            // 应用透明度配置
+            OpacityManager.apply(this.setting.opacityConfig());
             // 提示不为空，说明需要重启，则执行重启
             if (StringUtil.isNotBlank(tips) && MessageBox.confirm(tips)) {
                 RedisProcessUtil.restartApplication();
