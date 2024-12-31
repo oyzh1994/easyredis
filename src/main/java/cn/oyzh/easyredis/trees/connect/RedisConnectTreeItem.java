@@ -1,13 +1,14 @@
 package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
-import cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -159,6 +160,27 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     }
 
     @Override
+    public void loadChild() {
+        if (!this.isLoaded() && !this.isLoading()) {
+            try {
+                this.setLoaded(true);
+                this.setLoading(true);
+                RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
+                RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
+                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
+                this.setChild(List.of(item1, item2, item3));
+                this.expend();
+            } catch (Exception ex) {
+                this.setLoaded(false);
+                ex.printStackTrace();
+                JulLog.warn("loadChild error", ex);
+            } finally {
+                this.setLoading(false);
+            }
+        }
+    }
+
+    @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
         if (this.isWaiting()) {
@@ -286,8 +308,9 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
                             }
                             this.canceled = false;
                             this.closeConnect(false);
-                        } else if (this.initConnect()) {
-                            this.expend();
+                        } else {
+                            // } else if (this.initConnect()) {
+                            this.loadChild();
                         }
                     })
                     .onSuccess(this::refresh)

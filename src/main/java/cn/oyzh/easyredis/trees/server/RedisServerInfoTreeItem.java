@@ -52,14 +52,9 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
      */
     public static class RedisServerInfoTreeItemValue extends RichTreeItemValue {
 
-        public RedisServerInfoTreeItemValue() {
-            // this.flushGraphic();
-            // this.flushText();
-        }
-
         @Override
         public String name() {
-            return I18nHelper.serverInfo();
+            return I18nHelper.info();
         }
 
         @Override

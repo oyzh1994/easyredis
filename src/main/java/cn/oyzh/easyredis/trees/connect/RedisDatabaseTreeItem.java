@@ -186,9 +186,9 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
             try {
                 this.setLoaded(true);
                 RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
-                RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
+                // RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
                 RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
-                this.setChild(List.of(item1, item2, item3));
+                this.setChild(List.of(item1, item3));
                 this.expend();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -198,8 +198,8 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     }
 
     @Override
-    public RedisConnectTreeItem parent() {
-        return (RedisConnectTreeItem) super.parent();
+    public RedisDatabasesTreeItem parent() {
+        return (RedisDatabasesTreeItem) super.parent();
     }
 
     /**
@@ -257,6 +257,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     public void onPrimaryDoubleClick() {
         if (!this.isLoaded()) {
             this.loadChild();
+            this.expend();
         } else {
             super.onPrimaryDoubleClick();
         }

@@ -9,6 +9,7 @@ import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class RedisPubsubTab extends DynamicTab {
 
     {
         this.setClosable(true);
-        this.setOnCloseRequest(event -> this.unsubscribe());
+        // this.setOnCloseRequest(event -> this.unsubscribe());
         this.loadContent();
     }
 
@@ -84,6 +85,12 @@ public class RedisPubsubTab extends DynamicTab {
         this.controller().unsubscribe();
     }
 
+    @Override
+    protected void onTabClosed(Event event) {
+        super.onTabClosed(event);
+        this.unsubscribe();
+    }
+
     public RedisClient client() {
         return this.item.getClient();
     }
@@ -117,7 +124,7 @@ public class RedisPubsubTab extends DynamicTab {
             this.pubSub = new JedisPubSub() {
                 @Override
                 public void onMessage(String channel, String message) {
-                    textArea.appendLine(I18nHelper.receiveMessage() + ": " + message);
+                    textArea.appendLine(I18nHelper.receivedMessage() + " : " + message);
                 }
             };
             ThreadUtil.startVirtual(() -> item.getClient().subscribe(this.pubSub, item.getChannel()));

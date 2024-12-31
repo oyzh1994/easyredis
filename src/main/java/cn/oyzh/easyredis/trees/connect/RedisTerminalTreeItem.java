@@ -8,7 +8,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.scene.control.TreeItem;
 
 /**
  * @author oyzh
@@ -21,14 +20,20 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.Re
         this.setValue(new RedisTerminalTreeItemValue());
     }
 
-    @Override
-    public RedisDatabaseTreeItem parent() {
-        TreeItem<?> parent = this.getParent();
-        return (RedisDatabaseTreeItem) parent;
-    }
+    // @Override
+    // public RedisDatabaseTreeItem parent() {
+    //     TreeItem<?> parent = this.getParent();
+    //     return (RedisDatabaseTreeItem) parent;
+    // }
 
-    public RedisConnect redisConnect(){
-        return this.parent().redisConnect();
+    public RedisConnect redisConnect() {
+        if (this.parent() instanceof RedisDatabaseTreeItem item) {
+            return item.redisConnect();
+        }
+        if (this.parent() instanceof RedisConnectTreeItem item) {
+            return item.value();
+        }
+        return null;
     }
 
     @Override

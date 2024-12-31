@@ -1,0 +1,133 @@
+package cn.oyzh.easyredis.trees.connect;
+
+import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.node.NodeLifeCycle;
+import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.control.TreeItem;
+import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * redis数据库树节点
+ *
+ * @author oyzh
+ * @since 2023/07/12
+ */
+public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItem.RedisDatabasesTreeItemValue> implements NodeLifeCycle {
+
+    public RedisDatabasesTreeItem(RedisConnectTreeView treeView) {
+        super(treeView);
+        super.setSortable(false);
+        this.setValue(new RedisDatabasesTreeItemValue(this));
+    }
+
+    @Override
+    public RedisConnectTreeItem parent() {
+        return (RedisConnectTreeItem) super.parent();
+    }
+
+    /**
+     * 获取redis客户端
+     *
+     * @return redis客户端
+     */
+    public RedisClient client() {
+        return this.parent().client();
+    }
+
+    public int databases() {
+        return this.client().databases();
+    }
+
+    @Override
+    public RedisConnectTreeView getTreeView() {
+        return (RedisConnectTreeView) super.getTreeView();
+    }
+
+    @Override
+    public void loadChild() {
+        if (!this.isLoaded() && !this.isLoading()) {
+            try {
+                this.setLoaded(true);
+                this.setLoading(true);
+                // cluster集群模式
+                if (this.client().isClusterMode()) {
+                    this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
+                } else {// 正常模式
+                    int databases = this.databases();
+                    List<TreeItem<?>> items = new ArrayList<>(databases);
+                    for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
+                        items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
+                    }
+                    this.setChild(items);
+                }
+                this.expend();
+            } catch (Exception ex) {
+                this.setLoaded(false);
+                ex.printStackTrace();
+                JulLog.warn("loadChild error", ex);
+            } finally {
+                this.setLoading(false);
+            }
+        }
+    }
+
+    @Override
+    public void onPrimaryDoubleClick() {
+        if (!this.isLoaded()) {
+            this.startWaiting(this::loadChild);
+        } else {
+            super.onPrimaryDoubleClick();
+        }
+    }
+
+    /**
+     * Redis DB值
+     *
+     * @author oyzh
+     * @since 2023/06/22
+     */
+    @Accessors(chain = true, fluent = true)
+    public static class RedisDatabasesTreeItemValue extends RichTreeItemValue {
+
+        public RedisDatabasesTreeItemValue(RedisDatabasesTreeItem item) {
+            super(item);
+        }
+
+        @Override
+        protected RedisDatabasesTreeItem item() {
+            return (RedisDatabasesTreeItem) super.item();
+        }
+
+        @Override
+        public String name() {
+            return I18nHelper.database();
+        }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/databases.svg", 10);
+                this.graphic.disableTheme();
+            }
+            return super.graphic();
+        }
+
+        @Override
+        public String extra() {
+            try {
+                int databases = this.item().databases();
+                return "(" + databases + ")";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return super.extra();
+        }
+    }
+}
