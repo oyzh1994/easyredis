@@ -398,7 +398,10 @@ public class RedisClient {
         if (this.sentinelPool != null) {
             return this.sentinelPool.getResource();
         }
-        return this.pool.getResource();
+        if (this.pool != null) {
+            return this.pool.getResource();
+        }
+        return null;
     }
 
     /**
@@ -410,7 +413,7 @@ public class RedisClient {
         ThreadUtil.startVirtual(() -> {
             if (this.sentinelPool != null) {
                 this.sentinelPool.returnResource(jedis);
-            } else {
+            } else if (this.pool != null) {
                 this.pool.returnResource(jedis);
             }
         });

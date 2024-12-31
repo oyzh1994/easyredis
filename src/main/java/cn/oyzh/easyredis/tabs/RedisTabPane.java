@@ -441,44 +441,18 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         RedisClient client = event.data();
         List<Tab> closeTabs = new ArrayList<>();
         for (Tab tab : this.getTabs()) {
-            if (tab instanceof RedisServerTab serverTab && serverTab.client() == client) {
-                serverTab.closeRefreshTask();
+            if (tab instanceof RedisServerTab tab1 && tab1.client() == client) {
                 closeTabs.add(tab);
-            } else if (tab instanceof RedisPubsubTab pubsubTab && pubsubTab.client() == client) {
-                pubsubTab.unsubscribe();
+            } else if (tab instanceof RedisPubsubTab tab1 && tab1.client() == client) {
                 closeTabs.add(tab);
-                // } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
-                //     closeTabs.add(tab);
-            } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.redisConnect()) {
+            } else if (tab instanceof RedisKeysTab tab1 && tab1.redisConnect() == event.redisConnect()) {
+                closeTabs.add(tab);
+            } else if (tab instanceof RedisTerminalTab tab1 && tab1.redisConnect() == event.redisConnect()) {
                 closeTabs.add(tab);
             }
         }
         this.removeTab(closeTabs);
     }
-
-    // /**
-    //  * 获取过滤tab
-    //  *
-    //  * @return 过滤tab
-    //  */
-    // public RedisFilterTab getFilterTab() {
-    //     return super.getTab(RedisFilterTab.class);
-    // }
-    //
-    // /**
-    //  * 初始化过滤tab
-    //  *
-    //  * @param event 事件
-    //  */
-    // @EventSubscribe
-    // public void filterMain(RedisFilterMainEvent event) {
-    //     RedisFilterTab tab = this.getFilterTab();
-    //     if (tab == null) {
-    //         tab = new RedisFilterTab();
-    //         super.addTab(tab);
-    //     }
-    //     this.select(tab);
-    // }
 
     /**
      * 更新日志事件

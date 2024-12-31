@@ -4,7 +4,7 @@ services:
   #该容器只是执行一条命令，可以删除手动进入执行
   redis-cluster:
     image: redis
-    command: 'redis-cli -a 123456 --cluster create 192.168.3.4:6381 192.168.3.4:6382 192.168.3.4:6383 192.168.3.4:6384 192.168.3.4:6385 192.168.3.4:6386 --cluster-yes --cluster-replicas 1'
+    command: 'redis-cli -a 123456 --cluster create 192.168.3.4:6491 192.168.3.4:6492 192.168.3.4:6493 192.168.3.4:6494 192.168.3.4:6495 192.168.3.4:6496 --cluster-yes --cluster-replicas 1'
     depends_on:
       - redis1
       - redis2
@@ -18,8 +18,8 @@ services:
     image: redis
     container_name: redis-cluster-node1
     ports:
-      - 6381:6381
-      - 16381:16381
+      - 6491:6491
+      - 16491:16491
     volumes:
       - ./redis1.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -29,8 +29,8 @@ services:
     image: redis
     container_name: redis-cluster-node2
     ports:
-      - 6382:6382
-      - 16382:16382
+      - 6492:6492
+      - 16492:16492
     volumes:
       - ./redis2.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -40,8 +40,8 @@ services:
     image: redis
     container_name: redis-cluster-node3
     ports:
-      - 6383:6383
-      - 16383:16383
+      - 6493:6493
+      - 16493:16493
     volumes:
       - ./redis3.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -51,8 +51,8 @@ services:
     image: redis
     container_name: redis-cluster-node4
     ports:
-      - 6384:6384
-      - 16384:16384
+      - 6494:6494
+      - 16494:16494
     volumes:
       - ./redis4.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -62,8 +62,8 @@ services:
     image: redis
     container_name: redis-cluster-node5
     ports:
-      - 6385:6385
-      - 16385:16385
+      - 6495:6495
+      - 16495:16495
     volumes:
       - ./redis5.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -73,8 +73,8 @@ services:
     image: redis
     container_name: redis-cluster-node6
     ports:
-      - 6386:6386
-      - 16386:16386
+      - 6496:6496
+      - 16496:16496
     volumes:
       - ./redis6.conf:/conf/redis.conf
     command: redis-server /conf/redis.conf
@@ -87,7 +87,7 @@ services:
     volumes:
       - ./redis-sentinel1.conf:/conf/redis.conf
     ports:
-      - 6387:6387
+      - 6497:6497
     depends_on:
       - redis1
       - redis2
@@ -105,7 +105,7 @@ services:
     volumes:
       - ./redis-sentinel2.conf:/conf/redis.conf
     ports:
-      - 6388:6388
+      - 6498:6498
     depends_on:
       - redis1
       - redis2
@@ -123,7 +123,7 @@ services:
     volumes:
       - ./redis-sentinel3.conf:/conf/redis.conf
     ports:
-      - 6389:6389
+      - 6499:6499
     depends_on:
       - redis1
       - redis2

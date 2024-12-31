@@ -46,7 +46,7 @@ public class RedisKeysTab extends DynamicTab {
     @Override
     protected String getTabTitle() {
         String name = this.treeItem().redisConnect().getName();
-        Integer dbIndex = this.treeItem().dbIndex();
+        Integer dbIndex = this.treeItem().getInnerDbIndex();
         if (dbIndex != null) {
             name += "@" + dbIndex;
         }

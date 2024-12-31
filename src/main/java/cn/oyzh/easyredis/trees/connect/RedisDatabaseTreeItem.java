@@ -60,6 +60,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     @Accessors(chain = true, fluent = true)
     private Long dbSize;
 
+    /**
+     * 当前内部db索引
+     */
+    @Getter
     private Integer innerDbIndex;
 
     public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
@@ -67,7 +71,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         super.setSortable(false);
         this.innerDbIndex = dbIndex;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
-        this.value = dbIndex == null ? I18nHelper.keys() : "db" + dbIndex;
+        this.value = dbIndex == null ? I18nHelper.cluster() : "db" + dbIndex;
         this.setValue(new RedisDatabaseTreeItemValue(this));
     }
 
@@ -200,10 +204,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         }
     }
 
-    @Override
-    public RedisDatabasesTreeItem parent() {
-        return (RedisDatabasesTreeItem) super.parent();
-    }
+    // @Override
+    // public RedisDatabasesTreeItem parent() {
+    //     return (RedisDatabasesTreeItem) super.parent();
+    // }
 
     /**
      * 获取redis客户端
@@ -211,7 +215,13 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.parent().client();
+        if (this.parent() instanceof RedisDatabasesTreeItem item) {
+            return item.client();
+        }
+        if (this.parent() instanceof RedisConnectTreeItem item) {
+            return item.client();
+        }
+        return null;
     }
 
     /**

@@ -67,7 +67,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     /**
      * redis信息储存
      */
-    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
+    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
     public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RedisConnectTreeView treeView) {
         super(treeView);
@@ -131,33 +131,33 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         return this.client.isSentinelMode();
     }
 
-    /**
-     * 初始化连接
-     *
-     * @return 结果
-     */
-    private boolean initConnect() {
-        try {
-            // 哨兵模式
-            if (this.client.isSentinelMode()) {
-                this.setChild(new RedisServerInfoTreeItem(this.getTreeView()));
-            } else if (this.client.isClusterMode()) {// cluster集群模式
-                this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
-            } else {// 其他模式
-                int databases = this.client().databases();
-                List<TreeItem<?>> items = new ArrayList<>(databases);
-                for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-                    items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
-                }
-                this.setChild(items);
-            }
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
-        return false;
-    }
+    // /**
+    //  * 初始化连接
+    //  *
+    //  * @return 结果
+    //  */
+    // private boolean initConnect() {
+    //     try {
+    //         // 哨兵模式
+    //         if (this.client.isSentinelMode()) {
+    //             this.setChild(new RedisServerInfoTreeItem(this.getTreeView()));
+    //         } else if (this.client.isClusterMode()) {// cluster集群模式
+    //             this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
+    //         } else {// 其他模式
+    //             int databases = this.client().databases();
+    //             List<TreeItem<?>> items = new ArrayList<>(databases);
+    //             for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
+    //                 items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
+    //             }
+    //             this.setChild(items);
+    //         }
+    //         return true;
+    //     } catch (Exception ex) {
+    //         ex.printStackTrace();
+    //         MessageBox.exception(ex);
+    //     }
+    //     return false;
+    // }
 
     @Override
     public void loadChild() {
@@ -165,10 +165,22 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             try {
                 this.setLoaded(true);
                 this.setLoading(true);
-                RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
-                RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
-                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                this.setChild(List.of(item1, item2, item3));
+                // 哨兵模式
+                if (this.isSentinelMode()) {
+                    RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
+                    RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
+                    this.setChild(List.of(item2, item3));
+                } else if (this.isClusterMode()) {// 集群模式
+                    RedisDatabaseTreeItem item1 = new RedisDatabaseTreeItem(null, this.getTreeView());
+                    RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
+                    RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
+                    this.setChild(List.of(item1, item2, item3));
+                } else if (this.isClusterMode()) {// 正常模式
+                    RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
+                    RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
+                    RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
+                    this.setChild(List.of(item1, item2, item3));
+                }
                 this.expend();
             } catch (Exception ex) {
                 this.setLoaded(false);
@@ -290,7 +302,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         this.canceled = true;
         ThreadUtil.startVirtual(() -> {
             this.client.close();
-            this.stopWaiting();
+            this.setLoaded(false);
         });
     }
 
@@ -309,7 +321,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
                             this.canceled = false;
                             this.closeConnect(false);
                         } else {
-                            // } else if (this.initConnect()) {
                             this.loadChild();
                         }
                     })
@@ -367,14 +378,12 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     public void closeConnect(boolean waiting) {
         Runnable func = () -> {
             this.client.close();
-//            this.getValue().clearRole();
+            this.setLoaded(false);
             this.clearChild();
-            // this.flushGraphic();
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-//                    .onFinish(this::stopWaiting)
                     .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .build();
@@ -383,15 +392,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             func.run();
         }
     }
-
-    // @Override
-    // public void free() {
-    //     if (!this.isConnected()) {
-    //         this.connect();
-    //     } else {
-    //         super.free();
-    //     }
-    // }
 
     /**
      * 编辑连接
@@ -416,7 +416,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         redisInfo.copy(this.value);
         redisInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
         redisInfo.setCollects(Collections.emptyList());
-        if (this.infoStore.replace(redisInfo)) {
+        if (this.connectStore.replace(redisInfo)) {
             this.connectManager().addConnect(redisInfo);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
@@ -449,7 +449,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         }
         this.value.setName(connectName);
         // 修改名称
-        if (this.infoStore.update(this.value)) {
+        if (this.connectStore.update(this.value)) {
             this.setValue(new RedisConnectTreeItemValue(this));
         } else {
             MessageBox.warn(I18nHelper.operationFail());

@@ -91,6 +91,12 @@ public class RedisPubsubTab extends DynamicTab {
         this.unsubscribe();
     }
 
+    @Override
+    protected void onTabCloseRequest(Event event) {
+        super.onTabCloseRequest(event);
+        this.unsubscribe();
+    }
+
     public RedisClient client() {
         return this.item.getClient();
     }

@@ -500,9 +500,6 @@ public class RedisEventUtil {
         EventUtil.postSync(event);
     }
 
-    // public static void keySelected(RedisKeyTreeItem<?> activeItem) {
-    // }
-
     public static void treeItemChanged(TreeItem<?> treeItem) {
         RedisTreeItemChangedEvent event = new RedisTreeItemChangedEvent();
         event.data(treeItem);
