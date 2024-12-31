@@ -1,13 +1,14 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.Cursor;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -38,59 +39,25 @@ public class RedisPubsubController {
     private FlexTableView<RedisPubsubItem> listTable;
 
     /**
-     * 编号
-     */
-    @FXML
-    private FlexTableColumn<RedisPubsubItem, String> index;
-
-    /**
-     * 通道
-     */
-    @FXML
-    private FlexTableColumn<RedisPubsubItem, String> channel;
-
-    /**
-     * 操作
-     */
-    @FXML
-    private FlexTableColumn<RedisPubsubItem, String> action;
-
-    /**
      * 执行初始化
      *
      * @param client redis客户端
      */
     public void init(@NonNull RedisClient client) {
         this.client = client;
-        this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.channel.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        // 操作栏初始化
-        this.action.setCellFactory((cell) -> new FXTableCell<>() {
-            private HBox hBox;
-
-            // @Override
-            // public Node initGraphic() {
-            //     if (this.hBox == null) {
-            //         Button subscribe = new Button(I18nHelper.subscribe());
-            //         subscribe.setCursor(Cursor.HAND);
-            //         subscribe.setOnAction((event) -> subscribe(this.getTableItem()));
-            //         this.hBox = new HBox(subscribe);
-            //         this.hBox.setSpacing(5);
-            //     }
-            //     return hBox;
-            // }
-        });
         this.initPubsub();
     }
 
     /**
      * 执行订阅
-     *
-     * @param pubsubItem 订阅发布键
      */
-    private void subscribe(RedisPubsubItem pubsubItem) {
-        pubsubItem.setClient(this.client);
-        RedisEventUtil.pubsubOpen(pubsubItem);
+    @FXML
+    private void subscribe() {
+        RedisPubsubItem pubsubItem = this.listTable.getSelectedItem();
+        if (pubsubItem != null) {
+            pubsubItem.setClient(this.client);
+            RedisEventUtil.pubsubOpen(pubsubItem);
+        }
     }
 
     /**

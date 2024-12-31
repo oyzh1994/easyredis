@@ -186,54 +186,6 @@ public class RedisServerTab extends DynamicTab {
         private FlexTableView<RedisServerItem> propTable;
 
         /**
-         * 服务版本
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> serverVersion;
-
-        /**
-         * 服务角色
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> role;
-
-        /**
-         * 已用内存
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> usedMemory;
-
-        /**
-         * 客户端数量
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> connectedClients;
-
-        /**
-         * 已处理命令
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> totalCommandsProcessed;
-
-        /**
-         * 正常运行时间
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> uptime;
-
-        /**
-         * 键数量
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> keyCount;
-
-        /**
-         * 命中率
-         */
-        @FXML
-        private FlexTableColumn<RedisServerItem, String> hitRate;
-
-        /**
          * 刷新任务
          */
         private Future<?> refreshTask;
@@ -261,15 +213,6 @@ public class RedisServerTab extends DynamicTab {
             }
             this.serverInfoController.init(this.propProperty);
             this.aggregationController.init(this.propProperty);
-
-            this.role.setCellValueFactory(new PropertyValueFactory<>("role"));
-            this.uptime.setCellValueFactory(new PropertyValueFactory<>("uptime"));
-            this.hitRate.setCellValueFactory(new PropertyValueFactory<>("hitRate"));
-            this.keyCount.setCellValueFactory(new PropertyValueFactory<>("keyCount"));
-            this.usedMemory.setCellValueFactory(new PropertyValueFactory<>("usedMemory"));
-            this.serverVersion.setCellValueFactory(new PropertyValueFactory<>("serverVersion"));
-            this.connectedClients.setCellValueFactory(new PropertyValueFactory<>("connectedClients"));
-            this.totalCommandsProcessed.setCellValueFactory(new PropertyValueFactory<>("totalCommandsProcessed"));
             this.initRefreshTask();
         }
 

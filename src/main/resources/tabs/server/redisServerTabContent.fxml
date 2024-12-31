@@ -8,14 +8,14 @@
           flexWidth="100%">
     <FlexTableView flexWidth="100%" realHeight="80" fx:id="propTable">
         <columns>
-            <FlexTableColumn sortable="false" fx:id="serverVersion" text="%base.version" flexWidth="13%"/>
-            <FlexTableColumn sortable="false" fx:id="usedMemory" text="%base.usedMemory" flexWidth="13%"/>
-            <FlexTableColumn sortable="false" fx:id="connectedClients" text="%base.clientNum" flexWidth="12%"/>
-            <FlexTableColumn sortable="false" fx:id="totalCommandsProcessed" text="%redis.server.execCommandNum" flexWidth="15%"/>
-            <FlexTableColumn sortable="false" fx:id="uptime" text="%base.uptime" flexWidth="14%"/>
-            <FlexTableColumn sortable="false" fx:id="keyCount" text="%base.keyNum" flexWidth="11%"/>
-            <FlexTableColumn sortable="false" fx:id="hitRate" text="%base.hitRate" flexWidth="11%"/>
-            <FlexTableColumn sortable="false" fx:id="role" text="%base.role" flexWidth="11% - 15"/>
+            <FlexTableColumn sortable="false" valueName="serverVersion" text="%base.version" flexWidth="13%"/>
+            <FlexTableColumn sortable="false" valueName="usedMemory" text="%base.usedMemory" flexWidth="13%"/>
+            <FlexTableColumn sortable="false" valueName="connectedClients" text="%base.clientNum" flexWidth="12%"/>
+            <FlexTableColumn sortable="false" valueName="totalCommandsProcessed" text="%redis.server.execCommandNum" flexWidth="15%"/>
+            <FlexTableColumn sortable="false" valueName="uptime" text="%base.uptime" flexWidth="14%"/>
+            <FlexTableColumn sortable="false" valueName="keyCount" text="%base.keyNum" flexWidth="11%"/>
+            <FlexTableColumn sortable="false" valueName="hitRate" text="%base.hitRate" flexWidth="11%"/>
+            <FlexTableColumn sortable="false" valueName="role" text="%base.role" flexWidth="11% - 12"/>
         </columns>
     </FlexTableView>
     <FlexTabPane flexWidth="100%" flexHeight="100% - 70" fx:id="tabPane">

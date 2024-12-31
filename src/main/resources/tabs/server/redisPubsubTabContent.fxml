@@ -7,6 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.easyredis.fx.SubscribeSVGGlyph?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.server.RedisPubsubController" text="%redis.server.pubsub">
@@ -17,12 +18,16 @@
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
+            <SubscribeSVGGlyph size="14" onMousePrimaryClicked="#subscribe">
+                <HBox.margin>
+                    <Insets left="10" top="11"/>
+                </HBox.margin>
+            </SubscribeSVGGlyph>
         </FlexHBox>
         <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="15%" fx:id="index" text="%base.No"/>
-                <FlexTableColumn flexWidth="60%" fx:id="channel" text="%base.channel"/>
-                <FlexTableColumn flexWidth="25% - 5" fx:id="action" text="%base.action"/>
+                <FlexTableColumn flexWidth="25%" valueName="index" text="%base.No"/>
+                <FlexTableColumn flexWidth="75% - 12" valueName="channel" text="%base.channel"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

@@ -35,41 +35,6 @@ public class RedisClientInfoController {
     @FXML
     private FlexTableView<RedisClientItem> listTable;
 
-    /**
-     * 编号
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, Integer> index;
-
-    /**
-     * 地址
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, String> addr;
-
-    /**
-     * 存活
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, String> age;
-
-    /**
-     * 空闲
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, String> idle;
-
-    /**
-     * 标记
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, String> flags;
-
-    /**
-     * 当前库
-     */
-    @FXML
-    private FlexTableColumn<RedisClientItem, String> db;
 
     /**
      * 执行初始化
@@ -78,12 +43,6 @@ public class RedisClientInfoController {
      */
     public void init(@NonNull RedisClient client) {
         this.client = client;
-        this.db.setCellValueFactory(new PropertyValueFactory<>("db"));
-        this.age.setCellValueFactory(new PropertyValueFactory<>("age"));
-        this.addr.setCellValueFactory(new PropertyValueFactory<>("addr"));
-        this.idle.setCellValueFactory(new PropertyValueFactory<>("idle"));
-        this.index.setCellValueFactory(new PropertyValueFactory<>("index"));
-        this.flags.setCellValueFactory(new PropertyValueFactory<>("flags"));
         this.initClientList();
     }
 

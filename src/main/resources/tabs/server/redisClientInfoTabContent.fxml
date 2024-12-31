@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
@@ -20,12 +20,12 @@
         </FlexHBox>
         <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="10%" fx:id="index" text="%base.No"/>
-                <FlexTableColumn flexWidth="25%" fx:id="addr" text="%base.clientAddr"/>
-                <FlexTableColumn flexWidth="20%" fx:id="age" text="%redis.server.survival"/>
-                <FlexTableColumn flexWidth="20%" fx:id="idle" text="%base.idle"/>
-                <FlexTableColumn flexWidth="10%" fx:id="flags" text="%base.flags"/>
-                <FlexTableColumn flexWidth="15% - 20" fx:id="db" text="%redis.server.currDB"/>
+                <FlexTableColumn flexWidth="10%" text="%base.No" valueName="index"/>
+                <FlexTableColumn flexWidth="25%" text="%base.clientAddr" valueName="addr"/>
+                <FlexTableColumn flexWidth="20%" text="%redis.server.survival" valueName="age"/>
+                <FlexTableColumn flexWidth="20%" text="%base.idle" valueName="idle"/>
+                <FlexTableColumn flexWidth="10%" text="%base.flags" valueName="flags"/>
+                <FlexTableColumn flexWidth="15% - 12" text="%redis.server.currDB" valueName="db"/>
             </columns>
         </FlexTableView>
     </FlexVBox>
