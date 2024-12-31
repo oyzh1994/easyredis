@@ -23,6 +23,9 @@ import java.util.Objects;
 @Table("t_key_filter_history")
 public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHistory>, Serializable {
 
+    /**
+     * 数据id
+     */
     @Column
     @PrimaryKey
     private String uid;

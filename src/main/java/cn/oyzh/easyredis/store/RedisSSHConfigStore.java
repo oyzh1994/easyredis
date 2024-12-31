@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.store;
 
 import cn.oyzh.easyredis.domain.RedisSSHConfig;
+import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -33,5 +34,11 @@ public class RedisSSHConfigStore extends JdbcStandardStore<RedisSSHConfig> {
     @Override
     protected Class<RedisSSHConfig> modelClass() {
         return RedisSSHConfig.class;
+    }
+
+    public void deleteByIid(String iid) {
+        DeleteParam param = new DeleteParam();
+        param.addQueryParam(QueryParam.of("iid", iid));
+        super.delete(param);
     }
 }

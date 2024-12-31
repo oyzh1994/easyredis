@@ -20,42 +20,38 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
      */
     public static final RedisConnectStore INSTANCE = new RedisConnectStore();
 
+    /**
+     * ssh配置存储
+     */
+    private  final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+
     public List<RedisConnect> load() {
-        List<RedisConnect> list = super.selectList();
-        // 处理ssh信息
-        for (RedisConnect info : list) {
-            info.setSshConfig(RedisSSHConfigStore.INSTANCE.find(info.getId()));
-        }
-        return list;
+        return super.selectList();
     }
 
-    public boolean replace(RedisConnect info) {
+    public boolean replace(RedisConnect model) {
         boolean result = false;
-        if (info != null) {
-            if (super.exist(info.getId())) {
-                result = this.update(info);
+        if (model != null) {
+            if (super.exist(model.getId())) {
+                result = this.update(model);
             } else {
-                result = this.insert(info);
+                result = this.insert(model);
             }
-
-            // ssh信息处理
-            RedisSSHConfig connect = info.getSshConfig();
-            if (info.getSshConfig() != null) {
-                RedisSSHConfigStore.INSTANCE.replace(connect);
+            // ssh配置处理
+            RedisSSHConfig sshConfig = model.getSshConfig();
+            if (sshConfig != null) {
+                this.sshConfigStore.replace(sshConfig);
             } else {
-                DeleteParam param = new DeleteParam();
-                param.addQueryParam(new QueryParam("iid", info.getId()));
-                RedisSSHConfigStore.INSTANCE.delete(connect);
+                this.sshConfigStore.deleteByIid(model.getId());
             }
-
             // 收藏处理
-            List<String> collects = info.getCollects();
+            List<String> collects = model.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
                 for (String collect : collects) {
-                    RedisCollectStore.INSTANCE.replace(info.getId(), collect);
+                    RedisCollectStore.INSTANCE.replace(model.getId(), collect);
                 }
             } else {
-                RedisCollectStore.INSTANCE.delete(info.getId());
+                RedisCollectStore.INSTANCE.deleteByIid(model.getId());
             }
         }
         return result;

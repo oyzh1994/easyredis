@@ -60,7 +60,7 @@ public class RedisStoreUtil {
                         group.setName(obj.getString("name"));
                     }
                     if (obj.containsKey("expand")) {
-                        group.setExpand(obj.getBooleanValue("Expand"));
+                        group.setExpand(obj.getBooleanValue("expand"));
                     }
                     groups.add(group);
                 }
@@ -240,7 +240,6 @@ public class RedisStoreUtil {
                     histories.add(history);
                 }
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.store;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisCollect;
+import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 import cn.oyzh.store.jdbc.QueryParam;
 
@@ -77,5 +78,11 @@ public class RedisCollectStore extends JdbcStandardStore<RedisCollect> {
     @Override
     protected Class<RedisCollect> modelClass() {
         return RedisCollect.class;
+    }
+
+    public void deleteByIid(String iid) {
+        DeleteParam param = new DeleteParam();
+        param.addQueryParam(QueryParam.of("iid", iid));
+        super.delete(param);
     }
 }
