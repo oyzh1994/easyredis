@@ -2,16 +2,15 @@ package cn.oyzh.easyredis.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.RedisConnectionClosedEvent;
-import cn.oyzh.easyredis.event.RedisFilterMainEvent;
 import cn.oyzh.easyredis.event.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
-import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
@@ -32,6 +31,7 @@ import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * redis切换面板
@@ -135,13 +135,13 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 初始化终端tab
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    public void initTerminalTab(RedisConnect info) {
-        RedisTerminalTab terminalTab = this.getTerminalTab(info);
+    public void initTerminalTab(RedisConnect redisConnect, Integer dbIndex) {
+        RedisTerminalTab terminalTab = this.getTerminalTab(redisConnect, dbIndex);
         if (terminalTab == null) {
             terminalTab = new RedisTerminalTab();
-            terminalTab.init(info);
+            terminalTab.init(redisConnect, dbIndex);
             super.addTab(terminalTab);
         } else {
             terminalTab.flushGraphic();
@@ -158,7 +158,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(RedisTerminalOpenEvent event) {
-        this.initTerminalTab(event.data());
+        this.initTerminalTab(event.data(), event.dbIndex());
     }
 
     /**
@@ -170,7 +170,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     private void terminalClose(RedisTerminalCloseEvent event) {
         try {
             // 寻找节点
-            RedisTerminalTab terminalTab = this.getTerminalTab(event.data());
+            RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.dbIndex());
             // 移除节点
             if (terminalTab != null) {
                 terminalTab.closeTab();
@@ -183,14 +183,15 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     /**
      * 获取终端tab
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      * @return 终端tab
      */
-    private RedisTerminalTab getTerminalTab(RedisConnect info) {
-        if (info != null) {
+    private RedisTerminalTab getTerminalTab(RedisConnect redisConnect, Integer dbIndex) {
+        if (redisConnect != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof RedisTerminalTab cmdTab && cmdTab.redisConnect() == info) {
-                    return cmdTab;
+                if (tab instanceof RedisTerminalTab tab1 && tab1.redisConnect() == redisConnect
+                        && Objects.equals(tab1.dbIndex(), dbIndex)) {
+                    return tab1;
                 }
             }
         }

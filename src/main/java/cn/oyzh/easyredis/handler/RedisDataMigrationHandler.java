@@ -12,7 +12,7 @@ import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
-import cn.oyzh.easyredis.terminal.RedisTerminalHistoryJdbcStore;
+import cn.oyzh.easyredis.terminal.RedisTerminalHistoryStore;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Setter;
@@ -67,7 +67,7 @@ public class RedisDataMigrationHandler extends DataHandler {
 
     private RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
-    private RedisTerminalHistoryJdbcStore terminalHistoryStore = RedisTerminalHistoryJdbcStore.INSTANCE;
+    private RedisTerminalHistoryStore terminalHistoryStore = RedisTerminalHistoryStore.INSTANCE;
 
     private RedisKeyFilterHistoryStore keyFilterHistoryJdbcStore = RedisKeyFilterHistoryStore.INSTANCE;
 

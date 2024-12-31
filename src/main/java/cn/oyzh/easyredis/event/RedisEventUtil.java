@@ -63,11 +63,12 @@ public class RedisEventUtil {
     /**
      * 终端关闭事件
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    public static void terminalClose(RedisConnect info) {
+    public static void terminalClose(RedisConnect redisConnect,Integer dbIndex) {
         RedisTerminalCloseEvent event = new RedisTerminalCloseEvent();
-        event.data(info);
+        event.data(redisConnect);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -202,8 +203,8 @@ public class RedisEventUtil {
      * 键添加事件
      *
      * @param connect redis连接
-     * @param type 键类型
-     * @param key  键名称
+     * @param type    键类型
+     * @param key     键名称
      */
     public static void keyAdded(RedisConnect connect, String type, String key, int dbIndex) {
         RedisKeyAddedEvent event = new RedisKeyAddedEvent();
@@ -277,17 +278,18 @@ public class RedisEventUtil {
      * 终端打开事件
      */
     public static void terminalOpen() {
-        terminalOpen(null);
+        terminalOpen(null, null);
     }
 
     /**
      * 终端打开事件
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    public static void terminalOpen(RedisConnect info) {
+    public static void terminalOpen(RedisConnect redisConnect, Integer dbIndex) {
         RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
-        event.data(info);
+        event.data(redisConnect);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -339,9 +341,9 @@ public class RedisEventUtil {
      * 键ttl更新事件
      *
      * @param connect redis树节点
-     * @param ttl  ttl值
+     * @param ttl     ttl值
      */
-    public static void keyTTLUpdated(RedisConnect connect, Long ttl,String key,int dbIndex) {
+    public static void keyTTLUpdated(RedisConnect connect, Long ttl, String key, int dbIndex) {
         RedisKeyTTLUpdatedEvent event = new RedisKeyTTLUpdatedEvent();
         event.data(connect);
         event.ttl(ttl);

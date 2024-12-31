@@ -60,9 +60,12 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     @Accessors(chain = true, fluent = true)
     private Long dbSize;
 
+    private Integer innerDbIndex;
+
     public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
         super(treeView);
         super.setSortable(false);
+        this.innerDbIndex = dbIndex;
         this.dbIndex = dbIndex == null ? 0 : dbIndex;
         this.value = dbIndex == null ? I18nHelper.keys() : "db" + dbIndex;
         this.setValue(new RedisDatabaseTreeItemValue(this));
@@ -187,7 +190,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
                 this.setLoaded(true);
                 RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
                 // RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
-                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
+                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), this.innerDbIndex);
                 this.setChild(List.of(item1, item3));
                 this.expend();
             } catch (Exception ex) {

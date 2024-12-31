@@ -167,7 +167,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
                 this.setLoading(true);
                 RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
                 RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
-                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView());
+                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
                 this.setChild(List.of(item1, item2, item3));
                 this.expend();
             } catch (Exception ex) {
@@ -253,7 +253,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 打开终端
      */
     private void openTerminal() {
-        RedisEventUtil.terminalOpen(this.value);
+        RedisEventUtil.terminalOpen(this.value, null);
     }
 
     /**

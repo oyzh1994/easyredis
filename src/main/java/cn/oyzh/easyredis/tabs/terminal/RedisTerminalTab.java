@@ -7,8 +7,8 @@ import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import lombok.Getter;
@@ -25,12 +25,15 @@ public class RedisTerminalTab extends DynamicTab {
 
     {
         this.setClosable(true);
-        this.setOnCloseRequest(event -> {
-            // 关闭redis连接
-            RedisClient client = this.controller().client();
-            RedisConnectUtil.close(client, true);
-        });
         this.loadContent();
+    }
+
+    @Override
+    protected void onTabCloseRequest(Event event) {
+        super.onTabCloseRequest(event);
+        // 关闭redis连接
+        RedisClient client = this.controller().client();
+        RedisConnectUtil.close(client, true);
     }
 
     @Override
@@ -40,12 +43,12 @@ public class RedisTerminalTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return  "/tabs/terminal/redisTerminalTabContent.fxml";
+        return "/tabs/terminal/redisTerminalTabContent.fxml";
     }
 
     @Override
     public void flushGraphic() {
-        SVGGlyph graphic = (SVGGlyph) this.getGraphic();
+        TerminalSVGGlyph graphic = (TerminalSVGGlyph) this.getGraphic();
         if (graphic == null) {
             graphic = new TerminalSVGGlyph("13");
             graphic.setCursor(Cursor.DEFAULT);
@@ -56,24 +59,32 @@ public class RedisTerminalTab extends DynamicTab {
     /**
      * 初始化
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    public void init(RedisConnect info) {
+    public void init(RedisConnect redisConnect, Integer dbIndex) {
         try {
-            if (info == null) {
-                info = new RedisConnect();
-                info.setName(I18nHelper.unnamedConnection());
-
+            if (redisConnect == null) {
+                redisConnect = new RedisConnect();
+                redisConnect.setName(I18nHelper.unnamedConnection());
             }
             // 设置文本
-            this.setText(info.getName());
+            this.setText(redisConnect.getName());
             // 刷新图标
             this.flushGraphic();
             // 初始化redis连接
-            this.controller().client(new RedisClient(info));
+            this.controller().init(new RedisClient(redisConnect), dbIndex);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * db索引
+     *
+     * @return 当前db索引
+     */
+    public Integer dbIndex() {
+        return this.controller().dbIndex();
     }
 
     /**
@@ -100,6 +111,10 @@ public class RedisTerminalTab extends DynamicTab {
         @Accessors(chain = true, fluent = true)
         private RedisClient client;
 
+        @Getter
+        @Accessors(chain = true, fluent = true)
+        private Integer dbIndex;
+
         /**
          * redis命令行文本域
          */
@@ -107,13 +122,13 @@ public class RedisTerminalTab extends DynamicTab {
         private RedisTerminalTextTextArea terminal;
 
         /**
-         * 设置redis客户端
+         * 初始化
          *
          * @param client redis客户端
          */
-        public void client(@NonNull RedisClient client) {
+        public void init(@NonNull RedisClient client, Integer dbIndex) {
             this.client = client;
-            this.terminal.init(client);
+            this.terminal.init(client, dbIndex);
         }
 
         /**

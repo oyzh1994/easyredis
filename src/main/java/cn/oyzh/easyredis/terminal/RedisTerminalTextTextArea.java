@@ -49,6 +49,13 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      */
     private ChangeListener<RedisConnState> stateChangeListener;
 
+    /**
+     * db索引
+     */
+    @Getter
+    @Accessors(fluent = true, chain = false)
+    private Integer dbIndex;
+
     @Override
     public void flushPrompt() {
         String str;
@@ -61,17 +68,21 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
             str += "@" + this.redisConnect().getHost();
         }
         if (this.isConnecting()) {
-            str += "（" + I18nHelper.connectIng() + "）> ";
+            str += "(" + I18nHelper.connectIng() + this.getDbName() + ")> ";
         } else if (this.isConnected()) {
             if (this.client.isReadonly()) {
-                str += "（" + I18nHelper.connected() + "/" + I18nHelper.readonlyMode() + "）> ";
+                str += "(" + I18nHelper.connected() + "/" + I18nHelper.readonlyMode() + this.getDbName() + ")> ";
             } else {
-                str += "（" + I18nHelper.connected() + "）> ";
+                str += "(" + I18nHelper.connected() + this.getDbName() + ")> ";
             }
         } else {
-            str += " > ";
+            str += this.getDbName() + "> ";
         }
         this.prompt(str);
+    }
+
+    private String getDbName() {
+        return this.dbIndex == null ? "" : "@db" + this.dbIndex;
     }
 
     /**
@@ -79,12 +90,12 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      *
      * @param client redis客户端
      */
-    public void init(@NonNull RedisClient client) {
+    public void init(@NonNull RedisClient client, Integer dbIndex) {
         this.client = client;
+        this.dbIndex = dbIndex;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("redis.home.welcome"));
-        // this.appendLine("欢迎使用EasyRedis!");
-        this.appendLine("Powered By oyzh(2023-2023).");
+        this.appendLine("Powered By oyzh(2023-2024).");
         this.flushPrompt();
         if (this.isTemporary()) {
             this.initByTemporary();

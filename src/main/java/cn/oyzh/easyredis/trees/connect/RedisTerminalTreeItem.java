@@ -15,16 +15,13 @@ import cn.oyzh.i18n.I18nHelper;
  */
 public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.RedisTerminalTreeItemValue> {
 
-    public RedisTerminalTreeItem(RichTreeView treeView) {
+    private final Integer dbIndex;
+
+    public RedisTerminalTreeItem(RichTreeView treeView, Integer dbIndex) {
         super(treeView);
+        this.dbIndex = dbIndex;
         this.setValue(new RedisTerminalTreeItemValue());
     }
-
-    // @Override
-    // public RedisDatabaseTreeItem parent() {
-    //     TreeItem<?> parent = this.getParent();
-    //     return (RedisDatabaseTreeItem) parent;
-    // }
 
     public RedisConnect redisConnect() {
         if (this.parent() instanceof RedisDatabaseTreeItem item) {
@@ -38,7 +35,7 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.Re
 
     @Override
     public void onPrimaryDoubleClick() {
-        RedisEventUtil.terminalOpen(this.redisConnect());
+        RedisEventUtil.terminalOpen(this.redisConnect(), this.dbIndex);
     }
 
     /**

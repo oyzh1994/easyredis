@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.execute.TerminalExecuteResult;
+import cn.oyzh.i18n.I18nHelper;
 import redis.clients.jedis.Protocol;
 
 /**
@@ -44,7 +45,7 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
             }
             terminal.connect(command.command());
         } else {
-            terminal.outputByPrompt("非临时连接不支持此操作");
+            terminal.outputByPrompt(I18nHelper.operationNotSupport());
         }
         TerminalExecuteResult result = TerminalExecuteResult.ok();
         result.setIgnoreOutput(true);
