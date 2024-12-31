@@ -219,8 +219,8 @@ public class RedisKeysTab extends DynamicTab {
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
-                this.client = treeItem.client();
                 this.treeView.dbItem(this.treeItem);
+                this.client = treeItem.client();
                 // 加载根节点
                 this.treeView.loadItems();
             } catch (Exception ex) {
@@ -270,20 +270,6 @@ public class RedisKeysTab extends DynamicTab {
         private void refreshKey() {
             this.treeView.loadItems();
         }
-
-        // @FXML
-        // private void sortAsc() {
-        //     this.sortAsc.disappear();
-        //     this.sortDesc.display();
-        //     this.treeView.sortAsc();
-        // }
-        //
-        // @FXML
-        // private void sortDesc() {
-        //     this.sortDesc.disappear();
-        //     this.sortAsc.display();
-        //     this.treeView.sortDesc();
-        // }
 
         @FXML
         private void positionNode() {

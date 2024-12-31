@@ -41,7 +41,7 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
     }
 
     public RedisClient client() {
-        return this.dbItem.client();
+        return this.dbItem == null ? null : this.dbItem.client();
     }
 
     public RedisConnect redisConnect() {
@@ -64,7 +64,7 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
     @Override
     public RedisKeyTreeItemFilter itemFilter() {
         // 初始化过滤器
-        if (this.itemFilter == null) {
+        if (this.itemFilter == null && this.dbItem != null) {
             RedisKeyTreeItemFilter filter = new RedisKeyTreeItemFilter();
             filter.initFilters(this.client().iid());
             this.itemFilter = filter;
