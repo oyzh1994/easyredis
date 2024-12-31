@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectDeletedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
+import cn.oyzh.easyredis.event.connection.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisHyLogElementsAddedEvent;

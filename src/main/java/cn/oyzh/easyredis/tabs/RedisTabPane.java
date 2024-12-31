@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.key.RedisPubsubOpenEvent;
-import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
+import cn.oyzh.easyredis.event.connection.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetReverseViewEvent;

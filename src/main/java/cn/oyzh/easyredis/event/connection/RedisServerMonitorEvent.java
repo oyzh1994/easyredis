@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.connection;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.event.Event;
