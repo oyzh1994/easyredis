@@ -11,9 +11,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 /**
  * redis终端tab
@@ -56,6 +54,17 @@ public class RedisTerminalTab extends DynamicTab {
         }
     }
 
+    @Override
+    protected String getTabTitle() {
+        Integer dbIndex = this.dbIndex();
+        RedisConnect redisConnect = this.redisConnect();
+        // 设置文本
+        if (dbIndex != null) {
+            return redisConnect.getName() + "@" + dbIndex;
+        }
+        return redisConnect.getName();
+    }
+
     /**
      * 初始化
      *
@@ -67,12 +76,10 @@ public class RedisTerminalTab extends DynamicTab {
                 redisConnect = new RedisConnect();
                 redisConnect.setName(I18nHelper.unnamedConnection());
             }
-            // 设置文本
-            this.setText(redisConnect.getName());
-            // 刷新图标
-            this.flushGraphic();
             // 初始化redis连接
             this.controller().init(new RedisClient(redisConnect), dbIndex);
+            // 刷新tab
+            this.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -105,17 +112,6 @@ public class RedisTerminalTab extends DynamicTab {
     public static class RedisTerminalTabController extends DynamicTabController {
 
         /**
-         * redis客户端
-         */
-        @Getter
-        @Accessors(chain = true, fluent = true)
-        private RedisClient client;
-
-        @Getter
-        @Accessors(chain = true, fluent = true)
-        private Integer dbIndex;
-
-        /**
          * redis命令行文本域
          */
         @FXML
@@ -127,7 +123,6 @@ public class RedisTerminalTab extends DynamicTab {
          * @param client redis客户端
          */
         public void init(@NonNull RedisClient client, Integer dbIndex) {
-            this.client = client;
             this.terminal.init(client, dbIndex);
         }
 
@@ -137,8 +132,15 @@ public class RedisTerminalTab extends DynamicTab {
          * @return 当前redis信息
          */
         protected RedisConnect redisConnect() {
-            return this.client.redisConnect();
+            return this.terminal.redisConnect();
         }
 
+        public Integer dbIndex() {
+            return this.terminal.dbIndex();
+        }
+
+        public RedisClient client() {
+            return this.terminal.client();
+        }
     }
 }
