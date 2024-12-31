@@ -580,28 +580,30 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
 
         @Override
         public String extra() {
-            String role = this.item().role();
-            if (role != null) {
-                // 角色名称
-                String roleName = switch (role.toLowerCase()) {
-                    case "sentinel" -> I18nHelper.sentinel();
-                    case "master" -> I18nHelper.master();
-                    case "slave" -> I18nHelper.slave();
-                    default -> null;
-                };
-                String str = "(";
-                if (this.item().isSentinelMode()) {
-                    str += roleName;
-                } else if (this.item().isClusterMode()) {
-                    str += I18nHelper.cluster() + "/" + roleName;
-                } else if (this.item().isMasterMode()) {
-                    str += I18nHelper.master_slave() + "/" + roleName;
+            if (this.item().isConnected()) {
+                String role = this.item().role();
+                if (role != null) {
+                    // 角色名称
+                    String roleName = switch (role.toLowerCase()) {
+                        case "sentinel" -> I18nHelper.sentinel();
+                        case "master" -> I18nHelper.master();
+                        case "slave" -> I18nHelper.slave();
+                        default -> null;
+                    };
+                    String str = "(";
+                    if (this.item().isSentinelMode()) {
+                        str += roleName;
+                    } else if (this.item().isClusterMode()) {
+                        str += I18nHelper.cluster() + "/" + roleName;
+                    } else if (this.item().isMasterMode()) {
+                        str += I18nHelper.master_slave() + "/" + roleName;
+                    }
+                    if (this.item().isReadonly()) {
+                        str += "/" + I18nHelper.readonly();
+                    }
+                    str += ")";
+                    return str;
                 }
-                if (this.item().isReadonly()) {
-                    str += "/" + I18nHelper.readonly();
-                }
-                str += ")";
-                return str;
             }
             return super.extra();
         }

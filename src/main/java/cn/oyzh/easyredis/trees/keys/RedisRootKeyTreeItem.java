@@ -46,7 +46,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             if (redisKey == null) {
                 JulLog.warn("redisKey is null");
             } else {
-                this.addChild(this.initItemByNode(redisKey));
+                this.addChild(this.initKeyItem(redisKey));
             }
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -133,27 +133,27 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     /**
      * 初始化redis树键
      *
-     * @param node redis键
+     * @param redisKey redis键
      * @return redis树键
      */
-    private RedisKeyTreeItem initItemByNode(RedisKey node) {
-        if (node.isStringKey()) {
-            return new RedisStringKeyTreeItem(node, this.getTreeView());
+    private RedisKeyTreeItem initKeyItem(RedisKey redisKey) {
+        if (redisKey.isStringKey()) {
+            return new RedisStringKeyTreeItem(redisKey, this.getTreeView());
         }
-        if (node.isListKey()) {
-            return new RedisListKeyTreeItem(node, this.getTreeView());
+        if (redisKey.isListKey()) {
+            return new RedisListKeyTreeItem(redisKey, this.getTreeView());
         }
-        if (node.isSetKey()) {
-            return new RedisSetKeyTreeItem(node, this.getTreeView());
+        if (redisKey.isSetKey()) {
+            return new RedisSetKeyTreeItem(redisKey, this.getTreeView());
         }
-        if (node.isZSetKey()) {
-            return new RedisZSetKeyTreeItem(node, this.getTreeView());
+        if (redisKey.isZSetKey()) {
+            return new RedisZSetKeyTreeItem(redisKey, this.getTreeView());
         }
-        if (node.isHashKey()) {
-            return new RedisHashKeyTreeItem(node, this.getTreeView());
+        if (redisKey.isHashKey()) {
+            return new RedisHashKeyTreeItem(redisKey, this.getTreeView());
         }
-        if (node.isStreamKey()) {
-            return new RedisStreamKeyTreeItem(node, this.getTreeView());
+        if (redisKey.isStreamKey()) {
+            return new RedisStreamKeyTreeItem(redisKey, this.getTreeView());
         }
         return null;
     }
@@ -174,7 +174,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             // 数据不存在，则添加到集合
             Optional<RedisKeyTreeItem> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
             if (optional.isEmpty()) {
-                RedisKeyTreeItem item = this.initItemByNode(key);
+                RedisKeyTreeItem item = this.initKeyItem(key);
                 if (item != null) {
                     shows.add(item);
                 }

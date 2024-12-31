@@ -64,7 +64,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * 当前内部db索引
      */
     @Getter
-    private Integer innerDbIndex;
+    private final Integer innerDbIndex;
 
     public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
         super(treeView);
