@@ -75,7 +75,7 @@ public class RedisFilterAddController extends StageController {
             filter.setEnable(this.enable.isSelected());
             filter.setPartMatch(this.matchMode.isSelected());
             if (this.filterStore.replace(filter)) {
-                RedisEventUtil.filterAdded();
+                // RedisEventUtil.filterAdded();
                 RedisEventUtil.treeChildFilter();
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();

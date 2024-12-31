@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.connection;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -10,11 +10,11 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/11/28
  */
-public class RedisConnectionClosedEvent extends Event<RedisClient> implements EventFormatter {
+public class RedisConnectionConnectedEvent extends Event<RedisClient> implements EventFormatter {
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionConnected(), this.data().infoName());
     }
 
     public RedisConnect redisConnect() {

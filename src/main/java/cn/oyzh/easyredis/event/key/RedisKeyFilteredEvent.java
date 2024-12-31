@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.Event;
@@ -7,7 +7,7 @@ import cn.oyzh.event.Event;
  * @author oyzh
  * @since 2023/11/20
  */
-public class RedisKeyFlushedEvent extends Event<RedisDatabaseTreeItem> {
+public class RedisKeyFilteredEvent extends Event<RedisDatabaseTreeItem> {
 
 
 

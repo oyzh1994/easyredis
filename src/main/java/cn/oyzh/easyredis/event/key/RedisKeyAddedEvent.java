@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.event.Event;
@@ -10,14 +10,14 @@ import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
- * @since 2023/12/11
+ * @since 2023/11/20
  */
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisKeyTTLUpdatedEvent extends Event<RedisConnect> implements  EventFormatter {
+public class RedisKeyAddedEvent extends Event<RedisConnect> implements EventFormatter {
 
-    private Long ttl;
+    private String type;
 
     private String key;
 
@@ -26,8 +26,8 @@ public class RedisKeyTTLUpdatedEvent extends Event<RedisConnect> implements  Eve
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] "+ I18nHelper.ttlUpdated() +"[%s-db%s] ttl:%s",
-                this.data().getName(), this.key, this.dbIndex, this.ttl
+                "[%s] " + I18nHelper.addKey() + "[%s-db%s] " + I18nHelper.keyType() + ":[%s] ",
+                this.data().getName(), this.dbIndex, this.key, this.type
         );
     }
 }

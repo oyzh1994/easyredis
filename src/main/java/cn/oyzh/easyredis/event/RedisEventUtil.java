@@ -2,6 +2,22 @@ package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
+import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
+import cn.oyzh.easyredis.event.connection.RedisConnectDeletedEvent;
+import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
+import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyCopiedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyDeletedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyFilteredEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyFlushedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyMovedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyRenamedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyTTLUpdatedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeysMovedEvent;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
@@ -293,13 +309,13 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 过滤主页事件
-     */
-    public static void filterMain() {
-        RedisFilterMainEvent event = new RedisFilterMainEvent();
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 过滤主页事件
+    //  */
+    // public static void filterMain() {
+    //     RedisFilterMainEvent event = new RedisFilterMainEvent();
+    //     EventUtil.post(event);
+    // }
 
     // /**
     //  * 搜索开始事件
@@ -440,27 +456,27 @@ public class RedisEventUtil {
         EventUtil.post(new RedisAddConnectEvent());
     }
 
-    /**
-     * 展开左侧
-     */
-    public static void leftExtend() {
-        EventUtil.post(new RedisLeftExtendEvent());
-    }
+    // /**
+    //  * 展开左侧
+    //  */
+    // public static void leftExtend() {
+    //     EventUtil.post(new RedisLeftExtendEvent());
+    // }
+    //
+    // /**
+    //  * 收缩左侧
+    //  */
+    // public static void leftCollapse() {
+    //     EventUtil.post(new RedisLeftCollapseEvent());
+    // }
 
-    /**
-     * 收缩左侧
-     */
-    public static void leftCollapse() {
-        EventUtil.post(new RedisLeftCollapseEvent());
-    }
-
-    /**
-     * 过滤添加事件
-     */
-    public static void filterAdded() {
-        RedisFilterAddedEvent event = new RedisFilterAddedEvent();
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 过滤添加事件
+    //  */
+    // public static void filterAdded() {
+    //     RedisFilterAddedEvent event = new RedisFilterAddedEvent();
+    //     EventUtil.post(event);
+    // }
 
     /**
      * 更新日志事件

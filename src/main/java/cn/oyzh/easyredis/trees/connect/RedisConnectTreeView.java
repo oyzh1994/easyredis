@@ -2,12 +2,12 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
-import cn.oyzh.easyredis.event.RedisAddConnectEvent;
+import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.RedisAddGroupEvent;
-import cn.oyzh.easyredis.event.RedisConnectAddedEvent;
-import cn.oyzh.easyredis.event.RedisConnectUpdatedEvent;
-import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
-import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
+import cn.oyzh.easyredis.event.key.RedisKeyDeletedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
