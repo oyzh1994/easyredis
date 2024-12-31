@@ -31,11 +31,11 @@ public class RedisConnectUtil {
                 view.waitCursor();
                 view.appendTitle("===" + I18nHelper.connectTesting() + "===");
                 if (info.getName() == null) {
-                    info.setName("测试连接");
+                    info.setName(I18nHelper.testConnection());
                 }
                 RedisClient client = new RedisClient(info);
                 // 开始连接
-                client.start();
+                client.start(3_000);
                 view.enable();
                 view.defaultCursor();
                 view.restoreTitle();
@@ -137,7 +137,7 @@ public class RedisConnectUtil {
      * 复制连接
      *
      * @param connectInfo 连接信息
-     * @param info    redis对象
+     * @param info        redis对象
      */
     public static void copyConnect(RedisConnectInfo connectInfo, RedisConnect info) {
         if (connectInfo != null && info != null) {

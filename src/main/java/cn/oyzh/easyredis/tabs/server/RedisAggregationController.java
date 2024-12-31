@@ -4,7 +4,6 @@ import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 
@@ -50,15 +49,13 @@ public class RedisAggregationController {
     /**
      * 执行初始化
      *
-     * @param propProperty 属性对象
+     * @param prop 属性对象
      */
-    public void init(SimpleObjectProperty<RedisInfoProp> propProperty) {
-        propProperty.addListener((observable, oldValue, newValue) -> {
-            this.initClientChart(newValue);
-            this.initMemoryChart(newValue);
-            this.initCommandChart(newValue);
-            this.initNetworkChart(newValue);
-        });
+    public void init(RedisInfoProp prop) {
+        this.initClientChart(prop);
+        this.initMemoryChart(prop);
+        this.initCommandChart(prop);
+        this.initNetworkChart(prop);
     }
 
     /**

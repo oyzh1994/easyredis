@@ -58,6 +58,10 @@ public class RedisServerItem {
      */
     private SimpleStringProperty totalCommandsProcessedProperty;
 
+    public void init(RedisInfoProp prop) {
+        this.update(prop.getUptimeInDays(), prop.getUsedMemoryHuman(), prop.getTotalCommandsProcessed(), prop.getKeyspaceHits(), prop.getKeyspaceMisses(), prop.keyCount(), prop.getConnectedClients());
+    }
+
     public void update(long uptime, String useMemory, long totalCommandsProcessed, long hits, long misses, Long keyCount, int connectedClients) {
         String hitRate = null;
         if (hits == 0 && misses == 0) {

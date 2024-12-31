@@ -18,12 +18,7 @@ public class RedisSlowlogItem {
     /**
      * id
      */
-    private long id;
-
-    // /**
-    //  * 编号
-    //  */
-    // private int index;
+    private long logId;
 
     /**
      * 指令
@@ -66,7 +61,7 @@ public class RedisSlowlogItem {
      */
     public static RedisSlowlogItem from(Slowlog slowlog) {
         RedisSlowlogItem item = new RedisSlowlogItem();
-        item.setId(slowlog.getId());
+        item.setLogId(slowlog.getId());
         item.setClientName(slowlog.getClientName());
         item.setExecutionTime(slowlog.getExecutionTime());
         item.setClientHost(slowlog.getClientIpPort());
@@ -74,6 +69,4 @@ public class RedisSlowlogItem {
         item.setTimeStamp(Const.DATE_FORMAT.format(slowlog.getTimeStamp() * 1000));
         return item;
     }
-
-
 }

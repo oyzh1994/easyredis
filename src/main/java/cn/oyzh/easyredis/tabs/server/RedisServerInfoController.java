@@ -37,10 +37,10 @@ public class RedisServerInfoController {
     /**
      * 执行初始化
      *
-     * @param propProperty 属性对象
+     * @param prop 属性对象
      */
-    public void init(SimpleObjectProperty<RedisInfoProp> propProperty) {
-        propProperty.addListener((observable, oldValue, newValue) -> this.initPropPane(newValue));
+    public void init(RedisInfoProp prop) {
+         this.initPropPane(prop);
     }
 
     /**

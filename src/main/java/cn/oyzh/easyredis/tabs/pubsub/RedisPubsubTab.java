@@ -2,11 +2,11 @@ package cn.oyzh.easyredis.tabs.pubsub;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
+import cn.oyzh.easyredis.fx.SubscribeSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -45,13 +45,14 @@ public class RedisPubsubTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return  "/tabs/terminal/redisTerminalTabContent.fxml";
+        return "/tabs/pubsub/redisPubsubTabContent.fxml";
     }
+
     @Override
     public void flushGraphic() {
-        SVGGlyph graphic = (SVGGlyph) this.getGraphic();
+        SubscribeSVGGlyph graphic = (SubscribeSVGGlyph) this.getGraphic();
         if (graphic == null) {
-            graphic = new SVGGlyph("/font/subscribe.svg", "13");
+            graphic = new SubscribeSVGGlyph(13);
             graphic.setCursor(Cursor.DEFAULT);
             this.setGraphic(graphic);
         }

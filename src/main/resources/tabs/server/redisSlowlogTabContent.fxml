@@ -20,12 +20,12 @@
         </FlexHBox>
         <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="7%" fx:id="id" text="ID"/>
-                <FlexTableColumn flexWidth="33%" fx:id="command" text="%base.cmd"/>
-                <FlexTableColumn flexWidth="20%" fx:id="timeStamp" text="%base.time"/>
-                <FlexTableColumn flexWidth="16%" fx:id="clientHost" text="%base.clientAddr"/>
-                <FlexTableColumn flexWidth="12%" fx:id="clientName" text="%base.clientName"/>
-                <FlexTableColumn flexWidth="12% - 20" fx:id="executionTime" text="耗时(μs)"/>
+                <FlexTableColumn flexWidth="7%" valueName="logId" text="ID"/>
+                <FlexTableColumn flexWidth="33%" valueName="command" text="%base.cmd"/>
+                <FlexTableColumn flexWidth="20%" valueName="timeStamp" text="%base.time"/>
+                <FlexTableColumn flexWidth="16%" valueName="clientHost" text="%base.clientAddr"/>
+                <FlexTableColumn flexWidth="12%" valueName="clientName" text="%base.clientName"/>
+                <FlexTableColumn flexWidth="12% - 12" valueName="executionTime" text="%redis.slowlog.tip1"/>
             </columns>
         </FlexTableView>
     </FlexVBox>

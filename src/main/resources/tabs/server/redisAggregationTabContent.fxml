@@ -15,7 +15,7 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="%base.num"/>
+                    <NumberAxis/>
                 </yAxis>
             </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
@@ -33,7 +33,7 @@
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="%base.num"/>
+                    <NumberAxis/>
                 </yAxis>
             </FlexLineChart>
             <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">

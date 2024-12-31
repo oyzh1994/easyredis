@@ -13,14 +13,11 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -42,7 +39,7 @@ public class RedisServerTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return  "/tabs/server/redisServerTabContent.fxml";
+        return "/tabs/server/redisServerTabContent.fxml";
     }
 
     @Override
@@ -191,11 +188,6 @@ public class RedisServerTab extends DynamicTab {
         private Future<?> refreshTask;
 
         /**
-         * 服务属性
-         */
-        private final SimpleObjectProperty<RedisInfoProp> propProperty = new SimpleObjectProperty<>();
-
-        /**
          * 设置redis客户端
          *
          * @param client redis客户端
@@ -211,8 +203,6 @@ public class RedisServerTab extends DynamicTab {
                 this.tabPane.removeTab(this.slowlog);
                 this.tabPane.removeTab(this.clientInfo);
             }
-            this.serverInfoController.init(this.propProperty);
-            this.aggregationController.init(this.propProperty);
             this.initRefreshTask();
         }
 
@@ -233,6 +223,7 @@ public class RedisServerTab extends DynamicTab {
                 JulLog.debug("RefreshTask closed.");
             } catch (Exception ex) {
                 ex.printStackTrace();
+                JulLog.error("closeRefreshTask error", ex);
             }
         }
 
@@ -243,9 +234,8 @@ public class RedisServerTab extends DynamicTab {
             try {
                 RedisInfoProp infoProp = new RedisInfoProp();
                 infoProp.parse(this.client.info(null));
-                this.propProperty.set(infoProp);
                 RedisServerItem serverItem;
-                if (this.propTable.getItems().isEmpty()) {
+                if (this.propTable.isItemEmpty()) {
                     serverItem = new RedisServerItem();
                     serverItem.setServerVersion(infoProp.getRedisVersion());
                     try {
@@ -254,19 +244,14 @@ public class RedisServerTab extends DynamicTab {
                     }
                     this.propTable.addItem(serverItem);
                 } else {
-                    serverItem = this.propTable.getItems().getFirst();
+                    serverItem = (RedisServerItem) this.propTable.getItem(0);
                 }
-                serverItem.update(
-                        infoProp.getUptimeInDays(),
-                        infoProp.getUsedMemoryHuman(),
-                        infoProp.getTotalCommandsProcessed(),
-                        infoProp.getKeyspaceHits(),
-                        infoProp.getKeyspaceMisses(),
-                        infoProp.keyCount(),
-                        infoProp.getConnectedClients()
-                );
+                serverItem.init(infoProp);
+                this.serverInfoController.init(infoProp);
+                this.aggregationController.init(infoProp);
             } catch (Exception ex) {
                 ex.printStackTrace();
+                JulLog.error("renderPane error", ex);
             }
         }
     }
