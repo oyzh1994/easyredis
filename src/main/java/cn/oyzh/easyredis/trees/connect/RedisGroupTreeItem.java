@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisInfoAddController;
+import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -145,7 +145,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
      * 添加连接
      */
     private void addConnect() {
-        StageAdapter fxView = StageManager.parseStage(RedisInfoAddController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisConnectAddController.class, this.window());
         fxView.setProp("group", this.value);
         fxView.display();
     }

@@ -37,7 +37,7 @@ import lombok.NonNull;
         iconUrl = RedisConst.ICON_PATH,
         value = FXConst.FXML_PATH + "connect/redisConnectUpdate.fxml"
 )
-public class RedisInfoUpdateController extends StageController {
+public class RedisConnectUpdateController extends StageController {
 
     /**
      * 只读模式

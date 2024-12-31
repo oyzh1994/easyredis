@@ -23,7 +23,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.connect.RedisInfoAddController" realWidth="750" realHeight="400">
+          fx:controller="cn.oyzh.easyredis.controller.connect.RedisConnectAddController" realWidth="750" realHeight="400">
     <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">

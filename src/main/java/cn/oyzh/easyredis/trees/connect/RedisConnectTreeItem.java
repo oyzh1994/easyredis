@@ -7,7 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
-import cn.oyzh.easyredis.controller.connect.RedisInfoUpdateController;
+import cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -380,7 +380,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(RedisInfoUpdateController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisConnectUpdateController.class, this.window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
     }

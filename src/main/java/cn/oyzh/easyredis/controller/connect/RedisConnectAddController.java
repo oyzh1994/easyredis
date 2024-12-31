@@ -40,7 +40,7 @@ import java.util.ArrayList;
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "connect/redisConnectAdd.fxml"
 )
-public class RedisInfoAddController extends StageController {
+public class RedisConnectAddController extends StageController {
 
     /**
      * 只读模式

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.connect.RedisInfoUpdateController" realWidth="750" realHeight="400">
+          fx:controller="cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController" realWidth="750" realHeight="400">
     <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
