@@ -21,13 +21,13 @@ import java.util.Objects;
  * @since 2023/6/16
  */
 @Table("t_connect")
+@Setter
 public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<RedisConnect>, Serializable {
 
     /**
      * 数据id
      */
     @Getter
-    @Setter
     @Column
     @PrimaryKey
     private String id;
@@ -36,7 +36,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 连接地址
      */
     @Getter
-    @Setter
     @Column
     private String host;
 
@@ -44,7 +43,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 名称
      */
     @Getter
-    @Setter
     @Column
     private String name;
 
@@ -52,7 +50,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 备注信息
      */
     @Getter
-    @Setter
     @Column
     private String remark;
 
@@ -60,7 +57,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 分组id
      */
     @Getter
-    @Setter
     @Column
     private String groupId;
 
@@ -68,7 +64,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 认证用户
      */
     @Getter
-    @Setter
     @Column
     private String user;
 
@@ -76,7 +71,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 认证密码
      */
     @Getter
-    @Setter
     @Column
     private String password;
 
@@ -84,7 +78,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 只读模式
      */
     @Setter
-    @Getter
     @Column
     private Boolean readonly;
 
@@ -92,27 +85,29 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 收藏的键
      */
     @Getter
-    @Setter
     private List<String> collects;
+
+    /**
+     * 过滤列表
+     */
+    @Getter
+    private List<RedisFilter> filters;
 
     /**
      * 连接超时时间
      */
-    @Setter
     @Column
     private Integer connectTimeOut;
 
     /**
      * 执行超时时间
      */
-    @Setter
     @Column
     private Integer executeTimeOut;
 
     /**
      * 是否开启ssh转发
      */
-    @Setter
     @Getter
     @Column
     private Boolean sshForward;
@@ -120,29 +115,31 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     /**
      * ssh信息
      */
-    @Setter
     @Getter
     private RedisSSHConfig sshConfig;
 
     /**
      * 复制对象
      *
-     * @param info redis信息
+     * @param redisConnect redis连接
      * @return 当前对象
      */
-    public RedisConnect copy(@NonNull RedisConnect info) {
-        this.id = info.id;
-        this.name = info.name;
-        this.host = info.host;
-        this.user = info.user;
-        this.remark = info.remark;
-        this.groupId = info.groupId;
-        this.sshConfig = info.sshConfig;
-        this.readonly = info.readonly;
-        this.collects = info.collects;
-        this.password = info.password;
-        this.sshForward = info.sshForward;
-        this.connectTimeOut = info.connectTimeOut;
+    public RedisConnect copy(@NonNull RedisConnect redisConnect) {
+        this.id = redisConnect.id;
+        this.name = redisConnect.name;
+        this.host = redisConnect.host;
+        this.user = redisConnect.user;
+        this.remark = redisConnect.remark;
+        this.groupId = redisConnect.groupId;
+        this.sshConfig = redisConnect.sshConfig;
+        this.readonly = redisConnect.readonly;
+        this.password = redisConnect.password;
+        this.sshForward = redisConnect.sshForward;
+        this.connectTimeOut = redisConnect.connectTimeOut;
+        // 过滤
+        this.filters = redisConnect.filters;
+        // 收藏
+        this.collects = redisConnect.collects;
         return this;
     }
 

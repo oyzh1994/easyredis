@@ -17,12 +17,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.easyredis.fx.RedisFilterTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
+<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.connect.RedisInfoAddController" realWidth="750" realHeight="400">
-    <FlexTabPane flexWidth="100%" flexHeight="100% - 60" fx:id="tabPane">
+    <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel  text="%base.name">
+                <InfoLabel text="%base.name">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -33,7 +38,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel  text="%base.host">
+                <InfoLabel text="%base.host">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -44,7 +49,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel  text="%base.port">
+                <InfoLabel text="%base.port">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -54,7 +59,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </PortTextField>
-                <InfoLabel  text="%base.options">
+                <InfoLabel text="%base.options">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -68,12 +73,12 @@
         </FXTab>
         <FXTab text="%base.extra">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel  text="%base.connectTimeout">
+                <InfoLabel text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexHBox flexWidth="100%">
+                <FXHBox>
                     <NumberTextField realHeight="30" flexWidth="100% - 180" min="3" max="30" fx:id="connectTimeOut"
                                      tipText="%redis.info.connectTimoutTip" value="5" require="true">
                         <HBox.margin>
@@ -82,11 +87,11 @@
                     </NumberTextField>
                     <FXLabel text="%base.second">
                         <HBox.margin>
-                            <Insets left="10" top="10"/>
+                            <Insets left="10" top="9"/>
                         </HBox.margin>
                     </FXLabel>
-                </FlexHBox>
-                <InfoLabel  text="%base.executeTimeout">
+                </FXHBox>
+                <InfoLabel text="%base.executeTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -104,7 +109,7 @@
                         </HBox.margin>
                     </FXLabel>
                 </FlexHBox>
-                <InfoLabel  text="%base.remark">
+                <InfoLabel text="%base.remark">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -119,7 +124,7 @@
         </FXTab>
         <FXTab text="%base.auth">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel  text="%base.userName">
+                <InfoLabel text="%base.userName">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -130,7 +135,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-                <InfoLabel  text="%base.password">
+                <InfoLabel text="%base.password">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -144,9 +149,9 @@
                 </ClearableTextField>
             </FlexVBox>
         </FXTab>
-        <FXTab text="%base.ssh">
+        <FXTab text="%base.ssh" fx:id="sshTab">
             <FlexVBox flexWidth="100%" flexHeight="100%">
-                <InfoLabel  text="%base.enableSSHChannel">
+                <InfoLabel text="%base.enableSSHChannel">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -156,7 +161,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </SwitchToggleSwitch>
-                <InfoLabel  text="%base.host">
+                <InfoLabel text="%base.host">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -174,7 +179,7 @@
                         </HBox.margin>
                     </PortTextField>
                 </FlexHBox>
-                <InfoLabel  text="%base.connectTimeout">
+                <InfoLabel text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -185,7 +190,7 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </NumberTextField>
-                <InfoLabel  text="%base.sshInfo">
+                <InfoLabel text="%base.sshInfo">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
                     </VBox.margin>
@@ -204,6 +209,41 @@
                         </HBox.margin>
                     </ClearableTextField>
                 </FlexHBox>
+            </FlexVBox>
+        </FXTab>
+        <FXTab text="%base.filter">
+            <FlexVBox flexWidth="100%" flexHeight="100%">
+                <FlexHBox realHeight="50" flexWidth="100%">
+                    <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="280"
+                                        tipText="%base.searchKWTip">
+                        <HBox.margin>
+                            <Insets left="30" top="14"/>
+                        </HBox.margin>
+                    </ClearableTextField>
+                    <AddSVGGlyph size="16" onMousePrimaryClicked="#addFilter">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </AddSVGGlyph>
+                    <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteFilter">
+                        <HBox.margin>
+                            <Insets left="5" top="18"/>
+                        </HBox.margin>
+                    </DeleteSVGGlyph>
+                </FlexHBox>
+                <RedisFilterTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="filterTable"
+                                      copyCellDataOnDoubleClicked="true">
+                    <columns>
+                        <FlexTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
+                        <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
+                                         sortable="false"/>
+                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                         sortable="false"/>
+                    </columns>
+                    <VBox.margin>
+                        <Insets left="30"/>
+                    </VBox.margin>
+                </RedisFilterTableView>
             </FlexVBox>
         </FXTab>
     </FlexTabPane>
