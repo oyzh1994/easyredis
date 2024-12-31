@@ -26,7 +26,6 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         resizable = false,
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "filter/redisFilterAdd.fxml"
 )

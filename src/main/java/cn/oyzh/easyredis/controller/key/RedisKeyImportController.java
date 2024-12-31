@@ -58,10 +58,10 @@ import java.util.stream.Collectors;
  * @since 2023/07/19
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyImport.fxml"
 )
+@Deprecated
 public class RedisKeyImportController extends StageController {
 
     // /**

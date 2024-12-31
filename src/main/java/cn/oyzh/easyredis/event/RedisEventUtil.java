@@ -255,22 +255,22 @@ public class RedisEventUtil {
     /**
      * 连接已新增事件
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    public static void infoAdded(RedisConnect info) {
-        RedisInfoAddedEvent event = new RedisInfoAddedEvent();
-        event.data(info);
+    public static void connectAdded(RedisConnect redisConnect) {
+        RedisConnectAddedEvent event = new RedisConnectAddedEvent();
+        event.data(redisConnect);
         EventUtil.post(event);
     }
 
     /**
      * 连接已修改事件
      *
-     * @param info Redis信息
+     * @param redisConnect Redis信息
      */
-    public static void infoUpdated(RedisConnect info) {
-        RedisInfoUpdatedEvent event = new RedisInfoUpdatedEvent();
-        event.data(info);
+    public static void connectUpdated(RedisConnect redisConnect) {
+        RedisConnectUpdatedEvent event = new RedisConnectUpdatedEvent();
+        event.data(redisConnect);
         EventUtil.post(event);
     }
 
@@ -329,11 +329,11 @@ public class RedisEventUtil {
     /**
      * 连接已删除事件
      *
-     * @param info Redis信息
+     * @param redisConnect Redis信息
      */
-    public static void infoDeleted(RedisConnect info) {
-        RedisInfoDeletedEvent event = new RedisInfoDeletedEvent();
-        event.data(info);
+    public static void connectDeleted(RedisConnect redisConnect) {
+        RedisConnectDeletedEvent event = new RedisConnectDeletedEvent();
+        event.data(redisConnect);
         EventUtil.post(event);
     }
 

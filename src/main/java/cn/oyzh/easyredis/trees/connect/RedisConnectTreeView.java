@@ -4,8 +4,8 @@ import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.event.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.RedisAddGroupEvent;
-import cn.oyzh.easyredis.event.RedisInfoAddedEvent;
-import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
+import cn.oyzh.easyredis.event.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.RedisKeyDeletedEvent;
 import cn.oyzh.event.EventSubscribe;
@@ -130,7 +130,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      * @param event 事件
      */
     @EventSubscribe
-    private void infoAdded(RedisInfoAddedEvent event) {
+    private void connectAdded(RedisConnectAddedEvent event) {
         this.getRoot().addConnect(event.data());
     }
 
@@ -140,7 +140,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      * @param event 事件
      */
     @EventSubscribe
-    private void infoUpdated(RedisInfoUpdatedEvent event) {
-        this.getRoot().infoUpdate(event.data());
+    private void connectUpdate(RedisConnectUpdatedEvent event) {
+        this.getRoot().connectUpdate(event.data());
     }
 }

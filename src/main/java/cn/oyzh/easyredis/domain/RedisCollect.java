@@ -21,18 +21,26 @@ public class RedisCollect implements Serializable {
     private String iid;
 
     /**
-     * 路径
+     * db索引
      */
     @Column
-    private String path;
+    private int dbIndex;
+
+    /**
+     * 键
+     */
+    @Column
+    private String key;
+
 
     public RedisCollect() {
 
     }
 
-    public RedisCollect(String iid, String path) {
+    public RedisCollect(String iid, int dbIndex, String key) {
         this.iid = iid;
-        this.path = path;
+        this.key = key;
+        this.dbIndex = dbIndex;
     }
 
 }

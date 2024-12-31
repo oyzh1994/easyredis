@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisKeyValue;
-import cn.oyzh.easyredis.store.RedisConnectStore;
+import cn.oyzh.easyredis.store.RedisCollectStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -141,7 +141,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      *
      * @return redis信息
      */
-    public RedisConnect info() {
+    public RedisConnect redisConnect() {
         return this.getTreeView().redisConnect();
     }
 
@@ -214,28 +214,28 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 键是否被收藏
      */
     public boolean isCollect() {
-        if (this.info() != null) {
-            return this.info().isCollect(this.dbIndex(), this.key());
-        }
-        return false;
+        // if (this.redisConnect() != null) {
+        //     return this.redisConnect().isCollect(this.dbIndex(), this.key());
+        // }
+        return RedisCollectStore.INSTANCE.exist(this.iid(), this.dbIndex(), this.key());
     }
 
     /**
      * 收藏键
      */
     public void collect() {
-        this.info().addCollect(this.dbIndex(), this.key());
-        RedisConnectStore.INSTANCE.update(this.info());
+        RedisCollectStore.INSTANCE.replace(this.iid(), this.dbIndex(), this.key());
     }
 
     /**
      * 取消收藏键
      */
     public void unCollect() {
-        if (this.info().removeCollect(this.dbIndex(), this.key())) {
-            RedisConnectStore.INSTANCE.update(this.info());
-            this.doFilter();
-        }
+        RedisCollectStore.INSTANCE.delete(this.iid(), this.dbIndex(), this.key());
+    }
+
+    private String iid() {
+        return this.redisConnect().getId();
     }
 
     @Override
@@ -251,7 +251,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
             // 移除此键
             this.remove();
             // 发送事件
-            RedisEventUtil.keyDeleted(this.info(), this.key(), this.dbIndex());
+            RedisEventUtil.keyDeleted(this.redisConnect(), this.key(), this.dbIndex());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

@@ -24,9 +24,8 @@ import javafx.stage.WindowEvent;
  * @since 2023/07/19
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
-        modality = Modality.WINDOW_MODAL,
         resizable = false,
+        modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyFilter.fxml"
 )
 public class RedisKeyFilterController extends StageController {

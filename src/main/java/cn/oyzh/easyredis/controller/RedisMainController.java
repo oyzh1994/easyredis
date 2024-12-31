@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.controller.main.ConnectController;
 import cn.oyzh.easyredis.controller.main.MessageController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisInfoUpdatedEvent;
+import cn.oyzh.easyredis.event.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
@@ -48,7 +48,7 @@ public class RedisMainController extends ParentStageController {
     /**
      * 当前激活的redis信息
      */
-    private RedisConnect info;
+    private RedisConnect redisConnect;
 
     // /**
     //  * 左侧redis树
@@ -223,8 +223,8 @@ public class RedisMainController extends ParentStageController {
      * @param event 事件
      */
     @EventSubscribe
-    private void onInfoUpdate(RedisInfoUpdatedEvent event) {
-        if (this.info == event.data()) {
+    private void onInfoUpdate(RedisConnectUpdatedEvent event) {
+        if (this.redisConnect == event.data()) {
             this.flushViewTitle(event.data());
         }
     }
@@ -232,15 +232,15 @@ public class RedisMainController extends ParentStageController {
     /**
      * 刷新窗口标题
      *
-     * @param info redis信息
+     * @param redisConnect redis信息
      */
-    private void flushViewTitle(RedisConnect info) {
-        if (info != null) {
-            this.stage.appendTitle(" (" + info.getName() + ")");
+    private void flushViewTitle(RedisConnect redisConnect) {
+        if (redisConnect != null) {
+            this.stage.appendTitle(" (" + redisConnect.getName() + ")");
         } else {
             this.stage.restoreTitle();
         }
-        this.info = info;
+        this.redisConnect = redisConnect;
     }
 
     @Override

@@ -161,8 +161,8 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     }
 
     @Override
-    public void addConnect(@NonNull RedisConnect redisInfo) {
-        this.addConnectItem(new RedisConnectTreeItem(redisInfo, this.getTreeView()));
+    public void addConnect(@NonNull RedisConnect redisConnect) {
+        this.addConnectItem(new RedisConnectTreeItem(redisConnect, this.getTreeView()));
     }
 
     @Override

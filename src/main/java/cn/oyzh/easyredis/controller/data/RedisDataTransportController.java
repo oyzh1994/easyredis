@@ -45,7 +45,6 @@ import java.util.Set;
  * @since 2024/09/05
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/redisDataTransport.fxml"
 )

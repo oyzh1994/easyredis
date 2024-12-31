@@ -31,7 +31,6 @@ import java.util.Map;
  * @since 2023/07/07
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "row/redisStreamMessageAdd.fxml"
 )

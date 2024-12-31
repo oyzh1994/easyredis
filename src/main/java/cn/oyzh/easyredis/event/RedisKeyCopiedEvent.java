@@ -25,7 +25,7 @@ public class RedisKeyCopiedEvent extends Event<TreeItem<?>> implements EventForm
         if (this.data() instanceof RedisKeyTreeItem treeItem) {
             return String.format(
                     "[%s] " + I18nHelper.copyKey() + "[%s-db%s] " + I18nHelper.targetDatabase() + ":%s",
-                    treeItem.info().getName(), treeItem.key(), treeItem.dbIndex(), this.targetDB
+                    treeItem.redisConnect().getName(), treeItem.key(), treeItem.dbIndex(), this.targetDB
             );
         }
         return null;

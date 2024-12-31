@@ -67,13 +67,13 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
                 this.sshConfigStore.deleteByIid(model.getId());
             }
 
-            // 收藏处理
-            List<String> collects = model.getCollects();
-            if (CollectionUtil.isNotEmpty(collects)) {
-                for (String collect : collects) {
-                    this.collectStore.replace(model.getId(), collect);
-                }
-            }
+            // // 收藏处理
+            // List<String> collects = model.getCollects();
+            // if (CollectionUtil.isNotEmpty(collects)) {
+            //     for (String collect : collects) {
+            //         this.collectStore.replace(model.getId(), collect);
+            //     }
+            // }
 
             // 过滤处理
             List<RedisFilter> filters = model.getFilters();

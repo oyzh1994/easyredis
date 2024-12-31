@@ -41,14 +41,14 @@ public class RedisInfoExport {
     /**
      * 从redis连接数据生成
      *
-     * @param redisInfos 连接列表
+     * @param redisConnects 连接列表
      * @return RedisInfoExport
      */
-    public static RedisInfoExport fromConnects(@NonNull List<RedisConnect> redisInfos) {
+    public static RedisInfoExport fromConnects(@NonNull List<RedisConnect> redisConnects) {
         RedisInfoExport export = new RedisInfoExport();
         Project project = Project.load();
         export.version = project.getVersion();
-        export.connects = redisInfos;
+        export.connects = redisConnects;
         export.platform = System.getProperty("os.name");
         return export;
     }

@@ -23,7 +23,7 @@ public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem> implements Eve
     public String eventFormat() {
         return String.format(
                 "[%s] " + I18nHelper.keyRenamed() + "[%s-db%s] " + I18nHelper.newName() + ":%s",
-                this.data().info().getName(), this.oldKey, this.data().dbIndex(), this.data().key()
+                this.data().redisConnect().getName(), this.oldKey, this.data().dbIndex(), this.data().key()
         );
     }
 }

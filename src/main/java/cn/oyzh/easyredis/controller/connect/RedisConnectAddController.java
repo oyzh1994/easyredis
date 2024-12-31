@@ -261,7 +261,7 @@ public class RedisConnectAddController extends StageController {
             redisConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
             if (this.connectStore.replace(redisConnect)) {
-                RedisEventUtil.infoAdded(redisConnect);
+                RedisEventUtil.connectAdded(redisConnect);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();
             } else {

@@ -9,7 +9,7 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/12/08
  */
-public class RedisInfoAddedEvent extends Event<RedisConnect> implements EventFormatter {
+public class RedisConnectAddedEvent extends Event<RedisConnect> implements EventFormatter {
 
     @Override
     public String eventFormat() {

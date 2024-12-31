@@ -158,11 +158,11 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         try {
             String text = FileUtil.readUtf8String(file);
             RedisInfoExport export = RedisInfoExport.fromJSON(text);
-            List<RedisConnect> infos = export.getConnects();
-            if (CollectionUtil.isNotEmpty(infos)) {
-                for (RedisConnect info : infos) {
-                    if (!this.infoStore.replace(info)) {
-                        MessageBox.warn(I18nHelper.connect() + " : " + info.getName() + " " + I18nHelper.importFail());
+            List<RedisConnect> redisConnects = export.getConnects();
+            if (CollectionUtil.isNotEmpty(redisConnects)) {
+                for (RedisConnect redisConnect : redisConnects) {
+                    if (!this.infoStore.replace(redisConnect)) {
+                        MessageBox.warn(I18nHelper.connect() + " : " + redisConnect.getName() + " " + I18nHelper.importFail());
                     }
                 }
                 // 重新加载节点
@@ -246,29 +246,29 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     /**
      * 连接新增事件
      *
-     * @param info 连接
+     * @param redisConnect 连接
      */
-    public void infoAdded(RedisConnect info) {
-        this.addConnect(info);
+    public void connectAdded(RedisConnect redisConnect) {
+        this.addConnect(redisConnect);
     }
 
     /**
      * 连接变更事件
      *
-     * @param info 连接
+     * @param redisConnect 连接
      */
-    public void infoUpdate(RedisConnect info) {
+    public void connectUpdate(RedisConnect redisConnect) {
         f1:
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
-                if (connectTreeItem.value() == info) {
-                    connectTreeItem.value(info);
+                if (connectTreeItem.value() == redisConnect) {
+                    connectTreeItem.value(redisConnect);
                     break;
                 }
             } else if (item instanceof RedisGroupTreeItem groupTreeItem) {
                 for (RedisConnectTreeItem connectTreeItem : groupTreeItem.getConnectItems()) {
-                    if (connectTreeItem.value() == info) {
-                        connectTreeItem.value(info);
+                    if (connectTreeItem.value() == redisConnect) {
+                        connectTreeItem.value(redisConnect);
                         break f1;
                     }
                 }
@@ -277,13 +277,13 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     }
 
     @Override
-    public void addConnect(@NonNull RedisConnect info) {
-        RedisGroupTreeItem groupItem = this.getGroupItem(info.getGroupId());
+    public void addConnect(@NonNull RedisConnect redisConnect) {
+        RedisGroupTreeItem groupItem = this.getGroupItem(redisConnect.getGroupId());
         if (groupItem == null) {
-            super.addChild(new RedisConnectTreeItem(info, this.getTreeView()));
+            super.addChild(new RedisConnectTreeItem(redisConnect, this.getTreeView()));
             this.expend();
         } else {
-            groupItem.addConnect(info);
+            groupItem.addConnect(redisConnect);
         }
     }
 

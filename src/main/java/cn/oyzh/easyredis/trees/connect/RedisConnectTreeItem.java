@@ -412,12 +412,12 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 复制连接
      */
     private void repeatConnect() {
-        RedisConnect redisInfo = new RedisConnect();
-        redisInfo.copy(this.value);
-        redisInfo.setName(this.value.getName() + "-" + I18nHelper.repeat());
-        redisInfo.setCollects(Collections.emptyList());
-        if (this.connectStore.replace(redisInfo)) {
-            this.connectManager().addConnect(redisInfo);
+        RedisConnect redisConnect = new RedisConnect();
+        redisConnect.copy(this.value);
+        redisConnect.setName(this.value.getName() + "-" + I18nHelper.repeat());
+        redisConnect.setCollects(Collections.emptyList());
+        if (this.connectStore.replace(redisConnect)) {
+            this.connectManager().addConnect(redisConnect);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -428,7 +428,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         if (MessageBox.confirm(I18nHelper.delete() + " [" + this.value().getName() + "]")) {
             this.closeConnect(false);
             if (this.connectManager().delConnectItem(this)) {
-                RedisEventUtil.infoDeleted(this.value);
+                RedisEventUtil.connectDeleted(this.value);
             } else {
                 MessageBox.warn(I18nHelper.operationFail());
             }

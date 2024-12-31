@@ -21,19 +21,19 @@ public class RedisConnectUtil {
     /**
      * 测试连接
      *
-     * @param view 页面
-     * @param info redis信息
+     * @param view         页面
+     * @param redisConnect redis信息
      */
-    public static void testConnect(StageAdapter view, RedisConnect info) {
+    public static void testConnect(StageAdapter view, RedisConnect redisConnect) {
         ThreadUtil.startVirtual(() -> {
             try {
                 view.disable();
                 view.waitCursor();
                 view.appendTitle("===" + I18nHelper.connectTesting() + "===");
-                if (info.getName() == null) {
-                    info.setName(I18nHelper.testConnection());
+                if (redisConnect.getName() == null) {
+                    redisConnect.setName(I18nHelper.testConnection());
                 }
-                RedisClient client = new RedisClient(info);
+                RedisClient client = new RedisClient(redisConnect);
                 // 开始连接
                 client.start(3_000);
                 view.enable();
@@ -136,17 +136,17 @@ public class RedisConnectUtil {
     /**
      * 复制连接
      *
-     * @param connectInfo 连接信息
-     * @param info        redis对象
+     * @param connectInfo  连接信息
+     * @param redisConnect redis对象
      */
-    public static void copyConnect(RedisConnectInfo connectInfo, RedisConnect info) {
-        if (connectInfo != null && info != null) {
-            info.setUser(connectInfo.getUser());
-            info.setReadonly(connectInfo.isReadonly());
-            info.setPassword(connectInfo.getPassword());
-            info.setConnectTimeOut(connectInfo.getTimeout());
-            info.setExecuteTimeOut(connectInfo.getTimeout());
-            info.setHost(connectInfo.getHost() + ":" + connectInfo.getPort());
+    public static void copyConnect(RedisConnectInfo connectInfo, RedisConnect redisConnect) {
+        if (connectInfo != null && redisConnect != null) {
+            redisConnect.setUser(connectInfo.getUser());
+            redisConnect.setReadonly(connectInfo.isReadonly());
+            redisConnect.setPassword(connectInfo.getPassword());
+            redisConnect.setConnectTimeOut(connectInfo.getTimeout());
+            redisConnect.setExecuteTimeOut(connectInfo.getTimeout());
+            redisConnect.setHost(connectInfo.getHost() + ":" + connectInfo.getPort());
         }
     }
 }

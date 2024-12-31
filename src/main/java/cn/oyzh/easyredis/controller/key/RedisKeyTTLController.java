@@ -28,7 +28,6 @@ import java.sql.Date;
  * @since 2023/07/09
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyTTL.fxml"
 )
@@ -78,7 +77,7 @@ public class RedisKeyTTLController extends StageController {
             } else {
                 this.client.expire(this.treeItem.dbIndex(), this.treeItem.key(), ttlValue.longValue(), null);
             }
-            RedisEventUtil.keyTTLUpdated(this.treeItem.info(), ttlValue.longValue(), this.treeItem.key(), this.treeItem.dbIndex());
+            RedisEventUtil.keyTTLUpdated(this.treeItem.redisConnect(), ttlValue.longValue(), this.treeItem.key(), this.treeItem.dbIndex());
             MessageBox.okToast(I18nHelper.operationSuccess());
             this.closeWindow();
         } catch (Exception ex) {

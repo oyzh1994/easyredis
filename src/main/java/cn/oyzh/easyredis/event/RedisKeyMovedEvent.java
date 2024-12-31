@@ -25,7 +25,7 @@ public class RedisKeyMovedEvent extends Event<RedisKeyTreeItem> implements Event
     }
 
     public RedisConnect redisConnect() {
-        return this.data().info();
+        return this.data().redisConnect();
     }
 
     @Override

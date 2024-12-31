@@ -23,7 +23,6 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         resizable = false,
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "about.fxml"
 )

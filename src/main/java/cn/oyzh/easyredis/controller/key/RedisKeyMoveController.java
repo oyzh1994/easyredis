@@ -27,7 +27,6 @@ import javafx.stage.WindowEvent;
  * @since 2023/07/08
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyMove.fxml"
 )

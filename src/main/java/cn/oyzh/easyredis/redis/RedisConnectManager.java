@@ -19,19 +19,19 @@ public interface RedisConnectManager {
     /**
      * 添加连接
      *
-     * @param redisInfo 连接信息
+     * @param redisConnect 连接信息
      */
-    void addConnect(@NonNull RedisConnect redisInfo);
+    void addConnect(@NonNull RedisConnect redisConnect);
 
     /**
      * 删除多个连接
      *
-     * @param redisInfos 连接列表
+     * @param redisConnects 连接列表
      */
-    default void addConnects(List<RedisConnect> redisInfos) {
-        if (CollectionUtil.isNotEmpty(redisInfos)) {
-            for (RedisConnect redisInfo : redisInfos) {
-                this.addConnect(redisInfo);
+    default void addConnects(List<RedisConnect> redisConnects) {
+        if (CollectionUtil.isNotEmpty(redisConnects)) {
+            for (RedisConnect redisConnect : redisConnects) {
+                this.addConnect(redisConnect);
             }
         }
     }

@@ -30,17 +30,17 @@ public class RedisCollectStore extends JdbcStandardStore<RedisCollect> {
         param.setData(iid);
         List<RedisCollect> collects = super.selectList(param);
         if (CollectionUtil.isNotEmpty(collects)) {
-            return collects.parallelStream().map(RedisCollect::getPath).collect(Collectors.toList());
+            return collects.parallelStream().map(RedisCollect::getKey).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
 
-    public boolean replace(String iid, String path) {
-        return this.replace(new RedisCollect(iid, path));
+    public boolean replace(String iid, int dbIndex, String key) {
+        return this.replace(new RedisCollect(iid, dbIndex, key));
     }
 
     public boolean replace(RedisCollect model) {
-        if (model != null && !this.exist(model.getIid(), model.getPath())) {
+        if (model != null && !this.exist(model.getIid(), model.getDbIndex(), model.getKey())) {
             return this.insert(model);
         }
         return false;
@@ -55,21 +55,23 @@ public class RedisCollectStore extends JdbcStandardStore<RedisCollect> {
         return false;
     }
 
-    public boolean delete(String iid, String path) {
-        if (StringUtil.isEmpty(iid) && StringUtil.isEmpty(path)) {
+    public boolean delete(String iid, int dbIndex, String key) {
+        if (StringUtil.isEmpty(iid) && StringUtil.isEmpty(key)) {
             Map<String, Object> params = new HashMap<>();
             params.put("iid", iid);
-            params.put("path", path);
+            params.put("key", key);
+            params.put("dbIndex", dbIndex);
             return this.delete(params);
         }
         return false;
     }
 
-    public boolean exist(String iid, String path) {
-        if (StringUtil.isNotBlank(iid) && StringUtil.isNotBlank(path)) {
+    public boolean exist(String iid, int dbIndex, String key) {
+        if (StringUtil.isNotBlank(iid) && StringUtil.isNotBlank(key)) {
             Map<String, Object> params = new HashMap<>();
             params.put("iid", iid);
-            params.put("path", path);
+            params.put("key", key);
+            params.put("dbIndex", dbIndex);
             return super.exist(params);
         }
         return false;

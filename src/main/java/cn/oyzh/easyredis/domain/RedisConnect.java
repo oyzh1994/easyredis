@@ -20,8 +20,8 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/16
  */
-@Table("t_connect")
 @Setter
+@Table("t_connect")
 public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<RedisConnect>, Serializable {
 
     /**
@@ -144,57 +144,57 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         return this;
     }
 
-    /**
-     * 是否被收藏
-     *
-     * @param dbIndex 数据库索引
-     * @param key     键
-     * @return 结果
-     */
-    public boolean isCollect(int dbIndex, @NonNull String key) {
-        return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
-    }
+    // /**
+    //  * 是否被收藏
+    //  *
+    //  * @param dbIndex 数据库索引
+    //  * @param key     键
+    //  * @return 结果
+    //  */
+    // public boolean isCollect(int dbIndex, @NonNull String key) {
+    //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
+    // }
 
-    /**
-     * 添加收藏
-     *
-     * @param dbIndex 数据库索引
-     * @param key     键
-     */
-    public void addCollect(int dbIndex, @NonNull String key) {
-        if (this.collects == null) {
-            this.collects = new ArrayList<>();
-        }
-        String name = this.getCollectName(dbIndex, key);
-        if (!this.collects.contains(name)) {
-            this.collects.add(name);
-        }
-    }
+    // /**
+    //  * 添加收藏
+    //  *
+    //  * @param dbIndex 数据库索引
+    //  * @param key     键
+    //  */
+    // public void addCollect(int dbIndex, @NonNull String key) {
+    //     if (this.collects == null) {
+    //         this.collects = new ArrayList<>();
+    //     }
+    //     String name = this.getCollectName(dbIndex, key);
+    //     if (!this.collects.contains(name)) {
+    //         this.collects.add(name);
+    //     }
+    // }
+    //
+    // /**
+    //  * 取消收藏
+    //  *
+    //  * @param dbIndex 数据库索引
+    //  * @param key     键
+    //  * @return 结果
+    //  */
+    // public boolean removeCollect(int dbIndex, @NonNull String key) {
+    //     if (this.collects != null) {
+    //         return this.collects.remove(this.getCollectName(dbIndex, key));
+    //     }
+    //     return false;
+    // }
 
-    /**
-     * 取消收藏
-     *
-     * @param dbIndex 数据库索引
-     * @param key     键
-     * @return 结果
-     */
-    public boolean removeCollect(int dbIndex, @NonNull String key) {
-        if (this.collects != null) {
-            return this.collects.remove(this.getCollectName(dbIndex, key));
-        }
-        return false;
-    }
-
-    /**
-     * 获取收藏名称
-     *
-     * @param dbIndex db索引
-     * @param key     键名称
-     * @return 收藏名称
-     */
-    private String getCollectName(int dbIndex, String key) {
-        return dbIndex + "_@coll@_" + key;
-    }
+    // /**
+    //  * 获取收藏名称
+    //  *
+    //  * @param dbIndex db索引
+    //  * @param key     键名称
+    //  * @return 收藏名称
+    //  */
+    // private String getCollectName(int dbIndex, String key) {
+    //     return dbIndex + "_@coll@_" + key;
+    // }
 
     /**
      * 是否只读模式

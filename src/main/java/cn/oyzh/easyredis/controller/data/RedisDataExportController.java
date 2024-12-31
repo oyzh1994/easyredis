@@ -50,7 +50,6 @@ import java.util.Set;
  * @since 2024/11/26
  */
 @StageAttribute(
-        iconUrl = RedisConst.ICON_PATH,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/redisDataExport.fxml"
 )
@@ -90,12 +89,6 @@ public class RedisDataExportController extends StageController {
      */
     @FXML
     private FXToggleGroup format;
-
-    /**
-     * 前缀
-     */
-    @FXML
-    private FXToggleGroup prefix;
 
     /**
      * 文件名
