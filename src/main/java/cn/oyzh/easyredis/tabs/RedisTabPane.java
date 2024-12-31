@@ -14,7 +14,6 @@ import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
-import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.keys.RedisKeyTab;
 import cn.oyzh.easyredis.tabs.keys.RedisKeysTab;
@@ -456,29 +455,29 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         this.removeTab(closeTabs);
     }
 
-    /**
-     * 获取过滤tab
-     *
-     * @return 过滤tab
-     */
-    public RedisFilterTab getFilterTab() {
-        return super.getTab(RedisFilterTab.class);
-    }
-
-    /**
-     * 初始化过滤tab
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    public void filterMain(RedisFilterMainEvent event) {
-        RedisFilterTab tab = this.getFilterTab();
-        if (tab == null) {
-            tab = new RedisFilterTab();
-            super.addTab(tab);
-        }
-        this.select(tab);
-    }
+    // /**
+    //  * 获取过滤tab
+    //  *
+    //  * @return 过滤tab
+    //  */
+    // public RedisFilterTab getFilterTab() {
+    //     return super.getTab(RedisFilterTab.class);
+    // }
+    //
+    // /**
+    //  * 初始化过滤tab
+    //  *
+    //  * @param event 事件
+    //  */
+    // @EventSubscribe
+    // public void filterMain(RedisFilterMainEvent event) {
+    //     RedisFilterTab tab = this.getFilterTab();
+    //     if (tab == null) {
+    //         tab = new RedisFilterTab();
+    //         super.addTab(tab);
+    //     }
+    //     this.select(tab);
+    // }
 
     /**
      * 更新日志事件
