@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.other;
+package cn.oyzh.easyredis.terminal.key;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
@@ -9,10 +9,10 @@ import redis.clients.jedis.Protocol;
  * @since 2023/7/21
  */
 
-public class RedisHscanTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
+public class RedisScanTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
     protected Protocol.Command getCommandType() {
-        return Protocol.Command.HSCAN;
+        return Protocol.Command.SCAN;
     }
 }
