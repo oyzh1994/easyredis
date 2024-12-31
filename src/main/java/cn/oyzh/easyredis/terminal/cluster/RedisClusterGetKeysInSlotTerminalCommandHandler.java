@@ -5,10 +5,10 @@ package cn.oyzh.easyredis.terminal.cluster;
  * @since 2023/7/31
  */
 
-public class RedisClusterDelslotsTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
+public class RedisClusterGetKeysInSlotTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
     public String commandSubName() {
-        return "DELSLOTS";
+        return "GETKEYSINSLOT";
     }
 }

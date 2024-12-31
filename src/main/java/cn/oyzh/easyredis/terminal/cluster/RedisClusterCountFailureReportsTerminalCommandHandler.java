@@ -5,7 +5,7 @@ package cn.oyzh.easyredis.terminal.cluster;
  * @since 2023/7/31
  */
 
-public class RedisClusterCountfailurereportsTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
+public class RedisClusterCountFailureReportsTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
     public String commandSubName() {

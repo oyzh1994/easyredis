@@ -30,11 +30,6 @@
         "available": "4.0.0"
     },
     {
-        "args": "SLOWLOG",
-        "command": "SLOWLOG",
-        "available": "2.2.12"
-    },
-    {
         "args": "OBJECT",
         "command": "OBJECT",
         "available": "2.2.3"
@@ -58,6 +53,11 @@
         "args": "CONFIG",
         "command": "CONFIG",
         "available": "2.0.0"
+    },
+    {
+        "args": "SLOWLOG",
+        "command": "SLOWLOG",
+        "available": "2.2.12"
     },
     {
         "args": "XGROUP",

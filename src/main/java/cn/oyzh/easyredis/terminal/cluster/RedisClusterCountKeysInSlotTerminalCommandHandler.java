@@ -5,10 +5,10 @@ package cn.oyzh.easyredis.terminal.cluster;
  * @since 2023/7/31
  */
 
-public class RedisClusterBumpepochTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
+public class RedisClusterCountKeysInSlotTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
     public String commandSubName() {
-        return "BUMPEPOCH";
+        return "COUNTKEYSINSLOT";
     }
 }

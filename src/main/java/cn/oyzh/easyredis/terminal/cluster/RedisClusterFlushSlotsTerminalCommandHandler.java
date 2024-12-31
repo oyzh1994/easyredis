@@ -5,10 +5,10 @@ package cn.oyzh.easyredis.terminal.cluster;
  * @since 2023/7/31
  */
 
-public class RedisClusterSetconfigepochTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
+public class RedisClusterFlushSlotsTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
     public String commandSubName() {
-        return "SET-CONFIG-EPOCH";
+        return "FLUSHSLOTS";
     }
 }

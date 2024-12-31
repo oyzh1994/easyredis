@@ -111,7 +111,7 @@ public class RedisCmdSpider   {
     private void getDetail(String cmdName, RedisCommand redisCommand) throws Exception {
         String name = cmdName.replaceAll(" ", "-");
         Document document = Jsoup.connect(this.detailUrl + name + "/").get();
-        System.out.println(document.html());
+        // System.out.println(document.html());
         Elements args = document.getElementsByClass("command-syntax");
         String argsText = args.text();
         redisCommand.setArgs(argsText);
