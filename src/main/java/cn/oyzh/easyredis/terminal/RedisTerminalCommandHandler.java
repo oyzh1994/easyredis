@@ -47,12 +47,12 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
 
     @Override
     public String commandArg() {
-        return RedisCommandUtil.getCommandArgs(this.commandName());
+        return RedisCommandUtil.getCommandArgs(this.commandFullName());
     }
 
     @Override
     public String commandDesc() {
-        return RedisCommandUtil.getCommandDesc(this.commandName());
+        return RedisCommandUtil.getCommandDesc(this.commandFullName());
     }
 
     @Override

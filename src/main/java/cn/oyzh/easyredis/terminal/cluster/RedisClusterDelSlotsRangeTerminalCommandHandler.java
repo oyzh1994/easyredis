@@ -8,16 +8,6 @@ package cn.oyzh.easyredis.terminal.cluster;
 public class RedisClusterDelSlotsRangeTerminalCommandHandler extends RedisClusterTerminalCommandHandler {
 
     @Override
-    public String commandArg() {
-        return "start-slot end-slot [start-slot end-slot ...]";
-    }
-
-    @Override
-    public String commandDesc() {
-        return "Sets hash slot ranges as unbound for a node.";
-    }
-
-    @Override
     public String commandSubName() {
         return "DELSLOTSRANGE";
     }

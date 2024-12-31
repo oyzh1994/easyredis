@@ -18,11 +18,6 @@ public class RedisZrandmemberCommandHandler extends RedisKeyTerminalCommandHandl
     }
 
     @Override
-    public String commandArg() {
-        return "key [count]";
-    }
-
-    @Override
     protected RedisKeyType getKeyType() {
         return RedisKeyType.ZSET;
     }

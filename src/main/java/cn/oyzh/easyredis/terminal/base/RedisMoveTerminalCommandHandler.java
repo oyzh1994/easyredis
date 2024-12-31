@@ -11,11 +11,6 @@ import redis.clients.jedis.Protocol;
 public class RedisMoveTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    public String commandArg() {
-        return "key db";
-    }
-
-    @Override
     protected Protocol.Command getCommandType() {
         return Protocol.Command.MOVE;
     }
