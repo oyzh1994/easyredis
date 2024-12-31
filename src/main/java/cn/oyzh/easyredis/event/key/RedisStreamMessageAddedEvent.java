@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
 import cn.oyzh.event.Event;

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
-import cn.oyzh.easyredis.event.RedisZSetCoordinateAddedEvent;
+import cn.oyzh.easyredis.event.key.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;

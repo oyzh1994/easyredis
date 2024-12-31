@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.event.Event;
@@ -15,19 +15,21 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = true)
-public class RedisZSetMemberAddedEvent extends Event<RedisZSetKeyTreeItem> implements EventFormatter {
+public class RedisZSetCoordinateAddedEvent extends Event<RedisZSetKeyTreeItem> implements EventFormatter {
 
     private String key;
 
-    private Double score;
+    private Double longitude;
+
+    private Double latitude;
 
     private String member;
 
     @Override
     public String eventFormat() {
         return String.format(
-                "[%s] " + I18nHelper.key() + ":%s(db%s) " + I18nHelper.memberAdded() + ":%s " + I18nHelper.score() + ":%s",
-                this.data().infoName(), this.key, this.data().dbIndex(), this.member, this.score
+                "[%s] " + I18nHelper.key() + ":%s(db%s) " + I18nHelper.coordinatesAdded() + ":%s " + I18nHelper.longitude() + ":%s " + I18nHelper.latitude() + ":%s",
+                this.data().infoName(), this.key, this.data().dbIndex(), this.member, this.longitude, this.latitude
         );
     }
 }

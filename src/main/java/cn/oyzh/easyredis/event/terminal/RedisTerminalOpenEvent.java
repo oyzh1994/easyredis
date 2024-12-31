@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.event;
+package cn.oyzh.easyredis.event.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.event.Event;
