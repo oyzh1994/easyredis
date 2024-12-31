@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalManager;
@@ -36,7 +37,7 @@ import java.util.Optional;
 //         }
 // )
 // @EnableSpringUtil
-public class RedisCmdSpider   {
+public class RedisCmdSpider {
 
     private final String descUrl = "https://redis.io/docs/latest/commands/";
 
@@ -47,7 +48,7 @@ public class RedisCmdSpider   {
     private void fetch() throws IOException {
         System.out.println("fetch start---------->");
         RedisTerminalManager.registerHandlers();
-        Collection<TerminalCommandHandler<?,?>> list = TerminalManager.listHandler();
+        Collection<TerminalCommandHandler<?, ?>> list = TerminalManager.listHandler();
         List<RedisCommand> list1 = new ArrayList<>();
         Document document = Jsoup.connect(descUrl).get();
         Elements articles = document.getElementsByTag("article");
@@ -55,10 +56,10 @@ public class RedisCmdSpider   {
         int sum = 0;
         for (TerminalCommandHandler value : list) {
             try {
-                String cmdName = value.commandName();
-                if (StrUtil.isNotBlank(value.commandSubName())) {
-                    cmdName = cmdName + " " + value.commandSubName();
-                }
+                String cmdName = value.commandFullName();
+                // if (StrUtil.isNotBlank(value.commandSubName())) {
+                //     cmdName = cmdName + " " + value.commandSubName();
+                // }
                 if (!this.isNeedFetch(cmdName)) {
                     System.out.println("command:" + cmdName + " skip.");
                     continue;
@@ -100,11 +101,17 @@ public class RedisCmdSpider   {
     }
 
     private boolean isNeedFetch(String cmdName) {
+        if (StringUtil.equalsAnyIgnoreCase(cmdName, "clear", "help", "connect")) {
+            return false;
+        }
         RedisCommand command = RedisCommandUtil.getCommand(cmdName);
-        if (command == null || StrUtil.isBlank(command.getDesc()) || StrUtil.isBlank(command.getAvailable())
-                || StrUtil.isBlank(command.getArgs())) {
+        if (command == null || StrUtil.isBlank(command.getAvailable()) || StrUtil.isBlank(command.getArgs())) {
             return true;
         }
+        // if (command == null || StrUtil.isBlank(command.getDesc()) || StrUtil.isBlank(command.getAvailable())
+        //         || StrUtil.isBlank(command.getArgs())) {
+        //     return true;
+        // }
         return false;
     }
 

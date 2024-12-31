@@ -108,7 +108,6 @@ import cn.oyzh.easyredis.terminal.other.RedisResetTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisRoleTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisSaveTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.key.RedisScanTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.RedisSentinelTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisSlaveofTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.set.RedisSscanTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisTimeTerminalCommandHandler;
@@ -576,7 +575,7 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisResetTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisRoleTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSaveTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisSentinelTerminalCommandHandler.class);
+        // TerminalManager.registerHandler(RedisSentinelTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSlaveofTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisTimeTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisTouchTerminalCommandHandler.class);
