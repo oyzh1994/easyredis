@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectDeletedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
+import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
@@ -21,6 +22,7 @@ import cn.oyzh.easyredis.event.key.RedisKeyRenamedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeysMovedEvent;
 import cn.oyzh.easyredis.event.key.RedisListRowAddedEvent;
+import cn.oyzh.easyredis.event.key.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.key.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetCoordinateAddedEvent;
@@ -28,6 +30,7 @@ import cn.oyzh.easyredis.event.key.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetReverseViewEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
+import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
@@ -211,12 +214,12 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 树节点过滤事件
-     */
-    public static void treeChildFilter() {
-        EventUtil.post(new TreeChildFilterEvent());
-    }
+    // /**
+    //  * 树节点过滤事件
+    //  */
+    // public static void treeChildFilter() {
+    //     EventUtil.post(new TreeChildFilterEvent());
+    // }
 
 //    /**
 //     * 树节点变化事件
@@ -495,14 +498,14 @@ public class RedisEventUtil {
         EventUtil.post(new ChangelogEvent());
     }
 
-    /**
-     * 树节点选中事件
-     */
-    public static void treeChildSelected(RedisKeyTreeItem item) {
-        TreeChildSelectedEvent event = new TreeChildSelectedEvent();
-        event.data(item);
-        EventUtil.post(event);
-    }
+    // /**
+    //  * 树节点选中事件
+    //  */
+    // public static void treeChildSelected(RedisKeyTreeItem item) {
+    //     TreeChildSelectedEvent event = new TreeChildSelectedEvent();
+    //     event.data(item);
+    //     EventUtil.post(event);
+    // }
 
     /**
      * zset反转视图事件

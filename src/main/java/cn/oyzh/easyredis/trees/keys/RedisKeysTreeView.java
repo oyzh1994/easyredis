@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.event.key.RedisKeyFilteredEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyFlushedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyMovedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeysMovedEvent;
-import cn.oyzh.easyredis.event.TreeChildFilterEvent;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventSubscribe;
@@ -174,13 +173,13 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
         }
     }
 
-    /**
-     * 树节点过滤
-     */
-    @EventSubscribe
-    private void treeChildFilter(TreeChildFilterEvent event) {
-        this.filter();
-    }
+    // /**
+    //  * 树节点过滤
+    //  */
+    // @EventSubscribe
+    // private void treeChildFilter(TreeChildFilterEvent event) {
+    //     this.filter();
+    // }
 
     /**
      * 加载节点

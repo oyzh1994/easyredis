@@ -5,7 +5,7 @@ import cn.oyzh.easyredis.controller.main.MessageController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
-import cn.oyzh.easyredis.event.RedisTreeItemChangedEvent;
+import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
