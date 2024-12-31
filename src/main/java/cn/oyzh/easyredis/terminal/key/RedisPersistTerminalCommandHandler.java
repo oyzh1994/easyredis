@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.terminal.other;
+package cn.oyzh.easyredis.terminal.key;
 
 import cn.oyzh.easyredis.terminal.RedisKeyTerminalCommandHandler;
 import cn.oyzh.fx.terminal.command.TerminalCommand;

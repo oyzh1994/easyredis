@@ -94,13 +94,13 @@ import cn.oyzh.easyredis.terminal.list.RedisRpushxTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisAskingTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisBgrewriteaofTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisBgsaveTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.RedisCopyTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.key.RedisCopyTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisFailoverTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHscanTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisLastsaveTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisLolwutTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisObjectTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.RedisPersistTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.key.RedisPersistTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisReadonlyTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisReadwriteTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisReplicaofTerminalCommandHandler;
@@ -428,11 +428,13 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisPfmergeTerminalCommandHandler.class);
 
         // key命令
+        TerminalManager.registerHandler(RedisCopyTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisDbSizeTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisExpireatTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisExpireTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisExpiretimeTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisGetexTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisPersistTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisPexpireatTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisPexpireTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisPexpiretimeTerminalCommandHandler.class);
@@ -571,12 +573,10 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisAskingTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisBgrewriteaofTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisBgsaveTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCopyTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisFailoverTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisLastsaveTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisLolwutTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisObjectTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisPersistTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisReadonlyTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisReadwriteTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisReplicaofTerminalCommandHandler.class);

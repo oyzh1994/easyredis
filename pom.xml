@@ -14,7 +14,7 @@
     <description>redis的可视化操作、导入导出、传输、命令行功能</description>
 
     <properties>
-        <jedis.version>5.1.0</jedis.version>
+        <jedis.version>5.2.0</jedis.version>
     </properties>
 
     <dependencies>
