@@ -13,11 +13,6 @@
 <?import javafx.scene.layout.HBox?>
 <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.HeaderController2" realHeight="30">
-    <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12">
-        <HBox.margin>
-            <Insets left="10" top="8"/>
-        </HBox.margin>
-    </FilterSVGLabel>
     <TransportSVGLabel onMousePrimaryClicked="#transport" size="12">
         <HBox.margin>
             <Insets left="10" top="8"/>

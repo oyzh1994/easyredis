@@ -46,14 +46,6 @@ public class HeaderController2 extends StageController {
     }
 
     /**
-     * 过滤
-     */
-    @FXML
-    private void filter() {
-        RedisEventUtil.filterMain();
-    }
-
-    /**
      * 退出
      */
     @FXML
