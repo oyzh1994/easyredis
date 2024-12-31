@@ -11,6 +11,9 @@ import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
 import cn.oyzh.easyredis.event.connection.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
+import cn.oyzh.easyredis.event.group.RedisGroupAddedEvent;
+import cn.oyzh.easyredis.event.group.RedisGroupDeletedEvent;
+import cn.oyzh.easyredis.event.group.RedisGroupRenamedEvent;
 import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
@@ -548,5 +551,33 @@ public class RedisEventUtil {
      */
     public static void layout2() {
         EventUtil.post(new Layout2Event());
+    }
+
+    /**
+     * 分组已添加
+     */
+    public static void groupAdded(String group) {
+        RedisGroupAddedEvent event = new RedisGroupAddedEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 分组已删除
+     */
+    public static void groupDeleted(String group) {
+        RedisGroupDeletedEvent event = new RedisGroupDeletedEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 分组已更名
+     */
+    public static void groupRenamed(String group, String oldName) {
+        RedisGroupRenamedEvent event = new RedisGroupRenamedEvent();
+        event.data(group);
+        event.oldName(oldName);
+        EventUtil.post(event);
     }
 }

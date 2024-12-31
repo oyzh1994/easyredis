@@ -8,6 +8,8 @@ import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
+import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.fx.RedisSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
@@ -42,14 +44,14 @@ import java.util.Optional;
 public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
-     * redis信息储存
-     */
-    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
-
-    /**
      * redis分组储存
      */
     private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
+
+    /**
+     * redis信息储存
+     */
+    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
     public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
         super(treeView);
@@ -84,7 +86,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      * 导出连接
      */
     public void exportConnect() {
-        List<RedisConnect> infos = this.infoStore.load();
+        List<RedisConnect> infos = this.connectStore.load();
         if (infos.isEmpty()) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
@@ -158,11 +160,11 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         try {
             String text = FileUtil.readUtf8String(file);
             RedisInfoExport export = RedisInfoExport.fromJSON(text);
-            List<RedisConnect> redisConnects = export.getConnects();
-            if (CollectionUtil.isNotEmpty(redisConnects)) {
-                for (RedisConnect redisConnect : redisConnects) {
-                    if (!this.infoStore.replace(redisConnect)) {
-                        MessageBox.warn(I18nHelper.connect() + " : " + redisConnect.getName() + " " + I18nHelper.importFail());
+            List<RedisConnect> connects = export.getConnects();
+            if (CollectionUtil.isNotEmpty(connects)) {
+                for (RedisConnect connect : connects) {
+                    if (!this.connectStore.replace(connect)) {
+                        MessageBox.warn(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.importFail());
                     }
                 }
                 // 重新加载节点
@@ -188,27 +190,25 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
      */
     public void addGroup() {
         String groupName = MessageBox.prompt(I18nHelper.contentTip1());
-
         // 名称为null，则忽略
         if (groupName == null) {
             return;
         }
-
         // 不能为空
         if (StringUtil.isBlank(groupName)) {
             MessageBox.warn(I18nHelper.nameCanNotEmpty());
             return;
         }
-
-        RedisGroup group = new RedisGroup();
-        group.setName(groupName);
-        if (this.groupStore.exist(group)) {
+        // 检查是否存在
+        if (this.groupStore.exist(groupName)) {
             MessageBox.warn(I18nHelper.contentAlreadyExists());
             return;
         }
-
+        RedisGroup group = new RedisGroup();
+        group.setName(groupName);
         if (this.groupStore.replace(group)) {
             this.addChild(new RedisGroupTreeItem(group, this.getTreeView()));
+            RedisEventUtil.groupAdded(groupName);
         } else {
             MessageBox.warn(I18nHelper.operationFail());
         }
@@ -292,7 +292,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         if (!this.containsChild(item)) {
             if (item.value().getGroupId() != null) {
                 item.value().setGroupId(null);
-                this.infoStore.update(item.value());
+                this.connectStore.update(item.value());
             }
             super.addChild(item);
             this.expend();
@@ -310,7 +310,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     @Override
     public boolean delConnectItem(@NonNull RedisConnectTreeItem item) {
         // 删除连接
-        if (this.infoStore.delete(item.value())) {
+        if (this.connectStore.delete(item.value())) {
             this.removeChild(item);
             return true;
         }
@@ -333,7 +333,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     @Override
     public List<RedisConnectTreeItem> getConnectedItems() {
         List<RedisConnectTreeItem> items = new ArrayList<>(this.getChildrenSize());
-        for (Object item : this.unfilteredChildren()) {
+        for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisConnectTreeItem connectTreeItem) {
                 if (connectTreeItem.isConnected()) {
                     items.add(connectTreeItem);
@@ -367,25 +367,26 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
     public void loadChild() {
         // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
+        // List<RedisGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
-            List<RedisGroupTreeItem> groupItems = this.getGroupItems();
             List<TreeItem<?>> list = new ArrayList<>();
-            f1:
+            // f1:
             for (RedisGroup group : groups) {
-                for (RedisGroupTreeItem groupItem : groupItems) {
-                    if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
-                        continue f1;
-                    }
-                }
+                // for (RedisGroupTreeItem groupItem : groupItems) {
+                //     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
+                //         continue f1;
+                //     }
+                // }
                 list.add(new RedisGroupTreeItem(group, this.getTreeView()));
             }
             this.addChild(list);
         }
         // 初始化连接
-        List<RedisConnect> connects = this.infoStore.load();
+        List<RedisConnect> connects = this.connectStore.load();
+        List<RedisGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
             List<RedisConnectTreeItem> connectItems = this.getConnectItems();
-            List<RedisConnect> list = new ArrayList<>();
+            // List<RedisConnect> list = new ArrayList<>();
             f1:
             for (RedisConnect connect : connects) {
                 for (RedisConnectTreeItem connectItem : connectItems) {
@@ -393,14 +394,20 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
                         continue f1;
                     }
                 }
-                list.add(connect);
+                Optional<RedisGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
+                if (optional.isPresent()) {
+                    optional.get().addConnect(connect);
+                } else {
+                    this.addConnect(connect);
+                    // list.add(connect);
+                }
             }
-            this.addConnects(list);
+            // this.addConnects(list);
         }
     }
 
     /**
-     * redis 根节点值
+     * redis树节点值
      *
      * @author oyzh
      * @since 2023/11/21
@@ -415,7 +422,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         @Override
         public SVGGlyph graphic() {
             if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/redis.svg", 10);
+                this.graphic = new RedisSVGGlyph(12);
             }
             return super.graphic();
         }

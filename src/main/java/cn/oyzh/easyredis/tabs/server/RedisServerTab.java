@@ -60,7 +60,7 @@ public class RedisServerTab extends DynamicTab {
     public void init(RedisClient client) {
         try {
             // 设置文本
-            this.setText(I18nHelper.serverInfo() + "-" + client.infoName());
+            this.setText(I18nHelper.serverInfo() + "-" + client.connectName());
             // 刷新图标
             this.flushGraphic();
             // 初始化

@@ -14,7 +14,7 @@ public class RedisConnectionConnectedEvent extends Event<RedisClient> implements
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionConnected(), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionConnected(), this.data().connectName());
     }
 
     public RedisConnect redisConnect() {

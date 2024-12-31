@@ -14,7 +14,7 @@ public class RedisConnectionClosedEvent extends Event<RedisClient> implements Ev
 
     @Override
     public String eventFormat() {
-        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().infoName());
+        return String.format("[%s] " + I18nHelper.connectionDisconnected(), this.data().connectName());
     }
 
     public RedisConnect redisConnect() {

@@ -5,12 +5,14 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.fx.RedisSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
@@ -20,6 +22,7 @@ import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -27,6 +30,7 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
@@ -175,7 +179,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
                     this.setChild(List.of(item1, item2, item3));
-                } else if (this.isClusterMode()) {// 正常模式
+                } else {// 正常模式
                     RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
@@ -348,14 +352,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 传输数据
      */
     private void transportData() {
-        // StageAdapter wrapper = StageManager.getStage(RedisInfoTransportController.class);
-        // if (wrapper != null) {
-        //     wrapper.disappear();
-        // }
-        // wrapper = StageManager.parseStage(RedisInfoTransportController.class);
-        // wrapper.setProp("treeItem", this);
-        // wrapper.display();
-
         StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
         adapter.setProp("sourceInfo", this.value);
         adapter.display();
@@ -385,6 +381,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
                     .onSuccess(this::refresh)
+                    .onFinish(SystemUtil::gcLater)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
@@ -464,6 +461,13 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     public void value(@NonNull RedisConnect value) {
         this.value = value;
         this.client = new RedisClient(value);
+        this.client.stateProperty().addListener((observable, o, n) -> {
+            // 连接关闭
+            if (n == null || !n.isConnected()) {
+                // 清理子节点
+                this.clearChild();
+            }
+        });
         this.setValue(new RedisConnectTreeItemValue(this));
     }
 
@@ -520,7 +524,15 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
 
     @Override
     public void onPrimaryDoubleClick() {
-        this.connect();
+        if (!this.isConnected() && !this.isConnecting()) {
+            this.connect();
+        } else {
+            super.onPrimaryDoubleClick();
+        }
+    }
+
+    public String connectName() {
+        return this.value.getName();
     }
 
     public String getId() {
@@ -528,7 +540,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     }
 
     /**
-     * Redis 连接值
+     * redis树节点值
      *
      * @author oyzh
      * @since 2023/08/10
@@ -536,16 +548,8 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     @Accessors(chain = true, fluent = true)
     public static class RedisConnectTreeItemValue extends RichTreeItemValue {
 
-        // /**
-        //  * 节点
-        //  */
-        // private final RedisConnectTreeItem item;
-
         public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
             super(item);
-            // this.flushGraphic();
-            // this.flushGraphicColor();
-            // this.name(item.value().getName());
         }
 
         @Override
@@ -561,7 +565,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         @Override
         public SVGGlyph graphic() {
             if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/redis.svg", 10);
+                this.graphic = new RedisSVGGlyph(12);
             }
             return super.graphic();
         }
@@ -574,53 +578,32 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             return super.graphicColor();
         }
 
-        /**
-         * 清除角色组件
-         */
-        public void clearRole() {
-            // FXText role = (FXText) this.lookup("#role");
-            // this.removeChild(role);
-        }
-
-        /**
-         * 刷新角色组件
-         */
-        public void flushRole() {
-            // if (this.item.role() != null) {
-            //     // 角色名称
-            //     String roleName = switch (this.item.role().toLowerCase()) {
-            //         case "sentinel" -> I18nHelper.sentinel();
-            //         case "master" -> I18nHelper.master();
-            //         case "slave" -> I18nHelper.slave();
-            //         default -> null;
-            //     };
-            //     // 寻找组件
-            //     FXText role = (FXText) this.lookup("#role");
-            //     if (roleName == null) {
-            //         this.removeChild(role);
-            //     } else {
-            //         if (role == null) {
-            //             role = new FXText();
-            //             role.setId("role");
-            //             role.setFill(Color.valueOf("#228B22"));
-            //             this.addChild(role);
-            //             HBox.setMargin(role, new Insets(0, 0, 0, 3));
-            //         }
-            //         String str = "(";
-            //         if (this.item.isSentinelMode()) {
-            //             str += roleName;
-            //         } else if (this.item.isClusterMode()) {
-            //             str += I18nHelper.cluster() + "/" + roleName;
-            //         } else if (this.item.isMasterMode()) {
-            //             str += I18nHelper.master_slave() + "/" + roleName;
-            //         }
-            //         if (this.item.isReadonly()) {
-            //             str += "/" + I18nHelper.readonly();
-            //         }
-            //         str += ")";
-            //         role.setText(str);
-            //     }
-            // }
+        @Override
+        public String extra() {
+            String role = this.item().role();
+            if (role != null) {
+                // 角色名称
+                String roleName = switch (role.toLowerCase()) {
+                    case "sentinel" -> I18nHelper.sentinel();
+                    case "master" -> I18nHelper.master();
+                    case "slave" -> I18nHelper.slave();
+                    default -> null;
+                };
+                String str = "(";
+                if (this.item().isSentinelMode()) {
+                    str += roleName;
+                } else if (this.item().isClusterMode()) {
+                    str += I18nHelper.cluster() + "/" + roleName;
+                } else if (this.item().isMasterMode()) {
+                    str += I18nHelper.master_slave() + "/" + roleName;
+                }
+                if (this.item().isReadonly()) {
+                    str += "/" + I18nHelper.readonly();
+                }
+                str += ")";
+                return str;
+            }
+            return super.extra();
         }
     }
 }

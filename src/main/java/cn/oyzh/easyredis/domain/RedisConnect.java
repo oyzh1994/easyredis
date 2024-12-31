@@ -125,7 +125,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 当前对象
      */
     public RedisConnect copy(@NonNull RedisConnect redisConnect) {
-        this.id = redisConnect.id;
+//        this.id = redisConnect.id;
         this.name = redisConnect.name;
         this.host = redisConnect.host;
         this.user = redisConnect.user;

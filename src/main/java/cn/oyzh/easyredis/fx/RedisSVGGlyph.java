@@ -11,4 +11,8 @@ public class RedisSVGGlyph extends SVGGlyph {
     public RedisSVGGlyph() {
         super("/font/redis.svg");
     }
+
+    public RedisSVGGlyph(double size) {
+        super("/font/redis.svg", size);
+    }
 }

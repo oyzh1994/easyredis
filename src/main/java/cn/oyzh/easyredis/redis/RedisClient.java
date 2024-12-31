@@ -175,7 +175,7 @@ public class RedisClient {
      *
      * @return 连接状态属性
      */
-    private ReadOnlyObjectProperty<RedisConnState> stateProperty() {
+    public ReadOnlyObjectProperty<RedisConnState> stateProperty() {
         return this.state.getReadOnlyProperty();
     }
 
@@ -4700,7 +4700,7 @@ public class RedisClient {
      *
      * @return 连接名称
      */
-    public String infoName() {
+    public String connectName() {
         return this.redisConnect.getName();
     }
 

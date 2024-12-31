@@ -24,6 +24,8 @@ docker run -itd -p 6379:6379 redis --requirepass 123456
 
 ###### docker启动redis(集群)
 docker-compose -f .\redis-cluster-compose.yml up -d
+docker-compose -f .\redis-example-compose.yml up -d
+docker-compose -f .\redis-master-compose.yml up -d
 
 ###### mac无法启动解决方案1
 sudo chmod +x EasyRedis.app

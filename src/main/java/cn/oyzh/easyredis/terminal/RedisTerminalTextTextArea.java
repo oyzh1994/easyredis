@@ -62,7 +62,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         if (this.isTemporary()) {
             str = "redis " + I18nHelper.connection();
         } else {
-            str = this.client.infoName();
+            str = this.client.connectName();
         }
         if (this.redisConnect().getHost() != null) {
             str += "@" + this.redisConnect().getHost();

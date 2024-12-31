@@ -5,6 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
@@ -47,14 +48,14 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     private final RedisGroup value;
 
     /**
-     * redis信息储存
-     */
-    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
-
-    /**
      * redis分组储存
      */
     private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
+
+    /**
+     * redis连接储存
+     */
+    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
     public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisConnectTreeView treeView) {
         super(treeView);
@@ -64,13 +65,17 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         this.setExpanded(this.value.isExpand());
         // 监听收缩变化
         super.addEventHandler(branchCollapsedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            this.value.setExpand(false);
-            this.groupStore.update(this.value);
+            if (this.value.isExpand()) {
+                this.value.setExpand(false);
+                this.groupStore.update(this.value);
+            }
         });
         // 监听展开变化
         super.addEventHandler(branchExpandedEvent(), (EventHandler<TreeModificationEvent<TreeItem<?>>>) event -> {
-            this.value.setExpand(true);
-            this.groupStore.update(this.value);
+            if (!this.value.isExpand()) {
+                this.value.setExpand(true);
+                this.groupStore.update(this.value);
+            }
         });
     }
 
@@ -107,12 +112,15 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
             MessageBox.warn(I18nHelper.groupAlreadyExists());
             return;
         }
+        // 旧名称
+        String oldName = this.value.getName();
         // 修改名称
         this.value.setName(groupName);
-        if (!this.groupStore.replace(this.value)) {
-            MessageBox.warn(I18nHelper.operationFail());
-        } else {
+        if (this.groupStore.replace(this.value)) {
             this.refresh();
+            RedisEventUtil.groupRenamed(groupName, oldName);
+        } else {
+            MessageBox.warn(I18nHelper.operationFail());
         }
     }
 
@@ -125,7 +133,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
             return;
         }
         // 删除失败
-        if (!this.groupStore.delete(this.value)) {
+        if (!this.groupStore.delete(this.value.getName())) {
             MessageBox.warn(I18nHelper.operationFail());
             return;
         }
@@ -137,6 +145,8 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
             // 连接转移到父节点
             this.parent().addConnectItems(childes);
         }
+        // 发送事件
+        RedisEventUtil.groupDeleted(this.value.getName());
         // 移除节点
         this.remove();
     }
@@ -150,11 +160,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         fxView.display();
     }
 
-    /**
-     * 父节点
-     *
-     * @return 根节点
-     */
+    @Override
     public RedisRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
         return (RedisRootTreeItem) treeItem;
@@ -170,7 +176,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
-                this.infoStore.update(item.value());
+               this.connectStore.replace(item.value());
             }
             super.addChild(item);
         }
@@ -186,7 +192,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     @Override
     public boolean delConnectItem(@NonNull RedisConnectTreeItem item) {
         // 删除连接
-        if (this.infoStore.delete(item.value())) {
+        if (this.connectStore.delete(item.value())) {
             this.removeChild(item);
             return true;
         }
@@ -230,12 +236,11 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
     }
 
     /**
-     * Redis Group键值
+     * redis树group值
      *
      * @author oyzh
      * @since 2023/11/21
      */
-    @Accessors(chain = true, fluent = true)
     public static class RedisGroupTreeItemValue extends RichTreeItemValue {
 
         public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
@@ -256,14 +261,13 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         public SVGGlyph graphic() {
             if (this.graphic == null) {
                 this.graphic = new GroupSVGGlyph("10");
-                this.graphic.disableTheme();
             }
             return super.graphic();
         }
 
         @Override
         public Color graphicColor() {
-            if (this.item.isChildEmpty()) {
+            if (this.item().isChildEmpty()) {
                 return super.graphicColor();
             }
             return Color.DEEPSKYBLUE;
