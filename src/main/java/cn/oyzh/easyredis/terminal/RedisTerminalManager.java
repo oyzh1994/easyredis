@@ -146,62 +146,62 @@ import cn.oyzh.easyredis.terminal.client.RedisClientTrackingTerminalCommandHandl
 import cn.oyzh.easyredis.terminal.client.RedisClientTrackinginfoTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.client.RedisClientUnblockTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.client.RedisClientUnpuaseTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterAddslotsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterAddslotsrangeTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterBumpepochTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterCountfailurereportsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterCountkeysinslotTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterDelslotsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterDelslotsrangeTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterFailoverTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterFlushslotsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterForgetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterGetkeysinslotTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterInfoTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterKeyslotTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterLinksTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterMeetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterMyidTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterMyshardidTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterNodesTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterReplicateTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterResetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterSaveconfigTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterSetconfigepochTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterSetslotTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterShardsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterSlavesTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterSlotsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.cluster.RedisClusterTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandCountTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandDocsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandGetkeysTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandGetkeysandflagsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandInfoTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandListTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.command.RedisCommandTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyDoctorTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyGraphTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyHistogramTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyHistoryTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyLatestTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyResetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.latency.RedisLatencyTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryDoctorTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryMallocstatsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryPurgeTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryStatsTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.memory.RedisMemoryUsageTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.module.RedisModuleListTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.module.RedisModuleLoadTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.module.RedisModuleLoadexTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.module.RedisModuleTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.module.RedisModuleUnloadTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.slowlog.RedisSlowlogGetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.slowlog.RedisSlowlogLenTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.slowlog.RedisSlowlogResetTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.slowlog.RedisSlowlogTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterAddslotsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterAddslotsrangeTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterBumpepochTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterCountfailurereportsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterCountkeysinslotTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterDelslotsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterDelslotsrangeTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterFailoverTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterFlushslotsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterForgetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterGetkeysinslotTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterInfoTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterKeyslotTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterLinksTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterMeetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterMyidTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterMyshardidTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterNodesTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterReplicateTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterResetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterSaveconfigTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterSetconfigepochTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterSetslotTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterShardsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterSlavesTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterSlotsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.cluster.RedisClusterTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandCountTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandDocsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandGetkeysTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandGetkeysandflagsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandInfoTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandListTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.command.RedisCommandTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyDoctorTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyGraphTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyHistogramTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyHistoryTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyLatestTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyResetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.latency.RedisLatencyTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryDoctorTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryMallocstatsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryPurgeTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryStatsTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.memory.RedisMemoryUsageTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.module.RedisModuleListTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.module.RedisModuleLoadTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.module.RedisModuleLoadexTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.module.RedisModuleTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.module.RedisModuleUnloadTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.slowlog.RedisSlowlogGetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.slowlog.RedisSlowlogLenTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.slowlog.RedisSlowlogResetTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.slowlog.RedisSlowlogTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.program.RedisEvalTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.program.RedisEval_r0TerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.program.RedisEvalshaTerminalCommandHandler;
@@ -426,6 +426,44 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisClientUnblockTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisClientUnpuaseTerminalCommandHandler.class);
 
+        // cluster命令
+        TerminalManager.registerHandler(RedisClusterAddslotsrangeTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterAddslotsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterBumpepochTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterCountfailurereportsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterCountkeysinslotTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterDelslotsrangeTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterDelslotsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterFailoverTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterFlushslotsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterForgetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterGetkeysinslotTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterInfoTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterKeyslotTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterLinksTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterMeetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterMyidTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterMyshardidTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterNodesTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterReplicateTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterResetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterSaveconfigTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterSetconfigepochTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterSetslotTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterShardsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterSlavesTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterSlotsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisClusterTerminalCommandHandler.class);
+
+        // command命令
+        TerminalManager.registerHandler(RedisCommandCountTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandDocsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandGetkeysandflagsTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandGetkeysTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandInfoTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandListTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisCommandTerminalCommandHandler.class);
+
         // geo命令
         TerminalManager.registerHandler(RedisGeoaddTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisGeodistTerminalCommandHandler.class);
@@ -475,6 +513,15 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisScanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisTtlTerminalCommandHandler.class);
 
+        // latency命令
+        TerminalManager.registerHandler(RedisLatencyDoctorTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyGraphTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyHistogramTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyHistoryTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyLatestTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyResetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisLatencyTerminalCommandHandler.class);
+
         // list命令
         TerminalManager.registerHandler(RedisBlmoveTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisBlmpopTerminalCommandHandler.class);
@@ -499,54 +546,7 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisRpushTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisRpushxTerminalCommandHandler.class);
 
-        // other-cluster
-        TerminalManager.registerHandler(RedisClusterAddslotsrangeTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterAddslotsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterBumpepochTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterCountfailurereportsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterCountkeysinslotTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterDelslotsrangeTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterDelslotsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterFailoverTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterFlushslotsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterForgetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterGetkeysinslotTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterInfoTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterKeyslotTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterLinksTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterMeetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterMyidTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterMyshardidTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterNodesTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterReplicateTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterResetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterSaveconfigTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterSetconfigepochTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterSetslotTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterShardsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterSlavesTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterSlotsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisClusterTerminalCommandHandler.class);
-
-        // other-command
-        TerminalManager.registerHandler(RedisCommandCountTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandDocsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandGetkeysandflagsTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandGetkeysTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandInfoTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandListTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisCommandTerminalCommandHandler.class);
-
-        // other-latency
-        TerminalManager.registerHandler(RedisLatencyDoctorTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyGraphTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyHistogramTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyHistoryTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyLatestTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyResetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisLatencyTerminalCommandHandler.class);
-
-        // other-memory
+        // memory命令
         TerminalManager.registerHandler(RedisMemoryDoctorTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisMemoryMallocstatsTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisMemoryPurgeTerminalCommandHandler.class);
@@ -554,18 +554,12 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisMemoryTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisMemoryUsageTerminalCommandHandler.class);
 
-        // other-module
+        // module命令
         TerminalManager.registerHandler(RedisModuleListTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisModuleLoadexTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisModuleLoadTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisModuleTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisModuleUnloadTerminalCommandHandler.class);
-
-        // other- slowlog
-        TerminalManager.registerHandler(RedisSlowlogGetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisSlowlogLenTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisSlowlogResetTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisSlowlogTerminalCommandHandler.class);
 
         // other
         TerminalManager.registerHandler(RedisAskingTerminalCommandHandler.class);
@@ -663,6 +657,12 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisSscanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSunionstoreTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSunionTerminalCommandHandler.class);
+
+        // slowlog命令
+        TerminalManager.registerHandler(RedisSlowlogGetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisSlowlogLenTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisSlowlogResetTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisSlowlogTerminalCommandHandler.class);
 
         // stream-xgroup
         TerminalManager.registerHandler(RedisXgroupCreateconsumerTerminalCommandHandler.class);
