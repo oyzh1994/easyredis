@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
+import cn.oyzh.easyredis.terminal.RedisTerminalManager;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import org.jsoup.Jsoup;
@@ -45,6 +46,7 @@ public class RedisCmdSpider   {
 
     private void fetch() throws IOException {
         System.out.println("fetch start---------->");
+        RedisTerminalManager.registerHandlers();
         Collection<TerminalCommandHandler<?,?>> list = TerminalManager.listHandler();
         List<RedisCommand> list1 = new ArrayList<>();
         Document document = Jsoup.connect(descUrl).get();
@@ -65,6 +67,7 @@ public class RedisCmdSpider   {
                 RedisCommand command = new RedisCommand();
                 command.setCommand(cmdName);
                 for (Element article : articles) {
+                    // System.out.println(article);
                     String attr = article.attr("data-name");
                     if (cmdName.toUpperCase().equalsIgnoreCase(attr)) {
                         Elements p = article.getElementsByTag("p");
@@ -75,7 +78,7 @@ public class RedisCmdSpider   {
                         break;
                     }
                 }
-                getDetail(cmdName, command);
+                this.getDetail(cmdName, command);
                 list1.add(command);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -93,6 +96,7 @@ public class RedisCmdSpider   {
         }
         String json = JSONUtil.toJsonStr(list2);
         FileUtil.writeString(json, filePath, CharsetUtil.UTF_8);
+        System.out.println("fetch finish---------->");
     }
 
     private boolean isNeedFetch(String cmdName) {
@@ -106,7 +110,8 @@ public class RedisCmdSpider   {
 
     private void getDetail(String cmdName, RedisCommand redisCommand) throws Exception {
         String name = cmdName.replaceAll(" ", "-");
-        Document document = Jsoup.connect(detailUrl + name + "/").get();
+        Document document = Jsoup.connect(this.detailUrl + name + "/").get();
+        System.out.println(document.html());
         Elements args = document.getElementsByClass("command-syntax");
         String argsText = args.text();
         redisCommand.setArgs(argsText);

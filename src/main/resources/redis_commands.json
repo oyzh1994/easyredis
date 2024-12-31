@@ -15,28 +15,6 @@
         "available": "3.0.0"
     },
     {
-        "desc": "Sets hash slot ranges as unbound for a node.",
-        "args": "CLUSTER DELSLOTSRANGE start-slot end-slot [start-slot end-slot ...]",
-        "command": "CLUSTER DELSLOTSRANGE",
-        "available": "7.0.0"
-    },
-    {
-        "desc": "Sets the configuration epoch for a new node.",
-        "args": "CLUSTER SET-CONFIG-EPOCH config-epoch",
-        "command": "CLUSTER SET-CONFIG-EPOCH",
-        "available": "3.0.0"
-    },
-    {
-        "args": "CONFIG",
-        "command": "CONFIG",
-        "available": "2.0.0"
-    },
-    {
-        "args": "FUNCTION",
-        "command": "FUNCTION",
-        "available": "7.0.0"
-    },
-    {
         "args": "LATENCY",
         "command": "LATENCY",
         "available": "2.8.13"
@@ -52,14 +30,19 @@
         "available": "4.0.0"
     },
     {
+        "args": "SLOWLOG",
+        "command": "SLOWLOG",
+        "available": "2.2.12"
+    },
+    {
         "args": "OBJECT",
         "command": "OBJECT",
         "available": "2.2.3"
     },
     {
-        "args": "PUBSUB",
-        "command": "PUBSUB",
-        "available": "2.8.0"
+        "args": "FUNCTION",
+        "command": "FUNCTION",
+        "available": "7.0.0"
     },
     {
         "args": "SCRIPT",
@@ -67,9 +50,14 @@
         "available": "2.6.0"
     },
     {
-        "args": "SLOWLOG",
-        "command": "SLOWLOG",
-        "available": "2.2.12"
+        "args": "PUBSUB",
+        "command": "PUBSUB",
+        "available": "2.8.0"
+    },
+    {
+        "args": "CONFIG",
+        "command": "CONFIG",
+        "available": "2.0.0"
     },
     {
         "args": "XGROUP",
@@ -80,6 +68,18 @@
         "args": "XINFO",
         "command": "XINFO",
         "available": "5.0.0"
+    },
+    {
+        "desc": "Sets hash slot ranges as unbound for a node.",
+        "args": "CLUSTER DELSLOTSRANGE start-slot end-slot [start-slot end-slot ...]",
+        "command": "CLUSTER DELSLOTSRANGE",
+        "available": "7.0.0"
+    },
+    {
+        "desc": "Sets the configuration epoch for a new node.",
+        "args": "CLUSTER SET-CONFIG-EPOCH config-epoch",
+        "command": "CLUSTER SET-CONFIG-EPOCH",
+        "available": "3.0.0"
     },
     {
         "desc": "Lists the ACL categories, or the commands inside a category.",

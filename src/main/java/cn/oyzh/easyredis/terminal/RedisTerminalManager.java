@@ -51,7 +51,6 @@ import cn.oyzh.easyredis.terminal.hash.RedisHincrbyfloatTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHkeysCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHlenCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHmgetCommandHandler;
-import cn.oyzh.easyredis.terminal.hash.RedisHmsetCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHrandfieldCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHsetCommandHandler;
 import cn.oyzh.easyredis.terminal.hash.RedisHsetnxCommandHandler;
@@ -110,12 +109,12 @@ import cn.oyzh.easyredis.terminal.other.RedisRoleTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisSaveTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisScanTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisSlaveofTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.RedisSscanTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.set.RedisSscanTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisTimeTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisTouchTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisWaitTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.RedisWaitaofTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.other.RedisZscanTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.zset.RedisZscanTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.acl.RedisAclCatTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.acl.RedisAclDeluserTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.other.acl.RedisAclDryrunTerminalCommandHandler;
@@ -585,12 +584,10 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisSaveTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisScanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSlaveofTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisSscanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisTimeTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisTouchTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisWaitaofTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisWaitTerminalCommandHandler.class);
-        TerminalManager.registerHandler(RedisZscanTerminalCommandHandler.class);
 
         // program-function
         TerminalManager.registerHandler(RedisFunctionDeleteTerminalCommandHandler.class);
@@ -665,6 +662,7 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisSpopTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSrandmemberCommandHandler.class);
         TerminalManager.registerHandler(RedisSremCommandHandler.class);
+        TerminalManager.registerHandler(RedisSscanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSunionstoreTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisSunionTerminalCommandHandler.class);
 
@@ -745,6 +743,7 @@ public class RedisTerminalManager {
         TerminalManager.registerHandler(RedisZrevrangebyscoreTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisZrevrangeTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisZrevrankTerminalCommandHandler.class);
+        TerminalManager.registerHandler(RedisZscanTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisZscoreTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisZunionstoreTerminalCommandHandler.class);
         TerminalManager.registerHandler(RedisZunionTerminalCommandHandler.class);
