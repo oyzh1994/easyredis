@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.store;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.store.jdbc.JdbcKeyValueStore;
 
@@ -23,7 +24,13 @@ public class RedisSettingStore extends JdbcKeyValueStore<RedisSetting> {
     public static final RedisSetting SETTING = INSTANCE.load();
 
     public RedisSetting load() {
-        RedisSetting setting = super.select();
+        RedisSetting setting = null;
+        try {
+            setting = super.select();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.warn("load setting error", ex);
+        }
         if (setting == null) {
             setting = new RedisSetting();
         }

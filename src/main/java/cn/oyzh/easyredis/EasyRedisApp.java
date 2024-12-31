@@ -4,7 +4,7 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.controller.MainController;
-import cn.oyzh.easyredis.controller.SettingController;
+import cn.oyzh.easyredis.controller.SettingController2;
 import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
@@ -165,13 +165,13 @@ public class EasyRedisApp extends FXApplication {
      */
     private void showSetting() {
         FXUtil.runLater(() -> {
-            StageAdapter wrapper = StageManager.getStage(SettingController.class);
+            StageAdapter wrapper = StageManager.getStage(SettingController2.class);
             if (wrapper != null) {
                 JulLog.info("front setting.");
                 wrapper.toFront();
             } else {
                 JulLog.info("show setting.");
-                StageManager.showStage(SettingController.class, StageManager.getPrimaryStage());
+                StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
             }
         });
     }
