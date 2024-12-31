@@ -28,7 +28,7 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.Re
     }
 
     public RedisConnect redisConnect(){
-        return this.parent().info();
+        return this.parent().redisConnect();
     }
 
     @Override

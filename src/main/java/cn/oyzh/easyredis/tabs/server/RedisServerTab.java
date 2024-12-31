@@ -85,8 +85,8 @@ public class RedisServerTab extends DynamicTab {
      *
      * @return redis信息
      */
-    public RedisConnect info() {
-        return this.controller().client().redisInfo();
+    public RedisConnect redisConnect() {
+        return this.controller().client().redisConnect();
     }
 
     /**

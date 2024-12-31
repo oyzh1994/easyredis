@@ -1,14 +1,13 @@
 package cn.oyzh.easyredis.store;
 
-import cn.oyzh.common.dto.Paging;
-import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
-import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.SelectParam;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,24 +23,37 @@ public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
      */
     public static final RedisFilterStore INSTANCE = new RedisFilterStore();
 
-    public List<RedisFilter> load() {
-        return super.selectList();
-    }
-
     /**
      * 加载已启用的数据列表
      *
+     * @param iid redis连接id
      * @return 已启用的数据列表
+     * @see cn.oyzh.easyredis.domain.RedisConnect
      */
-    public List<RedisFilter> loadEnable() {
-        QueryParam queryParam = new QueryParam("enable", 1);
-        return super.selectList(queryParam);
+    public List<RedisFilter> loadEnable(String iid) {
+        if (StringUtil.isEmpty(iid)) {
+            return Collections.emptyList();
+        }
+        SelectParam selectParam = new SelectParam();
+        selectParam.addQueryParam(QueryParam.of("enable", 1));
+        selectParam.addQueryParam(QueryParam.of("iid", iid));
+        return super.selectList(selectParam);
     }
 
+    public List<RedisFilter> loadByIid(String iid) {
+        return super.selectList(QueryParam.of("iid", iid));
+    }
+
+    /**
+     * 替换
+     *
+     * @param model 模型
+     * @return 结果
+     */
     public boolean replace(RedisFilter model) {
         boolean result = false;
         if (model != null) {
-            if (this.exist(model.getKw())) {
+            if (this.exist(model.getKw(), model.getIid())) {
                 result = this.update(model);
             } else {
                 result = this.insert(model);
@@ -50,33 +62,35 @@ public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
         return result;
     }
 
-    public boolean delete(String kw) {
-        if (StringUtil.isNotBlank(kw)) {
+    /**
+     * 根据iid删除数据
+     *
+     * @param iid zk连接id
+     * @return 结果
+     * @see cn.oyzh.easyredis.domain.RedisConnect
+     */
+    public boolean deleteByIid(String iid) {
+        if (StringUtil.isNotBlank(iid)) {
             DeleteParam param = new DeleteParam();
-            param.addQueryParam(new QueryParam("kw", kw));
+            param.addQueryParam(new QueryParam("iid", iid));
             return this.delete(param);
         }
         return false;
     }
 
-    public Paging<RedisFilter> getPage(long pageNo, int limit, String kw) {
-        PageParam pageParam = new PageParam(limit, pageNo * limit);
-        List<RedisFilter> list = this.selectPage(kw, List.of("kw"), pageParam);
-        Paging<RedisFilter> paging;
-        if (CollectionUtil.isNotEmpty(list)) {
-            long count = this.selectCount(kw, List.of("kw"));
-            paging = new Paging<>(list, limit, count);
-            paging.currentPage(pageNo);
-        } else {
-            paging = new Paging<>(limit);
-        }
-        return paging;
-    }
-
-    public boolean exist(String kw) {
+    /**
+     * 判断是否存在
+     *
+     * @param kw  关键字
+     * @param iid zk连接id
+     * @return 结果
+     * @see cn.oyzh.easyredis.domain.RedisConnect
+     */
+    public boolean exist(String kw, String iid) {
         if (StringUtil.isNotBlank(kw)) {
             Map<String, Object> params = new HashMap<>();
             params.put("kw", kw);
+            params.put("iid", iid);
             return super.exist(params);
         }
         return false;
@@ -86,4 +100,5 @@ public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
     protected Class<RedisFilter> modelClass() {
         return RedisFilter.class;
     }
+
 }

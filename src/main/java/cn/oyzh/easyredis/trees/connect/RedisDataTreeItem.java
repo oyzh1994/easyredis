@@ -27,7 +27,7 @@ public class RedisDataTreeItem extends RichTreeItem<RedisDataTreeItem.RedisDataT
     }
 
     public RedisConnect redisConnect() {
-        return this.parent().info();
+        return this.parent().redisConnect();
     }
 
     private void setOpening(boolean opening) {

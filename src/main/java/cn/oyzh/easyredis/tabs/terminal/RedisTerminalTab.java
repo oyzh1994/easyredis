@@ -81,8 +81,8 @@ public class RedisTerminalTab extends DynamicTab {
      *
      * @return 当前redis信息
      */
-    public RedisConnect info() {
-        return this.controller().info();
+    public RedisConnect redisConnect() {
+        return this.controller().redisConnect();
     }
 
     /**
@@ -121,8 +121,8 @@ public class RedisTerminalTab extends DynamicTab {
          *
          * @return 当前redis信息
          */
-        protected RedisConnect info() {
-            return this.client.redisInfo();
+        protected RedisConnect redisConnect() {
+            return this.client.redisConnect();
         }
 
     }

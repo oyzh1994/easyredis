@@ -189,7 +189,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     private RedisTerminalTab getTerminalTab(RedisConnect info) {
         if (info != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof RedisTerminalTab cmdTab && cmdTab.info() == info) {
+                if (tab instanceof RedisTerminalTab cmdTab && cmdTab.redisConnect() == info) {
                     return cmdTab;
                 }
             }
@@ -263,7 +263,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     private RedisServerTab getServerTab(RedisClient client) {
         if (client != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof RedisServerTab serverTab && serverTab.info() == client.redisInfo()) {
+                if (tab instanceof RedisServerTab serverTab && serverTab.redisConnect() == client.redisConnect()) {
                     return serverTab;
                 }
             }
@@ -448,7 +448,7 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
                 closeTabs.add(tab);
                 // } else if (tab instanceof RedisKeyTab<?> keyTab && keyTab.client() == client) {
                 //     closeTabs.add(tab);
-            } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.info()) {
+            } else if (tab instanceof RedisKeysTab keyTab && keyTab.redisConnect() == event.redisConnect()) {
                 closeTabs.add(tab);
             }
         }

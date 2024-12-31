@@ -131,11 +131,12 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.user = redisConnect.user;
         this.remark = redisConnect.remark;
         this.groupId = redisConnect.groupId;
-        this.sshConfig = redisConnect.sshConfig;
         this.readonly = redisConnect.readonly;
         this.password = redisConnect.password;
-        this.sshForward = redisConnect.sshForward;
         this.connectTimeOut = redisConnect.connectTimeOut;
+        // ssh配置
+        this.sshConfig = redisConnect.sshConfig;
+        this.sshForward = redisConnect.sshForward;
         // 过滤
         this.filters = redisConnect.filters;
         // 收藏

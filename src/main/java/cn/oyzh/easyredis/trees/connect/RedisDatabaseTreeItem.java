@@ -117,7 +117,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         // fxView.display();
 
         StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
-        adapter.setProp("sourceInfo", this.info());
+        adapter.setProp("sourceInfo", this.redisConnect());
         adapter.setProp("dbIndex", this.dbIndex);
         adapter.display();
     }
@@ -154,7 +154,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         // fxView.setProp("treeItem", this);
         // fxView.display();
         StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
-        fxView.setProp("connect", this.info());
+        fxView.setProp("connect", this.redisConnect());
         fxView.setProp("dbIndex", this.dbIndex);
         fxView.display();
     }
@@ -216,8 +216,8 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      *
      * @return redis信息
      */
-    public RedisConnect info() {
-        return this.client().redisInfo();
+    public RedisConnect redisConnect() {
+        return this.client().redisConnect();
     }
 
     /**

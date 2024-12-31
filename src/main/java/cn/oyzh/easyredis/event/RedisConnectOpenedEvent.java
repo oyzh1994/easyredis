@@ -16,6 +16,6 @@ public class RedisConnectOpenedEvent extends Event<RedisDatabaseTreeItem>  {
     }
 
     public RedisConnect redisConnect() {
-        return this.data().client().redisInfo();
+        return this.data().client().redisConnect();
     }
 }

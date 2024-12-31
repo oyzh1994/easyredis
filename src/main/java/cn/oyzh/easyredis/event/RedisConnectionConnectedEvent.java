@@ -17,7 +17,7 @@ public class RedisConnectionConnectedEvent extends Event<RedisClient> implements
         return String.format("[%s] " + I18nHelper.connectionConnected(), this.data().infoName());
     }
 
-    public RedisConnect info() {
-        return this.data().redisInfo();
+    public RedisConnect redisConnect() {
+        return this.data().redisConnect();
     }
 }

@@ -144,7 +144,7 @@ public abstract class RedisKeyTab<T extends RedisKeyTreeItem> extends DynamicTab
      * @return redis客户端
      */
     public RedisConnect redisConnect() {
-        return this.client().redisInfo();
+        return this.client().redisConnect();
     }
 
     /**

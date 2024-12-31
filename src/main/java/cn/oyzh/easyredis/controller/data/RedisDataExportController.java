@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.controller.data;
 
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -285,7 +285,7 @@ public class RedisDataExportController extends StageController {
         this.exportHandler.filePath(this.exportFile.getPath());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.exportHandler.filters(this.filterStore.loadEnable());
+            this.exportHandler.filters(this.filterStore.loadEnable(this.client.iid()));
         } else {
             this.exportHandler.filters(null);
         }

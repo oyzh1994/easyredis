@@ -306,7 +306,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         // fxView.setProp("treeItem", this);
         // fxView.display();
         StageAdapter fxView = StageManager.parseStage(RedisDataImportController.class);
-        fxView.setProp("connect", this.client.redisInfo());
+        fxView.setProp("connect", this.client.redisConnect());
         fxView.display();
     }
 

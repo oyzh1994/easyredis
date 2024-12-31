@@ -6,13 +6,13 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
-import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
@@ -133,7 +133,7 @@ public class RedisClient {
      */
     @Getter
     @Accessors(chain = true, fluent = true)
-    private final RedisConnect redisInfo;
+    private final RedisConnect redisConnect;
 
     /**
      * cluster集群的主节点连接
@@ -154,10 +154,10 @@ public class RedisClient {
         return this.stateProperty().get();
     }
 
-    public RedisClient(@NonNull RedisConnect redisInfo) {
-        this.redisInfo = redisInfo;
-        if (redisInfo.isSSHForward() && redisInfo.getSshConfig() != null) {
-            this.sshForwarder = new SSHForwarder(redisInfo.getSshConfig());
+    public RedisClient(@NonNull RedisConnect redisConnect) {
+        this.redisConnect = redisConnect;
+        if (redisConnect.isSSHForward() && redisConnect.getSshConfig() != null) {
+            this.sshForwarder = new SSHForwarder(redisConnect.getSshConfig());
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
@@ -196,19 +196,19 @@ public class RedisClient {
     private void initClient(int connectTimeout) {
         HostAndPort host;
         // ssh端口转发
-        if (this.redisInfo.isSSHForward()) {
+        if (this.redisConnect.isSSHForward()) {
             SSHForwardConfig forwardInfo = new SSHForwardConfig();
-            forwardInfo.setHost(this.redisInfo.hostIp());
-            forwardInfo.setPort(this.redisInfo.hostPort());
+            forwardInfo.setHost(this.redisConnect.hostIp());
+            forwardInfo.setPort(this.redisConnect.hostPort());
             int localPort = this.sshForwarder.forward(forwardInfo);
             // 连接信息
             host = new HostAndPort("127.0.0.1", localPort);
         } else {// 直连
             // 连接信息
-            host = new HostAndPort(this.redisInfo.hostIp(), this.redisInfo.hostPort());
+            host = new HostAndPort(this.redisConnect.hostIp(), this.redisConnect.hostPort());
         }
         // 客户端配置
-        DefaultJedisClientConfig clientConfig = RedisClientUtil.newConfig(this.redisInfo.getUser(), this.redisInfo.getPassword(), connectTimeout, this.redisInfo.executeTimeOutMs());
+        DefaultJedisClientConfig clientConfig = RedisClientUtil.newConfig(this.redisConnect.getUser(), this.redisConnect.getPassword(), connectTimeout, this.redisConnect.executeTimeOutMs());
         // 初始化连接池
         this.initPool(host, clientConfig);
         try {
@@ -222,41 +222,6 @@ public class RedisClient {
             this.initCluster(host, clientConfig);
         }
     }
-
-    // /**
-    //  * 初始化哨兵
-    //  *
-    //  * @param host         地址
-    //  * @param clientConfig 客户端配置
-    //  */
-    // private void initSentinel(HostAndPort host, DefaultJedisClientConfig clientConfig) {
-    //     // master客户端配置
-    //     DefaultJedisClientConfig masterConfig = this.intClientConfig(this.redisInfo.getMasterUser(), this.redisInfo.getMasterPassword());
-    //     // 连接池配置
-    //     JedisPoolConfig poolConfig = new JedisPoolConfig();
-    //     // 初始化连接池
-    //     this.intPoolConfig(poolConfig);
-    //     // 获取master名称
-    //     String masterName = this.infoProp().masterName();
-    //     // 创建哨兵连接池
-    //     this.sentinelPool = new JedisSentinelPool(masterName, CollUtil.newHashSet(host), poolConfig, masterConfig, clientConfig);
-    //     // 清除信息属性
-    //     this.clearInfoProp();
-    //     // cluster集群模式
-    //     if (this.isClusterMode()) {
-    //         if (this.sentinelPool.getCurrentHostMaster() != null) {
-    //             // 初始化cluster集群
-    //             this.initCluster(this.sentinelPool.getCurrentHostMaster(), masterConfig);
-    //             // 关闭哨兵连接池
-    //             this.sentinelPool.close();
-    //             this.sentinelPool = null;
-    //         }
-    //     } else {
-    //         // 关闭连接池
-    //         this.pool.close();
-    //         this.pool = null;
-    //     }
-    // }
 
     /**
      * 初始化cluster集群
@@ -392,7 +357,7 @@ public class RedisClient {
      * @return 结果
      */
     public boolean isReadonly() {
-        return this.redisInfo.isReadonly();
+        return this.redisConnect.isReadonly();
     }
 
     /**
@@ -473,8 +438,10 @@ public class RedisClient {
                 isClosed = true;
             }
             // 销毁端口转发
-            if (this.redisInfo.isSSHForward()) {
-                this.sshForwarder.destroy();
+            if (this.redisConnect.isSSHForward()) {
+                if (this.sshForwarder != null) {
+                    this.sshForwarder.destroy();
+                }
             }
             // 已关闭
             if (isClosed) {
@@ -508,7 +475,7 @@ public class RedisClient {
      * 开始连接客户端
      */
     public void start() {
-        this.startDatabase(0, this.redisInfo.connectTimeOutMs());
+        this.startDatabase(0, this.redisConnect.connectTimeOutMs());
     }
 
     /**
@@ -524,7 +491,7 @@ public class RedisClient {
      * @param dbIndex 默认db索引
      */
     public void startDatabase(int dbIndex) {
-        this.startDatabase(dbIndex, this.redisInfo.connectTimeOutMs());
+        this.startDatabase(dbIndex, this.redisConnect.connectTimeOutMs());
     }
 
     /**
@@ -4731,6 +4698,10 @@ public class RedisClient {
      * @return 连接名称
      */
     public String infoName() {
-        return this.redisInfo.getName();
+        return this.redisConnect.getName();
+    }
+
+    public String iid() {
+        return this.redisConnect.getId();
     }
 }

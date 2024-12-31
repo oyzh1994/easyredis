@@ -16,13 +16,6 @@ public class RedisSSHConfigStore extends JdbcStandardStore<RedisSSHConfig> {
      */
     public static final RedisSSHConfigStore INSTANCE = new RedisSSHConfigStore();
 
-    public RedisSSHConfig find(String iid) {
-        QueryParam param = new QueryParam();
-        param.setName("iid");
-        param.setData(iid);
-        return super.selectOne(param);
-    }
-
     public boolean replace(RedisSSHConfig model) {
         String iid = model.getIid();
         if (super.exist(iid)) {
@@ -40,5 +33,9 @@ public class RedisSSHConfigStore extends JdbcStandardStore<RedisSSHConfig> {
         DeleteParam param = new DeleteParam();
         param.addQueryParam(QueryParam.of("iid", iid));
         super.delete(param);
+    }
+
+    public RedisSSHConfig getByIid(String iid) {
+        return super.selectOne(QueryParam.of("iid", iid));
     }
 }

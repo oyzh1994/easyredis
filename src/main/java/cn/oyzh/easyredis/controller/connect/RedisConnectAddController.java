@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.fx.RedisFilterTableView;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
+import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -17,7 +18,6 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
-import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -152,7 +152,7 @@ public class RedisConnectAddController extends StageController {
     /**
      * redis连接储存对象
      */
-    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
+    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
     /**
      * 过滤列表
@@ -260,8 +260,7 @@ public class RedisConnectAddController extends StageController {
             // 过滤列表
             redisConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
-            boolean result = this.infoStore.replace(redisConnect);
-            if (result) {
+            if (this.connectStore.replace(redisConnect)) {
                 RedisEventUtil.infoAdded(redisConnect);
                 MessageBox.okToast(I18nHelper.operationSuccess());
                 this.closeWindow();

@@ -27,7 +27,7 @@ public class RedisQueryTreeItem extends RichTreeItem<RedisQueryTreeItem.RedisQue
     }
 
     public RedisConnect redisConnect(){
-        return this.parent().info();
+        return this.parent().redisConnect();
     }
 
     @Override

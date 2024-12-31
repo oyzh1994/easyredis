@@ -63,8 +63,8 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
     /**
      * 初始化过滤配置
      */
-    public void initFilters() {
-        this.filters = this.filterStore.loadEnable();
+    public void initFilters(String iid) {
+        this.filters = this.filterStore.loadEnable(iid);
     }
 
     @Override

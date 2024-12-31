@@ -23,6 +23,6 @@ public class RedisKeysMovedEvent extends Event<RedisDatabaseTreeItem>   {
     }
 
     public RedisConnect redisConnect() {
-        return this.data().info();
+        return this.data().redisConnect();
     }
 }

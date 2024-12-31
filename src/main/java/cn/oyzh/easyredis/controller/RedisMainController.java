@@ -369,7 +369,7 @@ public class RedisMainController extends ParentStageController {
         if (event.data() instanceof RedisConnectTreeItem treeItem) {
             this.flushViewTitle(treeItem.value());
         } else if (event.data() instanceof RedisDatabaseTreeItem treeItem) {
-            this.flushViewTitle(treeItem.info());
+            this.flushViewTitle(treeItem.redisConnect());
         } else if (event.data() instanceof RedisDataTreeItem treeItem) {
             this.flushViewTitle(treeItem.redisConnect());
         } else if (event.data() instanceof RedisQueryTreeItem treeItem) {

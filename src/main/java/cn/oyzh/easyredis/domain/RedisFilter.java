@@ -33,6 +33,14 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
     private String uid;
 
     /**
+     * redis连接id
+     *
+     * @see RedisConnect
+     */
+    @Column
+    private String iid;
+
+    /**
      * 关键词
      */
     @Column
@@ -60,6 +68,7 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
      */
     public RedisFilter copy(@NonNull RedisFilter filter) {
         this.kw = filter.kw;
+        this.iid = filter.iid;
         this.enable = filter.enable;
         this.partMatch = filter.partMatch;
         return this;

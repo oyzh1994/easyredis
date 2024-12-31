@@ -57,8 +57,8 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         } else {
             str = this.client.infoName();
         }
-        if (this.info().getHost() != null) {
-            str += "@" + this.info().getHost();
+        if (this.redisConnect().getHost() != null) {
+            str += "@" + this.redisConnect().getHost();
         }
         if (this.isConnecting()) {
             str += "（" + I18nHelper.connectIng() + "）> ";
@@ -99,7 +99,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      * @return 结果
      */
     public boolean isTemporary() {
-        return this.client.redisInfo().getId() == null;
+        return this.client.iid() == null;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         this.connect = RedisConnectUtil.parse(input);
         if (this.connect != null) {
             this.disable();
-            RedisConnectUtil.copyConnect(this.connect, this.info());
+            RedisConnectUtil.copyConnect(this.connect, this.redisConnect());
             this.start(this.connect.getDb());
         }
     }
@@ -210,7 +210,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
-                String host = this.client.redisInfo().getHost();
+                String host = this.client.redisConnect().getHost();
                 if (t1 == RedisConnState.CONNECTED) {
                     // this.outputLine(host + " 连接成功.");
                     // this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
@@ -254,7 +254,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         }
     }
 
-    public RedisConnect info() {
-        return this.client().redisInfo();
+    public RedisConnect redisConnect() {
+        return this.client().redisConnect();
     }
 }

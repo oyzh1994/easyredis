@@ -1,15 +1,11 @@
 package cn.oyzh.easyredis.dto;
 
-import cn.oyzh.common.Index;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.store.RedisFilterStore;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import cn.oyzh.fx.plus.util.TableViewUtil;
 import lombok.NonNull;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,27 +16,17 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
-public class RedisFilterVO extends RedisFilter implements Index {
+public class RedisFilterVO extends RedisFilter {
 
     /**
-     * 索引
-     */
-    private int index;
-
-    /**
-     * 复制
+     * 转换
      *
      * @param filter redis过滤信息
-     * @param index  索引
-     * @return redis认证vo
+     * @return redis过滤vo
      */
-    public static RedisFilterVO copy(RedisFilter filter, int index) {
+    public static RedisFilterVO convert(RedisFilter filter) {
         RedisFilterVO authVO = new RedisFilterVO();
         authVO.copy(filter);
-        authVO.setIndex(index);
         return authVO;
     }
 
@@ -52,16 +38,23 @@ public class RedisFilterVO extends RedisFilter implements Index {
      */
     public static List<RedisFilterVO> convert(@NonNull List<RedisFilter> list) {
         List<RedisFilterVO> voList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            voList.add(copy(list.get(i), i + 1));
+        for (RedisFilter filter : list) {
+            voList.add(convert(filter));
         }
         return voList;
     }
 
     /**
-     * 过滤储存
+     * 关键字控件
      */
-    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    public ClearableTextField getKwControl() {
+        ClearableTextField textField = new ClearableTextField();
+        textField.setFlexWidth("100% - 12");
+        textField.setValue(this.getKw());
+        textField.addTextChangeListener((obs, o, n) -> this.setKw(n));
+        TableViewUtil.selectRowOnMouseClicked(textField);
+        return textField;
+    }
 
     /**
      * 匹配模式控件
@@ -70,12 +63,8 @@ public class RedisFilterVO extends RedisFilter implements Index {
         MatchToggleSwitch toggleSwitch = new MatchToggleSwitch();
         toggleSwitch.fontSize(11);
         toggleSwitch.setSelected(this.isPartMatch());
-        toggleSwitch.selectedChanged((obs, o, n) -> {
-            this.setPartMatch(n);
-            if (this.filterStore.replace(this)) {
-                RedisEventUtil.treeChildFilter();
-            }
-        });
+        toggleSwitch.selectedChanged((obs, o, n) -> this.setPartMatch(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
         return toggleSwitch;
     }
 
@@ -86,12 +75,8 @@ public class RedisFilterVO extends RedisFilter implements Index {
         EnabledToggleSwitch toggleSwitch = new EnabledToggleSwitch();
         toggleSwitch.setFontSize(11);
         toggleSwitch.setSelected(this.isEnable());
-        toggleSwitch.selectedChanged((abs, o, n) -> {
-            this.setEnable(n);
-            if (this.filterStore.replace(this)) {
-                RedisEventUtil.treeChildFilter();
-            }
-        });
+        toggleSwitch.selectedChanged((abs, o, n) -> this.setEnable(n));
+        TableViewUtil.selectRowOnMouseClicked(toggleSwitch);
         return toggleSwitch;
     }
 }

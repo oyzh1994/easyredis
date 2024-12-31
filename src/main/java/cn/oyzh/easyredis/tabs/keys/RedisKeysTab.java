@@ -45,7 +45,7 @@ public class RedisKeysTab extends DynamicTab {
 
     @Override
     protected String getTabTitle() {
-        String name = this.treeItem().info().getName();
+        String name = this.treeItem().redisConnect().getName();
         Integer dbIndex = this.treeItem().dbIndex();
         if (dbIndex != null) {
             name += "@" + dbIndex;
@@ -127,7 +127,7 @@ public class RedisKeysTab extends DynamicTab {
     }
 
     public RedisConnect redisConnect() {
-        return this.client().redisInfo();
+        return this.client().redisConnect();
     }
 
     /**
