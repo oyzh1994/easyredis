@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.info;
+package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.util.NumberUtil;
 import cn.oyzh.common.util.StringUtil;
@@ -6,8 +6,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 /**
  * redis信息属性项目

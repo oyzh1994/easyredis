@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.oyzh.easyredis.info.RedisSlowlogItem;
+import cn.oyzh.easyredis.dto.RedisSlowlogItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;

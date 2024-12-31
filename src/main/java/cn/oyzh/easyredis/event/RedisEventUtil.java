@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;

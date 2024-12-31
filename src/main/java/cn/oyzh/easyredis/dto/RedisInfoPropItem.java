@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.info;
+package cn.oyzh.easyredis.dto;
 
 import javafx.beans.property.SimpleStringProperty;
 

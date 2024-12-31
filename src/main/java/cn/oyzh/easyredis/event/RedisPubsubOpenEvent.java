@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.event.Event;
 
 /**

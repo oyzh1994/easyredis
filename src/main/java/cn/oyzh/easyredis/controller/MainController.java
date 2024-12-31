@@ -32,7 +32,6 @@ import java.util.List;
         usePrimary = true,
         fullScreenAble = true,
         alwaysOnTopAble = true,
-        iconUrl = RedisConst.ICON_PATH,
         value = FXConst.FXML_PATH + "main.fxml"
 )
 public class MainController extends ParentStageController {

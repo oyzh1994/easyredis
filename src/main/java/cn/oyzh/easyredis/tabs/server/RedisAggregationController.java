@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.server;
 
-import cn.oyzh.easyredis.info.RedisInfoProp;
+import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;

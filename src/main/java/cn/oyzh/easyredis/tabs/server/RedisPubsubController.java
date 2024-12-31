@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.plus.controls.table.FXTableCell;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;

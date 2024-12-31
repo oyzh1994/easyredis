@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.info.RedisInfoProp;
-import cn.oyzh.easyredis.info.RedisInfoPropItem;
+import cn.oyzh.easyredis.dto.RedisInfoProp;
+import cn.oyzh.easyredis.dto.RedisInfoPropItem;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;

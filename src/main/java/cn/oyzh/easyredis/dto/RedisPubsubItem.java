@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.info;
+package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import lombok.Data;

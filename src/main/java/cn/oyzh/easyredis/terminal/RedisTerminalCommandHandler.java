@@ -57,7 +57,7 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
 
     @Override
     public String commandSupportedVersion() {
-        return RedisCommandUtil.getCommandAvailable(this.commandName());
+        return RedisCommandUtil.getCommandAvailable(this.commandFullName());
     }
 
     protected abstract Protocol.Command getCommandType();

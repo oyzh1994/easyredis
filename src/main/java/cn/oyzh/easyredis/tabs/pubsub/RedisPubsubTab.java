@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.pubsub;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.tabs.DynamicTab;

@@ -338,7 +338,7 @@ public class RedisMainController extends ParentStageController {
         // this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
         NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT, this::resizeMainLeft);
-        resizeHelper.widthLimit(390f, 800f);
+        resizeHelper.widthLimit(240f, 650f);
         // // 初始化拉伸事件
         // this.tree.setOnMouseMoved(resizeHelper.mouseMoved());
         resizeHelper.initResizeEvent();

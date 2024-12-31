@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.event.RedisServerMonitorEvent;
 import cn.oyzh.easyredis.event.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.RedisZSetReverseViewEvent;
-import cn.oyzh.easyredis.info.RedisPubsubItem;
+import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.filter.RedisFilterTab;
