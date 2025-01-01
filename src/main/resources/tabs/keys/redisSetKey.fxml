@@ -2,23 +2,28 @@
 
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
-<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisStreamKeyDataController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisSetKeyController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
@@ -47,8 +52,7 @@
     <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
-            <FlexTableColumn flexWidth="70% - 12" text="%base.content" valueName="value"/>
+            <FlexTableColumn flexWidth="100% - 12" text="%base.member" valueName="value"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
@@ -77,27 +81,46 @@
             </HBox.margin>
         </PageBox>
     </FlexHBox>
-    <FXText text="%base.content">
-        <VBox.margin>
-            <Insets left="5"/>
-        </VBox.margin>
-    </FXText>
-    <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 440"
-                          flexWidth="100% - 4">
+    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
+        <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
+                      onMousePrimaryClicked="#saveKeyValue">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </SaveSVGGlyph>
+        <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
+                      onMousePrimaryClicked="#dataUndo">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </UndoSVGGlyph>
+        <RedoSVGGlyph disable="true" fx:id="dataRedo" tipText="%base.redoTip1" size="16"
+                      onMousePrimaryClicked="#dataRedo">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </RedoSVGGlyph>
+        <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </PasteSVGGlyph>
+        <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </ClearSVGGlyph>
+    </FlexHBox>
+    <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
+                       flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RichDataTextAreaPane>
-    <FXText text="%base.id">
-        <VBox.margin>
-            <Insets top="5" left="5"/>
-        </VBox.margin>
-    </FXText>
-    <ReadOnlyTextField disable="true" realHeight="25" flexWidth="100% - 4" fx:id="streamID">
-        <VBox.margin>
-            <Insets left="2"/>
-        </VBox.margin>
-    </ReadOnlyTextField>
+    </RedisDataTextArea>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

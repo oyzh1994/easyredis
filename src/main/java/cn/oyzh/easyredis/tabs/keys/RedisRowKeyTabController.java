@@ -20,7 +20,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/06/30
  */
-public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>, R extends RedisKeyRow> extends RedisKeyTabController<T> {
+public abstract class RedisRowKeyTabController<T extends RedisRowKeyTreeItem<R>, R extends RedisKeyRow> extends RedisKeyController<T> {
 
     /**
      * 分页数据

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHylogKeyDataController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHylogKeyController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
             <HBox.margin>

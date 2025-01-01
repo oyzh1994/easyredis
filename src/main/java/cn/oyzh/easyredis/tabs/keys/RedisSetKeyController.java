@@ -2,13 +2,12 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
-import cn.oyzh.easyredis.event.key.RedisZSetMemberAddedEvent;
+import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
+import cn.oyzh.easyredis.event.key.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
-import cn.oyzh.easyredis.redis.key.RedisZSetValue;
-import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
+import cn.oyzh.easyredis.trees.keys.RedisSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -26,12 +25,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * zset键tab内容组件
+ * set键tab内容组件
  *
  * @author oyzh
- * @since 2023/06/30
+ * @since 2023/06/21
  */
-public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
+public class RedisSetKeyController extends RedisRowKeyTabController<RedisSetKeyTreeItem, RedisSetValue.RedisSetRow> {
 
     /**
      * 数据撤销
@@ -52,60 +51,16 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
     private SVGGlyph saveNodeData;
 
     /**
-     * 反转视图
-     */
-    @FXML
-    private SVGGlyph reverseView;
-
-    /**
-     * 分数值
-     */
-    @FXML
-    private DecimalTextField scoreVal;
-
-    /**
-     * 数据组件
-     */
-    @FXML
-    private RichDataTextAreaPane nodeData;
-
-    /**
      * 格式
      */
     @FXML
     private RichDataTypeComboBox format;
 
     /**
-     * 数据监听器
+     * 数据组件
      */
-    private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
-            this.saveNodeData.enable();
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.unsavedValue().setValue(newValue);
-            }
-        }
-    };
-
-    /**
-     * 分数监听器
-     */
-    private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
-        Number value = this.scoreVal.getValue();
-        RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
-            this.saveNodeData.enable();
-            if (this.treeItem.unsavedValue() == null) {
-                this.treeItem.data(this.treeItem.currentRow());
-            }
-            if (this.treeItem.unsavedValue() != null) {
-                this.treeItem.unsavedValue().setScore(value.doubleValue());
-            }
-        }
-    };
+    @FXML
+    private RichDataTextAreaPane nodeData;
 
     /**
      * 格式监听器
@@ -129,47 +84,60 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
         }
     };
 
+    /**
+     * redis数据监听器
+     */
+    private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
+        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+            this.saveNodeData.enable();
+            if (this.treeItem.unsavedValue() == null) {
+                this.treeItem.data(this.treeItem.currentRow());
+            }
+            if (this.treeItem.unsavedValue() != null) {
+                this.treeItem.unsavedValue().setValue(newValue);
+            }
+        }
+    };
+
     @Override
     protected void initKey() {
         // 初始化表单
         this.initTable();
         // 显示首页
         this.firstPage();
-        // 显示切换按钮
-        this.reverseView.setVisible(this.isSupportCoordinate());
     }
 
     @Override
-    protected List<RedisZSetValue.RedisZSetRow> getRows() {
-        List<RedisZSetValue.RedisZSetRow> rows = this.treeItem.rows();
+    protected List<RedisSetValue.RedisSetRow> getRows() {
+        List<RedisSetValue.RedisSetRow> rows = this.treeItem.rows();
         String filterKW = this.filter.getText();
         if (StringUtil.isNotEmpty(filterKW)) {
             rows = rows.parallelStream()
-                    .filter(r -> StringUtil.containsIgnoreCase(r.getValue(), filterKW) || StringUtil.containsIgnoreCase(String.valueOf(r.getScore()), filterKW))
+                    .filter(r -> StringUtil.containsIgnoreCase(r.getValue(), filterKW))
                     .collect(Collectors.toList());
         }
         return rows;
     }
 
+    /**
+     * 添加行
+     */
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter fxView = StageManager.parseStage(RedisZSetMemberAddController.class);
+        StageAdapter fxView = StageManager.parseStage(RedisSetMemberAddController.class, this.treeItem.window());
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }
 
     @Override
-    protected void initRow(RedisZSetValue.RedisZSetRow row) {
+    protected void initRow(RedisSetValue.RedisSetRow row) {
         super.initRow(row);
         if (row == null) {
             this.nodeData.clear();
             this.nodeData.disable();
-            this.scoreVal.clear();
         } else {
-            this.scoreVal.setValue(row.getScore());
             this.nodeData.enable();
-            this.treeItem.clearData();
         }
     }
 
@@ -184,7 +152,6 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
             TaskManager.start(() -> {
                 this.treeItem.saveKeyValue();
                 this.listTable.refresh();
-                // 保存监听
                 this.saveNodeData.disable();
             });
         }
@@ -195,27 +162,9 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
     protected void copyRow() {
         if (this.treeItem.isSelectRow()) {
             String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
-                    I18nHelper.member() + " : " + this.treeItem.currentRow().getValue() + System.lineSeparator() +
-                    I18nHelper.score() + " : " + this.treeItem.currentRow().getScore();
+                    I18nHelper.member() + " : " + this.treeItem.currentRow().getValue();
             ClipboardUtil.setStringAndTip(builder);
         }
-    }
-
-    /**
-     * 是否支持地理坐标
-     *
-     * @return 结果
-     */
-    private boolean isSupportCoordinate() {
-        return this.treeItem.isSupportCoordinate();
-    }
-
-    /**
-     * 反转视图
-     */
-    @FXML
-    private void reverseView() {
-        this.treeItem.reverseView();
     }
 
     /**
@@ -256,7 +205,7 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
 
     @Override
     protected void firstShowData() {
-        RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+        RedisSetValue.RedisSetRow row = this.treeItem.data();
         if (row != null) {
             RichDataType dataType = this.nodeData.showDetectData(row.getValue());
             this.format.setValue(dataType);
@@ -267,7 +216,7 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
 
     @Override
     protected void showData(RichDataType dataType) {
-        RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+        RedisSetValue.RedisSetRow row = this.treeItem.data();
         if (row != null) {
             this.nodeData.showData(dataType, row.getValue());
         }
@@ -276,7 +225,7 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMember() + "?")) {
+        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMessage() + "?")) {
             RedisKeyRow row = this.treeItem.currentRow();
             if (this.treeItem.deleteRow()) {
                 // 移除
@@ -300,12 +249,6 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
         super.bindListeners();
         // 格式监听
         this.format.selectedItemChanged(this.formatListener);
-        // // 切换视图
-        // this.reverseView.managedBindVisible();
-        // 分数处理
-        this.scoreVal.addTextChangeListener(this.scoreValListener);
-        this.scoreVal.disableProperty().bind(this.nodeData.disabledProperty());
-        this.scoreVal.editableProperty().bind(this.nodeData.editableProperty());
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
@@ -313,12 +256,12 @@ public class RedisZSetKeyDataController extends RedisRowKeyTabController<RedisZS
     }
 
     /**
-     * zset成员添加事件
+     * set成员添加事件
      *
      * @param msg 消息
      */
     @EventSubscribe
-    private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
+    private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
         }

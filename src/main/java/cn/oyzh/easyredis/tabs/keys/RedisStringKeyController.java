@@ -7,7 +7,6 @@ import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
@@ -22,7 +21,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/31
  */
-public class RedisStringKeyDataController extends RedisKeyTabController<RedisStringKeyTreeItem> {
+public class RedisStringKeyController extends RedisKeyController<RedisStringKeyTreeItem> {
 
     /**
      * 数据撤销

@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-public class RedisCoordinateKeyDataController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
+public class RedisCoordinateKeyController extends RedisRowKeyTabController<RedisZSetKeyTreeItem, RedisZSetValue.RedisZSetRow> {
 
     /**
      * 数据撤销

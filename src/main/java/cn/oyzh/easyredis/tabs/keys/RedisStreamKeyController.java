@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/07/07
  */
-public class RedisStreamKeyDataController extends RedisRowKeyTabController<RedisStreamKeyTreeItem, RedisStreamValue.RedisStreamRow> {
+public class RedisStreamKeyController extends RedisRowKeyTabController<RedisStreamKeyTreeItem, RedisStreamValue.RedisStreamRow> {
 
     /**
      * 消息id

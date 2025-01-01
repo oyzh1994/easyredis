@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.LatitudeField?>
-<?import cn.oyzh.easyredis.fx.LongitudeField?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
@@ -11,7 +9,6 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.ReverseSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
@@ -27,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisCoordinateKeyDataController">
+          fx:controller="cn.oyzh.easyredis.tabs.keys.RedisHashKeyController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
@@ -49,21 +46,14 @@
                 <Insets left="5" top="-5"/>
             </HBox.margin>
         </ClearableTextField>
-        <ReverseSVGGlyph onMousePrimaryClicked="#reverseView" tipText="%redis.key.tip7" size="16">
-            <HBox.margin>
-                <Insets left="5"/>
-            </HBox.margin>
-        </ReverseSVGGlyph>
         <padding>
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
-                   fixedCellSize="25">
+    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable" fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="50%" valueName="value" text="%base.name"/>
-            <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="25% - 12" valueName="latitude" text="%base.latitude"/>
+            <FlexTableColumn flexWidth="50%" text="%base.field" valueName="field"/>
+            <FlexTableColumn flexWidth="50% - 12" text="%base.value" valueName="value"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
@@ -92,8 +82,8 @@
             </HBox.margin>
         </PageBox>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
-        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
+    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="fieldAction">
+        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="fieldFormat">
             <HBox.margin>
                 <Insets left="5" top="5"/>
             </HBox.margin>
@@ -104,6 +94,51 @@
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </SaveSVGGlyph>
+        <UndoSVGGlyph disable="true" fx:id="fieldUndo" tipText="%base.undoTip1" size="16"
+                      onMousePrimaryClicked="#fieldUndo">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </UndoSVGGlyph>
+        <RedoSVGGlyph disable="true" fx:id="fieldRedo" tipText="%base.redoTip1" size="16"
+                      onMousePrimaryClicked="#fieldRedo">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </RedoSVGGlyph>
+        <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteField" tipText="%base.pasteTip1">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </PasteSVGGlyph>
+        <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearFiled">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </ClearSVGGlyph>
+        <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </RefreshSVGGlyph>
+    </FlexHBox>
+    <FXText text="%base.field">
+        <VBox.margin>
+            <Insets left="5"/>
+        </VBox.margin>
+    </FXText>
+    <RedisDataTextArea disable="true" realHeight="80" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
+                          onKeyPressed="#onKeyDataKeyPressed">
+        <VBox.margin>
+            <Insets left="2"/>
+        </VBox.margin>
+    </RedisDataTextArea>
+    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
+            <HBox.margin>
+                <Insets left="5" top="5"/>
+            </HBox.margin>
+        </RichDataTypeComboBox>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
             <HBox.margin>
@@ -126,44 +161,17 @@
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </ClearSVGGlyph>
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
-            <HBox.margin>
-                <Insets left="5" top="9"/>
-            </HBox.margin>
-        </CopySVGGlyph>
     </FlexHBox>
-    <FXText text="%base.coordinates">
+    <FXText text="%base.value">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 514"
-                       flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextArea disable="true" flexHeight="100% - 549" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
+                       onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <FXText text="%base.longitude">
-        <VBox.margin>
-            <Insets top="5" left="5"/>
-        </VBox.margin>
-    </FXText>
-    <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
-                    tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
-        <VBox.margin>
-            <Insets left="2"/>
-        </VBox.margin>
-    </LongitudeField>
-    <FXText text="%base.latitude">
-        <VBox.margin>
-            <Insets top="5" left="5"/>
-        </VBox.margin>
-    </FXText>
-    <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
-                   tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
-        <VBox.margin>
-            <Insets left="2"/>
-        </VBox.margin>
-    </LatitudeField>
     <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
 </FlexVBox>

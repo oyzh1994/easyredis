@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
  * @author oyzh
  * @since 2024/05/17
  */
-public class RedisHylogKeyDataController extends RedisKeyTabController<RedisStringKeyTreeItem> {
+public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTreeItem> {
 
     /**
      * 二进制数据

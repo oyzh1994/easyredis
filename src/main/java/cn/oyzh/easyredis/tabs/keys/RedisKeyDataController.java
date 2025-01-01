@@ -10,7 +10,6 @@ import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroup;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.thread.BackgroundService;
 import cn.oyzh.fx.plus.util.NodeUtil;
@@ -33,28 +32,28 @@ public class RedisKeyDataController extends DynamicTabController {
     private FXTab root;
 
     @FXML
-    private RedisSetKeyDataController setKeyController;
+    private RedisSetKeyController setKeyController;
 
     @FXML
-    private RedisZSetKeyDataController zsetKeyController;
+    private RedisZSetKeyController zsetKeyController;
 
     @FXML
     private RedisListKeyDataController listKeyController;
 
     @FXML
-    private RedisHylogKeyDataController hylogKeyController;
+    private RedisHylogKeyController hylogKeyController;
 
     @FXML
-    private RedisHashKeyDataController hashKeyController;
+    private RedisHashKeyController hashKeyController;
 
     @FXML
-    private RedisStringKeyDataController stringKeyController;
+    private RedisStringKeyController stringKeyController;
 
     @FXML
-    private RedisStreamKeyDataController streamKeyController;
+    private RedisStreamKeyController streamKeyController;
 
     @FXML
-    private RedisCoordinateKeyDataController coordinateKeyController;
+    private RedisCoordinateKeyController coordinateKeyController;
 
     private RedisKeyTreeItem treeItem;
 
@@ -112,7 +111,7 @@ public class RedisKeyDataController extends DynamicTabController {
         }
     }
 
-    private RedisKeyTabController<?> getKeyController() {
+    private RedisKeyController<?> getKeyController() {
         if (this.treeItem instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {
                 return this.stringKeyController;
@@ -141,14 +140,14 @@ public class RedisKeyDataController extends DynamicTabController {
     }
 
     public void reloadKey() {
-        RedisKeyTabController<?> controller = this.getKeyController();
+        RedisKeyController<?> controller = this.getKeyController();
         if (controller != null) {
             controller.reloadKey();
         }
     }
 
     public void flushTTL() {
-        RedisKeyTabController<?> controller = this.getKeyController();
+        RedisKeyController<?> controller = this.getKeyController();
         if (controller != null) {
             controller.flushTTL();
         }
