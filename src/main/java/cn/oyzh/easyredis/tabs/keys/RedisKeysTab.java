@@ -1,5 +1,8 @@
 package cn.oyzh.easyredis.tabs.keys;
 
+import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -13,11 +16,13 @@ import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
@@ -137,6 +142,12 @@ public class RedisKeysTab extends DynamicTab {
     public static class RedisKeysTabController extends DynamicTabController {
 
         /**
+         * 根节点
+         */
+        @FXML
+        private FlexHBox root;
+
+        /**
          * tab节点
          */
         @FXML
@@ -192,18 +203,6 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private RedisKeySearchTypeComboBox searchType;
 
-        // /**
-        //  * 节点排序(正序)
-        //  */
-        // @FXML
-        // private SVGGlyph sortAsc;
-        //
-        // /**
-        //  * 节点排序(倒序)
-        //  */
-        // @FXML
-        // private SVGGlyph sortDesc;
-
         /**
          * 收藏面板
          */
@@ -216,6 +215,11 @@ public class RedisKeysTab extends DynamicTab {
         @FXML
         private SortSVGPane sortPane;
 
+        /**
+         * 初始化
+         *
+         * @param treeItem db节点
+         */
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
                 this.treeItem = treeItem;
@@ -310,23 +314,29 @@ public class RedisKeysTab extends DynamicTab {
          * @param treeItem 节点
          */
         private void initItem(TreeItem<?> treeItem) {
-            if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
+            ThreadUtil.start(() -> {
+                CostUtil.record();
+                this.root.disable();
                 try {
-                    // 设置激活节点
-                    this.activeItem = keyTreeItem;
-                    // 初始化数据
-                    this.initData();
-                    // 刷新tab
-                    this.flushTab();
-                    // 启用组件
-                    this.tabPane.enable();
+                    if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
+                        // 设置激活节点
+                        this.activeItem = keyTreeItem;
+                        // 初始化数据
+                        this.initData();
+                        // 刷新tab
+                        this.flushTab();
+                        // 启用组件
+                        this.tabPane.enable();
+                    } else {
+                        this.tabPane.disable();
+                    }
                 } catch (Exception ex) {
                     MessageBox.exception(ex);
+                } finally {
+                    this.root.enable();
+                    CostUtil.printCost();
                 }
-            } else {
-                // 禁用组件
-                this.tabPane.disable();
-            }
+            }, 50);
         }
 
         /**

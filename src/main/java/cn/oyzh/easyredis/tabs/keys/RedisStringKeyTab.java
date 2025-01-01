@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
@@ -120,12 +121,21 @@ public class RedisStringKeyTab extends RedisKeyTab<RedisStringKeyTreeItem> {
             this.flushBinary();
             // 按钮状态处理
             this.saveNodeData.setDisable(!this.treeItem.isDataUnsaved());
-            // 如果是raw格式，则选择binary
-            if (this.treeItem.isRawEncoding()) {
-                this.format.selectBinary();
-            } else {// 自动匹配
-                RichDataType dataType = this.nodeData.showDetectData(this.treeItem.data());
-                this.format.selectObj(dataType);
+//            // 如果是raw格式，则选择binary
+//            if (this.treeItem.isRawEncoding()) {
+//                this.format.selectBinary();
+//            } else {// 自动匹配
+//            RichDataType dataType = this.nodeData.showDetectData(this.treeItem.data());
+//            this.format.selectObj(dataType);
+//            }
+            Object rawData = this.treeItem.data();
+            byte detectType = TextUtil.detectType(rawData);
+            if (detectType == 1) {
+                this.nodeData.showJsonData(rawData);
+                this.format.selectObj(RichDataType.JSON);
+            } else {
+                this.nodeData.showStringData(rawData);
+                this.format.selectObj(RichDataType.STRING);
             }
         }
 

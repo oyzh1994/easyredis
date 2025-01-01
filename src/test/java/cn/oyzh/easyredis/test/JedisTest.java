@@ -32,4 +32,22 @@ public class JedisTest {
         long res = jedis.del(key);
         System.out.println(res);
     }
+
+    @Test
+    public void test3() {
+        Jedis jedis = new Jedis("120.24.176.61", 16379);
+        jedis.auth("123456");
+        jedis.select(2);
+        String key = "test".repeat(1_000);
+        String res = jedis.set("test1", key);
+        System.out.println(res);
+
+        String key1 = "test".repeat(10_000);
+        String res1 = jedis.set("test2", key1);
+        System.out.println(res1);
+
+        String key2 = "test".repeat(100_000);
+        String res2 = jedis.set("test3", key2);
+        System.out.println(res2);
+    }
 }
