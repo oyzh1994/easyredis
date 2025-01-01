@@ -369,10 +369,11 @@ public class RedisKeysTab extends DynamicTab {
          * 刷新ttl
          */
         public void flushTTL() {
-            RedisKeyTab<?> keyTab = this.tabPane.getTab(0);
-            if (keyTab != null) {
-                keyTab.flushTTL();
-            }
+//            RedisKeyTab<?> keyTab = this.tabPane.getTab(0);
+//            if (keyTab != null) {
+//                keyTab.flushTTL();
+//            }
+            this.keyDataController.flushTTL();
         }
 
         @FXML
