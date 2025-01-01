@@ -56,14 +56,14 @@ public class RedisKeyExtraController {
      * 刷新ttl
      */
     public void flushTTL() {
-        this.ttl.setText("TTL : " + this.treeItem.ttl());
+        this.ttl.text("TTL : " + this.treeItem.ttl());
     }
 
     /**
      * 刷新内存占用信息
      */
     public void flushMemoryUsage() {
-        this.memoryUsage.setText(I18nHelper.size() + " : " + this.treeItem.memoryUsageInfo());
+        this.memoryUsage.text(I18nHelper.size() + " : " + this.treeItem.memoryUsageInfo());
     }
 
     /**
