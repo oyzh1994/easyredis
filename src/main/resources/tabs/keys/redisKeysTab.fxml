@@ -69,6 +69,7 @@
     <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
+
         <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
     </FlexTabPane>
 </FlexHBox>

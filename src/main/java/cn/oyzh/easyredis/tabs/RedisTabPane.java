@@ -320,20 +320,20 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     //     return null;
     // }
 
-    /**
-     * 获取键tab列表
-     *
-     * @return 键tab列表
-     */
-    public List<RedisKeyTab<?>> getKeyTabs() {
-        List<RedisKeyTab<?>> list = new ArrayList<>();
-        for (Tab tab : this.getTabs()) {
-            if (tab instanceof RedisKeyTab<?> nodeTab) {
-                list.add(nodeTab);
-            }
-        }
-        return list;
-    }
+//    /**
+//     * 获取键tab列表
+//     *
+//     * @return 键tab列表
+//     */
+//    public List<RedisKeyTab<?>> getKeyTabs() {
+//        List<RedisKeyTab<?>> list = new ArrayList<>();
+//        for (Tab tab : this.getTabs()) {
+//            if (tab instanceof RedisKeyTab<?> nodeTab) {
+//                list.add(nodeTab);
+//            }
+//        }
+//        return list;
+//    }
 
     // /**
     //  * 初始化节点tab
