@@ -31,35 +31,69 @@ public class RedisKeyDataController extends DynamicTabController {
     @FXML
     private FXTab root;
 
+    /**
+     * set键
+     */
     @FXML
     private RedisSetKeyController setKeyController;
 
+    /**
+     * zset键
+     */
     @FXML
     private RedisZSetKeyController zsetKeyController;
 
+    /**
+     * list键
+     */
     @FXML
-    private RedisListKeyDataController listKeyController;
+    private RedisListKeyController listKeyController;
 
+    /**
+     * hylog键
+     */
     @FXML
     private RedisHylogKeyController hylogKeyController;
 
+    /**
+     * hash键
+     */
     @FXML
     private RedisHashKeyController hashKeyController;
 
+    /**
+     * string键
+     */
     @FXML
     private RedisStringKeyController stringKeyController;
 
+    /**
+     * stream键
+     */
     @FXML
     private RedisStreamKeyController streamKeyController;
 
+    /**
+     * 坐标键
+     */
     @FXML
     private RedisCoordinateKeyController coordinateKeyController;
 
+    /**
+     * 当前item
+     */
     private RedisKeyTreeItem treeItem;
 
+    /**
+     * 执行初始化
+     *
+     * @param treeItem 节点
+     */
     public void init(RedisKeyTreeItem treeItem) {
         this.treeItem = treeItem;
+        // 隐藏旧内容
         NodeGroupUtil.disappear(this.root, "key-data");
+        // 处理具体业务
         if (treeItem instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {
                 this.hylogKeyController.init(item1);
@@ -97,7 +131,7 @@ public class RedisKeyDataController extends DynamicTabController {
             Node node = this.root.getContent().lookup("#streamKey");
             NodeUtil.display(node);
         }
-        // 刷新
+        // 刷新tab
         this.flushTab();
         // 判断这个key是否到期
         if (treeItem.isExpire()) {
@@ -111,6 +145,10 @@ public class RedisKeyDataController extends DynamicTabController {
         }
     }
 
+    /**
+     * 获取键Controller
+     * @return 键Controller
+     */
     private RedisKeyController<?> getKeyController() {
         if (this.treeItem instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {
@@ -139,6 +177,9 @@ public class RedisKeyDataController extends DynamicTabController {
         return null;
     }
 
+    /**
+     * 重载键
+     */
     public void reloadKey() {
         RedisKeyController<?> controller = this.getKeyController();
         if (controller != null) {
@@ -146,6 +187,9 @@ public class RedisKeyDataController extends DynamicTabController {
         }
     }
 
+    /**
+     * 刷新ttl
+     */
     public void flushTTL() {
         RedisKeyController<?> controller = this.getKeyController();
         if (controller != null) {

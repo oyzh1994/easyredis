@@ -10,7 +10,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
 /**
- * redis键信息组件
+ * redis键额外信息组件
  *
  * @author oyzh
  * @since 2023/08/03

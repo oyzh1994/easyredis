@@ -25,18 +25,6 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Dyn
     @FXML
     protected FlexVBox root;
 
-    // /**
-    //  * 收藏
-    //  */
-    // @FXML
-    // protected SVGGlyph collect;
-    //
-    // /**
-    //  * 取消收藏
-    //  */
-    // @FXML
-    // protected SVGGlyph unCollect;
-
     /**
      * 树节点
      */
@@ -63,10 +51,6 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Dyn
         if (this.treeItem.isExpire()) {
             return false;
         }
-
-        // // 收藏处理
-        // this.collect.setVisible(!this.treeItem.isCollect());
-        // this.unCollect.setVisible(this.treeItem.isCollect());
 
         // 初始化节点
         this.initKey();
@@ -98,26 +82,6 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Dyn
     protected void renameKey() {
         this.treeItem.rename();
     }
-
-    // /**
-    //  * 收藏
-    //  */
-    // @FXML
-    // protected void collect() {
-    //     this.treeItem.collect();
-    //     this.collect.disappear();
-    //     this.unCollect.display();
-    // }
-    //
-    // /**
-    //  * 取消收藏
-    //  */
-    // @FXML
-    // protected void unCollect() {
-    //     this.treeItem.unCollect();
-    //     this.collect.display();
-    //     this.unCollect.disappear();
-    // }
 
     /**
      * 数据组件键盘按下事件
@@ -155,13 +119,6 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Dyn
     public void flushTTL() {
         this.keyExtraController.flushTTL();
     }
-
-    // @Override
-    // protected void bindListeners() {
-    //     super.bindListeners();
-    //     this.collect.managedBindVisible();
-    //     this.unCollect.managedBindVisible();
-    // }
 
     /**
      * 首次显示数据

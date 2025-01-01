@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/21
  */
-public class RedisListKeyDataController extends RedisRowKeyTabController<RedisListKeyTreeItem, RedisListValue.RedisListRow> {
+public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTreeItem, RedisListValue.RedisListRow> {
 
     /**
      * 数据撤销
