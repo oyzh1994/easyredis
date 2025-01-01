@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.ThreadLocalUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
@@ -395,11 +396,15 @@ public class RedisClient {
      * @return Jedis
      */
     private Jedis getResource() {
-        if (this.sentinelPool != null) {
-            return this.sentinelPool.getResource();
-        }
-        if (this.pool != null) {
-            return this.pool.getResource();
+        try {
+            if (this.sentinelPool != null) {
+                return this.sentinelPool.getResource();
+            }
+            if (this.pool != null) {
+                return this.pool.getResource();
+            }
+        } finally {
+            ThreadLocalUtil.setVal("connectName", this.connectName());
         }
         return null;
     }

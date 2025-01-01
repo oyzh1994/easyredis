@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
+import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
 import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
@@ -50,6 +51,7 @@ import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
+import redis.clients.jedis.CommandArguments;
 
 /**
  * redis事件工具
@@ -98,7 +100,7 @@ public class RedisEventUtil {
      *
      * @param redisConnect redis信息
      */
-    public static void terminalClose(RedisConnect redisConnect,Integer dbIndex) {
+    public static void terminalClose(RedisConnect redisConnect, Integer dbIndex) {
         RedisTerminalCloseEvent event = new RedisTerminalCloseEvent();
         event.data(redisConnect);
         event.dbIndex(dbIndex);
@@ -579,5 +581,15 @@ public class RedisEventUtil {
         event.data(group);
         event.oldName(oldName);
         EventUtil.post(event);
+    }
+
+    /**
+     * 客户端操作
+     */
+    public static void clientAction(String connectName, CommandArguments arguments) {
+        RedisClientActionEvent event = new RedisClientActionEvent();
+        event.data(connectName);
+        event.arguments(arguments);
+        EventUtil.postAsync(event);
     }
 }
