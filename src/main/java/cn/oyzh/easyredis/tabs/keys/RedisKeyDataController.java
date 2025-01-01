@@ -60,45 +60,44 @@ public class RedisKeyDataController extends DynamicTabController {
 
     public void init(RedisKeyTreeItem treeItem) {
         this.treeItem = treeItem;
-        NodeGroupUtil.disappear(this.root,"key-data");
+        NodeGroupUtil.disappear(this.root, "key-data");
         if (treeItem instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {
                 this.hylogKeyController.init(item1);
-                Node node= this.root.getContent().lookup("#hylogKey");
+                Node node = this.root.getContent().lookup("#hylogKey");
                 NodeUtil.display(node);
             } else {
                 this.stringKeyController.init(item1);
-                Node node= this.root.getContent().lookup("#stringKey");
+                Node node = this.root.getContent().lookup("#stringKey");
                 NodeUtil.display(node);
             }
         } else if (treeItem instanceof RedisZSetKeyTreeItem item1) {
             if (item1.isCoordinateView()) {
                 this.coordinateKeyController.init(item1);
-                Node node= this.root.getContent().lookup("#coordinateKey");
+                Node node = this.root.getContent().lookup("#coordinateKey");
                 NodeUtil.display(node);
             } else {
                 this.zsetKeyController.init(item1);
-                Node node= this.root.getContent().lookup("#zsetKey");
+                Node node = this.root.getContent().lookup("#zsetKey");
                 NodeUtil.display(node);
             }
         } else if (treeItem instanceof RedisHashKeyTreeItem item1) {
             this.hashKeyController.init(item1);
-            Node node= this.root.getContent().lookup("#hashKey");
+            Node node = this.root.getContent().lookup("#hashKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisListKeyTreeItem item1) {
             this.listKeyController.init(item1);
-            Node node= this.root.getContent().lookup("#listKey");
+            Node node = this.root.getContent().lookup("#listKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisSetKeyTreeItem item1) {
             this.setKeyController.init(item1);
-            Node node= this.root.getContent().lookup("#setKey");
+            Node node = this.root.getContent().lookup("#setKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisStreamKeyTreeItem item1) {
             this.streamKeyController.init(item1);
-            Node node= this.root.getContent().lookup("#streamKey");
+            Node node = this.root.getContent().lookup("#streamKey");
             NodeUtil.display(node);
         }
-
         // 刷新
         this.flushTab();
         // 判断这个key是否到期
