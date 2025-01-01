@@ -83,10 +83,15 @@ import java.util.Set;
  */
 public class RedisClient {
 
+//    /**
+//     * redis连接池
+//     */
+//    private JedisPool pool;
+
     /**
-     * redis连接池
+     * 连接池管理器
      */
-    private JedisPool pool;
+    private final RedisPoolManager poolManager = new RedisPoolManager();
 
     /**
      * redis集群操作对象
@@ -98,10 +103,10 @@ public class RedisClient {
      */
     private CommandObjects commandObjects;
 
-    /**
-     * redis哨兵连接池
-     */
-    private JedisSentinelPool sentinelPool;
+//    /**
+//     * redis哨兵连接池
+//     */
+//    private JedisSentinelPool sentinelPool;
 
     /**
      * 当前连接角色
@@ -117,7 +122,7 @@ public class RedisClient {
     /**
      * 数据库数量
      */
-    private int databases = 1;
+    private Integer databases;
 
     /**
      * 服务属性
@@ -253,7 +258,10 @@ public class RedisClient {
         // 初始化连接池
         this.intPoolConfig(poolConfig);
         // 生成连接池
-        this.pool = new JedisPool(poolConfig, host, clientConfig);
+        JedisPool pool = new JedisPool(poolConfig, host, clientConfig);
+        // 配置管理器
+        this.poolManager.setJedisPool(pool);
+        this.poolManager.setConnectName(this.connectName());
     }
 
     /**
@@ -396,18 +404,40 @@ public class RedisClient {
      * @return Jedis
      */
     private Jedis getResource() {
-        try {
-            if (this.sentinelPool != null) {
-                return this.sentinelPool.getResource();
-            }
-            if (this.pool != null) {
-                return this.pool.getResource();
-            }
-        } finally {
-            ThreadLocalUtil.setVal("connectName", this.connectName());
-        }
-        return null;
+        return this.poolManager.getResource();
     }
+
+    /**
+     * 获取连接
+     *
+     * @param dbIndex 数据库索引
+     * @return Jedis
+     */
+    private Jedis getResource(Integer dbIndex) {
+        if (dbIndex == null) {
+            return this.poolManager.getResource();
+        }
+        return this.poolManager.getResource(dbIndex);
+    }
+
+//    /**
+//     * 获取连接
+//     *
+//     * @return Jedis
+//     */
+//    private Jedis getResource() {
+//        try {
+//            if (this.sentinelPool != null) {
+//                return this.sentinelPool.getResource();
+//            }
+//            if (this.pool != null) {
+//                return this.pool.getResource();
+//            }
+//        } finally {
+//            ThreadLocalUtil.setVal("connectName", this.connectName());
+//        }
+//        return null;
+//    }
 
     /**
      * 返还连接
@@ -415,13 +445,14 @@ public class RedisClient {
      * @param jedis 连接
      */
     private void returnResource(Jedis jedis) {
-        ThreadUtil.startVirtual(() -> {
-            if (this.sentinelPool != null) {
-                this.sentinelPool.returnResource(jedis);
-            } else if (this.pool != null) {
-                this.pool.returnResource(jedis);
-            }
-        });
+//        ThreadUtil.startVirtual(() -> {
+//            if (this.sentinelPool != null) {
+//                this.sentinelPool.returnResource(jedis);
+//            } else if (this.pool != null) {
+//                this.pool.returnResource(jedis);
+//            }
+//        });
+        this.poolManager.returnResource(jedis);
     }
 
     /**
@@ -435,16 +466,16 @@ public class RedisClient {
                 this.cluster.close();
                 isClosed = true;
             }
-            // 关闭连接池
-            if (this.pool != null && !this.pool.isClosed()) {
-                this.pool.close();
-                isClosed = true;
-            }
-            // 关闭哨兵连接池
-            if (this.sentinelPool != null && !this.sentinelPool.isClosed()) {
-                this.sentinelPool.close();
-                isClosed = true;
-            }
+//            // 关闭连接池
+//            if (this.pool != null && !this.pool.isClosed()) {
+//                this.pool.close();
+//                isClosed = true;
+//            }
+//            // 关闭哨兵连接池
+//            if (this.sentinelPool != null && !this.sentinelPool.isClosed()) {
+//                this.sentinelPool.close();
+//                isClosed = true;
+//            }
             // 销毁端口转发
             if (this.redisConnect.isSSHForward()) {
                 if (this.sshForwarder != null) {
@@ -457,12 +488,13 @@ public class RedisClient {
                 RedisEventUtil.connectionClosed(this);
             }
             // 重置变量
-            this.pool = null;
+//            this.pool = null;
             this.role = null;
-            this.databases = 1;
             this.cluster = null;
+            this.databases = null;
             this.clearInfoProp();
-            this.sentinelPool = null;
+//            this.sentinelPool = null;
+            this.poolManager.destroy();
             this.commandObjects = null;
             this.clusterMasterPools = null;
         } catch (Exception ex) {
@@ -585,7 +617,8 @@ public class RedisClient {
      * @return 连接池
      */
     private Pool<?> getPool() {
-        return this.pool == null ? this.sentinelPool : this.pool;
+        return this.poolManager.getJedisPool();
+//        return this.pool == null ? this.sentinelPool : this.pool;
     }
 
     /**
@@ -636,7 +669,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hrandfield(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hrandfield(key);
@@ -659,7 +692,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hrandfield(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hrandfield(key, count);
@@ -682,7 +715,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hrandfieldWithValues(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hrandfieldWithValues(key, count);
@@ -704,7 +737,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hkeys(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hkeys(key);
@@ -726,7 +759,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hvals(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hvals(key);
@@ -748,7 +781,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hlen(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hlen(key);
@@ -773,7 +806,7 @@ public class RedisClient {
             return this.getCluster().hdel(key);
         }
         if (ArrayUtil.isNotEmpty(fields)) {
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             try {
                 this.dbIndex(jedis, dbIndex);
                 return jedis.hdel(key, fields);
@@ -800,7 +833,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hset(key, field, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hset(key, field, value);
@@ -824,7 +857,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hset(key, hash);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hset(key, hash);
@@ -849,7 +882,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hsetnx(key, field, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hsetnx(key, field, value);
@@ -872,7 +905,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hstrlen(key, field);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hstrlen(key, field);
@@ -896,7 +929,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hmset(key, hash);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hmset(key, hash);
@@ -919,7 +952,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hexists(key, field);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hexists(key, field);
@@ -942,7 +975,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hget(key, field);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hget(key, field);
@@ -967,7 +1000,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hincrBy(key, field, increment);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hincrBy(key, field, increment);
@@ -992,7 +1025,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hincrByFloat(key, field, increment);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hincrByFloat(key, field, increment);
@@ -1018,7 +1051,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hmget(key, fields);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hmget(key, fields);
@@ -1040,7 +1073,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().hgetAll(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.hgetAll(key);
@@ -1062,7 +1095,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zcard(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zcard(key);
@@ -1086,7 +1119,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zcount(key, min, max);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zcount(key, min, max);
@@ -1111,7 +1144,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zdiff(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zdiff(keys);
@@ -1136,7 +1169,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zdiffWithScores(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zdiffWithScores(keys);
@@ -1163,7 +1196,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zdiffStore(destkey, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zdiffStore(destkey, keys);
@@ -1186,7 +1219,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zscore(key, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zscore(key, member);
@@ -1212,7 +1245,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zmscore(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zmscore(key, members);
@@ -1243,7 +1276,7 @@ public class RedisClient {
             }
             return list;
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             List<Double> list = new ArrayList<>(members.length);
@@ -1269,7 +1302,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrandmember(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrandmember(key);
@@ -1292,7 +1325,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrandmember(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrandmember(key, count);
@@ -1327,7 +1360,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrange(key, start, end);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrange(key, start, end);
@@ -1354,7 +1387,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrem(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrem(key, members);
@@ -1377,7 +1410,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrank(key, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrank(key, member);
@@ -1400,7 +1433,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zrevrank(key, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zrevrank(key, member);
@@ -1425,7 +1458,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zadd(key, score, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zadd(key, score, member);
@@ -1449,7 +1482,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zadd(key, scoreMembers);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zadd(key, scoreMembers);
@@ -1474,7 +1507,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().zincrby(key, increment, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.zincrby(key, increment, member);
@@ -1497,7 +1530,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sismember(key, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sismember(key, member);
@@ -1519,7 +1552,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().srandmember(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.srandmember(key);
@@ -1542,7 +1575,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().srandmember(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.srandmember(key, count);
@@ -1564,7 +1597,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().scard(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.scard(key);
@@ -1588,7 +1621,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sadd(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (members == null) {
@@ -1614,7 +1647,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().spop(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.spop(key);
@@ -1639,7 +1672,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sdiff(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sdiff(keys);
@@ -1666,7 +1699,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sdiffstore(destkey, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sdiffstore(destkey, keys);
@@ -1691,7 +1724,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sunion(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sunion(keys);
@@ -1718,7 +1751,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sunionstore(destkey, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sunionstore(destkey, keys);
@@ -1743,7 +1776,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sinter(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sinter(keys);
@@ -1770,7 +1803,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().sinterstore(destkey, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.sinterstore(destkey, keys);
@@ -1794,7 +1827,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().spop(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.spop(key, count);
@@ -1821,7 +1854,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().srem(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.srem(key, members);
@@ -1843,7 +1876,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().smembers(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.smembers(key);
@@ -1870,7 +1903,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().rpush(key, values);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.rpush(key, values);
@@ -1897,7 +1930,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().rpushx(key, values);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.rpushx(key, values);
@@ -1924,7 +1957,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lpush(key, values);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lpush(key, values);
@@ -1951,7 +1984,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lpushx(key, values);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lpushx(key, values);
@@ -1976,7 +2009,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lset(key, index, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lset(key, index, value);
@@ -2002,7 +2035,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().linsert(key, where, pivot, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.linsert(key, where, pivot, value);
@@ -2029,7 +2062,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().blpop(timeout, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.blpop(timeout, keys);
@@ -2056,7 +2089,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().brpop(timeout, keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.brpop(timeout, keys);
@@ -2093,7 +2126,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lrem(key, count, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lrem(key, count, value);
@@ -2128,7 +2161,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lrange(key, start, end);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lrange(key, start, end);
@@ -2151,7 +2184,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lindex(key, index);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lindex(key, index);
@@ -2174,7 +2207,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lpop(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lpop(key);
@@ -2198,7 +2231,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().lpop(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.lpop(key, count);
@@ -2221,7 +2254,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().rpop(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.rpop(key);
@@ -2245,7 +2278,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().rpop(key, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.rpop(key, count);
@@ -2270,7 +2303,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().ltrim(key, start, stop);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.ltrim(key, start, stop);
@@ -2292,7 +2325,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().llen(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.llen(key);
@@ -2319,7 +2352,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().pfadd(key, elements);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.pfadd(key, elements);
@@ -2344,7 +2377,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().pfcount(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.pfcount(keys);
@@ -2371,7 +2404,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().pfmerge(destKey, sourceKeys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.pfmerge(destKey, sourceKeys);
@@ -2397,7 +2430,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().geoadd(key, longitude, latitude, member);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.geoadd(key, longitude, latitude, member);
@@ -2422,7 +2455,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().geoadd(key, params, memberCoordinate);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (params == null) {
@@ -2451,7 +2484,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().geohash(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.geohash(key, members);
@@ -2479,7 +2512,7 @@ public class RedisClient {
             }
             return this.getCluster().geodist(key, member1, member2, unit);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (unit == null) {
@@ -2509,7 +2542,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().geopos(key, members);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.geopos(key, members);
@@ -2531,7 +2564,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().exists(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.exists(key);
@@ -2556,7 +2589,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().exists(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.exists(keys);
@@ -2580,7 +2613,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().set(key, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.set(key, value == null ? "" : value);
@@ -2604,7 +2637,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().set(key, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.set(key, value == null ? new byte[]{} : value);
@@ -2629,7 +2662,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().setrange(key, offset, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.setrange(key, offset, value);
@@ -2653,7 +2686,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().setnx(key, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.setnx(key, value == null ? "" : value);
@@ -2678,7 +2711,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().setex(key, seconds, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.setex(key, seconds, value);
@@ -2704,7 +2737,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().mset(keyValues);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.mset(keyValues);
@@ -2730,7 +2763,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().msetnx(keyValues);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.msetnx(keyValues);
@@ -2752,7 +2785,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().get(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.get(key);
@@ -2774,7 +2807,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().get(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.get(key);
@@ -2798,7 +2831,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().getrange(key, startOffset, endOffset);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.getrange(key, startOffset, endOffset);
@@ -2823,7 +2856,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().mget(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.mget(keys);
@@ -2847,7 +2880,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().append(key, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.append(key, value);
@@ -2869,7 +2902,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().strlen(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.strlen(key);
@@ -2893,7 +2926,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().getSet(key, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.getSet(key, value);
@@ -2916,7 +2949,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().decr(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.decr(key);
@@ -2940,7 +2973,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().decrBy(key, decrement);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.decrBy(key, decrement);
@@ -2963,7 +2996,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().incr(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.incr(key);
@@ -2987,7 +3020,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().incrBy(key, increment);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.incrBy(key, increment);
@@ -3011,7 +3044,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().incrByFloat(key, increment);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.incrByFloat(key, increment);
@@ -3036,7 +3069,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().setbit(key, offset, value);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.setbit(key, offset, value);
@@ -3059,7 +3092,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().getbit(key, offset);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.getbit(key, offset);
@@ -3090,7 +3123,7 @@ public class RedisClient {
             }
             return this.getCluster().bitcount(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (start == null || end == null) {
@@ -3123,7 +3156,7 @@ public class RedisClient {
             }
             return this.getCluster().bitpos(key, value, params);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (params == null) {
@@ -3152,7 +3185,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().del(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.del(keys);
@@ -3191,7 +3224,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().xadd(key, id, hash);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.xadd(key, id, hash);
@@ -3216,7 +3249,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().xadd(key, hash, params);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.xadd(key, hash, params);
@@ -3243,7 +3276,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().xdel(key, ids);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.xdel(key, ids);
@@ -3265,7 +3298,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().xinfoStream(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.xinfoStream(key);
@@ -3287,7 +3320,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().xinfoStreamFull(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.xinfoStreamFull(key);
@@ -3338,7 +3371,7 @@ public class RedisClient {
             }
             return this.getCluster().xrange(key, start, end, count);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (count == null) {
@@ -3362,7 +3395,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().randomKey();
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.randomKey();
@@ -3386,7 +3419,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             throw new ClusterOperationException();
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, formDBIndex);
             return jedis.move(key, targetDBIndex);
@@ -3408,7 +3441,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().type(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.type(key);
@@ -3445,7 +3478,7 @@ public class RedisClient {
                 }
             }
         } else {// 一般连接处理
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             try (Pipeline pipeline = jedis.pipelined()) {
                 this.dbIndex(jedis, dbIndex);
                 for (String key : keys) {
@@ -3476,7 +3509,7 @@ public class RedisClient {
                 dbsize += this.dbSize(connectionPool);
             }
         } else {// 普通模式
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             try {
                 this.dbIndex(jedis, dbIndex);
                 dbsize = jedis.dbSize();
@@ -3516,7 +3549,7 @@ public class RedisClient {
         if (cursor == null) {
             cursor = ScanParams.SCAN_POINTER_START;
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.scan(cursor, params);
@@ -3573,7 +3606,7 @@ public class RedisClient {
                 keys.addAll(this.keys(connectionPool, pattern));
             }
         } else {// 普通模式
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             try {
                 this.dbIndex(jedis, dbIndex);
                 keys = jedis.keys(pattern);
@@ -3608,7 +3641,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().rename(key, newKey);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.rename(key, newKey);
@@ -3630,7 +3663,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().ttl(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.ttl(key);
@@ -3652,7 +3685,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().pttl(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.pttl(key);
@@ -3680,7 +3713,7 @@ public class RedisClient {
             }
             return this.getCluster().expire(key, seconds, option);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (option == null) {
@@ -3708,7 +3741,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().pexpire(key, milliseconds, option);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (option == null) {
@@ -3736,7 +3769,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().expireAt(key, unixTime, option);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (option == null) {
@@ -3764,7 +3797,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().expireAt(key, millisecondsTimestamp, option);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (option == null) {
@@ -3790,7 +3823,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().persist(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.persist(key);
@@ -3816,7 +3849,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().touch(keys);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.touch(keys);
@@ -3839,7 +3872,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().waitReplicas((String) null, replicas, timeout);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.waitReplicas(replicas, timeout);
         } finally {
@@ -3862,7 +3895,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().waitAOF((String) null, numLocal, replicas, timeout);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.waitAOF(numLocal, replicas, timeout);
         } finally {
@@ -3883,7 +3916,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().objectEncoding(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.objectEncoding(key);
@@ -3905,7 +3938,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().objectFreq(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.objectFreq(key);
@@ -3927,7 +3960,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().objectIdletime(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.objectIdletime(key);
@@ -3949,7 +3982,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().objectRefcount(key);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.objectRefcount(key);
@@ -3975,7 +4008,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().copy(srcKey, dstKey, replace);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             if (db == null) {
@@ -4000,7 +4033,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().flushDB();
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.flushDB();
@@ -4021,7 +4054,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().flushAll();
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.flushAll();
         } finally {
@@ -4038,7 +4071,7 @@ public class RedisClient {
     public Map<String, String> configGet(String pattern) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config get");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.configGet(pattern);
         } finally {
@@ -4057,7 +4090,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config set");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.configSet(parameter, value);
         } finally {
@@ -4075,7 +4108,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config set");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.configSet(parameterValues);
         } finally {
@@ -4092,7 +4125,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config rewrite");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.configRewrite();
         } finally {
@@ -4109,7 +4142,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "config resetStat");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.configResetStat();
         } finally {
@@ -4186,7 +4219,7 @@ public class RedisClient {
             throw new ClusterOperationException();
         }
         RedisVersionUtil.checkSupported(this.getServerVersion(), "select");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return this.dbIndex(jedis, dbIndex);
         } finally {
@@ -4208,7 +4241,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             return this.getCluster().publish(channel, message);
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.publish(channel, message);
         } finally {
@@ -4225,7 +4258,7 @@ public class RedisClient {
     public Map<String, Long> pubsubNumSub(String... channels) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub numSub");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.pubsubNumSub(channels);
         } finally {
@@ -4241,7 +4274,7 @@ public class RedisClient {
     public Long pubsubNumPat() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub numPat");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.pubsubNumPat();
         } finally {
@@ -4265,7 +4298,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             this.getCluster().subscribe(pubSub, channels);
         } else {
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             jedis.subscribe(pubSub, channels);
         }
     }
@@ -4286,7 +4319,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             this.getCluster().subscribe(pubSub, patterns);
         } else {
-            Jedis jedis = this.getResource();
+            Jedis jedis = this.getResource(dbIndex);
             jedis.psubscribe(pubSub, patterns);
         }
     }
@@ -4300,7 +4333,7 @@ public class RedisClient {
     public List<String> pubsubChannels(String pattern) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "pubsub channels");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             if (pattern == null) {
                 return jedis.pubsubChannels();
@@ -4317,13 +4350,21 @@ public class RedisClient {
      * @return db数量
      */
     public int databases() {
-        if (!this.isClusterMode() && !this.isSentinelMode()) {
-            Map<String, String> config = this.configGet("databases");
-            if (CollectionUtil.isEmpty(config)) {
-                this.databases = 16;
-            } else {
-                this.databases = Integer.parseInt(CollectionUtil.getFirst(config.values()));
+        if (this.databases != null) {
+            return this.databases;
+        }
+        try {
+            if (!this.isClusterMode() && !this.isSentinelMode()) {
+                Map<String, String> config = this.configGet("databases");
+                if (CollectionUtil.isEmpty(config)) {
+                    this.databases = 16;
+                } else {
+                    this.databases = Integer.parseInt(CollectionUtil.getFirst(config.values()));
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            this.databases = 16;
         }
         return this.databases;
     }
@@ -4359,7 +4400,7 @@ public class RedisClient {
      * @return 结果
      */
     public String info(String section) {
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             if (section == null) {
                 return jedis.info();
@@ -4387,7 +4428,7 @@ public class RedisClient {
     public List<String> time() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "time");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.time();
         } finally {
@@ -4404,7 +4445,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "save");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.save();
         } finally {
@@ -4420,7 +4461,7 @@ public class RedisClient {
     public long lastsave() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "lastsave");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.lastsave();
         } finally {
@@ -4437,7 +4478,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bgsave");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.bgsave();
         } finally {
@@ -4454,7 +4495,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "bgrewriteaof");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.bgrewriteaof();
         } finally {
@@ -4470,7 +4511,7 @@ public class RedisClient {
     public String clientList() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client list");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.clientList();
         } finally {
@@ -4486,7 +4527,7 @@ public class RedisClient {
     public String clientGetname() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client getname");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.clientGetname();
         } finally {
@@ -4504,7 +4545,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "client setname");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.clientSetname(name);
         } finally {
@@ -4520,7 +4561,7 @@ public class RedisClient {
     public long slowlogLen() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog len");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.slowlogLen();
         } finally {
@@ -4537,7 +4578,7 @@ public class RedisClient {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog reset");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.slowlogReset();
         } finally {
@@ -4553,7 +4594,7 @@ public class RedisClient {
     public List<Slowlog> slowlogGet() {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog get");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.slowlogGet();
         } finally {
@@ -4570,7 +4611,7 @@ public class RedisClient {
     public List<Slowlog> slowlogGet(long entries) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "slowlog get");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.slowlogGet(entries);
         } finally {
@@ -4588,7 +4629,7 @@ public class RedisClient {
     public Long memoryUsage(Integer dbIndex, String key) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "memoryUsage");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.memoryUsage(key);
@@ -4604,7 +4645,7 @@ public class RedisClient {
      */
     public List<Object> role() {
         RedisVersionUtil.checkSupported(this.getServerVersion(), "role");
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             return jedis.role();
         } finally {
@@ -4672,7 +4713,7 @@ public class RedisClient {
         if (commandObject == null) {
             return null;
         }
-        Jedis jedis = this.getResource();
+        Jedis jedis = this.getResource(dbIndex);
         try {
             this.dbIndex(jedis, dbIndex);
             return jedis.getConnection().executeCommand(commandObject);
