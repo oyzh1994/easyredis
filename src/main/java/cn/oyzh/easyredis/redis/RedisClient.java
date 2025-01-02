@@ -1,8 +1,6 @@
 package cn.oyzh.easyredis.redis;
 
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.ThreadLocalUtil;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
@@ -39,7 +37,6 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
-import redis.clients.jedis.JedisSentinelPool;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.Response;
@@ -93,10 +90,10 @@ public class RedisClient {
      */
     private final RedisPoolManager poolManager = new RedisPoolManager();
 
-    /**
-     * redis集群操作对象
-     */
-    private JedisCluster cluster;
+    // /**
+    //  * redis集群操作对象
+    //  */
+    // private JedisCluster cluster;
 
     /**
      * redis命令对象
@@ -141,10 +138,10 @@ public class RedisClient {
     @Accessors(chain = true, fluent = true)
     private final RedisConnect redisConnect;
 
-    /**
-     * cluster集群的主节点连接
-     */
-    private List<ConnectionPool> clusterMasterPools;
+    // /**
+    //  * cluster集群的主节点连接
+    //  */
+    // private List<ConnectionPool> clusterMasterPools;
 
     /**
      * 连接状态
@@ -241,7 +238,8 @@ public class RedisClient {
         // 初始化连接池
         this.intPoolConfig(clusterPoolConfig);
         // 初始化cluster集群操作对象
-        this.cluster = new JedisCluster(host, clientConfig, 10, clusterPoolConfig);
+        JedisCluster cluster = new JedisCluster(host, clientConfig, 10, clusterPoolConfig);
+        this.poolManager.setCluster(cluster);
         // 初始化指令对象
         this.commandObjects = new CommandObjects();
     }
@@ -375,27 +373,42 @@ public class RedisClient {
      * @return JedisCluster
      */
     private JedisCluster getCluster() {
-        return this.cluster;
+        return this.poolManager.getCluster();
+        // return this.cluster;
     }
+
+    // /**
+    //  * 获取cluster集群的主节点连接
+    //  *
+    //  * @return List<ConnectionPool>
+    //  */
+    // @Deprecated
+    // private List<ConnectionPool> getClusterMasterPools() {
+    //     Map<String, ConnectionPool> poolMap = this.cluster.getClusterNodes();
+    //     if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
+    //         this.clusterMasterPools = new ArrayList<>();
+    //         for (ConnectionPool connectionPool : poolMap.values()) {
+    //             List<Object> roleList = this.role(connectionPool);
+    //             Object role = CollectionUtil.getFirst(roleList);
+    //             if (StringUtil.equalsIgnoreCase("master", (String) role)) {
+    //                 this.clusterMasterPools.add(connectionPool);
+    //             }
+    //         }
+    //     }
+    //     return this.clusterMasterPools == null ? Collections.emptyList() : this.clusterMasterPools;
+    // }
 
     /**
      * 获取cluster集群的主节点连接
      *
      * @return List<ConnectionPool>
      */
-    private List<ConnectionPool> getClusterMasterPools() {
-        Map<String, ConnectionPool> poolMap = this.cluster.getClusterNodes();
-        if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
-            this.clusterMasterPools = new ArrayList<>();
-            for (ConnectionPool connectionPool : poolMap.values()) {
-                List<Object> roleList = this.role(connectionPool);
-                Object role = CollectionUtil.getFirst(roleList);
-                if (StringUtil.equalsIgnoreCase("master", (String) role)) {
-                    this.clusterMasterPools.add(connectionPool);
-                }
-            }
+    private List<ConnectionPool> getClusterPools() {
+        if (!this.poolManager.hasClusterPool()) {
+            Map<String, ConnectionPool> poolMap = this.getCluster().getClusterNodes();
+            this.poolManager.initClusterPool(poolMap);
         }
-        return this.clusterMasterPools == null ? Collections.emptyList() : this.clusterMasterPools;
+        return this.poolManager.getClusterPools();
     }
 
     /**
@@ -460,12 +473,12 @@ public class RedisClient {
      */
     public void close() {
         try {
-            boolean isClosed = false;
-            // 关闭集群
-            if (this.cluster != null) {
-                this.cluster.close();
-                isClosed = true;
-            }
+            // boolean isClosed = false;
+            // // 关闭集群
+            // if (this.cluster != null) {
+            //     this.cluster.close();
+            //     isClosed = true;
+            // }
 //            // 关闭连接池
 //            if (this.pool != null && !this.pool.isClosed()) {
 //                this.pool.close();
@@ -482,21 +495,21 @@ public class RedisClient {
                     this.sshForwarder.destroy();
                 }
             }
+            this.poolManager.destroy();
             // 已关闭
-            if (isClosed) {
+            // if (isClosed) {
                 this.state.set(RedisConnState.CLOSED);
                 RedisEventUtil.connectionClosed(this);
-            }
+            // }
             // 重置变量
 //            this.pool = null;
             this.role = null;
-            this.cluster = null;
+            // this.cluster = null;
             this.databases = null;
             this.clearInfoProp();
 //            this.sentinelPool = null;
-            this.poolManager.destroy();
             this.commandObjects = null;
-            this.clusterMasterPools = null;
+            // this.clusterMasterPools = null;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -3505,7 +3518,7 @@ public class RedisClient {
         // 集群模式
         if (this.isClusterMode()) {
             // 合并搜索结果
-            for (ConnectionPool connectionPool : this.getClusterMasterPools()) {
+            for (ConnectionPool connectionPool : this.getClusterPools()) {
                 dbsize += this.dbSize(connectionPool);
             }
         } else {// 普通模式
@@ -3602,7 +3615,7 @@ public class RedisClient {
         if (this.isClusterMode()) {
             keys = new HashSet<>();
             // 合并搜索结果
-            for (ConnectionPool connectionPool : this.getClusterMasterPools()) {
+            for (ConnectionPool connectionPool : this.getClusterPools()) {
                 keys.addAll(this.keys(connectionPool, pattern));
             }
         } else {// 普通模式

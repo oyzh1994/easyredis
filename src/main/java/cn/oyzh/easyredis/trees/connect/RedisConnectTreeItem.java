@@ -376,12 +376,12 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             this.client.close();
             this.setLoaded(false);
             this.clearChild();
+            this.refresh();
         };
         if (waiting) {
             Task task = TaskBuilder.newBuilder()
                     .onStart(func::run)
-                    .onSuccess(this::refresh)
-                    .onFinish(SystemUtil::gcLater)
+                    .onSuccess(SystemUtil::gcLater)
                     .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);

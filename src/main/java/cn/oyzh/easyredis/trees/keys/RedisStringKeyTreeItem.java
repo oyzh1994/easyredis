@@ -71,8 +71,8 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         if (rawValue == null || !rawValue.hasValue()) {
             // 刷新值
             this.refreshKeyValue();
-            // 刷新统计值
-            this.flushCount();
+            // // 刷新统计值
+            // this.flushCount();
         }
         return this.keyValue().getValue();
     }
