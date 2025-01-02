@@ -11,8 +11,11 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author oyzh
@@ -49,15 +52,39 @@ public class RedisPoolManager {
     private byte maxPoolSize = 16;
 
     /**
+     * 最大池上限
+     * 默认16
+     */
+    @Getter
+    @Setter
+    private byte initPoolSize = 16;
+
+    /**
      * 资源集合
      */
-    private List<Jedis> resources;
+    private final List<RedisConn> resources = new CopyOnWriteArrayList<>();
 
     /**
      * cluster集群的主节点连接
      */
     @Getter
     private List<ConnectionPool> clusterPools;
+
+    /**
+     * 初始化资源
+     */
+    public void initResource() {
+        // 创建数个待备用的
+        if (this.jedisPool != null) {
+            synchronized (this.resources) {
+                for (int i = 0; i < this.initPoolSize; i++) {
+                    Jedis jedis = this.jedisPool.getResource();
+                    jedis.select(i);
+                    this.resources.add(new RedisConn(jedis));
+                }
+            }
+        }
+    }
 
     /**
      * 初始化集群连接
@@ -85,20 +112,37 @@ public class RedisPoolManager {
      *
      * @return Jedis
      */
-    public Jedis getResource() {
+    public Jedis getResource(Integer dbIndex) {
         try {
+            // 从已有连接里面找
             if (CollectionUtil.isNotEmpty(this.resources)) {
-                Jedis jedis = CollectionUtil.getRandom(this.resources);
-                if (jedis != null) {
-                    return jedis;
+                List<RedisConn> list;
+                synchronized (this.resources) {
+                    list = this.resources.parallelStream().filter(i -> !i.isUsing()).collect(Collectors.toList());
+                }
+                Collections.shuffle(list);
+                for (RedisConn resource : list) {
+                    if (resource.isUsing()) {
+                        continue;
+                    }
+                    // 随便返回一个
+                    if (dbIndex == null) {
+                        resource.setUsing(true);
+                        return resource.getJedis();
+                    }
+                    // 寻找db一样的连接，没有找到就继续
+                    if (resource.getDB() == dbIndex) {
+                        resource.setUsing(true);
+                        return resource.getJedis();
+                    }
                 }
             }
+            // 创建一个新的
             if (this.jedisPool != null) {
                 Jedis jedis = this.jedisPool.getResource();
-                if (this.resources == null) {
-                    this.resources = new ArrayList<>();
+                synchronized (this.resources) {
+                    this.resources.add(new RedisConn(jedis, true));
                 }
-                this.resources.add(jedis);
                 return jedis;
             }
         } finally {
@@ -108,56 +152,31 @@ public class RedisPoolManager {
     }
 
     /**
-     * 获取连接
-     *
-     * @return Jedis
-     */
-    public Jedis getResource(int dbIndex) {
-        if (CollectionUtil.isNotEmpty(this.resources)) {
-            try {
-                for (Jedis resource : this.resources) {
-                    if (resource.getDB() == dbIndex) {
-                        return resource;
-                    }
-                }
-            } finally {
-                ThreadLocalUtil.setVal("connectName", this.connectName);
-            }
-        }
-        return this.getResource();
-    }
-
-    /**
      * 返还连接
      *
      * @param jedis 连接
      */
     public void returnResource(Jedis jedis) {
         if (jedis != null) {
-            // 如果没有超过限制，则不回收
-            if (CollectionUtil.isEmpty(this.resources) || this.resources.size() <= this.maxPoolSize) {
-                return;
-            }
-            // 寻找db一样的连接，优先回收
-            boolean beReturn = false;
-            for (Jedis resource : this.resources) {
-                if (resource.getDB() == jedis.getDB()) {
-                    beReturn = true;
+            // 寻找连接，标记为未使用
+            RedisConn conn = null;
+            for (RedisConn redisConn : this.resources) {
+                if (redisConn.getJedis() == jedis) {
+                    redisConn.setUsing(false);
+                    conn = redisConn;
                     break;
                 }
             }
-            Jedis jedis1;
-            // 优先回收当前
-            if (beReturn) {
-                jedis1 = jedis;
-            } else {// 随机寻找一个连接去回收
-                jedis1 = CollectionUtil.getRandom(this.resources);
+            // 如果没有超过限制，则不回收
+            if (this.resources.size() <= this.maxPoolSize) {
+                return;
             }
-            if (jedis1 != null) {
-                ThreadUtil.startVirtual(() -> {
-                    this.doReturnResource(jedis1);
-                    this.resources.remove(jedis1);
-                });
+            if (conn != null) {
+                // 从列表移除
+                this.resources.remove(conn);
+                // 执行资源返回
+                RedisConn finalConn = conn;
+                ThreadUtil.startVirtual(() -> this.doReturnResource(finalConn.getJedis()));
             }
         }
     }
@@ -179,11 +198,10 @@ public class RedisPoolManager {
     public void destroy() {
         // 清理一般连接
         if (CollectionUtil.isNotEmpty(this.resources)) {
-            for (Jedis value : this.resources) {
-                this.doReturnResource(value);
+            for (RedisConn value : this.resources) {
+                this.doReturnResource(value.getJedis());
             }
             this.resources.clear();
-            this.resources = null;
         }
         // 关闭连接池
         if (this.jedisPool != null && !this.jedisPool.isClosed()) {

@@ -111,7 +111,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             int limit = this.setting.calcLimit(1000, count);
             // 处理结束
             if (limit <= 0) {
-                FXUtil.runWait(() -> this.renderChild(keyItems, Collections.emptyList(), allKeys, true));
+                this.renderChild(keyItems, Collections.emptyList(), allKeys, true);
                 break;
             }
             // 设置加载数量
@@ -119,7 +119,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             // 扫描数据
             RedisScanResult result = RedisKeyUtil.scanKeys(dbItem.dbIndex(), cursor, params, dbItem.client());
             // 渲染数据
-            FXUtil.runWait(() -> this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish()));
+            this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish());
             // 查询结束
             if (result.isFinish()) {
                 break;

@@ -228,6 +228,7 @@ public class RedisKeysTab extends DynamicTab {
          */
         public void init(RedisDatabaseTreeItem treeItem) {
             try {
+                this.root.disable();
                 this.treeItem = treeItem;
                 this.treeView.dbItem(this.treeItem);
                 this.client = treeItem.client();
@@ -235,6 +236,8 @@ public class RedisKeysTab extends DynamicTab {
                 this.treeView.loadItems();
             } catch (Exception ex) {
                 MessageBox.exception(ex);
+            } finally {
+                this.root.enable();
             }
         }
 

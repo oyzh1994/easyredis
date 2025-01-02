@@ -259,6 +259,7 @@ public class RedisClient {
         JedisPool pool = new JedisPool(poolConfig, host, clientConfig);
         // 配置管理器
         this.poolManager.setJedisPool(pool);
+        this.poolManager.initResource();
         this.poolManager.setConnectName(this.connectName());
     }
 
@@ -271,7 +272,7 @@ public class RedisClient {
         // 最小空闲
         poolConfig.setMinIdle(3);
         // 最大空闲
-        poolConfig.setMaxIdle(15);
+        poolConfig.setMaxIdle(16);
         // 最大连接
         poolConfig.setMaxTotal(50);
         // 最大超时
@@ -417,7 +418,7 @@ public class RedisClient {
      * @return Jedis
      */
     private Jedis getResource() {
-        return this.poolManager.getResource();
+        return this.poolManager.getResource(null);
     }
 
     /**
@@ -427,9 +428,6 @@ public class RedisClient {
      * @return Jedis
      */
     private Jedis getResource(Integer dbIndex) {
-        if (dbIndex == null) {
-            return this.poolManager.getResource();
-        }
         return this.poolManager.getResource(dbIndex);
     }
 
