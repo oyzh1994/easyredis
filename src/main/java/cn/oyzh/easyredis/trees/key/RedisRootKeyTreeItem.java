@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.IRunnable;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
@@ -43,7 +44,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     public RedisRootKeyTreeItem(@NonNull RedisKeyTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
-        this.setValue(new RedisRootTreeItemValue());
+        this.setValue(new RedisRootTreeItemValue(this));
     }
 
     @Override
@@ -128,6 +129,15 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     /**
+     * 获取当前键节点数量
+     *
+     * @return 当前键节点
+     */
+    public int keyChildrenSize() {
+        return super.getChildren().filtered(i -> i instanceof RedisKeyTreeItem).size();
+    }
+
+    /**
      * 子节点-更多
      *
      * @return RedisMoreTreeItem
@@ -149,13 +159,23 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     @Override
     public void loadChild() {
         if (!this.isLoading()) {
-            try {
-                this.setLoading(true);
-                this.loadChild(this.setting.keyLoadLimit());
-                this.expend();
-            } finally {
-                this.setLoading(false);
-            }
+            IRunnable func = () -> {
+                try {
+                    this.setLoaded(true);
+                    this.setLoading(true);
+                    this.loadChild(this.setting.keyLoadLimit());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    this.setLoaded(false);
+                }
+            };
+            Task task = TaskBuilder.newBuilder()
+                    .onStart(func)
+                    .onSuccess(this::expend)
+                    .onFinish(() -> this.setLoading(false))
+                    .onError(MessageBox::exception)
+                    .build();
+            this.startWaiting(task);
         }
     }
 
@@ -206,9 +226,6 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             this.removeChild(delList);
             // 添加节点
             this.addChild(addList);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            this.setLoaded(false);
         } finally {
             this.doFilter();
             this.doSort();
@@ -234,48 +251,6 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     private RedisClient client() {
         return this.dbItem().client();
     }
-
-//    @Override
-//    public void loadChild() {
-//        RedisDatabaseTreeItem dbItem = this.dbItem();
-//        // 获取已有子节点
-//        List<RedisKeyTreeItem> keyItems = this.keyChildren();
-//        // 禁用排序
-//        this.setSortable(false);
-//        // 当前光标
-//        String cursor = null;
-//        // 扫描参数
-//        String pattern = StringUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
-//        ScanParams params = new ScanParams();
-//        params.match(pattern);
-//        // 全部节点
-//        List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
-//        // 数据计数
-//        int count = 0;
-//        // 扫描数据
-//        while (true) {
-//            // 计算限制
-//            int limit = this.setting.calcLimit(1000, count);
-//            // 处理结束
-//            if (limit <= 0) {
-//                this.renderChild(keyItems, Collections.emptyList(), allKeys, true);
-//                break;
-//            }
-//            // 设置加载数量
-//            params.count(limit);
-//            // 扫描数据
-//            RedisScanResult result = RedisKeyUtil.scanKeys(dbItem.dbIndex(), cursor, params, dbItem.client());
-//            // 渲染数据
-//            this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish());
-//            // 查询结束
-//            if (result.isFinish()) {
-//                break;
-//            }
-//            count += result.keySize();
-//            // 更新光标
-//            cursor = result.getCursor();
-//        }
-//    }
 
     /**
      * 初始化redis树键
@@ -305,65 +280,24 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         return null;
     }
 
-//    /**
-//     * 渲染子节点
-//     *
-//     * @param keyItems 所有键节点
-//     * @param keys     当前键
-//     * @param allKeys  所有键
-//     * @param finish   是否结束
-//     */
-//    private void renderChild(List<RedisKeyTreeItem> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
-//        allKeys.addAll(keys);
-//        // 单次查询数据
-//        List<TreeItem<?>> shows = new ArrayList<>(keys.size());
-//        for (RedisKey key : keys) {
-//            // 数据不存在，则添加到集合
-//            Optional<RedisKeyTreeItem> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
-//            if (optional.isEmpty()) {
-//                RedisKeyTreeItem item = this.initKeyItem(key);
-//                if (item != null) {
-//                    shows.add(item);
-//                }
-//            }
-//        }
-//        // 添加不在树的数据
-//        if (!shows.isEmpty()) {
-//            this.addChild(shows);
-//        }
-//        // 展开节点
-//        this.expend();
-//        // 结束处理
-//        if (finish) {
-//            // 无数据
-//            if (allKeys.isEmpty()) {
-//                this.clearChild();
-//            } else {// 删除不存在的数据
-//                List<TreeItem<?>> hides = new ArrayList<>();
-//                // 寻找在树，但是不在库的数据
-//                for (RedisKeyTreeItem item : keyItems) {
-//                    Optional<RedisKey> optional = allKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
-//                    if (optional.isEmpty()) {
-//                        hides.add(item);
-//                    }
-//                }
-//                // 删除不存在的数据
-//                if (!hides.isEmpty()) {
-//                    this.removeChild(hides);
-//                }
-//            }
-//            // 启用排序并执行排序
-//            allKeys.clear();
-//            this.setSortable(true);
-//            this.doSort();
-//        }
-//    }
+    @Override
+    public void onPrimaryDoubleClick() {
+        if (this.isLoaded()) {
+            super.onPrimaryDoubleClick();
+        } else {
+            this.loadChild();
+        }
+    }
 
     public static class RedisRootTreeItemValue extends RichTreeItemValue {
 
+        public RedisRootTreeItemValue(RedisRootKeyTreeItem item) {
+            super(item);
+        }
+
         @Override
-        public String name() {
-            return I18nHelper.keys();
+        protected RedisRootKeyTreeItem item() {
+            return (RedisRootKeyTreeItem) super.item();
         }
 
         @Override
@@ -373,6 +307,17 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
                 this.graphic.disableTheme();
             }
             return super.graphic();
+        }
+
+        @Override
+        public String name() {
+            return I18nHelper.keys();
+        }
+
+        @Override
+        public String extra() {
+            int size = this.item().keyChildrenSize();
+            return "(" + size + ")";
         }
     }
 }
