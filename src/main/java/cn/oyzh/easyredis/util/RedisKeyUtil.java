@@ -715,4 +715,59 @@ public class RedisKeyUtil {
         }
         return null;
     }
+
+    /**
+     * 获取键列表
+     *
+     * @param client       客户端
+     * @param dbIndex      db索引
+     * @param pattern      模式
+     * @param existingKeys 已存在的键列表
+     * @param limit        限制数量
+     * @return 键列表
+     */
+    public static List<RedisKey> getKeys(RedisClient client, int dbIndex, String pattern, List<String> existingKeys, int limit) {
+        // 当前光标
+        String cursor = null;
+        // 扫描参数
+        ScanParams params = new ScanParams();
+        params.match(pattern);
+        // 全部节点
+        List<RedisKey> allKeys = new ArrayList<>();
+        // 数据计数
+        int count = 0;
+        // 扫描数据
+        while (true) {
+            // 设置加载数量
+            if (limit > 0) {
+                params.count(Math.min(limit - count, 1000));
+            } else {
+                params.count(1000);
+            }
+            // 扫描数据
+            RedisScanResult result = RedisKeyUtil.scanKeys(dbIndex, cursor, params, client);
+            // 添加到集合
+            List<RedisKey> keys = result.getKeys();
+            if (CollectionUtil.isNotEmpty(keys)) {
+                if (existingKeys.isEmpty()) {
+                    allKeys.addAll(keys);
+                    count += keys.size();
+                } else {
+                    for (RedisKey key : keys) {
+                        if (!existingKeys.contains(key.key())) {
+                            allKeys.add(key);
+                            count++;
+                        }
+                    }
+                }
+            }
+            // 查询结束
+            if (result.isFinish() || (limit > 0 && count >= limit)) {
+                break;
+            }
+            // 更新光标
+            cursor = result.getCursor();
+        }
+        return allKeys;
+    }
 }

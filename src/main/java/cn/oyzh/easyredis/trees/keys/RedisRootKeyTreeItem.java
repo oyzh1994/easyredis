@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.trees.keys;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.redis.batch.RedisScanResult;
+import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
@@ -11,17 +11,13 @@ import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
-import redis.clients.jedis.params.ScanParams;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author oyzh
@@ -76,7 +72,17 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      * @return 当前键节点
      */
     public List<RedisKeyTreeItem> keyChildren() {
-        return (List) super.unfilteredChildren();
+        return (List) super.unfilteredChildren().filtered(i -> i instanceof RedisKeyTreeItem);
+    }
+
+    /**
+     * 子节点-更多
+     *
+     * @return RedisMoreTreeItem
+     */
+    protected RedisMoreTreeItem moreChildren() {
+        List list = super.unfilteredChildren().filtered(e -> e instanceof RedisMoreTreeItem);
+        return list.isEmpty() ? null : (RedisMoreTreeItem) list.getFirst();
     }
 
     @Override
@@ -90,45 +96,130 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
 
     @Override
     public void loadChild() {
-        RedisDatabaseTreeItem dbItem = this.dbItem();
-        // 获取已有子节点
-        List<RedisKeyTreeItem> keyItems = this.keyChildren();
-        // 禁用排序
-        this.setSortable(false);
-        // 当前光标
-        String cursor = null;
-        // 扫描参数
-        String pattern = StringUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
-        ScanParams params = new ScanParams();
-        params.match(pattern);
-        // 全部节点
-        List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
-        // 数据计数
-        int count = 0;
-        // 扫描数据
-        while (true) {
-            // 计算限制
-            int limit = this.setting.calcLimit(1000, count);
-            // 处理结束
-            if (limit <= 0) {
-                this.renderChild(keyItems, Collections.emptyList(), allKeys, true);
-                break;
+        if (!this.isLoading()) {
+            try {
+                this.setLoading(true);
+                RedisSetting setting = RedisSettingStore.SETTING;
+                this.loadChild(setting.keyLoadLimit());
+            } finally {
+                this.setLoading(false);
             }
-            // 设置加载数量
-            params.count(limit);
-            // 扫描数据
-            RedisScanResult result = RedisKeyUtil.scanKeys(dbItem.dbIndex(), cursor, params, dbItem.client());
-            // 渲染数据
-            this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish());
-            // 查询结束
-            if (result.isFinish()) {
-                break;
-            }
-            count += result.keySize();
-            // 更新光标
-            cursor = result.getCursor();
         }
     }
+
+    /**
+     * 加载子节点
+     *
+     * @param limit 限制数量
+     */
+    protected void loadChild(int limit) {
+        // 当前树
+        RedisKeysTreeView treeView = this.getTreeView();
+        // 获取选中节点
+        TreeItem<?> selectedItem = treeView == null ? null : treeView.getSelectedItem();
+        try {
+            // 扫描参数
+            String pattern = StringUtil.isBlank(this.getFilterPattern()) ? "*" : this.getFilterPattern();
+            // 节点列表
+            List<RedisKeyTreeItem> itemList = this.keyChildren();
+            // 添加列表
+            List<TreeItem<?>> addList = new ArrayList<>();
+            // 移除列表
+            List<TreeItem<?>> delList = new ArrayList<>();
+            // 已存在节点
+            List<String> existingKeys = itemList.parallelStream().map(RedisKeyTreeItem::key).toList();
+            // 获取节点列表
+            List<RedisKey> list = RedisKeyUtil.getKeys(this.client(), this.dbIndex(), pattern, existingKeys, limit);
+            // 处理节点
+            for (RedisKey node : list) {
+                // 添加到集合
+                addList.add(this.initKeyItem(node));
+            }
+            // 限制节点加载数量
+            if (limit > 0 && !list.isEmpty()) {
+                RedisMoreTreeItem moreItem = this.moreChildren();
+                if (moreItem != null) {
+                    delList.add(moreItem);
+                    addList.add(moreItem);
+                } else {
+                    addList.add(new RedisMoreTreeItem(this.getTreeView()));
+                }
+            } else {// 处理不限制的情况
+                RedisMoreTreeItem moreItem = this.moreChildren();
+                if (moreItem != null) {
+                    delList.add(moreItem);
+                }
+            }
+            // 删除节点
+            this.removeChild(delList);
+            // 添加节点
+            this.addChild(addList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            this.setLoaded(false);
+        } finally {
+            this.doFilter();
+            this.doSort();
+            // 选中节点
+            if (selectedItem != null) {
+                treeView.select(selectedItem);
+            }
+        }
+    }
+
+    private String getFilterPattern() {
+        return this.dbItem().getFilterPattern();
+    }
+
+    private int dbIndex() {
+        return this.dbItem().dbIndex();
+    }
+
+    private RedisClient client() {
+        return this.dbItem().client();
+    }
+
+//    @Override
+//    public void loadChild() {
+//        RedisDatabaseTreeItem dbItem = this.dbItem();
+//        // 获取已有子节点
+//        List<RedisKeyTreeItem> keyItems = this.keyChildren();
+//        // 禁用排序
+//        this.setSortable(false);
+//        // 当前光标
+//        String cursor = null;
+//        // 扫描参数
+//        String pattern = StringUtil.isBlank(dbItem.getFilterPattern()) ? "*" : dbItem.getFilterPattern();
+//        ScanParams params = new ScanParams();
+//        params.match(pattern);
+//        // 全部节点
+//        List<RedisKey> allKeys = new CopyOnWriteArrayList<>();
+//        // 数据计数
+//        int count = 0;
+//        // 扫描数据
+//        while (true) {
+//            // 计算限制
+//            int limit = this.setting.calcLimit(1000, count);
+//            // 处理结束
+//            if (limit <= 0) {
+//                this.renderChild(keyItems, Collections.emptyList(), allKeys, true);
+//                break;
+//            }
+//            // 设置加载数量
+//            params.count(limit);
+//            // 扫描数据
+//            RedisScanResult result = RedisKeyUtil.scanKeys(dbItem.dbIndex(), cursor, params, dbItem.client());
+//            // 渲染数据
+//            this.renderChild(keyItems, result.getKeys(), allKeys, result.isFinish());
+//            // 查询结束
+//            if (result.isFinish()) {
+//                break;
+//            }
+//            count += result.keySize();
+//            // 更新光标
+//            cursor = result.getCursor();
+//        }
+//    }
 
     /**
      * 初始化redis树键

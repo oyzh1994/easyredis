@@ -414,4 +414,17 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     }
 
     public abstract Object rawData();
+
+    public boolean keyEquals(RedisKey redisKey) {
+        if (redisKey != null) {
+            return this.value.compareTo(redisKey) == 0;
+        }
+        return false;
+    }
+
+    public void keyCopy(RedisKey redisKey) {
+        if (redisKey != null) {
+            this.value.copy(redisKey);
+        }
+    }
 }
