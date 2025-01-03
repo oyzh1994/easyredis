@@ -12,7 +12,7 @@ import lombok.NonNull;
  */
 public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
-    public RedisStringKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisStringKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

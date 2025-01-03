@@ -28,7 +28,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisRowKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

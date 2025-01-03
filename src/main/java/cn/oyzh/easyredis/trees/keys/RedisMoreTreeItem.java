@@ -13,7 +13,7 @@ import javafx.scene.control.TreeItem;
  */
 public class RedisMoreTreeItem extends RichTreeItem<RedisMoreTreeItem.RedisMoreTreeItemValue> {
 
-    public RedisMoreTreeItem(RedisKeysTreeView treeView) {
+    public RedisMoreTreeItem(RedisKeyTreeView treeView) {
         super(treeView);
         super.setSortable(false);
         super.setFilterable(false);

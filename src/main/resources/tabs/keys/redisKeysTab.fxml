@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
-<?import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView?>
+<?import cn.oyzh.easyredis.trees.keys.RedisKeyTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
@@ -30,9 +30,9 @@
                 </HBox.margin>
             </RedisKeySearchTextField>
         </FlexHBox>
-        <RedisKeysTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
+        <RedisKeyTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
 
-        </RedisKeysTreeView>
+        </RedisKeyTreeView>
         <FlexHBox flexWidth="100%" flexHeight="30">
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addKey">
                 <HBox.margin>

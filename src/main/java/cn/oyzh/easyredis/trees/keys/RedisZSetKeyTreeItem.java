@@ -123,7 +123,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisZSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

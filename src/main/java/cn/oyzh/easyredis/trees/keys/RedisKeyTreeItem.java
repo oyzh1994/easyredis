@@ -92,7 +92,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         return keyValue != null && keyValue.hasUnSavedValue();
     }
 
-    public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(treeView);
         this.value = value;
         super.setFilterable(true);
@@ -132,8 +132,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     }
 
     @Override
-    public RedisKeysTreeView getTreeView() {
-        return (RedisKeysTreeView) super.getTreeView();
+    public RedisKeyTreeView getTreeView() {
+        return (RedisKeyTreeView) super.getTreeView();
     }
 
     /**

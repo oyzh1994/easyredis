@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.RedisHashRow> {
 
-    public RedisHashKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisHashKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

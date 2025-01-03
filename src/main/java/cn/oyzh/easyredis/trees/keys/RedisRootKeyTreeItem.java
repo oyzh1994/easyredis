@@ -23,21 +23,22 @@ import java.util.Optional;
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.RedisUnnamedTreeItemValue> {
+public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.RedisRootTreeItemValue> {
+
     /**
      * 设置
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
 
-    public RedisRootKeyTreeItem(@NonNull RedisKeysTreeView treeView) {
+    public RedisRootKeyTreeItem(@NonNull RedisKeyTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
-        this.setValue(new RedisUnnamedTreeItemValue());
+        this.setValue(new RedisRootTreeItemValue());
     }
 
     public void keyAdded(String key) {
         try {
-            RedisKeysTreeView treeView = this.getTreeView();
+            RedisKeyTreeView treeView = this.getTreeView();
             RedisKey redisKey = treeView == null ? null : RedisKeyUtil.getKey(treeView.dbIndex(), key, false, false, treeView.client());
             if (redisKey == null) {
                 JulLog.warn("redisKey is null");
@@ -58,7 +59,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         }
     }
 
-    public static class RedisUnnamedTreeItemValue extends RichTreeItemValue {
+    public static class RedisRootTreeItemValue extends RichTreeItemValue {
 
         @Override
         public String name() {
@@ -86,8 +87,8 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     @Override
-    public RedisKeysTreeView getTreeView() {
-        return (RedisKeysTreeView) super.getTreeView();
+    public RedisKeyTreeView getTreeView() {
+        return (RedisKeyTreeView) super.getTreeView();
     }
 
     public RedisDatabaseTreeItem dbItem() {
@@ -99,8 +100,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         if (!this.isLoading()) {
             try {
                 this.setLoading(true);
-                RedisSetting setting = RedisSettingStore.SETTING;
-                this.loadChild(setting.keyLoadLimit());
+                this.loadChild(this.setting.keyLoadLimit());
             } finally {
                 this.setLoading(false);
             }
@@ -114,7 +114,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
      */
     protected void loadChild(int limit) {
         // 当前树
-        RedisKeysTreeView treeView = this.getTreeView();
+        RedisKeyTreeView treeView = this.getTreeView();
         // 获取选中节点
         TreeItem<?> selectedItem = treeView == null ? null : treeView.getSelectedItem();
         try {

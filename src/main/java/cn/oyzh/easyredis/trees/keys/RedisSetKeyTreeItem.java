@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.keys;
 
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
-import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -17,7 +16,7 @@ import java.util.Set;
  */
 public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.RedisSetRow> {
 
-    public RedisSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeysTreeView treeView) {
+    public RedisSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
@@ -11,7 +10,7 @@ import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisKeysTreeView;
+import cn.oyzh.easyredis.trees.keys.RedisKeyTreeView;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -22,7 +21,6 @@ import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
-import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
@@ -195,7 +193,7 @@ public class RedisKeysTab extends DynamicTab {
          * 节点数
          */
         @FXML
-        private RedisKeysTreeView treeView;
+        private RedisKeyTreeView treeView;
 
         /**
          * 搜索内容
