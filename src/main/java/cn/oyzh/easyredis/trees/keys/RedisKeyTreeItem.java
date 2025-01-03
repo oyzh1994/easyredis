@@ -214,9 +214,6 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 键是否被收藏
      */
     public boolean isCollect() {
-        // if (this.redisConnect() != null) {
-        //     return this.redisConnect().isCollect(this.dbIndex(), this.key());
-        // }
         return RedisCollectStore.INSTANCE.exist(this.iid(), this.dbIndex(), this.key());
     }
 
@@ -274,8 +271,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
             String oldKey = this.key();
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StringUtil.equalsIgnoreCase(result, "OK")) {
-                this.value().key(newKey);
-                // this.getValue().name(newKey);
+                this.value.key(newKey);
                 this.refresh();
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {

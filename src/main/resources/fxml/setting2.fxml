@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <SettingMainPane fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-                 fx:controller="cn.oyzh.easyredis.controller.SettingController2" realWidth="500" realHeight="420">
+                 fx:controller="cn.oyzh.easyredis.controller.SettingController2" realWidth="650" realHeight="420">
     <left>
         <SettingLeftTreeView flexWidth="100%" flexHeight="100%">
         </SettingLeftTreeView>

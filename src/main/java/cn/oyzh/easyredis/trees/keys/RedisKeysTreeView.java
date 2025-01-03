@@ -173,14 +173,6 @@ public class RedisKeysTreeView extends RichTreeView implements FXEventListener {
         }
     }
 
-    // /**
-    //  * 树节点过滤
-    //  */
-    // @EventSubscribe
-    // private void treeChildFilter(TreeChildFilterEvent event) {
-    //     this.filter();
-    // }
-
     /**
      * 加载节点
      */
