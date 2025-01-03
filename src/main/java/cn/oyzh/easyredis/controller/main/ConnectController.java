@@ -19,7 +19,7 @@ import javafx.stage.WindowEvent;
 public class ConnectController extends SubStageController {
 
     /**
-     * 左侧zk树
+     * 左侧redis树
      */
     @FXML
     private RedisConnectTreeView tree;
@@ -90,9 +90,7 @@ public class ConnectController extends SubStageController {
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // this.sortAsc.managedBindVisible();
-        // this.sortDesc.managedBindVisible();
-        // zk树变化事件
+        // redis树变化事件
         this.tree.selectItemChanged(RedisEventUtil::treeItemChanged);
         // 文件拖拽初始化
         this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);

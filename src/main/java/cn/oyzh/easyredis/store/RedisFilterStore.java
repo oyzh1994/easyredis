@@ -65,7 +65,7 @@ public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
     /**
      * 根据iid删除数据
      *
-     * @param iid zk连接id
+     * @param iid redis连接id
      * @return 结果
      * @see cn.oyzh.easyredis.domain.RedisConnect
      */
@@ -82,7 +82,7 @@ public class RedisFilterStore extends JdbcStandardStore<RedisFilter> {
      * 判断是否存在
      *
      * @param kw  关键字
-     * @param iid zk连接id
+     * @param iid redis连接id
      * @return 结果
      * @see cn.oyzh.easyredis.domain.RedisConnect
      */

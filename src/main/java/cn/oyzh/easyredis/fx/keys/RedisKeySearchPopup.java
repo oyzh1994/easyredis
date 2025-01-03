@@ -6,7 +6,7 @@ import cn.oyzh.i18n.I18nHelper;
 import java.util.List;
 
 /**
- * zk搜索历史弹窗
+ * redis搜索历史弹窗
  *
  * @author oyzh
  * @since 2023/4/24

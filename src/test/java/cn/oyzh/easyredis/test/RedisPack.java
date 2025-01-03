@@ -63,7 +63,7 @@ public class RedisPack {
     }
 
     @Test
-    public void easyzk_all_pack() throws Exception {
+    public void easyredis_all_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String win_amd64_pack_config = packagePath + "win_amd64_pack_config.json";
         String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";

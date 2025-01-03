@@ -527,7 +527,7 @@ public class RedisEventUtil {
     /**
      * 连接丢失事件
      *
-     * @param client zk客户端
+     * @param client redis客户端
      */
     public static void connectionOpened(RedisDatabaseTreeItem client) {
         RedisConnectOpenedEvent event = new RedisConnectOpenedEvent();

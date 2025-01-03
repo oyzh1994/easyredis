@@ -476,7 +476,7 @@ public class RedisClient {
     }
 
     /**
-     * 关闭zk，静默模式
+     * 关闭客户端，静默模式
      */
     public void closeQuiet() {
         this.closeQuietly = true;

@@ -38,7 +38,7 @@ public class RedisClientUtil {
         return builder.build();
     }
 
-    public static RedisClient newClient(RedisConnect zkInfo) {
-        return new RedisClient(zkInfo);
+    public static RedisClient newClient(RedisConnect redisConnect) {
+        return new RedisClient(redisConnect);
     }
 }

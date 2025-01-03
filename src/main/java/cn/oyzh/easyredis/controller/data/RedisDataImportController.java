@@ -38,7 +38,7 @@ import java.io.File;
 
 
 /**
- * zk数据导入业务
+ * redis数据导入业务
  *
  * @author oyzh
  * @since 2024/11/28
@@ -121,12 +121,12 @@ public class RedisDataImportController extends StageController {
     private MsgTextArea importMsg;
 
     /**
-     * 当前zk对象
+     * 当前redis对象
      */
     private RedisConnect connect;
 
     /**
-     * 当前zk客户端
+     * 当前redis客户端
      */
     private RedisClient client;
 

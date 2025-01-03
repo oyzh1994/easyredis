@@ -37,7 +37,7 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
     /**
      * 加载列表
      *
-     * @return zk连接列表
+     * @return redis连接列表
      */
     public List<RedisConnect> load() {
         return super.selectList();

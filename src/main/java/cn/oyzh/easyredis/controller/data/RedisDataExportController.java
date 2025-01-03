@@ -44,7 +44,7 @@ import java.util.Set;
 
 
 /**
- * zk数据导出业务
+ * redis数据导出业务
  *
  * @author oyzh
  * @since 2024/11/26
@@ -204,12 +204,12 @@ public class RedisDataExportController extends StageController {
     private Integer dbIndex;
 
     /**
-     * 当前zk对象
+     * 当前redis对象
      */
     private RedisConnect connect;
 
     /**
-     * 当前zk客户端
+     * 当前redis客户端
      */
     private RedisClient client;
 

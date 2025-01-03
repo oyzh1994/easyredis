@@ -1,7 +1,7 @@
 {
     "packMode": "packr",
     "platform": "macos_amd64",
-    "dest": "D:\\Package\\EasyRedis\\${appVersion}\\EasyZK_${appVersion}.app",
+    "dest": "D:\\Package\\EasyRedis\\${appVersion}\\EasyRedis_${appVersion}.app",
     "appIcon": "D:\\Workspaces\\OYZH\\easyredis\\resource\\zoo.icns",
     "mainJar": "D:\\Workspaces\\OYZH\\easyredis\\target\\easyredis-${appVersion}.jar",
     "jrePath": "D:\\Package\\EasyRedis\\macos_amd64_jre22",

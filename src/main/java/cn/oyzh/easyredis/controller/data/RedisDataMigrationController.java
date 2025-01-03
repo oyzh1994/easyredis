@@ -26,7 +26,7 @@ import javafx.stage.WindowEvent;
 
 
 /**
- * zk迁移业务
+ * redis迁移业务
  *
  * @author oyzh
  * @since 2024/11/25

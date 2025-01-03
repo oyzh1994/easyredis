@@ -170,7 +170,7 @@ public class RedisConnectUpdateController extends StageController {
     private ClearableTextField filterSearchKW;
 
     /**
-     * zk过滤配置储存
+     * redis过滤配置储存
      */
     private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 

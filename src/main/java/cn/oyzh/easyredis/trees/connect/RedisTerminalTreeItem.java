@@ -39,7 +39,7 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItem.Re
     }
 
     /**
-     * zk树节点值
+     * redis树节点值
      *
      * @author oyzh
      * @since 2023/4/7

@@ -35,7 +35,7 @@ public class RedisQueryTreeItem extends RichTreeItem<RedisQueryTreeItem.RedisQue
     }
 
     /**
-     * zk树节点值
+     * redis树节点值
      *
      * @author oyzh
      * @since 2023/4/7

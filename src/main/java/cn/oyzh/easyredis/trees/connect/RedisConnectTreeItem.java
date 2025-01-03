@@ -247,7 +247,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     }
 
     /**
-     * 导出zk节点
+     * 导出redis节点
      */
     public void exportData() {
         // StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
