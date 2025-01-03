@@ -1,17 +1,27 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.thread.Task;
+import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.controller.data.RedisDataExportController;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 
@@ -36,6 +46,55 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         this.setValue(new RedisRootTreeItemValue());
     }
 
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        // 重载
+        FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
+        // 卸载
+        FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
+        // 加载全部
+        FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
+        // 导出数据
+        FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
+        items.add(reload);
+        items.add(unload);
+        items.add(loadAll);
+        items.add(export);
+        return items;
+    }
+
+    /**
+     * 导出zk节点
+     */
+    public void exportData() {
+        StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class, this.window());
+        fxView.setProp("connect", this.redisConnect());
+        fxView.setProp("dbIndex", this.dbIndex());
+        fxView.display();
+    }
+
+    @Override
+    public void reloadChild() {
+        this.loadChild();
+    }
+
+    private void loadChildAll() {
+        Task task = TaskBuilder.newBuilder()
+                .onStart(() -> this.loadChild(0))
+                .onError(MessageBox::exception)
+                .build();
+        this.startWaiting(task);
+    }
+
+    /**
+     * 取消加载
+     */
+    public void unloadChild() {
+        this.clearChild();
+        this.setLoaded(false);
+    }
+
     public void keyAdded(String key) {
         try {
             RedisKeyTreeView treeView = this.getTreeView();
@@ -56,14 +115,6 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
                 keyItem.remove();
                 break;
             }
-        }
-    }
-
-    public static class RedisRootTreeItemValue extends RichTreeItemValue {
-
-        @Override
-        public String name() {
-            return I18nHelper.keys();
         }
     }
 
@@ -101,6 +152,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             try {
                 this.setLoading(true);
                 this.loadChild(this.setting.keyLoadLimit());
+                this.expend();
             } finally {
                 this.setLoading(false);
             }
@@ -169,6 +221,10 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
 
     private String getFilterPattern() {
         return this.dbItem().getFilterPattern();
+    }
+
+    private RedisConnect redisConnect() {
+        return this.dbItem().redisConnect();
     }
 
     private int dbIndex() {
@@ -249,57 +305,74 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         return null;
     }
 
-    /**
-     * 渲染子节点
-     *
-     * @param keyItems 所有键节点
-     * @param keys     当前键
-     * @param allKeys  所有键
-     * @param finish   是否结束
-     */
-    private void renderChild(List<RedisKeyTreeItem> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
-        allKeys.addAll(keys);
-        // 单次查询数据
-        List<TreeItem<?>> shows = new ArrayList<>(keys.size());
-        for (RedisKey key : keys) {
-            // 数据不存在，则添加到集合
-            Optional<RedisKeyTreeItem> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
-            if (optional.isEmpty()) {
-                RedisKeyTreeItem item = this.initKeyItem(key);
-                if (item != null) {
-                    shows.add(item);
-                }
-            }
+//    /**
+//     * 渲染子节点
+//     *
+//     * @param keyItems 所有键节点
+//     * @param keys     当前键
+//     * @param allKeys  所有键
+//     * @param finish   是否结束
+//     */
+//    private void renderChild(List<RedisKeyTreeItem> keyItems, List<RedisKey> keys, List<RedisKey> allKeys, boolean finish) {
+//        allKeys.addAll(keys);
+//        // 单次查询数据
+//        List<TreeItem<?>> shows = new ArrayList<>(keys.size());
+//        for (RedisKey key : keys) {
+//            // 数据不存在，则添加到集合
+//            Optional<RedisKeyTreeItem> optional = keyItems.parallelStream().filter(v -> v.key().equals(key.key())).findAny();
+//            if (optional.isEmpty()) {
+//                RedisKeyTreeItem item = this.initKeyItem(key);
+//                if (item != null) {
+//                    shows.add(item);
+//                }
+//            }
+//        }
+//        // 添加不在树的数据
+//        if (!shows.isEmpty()) {
+//            this.addChild(shows);
+//        }
+//        // 展开节点
+//        this.expend();
+//        // 结束处理
+//        if (finish) {
+//            // 无数据
+//            if (allKeys.isEmpty()) {
+//                this.clearChild();
+//            } else {// 删除不存在的数据
+//                List<TreeItem<?>> hides = new ArrayList<>();
+//                // 寻找在树，但是不在库的数据
+//                for (RedisKeyTreeItem item : keyItems) {
+//                    Optional<RedisKey> optional = allKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
+//                    if (optional.isEmpty()) {
+//                        hides.add(item);
+//                    }
+//                }
+//                // 删除不存在的数据
+//                if (!hides.isEmpty()) {
+//                    this.removeChild(hides);
+//                }
+//            }
+//            // 启用排序并执行排序
+//            allKeys.clear();
+//            this.setSortable(true);
+//            this.doSort();
+//        }
+//    }
+
+    public static class RedisRootTreeItemValue extends RichTreeItemValue {
+
+        @Override
+        public String name() {
+            return I18nHelper.keys();
         }
-        // 添加不在树的数据
-        if (!shows.isEmpty()) {
-            this.addChild(shows);
-        }
-        // 展开节点
-        this.expend();
-        // 结束处理
-        if (finish) {
-            // 无数据
-            if (allKeys.isEmpty()) {
-                this.clearChild();
-            } else {// 删除不存在的数据
-                List<TreeItem<?>> hides = new ArrayList<>();
-                // 寻找在树，但是不在库的数据
-                for (RedisKeyTreeItem item : keyItems) {
-                    Optional<RedisKey> optional = allKeys.parallelStream().filter(v -> v.key().equals(item.key())).findAny();
-                    if (optional.isEmpty()) {
-                        hides.add(item);
-                    }
-                }
-                // 删除不存在的数据
-                if (!hides.isEmpty()) {
-                    this.removeChild(hides);
-                }
+
+        @Override
+        public SVGGlyph graphic() {
+            if (this.graphic == null) {
+                this.graphic = new SVGGlyph("/font/key.svg", 10);
+                this.graphic.disableTheme();
             }
-            // 启用排序并执行排序
-            allKeys.clear();
-            this.setSortable(true);
-            this.doSort();
+            return super.graphic();
         }
     }
 }
