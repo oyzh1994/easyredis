@@ -90,6 +90,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
         FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
         FXMenuItem batchOperation = MenuItemHelper.batchOpt("12", this::batchOperation);
+        FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
         items.add(add);
         items.add(keyFilter);
@@ -97,7 +98,16 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         items.add(exportData);
         items.add(transportData);
         items.add(batchOperation);
+        items.add(openTerminal);
         return items;
+    }
+
+    /**
+     * 打开终端
+     */
+    @FXML
+    private void openTerminal() {
+        RedisEventUtil.terminalOpen(this.redisConnect(), this.dbIndex);
     }
 
     /**
@@ -115,14 +125,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     @FXML
     private void transportData() {
-        // StageAdapter fxView = StageManager.getStage(RedisInfoTransportController.class);
-        // if (fxView != null) {
-        //     fxView.disappear();
-        // }
-        // fxView = StageManager.parseStage(RedisInfoTransportController.class);
-        // fxView.setProp("treeItem", this);
-        // fxView.display();
-
         StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
         adapter.setProp("sourceInfo", this.redisConnect());
         adapter.setProp("dbIndex", this.dbIndex);
@@ -147,7 +149,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
     public void doKeyFilter(String pattern) {
         if (!StringUtil.equals(this.filterPattern, pattern)) {
             this.filterPattern = pattern;
-            // this.reloadChild();
             this.refresh();
             RedisEventUtil.keyFiltered(this);
         }
@@ -157,9 +158,6 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      * 导出键
      */
     public void exportData() {
-        // StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
-        // fxView.setProp("treeItem", this);
-        // fxView.display();
         StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
         fxView.setProp("connect", this.redisConnect());
         fxView.setProp("dbIndex", this.dbIndex);
@@ -184,30 +182,25 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         return this.client().isSentinelMode();
     }
 
-    /**
-     * 加载子节点
-     */
-    @Override
-    public void loadChild() {
-        if (!this.isLoaded()) {
-            try {
-                this.setLoaded(true);
-                RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
-                // RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
-                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), this.innerDbIndex);
-                this.setChild(List.of(item1, item3));
-                this.expend();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                this.setLoaded(false);
-            }
-        }
-    }
-
-    // @Override
-    // public RedisDatabasesTreeItem parent() {
-    //     return (RedisDatabasesTreeItem) super.parent();
-    // }
+//    /**
+//     * 加载子节点
+//     */
+//    @Override
+//    public void loadChild() {
+//        if (!this.isLoaded()) {
+//            try {
+//                this.setLoaded(true);
+//                RedisDataTreeItem item1 = new RedisDataTreeItem(this.getTreeView());
+//                // RedisQueryTreeItem item2 = new RedisQueryTreeItem(this.getTreeView());
+//                RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), this.innerDbIndex);
+//                this.setChild(List.of(item1, item3));
+//                this.expend();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                this.setLoaded(false);
+//            }
+//        }
+//    }
 
     /**
      * 获取redis客户端
@@ -266,13 +259,31 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
         return super.compareTo(o);
     }
 
+    private void setOpening(boolean opening) {
+        super.bitValue().set(7, opening);
+    }
+
+    private boolean isOpening() {
+        return super.bitValue().get(7);
+    }
+
     @Override
     public void onPrimaryDoubleClick() {
-        if (!this.isLoaded()) {
-            this.loadChild();
-            this.expend();
-        } else {
-            super.onPrimaryDoubleClick();
+//        if (!this.isLoaded()) {
+//            this.loadChild();
+//            this.expend();
+//        } else {
+//            super.onPrimaryDoubleClick();
+//        }
+        if (!this.isOpening()) {
+            this.setOpening(true);
+            super.startWaiting(() -> {
+                try {
+                    RedisEventUtil.connectionOpened(this);
+                } finally {
+                    this.setOpening(false);
+                }
+            });
         }
     }
 

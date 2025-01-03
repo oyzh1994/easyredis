@@ -2,11 +2,14 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.Accessors;
 
@@ -30,6 +33,23 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItem.
     @Override
     public RedisConnectTreeItem parent() {
         return (RedisConnectTreeItem) super.parent();
+    }
+
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        // 卸载
+        FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
+        items.add(unload);
+        return items;
+    }
+
+    /**
+     * 取消加载
+     */
+    public void unloadChild() {
+        this.clearChild();
+        this.setLoaded(false);
     }
 
     /**

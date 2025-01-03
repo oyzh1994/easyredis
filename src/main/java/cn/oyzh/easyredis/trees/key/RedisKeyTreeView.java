@@ -120,7 +120,8 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void keyFiltered(RedisKeyFilteredEvent event) {
         if (event.data() == this.dbItem) {
-            this.loadItems();
+            this.getRoot().unloadChild();
+            this.getRoot().loadChild();
         }
     }
 

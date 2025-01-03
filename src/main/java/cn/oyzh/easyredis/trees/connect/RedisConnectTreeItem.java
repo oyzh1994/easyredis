@@ -135,34 +135,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         return this.client.isSentinelMode();
     }
 
-    // /**
-    //  * 初始化连接
-    //  *
-    //  * @return 结果
-    //  */
-    // private boolean initConnect() {
-    //     try {
-    //         // 哨兵模式
-    //         if (this.client.isSentinelMode()) {
-    //             this.setChild(new RedisServerInfoTreeItem(this.getTreeView()));
-    //         } else if (this.client.isClusterMode()) {// cluster集群模式
-    //             this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
-    //         } else {// 其他模式
-    //             int databases = this.client().databases();
-    //             List<TreeItem<?>> items = new ArrayList<>(databases);
-    //             for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-    //                 items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
-    //             }
-    //             this.setChild(items);
-    //         }
-    //         return true;
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //         MessageBox.exception(ex);
-    //     }
-    //     return false;
-    // }
-
     @Override
     public void loadChild() {
         if (!this.isLoaded() && !this.isLoading()) {

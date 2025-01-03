@@ -81,11 +81,21 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     private void loadChildAll() {
-        Task task = TaskBuilder.newBuilder()
-                .onStart(() -> this.loadChild(0))
-                .onError(MessageBox::exception)
-                .build();
-        this.startWaiting(task);
+        if (!this.isLoaded() && !this.isLoading()) {
+            Task task = TaskBuilder.newBuilder()
+                    .onFinish(() -> this.setLoading(false))
+                    .onStart(() -> {
+                        this.setLoaded(true);
+                        this.setLoading(true);
+                        this.loadChild(0);
+                    })
+                    .onError(err -> {
+                        this.setLoaded(false);
+                        MessageBox.exception(err);
+                    })
+                    .build();
+            this.startWaiting(task);
+        }
     }
 
     /**
