@@ -57,7 +57,7 @@ public class RedisPoolManager {
      */
     @Getter
     @Setter
-    private byte initPoolSize = 16;
+    private byte initPoolSize = 3;
 
     /**
      * 资源集合

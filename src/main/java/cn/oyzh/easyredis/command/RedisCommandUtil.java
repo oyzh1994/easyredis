@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * redis版本工具类
+ * redis命令工具类
  *
  * @author oyzh
- * @since 2023/07/31
+ * @since 2024/05/29
  */
 @UtilityClass
 public class RedisCommandUtil {

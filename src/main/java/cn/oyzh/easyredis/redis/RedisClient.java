@@ -275,16 +275,16 @@ public class RedisClient {
         poolConfig.setMaxIdle(16);
         // 最大连接
         poolConfig.setMaxTotal(50);
-        // 最大超时
-        poolConfig.setMaxWait(Duration.ofSeconds(30));
         // 创建时测试
         poolConfig.setTestOnCreate(true);
         // 空闲时测试
         poolConfig.setTestWhileIdle(true);
 //        // 获取时测试
 //        poolConfig.setTestOnBorrow(true);
-        // 归还时测试
-        poolConfig.setTestOnReturn(true);
+//        // 归还时测试
+//        poolConfig.setTestOnReturn(true);
+        // 最大超时
+        poolConfig.setMaxWait(Duration.ofSeconds(5));
     }
 
     /**
