@@ -768,7 +768,7 @@ public class RedisKeyUtil {
             // 更新光标
             cursor = result.getCursor();
         }
-        if (allKeys.size() > limit) {
+        if (limit > 0 && allKeys.size() > limit) {
             return allKeys.subList(0, limit);
         }
         return allKeys;

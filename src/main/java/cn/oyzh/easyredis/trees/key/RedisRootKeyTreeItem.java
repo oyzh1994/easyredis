@@ -301,10 +301,14 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
 
         @Override
         public SVGGlyph graphic() {
+            if (this.graphic != null && this.graphic.isWaiting()) {
+                this.graphic.enableTheme();
+                return this.graphic;
+            }
             if (this.graphic == null) {
                 this.graphic = new SVGGlyph("/font/key.svg", 10);
-                this.graphic.disableTheme();
             }
+            this.graphic.disableTheme();
             return super.graphic();
         }
 

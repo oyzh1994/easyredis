@@ -72,7 +72,7 @@ public class RedisDataExportHandler extends DataHandler {
     /**
      * 批量处理大小
      */
-    private int batchSize = 5;
+    private int batchSize = 10;
 
     /**
      * 导出配置
