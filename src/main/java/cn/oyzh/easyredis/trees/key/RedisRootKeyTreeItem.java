@@ -83,16 +83,9 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     private void loadChildAll() {
         if (!this.isLoaded() && !this.isLoading()) {
             Task task = TaskBuilder.newBuilder()
-                    .onFinish(() -> this.setLoading(false))
-                    .onStart(() -> {
-                        this.setLoaded(true);
-                        this.setLoading(true);
-                        this.loadChild(0);
-                    })
-                    .onError(err -> {
-                        this.setLoaded(false);
-                        MessageBox.exception(err);
-                    })
+                    .onSuccess(this::expend)
+                    .onStart(() -> this.loadChild(0))
+                    .onError(MessageBox::exception)
                     .build();
             this.startWaiting(task);
         }
@@ -169,21 +162,10 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     @Override
     public void loadChild() {
         if (!this.isLoading()) {
-            IRunnable func = () -> {
-                try {
-                    this.setLoaded(true);
-                    this.setLoading(true);
-                    this.loadChild(this.setting.keyLoadLimit());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    this.setLoaded(false);
-                }
-            };
             Task task = TaskBuilder.newBuilder()
-                    .onStart(func)
                     .onSuccess(this::expend)
-                    .onFinish(() -> this.setLoading(false))
                     .onError(MessageBox::exception)
+                    .onStart(() -> this.loadChild(this.setting.keyLoadLimit()))
                     .build();
             this.startWaiting(task);
         }
@@ -200,6 +182,8 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         // 获取选中节点
         TreeItem<?> selectedItem = treeView == null ? null : treeView.getSelectedItem();
         try {
+            this.setLoaded(true);
+            this.setLoading(true);
             // 扫描参数
             String pattern = StringUtil.isBlank(this.getFilterPattern()) ? "*" : this.getFilterPattern();
             // 节点列表
@@ -218,7 +202,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
                 addList.add(this.initKeyItem(node));
             }
             // 限制节点加载数量
-            if (limit > 0 && !list.isEmpty()) {
+            if (limit > 0 && list.size() >= limit) {
                 RedisMoreTreeItem moreItem = this.moreChildren();
                 if (moreItem != null) {
                     delList.add(moreItem);
@@ -236,7 +220,12 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             this.removeChild(delList);
             // 添加节点
             this.addChild(addList);
+        } catch (Exception ex) {
+            this.setLoaded(false);
+            ex.printStackTrace();
+            throw ex;
         } finally {
+            this.setLoading(false);
             this.doFilter();
             this.doSort();
             // 选中节点
