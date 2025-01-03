@@ -11,7 +11,6 @@ import redis.clients.jedis.Protocol;
  * @author oyzh
  * @since 2023/12/13
  */
-
 public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
@@ -41,7 +40,7 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextTextArea terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
-                terminal.client().close();
+                terminal.client().closeQuiet();
             }
             terminal.connect(command.command());
         } else {

@@ -86,6 +86,11 @@ public class RedisClient {
 //    private JedisPool pool;
 
     /**
+     * 静默关闭标志位
+     */
+    private boolean closeQuietly;
+
+    /**
      * 连接池管理器
      */
     private final RedisPoolManager poolManager = new RedisPoolManager();
@@ -164,7 +169,11 @@ public class RedisClient {
         }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
-                case CLOSED -> RedisEventUtil.connectionClosed(this);
+                case CLOSED -> {
+                    if(!this.closeQuietly) {
+                        RedisEventUtil.connectionClosed(this);
+                    }
+                }
                 case CONNECTED -> RedisEventUtil.connectionConnected(this);
                 default -> {
 
@@ -467,6 +476,14 @@ public class RedisClient {
     }
 
     /**
+     * 关闭zk，静默模式
+     */
+    public void closeQuiet() {
+        this.closeQuietly = true;
+        this.close();
+    }
+
+    /**
      * 关闭客户端
      */
     public void close() {
@@ -497,7 +514,7 @@ public class RedisClient {
             // 已关闭
             // if (isClosed) {
                 this.state.set(RedisConnState.CLOSED);
-                RedisEventUtil.connectionClosed(this);
+//                RedisEventUtil.connectionClosed(this);
             // }
             // 重置变量
 //            this.pool = null;
@@ -518,7 +535,7 @@ public class RedisClient {
      */
     public void reset() {
         // 移除监听器
-        this.close();
+//        this.close();
         this.state.set(RedisConnState.NOT_INITIALIZED);
     }
 
@@ -566,9 +583,10 @@ public class RedisClient {
             }
             this.state.set(RedisConnState.CONNECTED);
         } catch (Exception ex) {
+            ex.printStackTrace();
             this.state.set(RedisConnState.FAILED);
             JulLog.warn("redisClient start error", ex);
-            throw new RedisException(ex);
+//            throw new RedisException(ex);
         }
     }
 

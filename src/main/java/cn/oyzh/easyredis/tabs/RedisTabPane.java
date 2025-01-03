@@ -64,9 +64,6 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
             while (c.next()) {
                 if (c.wasAdded() || c.wasRemoved()) {
                     TaskManager.startDelay("redis:homeTab:flush", this::flushHomeTab, 100);
-                    // if (c.wasAdded()) {
-                    //     TaskManager.startDelay("redis:nodeTab:flush", this::flushNodeTab, 100);
-                    // }
                 }
             }
         });
@@ -82,54 +79,6 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
             this.closeHomeTab();
         }
     }
-
-    // /**
-    //  * 刷新节点标签
-    //  */
-    // private void flushNodeTab() {
-    //     // 获取设置
-    //     RedisSetting setting = RedisSettingJdbcStore.SETTING;
-    //     // 判断是否需要处理tab限制
-    //     if (setting.isTabUnLimit()) {
-    //         return;
-    //     }
-    //     // 获取全部节点tab
-    //     List<RedisKeyTab<?>> tabs = this.getKeyTabs();
-    //     // 数据不满足限制要求，则直接忽略
-    //     if (tabs.size() <= setting.getTabLimit()) {
-    //         return;
-    //     }
-    //     // tab处理函数
-    //     Consumer<List<RedisKeyTab<?>>> func = tabList -> {
-    //         // 数据满足限制要求才处理
-    //         if (tabList.size() > setting.getTabLimit()) {
-    //             // 进行排序
-    //             tabList.sort((o1, o2) -> Comparator.comparingLong((ToLongFunction<RedisKeyTab<?>>) RedisKeyTab::getOpenedTime).compare(o2, o1));
-    //             // 跳过指定数量
-    //             List<RedisKeyTab<?>> list = tabList.stream().skip(setting.getTabLimit()).toList();
-    //             // 移除tab
-    //             if (!list.isEmpty()) {
-    //                 FXUtil.runLater(() -> this.getTabs().removeAll(list));
-    //             }
-    //         }
-    //     };
-    //     // 限制全部连接
-    //     if (setting.isAllTabLimitStrategy()) {
-    //         func.accept(tabs);
-    //     } else if (setting.isSingleTabLimitStrategy()) {// 限制单个连接
-    //         // 分组处理
-    //         Map<RedisClient, List<RedisKeyTab<?>>> map = new HashMap<>();
-    //         // 按分组添加到map
-    //         for (RedisKeyTab<?> tab : tabs) {
-    //             List<RedisKeyTab<?>> list = map.computeIfAbsent(tab.client(), k -> new ArrayList<>());
-    //             list.add(tab);
-    //         }
-    //         // 处理值
-    //         for (List<RedisKeyTab<?>> tabList : map.values()) {
-    //             func.accept(tabList);
-    //         }
-    //     }
-    // }
 
     /**
      * 初始化终端tab

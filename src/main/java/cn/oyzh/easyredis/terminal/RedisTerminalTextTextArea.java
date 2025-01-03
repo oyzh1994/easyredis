@@ -15,6 +15,7 @@ import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * redis终端文本域
@@ -191,12 +192,11 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      * 开始连接
      */
     private void start(int db) {
+        this.initStatListener();
         ExecutorUtil.start(() -> {
             try {
-                this.intStatListener();
+                this.disable();
                 this.client.startDatabase(db);
-            } catch (Exception ex) {
-                this.onError(RedisExceptionParser.INSTANCE.apply(ex));
             } finally {
                 this.enable();
             }
@@ -216,16 +216,13 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
     /**
      * 初始化连接状态处理
      */
-    private void intStatListener() {
+    private void initStatListener() {
         if (this.stateChangeListener == null) {
             this.stateChangeListener = (observableValue, state, t1) -> {
                 this.flushPrompt();
                 // 获取连接
                 String host = this.client.redisConnect().getHost();
                 if (t1 == RedisConnState.CONNECTED) {
-                    // this.outputLine(host + " 连接成功.");
-                    // this.outputLine("输入\"help\"或者按下tab键可查看命令列表.");
-                    // this.outputLine("输入\"命令 -?\"可查看此命令详情.");
                     this.outputLine(I18nHelper.terminalTip2());
                     this.outputLine(I18nHelper.terminalTip1());
                     this.outputPrompt();
@@ -233,19 +230,15 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
                     super.enableInput();
                 } else if (t1 == RedisConnState.CLOSED) {
                     this.outputLine(host + " " + I18nHelper.connectionClosed() + " .");
-                    // this.outputLine(host + " 连接关闭.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.CONNECTING) {
                     this.outputLine(host + " " + I18nHelper.connectionConnecting() + " .");
-                    // this.outputLine(host + " 开始连接.");
                     this.disableInput();
                 } else if (t1 == RedisConnState.BROKEN) {
                     this.outputLine(host + " " + I18nHelper.connectionBroken() + " .");
-                    // this.outputLine(host + " 连接中断.");
                     this.enableInput();
                 } else if (t1 == RedisConnState.FAILED) {
                     this.outputLine(host + " " + I18nHelper.connectFail() + " .");
-                    // this.outputLine(host + " 连接失败.");
                     if (this.connect != null) {
                         this.appendByPrompt(this.connect.getInput());
                     }
