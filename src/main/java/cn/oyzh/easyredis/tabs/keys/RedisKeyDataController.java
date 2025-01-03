@@ -1,12 +1,12 @@
 package cn.oyzh.easyredis.tabs.keys;
 
-import cn.oyzh.easyredis.trees.keys.RedisHashKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisListKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisSetKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisStreamKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;

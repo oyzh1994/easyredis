@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees.keys;
+package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;

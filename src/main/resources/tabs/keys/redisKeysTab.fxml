@@ -2,7 +2,7 @@
 
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTextField?>
 <?import cn.oyzh.easyredis.fx.keys.RedisKeySearchTypeComboBox?>
-<?import cn.oyzh.easyredis.trees.keys.RedisKeyTreeView?>
+<?import cn.oyzh.easyredis.trees.key.RedisKeyTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>

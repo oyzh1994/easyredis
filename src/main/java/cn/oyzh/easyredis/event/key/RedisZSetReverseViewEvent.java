@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
-import cn.oyzh.easyredis.trees.keys.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
 import cn.oyzh.event.Event;
 
 /**

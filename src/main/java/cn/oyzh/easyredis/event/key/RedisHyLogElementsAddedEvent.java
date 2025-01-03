@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.event.key;
 
 import cn.oyzh.common.util.ArrayUtil;
-import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;

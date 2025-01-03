@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees.keys;
+package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;

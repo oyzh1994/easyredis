@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.keys;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.fx.RedisDataTextArea;
-import cn.oyzh.easyredis.trees.keys.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;

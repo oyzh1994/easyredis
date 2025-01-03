@@ -1,10 +1,9 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.button.SubmitButton;
 import cn.oyzh.fx.plus.FXConst;

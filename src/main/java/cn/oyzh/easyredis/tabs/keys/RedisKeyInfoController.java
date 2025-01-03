@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;

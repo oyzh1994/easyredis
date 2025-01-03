@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.window.StageAdapter;

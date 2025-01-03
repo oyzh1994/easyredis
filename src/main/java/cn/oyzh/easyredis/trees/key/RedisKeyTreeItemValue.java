@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees.keys;
+package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;

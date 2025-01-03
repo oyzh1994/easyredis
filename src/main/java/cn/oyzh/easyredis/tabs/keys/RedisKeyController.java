@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.keys;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.trees.keys.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
