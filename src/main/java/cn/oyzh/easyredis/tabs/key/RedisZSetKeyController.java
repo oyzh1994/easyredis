@@ -331,6 +331,7 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             this.firstPage();
         }
     }
+
     @FXML
     private void expendList() {
         if (this.expandPane.isCollapse()) {
@@ -343,5 +344,4 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             this.expandPane.collapse();
         }
     }
-
 }

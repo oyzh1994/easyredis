@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
 import cn.oyzh.easyredis.event.key.RedisZSetCoordinateAddedEvent;
+import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
@@ -11,6 +12,7 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -74,6 +76,12 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
      */
     @FXML
     private RichDataTypeComboBox format;
+
+    /**
+     * 展开列表面板
+     */
+    @FXML
+    private ExpandListSVGPane expandPane;
 
     /**
      * 格式监听器
@@ -332,6 +340,19 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
         if (this.treeItem == event.data()) {
             this.firstPage();
+        }
+    }
+
+    @FXML
+    private void expendList() {
+        if (this.expandPane.isCollapse()) {
+            NodeGroupUtil.disappear(this.getTab(), "coordinate_list");
+            this.nodeData.setFlexHeight("100% - 184");
+            this.expandPane.expand();
+        } else {
+            NodeGroupUtil.display(this.getTab(), "coordinate_list");
+            this.nodeData.setFlexHeight("100% - 510");
+            this.expandPane.collapse();
         }
     }
 }
