@@ -104,7 +104,7 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
         Number value = this.scoreVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
+        if (!Objects.equals(row.getScore(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());

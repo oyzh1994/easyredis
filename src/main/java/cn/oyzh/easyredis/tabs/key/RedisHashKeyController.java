@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
+import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
@@ -11,6 +12,7 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -94,6 +96,12 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     private FlexHBox fieldAction;
 
     /**
+     * 展开列表面板
+     */
+    @FXML
+    private ExpandListSVGPane expandPane;
+
+    /**
      * 格式监听器
      */
     private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
@@ -120,15 +128,20 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      */
     private final ChangeListener<RichDataType> fieldFormatListener = (t1, t2, t3) -> {
         if (this.fieldFormat.isStringFormat()) {
-            this.showData(RichDataType.STRING);
+            this.hashField.showData(RichDataType.STRING);
+            this.hashField.setEditable(true);
         } else if (this.fieldFormat.isJsonFormat()) {
-            this.showData(RichDataType.JSON);
+            this.hashField.showData(RichDataType.JSON);
+            this.hashField.setEditable(true);
         } else if (this.fieldFormat.isBinaryFormat()) {
-            this.showData(RichDataType.BINARY);
+            this.hashField.showData(RichDataType.BINARY);
+            this.hashField.setEditable(false);
         } else if (this.fieldFormat.isHexFormat()) {
-            this.showData(RichDataType.HEX);
+            this.hashField.showData(RichDataType.HEX);
+            this.hashField.setEditable(false);
         } else if (this.fieldFormat.isRawFormat()) {
-            this.showData(RichDataType.RAW);
+            this.hashField.showData(RichDataType.RAW);
+            this.hashField.setEditable(true);
         }
     };
 
@@ -152,7 +165,7 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      */
     private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
         RedisHashValue.RedisHashRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getField(), newValue)) {
+        if (row != null && !Objects.equals(row.getField(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -384,7 +397,6 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.hashField.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldUndo.setDisable(!t1));
         this.hashField.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldRedo.setDisable(!t1));
         this.hashField.disableProperty().bind(this.nodeData.disabledProperty());
-        this.hashField.editableProperty().bind(this.nodeData.editableProperty());
         this.fieldAction.disableProperty().bind(this.nodeData.disabledProperty());
     }
 
@@ -397,6 +409,21 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
         if (this.treeItem == event.data()) {
             this.firstPage();
+        }
+    }
+
+    @FXML
+    private void expendList() {
+        if (this.expandPane.isCollapse()) {
+            NodeGroupUtil.disappear(this.getTab(), "hash_list");
+            this.hashField.realHeight(150);
+            this.nodeData.setFlexHeight("100% - 292");
+            this.expandPane.expand();
+        } else {
+            NodeGroupUtil.display(this.getTab(), "hash_list");
+            this.hashField.realHeight(100);
+            this.nodeData.setFlexHeight("100% - 567");
+            this.expandPane.collapse();
         }
     }
 }

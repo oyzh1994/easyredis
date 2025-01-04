@@ -126,7 +126,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
+        if (!Objects.equals(row.getLongitude(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
