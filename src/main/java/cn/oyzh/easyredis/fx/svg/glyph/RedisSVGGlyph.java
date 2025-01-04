@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.fx;
+package cn.oyzh.easyredis.fx.svg.glyph;
 
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 

@@ -4,12 +4,15 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
 import cn.oyzh.easyredis.event.key.RedisSetMemberAddedEvent;
+import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -61,6 +64,12 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
      */
     @FXML
     private RichDataTextAreaPane nodeData;
+
+    /**
+     * 展开列表面板
+     */
+    @FXML
+    private ExpandListSVGPane expandPane;
 
     /**
      * 格式监听器
@@ -253,6 +262,19 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+    }
+
+    @FXML
+    private void expendList() {
+        if (this.expandPane.isCollapse()) {
+            NodeGroupUtil.disappear(this.getTab(), "set_list");
+            this.nodeData.setFlexHeight("100% - 60");
+            this.expandPane.expand();
+        } else {
+            NodeGroupUtil.display(this.getTab(), "set_list");
+            this.nodeData.setFlexHeight("100% - 409");
+            this.expandPane.collapse();
+        }
     }
 
     /**

@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.easyredis.fx.SubscribeSVGGlyph?>
+<?import cn.oyzh.easyredis.fx.svg.glyph.SubscribeSVGGlyph?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.server.RedisPubsubController" text="%redis.server.pubsub">

@@ -23,12 +23,17 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author oyzh
@@ -265,7 +270,7 @@ public class RedisKeysTab extends DynamicTab {
         }
 
         @FXML
-        private void collectKey(MouseEvent event) {
+        private void collectKey() {
             if (this.activeItem != null) {
                 if (this.collectPane.isCollect()) {
                     this.activeItem.unCollect();
@@ -351,15 +356,6 @@ public class RedisKeysTab extends DynamicTab {
          */
         private void initData() {
             if (this.activeItem != null) {
-//                RedisKeyTab<?> keyTab = RedisKeyTab.ofItem(this.activeItem);
-//                if (this.tabPane.tabSize() == 1) {
-//                    this.tabPane.addTab(0, keyTab);
-//                    this.tabPane.select(keyTab);
-//                    this.keyInfoController.init(this.activeItem);
-//                } else if (this.tabPane.tabSize() == 2) {
-//                    this.tabPane.setTab(0, keyTab);
-//                    this.keyInfoController.init(this.activeItem);
-//                }
                 this.keyDataController.init(this.activeItem);
                 this.keyInfoController.init(this.activeItem);
                 this.collectPane.setCollect(this.activeItem.isCollect());
@@ -370,10 +366,6 @@ public class RedisKeysTab extends DynamicTab {
          * 刷新ttl
          */
         public void flushTTL() {
-//            RedisKeyTab<?> keyTab = this.tabPane.getTab(0);
-//            if (keyTab != null) {
-//                keyTab.flushTTL();
-//            }
             this.keyDataController.flushTTL();
         }
 
@@ -386,6 +378,34 @@ public class RedisKeysTab extends DynamicTab {
                 this.treeView.sortDesc();
                 this.sortPane.asc();
             }
+        }
+
+        @Override
+        public void onTabInit(DynamicTab tab) {
+            super.onTabInit(tab);
+            this.keyDataController.onTabInit(tab);
+            this.keyInfoController.onTabInit(tab);
+        }
+
+        @Override
+        public void onTabClose(DynamicTab tab, Event event) {
+            super.onTabClose(tab, event);
+            this.keyDataController.onTabClose(tab, event);
+            this.keyInfoController.onTabClose(tab, event);
+        }
+
+        @Override
+        public void changeLocale(Locale locale) {
+            super.changeLocale(locale);
+            this.keyDataController.changeLocale(locale);
+            this.keyInfoController.changeLocale(locale);
+        }
+
+        @Override
+        public void initialize(URL location, ResourceBundle resourceBundle) {
+            super.initialize(location, resourceBundle);
+            this.keyDataController.initialize(location, resourceBundle);
+            this.keyInfoController.initialize(location, resourceBundle);
         }
     }
 }

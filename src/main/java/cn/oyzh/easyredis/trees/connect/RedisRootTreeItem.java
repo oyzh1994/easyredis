@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.fx.RedisSVGGlyph;
+import cn.oyzh.easyredis.fx.svg.glyph.RedisSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;

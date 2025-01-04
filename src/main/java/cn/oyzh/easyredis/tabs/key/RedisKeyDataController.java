@@ -7,7 +7,8 @@ import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -17,13 +18,15 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 
+import java.util.List;
+
 /**
  * redis键信息组件
  *
  * @author oyzh
  * @since 2023/08/03
  */
-public class RedisKeyDataController extends DynamicTabController {
+public class RedisKeyDataController extends ParentTabController {
 
     /**
      * 根节点
@@ -147,6 +150,7 @@ public class RedisKeyDataController extends DynamicTabController {
 
     /**
      * 获取键Controller
+     *
      * @return 键Controller
      */
     private RedisKeyController<?> getKeyController() {
@@ -195,5 +199,13 @@ public class RedisKeyDataController extends DynamicTabController {
         if (controller != null) {
             controller.flushTTL();
         }
+    }
+
+    @Override
+    public List<? extends SubTabController> getSubControllers() {
+        return List.of(
+                this.streamKeyController, this.setKeyController, this.coordinateKeyController, this.zsetKeyController,
+                this.hashKeyController, this.listKeyController, this.stringKeyController, this.hylogKeyController
+        );
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisConnectComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
-<?import cn.oyzh.easyredis.fx.RedisSVGGlyph?>
+<?import cn.oyzh.easyredis.fx.svg.glyph.RedisSVGGlyph?>
 <?import cn.oyzh.fx.gui.button.NextStepButton?>
 <?import cn.oyzh.fx.gui.button.PrevStepButton?>
 <?import cn.oyzh.fx.gui.button.StopButton?>

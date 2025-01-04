@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -17,7 +18,7 @@ import javafx.scene.input.KeyEvent;
  * @author oyzh
  * @since 2023/06/21
  */
-public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends DynamicTabController {
+public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends SubTabController {
 
     /**
      * 根节点
