@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
+<FlexHBox flexWidth="100%" flexHeight="30" xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml" fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyExtraController">
+    <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1" fontSize="11"
+             onMousePrimaryClicked="#ttlUpdate" realHeight="20" cursorType="HAND"
+             style="-fx-text-fill: #4576ba">
+        <HBox.margin>
+            <Insets left="5" top="3"/>
+        </HBox.margin>
+    </FXLabel>
+    <FXText tipText="%base.memoryUsage" fx:id="memoryUsage"
+            style="-fx-fill: #AD0EB5B2;"
+            realHeight="20">
+        <HBox.margin>
+            <Insets left="5" top="5"/>
+        </HBox.margin>
+    </FXText>
+    <FXText tipText="%base.loadCost" fx:id="loadTime"
+             style="-fx-fill: #009933;"
+             realHeight="20">
+        <HBox.margin>
+            <Insets left="5" top="5"/>
+        </HBox.margin>
+    </FXText>
+</FlexHBox>
