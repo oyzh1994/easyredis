@@ -60,7 +60,7 @@
             <Insets left="2"/>
         </VBox.margin>
     </FlexTableView>
-    <FlexHBox groupId="list_list" realHeight="24">
+    <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -82,6 +82,11 @@
                 <Insets left="5" top="4"/>
             </HBox.margin>
         </PageBox>
+        <ExpandListSVGPane size="14" fx:id="expandPane" onMousePrimaryClicked="#expendList">
+            <HBox.margin>
+                <Insets left="5" top="6"/>
+            </HBox.margin>
+        </ExpandListSVGPane>
     </FlexHBox>
     <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
@@ -122,11 +127,6 @@
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </RefreshSVGGlyph>
-        <ExpandListSVGPane size="14" fx:id="expandPane" onMousePrimaryClicked="#expendList">
-            <HBox.margin>
-                <Insets left="5" top="10"/>
-            </HBox.margin>
-        </ExpandListSVGPane>
     </FlexHBox>
     <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">

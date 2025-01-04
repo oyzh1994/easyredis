@@ -17,8 +17,15 @@ import lombok.Setter;
 public class ExpandListSVGPane extends FXHBox implements MouseAdapter {
 
     @Getter
-    @Setter
     private String size;
+
+    public void setSize(String size) {
+        this.size = size;
+        SVGGlyph glyph = (SVGGlyph) this.getChild(0);
+        if (glyph != null) {
+            glyph.setSizeStr(size);
+        }
+    }
 
     public ExpandListSVGPane() {
         this.collapse();
