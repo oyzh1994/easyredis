@@ -4,6 +4,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.event.key.RedisZSetMemberAddedEvent;
+import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
@@ -11,6 +12,7 @@ import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -74,6 +76,12 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
      */
     @FXML
     private RichDataTypeComboBox format;
+
+    /**
+     * 展开列表面板
+     */
+    @FXML
+    private ExpandListSVGPane expandPane;
 
     /**
      * 数据监听器
@@ -323,4 +331,17 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             this.firstPage();
         }
     }
+    @FXML
+    private void expendList() {
+        if (this.expandPane.isCollapse()) {
+            NodeGroupUtil.disappear(this.getTab(), "zset_list");
+            this.nodeData.setFlexHeight("100% - 141");
+            this.expandPane.expand();
+        } else {
+            NodeGroupUtil.display(this.getTab(), "zset_list");
+            this.nodeData.setFlexHeight("100% - 466");
+            this.expandPane.collapse();
+        }
+    }
+
 }
