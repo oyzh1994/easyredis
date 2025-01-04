@@ -17,9 +17,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisStreamKeyController">
-    <FlexHBox realHeight="30" flexWidth="100%">
+    <FlexHBox groupId="stream_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
@@ -44,7 +45,7 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FlexTableView groupId="stream_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
             <FlexTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
@@ -76,6 +77,11 @@
                 <Insets left="5" top="4"/>
             </HBox.margin>
         </PageBox>
+        <ExpandListSVGPane size="14" fx:id="expandPane" onMousePrimaryClicked="#expendList">
+            <HBox.margin>
+                <Insets left="5" top="6"/>
+            </HBox.margin>
+        </ExpandListSVGPane>
     </FlexHBox>
     <FXText text="%base.content">
         <VBox.margin>
@@ -83,7 +89,7 @@
         </VBox.margin>
     </FXText>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 440"
+                          flexHeight="100% - 438"
                           flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>

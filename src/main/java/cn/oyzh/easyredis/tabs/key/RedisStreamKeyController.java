@@ -3,12 +3,14 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.key.RedisStreamMessageAddedEvent;
+import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -39,6 +41,12 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
      */
     @FXML
     private RichDataTextAreaPane nodeData;
+
+    /**
+     * 展开列表面板
+     */
+    @FXML
+    private ExpandListSVGPane expandPane;
 
     @Override
     protected void initKey() {
@@ -144,5 +152,18 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     protected void clearRow() {
         this.nodeData.clear();
         this.nodeData.disable();
+    }
+
+    @FXML
+    private void expendList() {
+        if (this.expandPane.isCollapse()) {
+            NodeGroupUtil.disappear(this.getTab(), "stream_list");
+            this.nodeData.setFlexHeight("100% - 112");
+            this.expandPane.expand();
+        } else {
+            NodeGroupUtil.display(this.getTab(), "stream_list");
+            this.nodeData.setFlexHeight("100% - 438");
+            this.expandPane.collapse();
+        }
     }
 }
