@@ -106,14 +106,21 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
 //            RichDataType dataType = this.nodeData.showDetectData(this.treeItem.data());
 //            this.format.selectObj(dataType);
 //            }
-        Object rawData = this.treeItem.data();
-        byte detectType = TextUtil.detectType(rawData);
-        if (detectType == 1) {
-            this.nodeData.showJsonData(rawData);
-            this.format.selectObj(RichDataType.JSON);
+        if (this.treeItem.isDataTooBig()) {
+            this.nodeData.disable();
+            MessageBox.warn(I18nHelper.dataTooLarge());
         } else {
-            this.nodeData.showStringData(rawData);
-            this.format.selectObj(RichDataType.STRING);
+            this.nodeData.enable();
+            Object rawData = this.treeItem.data();
+            byte detectType = TextUtil.detectType(rawData);
+            if (detectType == 1) {
+                this.nodeData.showJsonData(rawData);
+                this.format.selectObj(RichDataType.JSON);
+            } else {
+                this.nodeData.showStringData(rawData);
+                this.format.selectObj(RichDataType.STRING);
+            }
+
         }
     }
 

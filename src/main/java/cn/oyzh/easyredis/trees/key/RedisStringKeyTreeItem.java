@@ -77,21 +77,32 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         return this.keyValue().getValue();
     }
 
-    // /**
-    //  * 数据是否太长
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isDataTooLong() {
-    //     Object o = this.data();
-    //     if (o instanceof String s) {
-    //         return s.length() > 1024 * 1024;
-    //     }
-    //     if (o instanceof byte[] bytes) {
-    //         return bytes.length > 1024 * 1024;
-    //     }
-    //     return false;
-    // }
+    /**
+     * 数据是否太大
+     *
+     * @return 结果
+     */
+    public boolean isDataTooBig() {
+        Object o = this.data();
+        if (o instanceof String s) {
+//            long lineCount = s.lines().count();
+//            // 单行大于100k，数据太大
+//            if (s.length() / lineCount > 100 * 1024) {
+//                return true;
+//            }
+            return s.length() > 1024 * 1024;
+        }
+        if (o instanceof byte[] bytes) {
+//            if(bytes.length > 1024 * 1024){
+//                return true;
+//            }
+//            String s = new String(bytes);
+//            long lineCount = s.lines().count();
+//            return s.length() / lineCount > 100 * 1024;
+            return bytes.length > 1024 * 1024;
+        }
+        return false;
+    }
 
     /**
      * 获取统计值大小

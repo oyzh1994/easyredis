@@ -18,11 +18,11 @@ public class RedisDataTextArea extends RichDataTextAreaPane {
     protected void initTextArea() {
         RichDataTextArea textArea = super.getContent();
         // 200k
-        textArea.setStyleBound(RichDataType.HEX, 200 * 1024 * 1024);
+        textArea.setStyleBound(RichDataType.HEX, 200 * 1024);
         // 500k
-        textArea.setStyleBound(RichDataType.JSON, 500 * 1024 * 1024);
+        textArea.setStyleBound(RichDataType.JSON, 500 * 1024);
         // 100k
-        textArea.setStyleBound(RichDataType.BINARY, 100 * 1024 * 1024);
+        textArea.setStyleBound(RichDataType.BINARY, 100 * 1024);
         super.initTextArea();
     }
 
