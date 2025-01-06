@@ -87,7 +87,7 @@
             </HBox.margin>
         </ExpandListSVGPane>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="fieldAction">
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="fieldAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="fieldFormat">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -132,13 +132,13 @@
             <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RedisDataTextArea disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
+    <RedisDataTextArea groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -172,7 +172,7 @@
             <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RedisDataTextArea disable="true" flexHeight="100% - 567" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
+    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 567" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
                        onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

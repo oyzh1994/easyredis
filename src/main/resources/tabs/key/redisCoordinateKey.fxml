@@ -58,7 +58,7 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView  groupId="coordinate_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FlexTableView groupId="coordinate_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
             <FlexTableColumn flexWidth="50%" valueName="value" text="%base.name"/>
@@ -97,7 +97,7 @@
             </HBox.margin>
         </ExpandListSVGPane>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -142,7 +142,7 @@
             <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 510"
+    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 510"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
@@ -153,7 +153,7 @@
             <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
-    <LongitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
+    <LongitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
                     tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
@@ -164,7 +164,7 @@
             <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
-    <LatitudeField scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
+    <LatitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
                    tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

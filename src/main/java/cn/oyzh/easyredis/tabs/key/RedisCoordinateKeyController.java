@@ -23,8 +23,10 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -106,10 +108,15 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     };
 
     /**
+     * 忽略数据变化
+     */
+    private boolean ignoreDataChange = false;
+
+    /**
      * 数据监听器
      */
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -126,7 +133,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getLongitude(), value.doubleValue())) {
+        if (!this.ignoreDataChange && !Objects.equals(row.getLongitude(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -143,7 +150,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getLatitude(), value.doubleValue())) {
+        if (!this.ignoreDataChange && !Objects.equals(row.getLatitude(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -186,14 +193,14 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     protected void initRow(RedisZSetValue.RedisZSetRow row) {
         super.initRow(row);
         if (row == null) {
-            this.nodeData.clear();
-            this.nodeData.disable();
+//            this.nodeData.clear();
+//            this.nodeData.disable();
             this.latitudeVal.clear();
             this.longitudeVal.clear();
         } else {
             this.latitudeVal.setValue(row.getLatitude());
             this.longitudeVal.setValue(row.getLongitude());
-            this.nodeData.enable();
+//            this.nodeData.enable();
             this.saveNodeData.disable();
             this.treeItem.clearData();
         }
@@ -206,11 +213,20 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
             MessageBox.warn(I18nHelper.dataAlreadyExists());
             return;
         }
+        if (this.treeItem.isDataTooBig()) {
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
         if (this.treeItem.isDataUnsaved()) {
+            this.disableTab();
             TaskManager.start(() -> {
-                this.treeItem.saveKeyValue();
-                this.listTable.refresh();
-                this.saveNodeData.disable();
+                try {
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                    this.saveNodeData.disable();
+                } finally {
+                    this.enableTab();
+                }
             });
         }
     }
@@ -274,12 +290,27 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     @Override
     protected void firstShowData() {
         RedisZSetValue.RedisZSetRow row = this.treeItem.data();
-        if (row != null) {
-            RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-            this.format.setValue(dataType);
-            this.nodeData.forgetHistory();
-            this.saveNodeData.disable();
+        if (row == null) {
+            return;
         }
+        // 数据太大
+        if (this.treeItem.isDataTooBig()) {
+            // 状态处理
+            this.nodeData.clear();
+            this.nodeData.disable();
+            this.ignoreDataChange = true;
+            NodeGroupUtil.disable(this.getTab(), "dataToBig");
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
+        // 状态处理
+        this.nodeData.enable();
+        this.ignoreDataChange = true;
+        NodeGroupUtil.enable(this.getTab(), "dataToBig");
+        RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(dataType);
+        this.nodeData.forgetHistory();
+        this.saveNodeData.disable();
     }
 
     @Override
@@ -354,5 +385,11 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
             this.nodeData.setFlexHeight("100% - 510");
             this.expandPane.collapse();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

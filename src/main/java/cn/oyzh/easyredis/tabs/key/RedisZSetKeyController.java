@@ -24,8 +24,10 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -177,12 +179,12 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     protected void initRow(RedisZSetValue.RedisZSetRow row) {
         super.initRow(row);
         if (row == null) {
-            this.nodeData.clear();
-            this.nodeData.disable();
+//            this.nodeData.clear();
+//            this.nodeData.disable();
             this.scoreVal.clear();
         } else {
             this.scoreVal.setValue(row.getScore());
-            this.nodeData.enable();
+//            this.nodeData.enable();
             this.treeItem.clearData();
         }
     }
@@ -295,10 +297,9 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             return;
         }
         // 状态处理
-        this.nodeData.clear();
-        this.nodeData.disable();
-        this.ignoreDataChange = true;
-        NodeGroupUtil.disable(this.getTab(), "dataToBig");
+        this.nodeData.enable();
+        this.ignoreDataChange = false;
+        NodeGroupUtil.enable(this.getTab(), "dataToBig");
         RichDataType dataType = this.nodeData.showDetectData(row.getValue());
         this.format.setValue(dataType);
         this.nodeData.forgetHistory();
@@ -375,5 +376,11 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             this.nodeData.setFlexHeight("100% - 466");
             this.expandPane.collapse();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

@@ -23,8 +23,10 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -146,10 +148,15 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     };
 
     /**
+     * 忽略数据变化
+     */
+    private boolean ignoreDataChange = false;
+
+    /**
      * redis数据监听器
      */
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -165,7 +172,7 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      */
     private final ChangeListener<String> fieldValListener = (observable, oldValue, newValue) -> {
         RedisHashValue.RedisHashRow row = this.treeItem.rawValue();
-        if (row != null && !Objects.equals(row.getField(), newValue)) {
+        if (!this.ignoreDataChange && row != null && !Objects.equals(row.getField(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -189,12 +196,12 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         super.initRow(row);
         if (row == null) {
             this.hashField.clear();
-            this.nodeData.clear();
-            this.nodeData.disable();
+//            this.nodeData.clear();
+//            this.nodeData.disable();
         } else {
             this.hashField.setText(row.getField());
             this.hashField.forgetHistory();
-            this.nodeData.enable();
+//            this.nodeData.enable();
         }
     }
 
@@ -256,11 +263,20 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
             MessageBox.warn(I18nHelper.fieldAlreadyExists());
             return;
         }
+        if (this.treeItem.isDataTooBig()) {
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
         if (this.treeItem.isDataUnsaved()) {
+            this.disableTab();
             TaskManager.start(() -> {
-                this.treeItem.saveKeyValue();
-                this.listTable.refresh();
-                this.saveNodeData.disable();
+                try {
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                    this.saveNodeData.disable();
+                } finally {
+                    this.enableTab();
+                }
             });
         }
     }
@@ -340,16 +356,32 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @Override
     protected void firstShowData() {
         RedisHashValue.RedisHashRow row = this.treeItem.data();
-        if (row != null) {
-            RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-            this.format.setValue(dataType);
-            this.nodeData.forgetHistory();
-            this.saveNodeData.disable();
-
-            // 字段格式
-            RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
-            this.fieldFormat.setValue(fieldDataType);
+        if (row == null) {
+            return;
         }
+        // 数据太大
+        if (this.treeItem.isDataTooBig()) {
+            // 状态处理
+            this.nodeData.clear();
+            this.nodeData.disable();
+            this.ignoreDataChange = true;
+            NodeGroupUtil.disable(this.getTab(), "dataToBig");
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
+        // 状态处理
+        this.nodeData.enable();
+        this.ignoreDataChange = false;
+        NodeGroupUtil.enable(this.getTab(), "dataToBig");
+        // 数据处理
+        RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(dataType);
+        this.nodeData.forgetHistory();
+        this.saveNodeData.disable();
+
+        // 字段格式
+        RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
+        this.fieldFormat.setValue(fieldDataType);
     }
 
     @Override
@@ -425,5 +457,11 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
             this.nodeData.setFlexHeight("100% - 567");
             this.expandPane.collapse();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

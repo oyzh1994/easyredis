@@ -27,8 +27,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -356,5 +358,11 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
             this.nodeData.setFlexHeight("100% - 409");
             this.expandPane.collapse();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }
