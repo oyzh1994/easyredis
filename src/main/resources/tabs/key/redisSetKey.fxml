@@ -22,6 +22,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisSetKeyController">
     <FlexHBox groupId="set_list" realHeight="30" flexWidth="100%">
@@ -120,6 +121,11 @@
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </ClearSVGGlyph>
+        <BinarySVGGlyph tipText="%base.saveBinaryFile" size="16" onMousePrimaryClicked="#saveBinaryFile">
+            <HBox.margin>
+                <Insets left="5" top="9"/>
+            </HBox.margin>
+        </BinarySVGGlyph>
     </FlexHBox>
     <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">

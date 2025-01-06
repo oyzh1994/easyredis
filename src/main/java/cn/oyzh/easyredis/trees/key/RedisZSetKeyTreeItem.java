@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.key;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.key.RedisKey;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -252,6 +253,19 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         if (this.isDataUnsaved() && !Objects.equals(this.currentRow.getValue(), rowValue)) {
             Long zrank = this.client().zrank(this.dbIndex(), this.key(), rowValue);
             return zrank != null;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isDataTooBig() {
+        Object o = this.data();
+        if (o instanceof RedisZSetValue.RedisZSetRow r) {
+            String s = r.getValue();
+            if (s.length() > DATA_MAX) {
+                return true;
+            }
+            return s.lines().anyMatch(l -> l.length() > LINE_MAX);
         }
         return false;
     }

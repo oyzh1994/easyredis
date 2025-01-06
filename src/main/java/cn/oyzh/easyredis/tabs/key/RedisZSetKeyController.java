@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -84,10 +85,15 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     private ExpandListSVGPane expandPane;
 
     /**
+     * 忽略数据变化
+     */
+    private boolean ignoreDataChange = false;
+
+    /**
      * 数据监听器
      */
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -104,7 +110,7 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
         Number value = this.scoreVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!Objects.equals(row.getScore(), value.doubleValue())) {
+        if (!this.ignoreDataChange && !Objects.equals(row.getScore(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -188,12 +194,22 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             MessageBox.warn(I18nHelper.dataAlreadyExists());
             return;
         }
+        if (this.treeItem.isDataTooBig()) {
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
         if (this.treeItem.isDataUnsaved()) {
+            this.disableTab();
             TaskManager.start(() -> {
-                this.treeItem.saveKeyValue();
-                this.listTable.refresh();
-                // 保存监听
-                this.saveNodeData.disable();
+                try {
+
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                    // 保存监听
+                    this.saveNodeData.disable();
+                } finally {
+                    this.enableTab();
+                }
             });
         }
     }
@@ -265,12 +281,28 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     @Override
     protected void firstShowData() {
         RedisZSetValue.RedisZSetRow row = this.treeItem.data();
-        if (row != null) {
-            RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-            this.format.setValue(dataType);
-            this.nodeData.forgetHistory();
-            this.saveNodeData.disable();
+        if (row == null) {
+            return;
         }
+        // 数据太大
+        if (this.treeItem.isDataTooBig()) {
+            // 状态处理
+            this.nodeData.clear();
+            this.nodeData.disable();
+            this.ignoreDataChange = true;
+            NodeGroupUtil.disable(this.getTab(), "dataToBig");
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
+        // 状态处理
+        this.nodeData.clear();
+        this.nodeData.disable();
+        this.ignoreDataChange = true;
+        NodeGroupUtil.disable(this.getTab(), "dataToBig");
+        RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(dataType);
+        this.nodeData.forgetHistory();
+        this.saveNodeData.disable();
     }
 
     @Override
