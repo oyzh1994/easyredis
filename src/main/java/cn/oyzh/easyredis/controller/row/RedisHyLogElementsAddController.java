@@ -13,6 +13,7 @@ import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -38,7 +39,7 @@ public class RedisHyLogElementsAddController extends StageController {
      * 行数据
      */
     @FXML
-    private FlexTextArea rowValue;
+    private RichDataTextArea rowValue;
 
     /**
      * redis键

@@ -11,6 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController" realWidth="750"
           realHeight="550">
@@ -20,12 +21,12 @@
         </VBox.margin>
     </InfoLabel>
     <FlexHBox flexWidth="100%" flexHeight="100% - 120">
-        <FlexTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
-                      flexWidth="100% - 180">
+        <RichDataTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
+                          flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
             </HBox.margin>
-        </FlexTextArea>
+        </RichDataTextArea>
         <FlexVBox>
             <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>

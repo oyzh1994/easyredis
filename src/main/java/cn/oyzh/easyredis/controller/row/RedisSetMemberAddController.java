@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.controller.row;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.fx.RedisDataTextArea;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.fx.plus.FXConst;
@@ -11,6 +12,7 @@ import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -33,7 +35,7 @@ public class RedisSetMemberAddController extends StageController {
      * 行数据
      */
     @FXML
-    private FlexTextArea rowValue;
+    private RichDataTextArea rowValue;
 
     /**
      * redis键
