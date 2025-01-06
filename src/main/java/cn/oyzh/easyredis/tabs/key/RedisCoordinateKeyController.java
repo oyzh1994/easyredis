@@ -383,11 +383,11 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "coordinate_list");
-            this.nodeData.setFlexHeight("100% - 184");
+            this.nodeData.setFlexHeight("100% - 182");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "coordinate_list");
-            this.nodeData.setFlexHeight("100% - 510");
+            this.nodeData.setFlexHeight("100% - 508");
             this.expandPane.collapse();
         }
     }

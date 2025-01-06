@@ -87,92 +87,94 @@
             </HBox.margin>
         </ExpandListSVGPane>
     </FlexHBox>
-    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="fieldAction">
+    <FXText text="%base.field">
+        <VBox.margin>
+            <Insets top="5" left="5"/>
+        </VBox.margin>
+    </FXText>
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="24" flexWidth="100%" fx:id="fieldAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="fieldFormat">
             <HBox.margin>
-                <Insets left="5" top="5"/>
+                <Insets left="5"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </SaveSVGGlyph>
         <UndoSVGGlyph disable="true" fx:id="fieldUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#fieldUndo">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="fieldRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#fieldRedo">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteField" tipText="%base.pasteTip1">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearFiled">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </ClearSVGGlyph>
         <RefreshSVGGlyph size="15" onMousePrimaryClicked="#reloadRow">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </RefreshSVGGlyph>
     </FlexHBox>
-    <FXText text="%base.field">
-        <VBox.margin>
-            <Insets left="5"/>
-        </VBox.margin>
-    </FXText>
-    <RedisDataTextArea groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11" fx:id="hashField"
-                          onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextArea groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11"
+                       fx:id="hashField"
+                       onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+    <FXText text="%base.value">
+        <VBox.margin>
+            <Insets top="5" left="5"/>
+        </VBox.margin>
+    </FXText>
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="24" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
-                <Insets left="5" top="5"/>
+                <Insets left="5"/>
             </HBox.margin>
         </RichDataTypeComboBox>
         <UndoSVGGlyph disable="true" fx:id="dataUndo" tipText="%base.undoTip1" size="16"
                       onMousePrimaryClicked="#dataUndo">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </UndoSVGGlyph>
         <RedoSVGGlyph disable="true" fx:id="dataRedo" tipText="%base.redoTip1" size="16"
                       onMousePrimaryClicked="#dataRedo">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </RedoSVGGlyph>
         <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData" tipText="%base.pasteTip1">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </PasteSVGGlyph>
         <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
             <HBox.margin>
-                <Insets left="5" top="9"/>
+                <Insets left="5" top="4"/>
             </HBox.margin>
         </ClearSVGGlyph>
     </FlexHBox>
-    <FXText text="%base.value">
-        <VBox.margin>
-            <Insets left="5"/>
-        </VBox.margin>
-    </FXText>
-    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 567" flexWidth="100% - 4" fontSize="11" fx:id="nodeData"
+    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 565" flexWidth="100% - 4" fontSize="11"
+                       fx:id="nodeData"
                        onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>

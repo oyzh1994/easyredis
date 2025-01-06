@@ -372,11 +372,11 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "zset_list");
-            this.nodeData.setFlexHeight("100% - 141");
+            this.nodeData.setFlexHeight("100% - 140");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "zset_list");
-            this.nodeData.setFlexHeight("100% - 466");
+            this.nodeData.setFlexHeight("100% - 465");
             this.expandPane.collapse();
         }
     }

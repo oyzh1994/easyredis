@@ -454,12 +454,12 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "hash_list");
             this.hashField.realHeight(150);
-            this.nodeData.setFlexHeight("100% - 292");
+            this.nodeData.setFlexHeight("100% - 290");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "hash_list");
             this.hashField.realHeight(100);
-            this.nodeData.setFlexHeight("100% - 567");
+            this.nodeData.setFlexHeight("100% - 565");
             this.expandPane.collapse();
         }
     }
