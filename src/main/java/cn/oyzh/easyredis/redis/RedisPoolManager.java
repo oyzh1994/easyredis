@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.redis;
 
+import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadLocalUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
@@ -188,7 +189,12 @@ public class RedisPoolManager {
      */
     private void doReturnResource(Jedis jedis) {
         if (jedis != null && this.jedisPool != null) {
-            this.jedisPool.returnResource(jedis);
+            try {
+                this.jedisPool.returnResource(jedis);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JulLog.warn("doReturnResource error", ex);
+            }
         }
     }
 

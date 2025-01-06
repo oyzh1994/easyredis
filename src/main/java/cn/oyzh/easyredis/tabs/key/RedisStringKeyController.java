@@ -116,9 +116,10 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
 //            }
         // 检测数据是否太大
         if (this.treeItem.isDataTooBig()) {
-            this.ignoreDataChange = true;
+            // 状态处理
             this.nodeData.clear();
             this.nodeData.disable();
+            this.ignoreDataChange = true;
             NodeGroupUtil.disable(this.getTab(), "dataToBig");
             // 异步处理，避免阻塞主程序
             TaskManager.startDelay(() -> {
@@ -128,10 +129,12 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
             }, 10);
             return;
         }
-        // 数据处理
-        this.ignoreDataChange = false;
-        this.firstShowData();
+        // 状态处理
         this.nodeData.enable();
+        this.ignoreDataChange = false;
+        NodeGroupUtil.enable(this.getTab(), "dataToBig");
+        // 数据处理
+        this.firstShowData();
         Object rawData = this.treeItem.data();
         byte detectType = TextUtil.detectType(rawData);
         if (detectType == 1) {
