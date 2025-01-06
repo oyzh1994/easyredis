@@ -105,6 +105,8 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
             this.treeItem.refreshKeyValue();
             // 跳转到首页
             this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

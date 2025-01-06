@@ -103,18 +103,6 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
         }
     }
 
-    /**
-     * stream消息添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-        }
-    }
-
     @Override
     protected void firstShowData() {
         RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
@@ -144,6 +132,8 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
                 } else {// 刷新
                     this.firstPage();
                 }
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
             }
         }
     }
@@ -164,6 +154,20 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
             NodeGroupUtil.display(this.getTab(), "stream_list");
             this.nodeData.setFlexHeight("100% - 438");
             this.expandPane.collapse();
+        }
+    }
+
+    /**
+     * stream消息添加事件
+     *
+     * @param msg 消息
+     */
+    @EventSubscribe
+    private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
+        if (this.treeItem == msg.data()) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         }
     }
 }

@@ -303,6 +303,8 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
                 } else {// 刷新
                     this.firstPage();
                 }
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
             }
         }
     }
@@ -346,6 +348,8 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
     private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         }
     }
 

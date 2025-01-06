@@ -334,6 +334,8 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
                 } else {// 刷新
                     this.firstPage();
                 }
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
             }
         }
     }
@@ -372,6 +374,8 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
         if (this.treeItem == event.data()) {
             this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         }
     }
 

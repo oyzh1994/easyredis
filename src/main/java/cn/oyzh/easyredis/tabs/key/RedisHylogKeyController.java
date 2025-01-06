@@ -75,6 +75,8 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
             this.treeItem.refreshKeyValue();
             // 数据变更
             this.initKey();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -91,20 +93,6 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         fxView.display();
     }
 
-    /**
-     * hyLog元素添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            // 刷新数据
-            this.treeItem.flushCount();
-            this.initKey();
-        }
-    }
-
     @Override
     protected void firstShowData() {
         this.nodeData.showData(this.treeItem.rawValue());
@@ -115,5 +103,22 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
     @Override
     protected void showData(RichDataType dataType) {
         this.nodeData.showData(dataType, this.treeItem.rawValue());
+    }
+
+    /**
+     * hyLog元素添加事件
+     *
+     * @param msg 消息
+     */
+    @EventSubscribe
+    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
+        if (this.treeItem == msg.data()) {
+            // 刷新统计值
+            this.treeItem.flushCount();
+            // 初始化键
+            this.initKey();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 }

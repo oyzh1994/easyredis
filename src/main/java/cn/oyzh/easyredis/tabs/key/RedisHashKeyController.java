@@ -405,6 +405,8 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
                 } else {// 刷新
                     this.firstPage();
                 }
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
             }
         }
     }
@@ -442,6 +444,8 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
         if (this.treeItem == event.data()) {
             this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         }
     }
 

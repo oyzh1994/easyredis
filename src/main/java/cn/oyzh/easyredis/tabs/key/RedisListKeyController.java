@@ -315,6 +315,8 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
                 } else {// 刷新
                     this.firstPage();
                 }
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
             }
         }
     }
@@ -345,6 +347,8 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     private void onListRowAdded(RedisListRowAddedEvent msg) {
         if (this.treeItem == msg.data()) {
             this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         }
     }
 

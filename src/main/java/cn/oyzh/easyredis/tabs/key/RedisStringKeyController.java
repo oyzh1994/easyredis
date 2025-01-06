@@ -194,6 +194,8 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
             this.treeItem.refreshKeyValue();
             // 初始化数据
             this.initKey();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -217,6 +219,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
                     this.flushBinary();
                     // 保存监听
                     this.saveNodeData.disable();
+                    // 刷新内存占用
                     this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
