@@ -1,18 +1,23 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.fx.RedisDataTextArea;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -82,10 +87,15 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     };
 
     /**
+     * 忽略数据变化
+     */
+    private boolean ignoreDataChange = false;
+
+    /**
      * redis数据监听器
      */
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             this.treeItem.data(newValue);
         }
@@ -93,8 +103,6 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
 
     @Override
     protected void initKey() {
-        // 数据处理
-        this.firstShowData();
         // 刷新二进制处理
         this.flushBinary();
         // 按钮状态处理
@@ -106,21 +114,55 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
 //            RichDataType dataType = this.nodeData.showDetectData(this.treeItem.data());
 //            this.format.selectObj(dataType);
 //            }
+        // 检测数据是否太大
         if (this.treeItem.isDataTooBig()) {
+            this.ignoreDataChange = true;
+            this.nodeData.clear();
             this.nodeData.disable();
-            MessageBox.warn(I18nHelper.dataTooLarge());
+            NodeGroupUtil.disable(this.getTab(), "dataToBig");
+            // 异步处理，避免阻塞主程序
+            TaskManager.startDelay(() -> {
+                if (MessageBox.confirm(RedisI18nHelper.keyTip9())) {
+                    this.saveBinaryFile();
+                }
+            }, 10);
+            return;
+        }
+        // 数据处理
+        this.ignoreDataChange = false;
+        this.firstShowData();
+        this.nodeData.enable();
+        Object rawData = this.treeItem.data();
+        byte detectType = TextUtil.detectType(rawData);
+        if (detectType == 1) {
+            this.nodeData.showJsonData(rawData);
+            this.format.selectObj(RichDataType.JSON);
         } else {
-            this.nodeData.enable();
-            Object rawData = this.treeItem.data();
-            byte detectType = TextUtil.detectType(rawData);
-            if (detectType == 1) {
-                this.nodeData.showJsonData(rawData);
-                this.format.selectObj(RichDataType.JSON);
-            } else {
-                this.nodeData.showStringData(rawData);
-                this.format.selectObj(RichDataType.STRING);
-            }
+            this.nodeData.showStringData(rawData);
+            this.format.selectObj(RichDataType.STRING);
+        }
+    }
 
+    /**
+     * 保存为二进制文件
+     */
+    @FXML
+    private void saveBinaryFile() {
+        try {
+            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FileChooserHelper.allExtensionFilter());
+            if (file != null) {
+                Object data = this.treeItem.rawValue();
+                byte[] bytes = new byte[0];
+                if (data instanceof String s) {
+                    bytes = s.getBytes();
+                } else if (data instanceof byte[] s) {
+                    bytes = s;
+                }
+                FileUtil.writeBytes(bytes, file);
+//                MessageBox.info(I18nHelper.operationSuccess());
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 
@@ -160,11 +202,18 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @Override
     protected void saveKeyValue() {
         if (this.treeItem.isDataUnsaved()) {
+            this.getTab().disable();
             TaskManager.start(() -> {
-                this.treeItem.saveKeyValue();
-                this.flushBinary();
-                // 保存监听
-                this.saveNodeData.disable();
+                try {
+                    // 保存数据
+                    this.treeItem.saveKeyValue();
+                    // 刷新二进制标志位
+                    this.flushBinary();
+                    // 保存监听
+                    this.saveNodeData.disable();
+                } finally {
+                    this.getTab().enable();
+                }
             });
         }
     }

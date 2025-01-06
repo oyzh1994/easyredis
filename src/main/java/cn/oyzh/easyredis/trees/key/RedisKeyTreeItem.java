@@ -33,6 +33,16 @@ import java.util.Objects;
 public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValue> {
 
     /**
+     * 单行最大值
+     */
+    public static final int LINE_MAX = 100 * 1024;
+
+    /**
+     * 数据最大值
+     */
+    public static final int DATA_MAX = 1024 * 1024;
+
+    /**
      * redis键
      */
     @Getter

@@ -17,7 +17,7 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController">
+          fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController" groupId="dataToBig">
     <FlexHBox realHeight="30" flexWidth="100%">
         <RichDataTypeComboBox prefHeight="22" fx:id="format">
             <HBox.margin>

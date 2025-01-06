@@ -20,11 +20,11 @@ import javafx.scene.input.KeyEvent;
  */
 public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends SubTabController {
 
-    /**
-     * 根节点
-     */
-    @FXML
-    protected FlexVBox root;
+//    /**
+//     * 根节点
+//     */
+//    @FXML
+//    protected FlexVBox root;
 
     /**
      * 树节点

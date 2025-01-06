@@ -223,4 +223,8 @@ public class RedisI18nHelper {
     public static String migrationTip8() {
         return I18nResourceBundle.i18nString("redis.migration.tip8");
     }
+
+    public static String keyTip9() {
+        return I18nResourceBundle.i18nString("redis.key.tip9");
+    }
 }
