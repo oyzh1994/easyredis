@@ -204,11 +204,10 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
             this.disableTab();
             TaskManager.start(() -> {
                 try {
-
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
-                    // 保存监听
                     this.saveNodeData.disable();
+                    this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
                 }

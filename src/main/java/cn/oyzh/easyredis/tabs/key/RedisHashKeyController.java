@@ -274,6 +274,7 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
+                    this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
                 }

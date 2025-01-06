@@ -192,6 +192,7 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
+                    this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
                 }

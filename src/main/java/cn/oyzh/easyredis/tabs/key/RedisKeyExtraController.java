@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -9,13 +10,16 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * redis键额外信息组件
  *
  * @author oyzh
  * @since 2023/08/03
  */
-public class RedisKeyExtraController {
+public class RedisKeyExtraController extends DynamicTabController {
 
     /**
      * ttl组件
@@ -47,8 +51,10 @@ public class RedisKeyExtraController {
      */
     public void init(RedisKeyTreeItem treeItem) {
         this.treeItem = treeItem;
+        this.memoryUsage.textProperty().bind(this.treeItem.memoryUsageInfoProperty());
         this.flushTTL();
-        this.flushMemoryUsage();
+        this.treeItem.flushMemoryUsage();
+//        this.flushMemoryUsage();
         this.loadTime.setText(I18nHelper.cost() + " : " + this.treeItem.loadTime() + "ms");
     }
 
@@ -59,12 +65,12 @@ public class RedisKeyExtraController {
         this.ttl.text("TTL : " + this.treeItem.ttl());
     }
 
-    /**
-     * 刷新内存占用信息
-     */
-    public void flushMemoryUsage() {
-        this.memoryUsage.text(I18nHelper.size() + " : " + this.treeItem.memoryUsageInfo());
-    }
+//    /**
+//     * 刷新内存占用信息
+//     */
+//    public void flushMemoryUsage() {
+//        this.memoryUsage.text(I18nHelper.size() + " : " + this.treeItem.memoryUsageInfo());
+//    }
 
     /**
      * ttl设置
@@ -75,5 +81,4 @@ public class RedisKeyExtraController {
         fxView.setProp("treeItem", this.treeItem);
         fxView.display();
     }
-
 }

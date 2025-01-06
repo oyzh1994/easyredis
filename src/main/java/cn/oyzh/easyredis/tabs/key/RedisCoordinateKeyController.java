@@ -224,6 +224,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
+                    this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
                 }

@@ -180,6 +180,7 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
+                    this.treeItem.flushMemoryUsage();
                 } finally {
                     this.enableTab();
                 }

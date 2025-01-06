@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
@@ -9,8 +10,12 @@ import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * redis键tab内容组件
@@ -120,13 +125,30 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
     /**
      * 首次显示数据
      */
-    protected abstract void firstShowData( ) ;
+    protected abstract void firstShowData();
 
     /**
      * 显示数据
      *
      * @param dataType 数据类型
      */
-    protected abstract void showData(RichDataType dataType) ;
+    protected abstract void showData(RichDataType dataType);
 
+    @Override
+    public void onTabInit(DynamicTab tab) {
+        super.onTabInit(tab);
+        this.keyExtraController.onTabInit(tab);
+    }
+
+    @Override
+    public void onTabClose(DynamicTab tab, Event event) {
+        super.onTabClose(tab, event);
+        this.keyExtraController.onTabClose(tab, event);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        super.initialize(location, resourceBundle);
+        this.keyExtraController.initialize(location, resourceBundle);
+    }
 }

@@ -17,11 +17,14 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
+import java.io.PushbackReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -395,6 +398,19 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
             return memoryUsage / 1024.0 / 1024 + "MB";
         }
         return memoryUsage / 1024.0 / 1024 / 1024 + "GB";
+    }
+
+    private StringProperty memoryUsageInfoProperty;
+
+    public void flushMemoryUsage() {
+        this.memoryUsageInfoProperty.set(I18nHelper.size() + " : " + this.memoryUsageInfo());
+    }
+
+    public StringProperty memoryUsageInfoProperty() {
+        if (this.memoryUsageInfoProperty == null) {
+            this.memoryUsageInfoProperty = new SimpleStringProperty();
+        }
+        return this.memoryUsageInfoProperty;
     }
 
     /**
