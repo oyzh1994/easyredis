@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
@@ -7,9 +8,12 @@ import cn.oyzh.easyredis.event.key.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
@@ -22,6 +26,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -93,10 +98,15 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     };
 
     /**
+     * 忽略数据变化
+     */
+    private boolean ignoreDataChange = false;
+
+    /**
      * 数据监听器
      */
     private final ChangeListener<String> dataListener = (t1, t2, newValue) -> {
-        if (!Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -155,25 +165,34 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         fxView.display();
     }
 
-    @Override
-    protected void initRow(RedisListValue.RedisListRow row) {
-        super.initRow(row);
-        if (row == null) {
-            this.nodeData.clear();
-            this.nodeData.disable();
-        } else {
-            this.nodeData.enable();
-        }
-    }
+//    @Override
+//    protected void initRow(RedisListValue.RedisListRow row) {
+//        super.initRow(row);
+//        if (row == null) {
+//            this.nodeData.clear();
+//            this.nodeData.disable();
+//        } else {
+//            this.nodeData.enable();
+//        }
+//    }
 
     @FXML
     @Override
     protected void saveKeyValue() {
+        if (this.treeItem.isDataTooBig()) {
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
         if (this.treeItem.isDataUnsaved()) {
+            this.disableTab();
             TaskManager.start(() -> {
-                this.treeItem.saveKeyValue();
-                this.listTable.refresh();
-                this.saveNodeData.disable();
+                try {
+                    this.treeItem.saveKeyValue();
+                    this.listTable.refresh();
+                    this.saveNodeData.disable();
+                } finally {
+                    this.enableTab();
+                }
             });
         }
     }
@@ -227,11 +246,49 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     @Override
     protected void firstShowData() {
         RedisListValue.RedisListRow row = this.treeItem.data();
-        if (row != null) {
-            RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-            this.format.setValue(dataType);
-            this.nodeData.forgetHistory();
-            this.saveNodeData.disable();
+        if (row == null) {
+            return;
+        }
+        // 数据太大
+        if (this.treeItem.isDataTooBig()) {
+            // 状态处理
+            this.nodeData.clear();
+            this.nodeData.disable();
+            this.ignoreDataChange = true;
+            NodeGroupUtil.disable(this.getTab(), "dataToBig");
+            // 异步处理，避免阻塞主程序
+            TaskManager.startDelay(() -> {
+                if (MessageBox.confirm(RedisI18nHelper.keyTip9())) {
+                    this.saveBinaryFile();
+                }
+            }, 10);
+            return;
+        }
+        // 状态处理
+        this.nodeData.enable();
+        this.ignoreDataChange = false;
+        NodeGroupUtil.enable(this.getTab(), "dataToBig");
+        // 数据处理
+        RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(dataType);
+        this.nodeData.forgetHistory();
+        this.saveNodeData.disable();
+    }
+
+    /**
+     * 保存为二进制文件
+     */
+    @FXML
+    private void saveBinaryFile() {
+        try {
+            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FileChooserHelper.allExtensionFilter());
+            if (file != null) {
+                RedisListValue.RedisListRow row = this.treeItem.rawValue();
+                byte[] bytes = row.getValue().getBytes();
+                FileUtil.writeBytes(bytes, file);
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 
@@ -287,6 +344,7 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
             this.firstPage();
         }
     }
+
     @FXML
     private void expendList() {
         if (this.expandPane.isCollapse()) {
@@ -299,5 +357,4 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
             this.expandPane.collapse();
         }
     }
-
 }

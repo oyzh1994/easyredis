@@ -97,4 +97,13 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     public Object rawData() {
         return this.currentRow == null ? null : this.currentRow.getValue();
     }
+
+    /**
+     * 数据是否太大
+     *
+     * @return 结果
+     */
+    public boolean isDataTooBig() {
+        return false;
+    }
 }

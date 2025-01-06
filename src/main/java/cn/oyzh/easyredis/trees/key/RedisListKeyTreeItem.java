@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
+import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.NonNull;
 
@@ -104,5 +105,18 @@ public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.Red
     @Override
     public RedisListValue.RedisListRow rawValue() {
         return this.currentRow;
+    }
+
+    @Override
+    public boolean isDataTooBig() {
+        Object o = this.data();
+        if (o instanceof RedisListValue.RedisListRow r) {
+            String s = r.getValue();
+            if (s.length() > DATA_MAX) {
+                return true;
+            }
+            return s.lines().anyMatch(l -> l.length() > LINE_MAX);
+        }
+        return false;
     }
 }
