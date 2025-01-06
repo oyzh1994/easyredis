@@ -162,7 +162,6 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
                     bytes = s;
                 }
                 FileUtil.writeBytes(bytes, file);
-//                MessageBox.info(I18nHelper.operationSuccess());
             }
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -204,8 +203,12 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @FXML
     @Override
     protected void saveKeyValue() {
+        if (this.treeItem.isDataTooBig()) {
+            MessageBox.warn(I18nHelper.dataTooLarge());
+            return;
+        }
         if (this.treeItem.isDataUnsaved()) {
-            this.getTab().disable();
+            this.disableTab();
             TaskManager.start(() -> {
                 try {
                     // 保存数据
@@ -215,7 +218,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
                     // 保存监听
                     this.saveNodeData.disable();
                 } finally {
-                    this.getTab().enable();
+                    this.enableTab();
                 }
             });
         }

@@ -44,18 +44,14 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
      */
     public boolean init(T treeItem) {
         this.treeItem = treeItem;
-
         // 处理额外信息
         this.keyExtraController.init(treeItem);
-
         // 键已过期
         if (this.treeItem.isExpire()) {
             return false;
         }
-
         // 初始化节点
         this.initKey();
-
         return true;
     }
 
@@ -73,7 +69,7 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
         String builder = I18nHelper.database() + ": " + this.treeItem.dbIndex() + System.lineSeparator() +
                 I18nHelper.keyType() + ": " + this.treeItem.value().type() + System.lineSeparator() +
                 I18nHelper.keyName() + ": " + this.treeItem.key();
-        ClipboardUtil.setStringAndTip(builder, "键信息");
+        ClipboardUtil.setStringAndTip(builder);
     }
 
     /**

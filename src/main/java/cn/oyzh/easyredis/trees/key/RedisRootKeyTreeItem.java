@@ -6,6 +6,7 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.data.RedisDataExportController;
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -50,6 +51,8 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     @Override
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
+        // 添加
+        FXMenuItem add = MenuItemHelper.addKey("12", this::addKey);
         // 重载
         FXMenuItem reload = MenuItemHelper.refreshData("12", this::reloadChild);
         // 卸载
@@ -58,6 +61,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         FXMenuItem loadAll = MenuItemHelper.loadAll("12", this::loadChildAll);
         // 导出数据
         FXMenuItem export = MenuItemHelper.exportData("12", this::exportData);
+        items.add(add);
         items.add(reload);
         items.add(unload);
         items.add(loadAll);
@@ -66,7 +70,16 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     }
 
     /**
-     * 导出zk节点
+     * 添加键
+     */
+    public void addKey() {
+        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
+        fxView.setProp("dbItem", this.dbItem());
+        fxView.display();
+    }
+
+    /**
+     * 导出redis键
      */
     public void exportData() {
         StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class, this.window());

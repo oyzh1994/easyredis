@@ -5,6 +5,7 @@ import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.key.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -161,9 +162,9 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
         } else {
             this.firstShowData();
         }
-        if (this.dataAction != null) {
-            this.dataAction.setDisable(row == null);
-        }
+//        if (this.dataAction != null) {
+//            this.dataAction.setDisable(row == null);
+//        }
     }
 
     /**

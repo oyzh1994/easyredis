@@ -121,4 +121,20 @@ public class RedisSetKeyTreeItem extends RedisRowKeyTreeItem<RedisSetValue.Redis
         return false;
     }
 
+    /**
+     * 数据是否太大
+     *
+     * @return 结果
+     */
+    public boolean isDataTooBig() {
+        Object o = this.data();
+        if (o instanceof RedisSetValue.RedisSetRow r) {
+            String s = r.getValue();
+            if (s.length() > DATA_MAX) {
+                return true;
+            }
+            return s.lines().anyMatch(l -> l.length() > LINE_MAX);
+        }
+        return false;
+    }
 }

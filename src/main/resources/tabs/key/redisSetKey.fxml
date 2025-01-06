@@ -86,7 +86,7 @@
             </HBox.margin>
         </ExpandListSVGPane>
     </FlexHBox>
-    <FlexHBox disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -121,7 +121,7 @@
             </HBox.margin>
         </ClearSVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
+    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
