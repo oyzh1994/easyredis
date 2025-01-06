@@ -234,7 +234,7 @@ public class RedisKey implements Comparable<RedisKey>, ObjectCopier<RedisKey> {
         this.value(RedisStringValue.valueOf(value));
     }
 
-    public void valueOfString(byte[] value) {
+    public void valueOfBytes(byte[] value) {
         this.value(RedisStringValue.valueOf(value));
     }
 

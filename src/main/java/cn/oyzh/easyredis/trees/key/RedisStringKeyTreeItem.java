@@ -50,7 +50,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
             // 原始格式
             if (this.isRawEncoding(true)) {
                 byte[] val = this.client().get(this.dbIndex(), this.keyBinary());
-                this.value.valueOfString(val);
+                this.value.valueOfBytes(val);
             } else {// 字符串格式
                 String val = this.client().get(this.dbIndex(), this.key());
                 this.value.valueOfString(val);

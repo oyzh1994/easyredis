@@ -9,7 +9,6 @@ import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
-import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
