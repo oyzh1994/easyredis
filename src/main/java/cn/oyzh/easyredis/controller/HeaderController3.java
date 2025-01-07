@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.controller;
 
+import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
@@ -18,11 +19,6 @@ import javafx.fxml.FXML;
  * @since 2023/06/16
  */
 public class HeaderController3 extends StageController {
-
-    /**
-     * 项目信息
-     */
-    private final Project project = Project.load();
 
     /**
      * 设置
@@ -50,7 +46,7 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void quit() {
-        if (MessageBox.confirm(I18nHelper.quit() + " " + this.project.getName())) {
+        if (MessageBox.confirm(I18nHelper.quit() + " " + SysConst.projectName())) {
             StageManager.exit();
         }
     }
@@ -64,7 +60,7 @@ public class HeaderController3 extends StageController {
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageManager.showStage(RedisDataTransportController.class);
+            StageManager.showStage(RedisDataTransportController.class, this.stage);
         }
     }
 
@@ -96,6 +92,6 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void migration() {
-        StageManager.showStage(RedisDataMigrationController.class);
+        StageManager.showStage(RedisDataMigrationController.class, this.stage);
     }
 }

@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.fx.gui.svg.glyph.*?>
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.label.*?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import cn.oyzh.fx.gui.svg.glyph.ToolsSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.QuitSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.MigrationSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.SettingSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.AboutSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.TransportSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.pane.FlexPane?>
 <FlexVBox xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.HeaderController3" flexHeight="100%" realWidth="30">
     <TransportSVGGlyph onMousePrimaryClicked="#transport" size="12">
@@ -45,7 +38,7 @@
             <Insets left="10" top="15"/>
         </VBox.margin>
     </Layout2SVGGlyph>
-    <FlexPane flexWidth="100%" flexHeight="100% - 277">
+    <FlexPane flexWidth="100%" flexHeight="100% - 276">
 
     </FlexPane>
     <QuitSVGGlyph onMousePrimaryClicked="#quit" size="12">
