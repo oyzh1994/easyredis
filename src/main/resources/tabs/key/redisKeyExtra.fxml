@@ -10,7 +10,7 @@
              onMousePrimaryClicked="#ttlUpdate" prefHeight="22" cursorType="HAND"
              style="-fx-text-fill: #4576ba">
         <HBox.margin>
-            <Insets left="5"/>
+            <Insets left="5" top="1.5"/>
         </HBox.margin>
     </FXLabel>
     <FXText tipText="%base.memoryUsage" fx:id="memoryUsage"

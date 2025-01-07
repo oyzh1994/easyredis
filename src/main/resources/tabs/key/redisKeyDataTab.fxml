@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <FXTab text="%base.data" xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyDataController" fx:id="root">
+       fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyDataController" fx:id="dataRoot">
     <graphic>
         <SVGGlyph url="/font/key.svg" sizeStr="12" cursorType="DEFAULT"/>
     </graphic>

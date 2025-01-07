@@ -14,11 +14,11 @@
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="750"
           fx:id="root">
@@ -73,29 +73,31 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1"
-                          flexWidth="100% - 140">
-                <VBox.margin>
-                    <Insets left="30" top="5"/>
-                </VBox.margin>
-            </FlexTextArea>
-            <FlexVBox>
-                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </PasteSVGGlyph>
-                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </ClearSVGGlyph>
-                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </JSONSVGGlyph>
-            </FlexVBox>
+            <FlexHBox flexHeight="100% - 45">
+                <RichDataTextArea flexHeight="100%" tipText="%base.contentTip1"
+                                  flexWidth="100% - 140">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </RichDataTextArea>
+                <FlexVBox>
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </PasteSVGGlyph>
+                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </ClearSVGGlyph>
+                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </JSONSVGGlyph>
+                </FlexVBox>
+            </FlexHBox>
         </FlexVBox>
     </FlexVBox>
     <FlexVBox fx:id="bitBox" flexWidth="100%" flexHeight="100" managedBindVisible="true" visible="false">
@@ -150,28 +152,30 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
-                <VBox.margin>
-                    <Insets left="30" top="5"/>
-                </VBox.margin>
-            </FlexTextArea>
-            <FlexVBox>
-                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </PasteSVGGlyph>
-                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </ClearSVGGlyph>
-                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                    <VBox.margin>
-                        <Insets left="5" top="10"/>
-                    </VBox.margin>
-                </JSONSVGGlyph>
-            </FlexVBox>
+            <FlexHBox flexHeight="100% - 45">
+                <RichDataTextArea flexHeight="100%" tipText="%base.contentTip1" flexWidth="100% - 140">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </RichDataTextArea>
+                <FlexVBox>
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </PasteSVGGlyph>
+                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </ClearSVGGlyph>
+                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </JSONSVGGlyph>
+                </FlexVBox>
+            </FlexHBox>
         </FlexVBox>
     </FlexVBox>
     <FlexVBox fx:id="hashBox" flexWidth="100%" flexHeight="100% - 300" managedBindVisible="true" visible="false">
@@ -180,23 +184,23 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexTextArea fx:id="fieldValue" flexHeight="50% - 50" tipText="%base.contentTip1"
-                      flexWidth="100% - 140">
+        <RichDataTextArea fx:id="fieldValue" flexHeight="50% - 50" tipText="%base.contentTip1"
+                          flexWidth="100% - 140">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </FlexTextArea>
+        </RichDataTextArea>
         <FlexVBox flexWidth="100%" flexHeight="50%">
             <InfoLabel text="%base.fieldValue">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
+            <RichDataTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
                 <VBox.margin>
                     <Insets left="30" top="5"/>
                 </VBox.margin>
-            </FlexTextArea>
+            </RichDataTextArea>
             <FlexVBox>
                 <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
@@ -234,12 +238,45 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexTextArea flexHeight="100% - 45" tipText="%redis.key.msgTip2"
-                          flexWidth="100% - 140">
-                <VBox.margin>
+            <FlexHBox flexHeight="100% - 45">
+                <RichDataTextArea flexHeight="100%" tipText="%redis.key.msgTip2"
+                                  flexWidth="100% - 140">
+                    <HBox.margin>
+                        <Insets left="30" top="5"/>
+                    </HBox.margin>
+                </RichDataTextArea>
+                <FlexVBox>
+                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </PasteSVGGlyph>
+                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </ClearSVGGlyph>
+                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                        <VBox.margin>
+                            <Insets left="5" top="10"/>
+                        </VBox.margin>
+                    </JSONSVGGlyph>
+                </FlexVBox>
+            </FlexHBox>
+        </FlexVBox>
+    </FlexVBox>
+    <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 300" managedBindVisible="true" visible="false">
+        <InfoLabel text="%base.member">
+            <VBox.margin>
+                <Insets left="30" top="10"/>
+            </VBox.margin>
+        </InfoLabel>
+        <FlexHBox flexHeight="100% - 45">
+            <RichDataTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
+                <HBox.margin>
                     <Insets left="30" top="5"/>
-                </VBox.margin>
-            </FlexTextArea>
+                </HBox.margin>
+            </RichDataTextArea>
             <FlexVBox>
                 <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
@@ -257,36 +294,7 @@
                     </VBox.margin>
                 </JSONSVGGlyph>
             </FlexVBox>
-        </FlexVBox>
-    </FlexVBox>
-    <FlexVBox fx:id="listBox" flexWidth="100%" flexHeight="100% - 300" managedBindVisible="true" visible="false">
-        <InfoLabel text="%base.member">
-            <VBox.margin>
-                <Insets left="30" top="10"/>
-            </VBox.margin>
-        </InfoLabel>
-        <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
-            <VBox.margin>
-                <Insets left="30" top="5"/>
-            </VBox.margin>
-        </FlexTextArea>
-        <FlexVBox>
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
-        </FlexVBox>
+        </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="setBox" flexWidth="100%" flexHeight="100% - 300" managedBindVisible="true" visible="false">
         <InfoLabel text="%base.member">
@@ -294,28 +302,30 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
-            <VBox.margin>
-                <Insets left="30" top="5"/>
-            </VBox.margin>
-        </FlexTextArea>
-        <FlexVBox>
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
-        </FlexVBox>
+        <FlexHBox flexHeight="100% - 45">
+            <RichDataTextArea flexHeight="100% " tipText="%base.contentTip1" flexWidth="100% - 140">
+                <HBox.margin>
+                    <Insets left="30" top="5"/>
+                </HBox.margin>
+            </RichDataTextArea>
+            <FlexVBox>
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </JSONSVGGlyph>
+            </FlexVBox>
+        </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="hylogBox" flexWidth="100%" flexHeight="100% - 300" managedBindVisible="true" visible="false">
         <InfoLabel text="%base.elements">
@@ -323,29 +333,31 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexTextArea flexHeight="100% - 45" tipText="%redis.key.tip4"
-                      flexWidth="100% - 140">
-            <VBox.margin>
-                <Insets left="30" top="5"/>
-            </VBox.margin>
-        </FlexTextArea>
-        <FlexVBox>
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
-        </FlexVBox>
+        <FlexHBox flexHeight="100% - 45">
+            <RichDataTextArea flexHeight="100%" tipText="%redis.key.tip4"
+                              flexWidth="100% - 140">
+                <HBox.margin>
+                    <Insets left="30" top="5"/>
+                </HBox.margin>
+            </RichDataTextArea>
+            <FlexVBox>
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </JSONSVGGlyph>
+            </FlexVBox>
+        </FlexHBox>
     </FlexVBox>
     <FlexVBox fx:id="stringBox" flexWidth="100%" flexHeight="100% - 300">
         <InfoLabel text="%base.content">
@@ -353,28 +365,30 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexTextArea flexHeight="100% - 45" tipText="%base.contentTip1" flexWidth="100% - 140">
-            <VBox.margin>
-                <Insets left="30" top="5"/>
-            </VBox.margin>
-        </FlexTextArea>
-        <FlexVBox>
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
-        </FlexVBox>
+        <FlexHBox flexHeight="100% - 45">
+            <RichDataTextArea flexHeight="100%" tipText="%base.contentTip1" flexWidth="100% - 140">
+                <HBox.margin>
+                    <Insets left="30" top="5"/>
+                </HBox.margin>
+            </RichDataTextArea>
+            <FlexVBox>
+                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </PasteSVGGlyph>
+                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </ClearSVGGlyph>
+                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <VBox.margin>
+                        <Insets left="5" top="10"/>
+                    </VBox.margin>
+                </JSONSVGGlyph>
+            </FlexVBox>
+        </FlexHBox>
     </FlexVBox>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addKey">

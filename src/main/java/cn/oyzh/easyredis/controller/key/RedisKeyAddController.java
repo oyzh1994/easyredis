@@ -15,7 +15,6 @@ import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
@@ -23,6 +22,7 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.window.StageAttribute;
+import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -110,7 +110,7 @@ public class RedisKeyAddController extends StageController {
      * 字段名
      */
     @FXML
-    private FlexTextArea fieldValue;
+    private RichDataTextArea fieldValue;
 
     /**
      * bit值
@@ -186,24 +186,24 @@ public class RedisKeyAddController extends StageController {
      *
      * @return 值文本组件
      */
-    private FlexTextArea valueTextArea() {
-        FlexTextArea textArea;
+    private RichDataTextArea valueTextArea() {
+        RichDataTextArea textArea;
         if (this.stringBox.isVisible()) {
-            textArea = (FlexTextArea) this.stringBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.stringBox.lookup("RichDataTextArea");
         } else if (this.listBox.isVisible()) {
-            textArea = (FlexTextArea) this.listBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.listBox.lookup("RichDataTextArea");
         } else if (this.hylogBox.isVisible()) {
-            textArea = (FlexTextArea) this.hylogBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.hylogBox.lookup("RichDataTextArea");
         } else if (this.zSetBox.isVisible()) {
-            textArea = (FlexTextArea) this.zSetBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.zSetBox.lookup("RichDataTextArea");
         } else if (this.setBox.isVisible()) {
-            textArea = (FlexTextArea) this.setBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.setBox.lookup("RichDataTextArea");
         } else if (this.hashBox.isVisible()) {
-            textArea = (FlexTextArea) this.hashBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.hashBox.lookup("RichDataTextArea");
         } else if (this.coordinateBox.isVisible()) {
-            textArea = (FlexTextArea) this.coordinateBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.coordinateBox.lookup("RichDataTextArea");
         } else {
-            textArea = (FlexTextArea) this.streamBox.lookup("FlexTextArea");
+            textArea = (RichDataTextArea) this.streamBox.lookup("RichDataTextArea");
         }
         return textArea;
     }

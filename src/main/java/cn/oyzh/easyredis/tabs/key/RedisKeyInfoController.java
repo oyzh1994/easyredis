@@ -27,7 +27,7 @@ public class RedisKeyInfoController extends DynamicTabController {
      * 根节点
      */
     @FXML
-    private FXTab root;
+    private FXTab infoRoot;
 
     /**
      * redis客户端
@@ -94,7 +94,7 @@ public class RedisKeyInfoController extends DynamicTabController {
         this.redisKey = treeItem.value();
         this.client = treeItem.client();
         // 选中时则更新
-        if (this.root.isSelected()) {
+        if (this.infoRoot.isSelected()) {
             this.initObject();
         }
     }
@@ -121,7 +121,7 @@ public class RedisKeyInfoController extends DynamicTabController {
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
         super.initialize(location, resourceBundle);
-        this.root.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        this.infoRoot.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 this.initObject();
             }

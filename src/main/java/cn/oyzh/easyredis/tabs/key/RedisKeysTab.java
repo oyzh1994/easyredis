@@ -15,6 +15,8 @@ import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -32,6 +34,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -142,7 +145,7 @@ public class RedisKeysTab extends DynamicTab {
      * @author oyzh
      * @since 2024-12-03
      */
-    public static class RedisKeysTabController extends DynamicTabController {
+    public static class RedisKeysTabController extends ParentTabController {
 
         /**
          * 根节点
@@ -379,33 +382,38 @@ public class RedisKeysTab extends DynamicTab {
                 this.sortPane.asc();
             }
         }
+//
+//        @Override
+//        public void onTabInit(DynamicTab tab) {
+//            super.onTabInit(tab);
+//            this.keyDataController.onTabInit(tab);
+//            this.keyInfoController.onTabInit(tab);
+//        }
+//
+//        @Override
+//        public void onTabClose(DynamicTab tab, Event event) {
+//            super.onTabClose(tab, event);
+//            this.keyDataController.onTabClose(tab, event);
+//            this.keyInfoController.onTabClose(tab, event);
+//        }
+//
+//        @Override
+//        public void changeLocale(Locale locale) {
+//            super.changeLocale(locale);
+//            this.keyDataController.changeLocale(locale);
+//            this.keyInfoController.changeLocale(locale);
+//        }
+//
+//        @Override
+//        public void initialize(URL location, ResourceBundle resourceBundle) {
+//            super.initialize(location, resourceBundle);
+//            this.keyDataController.initialize(location, resourceBundle);
+//            this.keyInfoController.initialize(location, resourceBundle);
+//        }
 
         @Override
-        public void onTabInit(DynamicTab tab) {
-            super.onTabInit(tab);
-            this.keyDataController.onTabInit(tab);
-            this.keyInfoController.onTabInit(tab);
-        }
-
-        @Override
-        public void onTabClose(DynamicTab tab, Event event) {
-            super.onTabClose(tab, event);
-            this.keyDataController.onTabClose(tab, event);
-            this.keyInfoController.onTabClose(tab, event);
-        }
-
-        @Override
-        public void changeLocale(Locale locale) {
-            super.changeLocale(locale);
-            this.keyDataController.changeLocale(locale);
-            this.keyInfoController.changeLocale(locale);
-        }
-
-        @Override
-        public void initialize(URL location, ResourceBundle resourceBundle) {
-            super.initialize(location, resourceBundle);
-            this.keyDataController.initialize(location, resourceBundle);
-            this.keyInfoController.initialize(location, resourceBundle);
+        public List<? extends DynamicTabController> getSubControllers() {
+            return List.of(this.keyDataController, this.keyInfoController);
         }
     }
 }

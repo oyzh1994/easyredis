@@ -32,7 +32,7 @@ public class RedisKeyDataController extends ParentTabController {
      * 根节点
      */
     @FXML
-    private FXTab root;
+    private FXTab dataRoot;
 
     /**
      * set键
@@ -101,43 +101,43 @@ public class RedisKeyDataController extends ParentTabController {
     public void init(RedisKeyTreeItem treeItem) {
         this.treeItem = treeItem;
         // 隐藏旧内容
-        NodeGroupUtil.disappear(this.root, "key-data");
+        NodeGroupUtil.disappear(this.dataRoot, "key-data");
         // 处理具体业务
         if (treeItem instanceof RedisStringKeyTreeItem item1) {
             if (item1.isHyLog()) {
                 this.hylogKeyController.init(item1);
-                Node node = this.root.getContent().lookup("#hylogKey");
+                Node node = this.dataRoot.getContent().lookup("#hylogKey");
                 NodeUtil.display(node);
             } else {
                 this.stringKeyController.init(item1);
-                Node node = this.root.getContent().lookup("#stringKey");
+                Node node = this.dataRoot.getContent().lookup("#stringKey");
                 NodeUtil.display(node);
             }
         } else if (treeItem instanceof RedisZSetKeyTreeItem item1) {
             if (item1.isCoordinateView()) {
                 this.coordinateKeyController.init(item1);
-                Node node = this.root.getContent().lookup("#coordinateKey");
+                Node node = this.dataRoot.getContent().lookup("#coordinateKey");
                 NodeUtil.display(node);
             } else {
                 this.zsetKeyController.init(item1);
-                Node node = this.root.getContent().lookup("#zsetKey");
+                Node node = this.dataRoot.getContent().lookup("#zsetKey");
                 NodeUtil.display(node);
             }
         } else if (treeItem instanceof RedisHashKeyTreeItem item1) {
             this.hashKeyController.init(item1);
-            Node node = this.root.getContent().lookup("#hashKey");
+            Node node = this.dataRoot.getContent().lookup("#hashKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisListKeyTreeItem item1) {
             this.listKeyController.init(item1);
-            Node node = this.root.getContent().lookup("#listKey");
+            Node node = this.dataRoot.getContent().lookup("#listKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisSetKeyTreeItem item1) {
             this.setKeyController.init(item1);
-            Node node = this.root.getContent().lookup("#setKey");
+            Node node = this.dataRoot.getContent().lookup("#setKey");
             NodeUtil.display(node);
         } else if (treeItem instanceof RedisStreamKeyTreeItem item1) {
             this.streamKeyController.init(item1);
-            Node node = this.root.getContent().lookup("#streamKey");
+            Node node = this.dataRoot.getContent().lookup("#streamKey");
             NodeUtil.display(node);
         }
         // 处理额外信息

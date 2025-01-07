@@ -133,7 +133,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private final ChangeListener<String> longitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!this.ignoreDataChange && !Objects.equals(row.getLongitude(), value.doubleValue())) {
+        if (!this.ignoreDataChange && row != null && !Objects.equals(row.getLongitude(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -150,7 +150,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private final ChangeListener<String> latitudeValListener = (observable, oldValue, newValue) -> {
         Number value = this.longitudeVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!this.ignoreDataChange && !Objects.equals(row.getLatitude(), value.doubleValue())) {
+        if (!this.ignoreDataChange && row != null && !Objects.equals(row.getLatitude(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());

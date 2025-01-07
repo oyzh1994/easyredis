@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.key;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
 import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
+import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -23,6 +24,7 @@ import javafx.scene.control.MenuItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.PushbackReader;
 import java.util.ArrayList;
@@ -119,11 +121,22 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         FXMenuItem delete = MenuItemHelper.deleteKey("12", this::delete);
         FXMenuItem moveKey = MenuItemHelper.moveKey("12", this::moveKey);
         FXMenuItem copyKey = MenuItemHelper.copyKey("12", this::copyKey);
+        FXMenuItem updateTtl = MenuItemHelper.updateTtl("12", this::updateTtl);
         items.add(rename);
         items.add(moveKey);
         items.add(copyKey);
+        items.add(updateTtl);
         items.add(delete);
         return items;
+    }
+
+    /**
+     * 修改ttl
+     */
+    private void updateTtl() {
+        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.window());
+        fxView.setProp("treeItem", this);
+        fxView.display();
     }
 
     /**
