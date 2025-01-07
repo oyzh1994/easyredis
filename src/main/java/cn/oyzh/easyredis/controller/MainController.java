@@ -19,6 +19,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,11 +42,11 @@ public class MainController extends ParentStageController {
      */
     private final Project project = Project.load();
 
-    // /**
-    //  * 头部页面
-    //  */
-    // @FXML
-    // private HeaderController headerController;
+     /**
+      * 头部页面
+      */
+     @FXML
+     private HeaderController3 headerController;
 
     /**
      * redis主页业务
@@ -143,8 +144,8 @@ public class MainController extends ParentStageController {
 
     @Override
     public List<? extends StageController> getSubControllers() {
-        // return Arrays.asList(this.redisMainController, this.headerController);
-        return Collections.singletonList(this.redisMainController);
+         return Arrays.asList(this.redisMainController, this.headerController);
+//        return Collections.singletonList(this.redisMainController);
     }
 
     @Override
