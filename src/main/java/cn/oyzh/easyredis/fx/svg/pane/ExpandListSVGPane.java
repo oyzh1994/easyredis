@@ -6,6 +6,7 @@ import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.svg.SVGPane;
 import cn.oyzh.fx.plus.mouse.MouseAdapter;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,18 +15,7 @@ import lombok.Setter;
  * @author oyzh
  * @since 2025-01-04
  */
-public class ExpandListSVGPane extends FXHBox implements MouseAdapter {
-
-    @Getter
-    private String size;
-
-    public void setSize(String size) {
-        this.size = size;
-        SVGGlyph glyph = (SVGGlyph) this.getChild(0);
-        if (glyph != null) {
-            glyph.setSizeStr(size);
-        }
-    }
+public class ExpandListSVGPane extends SVGPane {
 
     public ExpandListSVGPane() {
         this.collapse();
