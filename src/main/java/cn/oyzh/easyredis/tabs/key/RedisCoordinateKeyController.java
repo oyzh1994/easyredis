@@ -306,7 +306,7 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
         }
         // 状态处理
         this.nodeData.enable();
-        this.ignoreDataChange = true;
+        this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         RichDataType dataType = this.nodeData.showDetectData(row.getValue());
         this.format.setValue(dataType);
@@ -349,20 +349,22 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // 绑定属性
-        this.latitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
-        this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+        // 经度处理
+        this.longitudeVal.addTextChangeListener(this.longitudeValListener);
         this.longitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
         this.longitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+        // 纬度处理
+        this.latitudeVal.addTextChangeListener(this.latitudeValListener);
+        this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
+        this.latitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
         // 格式监听
         this.format.selectedItemChanged(this.formatListener);
-        // 坐标处理
-        this.latitudeVal.addTextChangeListener(this.latitudeValListener);
-        this.longitudeVal.addTextChangeListener(this.longitudeValListener);
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+        // 操作绑定
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
     /**
@@ -383,18 +385,12 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "coordinate_list");
-            this.nodeData.setFlexHeight("100% - 182");
+            this.nodeData.setFlexHeight("100% - 152");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "coordinate_list");
-            this.nodeData.setFlexHeight("100% - 508");
+            this.nodeData.setFlexHeight("100% - 478");
             this.expandPane.collapse();
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
-        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

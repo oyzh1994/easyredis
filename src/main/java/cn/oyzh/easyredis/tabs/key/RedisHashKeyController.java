@@ -433,6 +433,8 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.hashField.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.fieldRedo.setDisable(!t1));
         this.hashField.disableProperty().bind(this.nodeData.disabledProperty());
         this.fieldAction.disableProperty().bind(this.nodeData.disabledProperty());
+        // 操作绑定
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
     /**
@@ -454,19 +456,13 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "hash_list");
             this.hashField.realHeight(150);
-            this.nodeData.setFlexHeight("100% - 290");
+            this.nodeData.setFlexHeight("100% - 260");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "hash_list");
             this.hashField.realHeight(100);
-            this.nodeData.setFlexHeight("100% - 565");
+            this.nodeData.setFlexHeight("100% - 536");
             this.expandPane.collapse();
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
-        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

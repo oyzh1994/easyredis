@@ -324,6 +324,8 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+        // 操作绑定
+        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
     @FXML
@@ -351,11 +353,5 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
             // 刷新内存占用
             this.treeItem.flushMemoryUsage();
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
-        this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 }

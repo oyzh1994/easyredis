@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisHashKeyController">
     <FlexHBox groupId="hash_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
@@ -173,7 +173,7 @@
             </HBox.margin>
         </ClearSVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 565" flexWidth="100% - 4" fontSize="11"
+    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 536" flexWidth="100% - 4" fontSize="11"
                        fx:id="nodeData"
                        onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>

@@ -26,7 +26,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisCoordinateKeyController">
     <FlexHBox groupId="coordinate_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
@@ -72,7 +72,7 @@
     <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
-                <Insets left="5"/>
+                <Insets left="5" top="5"/>
             </HBox.margin>
         </CopySVGGlyph>
         <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
@@ -142,7 +142,7 @@
             </HBox.margin>
         </CopySVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 508"
+    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 478"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
