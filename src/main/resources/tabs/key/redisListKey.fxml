@@ -24,7 +24,7 @@
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisListKeyController">
     <FlexHBox groupId="list_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
@@ -134,11 +134,11 @@
             </HBox.margin>
         </BinarySVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 409"
+    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 379"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

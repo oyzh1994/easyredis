@@ -88,6 +88,12 @@ public class RedisKeyDataController extends ParentTabController {
     private RedisKeyTreeItem treeItem;
 
     /**
+     * 键扩展信息
+     */
+    @FXML
+    private RedisKeyExtraController keyExtraController;
+
+    /**
      * 执行初始化
      *
      * @param treeItem 节点
@@ -134,6 +140,8 @@ public class RedisKeyDataController extends ParentTabController {
             Node node = this.root.getContent().lookup("#streamKey");
             NodeUtil.display(node);
         }
+        // 处理额外信息
+        this.keyExtraController.init(treeItem);
         // 刷新tab
         this.flushTab();
         // 判断这个key是否到期
@@ -195,17 +203,19 @@ public class RedisKeyDataController extends ParentTabController {
      * 刷新ttl
      */
     public void flushTTL() {
-        RedisKeyController<?> controller = this.getKeyController();
-        if (controller != null) {
-            controller.flushTTL();
-        }
+//        RedisKeyController<?> controller = this.getKeyController();
+//        if (controller != null) {
+//            controller.flushTTL();
+//        }
+        this.keyExtraController.flushTTL();
     }
 
     @Override
     public List<? extends SubTabController> getSubControllers() {
         return List.of(
                 this.streamKeyController, this.setKeyController, this.coordinateKeyController, this.zsetKeyController,
-                this.hashKeyController, this.listKeyController, this.stringKeyController, this.hylogKeyController
+                this.hashKeyController, this.listKeyController, this.stringKeyController, this.hylogKeyController,
+                this.keyExtraController
         );
     }
 }

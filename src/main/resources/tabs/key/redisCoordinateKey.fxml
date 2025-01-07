@@ -170,5 +170,5 @@
             <Insets left="2"/>
         </VBox.margin>
     </LatitudeField>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

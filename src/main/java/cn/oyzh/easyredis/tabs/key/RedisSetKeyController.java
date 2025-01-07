@@ -330,11 +330,11 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "set_list");
-            this.nodeData.setFlexHeight("100% - 84");
+            this.nodeData.setFlexHeight("100% - 54");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "set_list");
-            this.nodeData.setFlexHeight("100% - 409");
+            this.nodeData.setFlexHeight("100% - 379");
             this.expandPane.collapse();
         }
     }

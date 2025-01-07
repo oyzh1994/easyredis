@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisStreamKeyController">
     <FlexHBox groupId="stream_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
@@ -89,7 +89,7 @@
         </VBox.margin>
     </FXText>
     <RichDataTextAreaPane editable="false" dataType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                          flexHeight="100% - 438"
+                          flexHeight="100% - 408"
                           flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
@@ -105,5 +105,5 @@
             <Insets left="2"/>
         </VBox.margin>
     </ReadOnlyTextField>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

@@ -11,7 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisHylogKeyController">
     <FlexHBox realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
@@ -50,10 +50,10 @@
         </padding>
     </FlexHBox>
     <RedisDataTextArea editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
-                       flexHeight="100% - 60" flexWidth="100% - 4">
+                       flexHeight="100% - 30" flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

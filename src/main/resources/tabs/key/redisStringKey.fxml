@@ -17,7 +17,7 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
-<FlexVBox flexWidth="100%" flexHeight="100%" xmlns:fx="http://javafx.com/fxml/1"
+<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController">
     <FlexHBox realHeight="30" flexWidth="100%" groupId="dataToBig">
         <RichDataTypeComboBox prefHeight="22" fx:id="format">
@@ -81,11 +81,11 @@
             </HBox.margin>
         </BinarySVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" fontSize="11" fx:id="nodeData" flexHeight="100% - 60"
+    <RedisDataTextArea groupId="dataToBig" fontSize="11" fx:id="nodeData" flexHeight="100% - 30"
                        flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

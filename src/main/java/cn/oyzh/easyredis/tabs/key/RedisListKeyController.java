@@ -356,11 +356,11 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "list_list");
-            this.nodeData.setFlexHeight("100% - 84");
+            this.nodeData.setFlexHeight("100% - 54");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "list_list");
-            this.nodeData.setFlexHeight("100% - 409");
+            this.nodeData.setFlexHeight("100% - 379");
             this.expandPane.collapse();
         }
     }

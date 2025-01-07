@@ -148,11 +148,11 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     private void expendList() {
         if (this.expandPane.isCollapse()) {
             NodeGroupUtil.disappear(this.getTab(), "stream_list");
-            this.nodeData.setFlexHeight("100% - 112");
+            this.nodeData.setFlexHeight("100% - 82");
             this.expandPane.expand();
         } else {
             NodeGroupUtil.display(this.getTab(), "stream_list");
-            this.nodeData.setFlexHeight("100% - 438");
+            this.nodeData.setFlexHeight("100% - 408");
             this.expandPane.collapse();
         }
     }

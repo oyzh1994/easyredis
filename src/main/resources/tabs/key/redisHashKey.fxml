@@ -180,5 +180,5 @@
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
+<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

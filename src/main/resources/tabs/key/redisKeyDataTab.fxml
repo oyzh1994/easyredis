@@ -17,5 +17,6 @@
         <fx:include groupId="key-data" fx:id="zsetKey" source="redisZSetKey.fxml"/>
         <fx:include groupId="key-data" fx:id="streamKey" source="redisStreamKey.fxml"/>
         <fx:include groupId="key-data" fx:id="coordinateKey" source="redisCoordinateKey.fxml"/>
+        <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
     </FlexVBox>
 </FXTab>

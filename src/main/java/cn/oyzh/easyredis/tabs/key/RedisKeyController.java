@@ -36,11 +36,11 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
      */
     protected T treeItem;
 
-    /**
-     * 键扩展信息
-     */
-    @FXML
-    private RedisKeyExtraController keyExtraController;
+//    /**
+//     * 键扩展信息
+//     */
+//    @FXML
+//    private RedisKeyExtraController keyExtraController;
 
     /**
      * 初始化
@@ -49,8 +49,8 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
      */
     public boolean init(T treeItem) {
         this.treeItem = treeItem;
-        // 处理额外信息
-        this.keyExtraController.init(treeItem);
+//        // 处理额外信息
+//        this.keyExtraController.init(treeItem);
         // 键已过期
         if (this.treeItem.isExpire()) {
             return false;
@@ -115,12 +115,12 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
 
     }
 
-    /**
-     * 刷新ttl
-     */
-    public void flushTTL() {
-        this.keyExtraController.flushTTL();
-    }
+//    /**
+//     * 刷新ttl
+//     */
+//    public void flushTTL() {
+//        this.keyExtraController.flushTTL();
+//    }
 
     /**
      * 首次显示数据
@@ -134,21 +134,21 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
      */
     protected abstract void showData(RichDataType dataType);
 
-    @Override
-    public void onTabInit(DynamicTab tab) {
-        super.onTabInit(tab);
-        this.keyExtraController.onTabInit(tab);
-    }
-
-    @Override
-    public void onTabClose(DynamicTab tab, Event event) {
-        super.onTabClose(tab, event);
-        this.keyExtraController.onTabClose(tab, event);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resourceBundle) {
-        super.initialize(location, resourceBundle);
-        this.keyExtraController.initialize(location, resourceBundle);
-    }
+//    @Override
+//    public void onTabInit(DynamicTab tab) {
+//        super.onTabInit(tab);
+//        this.keyExtraController.onTabInit(tab);
+//    }
+//
+//    @Override
+//    public void onTabClose(DynamicTab tab, Event event) {
+//        super.onTabClose(tab, event);
+//        this.keyExtraController.onTabClose(tab, event);
+//    }
+//
+//    @Override
+//    public void initialize(URL location, ResourceBundle resourceBundle) {
+//        super.initialize(location, resourceBundle);
+//        this.keyExtraController.initialize(location, resourceBundle);
+//    }
 }

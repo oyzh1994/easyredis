@@ -247,6 +247,7 @@ public class RedisClient {
         this.intPoolConfig(clusterPoolConfig);
         // 初始化cluster集群操作对象
         JedisCluster cluster = new JedisCluster(host, clientConfig, 10, clusterPoolConfig);
+        // 集群配置
         this.poolManager.setCluster(cluster);
         // 初始化指令对象
         this.commandObjects = new CommandObjects();
@@ -265,7 +266,7 @@ public class RedisClient {
         this.intPoolConfig(poolConfig);
         // 生成连接池
         JedisPool pool = new JedisPool(poolConfig, host, clientConfig);
-        // 配置管理器
+        // 连接配置
         this.poolManager.setJedisPool(pool);
         this.poolManager.initResource();
         this.poolManager.setConnectName(this.connectName());
@@ -285,14 +286,14 @@ public class RedisClient {
         poolConfig.setMaxTotal(50);
         // 创建时测试
         poolConfig.setTestOnCreate(true);
+        // 获取时测试
+        poolConfig.setTestOnBorrow(true);
         // 空闲时测试
         poolConfig.setTestWhileIdle(true);
-//        // 获取时测试
-//        poolConfig.setTestOnBorrow(true);
-//        // 归还时测试
-//        poolConfig.setTestOnReturn(true);
+        // 归还时测试
+        poolConfig.setTestOnReturn(true);
         // 最大超时
-        poolConfig.setMaxWait(Duration.ofSeconds(5));
+        poolConfig.setMaxWait(Duration.ofSeconds(10));
     }
 
     /**
