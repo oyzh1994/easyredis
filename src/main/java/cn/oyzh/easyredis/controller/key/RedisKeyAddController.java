@@ -271,6 +271,7 @@ public class RedisKeyAddController extends StageController {
                 keyType = "BITMAP/STRING";
             }
             if (!result) {
+                MessageBox.warn(I18nHelper.operationFail());
                 return;
             }
             // 设置ttl
@@ -445,9 +446,15 @@ public class RedisKeyAddController extends StageController {
      * @return 结果
      */
     private boolean addBitNode(int dbIndex, String key) {
-        Number bitIndex = this.bitIndex.getValue();
-        // 设置bit值
-        return this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
+        try {
+            Number bitIndex = this.bitIndex.getValue();
+            // 设置bit值
+            this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     /**
