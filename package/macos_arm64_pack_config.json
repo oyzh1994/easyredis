@@ -1,18 +1,24 @@
 {
-    "packMode": "packr",
-    "platform": "linux_arm64",
-    "dest": "D:\\Package\\EasyRedis\\${appVersion}\\EasyRedis_${appVersion}",
-    "appIcon": "D:\\Workspaces\\OYZH\\easyredis\\resource\\redis.png",
+    "packMode": "jpackage",
+    "platform": "macos_arm64",
+    "dest": "D:\\Package\\EasyRedis\\${appVersion}\\EasyRedis_${appVersion}.app",
+    "appIcon": "D:\\Workspaces\\OYZH\\easyredis\\resource\\zoo.icns",
     "mainJar": "D:\\Workspaces\\OYZH\\easyredis\\target\\easyredis-${appVersion}.jar",
-    "jrePath": "D:\\Package\\EasyRedis\\linux_arm64_jre22",
     "jdkPath": "$SYSTEM",
     "packr": {
         "verbose": true,
+        "bundleIdentifier": "cn.oyzh.EasyRedis",
         "mainClass": "org.springframework.boot.loader.JarLauncher",
         "classpath": []
     },
+    "jpackage": {
+        "verbose": true,
+        "vendor": "oyzh",
+        "type": "app-image",
+        "description": "这是一个Redis管理工具，提供导入、导出、传输、终端、可视化操作等功能."
+    },
     "compress": {
-        "type": "tar.gz"
+        "type": "zip"
     },
     "jre": {
         "excludes": [
@@ -66,10 +72,10 @@
             ".*.processors",
             ".*.kotlin_module",
             ".*.dll",
-            ".*.dylib",
+            ".*.so",
             "javafx-graphics.*-win.jar",
-            "javafx-graphics.*-mac.*.jar",
-            "javafx-graphics.*-linux.jar"
+            "javafx-graphics.*-mac.jar",
+            "javafx-graphics.*-linux.*.jar"
         ]
     }
 }
