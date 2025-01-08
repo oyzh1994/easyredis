@@ -4,6 +4,7 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
+import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -69,6 +70,7 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void tool() {
+        StageManager.showStage(RedisToolController.class, this.stage);
     }
 
     /**
