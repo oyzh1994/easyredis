@@ -33,12 +33,6 @@ import java.util.concurrent.atomic.LongAdder;
 )
 public class RedisToolController extends StageController {
 
-    /**
-     * 缓存文本域
-     */
-    @FXML
-    private FlexTextArea cacheArea;
-
     @Override
     public void onStageShown(WindowEvent event) {
         this.stage.switchOnTab();
@@ -49,6 +43,12 @@ public class RedisToolController extends StageController {
     public String getViewTitle() {
         return I18nHelper.tools();
     }
+
+    /**
+     * 缓存文本域
+     */
+    @FXML
+    private FlexTextArea cacheArea;
 
     /**
      * 计算缓存

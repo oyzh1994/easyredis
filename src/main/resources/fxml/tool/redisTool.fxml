@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.button.CalcButton?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
 <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
 <FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.tool.RedisToolController" realWidth="850" realHeight="600">
