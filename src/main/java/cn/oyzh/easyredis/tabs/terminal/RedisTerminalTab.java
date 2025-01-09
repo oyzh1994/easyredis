@@ -41,7 +41,7 @@ public class RedisTerminalTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/terminal/redisTerminalTabContent.fxml";
+        return "/tabs/terminal/redisTerminalTab.fxml";
     }
 
     @Override

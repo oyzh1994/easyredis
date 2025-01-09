@@ -46,7 +46,7 @@ public class RedisPubsubTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/pubsub/redisPubsubTabContent.fxml";
+        return "/tabs/pubsub/redisPubsubTab.fxml";
     }
 
     @Override

@@ -39,7 +39,7 @@ public class ChangelogTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/changelog/changelogContent.fxml";
+        return "/tabs/changelog/changelogTab.fxml";
     }
 
     @Override

@@ -5,7 +5,6 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.HomeSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -31,7 +30,7 @@ public class RedisHomeTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/home/redisHomeTabContent.fxml";
+        return "/tabs/home/redisHomeTab.fxml";
     }
 
     @Override

@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTab.RedisServerTabController" flexHeight="100%"
+          fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTabController" flexHeight="100%"
           flexWidth="100%">
     <FlexTableView flexWidth="100%" realHeight="80" fx:id="propTable">
         <columns>
@@ -19,10 +19,10 @@
         </columns>
     </FlexTableView>
     <FlexTabPane flexWidth="100%" flexHeight="100% - 70" fx:id="tabPane">
-        <fx:include fx:id="aggregation" source="redisAggregationTabContent.fxml"/>
-        <fx:include fx:id="serverInfo" source="redisServerInfoTabContent.fxml"/>
-        <fx:include fx:id="slowlog" source="redisSlowlogTabContent.fxml"/>
-        <fx:include fx:id="clientInfo" source="redisClientInfoTabContent.fxml"/>
-        <fx:include fx:id="pubsub" source="redisPubsubTabContent.fxml"/>
+        <fx:include fx:id="aggregation" source="redisAggregationTab.fxml"/>
+        <fx:include fx:id="serverInfo" source="redisServerInfoTab.fxml"/>
+        <fx:include fx:id="slowlog" source="redisSlowlogTab.fxml"/>
+        <fx:include fx:id="clientInfo" source="redisClientInfoTab.fxml"/>
+        <fx:include fx:id="pubsub" source="redisPubsubTab.fxml"/>
     </FlexTabPane>
 </FlexVBox>
