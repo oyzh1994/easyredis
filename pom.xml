@@ -139,7 +139,6 @@
                 <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
                     <mainClass>cn.oyzh.easyredis.EasyRedisApp</mainClass>
-                    <layout>jar</layout>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
