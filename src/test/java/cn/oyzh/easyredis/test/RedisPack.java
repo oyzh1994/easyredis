@@ -72,7 +72,7 @@ public class RedisPack {
     @Test
     public void easyredis_macos_arm64_pack() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "macos_arm64_pack_config.json";
+        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -80,7 +80,7 @@ public class RedisPack {
         Packer packer = new Packer();
         packer.registerProjectHandler();
         packer.registerJdepsHandler();
-        packer.pack(win_pack_config, properties);
+        packer.pack(macos_arm64_pack_config, properties);
     }
 
     @Test
@@ -90,6 +90,7 @@ public class RedisPack {
         String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
         String linux_arm64_pack_config = packagePath + "linux_arm64_pack_config.json";
         String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
+        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
 
         String baseDir = "D:\\Workspaces\\OYZH\\fx-base\\";
         String projectDir = "D:\\Workspaces\\OYZH\\easyredis\\";
@@ -101,6 +102,7 @@ public class RedisPack {
         packer.pack(linux_amd64_pack_config);
         packer.pack(linux_arm64_pack_config);
         packer.pack(macos_amd64_pack_config);
+        packer.pack(macos_arm64_pack_config);
     }
 
 }
