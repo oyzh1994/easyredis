@@ -1,5 +1,5 @@
 {
-    "packMode": "packr",
+    "packMode": "jpackage",
     "platform": "macos_arm64",
     "dest": "/Volumes/Files/Package/EasyRedis/${appVersion}/EasyRedis_${appVersion}.app",
     "appIcon": "${projectPath}/resource/redis.icns",
