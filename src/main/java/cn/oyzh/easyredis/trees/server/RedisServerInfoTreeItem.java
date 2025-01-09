@@ -32,16 +32,16 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
         return this.parent().client();
     }
 
-    /**
-     * 显示服务信息
-     */
-    public void showServerInfo() {
-        RedisEventUtil.serverMonitor(this.client());
-    }
+//    /**
+//     * 显示服务信息
+//     */
+//    public void showServerInfo() {
+//        RedisEventUtil.serverMonitor(this.client());
+//    }
 
     @Override
     public void onPrimarySingleClick() {
-        this.showServerInfo();
+        RedisEventUtil.server(this.client());
     }
 
     /**

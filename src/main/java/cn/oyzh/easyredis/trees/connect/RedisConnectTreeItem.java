@@ -176,7 +176,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
-            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
+//            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
@@ -189,7 +189,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-            items.add(server);
+//            items.add(server);
             items.add(flushAll);
             items.add(openTerminal);
         } else {
@@ -228,12 +228,12 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         fxView.display();
     }
 
-    /**
-     * 查看服务信息
-     */
-    private void serverInfo() {
-        RedisEventUtil.serverMonitor(this.client);
-    }
+//    /**
+//     * 查看服务信息
+//     */
+//    private void serverInfo() {
+//        RedisEventUtil.serverMonitor(this.client);
+//    }
 
     /**
      * 打开终端

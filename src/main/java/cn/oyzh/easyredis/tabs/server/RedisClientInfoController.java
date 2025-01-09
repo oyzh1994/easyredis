@@ -2,10 +2,9 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.dto.RedisClientItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import javafx.fxml.FXML;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -20,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisClientInfoController {
+public class RedisClientInfoController extends SubTabController {
 
     /**
      * redis客户端
@@ -61,7 +60,7 @@ public class RedisClientInfoController {
         String list = this.client.clientList();
         AtomicInteger index = new AtomicInteger(1);
         List<RedisClientItem> items = new ArrayList<>();
-        list.lines().forEach(l->{
+        list.lines().forEach(l -> {
             RedisClientItem item = RedisClientItem.from(l);
             item.setIndex(index.getAndIncrement());
             items.add(item);

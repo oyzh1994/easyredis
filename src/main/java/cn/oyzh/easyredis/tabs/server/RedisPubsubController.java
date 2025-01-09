@@ -3,13 +3,9 @@ package cn.oyzh.easyredis.tabs.server;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.plus.controls.table.FXTableCell;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
-import javafx.scene.layout.HBox;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -23,7 +19,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/08/02
  */
-public class RedisPubsubController {
+public class RedisPubsubController extends SubTabController {
 
     /**
      * redis客户端

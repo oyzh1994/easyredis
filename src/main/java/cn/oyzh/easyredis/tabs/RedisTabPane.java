@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.key.RedisPubsubOpenEvent;
-import cn.oyzh.easyredis.event.connection.RedisServerMonitorEvent;
+import cn.oyzh.easyredis.event.connection.RedisServerEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetReverseViewEvent;
@@ -184,12 +184,12 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
     }
 
     /**
-     * 初始化服务信息tab
+     * 服务信息
      *
      * @param event 事件
      */
     @EventSubscribe
-    public void serverMonitor(RedisServerMonitorEvent event) {
+    public void server(RedisServerEvent event) {
         RedisServerTab serverTab = this.getServerTab(event.data());
         if (serverTab == null) {
             serverTab = new RedisServerTab();

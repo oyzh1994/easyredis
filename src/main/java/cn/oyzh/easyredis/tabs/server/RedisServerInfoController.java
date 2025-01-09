@@ -4,13 +4,13 @@ import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.dto.RedisInfoPropItem;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.util.TableViewUtil;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisServerInfoController {
+public class RedisServerInfoController extends SubTabController {
 
     /**
      * tab面板

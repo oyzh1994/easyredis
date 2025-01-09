@@ -10,7 +10,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectDeletedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
-import cn.oyzh.easyredis.event.connection.RedisServerMonitorEvent;
+import cn.oyzh.easyredis.event.connection.RedisServerEvent;
 import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.group.RedisGroupAddedEvent;
 import cn.oyzh.easyredis.event.group.RedisGroupDeletedEvent;
@@ -440,12 +440,12 @@ public class RedisEventUtil {
     }
 
     /**
-     * 服务监控事件
+     * 服务信息事件
      *
      * @param client redis客户端
      */
-    public static void serverMonitor(RedisClient client) {
-        RedisServerMonitorEvent event = new RedisServerMonitorEvent();
+    public static void server(RedisClient client) {
+        RedisServerEvent event = new RedisServerEvent();
         event.data(client);
         EventUtil.post(event);
     }

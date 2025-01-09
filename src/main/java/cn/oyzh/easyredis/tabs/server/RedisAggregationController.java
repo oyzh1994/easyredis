@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.dto.RedisInfoProp;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
 import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
 import cn.oyzh.i18n.I18nHelper;
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisAggregationController {
+public class RedisAggregationController extends SubTabController {
 
     /**
      * 客户端图表

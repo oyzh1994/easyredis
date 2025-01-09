@@ -7,5 +7,5 @@ import cn.oyzh.event.Event;
  * @author oyzh
  * @since 2024/4/1
  */
-public class RedisServerMonitorEvent extends Event<RedisClient> {
+public class RedisServerEvent extends Event<RedisClient> {
 }

@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
@@ -22,6 +23,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -113,7 +115,7 @@ public class RedisServerTab extends DynamicTab {
      * @author oyzh
      * @since 2023/08/01
      */
-    public static class RedisServerTabController extends DynamicTabController {
+    public static class RedisServerTabController extends ParentTabController {
 
         /**
          * redis客户端
@@ -253,6 +255,12 @@ public class RedisServerTab extends DynamicTab {
                 ex.printStackTrace();
                 JulLog.error("renderPane error", ex);
             }
+        }
+
+        @Override
+        public List<? extends DynamicTabController> getSubControllers() {
+            return List.of(this.aggregationController, this.pubsubController, this.slowlogController,
+                    this.serverInfoController, this.clientInfoController);
         }
     }
 }

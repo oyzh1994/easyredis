@@ -2,10 +2,9 @@ package cn.oyzh.easyredis.tabs.server;
 
 import cn.oyzh.easyredis.dto.RedisSlowlogItem;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
+import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import javafx.fxml.FXML;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -21,7 +20,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisSlowlogController {
+public class RedisSlowlogController extends SubTabController {
 
     /**
      * redis客户端
