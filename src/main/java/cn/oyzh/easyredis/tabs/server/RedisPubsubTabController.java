@@ -19,7 +19,7 @@ import java.util.List;
  * @author oyzh
  * @since 2023/08/02
  */
-public class RedisPubsubController extends SubTabController {
+public class RedisPubsubTabController extends SubTabController {
 
     /**
      * redis客户端

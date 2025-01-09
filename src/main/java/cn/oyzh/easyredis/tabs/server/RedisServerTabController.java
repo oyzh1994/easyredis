@@ -62,31 +62,31 @@ public class RedisServerTabController extends ParentTabController {
      * 订阅组件
      */
     @FXML
-    private RedisPubsubController pubsubController;
+    private RedisPubsubTabController pubsubController;
 
     /**
      * 慢查日志组件
      */
     @FXML
-    private RedisSlowlogController slowlogController;
+    private RedisSlowlogTabController slowlogController;
 
     /**
      * 服务信息组件
      */
     @FXML
-    private RedisServerInfoController serverInfoController;
+    private RedisServerInfoTabController serverInfoController;
 
     /**
      * 客户端信息组件
      */
     @FXML
-    private RedisClientInfoController clientInfoController;
+    private RedisClientInfoTabController clientInfoController;
 
     /**
      * 汇总组件
      */
     @FXML
-    private RedisAggregationController aggregationController;
+    private RedisAggregationTabController aggregationController;
 
     /**
      * 属性表格

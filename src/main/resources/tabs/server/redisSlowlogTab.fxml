@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisSlowlogController" text="%base.slowlog">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisSlowlogTabController" text="%base.slowlog">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox flexWidth="100%" realHeight="40">
             <RefreshSVGGlyph onMousePrimaryClicked="#refresh">

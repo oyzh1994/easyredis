@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
-       fx:controller="cn.oyzh.easyredis.tabs.server.RedisClientInfoController" text="%base.client">
+       fx:controller="cn.oyzh.easyredis.tabs.server.RedisClientInfoTabController" text="%base.client">
     <FlexVBox flexWidth="100%" flexHeight="100%">
         <FlexHBox flexWidth="100%" realHeight="40">
             <RefreshSVGGlyph onMousePrimaryClicked="#refresh">

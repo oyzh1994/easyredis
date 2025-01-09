@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisClientInfoController extends SubTabController {
+public class RedisClientInfoTabController extends SubTabController {
 
     /**
      * redis客户端
