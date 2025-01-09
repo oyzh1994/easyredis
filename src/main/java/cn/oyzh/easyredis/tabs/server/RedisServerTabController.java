@@ -6,11 +6,14 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.dto.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.terminal.histroy.TerminalHistory;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.NonNull;
@@ -115,15 +118,21 @@ public class RedisServerTabController extends ParentTabController {
             this.tabPane.removeTab(this.slowlog);
             this.tabPane.removeTab(this.clientInfo);
         }
-        this.initRefreshTask();
+//        this.renderPane();
+//        this.initRefreshTask();
     }
 
     /**
      * 初始化自动刷新任务
      */
     private void initRefreshTask() {
-        this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
-        JulLog.debug("RefreshTask started.");
+        try {
+            this.refreshTask = ExecutorUtil.start(this::renderPane, 0, 3_000);
+            JulLog.debug("RefreshTask started.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JulLog.error("initRefreshTask error", ex);
+        }
     }
 
     /**
@@ -142,29 +151,45 @@ public class RedisServerTabController extends ParentTabController {
     /**
      * 渲染主面板
      */
-    private void renderPane() {
+    private synchronized void renderPane() {
         try {
-            RedisInfoProp infoProp = new RedisInfoProp();
-            infoProp.parse(this.client.info(null));
-            RedisServerItem serverItem;
-            if (this.propTable.isItemEmpty()) {
-                serverItem = new RedisServerItem();
-                serverItem.setServerVersion(infoProp.getRedisVersion());
-                try {
-                    serverItem.setRole((String) CollectionUtil.getFirst(this.client.role()));
-                } catch (Exception ignored) {
+            JulLog.info("renderPane started.");
+            if (this.client != null) {
+                RedisInfoProp infoProp = new RedisInfoProp();
+                infoProp.parse(this.client.info(null));
+                RedisServerItem serverItem;
+                if (this.propTable.isItemEmpty()) {
+                    serverItem = new RedisServerItem();
+                    serverItem.setServerVersion(infoProp.getRedisVersion());
+                    try {
+                        serverItem.setRole((String) CollectionUtil.getFirst(this.client.role()));
+                    } catch (Exception ignored) {
+                    }
+                    this.propTable.addItem(serverItem);
+                } else {
+                    serverItem = (RedisServerItem) this.propTable.getItem(0);
                 }
-                this.propTable.addItem(serverItem);
-            } else {
-                serverItem = (RedisServerItem) this.propTable.getItem(0);
+                serverItem.init(infoProp);
+                this.serverInfoController.init(infoProp);
+                this.aggregationController.init(infoProp);
             }
-            serverItem.init(infoProp);
-            this.serverInfoController.init(infoProp);
-            this.aggregationController.init(infoProp);
+            JulLog.info("renderPane finished.");
         } catch (Exception ex) {
             ex.printStackTrace();
             JulLog.error("renderPane error", ex);
         }
+    }
+
+    @Override
+    public void onTabInit(DynamicTab tab) {
+        super.onTabInit(tab);
+        this.initRefreshTask();
+    }
+
+    @Override
+    public void onTabClose(DynamicTab tab, Event event) {
+        super.onTabClose(tab, event);
+        this.closeRefreshTask();
     }
 
     @Override

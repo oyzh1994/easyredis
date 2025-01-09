@@ -9,6 +9,7 @@ import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.TableViewUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.collections.ObservableList;
@@ -40,7 +41,7 @@ public class RedisServerInfoTabController extends SubTabController {
      * @param prop 属性对象
      */
     public void init(RedisInfoProp prop) {
-         this.initPropPane(prop);
+        this.initPropPane(prop);
     }
 
     /**
@@ -83,8 +84,10 @@ public class RedisServerInfoTabController extends SubTabController {
             value.setFlexWidth("70% - 20");
             value.setCellValueFactory(new PropertyValueFactory<>("value"));
 
-            tableView.getColumns().add(name);
-            tableView.getColumns().add(value);
+            FXUtil.runWait(() -> {
+                tableView.getColumns().add(name);
+                tableView.getColumns().add(value);
+            });
 
             // 双击时，复制列数据
             TableViewUtil.copyCellDataOnDoubleClicked(tableView);

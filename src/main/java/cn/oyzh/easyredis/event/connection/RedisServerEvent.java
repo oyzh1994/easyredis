@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.event.connection;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.event.Event;
 
@@ -8,4 +9,8 @@ import cn.oyzh.event.Event;
  * @since 2024/4/1
  */
 public class RedisServerEvent extends Event<RedisClient> {
+
+    public RedisConnect redisConnect() {
+        return this.data().redisConnect();
+    }
 }
