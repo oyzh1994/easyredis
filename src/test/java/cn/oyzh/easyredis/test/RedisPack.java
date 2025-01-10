@@ -32,11 +32,14 @@ public class RedisPack {
     public void easyredis_win_amd64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String win_pack_config = packagePath + "win_amd64_pack_config.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
 
         Packer packer = new Packer();
         packer.registerProjectHandler();
         packer.registerJdepsHandler();
-        packer.pack(win_pack_config);
+        packer.pack(win_pack_config, properties);
     }
 
     @Test
