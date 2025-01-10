@@ -365,6 +365,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
 
     @Override
     public void loadChild() {
+        this.clearChild();
         // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
         // List<RedisGroupTreeItem> groupItems = this.getGroupItems();
