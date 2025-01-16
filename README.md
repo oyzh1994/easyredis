@@ -1,4 +1,11 @@
-# 项目结构
+# 项目
+###### 依赖说明
+1. base工程  
+ https://gitee.com/oyzh1994/base
+2. fx-base工程  
+ https://gitee.com/oyzh1994/fx-base
+
+###### 结构说明 
 docker -> redis的docker启动配置文件等
 package -> 打包相关配置
 resource -> 项目相关资源文件
