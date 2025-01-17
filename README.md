@@ -86,3 +86,29 @@ chmod -R 755 /路径/EasyRedis.app(可拖入命令行窗口)
 ![img13.png](resource/md/img13.png)
 ###### 截图14
 ![img14.png](resource/md/img14.png)
+###### 截图15
+![img15.png](resource/md/img15.png)
+###### 截图16
+![img16.png](resource/md/img16.png)
+###### 截图17
+![img17.png](resource/md/img17.png)
+###### 截图18
+![img18.png](resource/md/img18.png)
+###### 截图19
+![img19.png](resource/md/img19.png)
+###### 截图20
+![img20.png](resource/md/img20.png)
+###### 截图21
+![img21.png](resource/md/img21.png)
+###### 截图22
+![img22.png](resource/md/img22.png)
+###### 截图23
+![img23.png](resource/md/img23.png)
+###### 截图24
+![img24.png](resource/md/img24.png)
+###### 截图25
+![img25.png](resource/md/img25.png)
+###### 截图26
+![img26.png](resource/md/img26.png)
+###### 截图27
+![img27.png](resource/md/img27.png)
