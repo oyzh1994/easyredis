@@ -1,4 +1,7 @@
 # 项目
+###### 项目说明
+这是一个使用javafx编写的redis客户端，支持基本的键操作，操作命令查看、键搜索、键过滤、导入导出、数据传输、服务监控、终端操作等功能，还支持暗色主题、系统主题跟随等能力
+
 ###### 依赖说明
 1. base工程  
  https://gitee.com/oyzh1994/base
@@ -11,10 +14,11 @@ package -> 打包相关配置
 resource -> 项目相关资源文件
 src -> 项目相关代码
 
-# Maven打包&安装
-mvn -X clean install package -DskipTests
+# Maven打
+###### 打包
+mvn -X clean package -DskipTests
 
-###### Maven打包注意
+###### 注意
 检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号21之类的问题
 
 # 程序打包
