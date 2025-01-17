@@ -11,6 +11,7 @@ import cn.oyzh.fx.gui.text.field.SearchTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -25,6 +26,7 @@ import javafx.stage.WindowEvent;
  */
 @StageAttribute(
         resizable = false,
+        stageStyle = FXStageStyle.UTILITY,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyFilter.fxml"
 )

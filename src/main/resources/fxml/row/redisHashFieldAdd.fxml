@@ -21,7 +21,7 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <RichDataTextArea fx:id="fieldValue" flexHeight="50% - 70" tipText="%base.contentTip1"
+    <RichDataTextArea fx:id="fieldValue" flexHeight="50% - 80" tipText="%base.contentTip1"
                       flexWidth="100% - 180">
         <VBox.margin>
             <Insets left="30" top="5"/>
