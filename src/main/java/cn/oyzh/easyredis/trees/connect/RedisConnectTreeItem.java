@@ -175,8 +175,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         } else if (this.isConnected()) {
             FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
-            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
-//            FXMenuItem server = MenuItemHelper.serverInfo("12", this::serverInfo);
+            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
@@ -185,11 +184,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
 
             items.add(closeConnect);
             items.add(editConnect);
-            items.add(repeatConnect);
+            items.add(cloneConnect);
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-//            items.add(server);
             items.add(flushAll);
             items.add(openTerminal);
         } else {
@@ -197,7 +195,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
-            FXMenuItem repeatConnect = MenuItemHelper.repeatConnect("12", this::repeatConnect);
+            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
@@ -206,7 +204,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
             items.add(connect);
             items.add(editConnect);
             items.add(renameConnect);
-            items.add(repeatConnect);
+            items.add(cloneConnect);
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
@@ -220,20 +218,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 导出redis节点
      */
     public void exportData() {
-        // StageAdapter fxView = StageManager.parseStage(RedisKeyExportController.class, this.window());
-        // fxView.setProp("treeItem", this);
-        // fxView.display();
         StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
         fxView.setProp("connect", this.value);
         fxView.display();
     }
-
-//    /**
-//     * 查看服务信息
-//     */
-//    private void serverInfo() {
-//        RedisEventUtil.serverMonitor(this.client);
-//    }
 
     /**
      * 打开终端
@@ -310,9 +298,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 导入数据
      */
     private void importData() {
-        // StageAdapter fxView = StageManager.parseStage(RedisKeyImportController.class, this.window());
-        // fxView.setProp("treeItem", this);
-        // fxView.display();
         StageAdapter fxView = StageManager.parseStage(RedisDataImportController.class);
         fxView.setProp("connect", this.client.redisConnect());
         fxView.display();
@@ -376,12 +361,12 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
     }
 
     /**
-     * 复制连接
+     * 克隆连接
      */
-    private void repeatConnect() {
+    private void cloneConnect() {
         RedisConnect redisConnect = new RedisConnect();
         redisConnect.copy(this.value);
-        redisConnect.setName(this.value.getName() + "-" + I18nHelper.repeat());
+        redisConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
         redisConnect.setCollects(Collections.emptyList());
         if (this.connectStore.replace(redisConnect)) {
             this.connectManager().addConnect(redisConnect);
