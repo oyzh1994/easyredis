@@ -176,6 +176,7 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     public void loadChild() {
         if (!this.isLoading()) {
             Task task = TaskBuilder.newBuilder()
+                    .onFinish(this::refresh)
                     .onSuccess(this::expend)
                     .onError(MessageBox::exception)
                     .onStart(() -> this.loadChild(this.setting.keyLoadLimit()))
@@ -199,14 +200,12 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
             this.setLoading(true);
             // 扫描参数
             String pattern = StringUtil.isBlank(this.getFilterPattern()) ? "*" : this.getFilterPattern();
-            // 节点列表
-            List<RedisKeyTreeItem> itemList = this.keyChildren();
             // 添加列表
             List<TreeItem<?>> addList = new ArrayList<>();
             // 移除列表
             List<TreeItem<?>> delList = new ArrayList<>();
             // 已存在节点
-            List<String> existingKeys = itemList.parallelStream().map(RedisKeyTreeItem::key).toList();
+            List<String> existingKeys = this.keyChildren().parallelStream().map(RedisKeyTreeItem::key).toList();
             // 获取节点列表
             List<RedisKey> list = RedisKeyUtil.getKeys(this.client(), this.dbIndex(), pattern, existingKeys, limit);
             // 处理节点
@@ -219,10 +218,8 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
                 RedisMoreTreeItem moreItem = this.moreChildren();
                 if (moreItem != null) {
                     delList.add(moreItem);
-                    addList.add(moreItem);
-                } else {
-                    addList.add(new RedisMoreTreeItem(this.getTreeView()));
                 }
+                addList.add(new RedisMoreTreeItem(this.getTreeView()));
             } else {// 处理不限制的情况
                 RedisMoreTreeItem moreItem = this.moreChildren();
                 if (moreItem != null) {
