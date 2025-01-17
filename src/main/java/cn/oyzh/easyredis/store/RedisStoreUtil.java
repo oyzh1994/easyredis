@@ -32,7 +32,8 @@ public class RedisStoreUtil {
      * 执行初始化
      */
     public static void init() {
-        JdbcConst.dbCacheSize(1024);
+        JdbcConst.dbCacheSize(65535);
+        JdbcConst.dbPageSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
         JdbcConst.dbFile(RedisConst.STORE_PATH + "db");
     }
