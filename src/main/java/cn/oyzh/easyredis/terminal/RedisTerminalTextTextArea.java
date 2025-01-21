@@ -107,7 +107,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         this.dbIndex = dbIndex;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("redis.home.welcome"));
-        this.appendLine("Powered By oyzh(2023-2024).");
+        this.appendLine("Powered By oyzh(2023-2025).");
         this.flushPrompt();
         if (this.isTemporary()) {
             this.initByTemporary();
