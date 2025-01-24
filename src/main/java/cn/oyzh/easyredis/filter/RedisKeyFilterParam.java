@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author oyzh
- * @since 2025/01/22
+ * @since 2025/01/24
  */
 @Data
 public class RedisKeyFilterParam {
@@ -21,9 +21,9 @@ public class RedisKeyFilterParam {
     private boolean matchFull;
 
     /**
-     * 搜索路径
+     * 搜索键
      */
-    private boolean searchPath = true;
+    private boolean searchKey = true;
 
     /**
      * 搜索数据
@@ -45,7 +45,7 @@ public class RedisKeyFilterParam {
             if (searchParam.searchData && !this.searchData) {
                 return false;
             }
-            return !searchParam.searchPath || this.searchPath;
+            return !searchParam.searchKey || this.searchKey;
         }
         return false;
     }

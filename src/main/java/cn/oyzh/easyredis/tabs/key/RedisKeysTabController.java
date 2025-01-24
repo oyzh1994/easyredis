@@ -152,7 +152,7 @@ public class RedisKeysTabController extends ParentTabController {
             this.treeView.highlightText(null);
         }
 //        // 仅在过滤数据的情况下设置内容高亮
-//        if (scope == 2 || scope == 1) {
+//        if (scope == 2 || scope == 1&&this.keyDataController) {
 //            this.nodeData.setHighlightText(kw);
 //        } else {
 //            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());

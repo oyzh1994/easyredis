@@ -16,7 +16,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
  * 过滤设置弹窗
  *
  * @author oyzh
- * @since 2025/01/22
+ * @since 2025/01/24
  */
 @PopupAttribute(
         value = FXConst.POPUP_PATH + "redisFilterSettingPopup.fxml",
@@ -26,10 +26,10 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
 public class RedisFilterSettingPopupController extends PopupController {
 
     /**
-     * 搜索路径
+     * 搜索键
      */
     @FXML
-    private FXCheckBox searchPath;
+    private FXCheckBox searchKey;
 
     /**
      * 搜索数据
@@ -58,7 +58,7 @@ public class RedisFilterSettingPopupController extends PopupController {
             RedisKeyFilterParam filterParam = new RedisKeyFilterParam();
             filterParam.setMatchCase(this.matchCase.isSelected());
             filterParam.setMatchFull(this.matchFull.isSelected());
-            filterParam.setSearchPath(this.searchPath.isSelected());
+            filterParam.setSearchKey(this.searchKey.isSelected());
             filterParam.setSearchData(this.searchData.isSelected());
             this.submit(filterParam);
             this.closeWindow();
@@ -83,7 +83,7 @@ public class RedisFilterSettingPopupController extends PopupController {
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());
             this.matchFull.setSelected(filterParam.isMatchFull());
-            this.searchPath.setSelected(filterParam.isSearchPath());
+            this.searchKey.setSelected(filterParam.isSearchKey());
             this.searchData.setSelected(filterParam.isSearchData());
         }
     }

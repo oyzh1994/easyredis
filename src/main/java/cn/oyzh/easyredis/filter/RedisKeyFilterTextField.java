@@ -79,7 +79,7 @@ public class RedisKeyFilterTextField extends LimitTextField {
      */
     public byte filterScope() {
         RedisKeyFilterParam filterParam = this.filterParam();
-        if (filterParam.isSearchData() && filterParam.isSearchPath()) {
+        if (filterParam.isSearchData() && filterParam.isSearchKey()) {
             return 2;
         }
         if (filterParam.isSearchData()) {

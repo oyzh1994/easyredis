@@ -24,7 +24,7 @@
                 </HBox.margin>
             </RedisKeySearchTypeComboBox>
             <RedisKeyFilterTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
-                                     flexWidth="100% - 105" maxLen="30">
+                                     flexWidth="100% - 105" tipText="%base.searchKWTip" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="3"/>
                 </HBox.margin>
