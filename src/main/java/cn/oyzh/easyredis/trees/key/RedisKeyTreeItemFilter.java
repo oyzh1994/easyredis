@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
@@ -49,6 +50,15 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
     @Getter
     @Setter
     private byte matchMode;
+
+    /**
+     * 0: 键
+     * 1: 数据
+     * 2: 键+数据
+     */
+    @Setter
+    @Getter
+    private byte scope;
 
     /**
      * 过滤内容列表
@@ -108,19 +118,35 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
             if (RedisKeyUtil.isFiltered(key, this.filters)) {
                 return false;
             }
+            // 关键字匹配
             if (StringUtil.isNotBlank(this.kw)) {
-                if (this.matchMode == 0) {
-                    return StringUtil.containsIgnoreCase(key, this.kw);
+                // 匹配大小写
+                boolean matchCase = this.matchMode == 1 || this.matchMode == 3;
+                // 匹配全文
+                boolean fullMatch = this.matchMode == 2 || this.matchMode == 3;
+                // 键
+                if (this.scope == 0 || this.scope == 2) {
+                    int index = TextUtil.findIndex(key, this.kw, null, matchCase, fullMatch);
+                    if (index != -1) {
+                        return true;
+                    }
                 }
-                if (this.matchMode == 1) {
-                    return StringUtil.contains(key, this.kw);
+                // 数据
+                if (this.scope == 1 || this.scope == 3) {
+                    if (treeItem instanceof RedisStringKeyTreeItem stringItem) {
+                        Object data = stringItem.data();
+                        String keyData = null;
+                        if (data instanceof byte[] bytes) {
+                            keyData = new String(bytes);
+                        } else if (data instanceof String string) {
+                            keyData = string;
+                        }
+                        if (keyData != null) {
+                            return TextUtil.findIndex(keyData, this.kw, null, matchCase, fullMatch) != -1;
+                        }
+                    }
                 }
-                if (this.matchMode == 2) {
-                    return StringUtil.equalsIgnoreCase(key, this.kw);
-                }
-                if (this.matchMode == 3) {
-                    return StringUtil.equals(key, this.kw);
-                }
+                return false;
             }
         }
         return true;

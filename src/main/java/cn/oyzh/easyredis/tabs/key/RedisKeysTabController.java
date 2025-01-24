@@ -1,0 +1,296 @@
+package cn.oyzh.easyredis.tabs.key;
+
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.common.util.CostUtil;
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
+import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
+import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
+import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeView;
+import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
+import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
+import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
+import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
+import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.control.TreeItem;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+import java.util.List;
+
+/**
+ * @author oyzh
+ * @since 2024-12-03
+ */
+public class RedisKeysTabController extends ParentTabController {
+
+    /**
+     * 根节点
+     */
+    @FXML
+    private FlexHBox root;
+
+    /**
+     * tab节点
+     */
+    @FXML
+    private FlexTabPane tabPane;
+
+    /**
+     * 键数据
+     */
+    @FXML
+    private RedisKeyDataController keyDataController;
+
+    /**
+     * 键信息
+     */
+    @FXML
+    private RedisKeyInfoController keyInfoController;
+
+    /**
+     * 左侧节点
+     */
+    @FXML
+    private FlexVBox leftBox;
+
+    /**
+     * redis客户端
+     */
+    @Getter
+    @Accessors(fluent = true, chain = false)
+    private RedisClient client;
+
+    /**
+     * db树节点
+     */
+    @Getter
+    @Accessors(fluent = true, chain = false)
+    private RedisDatabaseTreeItem treeItem;
+
+    /**
+     * 当前激活的节点
+     */
+    @Getter
+    private RedisKeyTreeItem activeItem;
+
+    /**
+     * 节点数
+     */
+    @FXML
+    private RedisKeyTreeView treeView;
+
+    /**
+     * 过滤内容
+     */
+    @FXML
+    private RedisKeyFilterTextField filterKW;
+
+    /**
+     * 过滤类型
+     */
+    @FXML
+    private RedisKeySearchTypeComboBox filterType;
+
+    /**
+     * 收藏面板
+     */
+    @FXML
+    private CollectSVGPane collectPane;
+
+    /**
+     * 排序面板
+     */
+    @FXML
+    private SortSVGPane sortPane;
+
+    /**
+     * 初始化
+     *
+     * @param treeItem db节点
+     */
+    public void init(RedisDatabaseTreeItem treeItem) {
+        try {
+            this.root.disable();
+            this.treeItem = treeItem;
+            this.treeView.dbItem(this.treeItem);
+            this.client = treeItem.client();
+            // 加载根节点
+            this.treeView.loadItems();
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
+        } finally {
+            this.root.enable();
+        }
+    }
+
+    @FXML
+    private void doFilter() {
+        String kw = this.filterKW.getTextTrim();
+        // 过滤模式
+        byte mode = this.filterKW.filterMode();
+        // 过滤范围
+        byte scope = this.filterKW.filterScope();
+        // 过滤类型
+        int type = this.filterType.getSelectedIndex();
+        // 设置高亮是否匹配大小写
+        this.treeView.highlightMatchCase(mode == 3 || mode == 1);
+        // 仅在过滤路径的情况下设置节点高亮
+        if (scope == 2 || scope == 0) {
+            this.treeView.highlightText(kw);
+        } else {
+            this.treeView.highlightText(null);
+        }
+//        // 仅在过滤数据的情况下设置内容高亮
+//        if (scope == 2 || scope == 1) {
+//            this.nodeData.setHighlightText(kw);
+//        } else {
+//            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
+//        }
+        this.treeView.itemFilter().setKw(kw);
+        this.treeView.itemFilter().setScope(scope);
+        this.treeView.itemFilter().setMatchMode(mode);
+        this.treeView.itemFilter().setType((byte) type);
+        this.treeView.filter();
+    }
+
+    @FXML
+    private void addKey() {
+        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
+        fxView.setProp("dbItem", this.treeItem);
+        fxView.display();
+    }
+
+    @FXML
+    private void deleteKey() {
+        if (this.activeItem != null) {
+            this.activeItem.delete();
+        }
+    }
+
+    @FXML
+    private void collectKey() {
+        if (this.activeItem != null) {
+            if (this.collectPane.isCollect()) {
+                this.activeItem.unCollect();
+                this.collectPane.unCollect();
+            } else {
+                this.activeItem.collect();
+                this.collectPane.collect();
+            }
+        }
+    }
+
+    @FXML
+    private void refreshKey() {
+        this.treeView.loadItems();
+    }
+
+    @FXML
+    private void positionNode() {
+        this.treeView.positionItem();
+    }
+
+    @Override
+    protected void bindListeners() {
+        super.bindListeners();
+        // 监听选中变化
+        this.treeView.selectItemChanged(this::initItem);
+        // 过滤处理
+        this.filterType.selectedIndexChanged((observable, oldValue, newValue) -> this.doFilter());
+        // 拉伸辅助
+        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizeHelper.widthLimit(240f, 750f);
+        resizeHelper.initResizeEvent();
+    }
+
+    /**
+     * 左侧组件重新布局
+     *
+     * @param newWidth 新宽度
+     */
+    private void resizeLeft(Float newWidth) {
+        if (newWidth != null && !Float.isNaN(newWidth)) {
+            // 设置组件宽
+            this.leftBox.setRealWidth(newWidth);
+            this.tabPane.setLayoutX(newWidth);
+            this.tabPane.setFlexWidth("100% - " + newWidth);
+            this.leftBox.parentAutosize();
+        }
+    }
+
+    /**
+     * 初始化节点
+     *
+     * @param treeItem 节点
+     */
+    private void initItem(TreeItem<?> treeItem) {
+        ThreadUtil.start(() -> {
+            CostUtil.record();
+            this.root.disable();
+            try {
+                if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
+                    // 设置激活节点
+                    this.activeItem = keyTreeItem;
+                    // 初始化数据
+                    this.initData();
+                    // 刷新tab
+                    this.flushTab();
+                    // 启用组件
+                    this.tabPane.enable();
+                } else {
+                    this.tabPane.disable();
+                }
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            } finally {
+                this.root.enable();
+                CostUtil.printCost();
+            }
+        }, 50);
+    }
+
+    /**
+     * 初始化数据
+     */
+    public void initData() {
+        if (this.activeItem != null) {
+            this.keyDataController.init(this.activeItem);
+            this.keyInfoController.init(this.activeItem);
+            this.collectPane.setCollect(this.activeItem.isCollect());
+        }
+    }
+
+    /**
+     * 刷新ttl
+     */
+    public void flushTTL() {
+        this.keyDataController.flushTTL();
+    }
+
+    @FXML
+    private void sortTree() {
+        if (this.sortPane.isAsc()) {
+            this.treeView.sortAsc();
+            this.sortPane.desc();
+        } else {
+            this.treeView.sortDesc();
+            this.sortPane.asc();
+        }
+    }
+
+    @Override
+    public List<? extends DynamicTabController> getSubControllers() {
+        return List.of(this.keyDataController, this.keyInfoController);
+    }
+}

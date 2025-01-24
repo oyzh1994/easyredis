@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.fx.keys;
+package cn.oyzh.easyredis.filter;
 
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
