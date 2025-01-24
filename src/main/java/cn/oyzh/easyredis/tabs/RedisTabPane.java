@@ -80,24 +80,24 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         }
     }
 
-    /**
-     * 初始化终端tab
-     *
-     * @param redisConnect redis信息
-     */
-    public void initTerminalTab(RedisConnect redisConnect, Integer dbIndex) {
-        RedisTerminalTab terminalTab = this.getTerminalTab(redisConnect, dbIndex);
-        if (terminalTab == null) {
-            terminalTab = new RedisTerminalTab();
-            terminalTab.init(redisConnect, dbIndex);
-            super.addTab(terminalTab);
-        } else {
-            terminalTab.flushGraphic();
-        }
-        if (!terminalTab.isSelected()) {
-            this.select(terminalTab);
-        }
-    }
+//    /**
+//     * 初始化终端tab
+//     *
+//     * @param redisConnect redis信息
+//     */
+//    public void initTerminalTab(RedisConnect redisConnect, Integer dbIndex) {
+//        RedisTerminalTab terminalTab = this.getTerminalTab(redisConnect, dbIndex);
+//        if (terminalTab == null) {
+//            terminalTab = new RedisTerminalTab(redisConnect,dbIndex);
+//            terminalTab.init(redisConnect, dbIndex);
+//            super.addTab(terminalTab);
+//        } else {
+//            terminalTab.flushGraphic();
+//        }
+//        if (!terminalTab.isSelected()) {
+//            this.select(terminalTab);
+//        }
+//    }
 
     /**
      * 终端打开事件
@@ -106,7 +106,16 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(RedisTerminalOpenEvent event) {
-        this.initTerminalTab(event.data(), event.dbIndex());
+        RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.dbIndex());
+        if (terminalTab == null) {
+            terminalTab = new RedisTerminalTab(event.data(), event.dbIndex());
+            super.addTab(terminalTab);
+        } else {
+            terminalTab.flushGraphic();
+        }
+        if (!terminalTab.isSelected()) {
+            this.select(terminalTab);
+        }
     }
 
     /**
@@ -126,6 +135,24 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * 获取终端tab
+     *
+     * @param client  redis客户端
+     * @param dbIndex db索引
+     * @return 终端tab
+     */
+    private RedisTerminalTab getTerminalTab(RedisClient client, Integer dbIndex) {
+        if (client != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof RedisTerminalTab tab1 && tab1.client() == client && Objects.equals(tab1.dbIndex(), dbIndex)) {
+                    return tab1;
+                }
+            }
+        }
+        return null;
     }
 
     /**

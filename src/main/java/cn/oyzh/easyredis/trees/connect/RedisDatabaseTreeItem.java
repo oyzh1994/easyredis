@@ -107,7 +107,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItem.Re
      */
     @FXML
     private void openTerminal() {
-        RedisEventUtil.terminalOpen(this.redisConnect(), this.dbIndex);
+        RedisEventUtil.terminalOpen(this.client(), this.dbIndex);
     }
 
     /**

@@ -319,11 +319,12 @@ public class RedisEventUtil {
     /**
      * 终端打开事件
      *
-     * @param redisConnect redis信息
+     * @param client  redis客户端
+     * @param dbIndex db索引
      */
-    public static void terminalOpen(RedisConnect redisConnect, Integer dbIndex) {
+    public static void terminalOpen(RedisClient client, Integer dbIndex) {
         RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
-        event.data(redisConnect);
+        event.data(client);
         event.dbIndex(dbIndex);
         EventUtil.post(event);
     }

@@ -2,9 +2,11 @@ package cn.oyzh.easyredis.terminal;
 
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ExecutorUtil;
+import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.dto.RedisConnectInfo;
+import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -38,7 +40,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
         // 禁用字体管理
         super.disableFont();
         // 初始化字体
-        RedisSetting setting= RedisSettingStore.SETTING;
+        RedisSetting setting = RedisSettingStore.SETTING;
         this.setFontSize(setting.getTerminalFontSize());
         this.setFontFamily(setting.getTerminalFontFamily());
         this.setFontWeight2(setting.getTerminalFontWeight());
@@ -54,7 +56,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
     /**
      * redis连接
      */
-    private RedisConnectInfo connect;
+    private RedisConnectInfo connectInfo;
 
     /**
      * redis客户端连接状态监听器
@@ -100,14 +102,15 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
     /**
      * 初始化
      *
-     * @param client redis客户端
+     * @param client  redis客户端
+     * @param dbIndex db索引
      */
     public void init(@NonNull RedisClient client, Integer dbIndex) {
         this.client = client;
         this.dbIndex = dbIndex;
         this.disableInput();
         this.outputLine(I18nResourceBundle.i18nString("redis.home.welcome"));
-        this.appendLine("Powered By oyzh(2023-2025).");
+        this.outputLine("Powered By oyzh(2023-2025).");
         this.flushPrompt();
         if (this.isTemporary()) {
             this.initByTemporary();
@@ -165,12 +168,11 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      * @param input 输入内容
      */
     public void connect(String input) {
-        this.client.reset();
-        this.connect = RedisConnectUtil.parse(input);
-        if (this.connect != null) {
+        this.connectInfo = RedisConnectUtil.parse(input);
+        if (this.connectInfo != null) {
             this.disable();
-            RedisConnectUtil.copyConnect(this.connect, this.redisConnect());
-            this.start(this.connect.getDb());
+            RedisConnectUtil.copyConnect(this.connectInfo, this.redisConnect());
+            this.start(this.connectInfo.getDb());
         }
     }
 
@@ -178,7 +180,6 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      * 临时连接处理
      */
     private void initByTemporary() {
-        // this.outputLine("请输入信息然后回车");
         this.outputLine("connect [-timeout timeout] -h host [-p port] [-u user] [-a password] [-n db] [-r]");
         this.outputLine("-timeout " + I18nResourceBundle.i18nString("base.unit", "base.ms"));
         this.outputLine("-h " + I18nHelper.host());
@@ -196,22 +197,27 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
      * 常驻连接处理
      */
     private void initByPermanent() {
-        this.start(0);
+//        this.start(0);
+        this.flushPrompt();
+        this.appendByPrompt("");
+        this.enableInput();
+        this.flushAndMoveCaretEnd();
     }
 
     /**
      * 开始连接
      */
     private void start(int db) {
-        this.initStatListener();
-        ExecutorUtil.start(() -> {
+        TaskManager.start(() -> {
             try {
-                this.disable();
+                this.initStatListener();
                 this.client.startDatabase(db);
+            } catch (Exception ex) {
+                this.onError(RedisExceptionParser.INSTANCE.apply(ex));
             } finally {
                 this.enable();
             }
-        }, 10);
+        });
     }
 
     /**
@@ -225,7 +231,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
     }
 
     /**
-     * 初始化连接状态处理
+     * 初始化连接状态监听器
      */
     private void initStatListener() {
         if (this.stateChangeListener == null) {
@@ -234,6 +240,7 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
                 // 获取连接
                 String host = this.client.redisConnect().getHost();
                 if (t1 == RedisConnState.CONNECTED) {
+                    this.outputLine(host + I18nHelper.connectSuccess() + " .");
                     this.outputLine(I18nHelper.terminalTip2());
                     this.outputLine(I18nHelper.terminalTip1());
                     this.outputPrompt();
@@ -250,8 +257,8 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
                     this.enableInput();
                 } else if (t1 == RedisConnState.FAILED) {
                     this.outputLine(host + " " + I18nHelper.connectFail() + " .");
-                    if (this.connect != null) {
-                        this.appendByPrompt(this.connect.getInput());
+                    if (this.connectInfo != null) {
+                        this.appendByPrompt(this.connectInfo.getInput());
                     }
                     this.flushAndMoveCaretEnd();
                     this.enableInput();
@@ -264,7 +271,10 @@ public class RedisTerminalTextTextArea extends TerminalTextArea {
 
     @Override
     public void enableInput() {
-        if (this.isConnected() || this.isTemporary()) {
+        if (this.isConnecting()) {
+            return;
+        }
+        if (this.isConnected() || (!this.isConnected() && this.isTemporary())) {
             super.enableInput();
         }
     }

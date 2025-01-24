@@ -61,12 +61,17 @@ public class RedisConnectUtil {
      *
      * @param client redis客户端
      * @param async  是否异步
+     * @param quiet  是否静默
      */
-    public static void close(RedisClient client, boolean async) {
+    public static void close(RedisClient client, boolean async, boolean quiet) {
         try {
             if (client != null && client.isConnected()) {
-                if (async) {
+                if (async && quiet) {
+                    ThreadUtil.startVirtual(client::closeQuiet);
+                } else if (async) {
                     ThreadUtil.startVirtual(client::close);
+                } else if (quiet) {
+                    client.closeQuiet();
                 } else {
                     client.close();
                 }

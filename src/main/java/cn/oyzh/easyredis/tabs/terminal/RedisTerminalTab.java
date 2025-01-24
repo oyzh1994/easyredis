@@ -17,18 +17,22 @@ import javafx.scene.Cursor;
  */
 public class RedisTerminalTab extends DynamicTab {
 
-    {
-        this.setClosable(true);
-        this.loadContent();
+//    {
+//        this.setClosable(true);
+//        this.loadContent();
+//    }
+
+    public RedisTerminalTab(RedisClient client, Integer dbIndex) {
+        this.init(client, dbIndex);
     }
 
-    @Override
-    protected void onTabCloseRequest(Event event) {
-        super.onTabCloseRequest(event);
-        // 关闭redis连接
-        RedisClient client = this.controller().client();
-        RedisConnectUtil.close(client, true);
-    }
+//    @Override
+//    protected void onTabCloseRequest(Event event) {
+//        super.onTabCloseRequest(event);
+//        // 关闭redis连接
+//        RedisClient client = this.controller().client();
+//        RedisConnectUtil.close(client, true);
+//    }
 
     @Override
     public RedisTerminalTabController controller() {
@@ -64,22 +68,52 @@ public class RedisTerminalTab extends DynamicTab {
     /**
      * 初始化
      *
-     * @param redisConnect redis信息
+     * @param client zk客户端
      */
-    public void init(RedisConnect redisConnect, Integer dbIndex) {
+    private void init(RedisClient client, Integer dbIndex) {
         try {
-            if (redisConnect == null) {
-                redisConnect = new RedisConnect();
-                redisConnect.setName(I18nHelper.unnamedConnection());
+            if (client == null) {
+                RedisConnect connect = new RedisConnect();
+                connect.setName(I18nHelper.unnamedConnection());
+                // 刷新图标
+                this.flushGraphic();
+//                // 设置标题
+//                super.setTitle(connect.getName());
+                // 初始化zk连接
+                this.controller().init(new RedisClient(connect), dbIndex);
+            } else {
+                // 刷新图标
+                this.flushGraphic();
+//                // 设置标题
+//                super.setTitle(client.connectName());
+                // 初始化zk连接
+                this.controller().init(client, dbIndex);
             }
-            // 初始化redis连接
-            this.controller().init(new RedisClient(redisConnect), dbIndex);
-            // 刷新tab
-            this.flush();
+            this.flushTitle();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+//    /**
+//     * 初始化
+//     *
+//     * @param redisConnect redis信息
+//     */
+//    public void init(RedisConnect redisConnect, Integer dbIndex) {
+//        try {
+//            if (redisConnect == null) {
+//                redisConnect = new RedisConnect();
+//                redisConnect.setName(I18nHelper.unnamedConnection());
+//            }
+//            // 初始化redis连接
+//            this.controller().init(new RedisClient(redisConnect), dbIndex);
+//            // 刷新tab
+//            this.flush();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     /**
      * db索引
@@ -99,4 +133,7 @@ public class RedisTerminalTab extends DynamicTab {
         return this.controller().redisConnect();
     }
 
+    public RedisClient client() {
+        return this.controller().client();
+    }
 }

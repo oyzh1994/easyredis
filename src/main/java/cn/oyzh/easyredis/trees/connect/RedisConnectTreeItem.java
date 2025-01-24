@@ -227,7 +227,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
      * 打开终端
      */
     private void openTerminal() {
-        RedisEventUtil.terminalOpen(this.value, null);
+        RedisEventUtil.terminalOpen(this.client, null);
     }
 
     /**
