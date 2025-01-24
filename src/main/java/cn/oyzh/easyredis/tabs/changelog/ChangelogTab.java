@@ -47,27 +47,4 @@ public class ChangelogTab extends DynamicTab {
         return I18nResourceBundle.i18nString("base.title.changelog");
     }
 
-    /**
-     * 更新日志tab内容组件
-     *
-     * @author oyzh
-     * @since 2024/05/08
-     */
-    public static class ChangelogTabController extends DynamicTabController {
-
-        /**
-         * 更新日志
-         */
-        @FXML
-        private ChangelogListView changelog;
-
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
-            super.initialize(url, resourceBundle);
-            // 更新日志列表
-            List<Changelog> changelogs = ChangelogManager.load();
-            // 初始化更新日志
-            this.changelog.init(changelogs);
-        }
-    }
 }

@@ -2,16 +2,12 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import lombok.NonNull;
 
 /**
  * redis终端tab
@@ -103,44 +99,4 @@ public class RedisTerminalTab extends DynamicTab {
         return this.controller().redisConnect();
     }
 
-    /**
-     * redis命令行tab内容组件
-     *
-     * @author oyzh
-     * @since 2023/07/21
-     */
-    public static class RedisTerminalTabController extends DynamicTabController {
-
-        /**
-         * redis命令行文本域
-         */
-        @FXML
-        private RedisTerminalTextTextArea terminal;
-
-        /**
-         * 初始化
-         *
-         * @param client redis客户端
-         */
-        public void init(@NonNull RedisClient client, Integer dbIndex) {
-            this.terminal.init(client, dbIndex);
-        }
-
-        /**
-         * redis信息
-         *
-         * @return 当前redis信息
-         */
-        protected RedisConnect redisConnect() {
-            return this.terminal.redisConnect();
-        }
-
-        public Integer dbIndex() {
-            return this.terminal.dbIndex();
-        }
-
-        public RedisClient client() {
-            return this.terminal.client();
-        }
-    }
 }
