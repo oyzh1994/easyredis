@@ -77,17 +77,17 @@
                 <Insets left="5" top="5"/>
             </HBox.margin>
         </DeleteSVGGlyph>
-        <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                 onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
-            <HBox.margin>
-                <Insets left="5" top="4"/>
-            </HBox.margin>
-        </PageBox>
         <ExpandListSVGPane size="14" fx:id="expandPane" onMousePrimaryClicked="#expendList">
             <HBox.margin>
                 <Insets left="5" top="6"/>
             </HBox.margin>
         </ExpandListSVGPane>
+        <PageBox fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
+                 onPrevClicked="#prevPage" onNextClicked="#nextPage" maxWidth="370">
+            <HBox.margin>
+                <Insets left="5" top="4"/>
+            </HBox.margin>
+        </PageBox>
     </FlexHBox>
     <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
