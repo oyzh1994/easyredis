@@ -176,8 +176,8 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
     public void loadChild() {
         if (!this.isLoading()) {
             Task task = TaskBuilder.newBuilder()
-                    .onFinish(this::refresh)
-                    .onSuccess(this::expend)
+                    .onFinish(this::expend)
+                    .onSuccess(this::refresh)
                     .onError(MessageBox::exception)
                     .onStart(() -> this.loadChild(this.setting.keyLoadLimit()))
                     .build();

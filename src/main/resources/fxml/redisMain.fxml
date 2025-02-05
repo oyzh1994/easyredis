@@ -4,10 +4,10 @@
 <?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
 <FlexPane xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.RedisMainController" flexWidth="100% - 30" flexHeight="100%">
-    <FlexTabPane flexHeight="100%" realWidth="300" rotateGraphic="true" fx:id="tabPaneLeft" tabMaxHeight="25">
+    <FlexTabPane flexHeight="100%" realWidth="300" fx:id="tabPaneLeft" tabMaxHeight="25">
         <fx:include fx:id="connect" source="main/connect.fxml"/>
         <fx:include fx:id="message" source="main/message.fxml"/>
     </FlexTabPane>
-    <RedisTabPane fx:id="tabPane" layoutX="300" flexWidth="100% - 300" tabDragPolicy="FIXED" tabClosingPolicy="ALL_TABS"
+    <RedisTabPane fx:id="tabPane" layoutX="300" flexWidth="100% - 300" tabClosingPolicy="ALL_TABS"
                   flexHeight="100%"/>
 </FlexPane>

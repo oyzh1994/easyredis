@@ -248,6 +248,8 @@ public class RedisKeysTabController extends ParentTabController {
                     this.flushTab();
                     // 启用组件
                     this.tabPane.enable();
+                    // 设置焦点
+                    this.treeView.focusNode();
                 } else {
                     this.tabPane.disable();
                 }

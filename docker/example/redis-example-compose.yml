@@ -6,7 +6,8 @@ services:
     container_name: redis-example
     volumes:
       - ./redis-example.conf:/conf/redis.conf
-      - D:/redis/bak_redis136/data:/data
+      - /Volumes/Files/redis-3.0.6/data:/data
+#      - D:/redis/bak_redis136/data:/data
     ports:
       - 7381:7381
     command: redis-server /conf/redis.conf

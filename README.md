@@ -39,10 +39,15 @@ cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_pack
 docker run -itd -p 6379:6379 redis
 docker run -itd -p 6379:6379 redis --requirepass 123456
 
-###### docker启动redis(集群)
+###### docker启动redis(windows)
 docker-compose -f .\redis-cluster-compose.yml up -d
 docker-compose -f .\redis-example-compose.yml up -d
 docker-compose -f .\redis-master-compose.yml up -d
+
+###### docker启动redis(macos)
+docker compose -f ./redis-cluster-compose.yml up -d
+docker compose -f ./redis-example-compose.yml up -d
+docker compose -f ./redis-master-compose.yml up -d
 
 # macos系统
 ###### mac无法启动解决方案1
