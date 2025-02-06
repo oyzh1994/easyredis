@@ -10,10 +10,7 @@ import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
-import cn.oyzh.fx.gui.svg.glyph.GroupSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -23,7 +20,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -38,7 +34,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/05/12
  */
-public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGroupTreeItemValue> implements RedisConnectManager {
+public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> implements RedisConnectManager {
 
     /**
      * 分组对象
@@ -235,42 +231,4 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItem.RedisGro
         return this.value.getGid();
     }
 
-    /**
-     * redis树group值
-     *
-     * @author oyzh
-     * @since 2023/11/21
-     */
-    public static class RedisGroupTreeItemValue extends RichTreeItemValue {
-
-        public RedisGroupTreeItemValue(RedisGroupTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected RedisGroupTreeItem item() {
-            return (RedisGroupTreeItem) super.item();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value().getName();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new GroupSVGGlyph("10");
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public Color graphicColor() {
-            if (this.item().isChildEmpty()) {
-                return super.graphicColor();
-            }
-            return Color.DEEPSKYBLUE;
-        }
-    }
 }

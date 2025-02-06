@@ -12,7 +12,6 @@ import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.fx.svg.glyph.RedisSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
@@ -20,8 +19,6 @@ import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -29,7 +26,6 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -45,7 +41,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/22
  */
-public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.RedisConnectTreeItemValue> {
+public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue> {
 
     /**
      * redis信息
@@ -494,73 +490,4 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItem.Redi
         return this.value.getId();
     }
 
-    /**
-     * redis树节点值
-     *
-     * @author oyzh
-     * @since 2023/08/10
-     */
-    @Accessors(chain = true, fluent = true)
-    public static class RedisConnectTreeItemValue extends RichTreeItemValue {
-
-        public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected RedisConnectTreeItem item() {
-            return (RedisConnectTreeItem) super.item();
-        }
-
-        @Override
-        public String name() {
-            return this.item().value().getName();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new RedisSVGGlyph(12);
-            }
-            return super.graphic();
-        }
-
-        @Override
-        public Color graphicColor() {
-            if (this.item().isConnected() || this.item().isConnecting()) {
-                return Color.GREEN;
-            }
-            return super.graphicColor();
-        }
-
-        @Override
-        public String extra() {
-            if (this.item().isConnected()) {
-                String role = this.item().role();
-                if (role != null) {
-                    // 角色名称
-                    String roleName = switch (role.toLowerCase()) {
-                        case "sentinel" -> I18nHelper.sentinel();
-                        case "master" -> I18nHelper.master();
-                        case "slave" -> I18nHelper.slave();
-                        default -> null;
-                    };
-                    String str = "(";
-                    if (this.item().isSentinelMode()) {
-                        str += roleName;
-                    } else if (this.item().isClusterMode()) {
-                        str += I18nHelper.cluster() + "/" + roleName;
-                    } else if (this.item().isMasterMode()) {
-                        str += I18nHelper.master_slave() + "/" + roleName;
-                    }
-                    if (this.item().isReadonly()) {
-                        str += "/" + I18nHelper.readonly();
-                    }
-                    str += ")";
-                    return str;
-                }
-            }
-            return super.extra();
-        }
-    }
 }

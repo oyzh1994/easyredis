@@ -9,14 +9,11 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.easyredis.fx.svg.glyph.RedisSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
@@ -41,7 +38,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootTreeItemValue> implements RedisConnectManager {
+public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
      * redis分组储存
@@ -407,25 +404,4 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItem.RedisRootT
         }
     }
 
-    /**
-     * redis树节点值
-     *
-     * @author oyzh
-     * @since 2023/11/21
-     */
-    public static class RedisRootTreeItemValue extends RichTreeItemValue {
-
-        @Override
-        public String name() {
-            return I18nHelper.redis();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic == null) {
-                this.graphic = new RedisSVGGlyph(12);
-            }
-            return super.graphic();
-        }
-    }
 }
