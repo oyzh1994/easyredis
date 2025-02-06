@@ -17,6 +17,7 @@ import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -169,7 +170,7 @@ public class RedisClient {
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
                 case CLOSED -> {
-                    if(!this.closeQuietly) {
+                    if (!this.closeQuietly) {
                         RedisEventUtil.connectionClosed(this);
                     }
                 }
@@ -197,7 +198,8 @@ public class RedisClient {
      */
     public void addStateListener(ChangeListener<RedisConnState> stateListener) {
         if (stateListener != null) {
-            this.state.addListener(stateListener);
+//            this.state.addListener(stateListener);
+            this.state.addListener(new WeakChangeListener<>(stateListener));
         }
     }
 
@@ -513,7 +515,7 @@ public class RedisClient {
             this.poolManager.destroy();
             // 已关闭
             // if (isClosed) {
-                this.state.set(RedisConnState.CLOSED);
+            this.state.set(RedisConnState.CLOSED);
 //                RedisEventUtil.connectionClosed(this);
             // }
             // 重置变量
