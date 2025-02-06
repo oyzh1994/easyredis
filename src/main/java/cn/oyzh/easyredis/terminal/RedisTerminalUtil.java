@@ -87,24 +87,24 @@ public class RedisTerminalUtil {
         }
         return formatOut(list);
     }
-
-    /**
-     * 格式化输出
-     *
-     * @param values 值
-     * @return 结果
-     */
-    public static String formatOutStream(List<StreamEntry> values) {
-        if (CollectionUtil.isEmpty(values)) {
-            return "";
-        }
-        int index = 1;
-        StringBuilder builder = new StringBuilder();
-        for (Object value : values) {
-            builder.append(index++).append(") ").append("\"").append(value).append("\"").append("\n");
-        }
-        return builder.toString();
-    }
+//
+//    /**
+//     * 格式化输出
+//     *
+//     * @param values 值
+//     * @return 结果
+//     */
+//    public static String formatOutStream(List<StreamEntry> values) {
+//        if (CollectionUtil.isEmpty(values)) {
+//            return "";
+//        }
+//        int index = 1;
+//        StringBuilder builder = new StringBuilder();
+//        for (Object value : values) {
+//            builder.append(index++).append(") ").append("\"").append(value).append("\"").append("\n");
+//        }
+//        return builder.toString();
+//    }
 
     /**
      * 格式化输出
@@ -137,7 +137,7 @@ public class RedisTerminalUtil {
     public CommandObject<Object> getCommand(Protocol.Command command, TerminalCommand terminalCommand) {
         CommandArguments arguments = new CommandArguments(command);
         arguments.addObjects(terminalCommand.argsList());
-        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
+        return new CommandObject<>(arguments, BuilderFactory.RAW_OBJECT);
     }
 
     /**
@@ -154,7 +154,7 @@ public class RedisTerminalUtil {
                 arguments.add(arg);
             }
         }
-        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
+        return new CommandObject<>(arguments, BuilderFactory.RAW_OBJECT);
     }
 
     /**
@@ -169,6 +169,6 @@ public class RedisTerminalUtil {
         if (arg != null) {
             arguments.add(arg);
         }
-        return new CommandObject(arguments, BuilderFactory.RAW_OBJECT);
+        return new CommandObject<>(arguments, BuilderFactory.RAW_OBJECT);
     }
 }

@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
 import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
@@ -33,6 +34,11 @@ import cn.oyzh.easyredis.event.key.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetReverseViewEvent;
+import cn.oyzh.easyredis.event.query.RedisAddQueryEvent;
+import cn.oyzh.easyredis.event.query.RedisOpenQueryEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryAddedEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryDeletedEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryRenamedEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
@@ -592,5 +598,62 @@ public class RedisEventUtil {
         event.data(connectName);
         event.arguments(arguments);
         EventUtil.postAsync(event);
+    }
+
+    /**
+     * 添加查询事件
+     *
+     * @param client Redis查询
+     */
+    public static void addQuery(RedisClient client) {
+        RedisAddQueryEvent event = new RedisAddQueryEvent();
+        event.data(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询已添加事件
+     *
+     * @param query Redis查询
+     */
+    public static void queryAdded(RedisQuery query) {
+        RedisQueryAddedEvent event = new RedisQueryAddedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询打开事件
+     *
+     * @param client Redis客户端
+     * @param query  Redis查询
+     */
+    public static void openQuery(RedisClient client, RedisQuery query) {
+        RedisOpenQueryEvent event = new RedisOpenQueryEvent();
+        event.data(query);
+        event.setClient(client);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询更名事件
+     *
+     * @param query Redis查询
+     */
+    public static void queryRenamed(RedisQuery query) {
+        RedisQueryRenamedEvent event = new RedisQueryRenamedEvent();
+        event.data(query);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 查询删除事件
+     *
+     * @param query Redis查询
+     */
+    public static void queryDeleted(RedisQuery query) {
+        RedisQueryDeletedEvent event = new RedisQueryDeletedEvent();
+        event.data(query);
+        EventUtil.post(event);
     }
 }

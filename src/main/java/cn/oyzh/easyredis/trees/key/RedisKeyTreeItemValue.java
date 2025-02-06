@@ -34,7 +34,7 @@ public class RedisKeyTreeItemValue extends RichTreeItemValue {
 
     @Override
     public String extra() {
-        return " (" + this.item().type().name() + ")";
+        return "(" + this.item().type().name() + ")";
     }
 
     @Override

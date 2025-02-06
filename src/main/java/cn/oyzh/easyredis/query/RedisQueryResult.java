@@ -1,0 +1,48 @@
+package cn.oyzh.easyredis.query;
+
+import cn.oyzh.i18n.I18nHelper;
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * zk查询结果
+ *
+ * @author oyzh
+ * @since 2025/01/20
+ */
+@Data
+public class RedisQueryResult {
+
+    /**
+     * 耗时
+     */
+    private long cost;
+
+    /**
+     * 结果
+     */
+    private Object result;
+
+    /**
+     * 消息
+     */
+    private String message;
+
+    /**
+     * 是否成功
+     */
+    private boolean success;
+
+    public String costSeconds() {
+        return String.format("%.2f" + I18nHelper.seconds(), this.cost / 1000.0);
+    }
+
+    public byte[] asData() {
+        return (byte[]) this.result;
+    }
+
+    public List<String> asNode() {
+        return (List<String>) this.result;
+    }
+}

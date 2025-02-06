@@ -11,11 +11,7 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/4/7
  */
-public class RedisQueryTreeItemValue extends RichTreeItemValue {
-
-    public RedisQueryTreeItemValue(RedisQueryTreeItem item) {
-        super(item);
-    }
+public class RedisQueriesTreeItemValue extends RichTreeItemValue {
 
     @Override
     public SVGGlyph graphic() {

@@ -139,17 +139,23 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                 if (this.isSentinelMode()) {
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    this.setChild(List.of(item2, item3));
+                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
+//                    this.setChild(List.of(item2, item3));
+                    this.setChild(List.of(item2, item3, item4));
                 } else if (this.isClusterMode()) {// 集群模式
                     RedisDatabaseTreeItem item1 = new RedisDatabaseTreeItem(null, this.getTreeView());
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    this.setChild(List.of(item1, item2, item3));
+                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
+//                    this.setChild(List.of(item1, item2, item3));
+                    this.setChild(List.of(item1, item2, item3, item4));
                 } else {// 正常模式
                     RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    this.setChild(List.of(item1, item2, item3));
+                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
+//                    this.setChild(List.of(item1, item2, item3));
+                    this.setChild(List.of(item1, item2, item3, item4));
                 }
                 this.expend();
             } catch (Exception ex) {

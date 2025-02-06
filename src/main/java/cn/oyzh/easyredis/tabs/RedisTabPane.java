@@ -2,12 +2,17 @@ package cn.oyzh.easyredis.tabs;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyTTLUpdatedEvent;
 import cn.oyzh.easyredis.event.key.RedisPubsubOpenEvent;
 import cn.oyzh.easyredis.event.connection.RedisServerEvent;
+import cn.oyzh.easyredis.event.query.RedisAddQueryEvent;
+import cn.oyzh.easyredis.event.query.RedisOpenQueryEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryDeletedEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryRenamedEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.key.RedisZSetReverseViewEvent;
@@ -16,6 +21,7 @@ import cn.oyzh.easyredis.tabs.changelog.ChangelogTab;
 import cn.oyzh.easyredis.tabs.home.RedisHomeTab;
 import cn.oyzh.easyredis.tabs.key.RedisKeysTab;
 import cn.oyzh.easyredis.tabs.pubsub.RedisPubsubTab;
+import cn.oyzh.easyredis.tabs.query.RedisQueryTab;
 import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
@@ -378,6 +384,78 @@ public class RedisTabPane extends DynamicTabPane implements FXEventListener {
         }
         if (!tab.isSelected()) {
             this.select(tab);
+        }
+    }
+
+    /**
+     * 获取查询tab
+     *
+     * @param query 查询
+     * @return 查询tab
+     */
+    private RedisQueryTab getQueryTab(RedisQuery query) {
+        if (query != null) {
+            for (Tab tab : this.getTabs()) {
+                if (tab instanceof RedisQueryTab queryTab && queryTab.query() == query) {
+                    return queryTab;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 添加查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void addQuery(RedisAddQueryEvent event) {
+        RedisQueryTab queryTab = new RedisQueryTab(event.data(), null);
+        super.addTab(queryTab);
+        this.select(queryTab);
+    }
+
+    /**
+     * 打开查询
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void openQuery(RedisOpenQueryEvent event) {
+        RedisQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab == null) {
+            queryTab = new RedisQueryTab(event.getClient(), event.data());
+            super.addTab(queryTab);
+        }
+        if (!queryTab.isSelected()) {
+            this.select(queryTab);
+        }
+    }
+
+    /**
+     * 查询更名
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryRenamed(RedisQueryRenamedEvent event) {
+        RedisQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.flushTitle();
+        }
+    }
+
+    /**
+     * 查询删除
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    public void queryDeleted(RedisQueryDeletedEvent event) {
+        RedisQueryTab queryTab = this.getQueryTab(event.data());
+        if (queryTab != null) {
+            queryTab.closeTab();
         }
     }
 }
