@@ -4792,7 +4792,7 @@ public class RedisClient {
     public String iid() {
         return this.redisConnect.getId();
     }
-    
+
     /**
      * 执行查询
      *

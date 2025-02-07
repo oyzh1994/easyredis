@@ -39,10 +39,14 @@ public class RedisQueryResult {
     }
 
     public boolean hasData() {
+        return this.result != null;
+    }
+
+    public boolean hasCollection() {
         return this.result instanceof Collection;
     }
 
-    public Collection<?> asData() {
+    public Collection<?> asCollection() {
         if (this.result instanceof Collection) {
             return (Collection<?>) this.result;
         }

@@ -4,10 +4,13 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
+import redis.clients.jedis.GeoCoordinate;
+import redis.clients.jedis.util.KeyValue;
 import redis.clients.jedis.util.SafeEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,12 +26,26 @@ public class RedisQueryDataTabController extends DynamicTabController {
         List<KeyValueProperty<Integer, Object>> data = new ArrayList<>();
         int index = 1;
         for (Object o : list) {
-            if (o instanceof byte[] bytes) {
-                data.add(KeyValueProperty.of(index++, SafeEncoder.encode(bytes)));
-            } else {
-                data.add(KeyValueProperty.of(index++, o.toString()));
-            }
+            this.parseObject(o, index++, data);
         }
         this.dataTable.setItem(data);
+    }
+
+    public void init(Object o) {
+        List<KeyValueProperty<Integer, Object>> data = new ArrayList<>();
+        this.parseObject(o, 1, data);
+        this.dataTable.setItem(data);
+    }
+
+    private void parseObject(Object o, int index, List<KeyValueProperty<Integer, Object>> data) {
+        if (o instanceof byte[] bytes) {
+            data.add(KeyValueProperty.of(index, SafeEncoder.encode(bytes)));
+        } else if (o instanceof Collection) {
+            data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+        } else if (o instanceof KeyValue<?, ?>) {
+            data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+        } else {
+            data.add(KeyValueProperty.of(index, o.toString()));
+        }
     }
 }

@@ -17,6 +17,12 @@ public class RedisQueryDataTab extends DynamicTab {
         this.controller().init(list);
     }
 
+    public RedisQueryDataTab(Object object) {
+        super();
+        super.flush();
+        this.controller().init(object);
+    }
+
     @Override
     protected String url() {
         return "/tabs/query/redisQueryDataTab.fxml";
