@@ -11,7 +11,7 @@ import redis.clients.jedis.Protocol;
 public class RedisFcall_r0TerminalCommandHandler extends cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.FCALL_RO;
     }
 }

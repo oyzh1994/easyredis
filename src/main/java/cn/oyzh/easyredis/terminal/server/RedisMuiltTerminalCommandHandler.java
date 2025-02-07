@@ -12,7 +12,7 @@ import redis.clients.jedis.Protocol;
 public class RedisMuiltTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.MULTI;
     }
 }

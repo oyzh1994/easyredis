@@ -18,7 +18,7 @@ public class RedisGeoradiusbymember_r0TerminalCommandHandler extends RedisKeyTer
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.GEORADIUSBYMEMBER_RO;
     }
 }

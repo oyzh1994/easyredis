@@ -18,7 +18,7 @@ public class RedisSdiffstoreTerminalCommandHandler extends RedisKeyTerminalComma
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SDIFFSTORE;
     }
 }

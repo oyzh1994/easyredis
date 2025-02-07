@@ -18,7 +18,7 @@ public class RedisSismemberCommandHandler extends RedisKeyTerminalCommandHandler
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SISMEMBER;
     }
 }

@@ -18,7 +18,7 @@ public class RedisHkeysCommandHandler extends RedisKeyTerminalCommandHandler<Ter
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.HKEYS;
     }
 }

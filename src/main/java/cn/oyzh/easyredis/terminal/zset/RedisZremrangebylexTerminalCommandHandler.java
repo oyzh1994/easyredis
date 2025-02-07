@@ -18,7 +18,7 @@ public class RedisZremrangebylexTerminalCommandHandler extends RedisKeyTerminalC
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ZREMRANGEBYLEX;
     }
 }

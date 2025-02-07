@@ -15,7 +15,7 @@ import redis.clients.jedis.Protocol;
 public class RedisAclTerminalCommandHandler extends RedisTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ACL;
     }
 

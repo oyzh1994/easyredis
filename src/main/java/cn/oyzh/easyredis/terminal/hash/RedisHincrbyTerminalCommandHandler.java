@@ -18,7 +18,7 @@ public class RedisHincrbyTerminalCommandHandler extends RedisKeyTerminalCommandH
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.HINCRBY;
     }
 }

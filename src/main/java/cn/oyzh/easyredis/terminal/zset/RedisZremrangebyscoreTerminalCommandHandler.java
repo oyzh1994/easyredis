@@ -18,7 +18,7 @@ public class RedisZremrangebyscoreTerminalCommandHandler extends RedisKeyTermina
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ZREMRANGEBYSCORE;
     }
 }

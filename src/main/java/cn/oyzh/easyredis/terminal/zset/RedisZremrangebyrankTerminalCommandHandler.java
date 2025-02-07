@@ -18,7 +18,7 @@ public class RedisZremrangebyrankTerminalCommandHandler extends RedisKeyTerminal
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ZREMRANGEBYRANK;
     }
 }

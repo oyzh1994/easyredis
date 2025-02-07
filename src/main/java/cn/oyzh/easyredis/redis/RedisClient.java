@@ -5,13 +5,21 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
+import cn.oyzh.easyredis.query.RedisQueryParam;
+import cn.oyzh.easyredis.query.RedisQueryResult;
+import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
+import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
+import cn.oyzh.fx.terminal.command.TerminalCommand;
+import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.ssh.SSHForwardConfig;
 import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -4783,5 +4791,34 @@ public class RedisClient {
 
     public String iid() {
         return this.redisConnect.getId();
+    }
+
+
+    /**
+     * 执行查询
+     *
+     * @param param 查询参数
+     * @return 查询结果
+     */
+    public RedisQueryResult query(RedisQueryParam param) {
+        RedisQueryResult result = new RedisQueryResult();
+        long start = System.currentTimeMillis();
+        try {
+            TerminalCommandHandler<?, ?> handler = TerminalManager.findHandler(param.getContent());
+            if (handler instanceof RedisTerminalCommandHandler<?> commandHandler) {
+                TerminalCommand command = commandHandler.parseCommand(param.getContent());
+                CommandObject<Object> object = RedisTerminalUtil.getCommand(commandHandler.getCommandType(), command.args());
+                Object execResult = this.execCommand(object);
+                result.setResult(execResult);
+            }
+            result.setSuccess(true);
+            result.setMessage("OK");
+        } catch (Exception ex) {
+            result.setSuccess(false);
+            result.setMessage(ex.getMessage());
+        }
+        long end = System.currentTimeMillis();
+        result.setCost(end - start);
+        return result;
     }
 }

@@ -17,7 +17,7 @@ public class RedisHmsetCommandHandler extends RedisKeyTerminalCommandHandler<Ter
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.HMSET;
     }
 }

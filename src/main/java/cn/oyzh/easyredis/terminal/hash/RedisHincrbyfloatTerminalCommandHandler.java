@@ -17,7 +17,7 @@ public class RedisHincrbyfloatTerminalCommandHandler extends RedisKeyTerminalCom
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.HINCRBYFLOAT;
     }
 }

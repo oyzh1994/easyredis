@@ -11,7 +11,7 @@ import redis.clients.jedis.Protocol;
 public class RedisDelTerminalCommandHandler extends RedisNKeysTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.DEL;
     }
 }

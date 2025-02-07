@@ -18,7 +18,7 @@ public class RedisZdiffTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ZDIFF;
     }
 }

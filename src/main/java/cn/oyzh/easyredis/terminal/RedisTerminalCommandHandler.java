@@ -60,6 +60,6 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
         return RedisCommandUtil.getCommandAvailable(this.commandFullName());
     }
 
-    protected abstract Protocol.Command getCommandType();
+    public abstract Protocol.Command getCommandType();
 
 }

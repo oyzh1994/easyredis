@@ -18,7 +18,7 @@ public class RedisBitfield_r0TerminalCommandHandler extends RedisKeyTerminalComm
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.BITFIELD_RO;
     }
 }

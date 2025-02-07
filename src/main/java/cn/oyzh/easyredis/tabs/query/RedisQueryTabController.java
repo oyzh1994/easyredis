@@ -41,7 +41,7 @@ public class RedisQueryTabController extends DynamicTabController {
     /**
      * zk客户端
      */
-    private RedisClient zkClient;
+    private RedisClient redisClient;
 
     /**
      * 当前内容
@@ -61,11 +61,11 @@ public class RedisQueryTabController extends DynamicTabController {
     private final RedisQueryStore queryStore = RedisQueryStore.INSTANCE;
 
     public RedisConnect redisConnect() {
-        return this.zkClient.redisConnect();
+        return this.redisClient.redisConnect();
     }
 
     public void init(RedisClient client, RedisQuery query) {
-        this.zkClient = client;
+        this.redisClient = client;
         this.content.setClient(client);
         if (query == null) {
             query = new RedisQuery();
@@ -109,12 +109,13 @@ public class RedisQueryTabController extends DynamicTabController {
         try {
             RedisQueryParam param = new RedisQueryParam();
             param.setContent(this.content.getText());
-            RedisQueryResult result = new RedisQueryResult();
+            RedisQueryResult result = this.redisClient.query(param);
             this.content.flexHeight("30% - 60");
             this.resultTabPane.setVisible(true);
             this.resultTabPane.clearChild();
             this.resultTabPane.addTab(new RedisQueryMsgTab(param, result));
             this.content.parentAutosize();
+            System.out.println(result.getResult());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);

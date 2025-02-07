@@ -18,7 +18,7 @@ public class RedisXrangeTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.XRANGE;
     }
 }

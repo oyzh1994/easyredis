@@ -18,7 +18,7 @@ public class RedisHstrlenCommandHandler extends RedisKeyTerminalCommandHandler<T
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.HSTRLEN;
     }
 }

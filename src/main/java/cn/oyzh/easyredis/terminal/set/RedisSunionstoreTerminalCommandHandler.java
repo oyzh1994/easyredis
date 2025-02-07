@@ -18,7 +18,7 @@ public class RedisSunionstoreTerminalCommandHandler extends RedisKeyTerminalComm
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SUNIONSTORE;
     }
 }

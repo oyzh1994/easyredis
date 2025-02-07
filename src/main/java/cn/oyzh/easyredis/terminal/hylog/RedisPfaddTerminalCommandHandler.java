@@ -18,7 +18,7 @@ public class RedisPfaddTerminalCommandHandler extends RedisKeyTerminalCommandHan
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.PFADD;
     }
 }

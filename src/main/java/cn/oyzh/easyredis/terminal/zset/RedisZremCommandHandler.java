@@ -18,7 +18,7 @@ public class RedisZremCommandHandler extends RedisKeyTerminalCommandHandler<Term
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.ZREM;
     }
 }

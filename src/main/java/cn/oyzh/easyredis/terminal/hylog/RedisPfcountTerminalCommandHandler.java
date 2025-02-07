@@ -18,7 +18,7 @@ public class RedisPfcountTerminalCommandHandler extends RedisKeyTerminalCommandH
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.PFCOUNT;
     }
 }

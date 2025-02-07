@@ -18,7 +18,7 @@ public class RedisSaddTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SADD;
     }
 }

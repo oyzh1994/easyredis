@@ -13,7 +13,7 @@ import redis.clients.jedis.Protocol;
 public class RedisRpopTerminalCommandHandler extends RedisKeyTerminalCommandHandler<TerminalCommand> {
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.RPOP;
     }
 

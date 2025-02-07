@@ -18,7 +18,7 @@ public class RedisSintercarkTerminalCommandHandler extends RedisKeyTerminalComma
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SINTERCARD;
     }
 }

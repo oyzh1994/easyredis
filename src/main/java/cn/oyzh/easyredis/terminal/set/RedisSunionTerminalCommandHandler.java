@@ -18,7 +18,7 @@ public class RedisSunionTerminalCommandHandler extends RedisKeyTerminalCommandHa
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.SUNION;
     }
 }

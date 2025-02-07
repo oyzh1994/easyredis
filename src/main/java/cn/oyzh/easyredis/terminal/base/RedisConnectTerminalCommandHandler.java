@@ -32,7 +32,7 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return null;
     }
 

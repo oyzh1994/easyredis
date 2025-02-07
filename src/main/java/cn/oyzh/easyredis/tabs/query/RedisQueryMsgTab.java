@@ -19,7 +19,7 @@ public class RedisQueryMsgTab extends DynamicTab {
 
     @Override
     protected String url() {
-        return "/tabs/query/zkQueryMsgTab.fxml";
+        return "/tabs/query/redisQueryMsgTab.fxml";
     }
 
     @Override

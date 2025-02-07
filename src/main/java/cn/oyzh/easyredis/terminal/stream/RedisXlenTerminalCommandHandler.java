@@ -18,7 +18,7 @@ public class RedisXlenTerminalCommandHandler extends RedisKeyTerminalCommandHand
     }
 
     @Override
-    protected Protocol.Command getCommandType() {
+    public Protocol.Command getCommandType() {
         return Protocol.Command.XLEN;
     }
 }
