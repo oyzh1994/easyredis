@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * zk查询结果
@@ -38,11 +38,14 @@ public class RedisQueryResult {
         return String.format("%.2f" + I18nHelper.seconds(), this.cost / 1000.0);
     }
 
-    public byte[] asData() {
-        return (byte[]) this.result;
+    public boolean hasData() {
+        return this.result instanceof Collection;
     }
 
-    public List<String> asNode() {
-        return (List<String>) this.result;
+    public Collection<?> asData() {
+        if (this.result instanceof Collection) {
+            return (Collection<?>) this.result;
+        }
+        return null;
     }
 }

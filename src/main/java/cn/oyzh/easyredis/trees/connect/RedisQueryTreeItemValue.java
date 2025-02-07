@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.controls.tree.view.FXTreeItem;
 import cn.oyzh.i18n.I18nHelper;
 
 /**
@@ -18,6 +19,11 @@ public class RedisQueryTreeItemValue extends RichTreeItemValue {
     }
 
     @Override
+    protected RedisQueryTreeItem item() {
+        return (RedisQueryTreeItem) super.item();
+    }
+
+    @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
             this.graphic = new QuerySVGGlyph("10");
@@ -27,6 +33,6 @@ public class RedisQueryTreeItemValue extends RichTreeItemValue {
 
     @Override
     public String name() {
-        return I18nHelper.query();
+        return this.item().value().getName();
     }
 }

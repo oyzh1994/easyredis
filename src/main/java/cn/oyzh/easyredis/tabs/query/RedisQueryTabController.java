@@ -114,6 +114,10 @@ public class RedisQueryTabController extends DynamicTabController {
             this.resultTabPane.setVisible(true);
             this.resultTabPane.clearChild();
             this.resultTabPane.addTab(new RedisQueryMsgTab(param, result));
+            if (result.hasData()) {
+                this.resultTabPane.addTab(new RedisQueryDataTab(result.asData()));
+                this.resultTabPane.select(1);
+            }
             this.content.parentAutosize();
             System.out.println(result.getResult());
         } catch (Exception ex) {
