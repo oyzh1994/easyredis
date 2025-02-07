@@ -1,17 +1,13 @@
 package cn.oyzh.easyredis.tabs.query;
 
-import cn.oyzh.easyredis.query.RedisQueryParam;
-import cn.oyzh.easyredis.query.RedisQueryResult;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.i18n.I18nHelper;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author oyzh
- * @since 2025/01/20
+ * @since 2025/02/07
  */
 public class RedisQueryDataTab extends DynamicTab {
 
@@ -35,6 +31,4 @@ public class RedisQueryDataTab extends DynamicTab {
     public String getTabTitle() {
         return I18nHelper.data();
     }
-
-
 }

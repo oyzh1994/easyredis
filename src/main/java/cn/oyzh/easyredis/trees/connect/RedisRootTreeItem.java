@@ -7,6 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -404,4 +405,14 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
         }
     }
 
+    public void queryAdded(RedisQuery query) {
+            List<RedisConnectTreeItem> items = this.getConnectItems();
+            if (items != null) {
+                for (RedisConnectTreeItem item : items) {
+                    if (StringUtil.equals(item.getId(), query.getIid())) {
+                        item.queriesItem().add(query);
+                    }
+                }
+            }
+        }
 }

@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyDeletedEvent;
+import cn.oyzh.easyredis.event.query.RedisQueryAddedEvent;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -142,5 +143,13 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     @EventSubscribe
     private void connectUpdate(RedisConnectUpdatedEvent event) {
         this.getRoot().connectUpdate(event.data());
+    }
+
+    /**
+     * 查询已添加事件
+     */
+    @EventSubscribe
+    private void queryAdded(RedisQueryAddedEvent event) {
+        this.getRoot().queryAdded(event.data());
     }
 }

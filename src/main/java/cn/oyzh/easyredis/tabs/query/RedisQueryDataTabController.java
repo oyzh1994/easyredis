@@ -1,13 +1,8 @@
 package cn.oyzh.easyredis.tabs.query;
 
-import cn.oyzh.easyredis.query.RedisQueryParam;
-import cn.oyzh.easyredis.query.RedisQueryResult;
-import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import redis.clients.jedis.util.SafeEncoder;
 
@@ -17,7 +12,7 @@ import java.util.List;
 
 /**
  * @author oyzh
- * @since 2025/01/20
+ * @since 2025/02/07
  */
 public class RedisQueryDataTabController extends DynamicTabController {
 

@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataImportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
@@ -31,6 +32,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -496,4 +498,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
         return this.value.getId();
     }
 
+    public RedisQueriesTreeItem queriesItem() {
+        return (RedisQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof RedisQueriesTreeItem).findAny().get();
+    }
 }
