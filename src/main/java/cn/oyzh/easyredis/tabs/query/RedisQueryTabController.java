@@ -131,6 +131,7 @@ public class RedisQueryTabController extends DynamicTabController {
     @FXML
     private void run() {
         try {
+            this.disableTab();
             RedisQueryParam param = new RedisQueryParam();
             param.setContent(this.content.getText());
             param.setDbIndex(this.database.getSelectedIndex());
@@ -147,6 +148,8 @@ public class RedisQueryTabController extends DynamicTabController {
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
+        } finally {
+            this.enableTab();
         }
     }
 

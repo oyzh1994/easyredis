@@ -2,14 +2,20 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.thread.ThreadUtil;
+import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.popups.RedisPageSettingPopupController;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
+import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.key.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
+import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
@@ -51,6 +57,11 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      */
     @FXML
     protected FlexHBox dataAction;
+
+    /**
+     * 设置
+     */
+    private final RedisSetting setting = RedisSettingStore.SETTING;
 
     @Override
     public boolean init(T treeItem) {
@@ -136,11 +147,18 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * @param pageNo 页码
      */
     protected void initPage(long pageNo) {
-        List<R> rows = this.getRows();
-        this.pageData = new Paging<>(rows, 10);
-        List<R> pageRows = this.pageData.page(pageNo);
-        this.listTable.setItem(pageRows);
-        this.pagePane.setPaging(this.pageData);
+        this.disableTab();
+        ThreadUtil.start(() -> {
+            try {
+                List<R> rows = this.getRows();
+                this.pageData = new Paging<>(rows, this.setting.getRecordPageLimit());
+                List<R> pageRows = this.pageData.page(pageNo);
+                this.listTable.setItem(pageRows);
+                this.pagePane.setPaging(this.pageData);
+            } finally {
+                this.enableTab();
+            }
+        }, 20);
     }
 
     /**
@@ -157,13 +175,20 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * @param row 当前行
      */
     protected void initRow(R row) {
-        this.treeItem.currentRow(row);
-        this.treeItem.clearData();
-        if (row == null) {
-            this.clearRow();
-        } else {
-            this.firstShowData();
-        }
+        this.disableTab();
+        FXUtil.runLater(() -> {
+            try {
+                this.treeItem.currentRow(row);
+                this.treeItem.clearData();
+                if (row == null) {
+                    this.clearRow();
+                } else {
+                    this.firstShowData();
+                }
+            } finally {
+                this.enableTab();
+            }
+        }, 20);
 //        if (this.dataAction != null) {
 //            this.dataAction.setDisable(row == null);
 //        }
@@ -178,4 +203,19 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * 清除行
      */
     protected abstract void clearRow();
+
+    /**
+     * 页码设置
+     */
+    @FXML
+    private void pageSetting() {
+        PopupAdapter popup = PopupManager.parsePopup(RedisPageSettingPopupController.class);
+        popup.showPopup(this.pagePane.getSettingBtn());
+        int limit = this.setting.getRecordPageLimit();
+        popup.setSubmitHandler(o -> {
+            if (o instanceof Integer l && l != limit) {
+                this.firstPage();
+            }
+        });
+    }
 }

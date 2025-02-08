@@ -44,11 +44,31 @@ public class RedisSetting extends Setting {
         return this.keyLoadLimit == null ? 0 : this.keyLoadLimit;
     }
 
-    public int calcLimit(int limit, int count) {
-        if (this.keyLoadLimit() == 0) {
-            return limit;
+//    public int calcLimit(int limit, int count) {
+//        if (this.keyLoadLimit() == 0) {
+//            return limit;
+//        }
+//        int size = this.keyLoadLimit() - count;
+//        return Math.min(size, limit);
+//    }
+
+    /**
+     * 记录每页限制
+     */
+    private Integer recordPageLimit;
+
+    public void setRecordPageLimit(Integer recordPageLimit) {
+        if (recordPageLimit == null || recordPageLimit <= 0) {
+            this.recordPageLimit = 100;
+        } else {
+            this.recordPageLimit = recordPageLimit;
         }
-        int size = this.keyLoadLimit() - count;
-        return Math.min(size, limit);
+    }
+
+    public Integer getRecordPageLimit() {
+        if (this.recordPageLimit == null || this.recordPageLimit <= 0) {
+            return 100;
+        }
+        return this.recordPageLimit;
     }
 }

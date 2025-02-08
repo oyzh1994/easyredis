@@ -25,7 +25,6 @@ import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -206,8 +205,8 @@ public class RedisClient {
      */
     public void addStateListener(ChangeListener<RedisConnState> stateListener) {
         if (stateListener != null) {
-//            this.state.addListener(stateListener);
-            this.state.addListener(new WeakChangeListener<>(stateListener));
+            this.state.addListener(stateListener);
+//            this.state.addListener(new WeakChangeListener<>(stateListener));
         }
     }
 
