@@ -11,20 +11,20 @@ public class RedisQueryTokenAnalyzer {
 
     public static final RedisQueryTokenAnalyzer INSTANCE = new RedisQueryTokenAnalyzer();
 
-    public RedisQueryToken currentToken(String content, int currentIndex) {
+    public RedisQueryToken currentToken(String input, int currentIndex) {
         try {
-            if (StringUtil.isEmpty(content)) {
+            if (StringUtil.isEmpty(input)) {
                 return null;
             }
             if (currentIndex <= 0) {
                 return null;
             }
-            if (currentIndex > content.length()) {
+            if (currentIndex > input.length()) {
                 return null;
             }
             RedisQueryToken token = new RedisQueryToken();
             // 截取字符串
-            content = content.substring(0, currentIndex);
+            String content = input.substring(0, currentIndex);
             // 当前位置
             int tokenIndex = 0;
             Character tokenType = null;
@@ -42,15 +42,10 @@ public class RedisQueryTokenAnalyzer {
                         tokenIndex = chars.length - i;
                         break;
                     }
-                    // 寻找操作符2
-                    if (c == '-') {
-                        tokenType = c;
-                        tokenIndex = chars.length - i - 1;
-                        break;
-                    }
                 }
             }
             String tokenContent = content.substring(tokenIndex);
+            token.setInput(input);
             token.setToken(tokenType);
             token.setEndIndex(currentIndex);
             token.setStartIndex(tokenIndex);

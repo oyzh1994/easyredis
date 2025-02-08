@@ -1,8 +1,12 @@
 package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.domain.RedisQuery;
 import lombok.Data;
 import lombok.ToString;
+import redis.clients.jedis.Protocol;
+
+import java.util.List;
 
 /**
  * @author oyzh
@@ -21,6 +25,11 @@ public class RedisQueryToken {
      * 开始位置
      */
     private int startIndex;
+
+    /**
+     * 输入
+     */
+    private String input;
 
     /**
      * 内容
@@ -50,6 +59,14 @@ public class RedisQueryToken {
     }
 
     public boolean isPossibilityKey() {
-        return this.token != null && this.token == ' ';
+        if (this.token != null && this.token == ' ') {
+            List<Protocol.Command> commands = RedisQueryUtil.keyCommands();
+            for (Protocol.Command command : commands) {
+                if (StringUtil.startWithIgnoreCase(this.input, command.toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
