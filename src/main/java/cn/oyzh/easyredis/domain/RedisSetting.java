@@ -53,22 +53,23 @@ public class RedisSetting extends Setting {
 //    }
 
     /**
-     * 记录每页限制
+     * 行页码限制
      */
-    private Integer recordPageLimit;
+    @Column
+    private Integer rowPageLimit;
 
-    public void setRecordPageLimit(Integer recordPageLimit) {
-        if (recordPageLimit == null || recordPageLimit <= 0) {
-            this.recordPageLimit = 100;
+    public void setRowPageLimit(Integer rowPageLimit) {
+        if (rowPageLimit == null || rowPageLimit <= 0) {
+            this.rowPageLimit = 100;
         } else {
-            this.recordPageLimit = recordPageLimit;
+            this.rowPageLimit = rowPageLimit;
         }
     }
 
-    public Integer getRecordPageLimit() {
-        if (this.recordPageLimit == null || this.recordPageLimit <= 0) {
+    public Integer getRowPageLimit() {
+        if (this.rowPageLimit == null || this.rowPageLimit <= 0) {
             return 100;
         }
-        return this.recordPageLimit;
+        return this.rowPageLimit;
     }
 }

@@ -17,7 +17,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_TOP_LEFT;
  * 页码设置弹窗
  *
  * @author oyzh
- * @since 2024/08/06
+ * @since 2025/02/08
  */
 @PopupAttribute(
         value = FXConst.POPUP_PATH + "redisPageSettingPopup.fxml",
@@ -49,7 +49,7 @@ public class RedisPageSettingPopupController extends PopupController {
     private void apply() {
         try {
             int limit = this.limit.getIntValue();
-            this.setting.setRecordPageLimit(limit);
+            this.setting.setRowPageLimit(limit);
             this.settingStore.update(this.setting);
             this.submit(limit);
             this.closeWindow();
@@ -74,7 +74,7 @@ public class RedisPageSettingPopupController extends PopupController {
     @Override
     public void onWindowShowing(WindowEvent event) {
         super.onWindowShowing(event);
-        this.limit.setValue(this.setting.getRecordPageLimit());
+        this.limit.setValue(this.setting.getRowPageLimit());
     }
 
     @Override
