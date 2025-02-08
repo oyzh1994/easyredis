@@ -15,6 +15,7 @@ public class RedisQueryPromptItem {
      * 类型
      * 1 关键字
      * 2 参数
+     * 3 键
      */
     private byte type;
 
@@ -49,5 +50,14 @@ public class RedisQueryPromptItem {
      */
     public boolean isParamType() {
         return 2 == this.type;
+    }
+
+    /**
+     * 是否键类型
+     *
+     * @return 结果
+     */
+    public boolean isKeyType() {
+        return 3 == this.type;
     }
 }

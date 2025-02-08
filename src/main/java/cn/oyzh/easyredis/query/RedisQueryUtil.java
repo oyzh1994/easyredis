@@ -33,12 +33,21 @@ public class RedisQueryUtil {
      */
     private static final Set<String> PARAMS = new HashSet<>();
 
+    /**
+     * 键
+     */
+    private static final Set<String> KEYS = new HashSet<>();
+
     static {
         // 关键字
-        Collection<TerminalCommandHandler<?, ?>> handlers= TerminalManager.listHandler();
+        Collection<TerminalCommandHandler<?, ?>> handlers = TerminalManager.listHandler();
         for (TerminalCommandHandler<?, ?> handler : handlers) {
-            KEYWORDS.add(handler.commandName());
-            KEYWORDS.add(handler.commandSubName());
+            if (StringUtil.isNotBlank(handler.commandName())) {
+                KEYWORDS.add(handler.commandName());
+            }
+            if (StringUtil.isNotBlank(handler.commandSubName())) {
+                KEYWORDS.add(handler.commandSubName());
+            }
         }
         // 参数
         PARAMS.add("WITHSCORES");
@@ -50,6 +59,17 @@ public class RedisQueryUtil {
 
     public static Set<String> getParams() {
         return PARAMS;
+    }
+
+    public static Set<String> getKeys() {
+        return KEYS;
+    }
+
+    public static void setKeys(Collection<String> keys) {
+        KEYS.clear();
+        if (keys != null) {
+            KEYS.addAll(keys);
+        }
     }
 
     public static double clacCorr(String str, String text) {
@@ -103,11 +123,29 @@ public class RedisQueryUtil {
         // 参数
         if (token.isPossibilityParam()) {
             tasks.add(() -> getParams().parallelStream().forEach(param -> {
-                RedisQueryPromptItem item = new RedisQueryPromptItem();
-                item.setType((byte) 3);
-                item.setContent(param);
-                item.setCorrelation(1);
-                items.add(item);
+                // 计算相关度
+                double corr = clacCorr(param, text);
+                if (corr > minCorr) {
+                    RedisQueryPromptItem item = new RedisQueryPromptItem();
+                    item.setType((byte) 2);
+                    item.setContent(param);
+                    item.setCorrelation(corr);
+                    items.add(item);
+                }
+            }));
+        }
+        // 键
+        if (token.isPossibilityKey()) {
+            tasks.add(() -> getKeys().parallelStream().forEach(key -> {
+                // 计算相关度
+                double corr = clacCorr(key, text);
+                if (corr > minCorr) {
+                    RedisQueryPromptItem item = new RedisQueryPromptItem();
+                    item.setType((byte) 3);
+                    item.setContent(key);
+                    item.setCorrelation(corr);
+                    items.add(item);
+                }
             }));
         }
         // 执行任务

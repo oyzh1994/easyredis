@@ -48,4 +48,8 @@ public class RedisQueryToken {
     public boolean isPossibilityParam() {
         return this.token != null && this.token == ' ';
     }
+
+    public boolean isPossibilityKey() {
+        return this.token != null && this.token == ' ';
+    }
 }

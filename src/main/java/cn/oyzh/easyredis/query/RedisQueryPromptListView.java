@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.query;
 
+import cn.oyzh.easyredis.fx.svg.glyph.KeySVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
@@ -159,6 +160,9 @@ public class RedisQueryPromptListView extends FlexListView<FlexHBox> {
             label = new SVGLabel(item.getContent(), svgGlyph);
         } else if (item.isParamType()) {
             SVGGlyph svgGlyph = new ParamSVGGlyph("12");
+            label = new SVGLabel(item.getContent(), svgGlyph);
+        } else if (item.isKeyType()) {
+            SVGGlyph svgGlyph = new KeySVGGlyph("12");
             label = new SVGLabel(item.getContent(), svgGlyph);
         }
         if (label != null) {

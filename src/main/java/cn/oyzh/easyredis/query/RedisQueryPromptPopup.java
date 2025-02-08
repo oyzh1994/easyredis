@@ -2,7 +2,9 @@ package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.plus.controls.popup.FXPopup;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.theme.ThemeManager;
@@ -155,32 +157,22 @@ public class RedisQueryPromptPopup extends FXPopup {
     /**
      * 初始化提示词
      *
-     * @param token 提示词
+     * @param token       提示词
+     * @param redisClient redis客户端
      * @return 结果
      */
-    public synchronized boolean initPrompts(RedisQueryToken token, RedisClient zkClient) {
-//        // 初始化提示的子节点列表
-//        if (token.isPossibilityNode()) {
-//            try {
-//                String path = token.getPath();
-//                if (path == null) {
-//                    RedisQueryUtil.setNodes(null);
-//                } else {
-//                    List<String> children = zkClient.getChildren(path);
-//                    if (CollectionUtil.isNotEmpty(children)) {
-//                        List<String> list = new ArrayList<>();
-//                        for (String s : children) {
-//                            list.add(RedisNodeUtil.concatPath(path, s));
-//                        }
-//                        RedisQueryUtil.setNodes(list);
-//                    }
-//                }
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        } else {
-//            RedisQueryUtil.setNodes(null);
-//        }
+    public synchronized boolean initPrompts(RedisQueryToken token, RedisClient redisClient) {
+        // 初始化提示的键列表
+        if (token.isPossibilityKey()) {
+            try {
+                List<String> keys = RedisKeyUtil.scanKeys(0, redisClient, "*", 30);
+                RedisQueryUtil.setKeys(keys);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            RedisQueryUtil.setKeys(null);
+        }
         // 提示词列表
         List<RedisQueryPromptItem> items = RedisQueryUtil.initPrompts(token, 0.5f);
         // 初始化数据
