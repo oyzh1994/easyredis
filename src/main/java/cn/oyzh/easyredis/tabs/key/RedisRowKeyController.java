@@ -151,7 +151,7 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
         ThreadUtil.start(() -> {
             try {
                 List<R> rows = this.getRows();
-                this.pageData = new Paging<>(rows, this.setting.getRecordPageLimit());
+                this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
                 List<R> pageRows = this.pageData.page(pageNo);
                 this.listTable.setItem(pageRows);
                 this.pagePane.setPaging(this.pageData);
@@ -211,7 +211,7 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
     private void pageSetting() {
         PopupAdapter popup = PopupManager.parsePopup(RedisPageSettingPopupController.class);
         popup.showPopup(this.pagePane.getSettingBtn());
-        int limit = this.setting.getRecordPageLimit();
+        int limit = this.setting.getRowPageLimit();
         popup.setSubmitHandler(o -> {
             if (o instanceof Integer l && l != limit) {
                 this.firstPage();
