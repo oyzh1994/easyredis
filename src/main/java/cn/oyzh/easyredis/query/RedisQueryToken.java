@@ -42,21 +42,10 @@ public class RedisQueryToken {
     }
 
     public boolean isPossibilityKeyword() {
-        return this.token == null;
-    }
-
-    public boolean isPossibilityNode() {
-        return this.token != null && this.isNotEmpty() && this.token == ' ';
+        return this.token == null || this.token == ' ';
     }
 
     public boolean isPossibilityParam() {
-        return this.token != null && this.token == '-';
-    }
-
-    public String getPath() {
-//        if (this.content.startsWith("/")) {
-//            return ZKNodeUtil.getParentPath(this.content);
-//        }
-        return null;
+        return this.token != null && this.token == ' ';
     }
 }

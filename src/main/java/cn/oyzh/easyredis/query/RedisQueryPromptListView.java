@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.query;
 
-import cn.oyzh.easyredis.fx.svg.glyph.KeywordsSVGGlyph;
-import cn.oyzh.easyredis.fx.svg.glyph.ParamSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.list.FlexListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -140,16 +140,9 @@ public class RedisQueryPromptListView extends FlexListView<FlexHBox> {
             // 提示组件
             SVGLabel promptLabel = this.initPromptLabel(item);
             box.addChild(promptLabel);
-//            // 额外组件
-//            FlexLabel extLabel = this.initExtLabel(item);
-//            if (extLabel != null) {
-//                box.addChild(extLabel);
-//            }
             box.setProp("item", item);
             boxList.add(box);
-//            System.out.println(item + "=" + item.getContent());
         }
-//        System.out.println("----------->");
         this.setItem(boxList);
     }
 
@@ -163,16 +156,9 @@ public class RedisQueryPromptListView extends FlexListView<FlexHBox> {
         SVGLabel label = null;
         if (item.isKeywordType()) {
             SVGGlyph svgGlyph = new KeywordsSVGGlyph("12");
-//            svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
-        } else if (item.isNodeType()) {
-            SVGGlyph svgGlyph = new SVGGlyph("/font/file-text.svg", "12");
-//            svgGlyph.setColor(Color.BLACK);
-            label = new SVGLabel(item.getContent(), svgGlyph);
-            label.setRealWidth(240);
         } else if (item.isParamType()) {
             SVGGlyph svgGlyph = new ParamSVGGlyph("12");
-//            svgGlyph.setColor(Color.BLACK);
             label = new SVGLabel(item.getContent(), svgGlyph);
         }
         if (label != null) {
@@ -180,24 +166,6 @@ public class RedisQueryPromptListView extends FlexListView<FlexHBox> {
         }
         return label;
     }
-
-//    /**
-//     * 初始化额外信息组件
-//     *
-//     * @param item 提示词
-//     * @return 组件
-//     */
-//    private FlexLabel initExtLabel(ZKQueryPromptItem item) {
-//        FlexLabel label = null;
-//        if (item.isTableType() || item.isViewType() || item.isColumnType()) {
-//            label = new FlexLabel(item.getExtContent());
-//            label.setTextFill(Color.valueOf("#D3D3D3"));
-//        }
-//        if (label != null) {
-//            label.setTipText(item.getContent());
-//        }
-//        return label;
-//    }
 
     /**
      * 初始化提示词组件

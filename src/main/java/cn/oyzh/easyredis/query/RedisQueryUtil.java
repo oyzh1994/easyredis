@@ -2,6 +2,8 @@ package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
+import cn.oyzh.fx.terminal.util.TerminalManager;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -22,11 +24,6 @@ import java.util.stream.Collectors;
 public class RedisQueryUtil {
 
     /**
-     * 节点列表
-     */
-    private static final Set<String> NODES = new HashSet<>();
-
-    /**
      * 关键字
      */
     private static final Set<String> KEYWORDS = new HashSet<>();
@@ -38,55 +35,21 @@ public class RedisQueryUtil {
 
     static {
         // 关键字
-        // 数据
-        KEYWORDS.add("get");
-        KEYWORDS.add("set");
-        KEYWORDS.add("sync");
-        // 节点
-        KEYWORDS.add("rmr");
-        KEYWORDS.add("delete");
-        KEYWORDS.add("deleteall");
-        KEYWORDS.add("create");
-        // 权限
-        KEYWORDS.add("setAcl");
-        KEYWORDS.add("getAcl");
-        // 子节点
-        KEYWORDS.add("ls");
-        KEYWORDS.add("ls2");
-        KEYWORDS.add("stat");
-        KEYWORDS.add("getEphemerals");
-        KEYWORDS.add("getAllChildrenNumber");
-        // 配额
-        KEYWORDS.add("setquota");
-        KEYWORDS.add("delquota");
-        KEYWORDS.add("listquota");
-
+        Collection<TerminalCommandHandler<?, ?>> handlers= TerminalManager.listHandler();
+        for (TerminalCommandHandler<?, ?> handler : handlers) {
+            KEYWORDS.add(handler.commandName());
+            KEYWORDS.add(handler.commandSubName());
+        }
         // 参数
-        PARAMS.add("-s");
-        PARAMS.add("-e");
-        PARAMS.add("-c");
-        PARAMS.add("-n");
-        PARAMS.add("-b");
-        PARAMS.add("-v");
+        PARAMS.add("WITHSCORES");
     }
 
     public static Set<String> getKeywords() {
         return KEYWORDS;
     }
 
-    public static Set<String> getNodes() {
-        return NODES;
-    }
-
     public static Set<String> getParams() {
         return PARAMS;
-    }
-
-    public static void setNodes(Collection<String> nodes) {
-        NODES.clear();
-        if (nodes != null) {
-            NODES.addAll(nodes);
-        }
     }
 
     public static double clacCorr(String str, String text) {
@@ -132,20 +95,6 @@ public class RedisQueryUtil {
                     RedisQueryPromptItem item = new RedisQueryPromptItem();
                     item.setType((byte) 1);
                     item.setContent(keyword);
-                    item.setCorrelation(corr);
-                    items.add(item);
-                }
-            }));
-        }
-        // 节点
-        if (token.isPossibilityNode()) {
-            tasks.add(() -> getNodes().parallelStream().forEach(node -> {
-                // 计算相关度
-                double corr = clacCorr(node, text);
-                if (corr > minCorr) {
-                    RedisQueryPromptItem item = new RedisQueryPromptItem();
-                    item.setType((byte) 2);
-                    item.setContent(node);
                     item.setCorrelation(corr);
                     items.add(item);
                 }
