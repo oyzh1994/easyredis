@@ -28,9 +28,7 @@ public class RedisQueryTextArea extends RichDataTextAreaPane {
     private final RedisQueryPromptPopup promptPopup = new RedisQueryPromptPopup();
 
     {
-//        this.showLineNum();
         this.setOnMouseReleased(e -> this.promptPopup.hide());
-//        this.addTextChangeListener((observable, oldValue, newValue) -> this.initTextStyle());
         this.promptPopup.setOnItemSelected(item -> this.promptPopup.autoComplete(this, item));
         this.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
