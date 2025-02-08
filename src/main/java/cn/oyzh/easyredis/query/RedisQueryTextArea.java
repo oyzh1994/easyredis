@@ -16,7 +16,14 @@ import java.util.Set;
 public class RedisQueryTextArea extends RichDataTextAreaPane {
 
     /**
-     * zk客户端
+     * db索引
+     */
+    @Setter
+    @Getter
+    private int dbIndex;
+
+    /**
+     * redis客户端
      */
     @Getter
     @Setter

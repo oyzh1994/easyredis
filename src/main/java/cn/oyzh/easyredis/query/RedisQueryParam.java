@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.query;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,13 @@ import java.util.List;
  * @since 2025/01/20
  */
 public class RedisQueryParam {
+
+    /**
+     * db索引
+     */
+    @Getter
+    @Setter
+    private int dbIndex;
 
     /**
      * 内容

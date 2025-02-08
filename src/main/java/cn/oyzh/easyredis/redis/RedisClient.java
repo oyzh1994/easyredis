@@ -4807,7 +4807,7 @@ public class RedisClient {
             if (handler instanceof RedisTerminalCommandHandler<?> commandHandler) {
                 TerminalCommand command = commandHandler.parseCommand(param.getContent());
                 CommandObject<Object> object = RedisTerminalUtil.getCommand(commandHandler.getCommandType(), command.args());
-                Object execResult = this.execCommand(object);
+                Object execResult = this.execCommand(param.getDbIndex(), object);
                 result.setResult(execResult);
             }
             result.setSuccess(true);

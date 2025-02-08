@@ -4,6 +4,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
 import cn.oyzh.easyredis.query.RedisQueryTextArea;
@@ -50,6 +51,12 @@ public class RedisQueryTabController extends DynamicTabController {
     private RedisQueryTextArea content;
 
     /**
+     * 数据库
+     */
+    @FXML
+    private RedisDatabaseComboBox database;
+
+    /**
      * 结果面板
      */
     @FXML
@@ -76,6 +83,16 @@ public class RedisQueryTabController extends DynamicTabController {
             this.content.setText(query.getContent());
             this.content.setPromptText(null);
         }
+        // 初始化数据库
+        this.database.setDbCount(client.databases());
+        this.database.setInitIndex(query.getDbIndex());
+        // 监听数据库变化
+        this.database.selectedIndexChanged((observable, oldValue, newValue) -> {
+            this.unsaved = true;
+            this.flushTab();
+            this.content.setDbIndex(newValue.intValue());
+        });
+        // 监听内容变化
         this.content.addTextChangeListener((observable, oldValue, newValue) -> {
             this.unsaved = true;
             this.flushTab();
@@ -83,10 +100,14 @@ public class RedisQueryTabController extends DynamicTabController {
         this.query = query;
     }
 
+    /**
+     * 保存
+     */
     @FXML
     private void save() {
         try {
             this.query.setContent(this.content.getText());
+            this.query.setDbIndex(this.database.getSelectedIndex());
             if (this.query.getUid() == null) {
                 String name = MessageBox.prompt(I18nHelper.pleaseInputName());
                 if (StringUtil.isNotBlank(name)) {
@@ -104,28 +125,36 @@ public class RedisQueryTabController extends DynamicTabController {
         }
     }
 
+    /**
+     * 运行
+     */
     @FXML
     private void run() {
         try {
             RedisQueryParam param = new RedisQueryParam();
             param.setContent(this.content.getText());
+            param.setDbIndex(this.database.getSelectedIndex());
             RedisQueryResult result = this.redisClient.query(param);
             this.content.flexHeight("30% - 60");
             this.resultTabPane.setVisible(true);
             this.resultTabPane.clearChild();
             this.resultTabPane.addTab(new RedisQueryMsgTab(param, result));
-         if (result.hasData()) {
+            if (result.hasData()) {
                 this.resultTabPane.addTab(new RedisQueryDataTab(result.getResult()));
                 this.resultTabPane.select(1);
             }
             this.content.parentAutosize();
-            System.out.println(result.getResult());
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
         }
     }
 
+    /**
+     * 内容键入事件
+     *
+     * @param event 事件
+     */
     @FXML
     private void onContentKeyPressed(KeyEvent event) {
         if (KeyboardUtil.isCtrlS(event)) {

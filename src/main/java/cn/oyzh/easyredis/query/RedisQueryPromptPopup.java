@@ -159,13 +159,14 @@ public class RedisQueryPromptPopup extends FXPopup {
      *
      * @param token       提示词
      * @param redisClient redis客户端
+     * @param dbIndex     db索引
      * @return 结果
      */
-    public synchronized boolean initPrompts(RedisQueryToken token, RedisClient redisClient) {
+    public synchronized boolean initPrompts(RedisQueryToken token, RedisClient redisClient, int dbIndex) {
         // 初始化提示的键列表
         if (token.isPossibilityKey()) {
             try {
-                List<String> keys = RedisKeyUtil.scanKeys(0, redisClient, "*", 30);
+                List<String> keys = RedisKeyUtil.scanKeys(dbIndex, redisClient, "*", 30);
                 RedisQueryUtil.setKeys(keys);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -250,7 +251,7 @@ public class RedisQueryPromptPopup extends FXPopup {
             TaskManager.startDelay("query:prompt" + this.hashCode(), () -> {
                 // 初始化提示词
                 if (this.promptFlag.get() == promptFlagVal) {
-                    if (this.initPrompts(this.token, area.getClient())) {
+                    if (this.initPrompts(this.token, area.getClient(), area.getDbIndex())) {
                         this.showPrompt(area);
                     } else {
                         this.hide();

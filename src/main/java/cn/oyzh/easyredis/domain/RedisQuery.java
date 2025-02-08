@@ -43,4 +43,10 @@ public class RedisQuery implements Serializable {
      */
     @Column
     private String content;
+
+    /**
+     * db索引
+     */
+    @Column
+    private int dbIndex;
 }
