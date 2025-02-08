@@ -38,14 +38,12 @@ public class RedisQueryDataTabController extends DynamicTabController {
     }
 
     private void parseObject(Object o, int index, List<KeyValueProperty<Integer, Object>> data) {
-        if (o instanceof byte[] bytes) {
-            data.add(KeyValueProperty.of(index, SafeEncoder.encode(bytes)));
-        } else if (o instanceof Collection) {
-            data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
-        } else if (o instanceof KeyValue<?, ?>) {
-            data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
-        } else {
-            data.add(KeyValueProperty.of(index, o.toString()));
+        switch (o) {
+            case byte[] bytes -> data.add(KeyValueProperty.of(index, SafeEncoder.encode(bytes)));
+            case Collection<?> _ -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+            case KeyValue<?, ?> _ -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+            case null -> data.add(KeyValueProperty.of(index, ""));
+            default -> data.add(KeyValueProperty.of(index, o.toString()));
         }
     }
 }

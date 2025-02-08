@@ -11,16 +11,14 @@ import java.util.Collection;
  */
 public class RedisQueryDataTab extends DynamicTab {
 
-    public RedisQueryDataTab(Collection<?> list) {
-        super();
-        super.flush();
-        this.controller().init(list);
-    }
-
     public RedisQueryDataTab(Object object) {
         super();
         super.flush();
-        this.controller().init(object);
+        if (object instanceof Collection<?> collection) {
+            this.controller().init(collection);
+        } else {
+            this.controller().init(object);
+        }
     }
 
     @Override
