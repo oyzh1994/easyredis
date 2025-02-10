@@ -53,17 +53,12 @@ public class RedisKeyFilterPopupController extends PopupController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.keyFilter.setHistoryPopup(new RedisKeyFilterHistoryPopup());
-    }
-
-    @Override
-    public void onPopupInitialize(PopupAdapter window) {
-        super.onPopupInitialize(window);
         String pattern = this.getWindowProp("pattern");
         if (!StringUtil.isBlank(pattern)) {
             this.keyFilter.setText(pattern);
         }
         this.keyFilter.requestFocus();
+        this.keyFilter.setHistoryPopup(new RedisKeyFilterHistoryPopup());
     }
 
     /**

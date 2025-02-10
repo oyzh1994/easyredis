@@ -9,27 +9,27 @@
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.popups.RedisPageSettingPopupController" realWidth="280"
-          realHeight="100">
+          realHeight="110">
     <InfoLabel text="%base.pageLimit">
         <FlexVBox.margin>
-            <Insets left="30" top="10"/>
+            <Insets left="15" top="5"/>
         </FlexVBox.margin>
     </InfoLabel>
     <NumberTextField fx:id="limit" minVal="1" step="100" realHeight="25" flexWidth="100% - 120"
                      styleClass="popover-item">
         <FlexVBox.margin>
-            <Insets left="30" top="5"/>
+            <Insets left="15" top="5"/>
         </FlexVBox.margin>
     </NumberTextField>
-    <FlexHBox flexWidth="100%" realHeight="25">
+    <FlexHBox flexWidth="100%">
         <ApplySVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
-                <Insets left="30" top="10"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </ApplySVGGlyph>
         <CancelSVGGlyph onMousePrimaryClicked="#close" sizeStr="11">
             <HBox.margin>
-                <Insets left="30" top="10"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </CancelSVGGlyph>
     </FlexHBox>

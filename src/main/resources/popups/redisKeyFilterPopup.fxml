@@ -5,39 +5,25 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.text.field.SearchTextField?>
-<?import cn.oyzh.fx.gui.button.SubmitButton?>
-<?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.svg.glyph.ApplySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CancelSVGGlyph?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.popups.RedisKeyFilterPopupController" realWidth="400" realHeight="110">
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <SearchTextField fx:id="keyFilter" onSearch="#doKeyFilter" realHeight="30.0" flexWidth="100% - 65"
-                         tipText="%redis.filter.tip1" require="true" text="*">
-            <HBox.margin>
-                <Insets left="30" top="10"/>
-            </HBox.margin>
-        </SearchTextField>
-    </FlexHBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#doKeyFilter">
-            <HBox.margin>
-                <Insets left="30" top="20"/>
-            </HBox.margin>
-        </SubmitButton>
-        <CancelButton>
-            <HBox.margin>
-                <Insets left="15" top="20"/>
-            </HBox.margin>
-        </CancelButton>
+          fx:controller="cn.oyzh.easyredis.popups.RedisKeyFilterPopupController" realWidth="280" realHeight="90">
+    <SearchTextField fx:id="keyFilter" onSearch="#apply" realHeight="30.0" flexWidth="100% - 65"
+                     tipText="%redis.filter.tip1" require="true" text="*">
+        <FlexVBox.margin>
+            <Insets left="15" top="10"/>
+        </FlexVBox.margin>
+    </SearchTextField>
+    <FlexHBox flexWidth="100%">
         <ApplySVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
-                <Insets left="30" top="10"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </ApplySVGGlyph>
         <CancelSVGGlyph onMousePrimaryClicked="#close" sizeStr="11">
             <HBox.margin>
-                <Insets left="30" top="10"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </CancelSVGGlyph>
     </FlexHBox>

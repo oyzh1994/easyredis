@@ -309,18 +309,19 @@ public class RedisKeysTabController extends ParentTabController {
      */
     @FXML
     private void doKeyFilter(MouseEvent event) {
+        String filterPattern = this.treeItem.getFilterPattern();
         PopupAdapter popup = PopupManager.parsePopup(RedisKeyFilterPopupController.class);
+        popup.setProp("pattern", filterPattern);
         SVGGlyph glyph = (SVGGlyph) event.getSource();
         if (glyph == null) {
             glyph = (SVGGlyph) event.getTarget();
         }
-        popup.showPopup(glyph);
-        String filterPattern = this.treeItem.getFilterPattern();
         popup.setSubmitHandler(o -> {
-            if (!StringUtil.equals(filterPattern, this.treeItem.getFilterPattern())) {
-                this.treeItem.doKeyFilter(filterPattern);
+            if (o instanceof String pattern && !StringUtil.equals(pattern, filterPattern)) {
+                this.treeItem.setFilterPattern(pattern);
                 RedisEventUtil.keyFiltered(this.treeItem);
             }
         });
+        popup.showPopup(glyph);
     }
 }

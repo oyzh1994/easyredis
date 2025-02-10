@@ -18,6 +18,7 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      * 键过滤模式
      */
     @Getter
+    @Setter
     private String filterPattern;
 
     @Getter
@@ -137,18 +139,18 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        fxView.display();
 //    }
 
-    /**
-     * 执行键过滤
-     *
-     * @param pattern 模式
-     */
-    public void doKeyFilter(String pattern) {
-        if (!StringUtil.equals(this.filterPattern, pattern)) {
-            this.filterPattern = pattern;
-            this.refresh();
-            RedisEventUtil.keyFiltered(this);
-        }
-    }
+//    /**
+//     * 执行键过滤
+//     *
+//     * @param pattern 模式
+//     */
+//    public void doKeyFilter(String pattern) {
+//        if (!StringUtil.equals(this.filterPattern, pattern)) {
+//            this.filterPattern = pattern;
+//            this.refresh();
+//            RedisEventUtil.keyFiltered(this);
+//        }
+//    }
 
     /**
      * 导出键
