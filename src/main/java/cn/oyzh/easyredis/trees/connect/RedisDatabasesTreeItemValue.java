@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.easyredis.fx.svg.glyph.DatabaseSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
@@ -31,7 +32,7 @@ public class RedisDatabasesTreeItemValue extends RichTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         if (this.graphic == null) {
-            this.graphic = new SVGGlyph("/font/databases.svg", 10);
+            this.graphic = new DatabaseSVGGlyph("10");
             this.graphic.disableTheme();
         }
         return super.graphic();
