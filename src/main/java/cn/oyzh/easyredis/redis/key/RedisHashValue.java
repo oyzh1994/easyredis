@@ -27,7 +27,7 @@ public class RedisHashValue implements RedisKeyValue<List<RedisHashValue.RedisHa
     }
 
     public static RedisHashValue valueOf(Map<String, String> value) {
-        List<RedisHashRow> rows = new ArrayList<>();
+        List<RedisHashRow> rows = new ArrayList<>(12);
         if (value != null) {
             for (Map.Entry<String, String> entry : value.entrySet()) {
                 rows.add(new RedisHashRow(entry.getKey(), entry.getValue()));

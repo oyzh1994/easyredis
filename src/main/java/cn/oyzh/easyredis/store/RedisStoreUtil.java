@@ -55,7 +55,7 @@ public class RedisStoreUtil {
      * @return 旧版本分组数据
      */
     public static List<RedisGroup> loadGroups() {
-        List<RedisGroup> groups = new ArrayList<>();
+        List<RedisGroup> groups = new ArrayList<>(24);
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "redis_group.json";
         try {
@@ -89,7 +89,7 @@ public class RedisStoreUtil {
      * @return 旧版本连接数据
      */
     public static List<RedisConnect> loadConnects() {
-        List<RedisConnect> connects = new ArrayList<>();
+        List<RedisConnect> connects = new ArrayList<>(24);
         String storePath = SysConst.storeDir();
         String file = storePath + File.separator + "redis_info.json";
         try {
@@ -199,7 +199,7 @@ public class RedisStoreUtil {
      * @return 旧版本终端历史数据
      */
     public static List<RedisTerminalHistory> loadTerminalHistory() {
-        List<RedisTerminalHistory> histories = new ArrayList<>();
+        List<RedisTerminalHistory> histories = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "redis_shell_history.json";
@@ -233,7 +233,7 @@ public class RedisStoreUtil {
      * @return 旧版本键过滤历史数据
      */
     public static List<RedisKeyFilterHistory> loadKeyFilterHistory() {
-        List<RedisKeyFilterHistory> histories = new ArrayList<>();
+        List<RedisKeyFilterHistory> histories = new ArrayList<>(24);
         try {
             String storePath = SysConst.storeDir();
             String file = storePath + File.separator + "redis_key_filter_history.json";

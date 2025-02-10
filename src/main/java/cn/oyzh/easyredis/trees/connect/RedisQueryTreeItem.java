@@ -55,7 +55,7 @@ public class RedisQueryTreeItem extends RichTreeItem<RedisQueryTreeItemValue> {
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(4);
         FXMenuItem openQuery = MenuItemHelper.openQuery("12", this::loadChild);
         FXMenuItem renameQuery = MenuItemHelper.renameQuery("12", this::rename);
         FXMenuItem deleteQuery = MenuItemHelper.deleteQuery("12", this::delete);

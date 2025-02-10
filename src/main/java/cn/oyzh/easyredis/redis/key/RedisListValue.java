@@ -26,7 +26,7 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
     }
 
     public static RedisListValue valueOf(List<String> elements) {
-        List<RedisListRow> rows = new ArrayList<>();
+        List<RedisListRow> rows = new ArrayList<>(12);
         if (elements != null) {
             int index = 0;
             for (String element : elements) {

@@ -59,7 +59,7 @@ public class RedisClientInfoTabController extends SubTabController {
     private void initClientList() {
         String list = this.client.clientList();
         AtomicInteger index = new AtomicInteger(1);
-        List<RedisClientItem> items = new ArrayList<>();
+        List<RedisClientItem> items = new ArrayList<>(24);
         list.lines().forEach(l -> {
             RedisClientItem item = RedisClientItem.from(l);
             item.setIndex(index.getAndIncrement());

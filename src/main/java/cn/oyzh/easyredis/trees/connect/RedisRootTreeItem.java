@@ -65,7 +65,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(4);
         FXMenuItem addConnect = MenuItemHelper.addConnect("12", this::addConnect);
         FXMenuItem exportConnect = MenuItemHelper.exportConnect("12", this::exportConnect);
         FXMenuItem importConnect = MenuItemHelper.importConnect("12", this::importConnect);
@@ -368,7 +368,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
         List<RedisGroup> groups = this.groupStore.load();
         // List<RedisGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
-            List<TreeItem<?>> list = new ArrayList<>();
+            List<TreeItem<?>> list = new ArrayList<>(groups.size());
             // f1:
             for (RedisGroup group : groups) {
                 // for (RedisGroupTreeItem groupItem : groupItems) {

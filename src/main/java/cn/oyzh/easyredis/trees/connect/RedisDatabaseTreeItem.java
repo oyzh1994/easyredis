@@ -80,7 +80,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(12);
         FXMenuItem add = MenuItemHelper.addKey("12", this::addKey);
         FXMenuItem keyFilter = MenuItemHelper.keyFilter("12", this::keyFilter);
         // FXMenuItem refresh = MenuItemHelper.refreshData("12", this::reloadChild);

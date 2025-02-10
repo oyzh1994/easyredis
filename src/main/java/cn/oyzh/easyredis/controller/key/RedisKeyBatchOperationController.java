@@ -455,7 +455,7 @@ public class RedisKeyBatchOperationController extends StageController {
      * @return 键列表
      */
     private List<String> findKeys(FlexTextArea area, String pattern) {
-        List<String> keys = new ArrayList<>();
+        List<String> keys = new ArrayList<>(1000);
         String cursor = null;
         while (!ThreadUtil.isInterrupted()) {
             ScanParams params = new ScanParams();

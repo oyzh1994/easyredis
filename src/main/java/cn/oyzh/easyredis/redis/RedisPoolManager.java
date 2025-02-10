@@ -94,7 +94,7 @@ public class RedisPoolManager {
      */
     public void initClusterPool(Map<String, ConnectionPool> poolMap) {
         if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterPools == null || !poolMap.values().containsAll(this.clusterPools))) {
-            this.clusterPools = new ArrayList<>();
+            this.clusterPools = new ArrayList<>(poolMap.size());
             this.clusterPools.addAll(poolMap.values());
         }
     }

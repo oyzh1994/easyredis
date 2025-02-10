@@ -63,7 +63,7 @@ public class RedisInfoExport {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         RedisInfoExport export = new RedisInfoExport();
-        export.connects = new ArrayList<>();
+        export.connects = new ArrayList<>(4);
         export.version = object.getString("version");
         export.connects = object.getBeanList("connects", RedisConnect.class);
         return export;

@@ -32,7 +32,7 @@ public class RedisSetValue implements RedisKeyValue<List<RedisSetValue.RedisSetR
     }
 
     public static RedisSetValue valueOf(Set<String> members) {
-        List<RedisSetRow> rows = new ArrayList<>();
+        List<RedisSetRow> rows = new ArrayList<>(12);
         if (members != null) {
             for (String member : members) {
                 rows.add(new RedisSetRow(member));

@@ -30,7 +30,7 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
     }
 
     public static RedisStreamValue valueOf(List<StreamEntry> value) {
-        List<RedisStreamRow> rows = new ArrayList<>();
+        List<RedisStreamRow> rows = new ArrayList<>(12);
         if (value != null) {
             for (StreamEntry entry : value) {
                 rows.add(new RedisStreamRow(entry));

@@ -69,7 +69,7 @@ public class RedisPubsubTabController extends SubTabController {
      */
     private void initPubsub() {
         List<String> list = this.client.pubsubChannels("*");
-        List<RedisPubsubItem> items = new ArrayList<>();
+        List<RedisPubsubItem> items = new ArrayList<>(list.size());
         int index = 1;
         for (String l : list) {
             RedisPubsubItem item = new RedisPubsubItem();

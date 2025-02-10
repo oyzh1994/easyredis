@@ -21,7 +21,7 @@ public class RedisTerminalHistoryHandler extends BaseTerminalHistoryHandler {
     /**
      * 缓存记录
      */
-    private final List<RedisTerminalHistory> cecheList = new ArrayList<>();
+    private final List<RedisTerminalHistory> cecheList = new ArrayList<>(24);
 
     /**
      * 存储器

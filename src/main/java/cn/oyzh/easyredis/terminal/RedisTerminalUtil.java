@@ -80,7 +80,7 @@ public class RedisTerminalUtil {
         if (CollectionUtil.isEmpty(values)) {
             return "";
         }
-        List<Object> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>(values.size());
         for (Map.Entry<?, ?> entry : values.entrySet()) {
             list.add(entry.getKey());
             list.add(entry.getValue());

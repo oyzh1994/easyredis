@@ -116,7 +116,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(8);
         FXMenuItem rename = MenuItemHelper.renameKey("12", this::rename);
         FXMenuItem delete = MenuItemHelper.deleteKey("12", this::delete);
         FXMenuItem moveKey = MenuItemHelper.moveKey("12", this::moveKey);

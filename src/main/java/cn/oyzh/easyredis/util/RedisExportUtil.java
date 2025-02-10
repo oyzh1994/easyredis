@@ -44,7 +44,7 @@ public class RedisExportUtil {
         String platform = OSUtil.getOSType();
         RedisNodeExport export = new RedisNodeExport();
         // 元信息
-        export.setNodes(new ArrayList<>());
+        export.setNodes(new ArrayList<>(4));
         export.setVersion(version);
         export.setCharset(charset);
         export.setPlatform(platform);
@@ -87,7 +87,7 @@ public class RedisExportUtil {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         RedisNodeExport export = new RedisNodeExport();
-        export.setNodes(new ArrayList<>());
+        export.setNodes(new ArrayList<>(4));
         export.setVersion(object.getString("version"));
         export.setPlatform(object.getString("platform"));
         JSONArray nodes = object.getJSONArray("nodes");

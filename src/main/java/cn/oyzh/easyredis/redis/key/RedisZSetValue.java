@@ -27,7 +27,7 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
     }
 
     public static RedisZSetValue valueOf(List<String> members, List<Double> scores) {
-        List<RedisZSetRow> rows = new ArrayList<>();
+        List<RedisZSetRow> rows = new ArrayList<>(12);
         if (members != null) {
             int index = 0;
             for (String member : members) {
@@ -38,7 +38,7 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
     }
 
     public static RedisZSetValue valueOfCoordinates(List<String> members, List<GeoCoordinate> coordinates) {
-        List<RedisZSetRow> rows = new ArrayList<>();
+        List<RedisZSetRow> rows = new ArrayList<>(12);
         if (members != null) {
             int index = 0;
             for (String member : members) {

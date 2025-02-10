@@ -58,7 +58,7 @@ public class RedisSlowlogTabController extends SubTabController {
      */
     private void initSlowlog() {
         List<Slowlog> list = this.client.slowlogGet(1024);
-        List<RedisSlowlogItem> items = new ArrayList<>();
+        List<RedisSlowlogItem> items = new ArrayList<>(list.size());
         for (Slowlog slowlog : list) {
             RedisSlowlogItem item = RedisSlowlogItem.from(slowlog);
             items.add(item);

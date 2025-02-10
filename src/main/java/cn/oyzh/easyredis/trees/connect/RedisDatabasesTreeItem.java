@@ -33,7 +33,7 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItemV
 
     @Override
     public List<MenuItem> getMenuItems() {
-        List<MenuItem> items = new ArrayList<>();
+        List<MenuItem> items = new ArrayList<>(2);
         // 卸载
         FXMenuItem unload = MenuItemHelper.unload("12", this::unloadChild);
         items.add(unload);

@@ -39,7 +39,7 @@ public class RedisFilterTableView extends FlexTableView<RedisFilterVO> {
     }
 
     public List<RedisFilter> getFilters() {
-        List<RedisFilter> list = new ArrayList<>();
+        List<RedisFilter> list = new ArrayList<>(this.list.size());
         for (RedisFilterVO filterVO : this.list) {
             if (filterVO != null && StringUtil.isNotBlank(filterVO.getKw())) {
                 list.add(filterVO);
@@ -49,7 +49,7 @@ public class RedisFilterTableView extends FlexTableView<RedisFilterVO> {
     }
 
     private void initDataList() {
-        List<RedisFilterVO> list = new ArrayList<>();
+        List<RedisFilterVO> list = new ArrayList<>(12);
         if (this.list != null) {
             for (RedisFilterVO filter : this.list) {
                 if (StringUtil.isBlank(this.kw) || StringUtil.containsIgnoreCase(filter.getKw(), this.kw)) {
@@ -62,7 +62,7 @@ public class RedisFilterTableView extends FlexTableView<RedisFilterVO> {
 
     public void addFilter(RedisFilterVO filter) {
         if (this.list == null) {
-            this.list = new ArrayList<>();
+            this.list = new ArrayList<>(12);
         }
         this.list.add(filter);
         this.initDataList();
