@@ -1,8 +1,8 @@
-package cn.oyzh.easyredis.trees.server;
+package cn.oyzh.easyredis.trees.connect;
 
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 
@@ -40,4 +40,7 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
         RedisEventUtil.server(this.client());
     }
 
+    public RedisConnect redisConnect() {
+        return this.client().redisConnect();
+    }
 }

@@ -9,9 +9,11 @@ import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.tabs.RedisTabPane;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import cn.oyzh.easyredis.trees.connect.RedisDataTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisDatabasesTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisQueriesTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisQueryTreeItem;
+import cn.oyzh.easyredis.trees.connect.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.trees.connect.RedisTerminalTreeItem;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.event.Layout1Event;
@@ -370,11 +372,17 @@ public class RedisMainController extends ParentStageController {
             this.flushViewTitle(treeItem.value());
         } else if (event.data() instanceof RedisDatabaseTreeItem treeItem) {
             this.flushViewTitle(treeItem.redisConnect());
-        } else if (event.data() instanceof RedisDataTreeItem treeItem) {
+        } else if (event.data() instanceof RedisDatabasesTreeItem treeItem) {
             this.flushViewTitle(treeItem.redisConnect());
+//        } else if (event.data() instanceof RedisDataTreeItem treeItem) {
+//            this.flushViewTitle(treeItem.redisConnect());
         } else if (event.data() instanceof RedisQueryTreeItem treeItem) {
             this.flushViewTitle(treeItem.redisConnect());
+        } else if (event.data() instanceof RedisQueriesTreeItem treeItem) {
+            this.flushViewTitle(treeItem.redisConnect());
         } else if (event.data() instanceof RedisTerminalTreeItem treeItem) {
+            this.flushViewTitle(treeItem.redisConnect());
+        } else if (event.data() instanceof RedisServerInfoTreeItem treeItem) {
             this.flushViewTitle(treeItem.redisConnect());
         } else {
             this.flushViewTitle(null);

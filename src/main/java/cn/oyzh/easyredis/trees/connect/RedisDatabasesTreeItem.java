@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -101,5 +102,14 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItemV
         } else {
             super.onPrimaryDoubleClick();
         }
+    }
+
+    /**
+     * 获取redis信息
+     *
+     * @return redis信息
+     */
+    public RedisConnect redisConnect() {
+        return this.client().redisConnect();
     }
 }

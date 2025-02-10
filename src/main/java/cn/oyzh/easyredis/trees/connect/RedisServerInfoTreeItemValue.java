@@ -1,4 +1,4 @@
-package cn.oyzh.easyredis.trees.server;
+package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.fx.gui.svg.glyph.InfoSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;

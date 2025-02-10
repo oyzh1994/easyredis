@@ -15,7 +15,6 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
-import cn.oyzh.easyredis.trees.server.RedisServerInfoTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
@@ -137,23 +136,23 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                 this.setLoading(true);
                 // 哨兵模式
                 if (this.isSentinelMode()) {
-                    RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
+                    RedisServerInfoTreeItem item1 = new RedisServerInfoTreeItem(this.getTreeView());
+                    RedisQueriesTreeItem item2 = new RedisQueriesTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
 //                    this.setChild(List.of(item2, item3));
-                    this.setChild(List.of(item2, item3, item4));
+                    this.setChild(List.of(item1, item2, item3));
                 } else if (this.isClusterMode()) {// 集群模式
                     RedisDatabaseTreeItem item1 = new RedisDatabaseTreeItem(null, this.getTreeView());
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
-                    RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
+                    RedisQueriesTreeItem item3 = new RedisQueriesTreeItem(this.getTreeView());
+                    RedisTerminalTreeItem item4 = new RedisTerminalTreeItem(this.getTreeView(), null);
 //                    this.setChild(List.of(item1, item2, item3));
                     this.setChild(List.of(item1, item2, item3, item4));
                 } else {// 正常模式
                     RedisDatabasesTreeItem item1 = new RedisDatabasesTreeItem(this.getTreeView());
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
-                    RedisTerminalTreeItem item3 = new RedisTerminalTreeItem(this.getTreeView(), null);
-                    RedisQueriesTreeItem item4 = new RedisQueriesTreeItem(this.getTreeView());
+                    RedisQueriesTreeItem item3 = new RedisQueriesTreeItem(this.getTreeView());
+                    RedisTerminalTreeItem item4 = new RedisTerminalTreeItem(this.getTreeView(), null);
 //                    this.setChild(List.of(item1, item2, item3));
                     this.setChild(List.of(item1, item2, item3, item4));
                 }
