@@ -314,8 +314,8 @@ public class RedisConnectUpdateController extends StageController {
     }
 
     @Override
-    public void onStageShown(@NonNull WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(@NonNull WindowEvent event) {
+        super.onWindowShown(event);
         this.redisConnect = this.getWindowProp("redisInfo");
         this.name.setText(this.redisConnect.getName());
         this.user.setText(this.redisConnect.getUser());

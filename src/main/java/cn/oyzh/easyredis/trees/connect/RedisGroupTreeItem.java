@@ -157,9 +157,9 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
     }
 
     @Override
-    public RedisRootTreeItem parent() {
+    public RedisConnectRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
-        return (RedisRootTreeItem) treeItem;
+        return (RedisConnectRootTreeItem) treeItem;
     }
 
     @Override

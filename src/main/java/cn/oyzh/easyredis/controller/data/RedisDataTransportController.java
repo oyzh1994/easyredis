@@ -407,8 +407,8 @@ public class RedisDataTransportController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         // 来源连接不为null，则禁用来源选项
         RedisConnect sourceInfo = this.stage.getProp("sourceInfo");
         if (sourceInfo != null) {

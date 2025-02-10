@@ -527,7 +527,7 @@
 //     }
 //
 //     @Override
-//     public void onStageShown(WindowEvent event) {
+//     public void onWindowShown(WindowEvent event) {
 //         TreeItem<?> treeItem = this.stage.getProp("treeItem");
 //         // db节点
 //         if (treeItem instanceof RedisDatabaseTreeItem dbTreeItem) {
@@ -552,7 +552,7 @@
 //             this.transportType = 1;
 //         }
 //         this.stage.hideOnEscape();
-//         super.onStageShown(event);
+//         super.onWindowShown(event);
 //     }
 //
 //     @Override

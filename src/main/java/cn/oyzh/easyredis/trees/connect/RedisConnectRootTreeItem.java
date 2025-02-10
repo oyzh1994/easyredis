@@ -39,7 +39,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
+public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeItemValue> implements RedisConnectManager {
 
     /**
      * redis分组储存
@@ -51,9 +51,9 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
+    public RedisConnectRootTreeItem(@NonNull RedisConnectTreeView treeView) {
         super(treeView);
-        this.setValue(new RedisRootTreeItemValue());
+        this.setValue(new RedisConnectRootTreeItemValue());
         // 加载子节点
         this.loadChild();
     }

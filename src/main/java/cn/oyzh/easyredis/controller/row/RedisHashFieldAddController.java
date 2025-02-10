@@ -125,11 +125,11 @@ public class RedisHashFieldAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.treeItem = this.getWindowProp("treeItem");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        super.onStageShown(event);
+        super.onWindowShown(event);
     }
 
     @Override

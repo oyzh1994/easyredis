@@ -154,8 +154,8 @@ public class RedisKeyTTLController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.showTime = System.currentTimeMillis();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();

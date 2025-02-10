@@ -297,8 +297,8 @@
 //     }
 //
 //     @Override
-//     public void onStageShown(WindowEvent event) {
-//         super.onStageShown(event);
+//     public void onWindowShown(WindowEvent event) {
+//         super.onWindowShown(event);
 //         this.treeView = this.parent().tree;
 //         // 初始化搜索
 //         this.searchHandler.init(this.treeView);

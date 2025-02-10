@@ -65,9 +65,9 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
-            <FilterSVGGlyph size="17" onMousePrimaryClicked="#doKeyFilter">
+            <FilterSVGGlyph size="15" onMousePrimaryClicked="#doKeyFilter">
                 <HBox.margin>
-                    <Insets left="5" top="5"/>
+                    <Insets left="5" top="6"/>
                 </HBox.margin>
             </FilterSVGGlyph>
         </FlexHBox>

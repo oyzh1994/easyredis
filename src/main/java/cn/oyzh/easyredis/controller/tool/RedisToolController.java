@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.LongAdder;
 public class RedisToolController extends StageController {
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

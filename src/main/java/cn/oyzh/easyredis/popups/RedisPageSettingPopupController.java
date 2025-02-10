@@ -12,6 +12,7 @@ import javafx.stage.WindowEvent;
 
 import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
 import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_TOP_LEFT;
+import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_LEFT;
 
 /**
  * 页码设置弹窗
@@ -22,7 +23,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_TOP_LEFT;
 @PopupAttribute(
         value = FXConst.POPUP_PATH + "redisPageSettingPopup.fxml",
         arrowLocation = BOTTOM_LEFT,
-        anchorLocation = CONTENT_TOP_LEFT
+        anchorLocation = WINDOW_TOP_LEFT
 )
 public class RedisPageSettingPopupController extends PopupController {
 

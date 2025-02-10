@@ -352,8 +352,8 @@ public class RedisDataImportController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.connect = this.getWindowProp("connect");
     }
 

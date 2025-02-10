@@ -2,10 +2,12 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
+import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
-import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
 import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
+import cn.oyzh.easyredis.popups.RedisKeyFilterPopupController;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
@@ -16,14 +18,19 @@ import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -301,10 +308,19 @@ public class RedisKeysTabController extends ParentTabController {
      * 键过滤
      */
     @FXML
-    private void doKeyFilter() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class);
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.setProp("pattern", this.treeItem.getFilterPattern());
-        fxView.display();
+    private void doKeyFilter(MouseEvent event) {
+        PopupAdapter popup = PopupManager.parsePopup(RedisKeyFilterPopupController.class);
+        SVGGlyph glyph = (SVGGlyph) event.getSource();
+        if (glyph == null) {
+            glyph = (SVGGlyph) event.getTarget();
+        }
+        popup.showPopup(glyph);
+        String filterPattern = this.treeItem.getFilterPattern();
+        popup.setSubmitHandler(o -> {
+            if (!StringUtil.equals(filterPattern, this.treeItem.getFilterPattern())) {
+                this.treeItem.doKeyFilter(filterPattern);
+                RedisEventUtil.keyFiltered(this.treeItem);
+            }
+        });
     }
 }

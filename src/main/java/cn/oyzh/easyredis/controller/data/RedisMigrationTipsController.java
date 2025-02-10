@@ -31,8 +31,8 @@ public class RedisMigrationTipsController extends StageController {
     private FXCheckBox ignoreMigration;
 
     @Override
-    public void onStageShown(WindowEvent event) {
-        super.onStageShown(event);
+    public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.stage.hideOnEscape();
     }
 

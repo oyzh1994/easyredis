@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
 import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
+import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_LEFT;
 
 /**
  * 过滤设置弹窗
@@ -21,7 +21,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
 @PopupAttribute(
         value = FXConst.POPUP_PATH + "redisFilterSettingPopup.fxml",
         arrowLocation = BOTTOM_LEFT,
-        anchorLocation = CONTENT_BOTTOM_LEFT
+        anchorLocation = WINDOW_TOP_LEFT
 )
 public class RedisFilterSettingPopupController extends PopupController {
 

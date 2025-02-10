@@ -5,7 +5,6 @@ import cn.oyzh.easyredis.controller.data.RedisDataExportController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
-import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;

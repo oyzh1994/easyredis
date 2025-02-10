@@ -38,7 +38,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
 
     @Override
     protected void initRoot() {
-        super.setRoot(new RedisRootTreeItem(this));
+        super.setRoot(new RedisConnectRootTreeItem(this));
         this.getRoot().expend();
         super.initRoot();
     }
@@ -56,8 +56,8 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     }
 
     @Override
-    public RedisRootTreeItem getRoot() {
-        return (RedisRootTreeItem) super.getRoot();
+    public RedisConnectRootTreeItem getRoot() {
+        return (RedisConnectRootTreeItem) super.getRoot();
     }
 
     /**

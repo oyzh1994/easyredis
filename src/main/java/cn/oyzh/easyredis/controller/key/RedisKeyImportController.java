@@ -423,7 +423,7 @@ public class RedisKeyImportController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         // this.treeItem = this.getWindowProp("treeItem");
         // this.client = treeItem.client();
         this.client = this.getWindowProp("client");

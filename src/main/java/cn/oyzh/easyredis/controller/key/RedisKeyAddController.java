@@ -525,12 +525,12 @@ public class RedisKeyAddController extends StageController {
     }
 
     @Override
-    public void onStageShown(WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         this.stage.switchOnTab();
         this.mutexes.manageBindVisible();
         this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.coordinateBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
         this.stage.hideOnEscape();
-        super.onStageShown(event);
+        super.onWindowShown(event);
         this.dbItem = this.getWindowProp("dbItem");
         RedisKeyType type = this.getWindowProp("type");
         this.type.select(type);
