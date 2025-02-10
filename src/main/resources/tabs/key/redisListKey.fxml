@@ -83,7 +83,7 @@
             </HBox.margin>
         </ExpandListSVGPane>
         <PageBox onSettingClicked="#pageSetting" fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                 onPrevClicked="#prevPage" onNextClicked="#nextPage" maxWidth="370">
+                 onPrevClicked="#prevPage" onNextClicked="#nextPage" maxWidth="370" hideIfLessPage="false">
             <HBox.margin>
                 <Insets left="5" top="4"/>
             </HBox.margin>
@@ -140,5 +140,4 @@
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextArea>
-<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

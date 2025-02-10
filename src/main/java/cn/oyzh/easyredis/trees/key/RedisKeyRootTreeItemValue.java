@@ -1,9 +1,11 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.fx.svg.glyph.KeySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.paint.Color;
 
 /**
  * @author oyzh
@@ -13,6 +15,7 @@ public class RedisKeyRootTreeItemValue extends RichTreeItemValue {
 
     public RedisKeyRootTreeItemValue(RedisKeyRootTreeItem item) {
         super(item);
+        this.setRichMode(true);
     }
 
     @Override
@@ -23,13 +26,13 @@ public class RedisKeyRootTreeItemValue extends RichTreeItemValue {
     @Override
     public SVGGlyph graphic() {
         if (this.graphic != null && this.graphic.isWaiting()) {
-            this.graphic.enableTheme();
+//            this.graphic.enableTheme();
             return this.graphic;
         }
         if (this.graphic == null) {
-            this.graphic = new SVGGlyph("/font/key.svg", 10);
+            this.graphic = new KeySVGGlyph("10");
+            this.graphic.disableTheme();
         }
-        this.graphic.disableTheme();
         return super.graphic();
     }
 
@@ -41,11 +44,16 @@ public class RedisKeyRootTreeItemValue extends RichTreeItemValue {
     @Override
     public String extra() {
         int size = this.item().keyChildrenSize();
-        String extra= "(" + size + ")";
+        String extra = "(" + size + ")";
         String filterPattern = this.item().dbItem().getFilterPattern();
         if (StringUtil.isNotBlank(filterPattern)) {
             extra += "[" + I18nHelper.keyFilter() + ":" + filterPattern + "]";
         }
         return extra;
+    }
+
+    @Override
+    public Color extraColor() {
+        return Color.FORESTGREEN;
     }
 }

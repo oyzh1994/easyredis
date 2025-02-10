@@ -81,7 +81,7 @@
             </HBox.margin>
         </ExpandListSVGPane>
         <PageBox onSettingClicked="#pageSetting" fx:id="pagePane" realHeight="22" onFirstClicked="#firstPage" onLastClicked="#lastPage"
-                 onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370">
+                 onPrevClicked="#prevPage" onNextClicked="#nextPage" prefWidth="370" hideIfLessPage="false">
             <HBox.margin>
                 <Insets left="5" top="4"/>
             </HBox.margin>

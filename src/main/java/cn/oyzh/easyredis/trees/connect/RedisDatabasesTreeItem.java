@@ -97,10 +97,9 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItemV
     @Override
     public void onPrimaryDoubleClick() {
         if (!this.isLoaded()) {
-            this.startWaiting(this::loadChild);
+            this.startWaiting(this::loadChild, 150);
         } else {
             super.onPrimaryDoubleClick();
         }
     }
-
 }

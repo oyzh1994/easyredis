@@ -15,7 +15,7 @@
             <Insets left="15" top="5"/>
         </FlexVBox.margin>
     </InfoLabel>
-    <NumberTextField fx:id="limit" minVal="1" step="100" realHeight="25" flexWidth="100% - 120"
+    <NumberTextField fx:id="limit" minVal="1" step="100" realHeight="25" flexWidth="100% - 65"
                      styleClass="popover-item">
         <FlexVBox.margin>
             <Insets left="15" top="5"/>
