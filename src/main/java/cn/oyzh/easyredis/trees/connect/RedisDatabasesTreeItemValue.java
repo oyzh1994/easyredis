@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.fx.svg.glyph.DatabaseSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.paint.Color;
 import lombok.experimental.Accessors;
 
 /**
@@ -33,10 +34,18 @@ public class RedisDatabasesTreeItemValue extends RichTreeItemValue {
     public SVGGlyph graphic() {
         if (this.graphic == null) {
             this.graphic = new DatabaseSVGGlyph("10");
-            this.graphic.disableTheme();
+//            this.graphic.disableTheme();
         }
         return super.graphic();
     }
+
+//    @Override
+//    public Color graphicColor() {
+//        if (this.item().isChildEmpty()) {
+//            return super.graphicColor();
+//        }
+//        return Color.DARKGREEN;
+//    }
 
     @Override
     public String extra() {

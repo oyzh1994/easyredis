@@ -35,18 +35,18 @@ public class RedisDatabaseTreeItemValue extends RichTreeItemValue {
     public SVGGlyph graphic() {
         if (this.graphic == null) {
             this.graphic = new DatabaseSVGGlyph("10");
-            this.graphic.disableTheme();
+//            this.graphic.disableTheme();
         }
         return super.graphic();
     }
 
-    @Override
-    public Color graphicColor() {
-        if (this.item().isChildEmpty()) {
-            return super.graphicColor();
-        }
-        return Color.DARKGREEN;
-    }
+//    @Override
+//    public Color graphicColor() {
+//        if (this.item().isChildEmpty()) {
+//            return super.graphicColor();
+//        }
+//        return Color.DARKGREEN;
+//    }
 
     @Override
     public String extra() {
