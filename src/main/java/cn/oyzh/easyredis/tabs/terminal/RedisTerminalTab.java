@@ -2,11 +2,9 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.event.Event;
 import javafx.scene.Cursor;
 
 /**

@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
 import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_TOP_LEFT;
 import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_LEFT;
 
 /**

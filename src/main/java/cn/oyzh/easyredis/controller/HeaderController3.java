@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
 import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;

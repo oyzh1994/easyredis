@@ -8,7 +8,6 @@ import redis.clients.jedis.CommandArguments;
 import redis.clients.jedis.CommandObject;
 import redis.clients.jedis.GeoCoordinate;
 import redis.clients.jedis.Protocol;
-import redis.clients.jedis.resps.StreamEntry;
 import redis.clients.jedis.util.SafeEncoder;
 
 import java.util.ArrayList;

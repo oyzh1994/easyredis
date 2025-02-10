@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.Protocol;
 

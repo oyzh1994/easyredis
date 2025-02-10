@@ -1,9 +1,7 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

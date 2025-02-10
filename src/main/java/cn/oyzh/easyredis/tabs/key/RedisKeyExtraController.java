@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
@@ -10,9 +9,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * redis键额外信息组件

@@ -2,14 +2,8 @@ package cn.oyzh.easyredis.fx.svg.pane;
 
 import cn.oyzh.easyredis.fx.svg.glyph.CollapseListSVGGlyph;
 import cn.oyzh.easyredis.fx.svg.glyph.ExpandListSVGGlyph;
-import cn.oyzh.fx.gui.svg.glyph.CollectSVGGlyph;
-import cn.oyzh.fx.gui.svg.glyph.UnCollectSVGGlyph;
-import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGPane;
-import cn.oyzh.fx.plus.mouse.MouseAdapter;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author oyzh

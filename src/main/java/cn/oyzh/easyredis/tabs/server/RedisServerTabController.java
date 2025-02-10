@@ -12,7 +12,6 @@ import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
-import cn.oyzh.fx.terminal.histroy.TerminalHistory;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.Getter;

@@ -3,8 +3,6 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.i18n.I18nHelper;
 import lombok.Data;
 
-import java.util.Collection;
-
 /**
  * zk查询结果
  *

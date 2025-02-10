@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.plus.controls.popup.FXPopup;

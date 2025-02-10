@@ -11,8 +11,6 @@ import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -28,10 +26,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.io.File;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**

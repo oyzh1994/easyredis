@@ -4,26 +4,15 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.easyredis.fx.RedisKeyFilterHistoryPopup;
 import cn.oyzh.easyredis.store.RedisKeyFilterHistoryStore;
-import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.fx.gui.text.field.SearchTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.PopupController;
-import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.plus.window.FXStageStyle;
-import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupAttribute;
-import cn.oyzh.fx.plus.window.StageAttribute;
 import javafx.fxml.FXML;
-import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import static atlantafx.base.controls.Popover.ArrowLocation.BOTTOM_LEFT;
-import static atlantafx.base.controls.Popover.ArrowLocation.LEFT_TOP;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_BOTTOM_LEFT;
 import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_LEFT;
-import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_RIGHT;
 
 
 /**

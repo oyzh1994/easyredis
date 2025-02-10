@@ -8,7 +8,6 @@ import cn.oyzh.easyredis.event.key.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
-import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.event.EventSubscribe;
@@ -27,10 +26,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 
 import java.io.File;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**

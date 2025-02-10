@@ -1,19 +1,10 @@
 package cn.oyzh.easyredis.tabs.home;
 
-import cn.oyzh.common.dto.Project;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.gui.svg.glyph.HomeSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.i18n.I18nHelper;
-import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * redis主页tab

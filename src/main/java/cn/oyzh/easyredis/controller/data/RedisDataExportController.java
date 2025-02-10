@@ -5,7 +5,6 @@ import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.handler.RedisDataExportHandler;

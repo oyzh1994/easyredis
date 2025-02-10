@@ -28,7 +28,6 @@ import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;

@@ -5,7 +5,6 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;

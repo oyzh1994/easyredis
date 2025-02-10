@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.terminal;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ExecutorUtil;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.dto.RedisConnectInfo;
@@ -14,17 +13,11 @@ import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextArea;
-import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * redis终端文本域

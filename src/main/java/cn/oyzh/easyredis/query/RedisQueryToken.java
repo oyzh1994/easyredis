@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.domain.RedisQuery;
 import lombok.Data;
 import lombok.ToString;
 import redis.clients.jedis.Protocol;

@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.fx.plus.FXConst;
@@ -20,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.controller.data;
 
-import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.FXConst;

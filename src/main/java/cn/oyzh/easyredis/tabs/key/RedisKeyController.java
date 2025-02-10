@@ -2,20 +2,13 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.SubTabController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * redis键tab内容组件

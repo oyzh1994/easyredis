@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.controller.data;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.SystemUtil;
-import cn.oyzh.easyredis.RedisConst;
 import cn.oyzh.easyredis.handler.RedisDataMigrationHandler;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;

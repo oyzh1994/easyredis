@@ -3,8 +3,6 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.tree.view.FXTreeItem;
-import cn.oyzh.i18n.I18nHelper;
 
 /**
  * redis树节点值

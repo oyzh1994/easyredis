@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.util.BooleanUtil;
-import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
@@ -12,7 +11,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

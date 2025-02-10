@@ -2,17 +2,8 @@ package cn.oyzh.easyredis.tabs.changelog;
 
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.changelog.Changelog;
-import cn.oyzh.fx.plus.changelog.ChangelogListView;
-import cn.oyzh.fx.plus.changelog.ChangelogManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * 更新日志表tab
