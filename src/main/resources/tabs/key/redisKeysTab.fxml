@@ -14,6 +14,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.easyredis.filter.RedisKeyFilterTextField?>
+<?import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph?>
 <FlexHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
     <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
@@ -64,6 +65,11 @@
                     <Insets left="5" top="5"/>
                 </HBox.margin>
             </PositioningSVGGlyph>
+            <FilterSVGGlyph size="17" onMousePrimaryClicked="#doKeyFilter">
+                <HBox.margin>
+                    <Insets left="5" top="5"/>
+                </HBox.margin>
+            </FilterSVGGlyph>
         </FlexHBox>
     </FlexVBox>
     <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"

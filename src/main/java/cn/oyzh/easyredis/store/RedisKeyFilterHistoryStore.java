@@ -6,13 +6,17 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
 import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
+import cn.oyzh.store.jdbc.OrderByParam;
 import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.QueryParams;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * redis过滤历史存储
@@ -39,10 +43,15 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
     public boolean replace(RedisKeyFilterHistory model) {
         boolean result = false;
         if (model != null) {
-            if (this.exist(model.getPattern())) {
-                result = this.update(model);
-            } else {
-                result = this.insert(model);
+            result = this.insert(model);
+            QueryParams queryParams = new QueryParams();
+            long count = super.selectCount(queryParams);
+            // 删除超出限制的节点
+            if (count > His_Max_Size) {
+                DeleteParam deleteParam = new DeleteParam();
+                deleteParam.addQueryParams(queryParams);
+                deleteParam.setLimit(1L);
+                super.delete(deleteParam);
             }
         }
         return result;
@@ -86,6 +95,7 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
     }
 
     public List<String> getPatterns() {
-        return Collections.emptyList();
+        List<RedisKeyFilterHistory> histories = this.load();
+        return histories.parallelStream().map(RedisKeyFilterHistory::getPattern).collect(Collectors.toList());
     }
 }

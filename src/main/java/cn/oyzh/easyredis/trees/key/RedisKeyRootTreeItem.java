@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.log.JulLog;
-import cn.oyzh.common.thread.IRunnable;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
@@ -16,36 +15,32 @@ import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
-import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
-import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.RedisRootTreeItemValue> {
+public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue> {
 
     /**
      * 设置
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
 
-    public RedisRootKeyTreeItem(@NonNull RedisKeyTreeView treeView) {
+    public RedisKeyRootTreeItem(@NonNull RedisKeyTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
-        this.setValue(new RedisRootTreeItemValue(this));
+        this.setValue(new RedisKeyRootTreeItemValue(this));
     }
 
     @Override
@@ -298,39 +293,4 @@ public class RedisRootKeyTreeItem extends RichTreeItem<RedisRootKeyTreeItem.Redi
         }
     }
 
-    public static class RedisRootTreeItemValue extends RichTreeItemValue {
-
-        public RedisRootTreeItemValue(RedisRootKeyTreeItem item) {
-            super(item);
-        }
-
-        @Override
-        protected RedisRootKeyTreeItem item() {
-            return (RedisRootKeyTreeItem) super.item();
-        }
-
-        @Override
-        public SVGGlyph graphic() {
-            if (this.graphic != null && this.graphic.isWaiting()) {
-                this.graphic.enableTheme();
-                return this.graphic;
-            }
-            if (this.graphic == null) {
-                this.graphic = new SVGGlyph("/font/key.svg", 10);
-            }
-            this.graphic.disableTheme();
-            return super.graphic();
-        }
-
-        @Override
-        public String name() {
-            return I18nHelper.keys();
-        }
-
-        @Override
-        public String extra() {
-            int size = this.item().keyChildrenSize();
-            return "(" + size + ")";
-        }
-    }
 }

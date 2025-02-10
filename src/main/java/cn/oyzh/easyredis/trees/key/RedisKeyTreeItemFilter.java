@@ -80,7 +80,7 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
     @Override
     public boolean test(RichTreeItem<?> item) {
         // 根节点不参与过滤
-        if (item instanceof RedisRootKeyTreeItem) {
+        if (item instanceof RedisKeyRootTreeItem) {
             return true;
         }
         // 键节点

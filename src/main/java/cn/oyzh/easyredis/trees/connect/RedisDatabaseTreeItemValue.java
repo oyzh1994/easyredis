@@ -56,10 +56,10 @@ public class RedisDatabaseTreeItemValue extends RichTreeItemValue {
             if (dbSize != null) {
                 extra += "(" + dbSize + ")";
             }
-            String filterPattern = this.item().getFilterPattern();
-            if (StringUtil.isNotBlank(filterPattern)) {
-                extra += "[" + I18nHelper.keyFilter() + ":" + filterPattern + "]";
-            }
+//            String filterPattern = this.item().getFilterPattern();
+//            if (StringUtil.isNotBlank(filterPattern)) {
+//                extra += "[" + I18nHelper.keyFilter() + ":" + filterPattern + "]";
+//            }
             return extra;
         } catch (Exception ex) {
             ex.printStackTrace();

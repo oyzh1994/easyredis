@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
+import cn.oyzh.easyredis.controller.key.RedisKeyFilterController;
 import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
 import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -294,5 +295,16 @@ public class RedisKeysTabController extends ParentTabController {
     @Override
     public List<? extends DynamicTabController> getSubControllers() {
         return List.of(this.keyDataController, this.keyInfoController);
+    }
+
+    /**
+     * 键过滤
+     */
+    @FXML
+    private void doKeyFilter() {
+        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class);
+        fxView.setProp("treeItem", this.treeItem);
+        fxView.setProp("pattern", this.treeItem.getFilterPattern());
+        fxView.display();
     }
 }

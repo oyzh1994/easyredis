@@ -82,7 +82,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>(12);
         FXMenuItem add = MenuItemHelper.addKey("12", this::addKey);
-        FXMenuItem keyFilter = MenuItemHelper.keyFilter("12", this::keyFilter);
+//        FXMenuItem keyFilter = MenuItemHelper.keyFilter("12", this::keyFilter);
         // FXMenuItem refresh = MenuItemHelper.refreshData("12", this::reloadChild);
         FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
         FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
@@ -90,7 +90,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
         FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
         items.add(add);
-        items.add(keyFilter);
+//        items.add(keyFilter);
         // items.add(refresh);
         items.add(exportData);
         items.add(transportData);
@@ -128,15 +128,15 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
         adapter.display();
     }
 
-    /**
-     * 键过滤
-     */
-    private void keyFilter() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.setProp("pattern", this.filterPattern);
-        fxView.display();
-    }
+//    /**
+//     * 键过滤
+//     */
+//    private void keyFilter() {
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class, this.window());
+//        fxView.setProp("treeItem", this);
+//        fxView.setProp("pattern", this.filterPattern);
+//        fxView.display();
+//    }
 
     /**
      * 执行键过滤

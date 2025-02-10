@@ -17,15 +17,15 @@ public class RedisMoreTreeItem extends RichTreeItem<RedisMoreTreeItemValue> {
     }
 
     @Override
-    public RedisRootKeyTreeItem parent() {
+    public RedisKeyRootTreeItem parent() {
         TreeItem<?> parent = this.getParent();
-        return (RedisRootKeyTreeItem) parent;
+        return (RedisKeyRootTreeItem) parent;
     }
 
     @Override
     public void onPrimaryDoubleClick() {
         if (!this.isLoading()) {
-            RedisRootKeyTreeItem treeItem = this.parent();
+            RedisKeyRootTreeItem treeItem = this.parent();
             if (treeItem != null) {
                 treeItem.loadChild();
             }

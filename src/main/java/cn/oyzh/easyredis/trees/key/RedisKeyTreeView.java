@@ -55,7 +55,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
 
     @Override
     protected void initRoot() {
-        this.setRoot(new RedisRootKeyTreeItem(this));
+        this.setRoot(new RedisKeyRootTreeItem(this));
 //        super.setShowRoot(false);
         super.initRoot();
     }
@@ -72,8 +72,8 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     }
 
     @Override
-    public RedisRootKeyTreeItem getRoot() {
-        return (RedisRootKeyTreeItem) super.getRoot();
+    public RedisKeyRootTreeItem getRoot() {
+        return (RedisKeyRootTreeItem) super.getRoot();
     }
 
     /**

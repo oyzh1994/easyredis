@@ -50,7 +50,7 @@ public class RedisKeyFilterController extends StageController {
 
     @Override
     public void onStageShown(WindowEvent event) {
-        EventUtil.register(this);
+//        EventUtil.register(this);
         this.stage.hideOnEscape();
         super.onStageShown(event);
         this.treeItem = this.getWindowProp("treeItem");
@@ -66,12 +66,12 @@ public class RedisKeyFilterController extends StageController {
      * 键过滤
      */
     @FXML
-    private void keyFilter() {
+    private void doKeyFilter() {
         String pattern = this.keyFilter.getText();
         if (StringUtil.isNotBlank(pattern) && !"*".equals(pattern)) {
             RedisKeyFilterHistory history = new RedisKeyFilterHistory();
             history.setPattern(pattern);
-            this.historyStore.replace(history);
+            this.historyStore.insert(history);
         }
         this.treeItem.doKeyFilter(pattern);
         this.closeWindow();

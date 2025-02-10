@@ -10,7 +10,7 @@
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyFilterController" realWidth="400" realHeight="110">
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SearchTextField fx:id="keyFilter" onSearch="#keyFilter" realHeight="30.0" flexWidth="100% - 65"
+        <SearchTextField fx:id="keyFilter" onSearch="#doKeyFilter" realHeight="30.0" flexWidth="100% - 65"
                          tipText="%redis.filter.tip1" require="true" text="*">
             <HBox.margin>
                 <Insets left="30" top="10"/>
@@ -18,7 +18,7 @@
         </SearchTextField>
     </FlexHBox>
     <FlexHBox flexWidth="100%" realHeight="50">
-        <SubmitButton onAction="#keyFilter">
+        <SubmitButton onAction="#doKeyFilter">
             <HBox.margin>
                 <Insets left="30" top="20"/>
             </HBox.margin>
