@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.key.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
+import cn.oyzh.fx.gui.page.PageEvent;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.table.FlexTableView;
@@ -217,5 +218,13 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
                 this.firstPage();
             }
         });
+    }
+
+    /**
+     * 页码跳页
+     */
+    @FXML
+    private void pageJump(PageEvent.PageJumpEvent event) {
+        this.initPage(event.getPage());
     }
 }
