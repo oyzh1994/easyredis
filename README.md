@@ -26,22 +26,33 @@ mvn -X clean package -DskipTests
 检查cmd里面java -version的版本号和项目版本号是否一致，否则可能出现无效的目标版本号21之类的问题
 
 # 程序打包
+###### 图标转换
+###### png转icns
+https://anyconv.com/png-to-icns-converter/
+###### png转ico
+https://www.freeconvert.com/zh/png-to-ico
+
 ###### windows x64
 exe、msi打包依赖
 https://github.com/wixtoolset/wix3/releases
-(推荐)msi打包文件 在项目 -> package -> win -> win_amd64_msi.json
-cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_msi
-exe打包文件 在项目 -> package -> win -> win_amd64_exe.json
+(推荐)exe打包文件 在项目 -> package -> win -> win_amd64_exe.json
 cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_exe
+msi打包文件 在项目 -> package -> win -> win_amd64_msi.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_msi
 image打包文件 在项目 -> package -> win -> win_amd64_image.json
 cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_image
+###### 注意事项
+exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
 ###### macos arm64
 (推荐)dmg打包文件 在项目 -> package -> macos -> macos_arm64_dmg.json
 cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_dmg
 image打包文件 在项目 -> package -> macos -> macos_arm64_image.json
 cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_image
+###### 注意事项
+dmg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
+# Docker
 # docker启动实例
 ###### docker启动redis(单个)
 docker run -itd -p 6379:6379 redis
@@ -57,13 +68,13 @@ docker compose -f ./redis-cluster-compose.yml up -d
 docker compose -f ./redis-example-compose.yml up -d
 docker compose -f ./redis-master-compose.yml up -d
 
-# macos系统
+# Macos系统
+###### mac执行dmg安装后，启动台不显示程序图标解决方案
+defaults write com.apple.dock ResetLaunchPad -bool true && killall Dock
 ###### mac无法启动解决方案1
 sudo chmod +x EasyRedis.app
-
 ###### mac无法启动解决方案2
 chmod -R 755 /路径/EasyRedis.app(可拖入命令行窗口)
-
 ###### mac无法启动解决方案3
 当在macOS上运行.app文件时提示“已损坏，无法打开”，你可以尝试以下几种解决方法：
 1. 允许“任何来源”下载的App运行‌

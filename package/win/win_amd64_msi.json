@@ -19,11 +19,8 @@
         "win-dir-chooser": true,
         "description": "这是一个Redis管理工具，提供导入、导出、传输、终端、可视化操作等功能."
     },
-    "compress": {
-        "type": "zip"
-    },
     "jdeps": {
-        "multi-release": 22,
+        "multi-release": 23,
         "summary": true,
         "skips": [
             "javafx-.*.jar"
