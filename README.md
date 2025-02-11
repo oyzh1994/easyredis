@@ -27,12 +27,20 @@ mvn -X clean package -DskipTests
 
 # 程序打包
 ###### windows x64
-打包文件 在项目 -> package -> win_amd64_pack_config.json
-cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_pack
+exe、msi打包依赖
+https://github.com/wixtoolset/wix3/releases
+(推荐)msi打包文件 在项目 -> package -> win -> win_amd64_msi.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_msi
+exe打包文件 在项目 -> package -> win -> win_amd64_exe.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_exe
+image打包文件 在项目 -> package -> win -> win_amd64_image.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_image
 
 ###### macos arm64
-打包文件 在项目 -> package -> macos_arm64_pack_config.json
-cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_pack
+(推荐)dmg打包文件 在项目 -> package -> macos -> macos_arm64_dmg.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_dmg
+image打包文件 在项目 -> package -> macos -> macos_arm64_image.json
+cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_image
 
 # docker启动实例
 ###### docker启动redis(单个)

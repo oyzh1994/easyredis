@@ -29,6 +29,48 @@ public class RedisPack {
     }
 
     @Test
+    public void easyredis_win_amd64_msi() throws Exception {
+        String packagePath = this.getPackagePath();
+        String win_pack_config = packagePath + "/win/win_amd64_msi.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.registerJdepsHandler();
+        packer.pack(win_pack_config, properties);
+    }
+    
+    @Test
+    public void easyredis_win_amd64_exe() throws Exception {
+        String packagePath = this.getPackagePath();
+        String win_pack_config = packagePath + "/win/win_amd64_exe.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.registerJdepsHandler();
+        packer.pack(win_pack_config, properties);
+    }
+
+    @Test
+    public void easyredis_win_amd64_image() throws Exception {
+        String packagePath = this.getPackagePath();
+        String win_pack_config = packagePath + "/win/win_amd64_image.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.registerJdepsHandler();
+        packer.pack(win_pack_config, properties);
+    }
+
+    @Test
     public void easyredis_win_amd64_pack() throws Exception {
         String packagePath = this.getPackagePath();
         String win_pack_config = packagePath + "win_amd64_pack_config.json";
