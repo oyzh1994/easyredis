@@ -73,9 +73,23 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_macos_arm64_pack() throws Exception {
+    public void easyredis_macos_arm64_dmg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
+        String macos_arm64_pack_config = packagePath + "/macos/macos_arm64_dmg.json";
+        String getProjectPath = this.getProjectPath();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("projectPath", getProjectPath);
+
+        Packer packer = new Packer();
+        packer.registerProjectHandler();
+        packer.registerJdepsHandler();
+        packer.pack(macos_arm64_pack_config, properties);
+    }
+
+    @Test
+    public void easyredis_macos_arm64_image() throws Exception {
+        String packagePath = this.getPackagePath();
+        String macos_arm64_pack_config = packagePath + "/macos/macos_arm64_image.json";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
