@@ -1,7 +1,7 @@
 {
     "packMode": "jpackage",
     "platform": "win_amd64",
-    "dest": "C:/Package/EasyRedis/${appVersion}/EasyRedis",
+    "dest": "C:/Package/EasyRedis/${appVersion}/",
     "appIcon": "${projectPath}/resource/redis.ico",
     "mainJar": "${projectPath}/target/easyredis-${appVersion}.jar",
     "jdkPath": "$SYSTEM",
