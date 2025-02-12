@@ -120,6 +120,10 @@
             ".*.kotlin_module",
             ".*.dylib",
             ".*.so",
+            "data.zip",
+            "git.properties",
+            "native-image.properties",
+            "spring-boot-jarmode-layertools-.*.jar",
             "javafx-graphics.*-mac.*.jar",
             "javafx-graphics.*-linux.*.jar"
         ]

@@ -121,6 +121,10 @@
             ".*.kotlin_module",
             ".*.dll",
             ".*.so",
+            "data.zip",
+            "git.properties",
+            "native-image.properties",
+            "spring-boot-jarmode-layertools-.*.jar",
             "javafx-graphics.*-win.jar",
             "javafx-graphics.*-mac.jar",
             "javafx-graphics.*-linux.*.jar"
