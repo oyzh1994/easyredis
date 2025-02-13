@@ -300,7 +300,7 @@ public class RedisConnectAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.info.add");
+        return I18nHelper.connectAddTitle();
     }
 
     /**

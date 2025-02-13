@@ -353,7 +353,7 @@ public class RedisConnectUpdateController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.info.update");
+        return I18nHelper.connectUpdateTitle();
     }
 
     /**
