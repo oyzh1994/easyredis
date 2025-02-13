@@ -336,15 +336,6 @@ public class RedisConnectUpdateController extends StageController {
             this.sshTimeout.setValue(sshConfig.getTimeout());
             this.sshPassword.setText(sshConfig.getPassword());
         }
-        // ssh连接信息
-        RedisSSHConfig connectInfo = this.redisConnect.getSshConfig();
-        if (connectInfo != null) {
-            this.sshHost.setText(connectInfo.getHost());
-            this.sshUser.setText(connectInfo.getUser());
-            this.sshPort.setValue(connectInfo.getPort());
-            this.sshTimeout.setValue(connectInfo.getTimeout());
-            this.sshPassword.setText(connectInfo.getPassword());
-        }
         // 初始化数据
         this.initFilterDataList();
         this.stage.switchOnTab();
