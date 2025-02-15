@@ -2,6 +2,9 @@
 ###### 项目说明
 这是一个使用javafx编写的redis客户端，支持基本的连接管理，分组管理、键操作、操作命令查看、键搜索、键过滤、导入导出、数据传输、服务监控、终端操作等功能，还支持暗色主题、系统主题跟随等能力
 
+###### 下载地址
+https://gitee.com/oyzh1994/easyredis/releases
+
 ###### 启动入口
 cn.oyzh.easyredis.EasyRedisBootstrap.main
 
@@ -101,7 +104,7 @@ chmod -R 755 /路径/EasyRedis.app(可拖入命令行窗口)
 ![img8.png](resource/md/img8.png)
 ###### 截图9
 ![img9.png](resource/md/img9.png)
-###### 截图8
+###### 截图10
 ![img10.png](resource/md/img10.png)
 ###### 截图11
 ![img11.png](resource/md/img11.png)
@@ -138,6 +141,8 @@ chmod -R 755 /路径/EasyRedis.app(可拖入命令行窗口)
 ###### 截图27
 ![img27.png](resource/md/img27.png)
 ###### 截图28
-![img29.png](resource/md/img28.png)
+![img28.png](resource/md/img28.png)
 ###### 截图29
-![img28.png](resource/md/img29.png)
+![img29.png](resource/md/img29.png)
+###### 截图30
+![img30.png](resource/md/img30.png)
