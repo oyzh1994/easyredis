@@ -16,9 +16,9 @@ cn.oyzh.easyredis.EasyRedisBootstrap.main
 3. jdk版本要求23
 
 ###### 结构说明 
-docker -> docker配置文件等
-package -> 打包相关配置
-resource -> 项目相关资源文件
+docker -> docker配置文件等  
+package -> 打包相关配置  
+resource -> 项目相关资源文件  
 src -> 项目相关代码
 
 # Maven
@@ -58,7 +58,7 @@ exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示
 配置 -> package -> macos -> macos_arm64_image.json
 入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_image
 ###### 注意事项
-dmg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
+dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
 # Docker
 # docker启动实例
