@@ -9,14 +9,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.gui.label.SystemLabel?>
 <FXTab text="%base.info" xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyInfoController" fx:id="infoRoot">
     <graphic>
         <SVGGlyph url="/font/status.svg" sizeStr="12" cursorType="DEFAULT"/>
     </graphic>
-    <FlexVBox flexHeight="100%"
-              flexWidth="100%">
+    <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox realHeight="30" flexWidth="100%">
             <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
                 <HBox.margin>
@@ -33,21 +33,21 @@
             </padding>
         </FlexHBox>
         <FlexVBox flexHeight="100% - 30" flexWidth="100%" fontSize="11">
-            <SuccessText fx:id="objectEncoding" realHeight="30" flexWidth="100%">
+            <SystemLabel fx:id="objectEncoding" realHeight="25" flexWidth="100%">
                 <VBox.margin>
                     <Insets left="5" top="15"/>
                 </VBox.margin>
-            </SuccessText>
-            <SuccessText fx:id="objectIdletime" realHeight="30" flexWidth="100%">
+            </SystemLabel>
+            <SystemLabel fx:id="objectIdletime" realHeight="25" flexWidth="100%">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SuccessText>
-            <SuccessText fx:id="objectRefcount" realHeight="30" flexWidth="100%">
+            </SystemLabel>
+            <SystemLabel fx:id="objectRefcount" realHeight="25" flexWidth="100%">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
-            </SuccessText>
+            </SystemLabel>
         </FlexVBox>
     </FlexVBox>
 </FXTab>

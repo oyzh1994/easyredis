@@ -9,12 +9,10 @@
 <?import cn.oyzh.fx.gui.text.field.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.rich.richtextfx.control.RichTextAreaPane?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController" realWidth="750"
           realHeight="550">

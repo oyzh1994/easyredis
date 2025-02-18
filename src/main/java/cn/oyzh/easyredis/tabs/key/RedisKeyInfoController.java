@@ -5,8 +5,8 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -48,19 +48,19 @@ public class RedisKeyInfoController extends DynamicTabController {
      * 编码
      */
     @FXML
-    private FlexText objectEncoding;
+    private FXLabel objectEncoding;
 
     /**
      * 空闲时间
      */
     @FXML
-    private FlexText objectIdletime;
+    private FXLabel objectIdletime;
 
     /**
      * 引用数量
      */
     @FXML
-    private FlexText objectRefcount;
+    private FXLabel objectRefcount;
 
     /**
      * 复制信息
