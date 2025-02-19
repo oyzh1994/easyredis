@@ -3,8 +3,14 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
+import cn.oyzh.fx.plus.menu.FXMenuItem;
+import javafx.scene.control.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * redis服务信息树节点
@@ -26,6 +32,14 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
 
     public RedisClient client() {
         return this.parent().client();
+    }
+
+    @Override
+    public List<MenuItem> getMenuItems() {
+        List<MenuItem> items = new ArrayList<>();
+        FXMenuItem openInfo = MenuItemHelper.openInfo("12", this::loadChild);
+        items.add(openInfo);
+        return items;
     }
 
 //    /**
