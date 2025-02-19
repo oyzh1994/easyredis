@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.fx.svg.glyph.KeySVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.KeywordsSVGGlyph;
 import cn.oyzh.fx.gui.svg.glyph.ParamSVGGlyph;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.list.FlexListView;
+import cn.oyzh.fx.plus.controls.list.FXListView;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.svg.SVGLabel;
 import cn.oyzh.fx.plus.mouse.MouseUtil;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/21
  */
-public class RedisQueryPromptListView extends FlexListView<FlexHBox> {
+public class RedisQueryPromptListView extends FXListView<FlexHBox> {
 
     {
         this.setRealWidth(360);

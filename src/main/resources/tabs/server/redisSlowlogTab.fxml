@@ -3,8 +3,8 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXTab xmlns="http://javafx.com/javafx"
@@ -18,15 +18,15 @@
                 </HBox.margin>
             </RefreshSVGGlyph>
         </FlexHBox>
-        <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
+        <FXTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="7%" valueName="logId" text="ID"/>
-                <FlexTableColumn flexWidth="33%" valueName="command" text="%base.cmd"/>
-                <FlexTableColumn flexWidth="20%" valueName="timeStamp" text="%base.time"/>
-                <FlexTableColumn flexWidth="16%" valueName="clientHost" text="%base.clientAddr"/>
-                <FlexTableColumn flexWidth="12%" valueName="clientName" text="%base.clientName"/>
-                <FlexTableColumn flexWidth="12% - 12" valueName="executionTime" text="%redis.slowlog.tip1"/>
+                <FXTableColumn flexWidth="7%" valueName="logId" text="ID"/>
+                <FXTableColumn flexWidth="33%" valueName="command" text="%base.cmd"/>
+                <FXTableColumn flexWidth="20%" valueName="timeStamp" text="%base.time"/>
+                <FXTableColumn flexWidth="16%" valueName="clientHost" text="%base.clientAddr"/>
+                <FXTableColumn flexWidth="12%" valueName="clientName" text="%base.clientName"/>
+                <FXTableColumn flexWidth="12% - 12" valueName="executionTime" text="%redis.slowlog.tip1"/>
             </columns>
-        </FlexTableView>
+        </FXTableView>
     </FlexVBox>
 </FXTab>

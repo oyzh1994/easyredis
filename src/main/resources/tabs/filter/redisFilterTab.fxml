@@ -6,8 +6,8 @@
 <!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.table.FlexTableView?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.table.FXTableView?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%" -->
@@ -38,13 +38,13 @@
 <!--             <Insets top="18"/> -->
 <!--         </padding> -->
 <!--     </FlexHBox> -->
-<!--     <FlexTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true"> -->
+<!--     <FXTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true"> -->
 <!--         <columns> -->
 <!--             <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/> -->
 <!--             <FlexTableColumn flexWidth="45%" text="%base.kw" valueName="kw"/> -->
 <!--             <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl" sortable="false"/> -->
 <!--             <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/> -->
 <!--         </columns> -->
-<!--     </FlexTableView> -->
+<!--     </FXTableView> -->
 <!-- </FlexVBox> -->
 

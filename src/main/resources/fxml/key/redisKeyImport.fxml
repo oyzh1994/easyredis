@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.FlexText?>
+<?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import javafx.geometry.Insets?>
@@ -31,11 +31,11 @@
             </HBox.margin>
         </FileButton>
     </FlexHBox>
-    <FlexText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
+    <FXText fx:id="scriptInfo" managedBindVisible="true" visible="false" fontSize="11">
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>
-    </FlexText>
+    </FXText>
     <FlexHBox flexWidth="100%" realHeight="50">
         <AccentLabel text="%base.keyExists" realHeight="30" realWidth="80">
             <HBox.margin>
@@ -114,11 +114,11 @@
                 <Insets top="10"/>
             </VBox.margin>
         </FXLabel>
-        <FlexText fill="#666" text="%redis.import.tip5">
+        <FXText fill="#666" text="%redis.import.tip5">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>
-        </FlexText>
+        </FXText>
         <VBox.margin>
             <Insets left="110"/>
         </VBox.margin>

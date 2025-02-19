@@ -3,8 +3,8 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.easyredis.fx.svg.glyph.SubscribeSVGGlyph?>
@@ -24,11 +24,11 @@
                 </HBox.margin>
             </SubscribeSVGGlyph>
         </FlexHBox>
-        <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
+        <FXTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="25%" valueName="index" text="%base.No"/>
-                <FlexTableColumn flexWidth="75% - 12" valueName="channel" text="%base.channel"/>
+                <FXTableColumn flexWidth="25%" valueName="index" text="%base.No"/>
+                <FXTableColumn flexWidth="75% - 12" valueName="channel" text="%base.channel"/>
             </columns>
-        </FlexTableView>
+        </FXTableView>
     </FlexVBox>
 </FXTab>

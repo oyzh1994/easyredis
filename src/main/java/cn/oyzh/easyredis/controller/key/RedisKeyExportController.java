@@ -21,7 +21,7 @@
 // import cn.oyzh.fx.gui.text.field.ClearableTextField;
 // import cn.oyzh.fx.plus.controller.StageController;
 // import cn.oyzh.fx.plus.controls.box.FlexHBox;
-// import cn.oyzh.fx.plus.controls.button.FlexButton;
+// import cn.oyzh.fx.plus.controls.button.FXButton;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
 // import cn.oyzh.fx.gui.text.area.MsgTextArea;
@@ -128,13 +128,13 @@
 //     //  * 导出按钮
 //     //  */
 //     // @FXML
-//     // private FlexButton exportBtn;
+//     // private FXButton exportBtn;
 //
 //     /**
 //      * 结束导出按钮
 //      */
 //     @FXML
-//     private FlexButton stopExportBtn;
+//     private FXButton stopExportBtn;
 //
 //     /**
 //      * 导出状态

@@ -17,8 +17,8 @@
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
@@ -58,17 +58,17 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView groupId="coordinate_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FXTableView groupId="coordinate_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="50%" valueName="value" text="%base.name"/>
-            <FlexTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
-            <FlexTableColumn flexWidth="25% - 12" valueName="latitude" text="%base.latitude"/>
+            <FXTableColumn flexWidth="50%" valueName="value" text="%base.name"/>
+            <FXTableColumn flexWidth="25%" valueName="longitude" text="%base.longitude"/>
+            <FXTableColumn flexWidth="25% - 12" valueName="latitude" text="%base.latitude"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </FlexTableView>
+    </FXTableView>
     <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>

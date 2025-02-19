@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.server;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.chart.ChartHelper;
-import cn.oyzh.fx.plus.controls.chart.FlexLineChart;
+import cn.oyzh.fx.plus.controls.chart.FXLineChart;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
@@ -22,25 +22,25 @@ public class RedisAggregationTabController extends SubTabController {
      * 客户端图表
      */
     @FXML
-    private FlexLineChart<String, Number> clientChart;
+    private FXLineChart<String, Number> clientChart;
 
     /**
      * 内存图表
      */
     @FXML
-    private FlexLineChart<String, Number> memoryChart;
+    private FXLineChart<String, Number> memoryChart;
 
     /**
      * 指令图表
      */
     @FXML
-    private FlexLineChart<String, Number> commandChart;
+    private FXLineChart<String, Number> commandChart;
 
     /**
      * 网络图表
      */
     @FXML
-    private FlexLineChart<String, Number> networkChart;
+    private FXLineChart<String, Number> networkChart;
 
     /**
      * 日期格式化

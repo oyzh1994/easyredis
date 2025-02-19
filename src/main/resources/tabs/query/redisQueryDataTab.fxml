@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 <FlexVBox xmlns:fx="http://javafx.com/fxml/1" flexWidth="100% - 30" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.query.RedisQueryDataTabController">
-    <FlexTableView fx:id="dataTable" flexWidth="100%" flexHeight="100%">
+    <FXTableView fx:id="dataTable" flexWidth="100%" flexHeight="100%">
         <columns>
-            <FlexTableColumn valueName="key" flexWidth="15%" text="#"/>
-            <FlexTableColumn valueName="value" flexWidth="85% - 12" text="%base.data"/>
+            <FXTableColumn valueName="key" flexWidth="15%" text="#"/>
+            <FXTableColumn valueName="value" flexWidth="85% - 12" text="%base.data"/>
         </columns>
         <VBox.margin>
             <Insets left="5" top="5"/>
         </VBox.margin>
-    </FlexTableView>
+    </FXTableView>
 </FlexVBox>

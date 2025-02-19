@@ -8,8 +8,8 @@
 <!--<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>-->
 <!--<?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>-->
 <!--<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>-->
-<!--<?import cn.oyzh.fx.plus.controls.picker.FlexColorPicker?>-->
-<!--<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>-->
+<!--<?import cn.oyzh.fx.plus.controls.picker.FXColorPicker?>-->
+<!--<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>-->
 <!--<?import cn.oyzh.fx.plus.controls.tab.FXTab?>-->
 <!--<?import cn.oyzh.fx.plus.controls.text.FlexSlider?>-->
 <!--<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>-->
@@ -23,7 +23,7 @@
 <!--<?import javafx.scene.layout.VBox?>-->
 <!--<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"-->
 <!--          fx:controller="cn.oyzh.easyredis.controller.SettingController" realWidth="500" realHeight="420">-->
-<!--    <FlexTabPane flexWidth="100%" flexHeight="100% - 70">-->
+<!--    <FXTabPane flexWidth="100%" flexHeight="100% - 70">-->
 <!--        <FXTab text="%base.redis">-->
 <!--            <FlexVBox flexWidth="100%" flexHeight="100%">-->
 <!--                <InfoLabel text="%redis.setting.tip1">-->
@@ -262,7 +262,7 @@
 <!--                </FlexHBox>-->
 <!--            </FlexVBox>-->
 <!--        </FXTab>-->
-<!--    </FlexTabPane>-->
+<!--    </FXTabPane>-->
 <!--    <FlexHBox flexWidth="100%" realHeight="50">-->
 <!--        <SaveButton onAction="#saveSetting">-->
 <!--            <HBox.margin>-->

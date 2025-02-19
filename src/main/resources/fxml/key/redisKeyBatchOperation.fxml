@@ -12,12 +12,12 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600" fx:id="root">
     <FXTab text="%base.deleteKey" groupId="exec">
@@ -306,4 +306,4 @@
             </FlexHBox>
         </FlexVBox>
     </FXTab>
-</FlexTabPane>
+</FXTabPane>

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.store.RedisConnectStore;
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 
 /**
@@ -11,7 +11,7 @@ import cn.oyzh.fx.plus.converter.SimpleStringConverter;
  * @author oyzh
  * @since 2023/07/20
  */
-public class RedisConnectComboBox extends FlexComboBox<RedisConnect> {
+public class RedisConnectComboBox extends FXComboBox<RedisConnect> {
 
     {
         this.setConverter(new SimpleStringConverter<>() {

@@ -6,7 +6,7 @@
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.AnalyseSVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.NextSVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.PrevSVGGlyph?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.text.FlexText?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.text.FXText?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.search.SearchTextField?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
@@ -38,11 +38,11 @@
 <!--                 <Insets left="5" top="9"/> -->
 <!--             </HBox.margin> -->
 <!--         </AnalyseSVGGlyph> -->
-<!--         <FlexText fx:id="searchResult" fontSize="11"> -->
+<!--         <FXText fx:id="searchResult" fontSize="11"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="5" top="9"/> -->
 <!--             </HBox.margin> -->
-<!--         </FlexText> -->
+<!--         </FXText> -->
 <!--     </FlexHBox> -->
 <!--     <FlexHBox realHeight="30" flexWidth="100%" fontSize="10"> -->
 <!--         <FXCheckBox text="%base.filterMode" selected="true" fx:id="filterMode"> -->

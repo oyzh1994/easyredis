@@ -19,7 +19,7 @@ import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.box.FlexHBox;
 import cn.oyzh.fx.plus.controls.box.FlexVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeResizer;
 import cn.oyzh.fx.plus.window.PopupAdapter;
@@ -51,7 +51,7 @@ public class RedisKeysTabController extends ParentTabController {
      * tab节点
      */
     @FXML
-    private FlexTabPane tabPane;
+    private FXTabPane tabPane;
 
     /**
      * 键数据

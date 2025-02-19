@@ -10,8 +10,8 @@ import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.Getter;
@@ -58,7 +58,7 @@ public class RedisServerTabController extends ParentTabController {
      * tab面板
      */
     @FXML
-    private FlexTabPane tabPane;
+    private FXTabPane tabPane;
 
     /**
      * 订阅组件
@@ -94,7 +94,7 @@ public class RedisServerTabController extends ParentTabController {
      * 属性表格
      */
     @FXML
-    private FlexTableView<RedisServerItem> propTable;
+    private FXTableView<RedisServerItem> propTable;
 
     /**
      * 刷新任务

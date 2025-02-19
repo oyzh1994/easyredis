@@ -16,8 +16,8 @@
 <?import cn.oyzh.fx.gui.text.field.DecimalTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
@@ -58,16 +58,16 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView groupId="zset_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FXTableView groupId="zset_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="70%" text="%base.member" valueName="value"/>
-            <FlexTableColumn flexWidth="30% - 12" text="%base.score" valueName="score"/>
+            <FXTableColumn flexWidth="70%" text="%base.member" valueName="value"/>
+            <FXTableColumn flexWidth="30% - 12" text="%base.score" valueName="score"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </FlexTableView>
+    </FXTableView>
     <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>

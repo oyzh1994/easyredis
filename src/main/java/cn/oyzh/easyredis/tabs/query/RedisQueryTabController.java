@@ -12,7 +12,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisQueryStore;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -60,7 +60,7 @@ public class RedisQueryTabController extends DynamicTabController {
      * 结果面板
      */
     @FXML
-    private FlexTabPane resultTabPane;
+    private FXTabPane resultTabPane;
 
     /**
      * 查询存储

@@ -10,7 +10,7 @@
 <?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.easyredis.filter.RedisKeyFilterTextField?>
@@ -72,10 +72,10 @@
             </FilterSVGGlyph>
         </FlexHBox>
     </FlexVBox>
-    <FlexTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
+    <FXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
         <fx:include fx:id="keyData" source="redisKeyDataTab.fxml"/>
         <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
-    </FlexTabPane>
+    </FXTabPane>
 </FlexHBox>

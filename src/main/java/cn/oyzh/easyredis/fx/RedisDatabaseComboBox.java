@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.fx;
 
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import lombok.Getter;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2023/07/07
  */
-public class RedisDatabaseComboBox extends FlexComboBox<String> {
+public class RedisDatabaseComboBox extends FXComboBox<String> {
 
     @Getter
     private int dbCount;

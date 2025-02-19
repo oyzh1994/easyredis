@@ -10,8 +10,8 @@
 <?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
@@ -45,16 +45,16 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView groupId="stream_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FXTableView groupId="stream_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
-            <FlexTableColumn flexWidth="70% - 12" text="%base.content" valueName="value"/>
+            <FXTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
+            <FXTableColumn flexWidth="70% - 12" text="%base.content" valueName="value"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </FlexTableView>
+    </FXTableView>
     <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>

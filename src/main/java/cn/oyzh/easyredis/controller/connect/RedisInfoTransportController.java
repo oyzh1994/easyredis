@@ -22,7 +22,7 @@
 // import cn.oyzh.fx.plus.controller.StageController;
 // import cn.oyzh.fx.plus.controls.box.FlexHBox;
 // import cn.oyzh.fx.plus.controls.button.FXRadioButton;
-// import cn.oyzh.fx.plus.controls.button.FlexButton;
+// import cn.oyzh.fx.plus.controls.button.FXButton;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
 // import cn.oyzh.fx.gui.text.area.MsgTextArea;
@@ -97,13 +97,13 @@
 //      * 传输按钮
 //      */
 //     @FXML
-//     private FlexButton transportBtn;
+//     private FXButton transportBtn;
 //
 //     /**
 //      * 结束传输按钮
 //      */
 //     @FXML
-//     private FlexButton stopTransportBtn;
+//     private FXButton stopTransportBtn;
 //
 //     /**
 //      * 传输状态

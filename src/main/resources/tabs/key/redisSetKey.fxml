@@ -16,8 +16,8 @@
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -50,15 +50,15 @@
             <Insets top="7"/>
         </padding>
     </FlexHBox>
-    <FlexTableView groupId="set_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    <FXTableView groupId="set_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="100% - 12" text="%base.member" valueName="value"/>
+            <FXTableColumn flexWidth="100% - 12" text="%base.member" valueName="value"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </FlexTableView>
+    </FXTableView>
     <FlexHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>

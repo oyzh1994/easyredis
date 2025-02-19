@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.query;
 
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
 import redis.clients.jedis.util.KeyValue;
@@ -18,7 +18,7 @@ import java.util.List;
 public class RedisQueryDataTabController extends DynamicTabController {
 
     @FXML
-    private FlexTableView<KeyValueProperty<Integer, Object>> dataTable;
+    private FXTableView<KeyValueProperty<Integer, Object>> dataTable;
 
     public void init(Collection<?> list) {
         List<KeyValueProperty<Integer, Object>> data = new ArrayList<>();

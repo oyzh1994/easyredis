@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.label.FlexLabel;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -54,7 +54,7 @@ public class RedisKeyTTLController extends StageController {
      * 到期预览
      */
     @FXML
-    private FlexLabel expirePreview;
+    private FXLabel expirePreview;
 
     /**
      * 树键

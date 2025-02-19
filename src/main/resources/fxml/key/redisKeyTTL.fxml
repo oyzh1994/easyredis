@@ -7,7 +7,7 @@
 <?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
-<?import cn.oyzh.fx.plus.controls.label.FlexLabel?>
+<?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -90,11 +90,11 @@
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FlexLabel fx:id="expirePreview" prefHeight="25" flexWidth="100% - 140">
+    <FXLabel fx:id="expirePreview" prefHeight="25" flexWidth="100% - 140">
         <VBox.margin>
             <Insets left="30" top="5"/>
         </VBox.margin>
-    </FlexLabel>
+    </FXLabel>
     <FlexHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#ttlSetting">
             <HBox.margin>

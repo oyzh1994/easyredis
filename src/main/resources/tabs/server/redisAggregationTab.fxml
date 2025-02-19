@@ -4,46 +4,46 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import cn.oyzh.fx.plus.controls.chart.FlexLineChart?>
+<?import cn.oyzh.fx.plus.controls.chart.FXLineChart?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.server.RedisAggregationTabController" text="%base.aggregate">
     <FlexVBox flexHeight="100%" flexWidth="100%">
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="clientChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis/>
                 </yAxis>
-            </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
+            </FXLineChart>
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="memoryChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="Mb"/>
                 </yAxis>
-            </FlexLineChart>
+            </FXLineChart>
         </FlexHBox>
         <FlexHBox flexWidth="100%" flexHeight="50%">
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="commandChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis/>
                 </yAxis>
-            </FlexLineChart>
-            <FlexLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">
+            </FXLineChart>
+            <FXLineChart flexWidth="50%" flexHeight="100%" fx:id="networkChart">
                 <xAxis>
                     <CategoryAxis/>
                 </xAxis>
                 <yAxis>
                     <NumberAxis label="KB/s"/>
                 </yAxis>
-            </FlexLineChart>
+            </FXLineChart>
         </FlexHBox>
     </FlexVBox>
 </FXTab>
