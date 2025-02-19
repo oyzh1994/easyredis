@@ -2,7 +2,7 @@
 //
 // import cn.oyzh.common.thread.ThreadUtil;
 // import cn.oyzh.common.util.CollectionUtil;
-// import cn.oyzh.common.util.SystemUtil;
+// import cn.oyzh.common.system.SystemUtil;
 // import cn.oyzh.easyredis.RedisConst;
 // import cn.oyzh.easyredis.domain.RedisConnect;
 // import cn.oyzh.easyredis.domain.RedisFilter;
