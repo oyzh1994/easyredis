@@ -540,6 +540,7 @@ public class RedisKeyAddController extends StageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
+        this.mutexes.destroy();
     }
 
     @Override

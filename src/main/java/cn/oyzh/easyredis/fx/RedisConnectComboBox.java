@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.store.RedisConnectStore;
-import cn.oyzh.fx.plus.SimpleStringConverter;
+import cn.oyzh.fx.plus.converter.SimpleStringConverter;
 import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
 
 /**

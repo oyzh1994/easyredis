@@ -21,7 +21,7 @@ import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.controller.ParentStageController;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizer;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.stage.WindowEvent;
@@ -339,11 +339,11 @@ public class RedisMainController extends ParentStageController {
         // // 文件拖拽初始化
         // this.stage.initDragFile(this.tree.getDragContent(), this.tree.getRoot()::dragFile);
         // 拖动改变redis树大小处理
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.tabPaneLeft, Cursor.DEFAULT, this::resizeMainLeft);
-        resizeHelper.widthLimit(240f, 650f);
+        NodeResizer resizer = new NodeResizer(this.tabPaneLeft, Cursor.DEFAULT, this::resizeMainLeft);
+        resizer.widthLimit(240f, 650f);
         // // 初始化拉伸事件
         // this.tree.setOnMouseMoved(resizeHelper.mouseMoved());
-        resizeHelper.initResizeEvent();
+        resizer.initResizeEvent();
 
         // 搜索触发事件
         // KeyListener.listenReleased(this.stage, new KeyHandler().keyCode(KeyCode.F).controlDown(true).handler(t1 -> RedisEventUtil.searchFire()));
