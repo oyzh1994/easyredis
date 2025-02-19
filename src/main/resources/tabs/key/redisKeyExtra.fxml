@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
-<FlexHBox flexWidth="100%" flexHeight="30" xmlns="http://javafx.com/javafx"
+<FXHBox flexWidth="100%" flexHeight="30" xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml" fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeyExtraController">
     <FXLabel fx:id="ttl" tipText="%redis.key.ttlTip1"
              onMousePrimaryClicked="#ttlUpdate" prefHeight="22" cursorType="HAND"
@@ -27,4 +27,4 @@
             <Insets left="5" top="5"/>
         </HBox.margin>
     </FXText>
-</FlexHBox>
+</FXHBox>

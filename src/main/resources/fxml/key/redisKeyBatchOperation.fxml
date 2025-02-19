@@ -8,8 +8,8 @@
 <?import cn.oyzh.fx.gui.text.area.MsgTextArea?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXButton?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
@@ -21,13 +21,13 @@
              fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
              realHeight="600" fx:id="root">
     <FXTab text="%base.deleteKey" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%redis.key.tip3">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <ClearableTextField fx:id="pattern1" realHeight="30.0" flexWidth="100% - 285" text="*" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -38,7 +38,7 @@
                         <Insets left="5" top="10"/>
                     </HBox.margin>
                 </FXButton>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%redis.key.tip1">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -50,7 +50,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#delKeys" text="%base.delete" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -61,11 +61,11 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.ttl" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%base.ttl">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -83,7 +83,7 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <ClearableTextField fx:id="pattern2" realHeight="30.0" flexWidth="100% - 285" text="*" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -94,7 +94,7 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXButton>
-            </FlexHBox>
+            </FXHBox>
             <AccentLabel text="%redis.key.tip1">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -105,7 +105,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#expireKeys" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -116,11 +116,11 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.clear" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%base.operation">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -141,7 +141,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#flushDB" text="%base.clear" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -152,11 +152,11 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.move" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%base.targetDB">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -173,7 +173,7 @@
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <ClearableTextField fx:id="pattern4" realHeight="30.0" flexWidth="100% - 285" text="*" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -184,7 +184,7 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXButton>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%redis.key.tip1">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -195,7 +195,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <SubmitButton onAction="#moveKeys" text="%base.move" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -206,17 +206,17 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.copy" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%base.targetDB">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <RedisDatabaseComboBox fx:id="copyTargetDB" realHeight="30" prefWidth="120" initIndex="1"
                                        groupId="exec">
                     <HBox.margin>
@@ -228,13 +228,13 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXCheckBox>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%redis.key.tip3">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
                 </VBox.margin>
             </InfoLabel>
-            <FlexHBox flexWidth="100%">
+            <FXHBox flexWidth="100%">
                 <ClearableTextField fx:id="pattern5" realHeight="30.0" flexWidth="100% - 285" text="*" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
@@ -245,7 +245,7 @@
                         <Insets left="10" top="10"/>
                     </HBox.margin>
                 </FXButton>
-            </FlexHBox>
+            </FXHBox>
             <InfoLabel text="%redis.key.tip1">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -256,7 +256,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#copyKeys" text="%base.copy" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -267,11 +267,11 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
     <FXTab text="%base.count" groupId="exec">
-        <FlexVBox flexWidth="100%" flexHeight="100%">
+        <FXVBox flexWidth="100%" flexHeight="100%">
             <InfoLabel text="%redis.key.tip3">
                 <VBox.margin>
                     <Insets left="30" top="10"/>
@@ -292,7 +292,7 @@
                     <Insets left="30" top="5"/>
                 </VBox.margin>
             </MsgTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <SubmitButton onAction="#countKeys" text="%base.count" groupId="exec">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -303,7 +303,7 @@
                         <Insets left="15" top="20"/>
                     </HBox.margin>
                 </StopButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
 </FXTabPane>

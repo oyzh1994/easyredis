@@ -22,7 +22,7 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
 //     * 根节点
 //     */
 //    @FXML
-//    protected FlexVBox root;
+//    protected FXVBox root;
 
     /**
      * 树节点

@@ -14,8 +14,8 @@
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
@@ -23,9 +23,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
-<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisSetKeyController">
-    <FlexHBox groupId="set_list" realHeight="30" flexWidth="100%">
+    <FXHBox groupId="set_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
@@ -49,7 +49,7 @@
         <padding>
             <Insets top="7"/>
         </padding>
-    </FlexHBox>
+    </FXHBox>
     <FXTableView groupId="set_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
@@ -59,7 +59,7 @@
             <Insets left="2"/>
         </VBox.margin>
     </FXTableView>
-    <FlexHBox realHeight="24">
+    <FXHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -86,8 +86,8 @@
                 <Insets left="5" top="4"/>
             </HBox.margin>
         </PageBox>
-    </FlexHBox>
-    <FlexHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
+    </FXHBox>
+    <FXHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
         <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -126,11 +126,11 @@
                 <Insets left="5" top="9"/>
             </HBox.margin>
         </BinarySVGGlyph>
-    </FlexHBox>
+    </FXHBox>
     <RedisDataTextAreaPane groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 379"
                            flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextAreaPane>
-</FlexVBox>
+</FXVBox>

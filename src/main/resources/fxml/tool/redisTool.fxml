@@ -3,8 +3,8 @@
 <?import cn.oyzh.fx.gui.button.ClearButton?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
@@ -13,7 +13,7 @@
 <FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
              fx:controller="cn.oyzh.easyredis.controller.tool.RedisToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.cache">
-        <FlexVBox flexHeight="100%" flexWidth="100%">
+        <FXVBox flexHeight="100%" flexWidth="100%">
             <InfoLabel text="%base.info">
                 <VBox.margin>
                     <Insets left="30" top="20"/>
@@ -24,7 +24,7 @@
                    <Insets left="30" top="5"/>
                </VBox.margin>
            </ReadOnlyTextArea>
-            <FlexHBox flexWidth="100%" realHeight="50">
+            <FXHBox flexWidth="100%" realHeight="50">
                 <CalcButton onAction="#calcCache" realHeight="30">
                     <HBox.margin>
                         <Insets left="30" top="20"/>
@@ -35,7 +35,7 @@
                         <Insets left="10" top="20"/>
                     </HBox.margin>
                 </ClearButton>
-            </FlexHBox>
-        </FlexVBox>
+            </FXHBox>
+        </FXVBox>
     </FXTab>
 </FXTabPane>

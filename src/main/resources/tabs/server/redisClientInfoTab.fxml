@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
@@ -10,14 +10,14 @@
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.server.RedisClientInfoTabController" text="%base.client">
-    <FlexVBox flexWidth="100%" flexHeight="100%">
-        <FlexHBox flexWidth="100%" realHeight="40">
+    <FXVBox flexWidth="100%" flexHeight="100%">
+        <FXHBox flexWidth="100%" realHeight="40">
             <RefreshSVGGlyph onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-        </FlexHBox>
+        </FXHBox>
         <FXTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
                 <FXTableColumn flexWidth="10%" text="%base.No" valueName="index"/>
@@ -28,6 +28,6 @@
                 <FXTableColumn flexWidth="15% - 12" text="%redis.server.currDB" valueName="db"/>
             </columns>
         </FXTableView>
-    </FlexVBox>
+    </FXVBox>
 
 </FXTab>

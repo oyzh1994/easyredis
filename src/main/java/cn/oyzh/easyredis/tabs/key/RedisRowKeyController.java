@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.trees.key.RedisRowKeyTreeItem;
 import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.page.PageEvent;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
@@ -57,7 +57,7 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * 数据操作面板
      */
     @FXML
-    protected FlexHBox dataAction;
+    protected FXHBox dataAction;
 
     /**
      * 设置

@@ -2,8 +2,8 @@
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.SuccessText?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <?import javafx.geometry.Insets?>
@@ -16,8 +16,8 @@
     <graphic>
         <SVGGlyph url="/font/status.svg" sizeStr="12" cursorType="DEFAULT"/>
     </graphic>
-    <FlexVBox flexHeight="100%" flexWidth="100%">
-        <FlexHBox realHeight="30" flexWidth="100%">
+    <FXVBox flexHeight="100%" flexWidth="100%">
+        <FXHBox realHeight="30" flexWidth="100%">
             <CopySVGGlyph size="16" onMousePrimaryClicked="#copy">
                 <HBox.margin>
                     <Insets left="5"/>
@@ -31,8 +31,8 @@
             <padding>
                 <Insets top="7"/>
             </padding>
-        </FlexHBox>
-        <FlexVBox flexHeight="100% - 30" flexWidth="100%" fontSize="11">
+        </FXHBox>
+        <FXVBox flexHeight="100% - 30" flexWidth="100%" fontSize="11">
             <SystemLabel fx:id="objectEncoding" realHeight="25" flexWidth="100%">
                 <VBox.margin>
                     <Insets left="5" top="15"/>
@@ -48,6 +48,6 @@
                     <Insets left="5" top="10"/>
                 </VBox.margin>
             </SystemLabel>
-        </FlexVBox>
-    </FlexVBox>
+        </FXVBox>
+    </FXVBox>
 </FXTab>

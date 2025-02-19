@@ -8,17 +8,17 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.pane.CollectSVGPane?>
 <?import cn.oyzh.fx.gui.svg.pane.SortSVGPane?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.easyredis.filter.RedisKeyFilterTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph?>
-<FlexHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FXHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
-    <FlexVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
-        <FlexHBox realHeight="30" flexWidth="100%">
+    <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
+        <FXHBox realHeight="30" flexWidth="100%">
             <RedisKeySearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="3"/>
@@ -30,11 +30,11 @@
                     <Insets left="5" top="3"/>
                 </HBox.margin>
             </RedisKeyFilterTextField>
-        </FlexHBox>
+        </FXHBox>
         <RedisKeyTreeView flexWidth="100%" fx:id="treeView" flexHeight="100% - 60">
 
         </RedisKeyTreeView>
-        <FlexHBox flexWidth="100%" flexHeight="30">
+        <FXHBox flexWidth="100%" flexHeight="30">
             <AddSVGGlyph size="16" onMousePrimaryClicked="#addKey">
                 <HBox.margin>
                     <Insets left="5" top="5"/>
@@ -70,12 +70,12 @@
                     <Insets left="5" top="6"/>
                 </HBox.margin>
             </FilterSVGGlyph>
-        </FlexHBox>
-    </FlexVBox>
+        </FXHBox>
+    </FXVBox>
     <FXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" side="RIGHT" flexWidth="100% - 305"
                  flexHeight="100%"
                  rotateGraphic="true" disable="true">
         <fx:include fx:id="keyData" source="redisKeyDataTab.fxml"/>
         <fx:include fx:id="keyInfo" source="redisKeyInfoTab.fxml"/>
     </FXTabPane>
-</FlexHBox>
+</FXHBox>

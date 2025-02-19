@@ -1,23 +1,23 @@
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
 
-<!--<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>-->
-<!--<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>-->
+<!--<?import cn.oyzh.fx.plus.controls.box.FXHBox?>-->
+<!--<?import cn.oyzh.fx.plus.controls.box.FXVBox?>-->
 <!--<?import javafx.geometry.Insets?>-->
 <!--<?import javafx.scene.layout.HBox?>-->
 <!--<?import cn.oyzh.fx.gui.text.field.SearchTextField?>-->
 <!--<?import cn.oyzh.fx.gui.button.SubmitButton?>-->
 <!--<?import cn.oyzh.fx.gui.button.CancelButton?>-->
-<!--<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"-->
+<!--<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"-->
 <!--          fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyFilterController" realWidth="400" realHeight="110">-->
-<!--    <FlexHBox flexWidth="100%" realHeight="50">-->
+<!--    <FXHBox flexWidth="100%" realHeight="50">-->
 <!--        <SearchTextField fx:id="keyFilter" onSearch="#doKeyFilter" realHeight="30.0" flexWidth="100% - 65"-->
 <!--                         tipText="%redis.filter.tip1" require="true" text="*">-->
 <!--            <HBox.margin>-->
 <!--                <Insets left="30" top="10"/>-->
 <!--            </HBox.margin>-->
 <!--        </SearchTextField>-->
-<!--    </FlexHBox>-->
-<!--    <FlexHBox flexWidth="100%" realHeight="50">-->
+<!--    </FXHBox>-->
+<!--    <FXHBox flexWidth="100%" realHeight="50">-->
 <!--        <SubmitButton onAction="#doKeyFilter">-->
 <!--            <HBox.margin>-->
 <!--                <Insets left="30" top="20"/>-->
@@ -28,5 +28,5 @@
 <!--                <Insets left="15" top="20"/>-->
 <!--            </HBox.margin>-->
 <!--        </CancelButton>-->
-<!--    </FlexHBox>-->
-<!--</FlexVBox>-->
+<!--    </FXHBox>-->
+<!--</FXVBox>-->

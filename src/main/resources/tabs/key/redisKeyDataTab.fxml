@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.svg.SVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
 <FXTab text="%base.data" xmlns="http://javafx.com/javafx"
@@ -8,7 +8,7 @@
     <graphic>
         <SVGGlyph url="/font/key.svg" sizeStr="12" cursorType="DEFAULT"/>
     </graphic>
-    <FlexVBox flexHeight="100%" flexWidth="100%">
+    <FXVBox flexHeight="100%" flexWidth="100%">
         <fx:include groupId="key-data" fx:id="stringKey" source="redisStringKey.fxml"/>
         <fx:include groupId="key-data" fx:id="hylogKey" source="redisHyLogKey.fxml"/>
         <fx:include groupId="key-data" fx:id="listKey" source="redisListKey.fxml"/>
@@ -18,5 +18,5 @@
         <fx:include groupId="key-data" fx:id="streamKey" source="redisStreamKey.fxml"/>
         <fx:include groupId="key-data" fx:id="coordinateKey" source="redisCoordinateKey.fxml"/>
         <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>
-    </FlexVBox>
+    </FXVBox>
 </FXTab>

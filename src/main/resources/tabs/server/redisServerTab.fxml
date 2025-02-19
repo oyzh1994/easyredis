@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableView?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.server.RedisServerTabController" flexHeight="100%"
           flexWidth="100%">
     <FXTableView flexWidth="100%" realHeight="80" fx:id="propTable">
@@ -25,4 +25,4 @@
         <fx:include fx:id="clientInfo" source="redisClientInfoTab.fxml"/>
         <fx:include fx:id="pubsub" source="redisPubsubTab.fxml"/>
     </FXTabPane>
-</FlexVBox>
+</FXVBox>

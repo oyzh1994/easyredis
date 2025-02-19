@@ -4,15 +4,15 @@
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXVBox?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.table.FXTableView?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
-<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%" -->
+<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%" -->
 <!--           fx:controller="cn.oyzh.easyredis.tabs.filter.RedisFilterTab.RedisFilterTabController"> -->
-<!--     <FlexHBox realHeight="50" flexWidth="100%"> -->
+<!--     <FXHBox realHeight="50" flexWidth="100%"> -->
 <!--         <ClearableTextField realHeight="26" fx:id="searchKeyWord" realWidth="200" tipText="%base.searchKWTip"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="5" top="-4"/> -->
@@ -37,7 +37,7 @@
 <!--         <padding> -->
 <!--             <Insets top="18"/> -->
 <!--         </padding> -->
-<!--     </FlexHBox> -->
+<!--     </FXHBox> -->
 <!--     <FXTableView flexHeight="100% - 50" flexWidth="100%" fx:id="listTable" copyCellDataOnDoubleClicked="true"> -->
 <!--         <columns> -->
 <!--             <FlexTableColumn flexWidth="15%" text="%base.No" valueName="index"/> -->
@@ -46,5 +46,5 @@
 <!--             <FlexTableColumn flexWidth="20% - 15" text="%base.status" valueName="statusControl" sortable="false"/> -->
 <!--         </columns> -->
 <!--     </FXTableView> -->
-<!-- </FlexVBox> -->
+<!-- </FXVBox> -->
 

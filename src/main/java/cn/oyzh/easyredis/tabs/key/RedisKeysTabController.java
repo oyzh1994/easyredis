@@ -16,8 +16,8 @@ import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -45,7 +45,7 @@ public class RedisKeysTabController extends ParentTabController {
      * 根节点
      */
     @FXML
-    private FlexHBox root;
+    private FXHBox root;
 
     /**
      * tab节点
@@ -69,7 +69,7 @@ public class RedisKeysTabController extends ParentTabController {
      * 左侧节点
      */
     @FXML
-    private FlexVBox leftBox;
+    private FXVBox leftBox;
 
     /**
      * redis客户端
