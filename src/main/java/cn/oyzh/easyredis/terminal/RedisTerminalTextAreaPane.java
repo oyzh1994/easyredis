@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTextTextArea extends TerminalTextAreaPane {
+public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
 
     {
         this.keyHandler(RedisTerminalKeyHandler.INSTANCE);
