@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.query.RedisQueryTextArea?>
+<?import cn.oyzh.easyredis.query.RedisQueryTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
           fx:controller="cn.oyzh.easyredis.tabs.query.RedisQueryTabController">
@@ -28,12 +28,12 @@
             </HBox.margin>
         </RunSVGGlyph>
     </FlexHBox>
-    <RedisQueryTextArea onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
-                        flexWidth="100% - 30" flexHeight="100% - 60">
+    <RedisQueryTextAreaPane onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
+                            flexWidth="100% - 30" flexHeight="100% - 60">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
-    </RedisQueryTextArea>
+    </RedisQueryTextAreaPane>
     <FlexTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
     </FlexTabPane>

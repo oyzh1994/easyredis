@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
 import cn.oyzh.fx.gui.tabs.DynamicTabController;
@@ -22,7 +22,7 @@ public class RedisTerminalTabController extends DynamicTabController {
      * redis命令行文本域
      */
     @FXML
-    private RedisTerminalTextTextArea terminal;
+    private RedisTerminalTextAreaPane terminal;
 
     /**
      * 初始化

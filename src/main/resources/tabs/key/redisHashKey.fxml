@@ -21,7 +21,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisHashKeyController">
@@ -132,13 +132,13 @@
             </HBox.margin>
         </RefreshSVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11"
-                       fx:id="hashField"
-                       onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextAreaPane groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11"
+                           fx:id="hashField"
+                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextArea>
+    </RedisDataTextAreaPane>
     <FXText text="%base.value">
         <VBox.margin>
             <Insets top="5" left="5"/>
@@ -173,11 +173,11 @@
             </HBox.margin>
         </ClearSVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" flexHeight="100% - 536" flexWidth="100% - 4" fontSize="11"
-                       fx:id="nodeData"
-                       onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextAreaPane groupId="dataToBig" disable="true" flexHeight="100% - 536" flexWidth="100% - 4" fontSize="11"
+                           fx:id="nodeData"
+                           onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextArea>
+    </RedisDataTextAreaPane>
 </FlexVBox>

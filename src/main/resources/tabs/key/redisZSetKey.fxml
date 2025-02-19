@@ -23,7 +23,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisZSetKeyController">
@@ -136,12 +136,12 @@
             </HBox.margin>
         </ClearSVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 435"
-                       flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextAreaPane groupId="dataToBig" disable="true" fontSize="11" fx:id="nodeData" flexHeight="100% - 435"
+                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextArea>
+    </RedisDataTextAreaPane>
     <FXText text="%base.score">
         <VBox.margin>
             <Insets top="5" left="5"/>

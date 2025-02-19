@@ -7,7 +7,7 @@ import cn.oyzh.fx.terminal.key.TerminalKeyHandler;
  * @author oyzh
  * @since 2023/8/28
  */
-public class RedisTerminalKeyHandler implements TerminalKeyHandler<RedisTerminalTextTextArea> {
+public class RedisTerminalKeyHandler implements TerminalKeyHandler<RedisTerminalTextAreaPane> {
 
     /**
      * 当前实例

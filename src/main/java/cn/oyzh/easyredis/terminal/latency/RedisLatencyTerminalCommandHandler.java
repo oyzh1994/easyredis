@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.latency;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextTextArea;
+import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import redis.clients.jedis.CommandObject;
@@ -20,7 +20,7 @@ public class RedisLatencyTerminalCommandHandler extends RedisTerminalCommandHand
     }
 
     @Override
-    public String commandHelp(RedisTerminalTextTextArea terminal) {
+    public String commandHelp(RedisTerminalTextAreaPane terminal) {
         CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
         Object obj = terminal.client().execCommand(object);
         return RedisTerminalUtil.formatOut(obj);

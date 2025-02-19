@@ -7,7 +7,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
-import cn.oyzh.easyredis.query.RedisQueryTextArea;
+import cn.oyzh.easyredis.query.RedisQueryTextAreaPane;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisQueryStore;
 import cn.oyzh.fx.gui.tabs.DynamicTab;
@@ -48,7 +48,7 @@ public class RedisQueryTabController extends DynamicTabController {
      * 当前内容
      */
     @FXML
-    private RedisQueryTextArea content;
+    private RedisQueryTextAreaPane content;
 
     /**
      * 数据库

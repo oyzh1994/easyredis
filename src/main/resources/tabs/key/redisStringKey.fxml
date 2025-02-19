@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
 <FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController">
@@ -81,11 +81,11 @@
             </HBox.margin>
         </BinarySVGGlyph>
     </FlexHBox>
-    <RedisDataTextArea groupId="dataToBig" fontSize="11" fx:id="nodeData" flexHeight="100% - 30"
-                       flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataTextAreaPane groupId="dataToBig" fontSize="11" fx:id="nodeData" flexHeight="100% - 30"
+                           flexWidth="100% - 4" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextArea>
+    </RedisDataTextAreaPane>
 <!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FlexVBox>

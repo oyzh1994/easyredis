@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
-import cn.oyzh.easyredis.fx.RedisDataTextArea;
+import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -62,7 +62,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
      * 数据组件
      */
     @FXML
-    private RedisDataTextArea nodeData;
+    private RedisDataTextAreaPane nodeData;
 
     /**
      * 格式监听器
