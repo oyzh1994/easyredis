@@ -1,6 +1,9 @@
 package cn.oyzh.easyredis.controller.main;
 
-import cn.oyzh.easyredis.fx.RedisMsgTextArea;
+import cn.oyzh.common.Const;
+import cn.oyzh.event.EventFormatter;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import javafx.fxml.FXML;
 
@@ -17,7 +20,7 @@ public class MessageController extends SubStageController   {
      * 消息文本框
      */
     @FXML
-    private RedisMsgTextArea msgArea;
+    private MsgTextArea msgArea;
 
     /**
      * 清空节点消息
@@ -27,4 +30,11 @@ public class MessageController extends SubStageController   {
         this.msgArea.clear();
     }
 
+    @EventSubscribe
+    private void onEventMsg(EventFormatter formatter) {
+        String formatMsg = formatter.eventFormat();
+        if (formatMsg != null) {
+            this.msgArea.appendLine(String.format("%s %s", Const.DATE_TIME_FORMAT.format(System.currentTimeMillis()), formatMsg));
+        }
+    }
 }
