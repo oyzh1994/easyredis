@@ -705,10 +705,10 @@ public class RedisEventUtil {
      *
      * @param connect zk连接
      */
-    public static void showExportData(RedisConnect connect, String path) {
+    public static void showExportData(RedisConnect connect, Integer dbIndex) {
         RedisShowExportDataEvent event = new RedisShowExportDataEvent();
         event.data(connect);
-        event.path(path);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 

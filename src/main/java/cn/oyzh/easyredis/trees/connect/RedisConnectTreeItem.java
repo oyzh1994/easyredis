@@ -7,7 +7,6 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
-import cn.oyzh.easyredis.controller.data.RedisExportDataController;
 import cn.oyzh.easyredis.controller.data.RedisImportDataController;
 import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.domain.RedisConnect;
@@ -219,9 +218,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      * 导出redis节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class);
-        fxView.setProp("connect", this.value);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class);
+//        fxView.setProp("connect", this.value);
+//        fxView.display();
+        RedisEventUtil.showExportData(this.value, null);
     }
 
     /**
@@ -496,6 +496,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
     }
 
     public RedisQueriesTreeItem queriesItem() {
-        return (RedisQueriesTreeItem) this.unfilteredChildren().stream().filter(i-> i instanceof RedisQueriesTreeItem).findAny().get();
+        return (RedisQueriesTreeItem) this.unfilteredChildren().stream().filter(i -> i instanceof RedisQueriesTreeItem).findAny().get();
     }
 }

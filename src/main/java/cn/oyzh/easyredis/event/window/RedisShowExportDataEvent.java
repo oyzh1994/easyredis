@@ -15,5 +15,5 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 public class RedisShowExportDataEvent extends Event<RedisConnect> {
 
-    private String path;
+    private Integer dbIndex;
 }

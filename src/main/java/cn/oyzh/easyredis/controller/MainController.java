@@ -335,7 +335,6 @@ public class MainController extends ParentStageController {
 
                 StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class);
                 adapter.setProp("connect", event.data());
-                adapter.setProp("nodePath", event.path());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();

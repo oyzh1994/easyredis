@@ -4,10 +4,10 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.data.RedisExportDataController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -77,10 +77,11 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      * 导出redis键
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class, this.window());
-        fxView.setProp("connect", this.redisConnect());
-        fxView.setProp("dbIndex", this.dbIndex());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class, this.window());
+//        fxView.setProp("connect", this.redisConnect());
+//        fxView.setProp("dbIndex", this.dbIndex());
+//        fxView.display();
+        RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex());
     }
 
     @Override

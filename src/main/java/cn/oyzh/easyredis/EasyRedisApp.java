@@ -5,8 +5,8 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.controller.SettingController2;
-import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
@@ -107,7 +107,8 @@ public class EasyRedisApp extends FXApplication {
             TerminalManager.setLoadHandlerAction(RedisTerminalManager::registerHandlers);
             // 显示迁移弹窗
             if (RedisStoreUtil.checkOlder()) {
-                FXUtil.runWait(() -> StageManager.showStage(RedisMigrationTipsController.class), 1000);
+//                FXUtil.runWait(() -> StageManager.showStage(RedisMigrationTipsController.class), 1000);
+                RedisEventUtil.showMigrationTips();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
