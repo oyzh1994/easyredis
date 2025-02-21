@@ -4,7 +4,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -68,9 +67,10 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      * 添加键
      */
     public void addKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
-        fxView.setProp("dbItem", this.dbItem());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
+//        fxView.setProp("dbItem", this.dbItem());
+//        fxView.display();
+        RedisEventUtil.showAddKey(this.dbItem());
     }
 
     /**

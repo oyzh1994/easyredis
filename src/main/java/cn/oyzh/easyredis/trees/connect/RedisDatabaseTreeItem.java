@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -227,9 +226,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      * 添加键
      */
     public void addKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
-        fxView.setProp("dbItem", this);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
+//        fxView.setProp("dbItem", this);
+//        fxView.display();
+        RedisEventUtil.showAddKey(this);
     }
 
     /**

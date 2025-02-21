@@ -44,12 +44,12 @@ import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
+import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
 import cn.oyzh.easyredis.event.window.RedisShowExportDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowImportDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowMainEvent;
 import cn.oyzh.easyredis.event.window.RedisShowMigrationDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowMigrationTipsEvent;
 import cn.oyzh.easyredis.event.window.RedisShowSettingEvent;
+import cn.oyzh.easyredis.event.window.RedisShowTTLKeyEvent;
 import cn.oyzh.easyredis.event.window.RedisShowToolEvent;
 import cn.oyzh.easyredis.event.window.RedisShowTransportDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowUpdateConnectEvent;
@@ -668,12 +668,12 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
-    /**
-     * 显示主页面
-     */
-    public static void showMain() {
-        EventUtil.post(new RedisShowMainEvent());
-    }
+//    /**
+//     * 显示主页面
+//     */
+//    public static void showMain() {
+//        EventUtil.post(new RedisShowMainEvent());
+//    }
 
     /**
      * 显示设置页面
@@ -774,10 +774,32 @@ public class RedisEventUtil {
         EventUtil.post(new RedisShowMigrationDataEvent());
     }
 
+//    /**
+//     * 显示迁移提示页面
+//     */
+//    public static void showMigrationTips() {
+//        EventUtil.post(new RedisShowMigrationTipsEvent());
+//    }
+
     /**
-     * 显示迁移提示页面
+     * 显示添加键页面
+     *
+     * @param dbItem db库
      */
-    public static void showMigrationTips() {
-        EventUtil.post(new RedisShowMigrationTipsEvent());
+    public static void showAddKey(RedisDatabaseTreeItem dbItem) {
+        RedisShowAddKeyEvent event = new RedisShowAddKeyEvent();
+        event.data(dbItem);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示键ttl页面
+     *
+     * @param item 键
+     */
+    public static void showTTLKey(RedisKeyTreeItem item) {
+        RedisShowTTLKeyEvent event = new RedisShowTTLKeyEvent();
+        event.data(item);
+        EventUtil.post(event);
     }
 }

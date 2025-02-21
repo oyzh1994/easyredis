@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
 import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
@@ -173,9 +172,10 @@ public class RedisKeysTabController extends ParentTabController {
 
     @FXML
     private void addKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
-        fxView.setProp("dbItem", this.treeItem);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
+//        fxView.setProp("dbItem", this.treeItem);
+//        fxView.display();
+        RedisEventUtil.showAddKey(this.treeItem);
     }
 
     @FXML
