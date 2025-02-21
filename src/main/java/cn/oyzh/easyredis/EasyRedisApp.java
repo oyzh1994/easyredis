@@ -219,7 +219,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -241,7 +241,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -258,7 +258,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -275,7 +275,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -292,7 +292,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -309,7 +309,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -326,7 +326,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -341,7 +341,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 StageManager.showStage(RedisToolController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -356,7 +356,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 StageManager.showStage(AboutController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -371,7 +371,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 StageManager.showStage(RedisMigrationDataController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -385,7 +385,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 StageManager.showStage(RedisMigrationTipsController.class, StageManager.getPrimaryStage());
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -402,7 +402,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
@@ -419,7 +419,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                MessageBox.exception(ex, I18nHelper.operationException());
+                MessageBox.exception(ex);
             }
         });
     }
