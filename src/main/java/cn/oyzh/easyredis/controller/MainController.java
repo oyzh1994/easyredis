@@ -2,7 +2,13 @@ package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.easyredis.controller.connect.RedisAddConnectController;
+import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
+import cn.oyzh.easyredis.controller.data.RedisExportDataController;
+import cn.oyzh.easyredis.controller.data.RedisImportDataController;
+import cn.oyzh.easyredis.controller.data.RedisMigrationDataController;
 import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
+import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;

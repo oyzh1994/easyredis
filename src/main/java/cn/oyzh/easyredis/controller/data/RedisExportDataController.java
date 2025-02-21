@@ -51,7 +51,7 @@ import java.util.Set;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "data/redisDataExport.fxml"
+        value = FXConst.FXML_PATH + "data/redisExportData.fxml"
 )
 public class RedisExportDataController extends StageController {
 
