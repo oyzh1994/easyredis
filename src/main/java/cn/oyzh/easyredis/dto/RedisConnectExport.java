@@ -5,8 +5,10 @@ import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisGroup;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
  * @since 2023/06/22
  */
 //@Slf4j
-public class RedisInfoExport {
+public class RedisConnectExport {
 
     /**
      * 导出程序版本号
@@ -33,7 +35,14 @@ public class RedisInfoExport {
     private String platform;
 
     /**
-     * 导出连接数据
+     * 分组
+     */
+    @Setter
+    @Getter
+    private List<RedisGroup> groups;
+
+    /**
+     * 连接
      */
     @Getter
     private List<RedisConnect> connects;
@@ -44,8 +53,8 @@ public class RedisInfoExport {
      * @param redisConnects 连接列表
      * @return RedisInfoExport
      */
-    public static RedisInfoExport fromConnects(@NonNull List<RedisConnect> redisConnects) {
-        RedisInfoExport export = new RedisInfoExport();
+    public static RedisConnectExport fromConnects(@NonNull List<RedisConnect> redisConnects) {
+        RedisConnectExport export = new RedisConnectExport();
         Project project = Project.load();
         export.version = project.getVersion();
         export.connects = redisConnects;
@@ -59,12 +68,14 @@ public class RedisInfoExport {
      * @param json json字符串
      * @return RedisInfoExport
      */
-    public static RedisInfoExport fromJSON(@NonNull String json) {
+    public static RedisConnectExport fromJSON(@NonNull String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
-        RedisInfoExport export = new RedisInfoExport();
+        RedisConnectExport export = new RedisConnectExport();
         export.connects = new ArrayList<>(4);
         export.version = object.getString("version");
+        export.platform = object.getString("platform");
+        export.groups = object.getBeanList("groups", RedisGroup.class);
         export.connects = object.getBeanList("connects", RedisConnect.class);
         return export;
     }

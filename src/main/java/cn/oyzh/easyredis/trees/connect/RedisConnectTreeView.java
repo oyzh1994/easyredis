@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectImportedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
@@ -12,7 +13,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -36,7 +36,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
 
     @Override
     protected void initRoot() {
-        super.setRoot(new RedisConnectRootTreeItem(this));
+        super.setRoot(new RedisRootTreeItem(this));
         this.getRoot().expend();
         super.initRoot();
     }
@@ -54,8 +54,8 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     }
 
     @Override
-    public RedisConnectRootTreeItem getRoot() {
-        return (RedisConnectRootTreeItem) super.getRoot();
+    public RedisRootTreeItem getRoot() {
+        return (RedisRootTreeItem) super.getRoot();
     }
 
     /**
@@ -149,5 +149,13 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     @EventSubscribe
     private void queryAdded(RedisQueryAddedEvent event) {
         this.getRoot().queryAdded(event.data());
+    }
+
+    /**
+     * 连接已导入事件
+     */
+    @EventSubscribe
+    private void connectImported(RedisConnectImportedEvent event) {
+        this.getRoot().reloadChild();
     }
 }

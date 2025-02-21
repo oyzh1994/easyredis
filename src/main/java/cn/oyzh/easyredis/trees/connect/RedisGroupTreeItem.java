@@ -10,11 +10,10 @@ import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -52,7 +51,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisConnectTreeView treeView) {
+    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new RedisGroupTreeItemValue(this));
@@ -157,9 +156,9 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
     }
 
     @Override
-    public RedisConnectRootTreeItem parent() {
+    public RedisRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
-        return (RedisConnectRootTreeItem) treeItem;
+        return (RedisRootTreeItem) treeItem;
     }
 
     @Override

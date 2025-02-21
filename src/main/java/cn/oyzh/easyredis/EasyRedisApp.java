@@ -8,6 +8,8 @@ import cn.oyzh.easyredis.controller.AboutController;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.controller.SettingController2;
 import cn.oyzh.easyredis.controller.connect.RedisAddConnectController;
+import cn.oyzh.easyredis.controller.connect.RedisExportConnectController;
+import cn.oyzh.easyredis.controller.connect.RedisImportConnectController;
 import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
 import cn.oyzh.easyredis.controller.data.RedisExportDataController;
 import cn.oyzh.easyredis.controller.data.RedisImportDataController;
@@ -22,7 +24,9 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
+import cn.oyzh.easyredis.event.window.RedisShowExportConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowExportDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowImportConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowImportDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowMigrationDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowSettingEvent;
@@ -416,6 +420,38 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             try {
                 StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class);
                 adapter.setProp("treeItem", event.data());
+                adapter.display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
+    }
+
+    /**
+     * 显示导出连接页面
+     */
+    @EventSubscribe
+    private void exportConnect(RedisShowExportConnectEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageManager.showStage(RedisExportConnectController.class, StageManager.getPrimaryStage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
+    }
+
+    /**
+     * 显示导入连接页面
+     */
+    @EventSubscribe
+    private void importConnect(RedisShowImportConnectEvent event) {
+        FXUtil.runLater(() -> {
+            try {
+                StageAdapter adapter = StageManager.parseStage(RedisImportConnectController.class, StageManager.getPrimaryStage());
+                adapter.setProp("file", event.data());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();

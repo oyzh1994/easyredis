@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.event;
 
+import cn.oyzh.easyredis.event.connect.RedisConnectImportedEvent;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
@@ -8,7 +9,7 @@ import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
-import cn.oyzh.easyredis.event.connection.RedisConnectDeletedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectDeletedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
 import cn.oyzh.easyredis.event.connection.RedisServerEvent;
@@ -45,7 +46,9 @@ import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
+import cn.oyzh.easyredis.event.window.RedisShowExportConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowExportDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowImportConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowImportDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowMigrationDataEvent;
 import cn.oyzh.easyredis.event.window.RedisShowSettingEvent;
@@ -69,6 +72,8 @@ import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
 import lombok.experimental.UtilityClass;
 import redis.clients.jedis.CommandArguments;
+
+import java.io.File;
 
 /**
  * redis事件工具
@@ -668,12 +673,23 @@ public class RedisEventUtil {
         EventUtil.post(event);
     }
 
-//    /**
-//     * 显示主页面
-//     */
-//    public static void showMain() {
-//        EventUtil.post(new RedisShowMainEvent());
-//    }
+    /**
+     * 显示导出连接页面
+     */
+    public static void showExportConnect() {
+        EventUtil.post(new RedisShowExportConnectEvent());
+    }
+
+    /**
+     * 显示导入连接页面
+     *
+     * @param file 文件
+     */
+    public static void showImportConnect(File file) {
+        RedisShowImportConnectEvent event = new RedisShowImportConnectEvent();
+        event.data(file);
+        EventUtil.post(event);
+    }
 
     /**
      * 显示设置页面
@@ -801,5 +817,12 @@ public class RedisEventUtil {
         RedisShowTTLKeyEvent event = new RedisShowTTLKeyEvent();
         event.data(item);
         EventUtil.post(event);
+    }
+
+    /**
+     * 连接已导入事件
+     */
+    public static void connectImported() {
+        EventUtil.post(new RedisConnectImportedEvent());
     }
 }
