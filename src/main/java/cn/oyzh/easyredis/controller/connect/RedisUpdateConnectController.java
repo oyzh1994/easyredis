@@ -42,7 +42,7 @@ import java.util.List;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "connect/redisConnectUpdate.fxml"
+        value = FXConst.FXML_PATH + "connect/redisUpdateConnect.fxml"
 )
 public class RedisUpdateConnectController extends StageController {
 
