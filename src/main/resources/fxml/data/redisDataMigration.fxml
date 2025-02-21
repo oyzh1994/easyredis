@@ -16,8 +16,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.data.RedisDataMigrationController" realWidth="800"
-          realHeight="600">
+        fx:controller="cn.oyzh.easyredis.controller.data.RedisMigrationDataController" realWidth="800"
+        realHeight="600">
     <FXHBox flexWidth="100%" realHeight="80">
         <FXHBox flexHeight="100%" flexWidth="100%">
             <MigrationSVGGlyph sizeStr="40,40" color="yellowgreen">

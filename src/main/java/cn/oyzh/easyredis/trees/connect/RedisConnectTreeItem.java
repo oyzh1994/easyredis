@@ -6,10 +6,10 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectUpdateController;
-import cn.oyzh.easyredis.controller.data.RedisDataExportController;
-import cn.oyzh.easyredis.controller.data.RedisDataImportController;
-import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
+import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
+import cn.oyzh.easyredis.controller.data.RedisExportDataController;
+import cn.oyzh.easyredis.controller.data.RedisImportDataController;
+import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -219,7 +219,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      * 导出redis节点
      */
     public void exportData() {
-        StageAdapter fxView = StageManager.parseStage(RedisDataExportController.class);
+        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class);
         fxView.setProp("connect", this.value);
         fxView.display();
     }
@@ -299,7 +299,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(RedisDataImportController.class);
+        StageAdapter fxView = StageManager.parseStage(RedisImportDataController.class);
         fxView.setProp("connect", this.client.redisConnect());
         fxView.display();
     }
@@ -308,7 +308,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      * 传输数据
      */
     private void transportData() {
-        StageAdapter adapter = StageManager.parseStage(RedisDataTransportController.class);
+        StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
         adapter.setProp("sourceInfo", this.value);
         adapter.display();
     }
@@ -356,7 +356,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(RedisConnectUpdateController.class, this.window());
+        StageAdapter fxView = StageManager.parseStage(RedisUpdateConnectController.class, this.window());
         fxView.setProp("redisInfo", this.value());
         fxView.display();
     }

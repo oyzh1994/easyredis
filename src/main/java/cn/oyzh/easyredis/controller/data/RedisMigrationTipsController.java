@@ -56,6 +56,6 @@ public class RedisMigrationTipsController extends StageController {
     @FXML
     private void migration( ) {
         this.close();
-        StageManager.showStage(RedisDataMigrationController.class);
+        StageManager.showStage(RedisMigrationDataController.class);
     }
 }

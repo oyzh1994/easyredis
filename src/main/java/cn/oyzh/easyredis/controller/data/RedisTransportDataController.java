@@ -20,7 +20,6 @@ import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -49,7 +48,7 @@ import java.util.Set;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/redisDataTransport.fxml"
 )
-public class RedisDataTransportController extends StageController {
+public class RedisTransportDataController extends StageController {
 
     /**
      * 第一步

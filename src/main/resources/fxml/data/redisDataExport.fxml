@@ -22,7 +22,7 @@
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.data.RedisDataExportController" realWidth="800" realHeight="600">
+        fx:controller="cn.oyzh.easyredis.controller.data.RedisExportDataController" realWidth="800" realHeight="600">
     <FXHBox flexWidth="100%" realHeight="80">
         <FXHBox flexHeight="100%" flexWidth="100%">
             <ExportSVGGlyph sizeStr="40,40" color="yellowgreen">

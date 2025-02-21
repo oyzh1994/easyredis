@@ -24,8 +24,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.data.RedisDataTransportController" realWidth="800"
-          realHeight="600">
+        fx:controller="cn.oyzh.easyredis.controller.data.RedisTransportDataController" realWidth="800"
+        realHeight="600">
     <FXHBox flexWidth="100%" realHeight="80">
         <FXHBox flexHeight="100%" flexWidth="50% - 20" nodeOrientation="RIGHT_TO_LEFT">
             <RedisSVGGlyph sizeStr="40,40" color="yellowgreen">

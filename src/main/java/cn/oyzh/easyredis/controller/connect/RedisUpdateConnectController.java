@@ -44,7 +44,7 @@ import java.util.List;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "connect/redisConnectUpdate.fxml"
 )
-public class RedisConnectUpdateController extends StageController {
+public class RedisUpdateConnectController extends StageController {
 
     /**
      * 只读模式

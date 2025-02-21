@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
+import cn.oyzh.easyredis.controller.connect.RedisAddConnectController;
 import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
@@ -112,7 +112,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void addConnect(RedisAddConnectEvent event) {
-        StageManager.showStage(RedisConnectAddController.class, this.window());
+        StageManager.showStage(RedisAddConnectController.class, this.window());
     }
 
     /**

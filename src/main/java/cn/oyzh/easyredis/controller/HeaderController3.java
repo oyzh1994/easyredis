@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.SysConst;
 import cn.oyzh.common.system.OSUtil;
-import cn.oyzh.easyredis.controller.data.RedisDataMigrationController;
-import cn.oyzh.easyredis.controller.data.RedisDataTransportController;
+import cn.oyzh.easyredis.controller.data.RedisMigrationDataController;
+import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -59,11 +59,11 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void transport() {
-        StageAdapter wrapper = StageManager.getStage(RedisDataTransportController.class);
+        StageAdapter wrapper = StageManager.getStage(RedisTransportDataController.class);
         if (wrapper != null) {
             wrapper.toFront();
         } else {
-            StageManager.showStage(RedisDataTransportController.class, this.stage);
+            StageManager.showStage(RedisTransportDataController.class, this.stage);
         }
     }
 
@@ -96,7 +96,7 @@ public class HeaderController3 extends StageController {
      */
     @FXML
     private void migration() {
-        StageManager.showStage(RedisDataMigrationController.class, this.stage);
+        StageManager.showStage(RedisMigrationDataController.class, this.stage);
     }
 
     /**

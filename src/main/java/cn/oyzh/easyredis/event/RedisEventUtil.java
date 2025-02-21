@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.event;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
@@ -42,6 +43,20 @@ import cn.oyzh.easyredis.event.query.RedisQueryRenamedEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
+import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
+import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
+import cn.oyzh.easyredis.event.window.ZKShowAddNodeEvent;
+import cn.oyzh.easyredis.event.window.ZKShowAuthNodeEvent;
+import cn.oyzh.easyredis.event.window.RedisShowExportDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowImportDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowMainEvent;
+import cn.oyzh.easyredis.event.window.RedisShowMigrationDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowMigrationTipsEvent;
+import cn.oyzh.easyredis.event.window.ZKShowQRCodeNodeEvent;
+import cn.oyzh.easyredis.event.window.RedisShowSettingEvent;
+import cn.oyzh.easyredis.event.window.RedisShowToolEvent;
+import cn.oyzh.easyredis.event.window.RedisShowTransportDataEvent;
+import cn.oyzh.easyredis.event.window.RedisShowUpdateConnectEvent;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
@@ -655,5 +670,116 @@ public class RedisEventUtil {
         RedisQueryDeletedEvent event = new RedisQueryDeletedEvent();
         event.data(query);
         EventUtil.post(event);
+    }
+    /**
+     * 显示主页面
+     */
+    public static void showMain() {
+        EventUtil.post(new RedisShowMainEvent());
+    }
+
+    /**
+     * 显示设置页面
+     */
+    public static void showSetting() {
+        EventUtil.post(new RedisShowSettingEvent());
+    }
+
+    /**
+     * 显示传输数据页面
+     */
+    public static void showTransportData() {
+        showTransportData(null);
+    }
+
+    /**
+     * 显示传输数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showTransportData(RedisConnect connect) {
+        RedisShowTransportDataEvent event = new RedisShowTransportDataEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示导出数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showExportData(RedisConnect connect, String path) {
+        RedisShowExportDataEvent event = new RedisShowExportDataEvent();
+        event.data(connect);
+        event.path(path);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示导入数据页面
+     *
+     * @param connect zk连接
+     */
+    public static void showImportData(RedisConnect connect) {
+        RedisShowImportDataEvent event = new RedisShowImportDataEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示添加连接页面
+     */
+    public static void showAddConnect() {
+        showAddConnect(null);
+    }
+
+    /**
+     * 显示修改连接页面
+     *
+     * @param connect zk连接
+     */
+    public static void showUpdateConnect(RedisConnect connect) {
+        RedisShowUpdateConnectEvent event = new RedisShowUpdateConnectEvent();
+        event.data(connect);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示添加连接页面
+     *
+     * @param group 分组
+     */
+    public static void showAddConnect(RedisGroup group) {
+        RedisShowAddConnectEvent event = new RedisShowAddConnectEvent();
+        event.data(group);
+        EventUtil.post(event);
+    }
+
+    /**
+     * 显示工具页面
+     */
+    public static void showTool() {
+        EventUtil.post(new RedisShowToolEvent());
+    }
+
+    /**
+     * 显示关于页面
+     */
+    public static void showAbout() {
+        EventUtil.post(new RedisShowAboutEvent());
+    }
+
+    /**
+     * 显示迁移数据页面
+     */
+    public static void showMigrationData() {
+        EventUtil.post(new RedisShowMigrationDataEvent());
+    }
+
+    /**
+     * 显示迁移提示页面
+     */
+    public static void showMigrationTips() {
+        EventUtil.post(new RedisShowMigrationTipsEvent());
     }
 }

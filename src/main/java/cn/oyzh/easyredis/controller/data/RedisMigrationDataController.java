@@ -36,7 +36,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/redisDataMigration.fxml"
 )
-public class RedisDataMigrationController extends StageController {
+public class RedisMigrationDataController extends StageController {
 
     /**
      * 第一步

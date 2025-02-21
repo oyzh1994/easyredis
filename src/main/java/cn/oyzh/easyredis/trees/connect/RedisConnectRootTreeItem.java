@@ -4,7 +4,7 @@ import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
+import cn.oyzh.easyredis.controller.connect.RedisAddConnectController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
@@ -180,7 +180,7 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
      * 添加连接
      */
     private void addConnect() {
-        StageManager.showStage(RedisConnectAddController.class, this.window());
+        StageManager.showStage(RedisAddConnectController.class, this.window());
     }
 
     /**
