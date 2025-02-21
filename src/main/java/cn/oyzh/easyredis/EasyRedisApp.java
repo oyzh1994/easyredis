@@ -3,6 +3,7 @@ package cn.oyzh.easyredis;
 import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.controller.AboutController;
 import cn.oyzh.easyredis.controller.MainController;
 import cn.oyzh.easyredis.controller.SettingController2;
@@ -172,7 +173,11 @@ public class EasyRedisApp extends FXApplication implements EventListener {
                 return;
             }
             // 初始化
-            TrayManager.init(RedisConst.TRAY_ICON_PATH);
+            if (OSUtil.isWindows()) {
+                TrayManager.init(RedisConst.TRAY_ICON_PATH);
+            } else {
+                TrayManager.init(RedisConst.ICON_PATH);
+            }
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
