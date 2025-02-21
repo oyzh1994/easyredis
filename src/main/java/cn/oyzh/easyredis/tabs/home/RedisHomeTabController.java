@@ -54,7 +54,8 @@ public class RedisHomeTabController extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        RedisEventUtil.addConnect();
+//        RedisEventUtil.addConnect();
+        RedisEventUtil.showAddConnect();
     }
 
     /**

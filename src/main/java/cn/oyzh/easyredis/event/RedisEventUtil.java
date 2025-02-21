@@ -5,7 +5,6 @@ import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
-import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
@@ -487,12 +486,12 @@ public class RedisEventUtil {
         EventUtil.post(new RedisAddGroupEvent());
     }
 
-    /**
-     * 添加连接
-     */
-    public static void addConnect() {
-        EventUtil.post(new RedisAddConnectEvent());
-    }
+//    /**
+//     * 添加连接
+//     */
+//    public static void addConnect() {
+//        EventUtil.post(new RedisAddConnectEvent());
+//    }
 
     // /**
     //  * 展开左侧
@@ -668,6 +667,7 @@ public class RedisEventUtil {
         event.data(query);
         EventUtil.post(event);
     }
+
     /**
      * 显示主页面
      */
@@ -686,7 +686,7 @@ public class RedisEventUtil {
      * 显示传输数据页面
      */
     public static void showTransportData() {
-        showTransportData(null);
+        showTransportData(null, null);
     }
 
     /**
@@ -694,9 +694,10 @@ public class RedisEventUtil {
      *
      * @param connect zk连接
      */
-    public static void showTransportData(RedisConnect connect) {
+    public static void showTransportData(RedisConnect connect, Integer dbIndex) {
         RedisShowTransportDataEvent event = new RedisShowTransportDataEvent();
         event.data(connect);
+        event.dbIndex(dbIndex);
         EventUtil.post(event);
     }
 

@@ -408,9 +408,9 @@ public class RedisTransportDataController extends StageController {
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         // 来源连接不为null，则禁用来源选项
-        RedisConnect sourceInfo = this.stage.getProp("sourceInfo");
+        RedisConnect sourceConnect = this.stage.getProp("sourceConnect");
         if (sourceInfo != null) {
-            this.sourceInfo.select(sourceInfo);
+            this.sourceInfo.select(sourceConnect);
             this.sourceInfo.disable();
         }
         // 预选的db

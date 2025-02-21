@@ -100,7 +100,8 @@ public class ConnectController extends SubStageController {
 
     @FXML
     private void addConnect() {
-        RedisEventUtil.addConnect();
+//        RedisEventUtil.addConnect();
+        RedisEventUtil.showAddConnect();
     }
 
     @FXML

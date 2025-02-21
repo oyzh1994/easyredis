@@ -6,9 +6,6 @@ import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
-import cn.oyzh.easyredis.controller.data.RedisImportDataController;
-import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -299,18 +296,20 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      * 导入数据
      */
     private void importData() {
-        StageAdapter fxView = StageManager.parseStage(RedisImportDataController.class);
-        fxView.setProp("connect", this.client.redisConnect());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisImportDataController.class);
+//        fxView.setProp("connect", this.client.redisConnect());
+//        fxView.display();
+        RedisEventUtil.showImportData(this.client.redisConnect());
     }
 
     /**
      * 传输数据
      */
     private void transportData() {
-        StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
-        adapter.setProp("sourceInfo", this.value);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
+//        adapter.setProp("sourceInfo", this.value);
+//        adapter.display();
+        RedisEventUtil.showTransportData(this.client.redisConnect(), null);
     }
 
     /**
@@ -356,9 +355,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
             }
             this.closeConnect();
         }
-        StageAdapter fxView = StageManager.parseStage(RedisUpdateConnectController.class, this.window());
-        fxView.setProp("redisInfo", this.value());
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisUpdateConnectController.class, this.window());
+//        fxView.setProp("redisInfo", this.value());
+//        fxView.display();
+        RedisEventUtil.showUpdateConnect(this.value);
     }
 
     /**

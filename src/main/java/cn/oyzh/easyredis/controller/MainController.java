@@ -316,7 +316,7 @@ public class MainController extends ParentStageController {
             try {
 
                 StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
-                adapter.setProp("sourceInfo", event.data());
+                adapter.setProp("sourceConnect", event.data());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -386,7 +386,7 @@ public class MainController extends ParentStageController {
         FXUtil.runLater(() -> {
             try {
                 StageAdapter adapter = StageManager.parseStage(RedisUpdateConnectController.class);
-                adapter.setProp("zkConnect", event.data());
+                adapter.setProp("redisConnect", event.data());
                 adapter.display();
             } catch (Exception ex) {
                 ex.printStackTrace();
