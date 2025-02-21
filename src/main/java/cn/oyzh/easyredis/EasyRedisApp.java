@@ -50,10 +50,10 @@ public class EasyRedisApp extends FXApplication {
     public static void main(String[] args) {
         try {
             SysConst.projectName(PROJECT.getName());
+            SysConst.storeDir(RedisConst.STORE_PATH);
             JulLog.info("项目启动中...");
             // 储存初始化
             RedisStoreUtil.init();
-            SysConst.storeDir(RedisConst.STORE_PATH);
             SysConst.cacheDir(RedisConst.CACHE_PATH);
             FXConst.appIcon(RedisConst.ICON_PATH);
             EventFactory.registerEventBus(FxEventBus.class);
