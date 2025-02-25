@@ -97,6 +97,13 @@
             <version>${h2.version}</version>
         </dependency>
 
+        <!-- 二维码工具 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>${zxing.version}</version>
+        </dependency>
+
         <!-- fx打包 -->
         <dependency>
             <groupId>cn.oyzh</groupId>

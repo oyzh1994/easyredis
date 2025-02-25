@@ -4,6 +4,7 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.TextUtil;
 import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
+import cn.oyzh.easyredis.popups.RedisKeyQRCodePopupController;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -11,11 +12,15 @@ import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
+import cn.oyzh.fx.plus.window.PopupAdapter;
+import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.Objects;
@@ -296,5 +301,21 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
         this.nodeData.redoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataRedo.setDisable(!t1));
+    }
+
+    /**
+     * 健值转二维码
+     */
+    @FXML
+    private void key2QRCode(MouseEvent event) {
+        try {
+            PopupAdapter adapter= PopupManager.parsePopup(RedisKeyQRCodePopupController.class);
+            adapter.setProp("key", this.treeItem.value());
+            adapter.setProp("keyData", this.nodeData.getTextTrim());
+            adapter.showPopup((Node) event.getSource());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
     }
 }

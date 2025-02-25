@@ -17,8 +17,9 @@
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.BinarySVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.QRCodeSVGGlyph?>
 <FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController">
+        fx:controller="cn.oyzh.easyredis.tabs.key.RedisStringKeyController">
     <FXHBox realHeight="30" flexWidth="100%" groupId="dataToBig">
         <RichDataTypeComboBox prefHeight="22" fx:id="format">
             <HBox.margin>
@@ -69,6 +70,11 @@
                 <Insets left="5" top="7"/>
             </HBox.margin>
         </CopySVGGlyph>
+        <QRCodeSVGGlyph size="16" onMousePrimaryClicked="#key2QRCode" groupId="dataToBig">
+            <HBox.margin>
+                <Insets left="5" top="7"/>
+            </HBox.margin>
+        </QRCodeSVGGlyph>
         <FXText realHeight="22" fontSize="11" text="%base.binary" style="-fx-fill: green" fx:id="binary"
                 managedBindVisible="true" visible="false">
             <HBox.margin>
