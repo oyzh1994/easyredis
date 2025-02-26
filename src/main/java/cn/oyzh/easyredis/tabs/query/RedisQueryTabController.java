@@ -10,8 +10,8 @@ import cn.oyzh.easyredis.query.RedisQueryResult;
 import cn.oyzh.easyredis.query.RedisQueryTextAreaPane;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisQueryStore;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2025/02/06
  */
-public class RedisQueryTabController extends DynamicTabController {
+public class RedisQueryTabController extends RichTabController {
 
     /**
      * 查询对象
@@ -168,7 +168,7 @@ public class RedisQueryTabController extends DynamicTabController {
     }
 
     @Override
-    public void onCloseRequest(DynamicTab tab, Event event) {
+    public void onCloseRequest(RichTab tab, Event event) {
         if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
         } else {

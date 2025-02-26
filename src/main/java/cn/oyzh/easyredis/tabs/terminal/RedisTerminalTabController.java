@@ -4,8 +4,8 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import lombok.NonNull;
@@ -16,7 +16,7 @@ import lombok.NonNull;
  * @author oyzh
  * @since 2023/07/21
  */
-public class RedisTerminalTabController extends DynamicTabController {
+public class RedisTerminalTabController extends RichTabController {
 
     /**
      * redis命令行文本域
@@ -51,7 +51,7 @@ public class RedisTerminalTabController extends DynamicTabController {
     }
 
     @Override
-    public void onTabClose(DynamicTab tab, Event event) {
+    public void onTabClose(RichTab tab, Event event) {
         if (this.terminal.isTemporary()) {
             RedisConnectUtil.close(this.client(), true, true);
         }

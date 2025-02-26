@@ -26,7 +26,7 @@ import cn.oyzh.easyredis.tabs.server.RedisServerTab;
 import cn.oyzh.easyredis.tabs.terminal.RedisTerminalTab;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.gui.tabs.DynamicTabPane;
+import cn.oyzh.fx.gui.tabs.RichTabPane;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -44,7 +44,7 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisTabPane extends DynamicTabPane implements FXEventListener {
+public class RedisTabPane extends RichTabPane implements FXEventListener {
 
     @Override
     public void onNodeInitialize() {

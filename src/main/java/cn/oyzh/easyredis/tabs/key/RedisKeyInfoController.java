@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/08/03
  */
-public class RedisKeyInfoController extends DynamicTabController {
+public class RedisKeyInfoController extends RichTabController {
 
     /**
      * 根节点

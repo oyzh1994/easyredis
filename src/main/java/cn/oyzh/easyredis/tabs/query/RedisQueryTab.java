@@ -4,14 +4,14 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.scene.Cursor;
 
 /**
  * @author oyzh
  * @since 2025/02/06
  */
-public class RedisQueryTab extends DynamicTab {
+public class RedisQueryTab extends RichTab {
 
     public RedisQueryTab(RedisClient client, RedisQuery query) {
         super();

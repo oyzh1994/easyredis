@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.pubsub;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import redis.clients.jedis.JedisPubSub;
  * @author oyzh
  * @since 2023/08/02
  */
-public class RedisPubsubTabController extends DynamicTabController {
+public class RedisPubsubTabController extends RichTabController {
 
     /**
      * 订阅组件

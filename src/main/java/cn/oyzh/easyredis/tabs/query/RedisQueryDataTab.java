@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author oyzh
  * @since 2025/02/07
  */
-public class RedisQueryDataTab extends DynamicTab {
+public class RedisQueryDataTab extends RichTab {
 
     public RedisQueryDataTab(Object object) {
         super();

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.pubsub;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.fx.svg.glyph.SubscribeSVGGlyph;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.event.Event;
 import javafx.scene.Cursor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/08/02
  */
-public class RedisPubsubTab extends DynamicTab {
+public class RedisPubsubTab extends RichTab {
 
     {
         this.setClosable(true);

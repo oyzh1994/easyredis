@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author oyzh
  * @since 2025/02/07
  */
-public class RedisQueryDataTabController extends DynamicTabController {
+public class RedisQueryDataTabController extends RichTabController {
 
     @FXML
     private FXTableView<KeyValueProperty<Integer, Object>> dataTable;
