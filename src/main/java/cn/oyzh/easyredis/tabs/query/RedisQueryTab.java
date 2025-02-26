@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.query;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.QuerySVGGlyph;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.scene.Cursor;
 
@@ -21,9 +21,9 @@ public class RedisQueryTab extends RichTab {
 
     @Override
     public void flushGraphic() {
-        ChangelogSVGGlyph glyph = (ChangelogSVGGlyph) this.getGraphic();
+        QuerySVGGlyph glyph = (QuerySVGGlyph) this.getGraphic();
         if (glyph == null) {
-            glyph = new ChangelogSVGGlyph("12");
+            glyph = new QuerySVGGlyph("12");
             glyph.setCursor(Cursor.DEFAULT);
             this.graphic(glyph);
         }
