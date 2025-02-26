@@ -10,19 +10,19 @@
           fx:controller="cn.oyzh.easyredis.popups.RedisFilterSettingPopupController" realWidth="280"
           realHeight="80">
     <FXHBox>
-        <FXCheckBox fx:id="searchKey" text="%base.key" selected="true">
-            <HBox.margin>
-                <Insets left="15" top="15"/>
-            </HBox.margin>
-        </FXCheckBox>
-        <FXCheckBox fx:id="searchData" text="%base.data" selected="true">
-            <HBox.margin>
-                <Insets left="5" top="15"/>
-            </HBox.margin>
-        </FXCheckBox>
+<!--        <FXCheckBox fx:id="searchKey" text="%base.key" selected="true">-->
+<!--            <HBox.margin>-->
+<!--                <Insets left="15" top="15"/>-->
+<!--            </HBox.margin>-->
+<!--        </FXCheckBox>-->
+<!--        <FXCheckBox fx:id="searchData" text="%base.data" selected="true">-->
+<!--            <HBox.margin>-->
+<!--                <Insets left="5" top="15"/>-->
+<!--            </HBox.margin>-->
+<!--        </FXCheckBox>-->
         <FXCheckBox fx:id="matchCase" text="%base.matchCase">
             <HBox.margin>
-                <Insets left="5" top="15"/>
+                <Insets left="15" top="15"/>
             </HBox.margin>
         </FXCheckBox>
         <FXCheckBox fx:id="matchFull" text="%base.matchFull">

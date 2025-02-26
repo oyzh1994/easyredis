@@ -151,7 +151,7 @@ public class RedisKeysTabController extends ParentTabController {
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
         this.treeView.highlightMatchCase(mode == 3 || mode == 1);
-        // 仅在过滤路径的情况下设置节点高亮
+        // 仅在过滤键的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
             this.treeView.highlightText(kw);
         } else {

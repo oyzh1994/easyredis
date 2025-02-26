@@ -108,9 +108,9 @@ public class RedisKeyInfoController extends DynamicTabController {
                 String key = this.treeItem.key();
                 int dbIndex = this.treeItem.dbIndex();
                 RedisKeyUtil.keyObject(this.redisKey, dbIndex, key, this.client);
-                this.objectIdletime.setText(I18nHelper.idleTime() + " : " + this.redisKey.objectIdletimeString());
-                this.objectRefcount.setText(I18nHelper.refcount() + " : " + this.redisKey.objectRefcountString());
-                this.objectEncoding.setText(I18nHelper.encoding() + " : " + this.redisKey.objectedEncodingString());
+                this.objectIdletime.text(I18nHelper.idleTime() + " : " + this.redisKey.objectIdletimeString());
+                this.objectRefcount.text(I18nHelper.refcount() + " : " + this.redisKey.objectRefcountString());
+                this.objectEncoding.text(I18nHelper.encoding() + " : " + this.redisKey.objectedEncodingString());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);

@@ -25,17 +25,17 @@ import static javafx.stage.PopupWindow.AnchorLocation.WINDOW_TOP_LEFT;
 )
 public class RedisFilterSettingPopupController extends PopupController {
 
-    /**
-     * 搜索键
-     */
-    @FXML
-    private FXCheckBox searchKey;
+//    /**
+//     * 搜索键
+//     */
+//    @FXML
+//    private FXCheckBox searchKey;
 
-    /**
-     * 搜索数据
-     */
-    @FXML
-    private FXCheckBox searchData;
+//    /**
+//     * 搜索数据
+//     */
+//    @FXML
+//    private FXCheckBox searchData;
 
     /**
      * 匹配大小写
@@ -58,8 +58,8 @@ public class RedisFilterSettingPopupController extends PopupController {
             RedisKeyFilterParam filterParam = new RedisKeyFilterParam();
             filterParam.setMatchCase(this.matchCase.isSelected());
             filterParam.setMatchFull(this.matchFull.isSelected());
-            filterParam.setSearchKey(this.searchKey.isSelected());
-            filterParam.setSearchData(this.searchData.isSelected());
+//            filterParam.setSearchKey(this.searchKey.isSelected());
+//            filterParam.setSearchData(this.searchData.isSelected());
             this.submit(filterParam);
             this.closeWindow();
         } catch (Exception ex) {
@@ -83,8 +83,8 @@ public class RedisFilterSettingPopupController extends PopupController {
         if (filterParam != null) {
             this.matchCase.setSelected(filterParam.isMatchCase());
             this.matchFull.setSelected(filterParam.isMatchFull());
-            this.searchKey.setSelected(filterParam.isSearchKey());
-            this.searchData.setSelected(filterParam.isSearchData());
+//            this.searchKey.setSelected(filterParam.isSearchKey());
+//            this.searchData.setSelected(filterParam.isSearchData());
         }
     }
 }
