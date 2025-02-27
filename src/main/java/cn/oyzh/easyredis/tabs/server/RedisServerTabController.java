@@ -186,8 +186,8 @@ public class RedisServerTabController extends ParentTabController {
     }
 
     @Override
-    public void onTabClose(RichTab tab, Event event) {
-        super.onTabClose(tab, event);
+    public void onTabClosed(Event event) {
+        super.onTabClosed(event);
         this.closeRefreshTask();
     }
 

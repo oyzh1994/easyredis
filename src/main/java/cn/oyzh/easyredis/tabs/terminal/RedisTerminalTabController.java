@@ -51,10 +51,10 @@ public class RedisTerminalTabController extends RichTabController {
     }
 
     @Override
-    public void onTabClose(RichTab tab, Event event) {
+    public void onTabClosed(Event event) {
         if (this.terminal.isTemporary()) {
             RedisConnectUtil.close(this.client(), true, true);
         }
-        super.onTabClose(tab, event);
+        super.onTabClosed(event);
     }
 }

@@ -168,11 +168,11 @@ public class RedisQueryTabController extends RichTabController {
     }
 
     @Override
-    public void onCloseRequest(RichTab tab, Event event) {
+    public void onTabCloseRequest(Event event) {
         if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
         } else {
-            super.onCloseRequest(tab, event);
+            super.onTabCloseRequest(event);
         }
     }
 }
