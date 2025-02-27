@@ -83,7 +83,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 收藏的键
      */
     @Getter
-    private List<String> collects;
+    private List<RedisCollect> collects;
 
     /**
      * 过滤列表

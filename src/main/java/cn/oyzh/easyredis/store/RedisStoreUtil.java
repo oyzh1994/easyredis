@@ -5,8 +5,10 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.json.JSONArray;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.RedisConst;
+import cn.oyzh.easyredis.domain.RedisCollect;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
@@ -99,7 +101,6 @@ public class RedisStoreUtil {
                 for (int i = 0; i < array.size(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     RedisConnect connect = new RedisConnect();
-
                     if (obj.containsKey("id")) {
                         connect.setId(obj.getString("id"));
                     }
@@ -113,7 +114,15 @@ public class RedisStoreUtil {
                         connect.setSshForward(obj.getBooleanValue("sshForward"));
                     }
                     if (obj.containsKey("collects")) {
-                        connect.setCollects(obj.getBeanList("collects", String.class));
+                        List<String> collects = obj.getBeanList("collects", String.class);
+                        if (CollectionUtil.isNotEmpty(collects)) {
+                            List<RedisCollect> collectList = new ArrayList<>();
+                            for (String collect : collects) {
+                                collectList.add(new RedisCollect(connect.getId(), 0, collect));
+                            }
+                            connect.setCollects(collectList);
+                        }
+//                        connect.setCollects(obj.getBeanList("collects", String.class));
                     }
                     if (obj.containsKey("remark")) {
                         connect.setRemark(obj.getString("remark"));

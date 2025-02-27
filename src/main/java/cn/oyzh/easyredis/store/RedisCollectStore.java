@@ -24,15 +24,16 @@ public class RedisCollectStore extends JdbcStandardStore<RedisCollect> {
      */
     public static final RedisCollectStore INSTANCE = new RedisCollectStore();
 
-    public List<String> list(String iid) {
+    public List<RedisCollect> loadByIid(String iid) {
         QueryParam param = new QueryParam();
         param.setName("iid");
         param.setData(iid);
-        List<RedisCollect> collects = super.selectList(param);
-        if (CollectionUtil.isNotEmpty(collects)) {
-            return collects.parallelStream().map(RedisCollect::getKey).collect(Collectors.toList());
-        }
-        return Collections.emptyList();
+        return super.selectList(param);
+//        List<RedisCollect> collects = super.selectList(param);
+//        if (CollectionUtil.isNotEmpty(collects)) {
+//            return collects.parallelStream().map(RedisCollect::getKey).collect(Collectors.toList());
+//        }
+//        return Collections.emptyList();
     }
 
     public boolean replace(String iid, int dbIndex, String key) {

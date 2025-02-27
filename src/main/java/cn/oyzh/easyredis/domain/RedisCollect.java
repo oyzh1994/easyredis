@@ -32,7 +32,6 @@ public class RedisCollect implements Serializable {
     @Column
     private String key;
 
-
     public RedisCollect() {
 
     }

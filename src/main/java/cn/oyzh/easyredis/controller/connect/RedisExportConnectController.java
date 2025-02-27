@@ -68,7 +68,7 @@ public class RedisExportConnectController extends StageController {
      */
     @FXML
     private void doExport() {
-        List<RedisConnect> connects = this.connectStore.load();
+        List<RedisConnect> connects = this.connectStore.loadFull();
         if (CollectionUtil.isEmpty(connects)) {
             MessageBox.warn(I18nHelper.connectionIsEmpty());
             return;
