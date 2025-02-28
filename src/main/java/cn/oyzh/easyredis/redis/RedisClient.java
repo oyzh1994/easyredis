@@ -5,14 +5,17 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
+import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
+import cn.oyzh.easyredis.store.RedisSSHConfigStore;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
@@ -160,6 +163,11 @@ public class RedisClient {
     private final ReadOnlyObjectWrapper<RedisConnState> state = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
 
     /**
+     * ssh配置储存
+     */
+    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+
+    /**
      * 获取连接状态
      *
      * @return 连接状态
@@ -170,9 +178,9 @@ public class RedisClient {
 
     public RedisClient(@NonNull RedisConnect redisConnect) {
         this.redisConnect = redisConnect;
-        if (redisConnect.isSSHForward() && redisConnect.getSshConfig() != null) {
-            this.sshForwarder = new SSHForwarder(redisConnect.getSshConfig());
-        }
+        // if (redisConnect.isSSHForward() && redisConnect.getSshConfig() != null) {
+        //     this.sshForwarder = new SSHForwarder(redisConnect.getSshConfig());
+        // }
         this.stateProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
                 case CLOSED -> {
@@ -216,12 +224,34 @@ public class RedisClient {
         HostAndPort host;
         // ssh端口转发
         if (this.redisConnect.isSSHForward()) {
-            SSHForwardConfig forwardInfo = new SSHForwardConfig();
-            forwardInfo.setHost(this.redisConnect.hostIp());
-            forwardInfo.setPort(this.redisConnect.hostPort());
-            int localPort = this.sshForwarder.forward(forwardInfo);
-            // 连接信息
-            host = new HostAndPort("127.0.0.1", localPort);
+            // 初始化ssh转发器
+            RedisSSHConfig sshConfig = this.redisConnect.getSshConfig();
+            // 从数据库获取
+            if (sshConfig == null) {
+                sshConfig = this.sshConfigStore.getByIid(this.redisConnect.getId());
+            }
+            if (sshConfig != null) {
+                if (this.sshForwarder == null) {
+                    this.sshForwarder = new SSHForwarder(sshConfig);
+                }
+                // ssh配置
+                SSHForwardConfig forwardConfig = new SSHForwardConfig();
+                forwardConfig.setHost(this.redisConnect.hostIp());
+                forwardConfig.setPort(this.redisConnect.hostPort());
+                // 执行连接
+                int localPort = this.sshForwarder.forward(forwardConfig);
+                // 连接信息
+                host = new HostAndPort("127.0.0.1", localPort);
+            } else {
+                JulLog.warn("ssh forward is enable but ssh config is null");
+                throw new RedisException("ssh forward is enable but ssh config is null");
+            }
+            // SSHForwardConfig forwardInfo = new SSHForwardConfig();
+            // forwardInfo.setHost(this.redisConnect.hostIp());
+            // forwardInfo.setPort(this.redisConnect.hostPort());
+            // int localPort = this.sshForwarder.forward(forwardInfo);
+            // // 连接信息
+            // host = new HostAndPort("127.0.0.1", localPort);
         } else {// 直连
             // 连接信息
             host = new HostAndPort(this.redisConnect.hostIp(), this.redisConnect.hostPort());
@@ -395,26 +425,26 @@ public class RedisClient {
         // return this.cluster;
     }
 
-    // /**
-    //  * 获取cluster集群的主节点连接
-    //  *
-    //  * @return List<ConnectionPool>
-    //  */
-    // @Deprecated
-    // private List<ConnectionPool> getClusterMasterPools() {
-    //     Map<String, ConnectionPool> poolMap = this.cluster.getClusterNodes();
-    //     if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
-    //         this.clusterMasterPools = new ArrayList<>();
-    //         for (ConnectionPool connectionPool : poolMap.values()) {
-    //             List<Object> roleList = this.role(connectionPool);
-    //             Object role = CollectionUtil.getFirst(roleList);
-    //             if (StringUtil.equalsIgnoreCase("master", (String) role)) {
-    //                 this.clusterMasterPools.add(connectionPool);
-    //             }
-    //         }
-    //     }
-    //     return this.clusterMasterPools == null ? Collections.emptyList() : this.clusterMasterPools;
-    // }
+// /**
+//  * 获取cluster集群的主节点连接
+//  *
+//  * @return List<ConnectionPool>
+//  */
+// @Deprecated
+// private List<ConnectionPool> getClusterMasterPools() {
+//     Map<String, ConnectionPool> poolMap = this.cluster.getClusterNodes();
+//     if (CollectionUtil.isNotEmpty(poolMap) && (this.clusterMasterPools == null || !poolMap.values().containsAll(this.clusterMasterPools))) {
+//         this.clusterMasterPools = new ArrayList<>();
+//         for (ConnectionPool connectionPool : poolMap.values()) {
+//             List<Object> roleList = this.role(connectionPool);
+//             Object role = CollectionUtil.getFirst(roleList);
+//             if (StringUtil.equalsIgnoreCase("master", (String) role)) {
+//                 this.clusterMasterPools.add(connectionPool);
+//             }
+//         }
+//     }
+//     return this.clusterMasterPools == null ? Collections.emptyList() : this.clusterMasterPools;
+// }
 
     /**
      * 获取cluster集群的主节点连接

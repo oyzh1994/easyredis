@@ -9,7 +9,7 @@ import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
 import cn.oyzh.event.EventSubscribe;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -93,7 +93,7 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      * 字段操作
      */
     @FXML
-    private FlexHBox fieldAction;
+    private FXHBox fieldAction;
 
     /**
      * 展开列表面板

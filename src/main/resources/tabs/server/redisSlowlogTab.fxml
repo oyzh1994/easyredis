@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <FXTab xmlns="http://javafx.com/javafx"
        xmlns:fx="http://javafx.com/fxml"
        fx:controller="cn.oyzh.easyredis.tabs.server.RedisSlowlogTabController" text="%base.slowlog">
-    <FlexVBox flexWidth="100%" flexHeight="100%">
-        <FlexHBox flexWidth="100%" realHeight="40">
+    <FXVBox flexWidth="100%" flexHeight="100%">
+        <FXHBox flexWidth="100%" realHeight="40">
             <RefreshSVGGlyph onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="10" top="10"/>
                 </HBox.margin>
             </RefreshSVGGlyph>
-        </FlexHBox>
-        <FlexTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
+        </FXHBox>
+        <FXTableView flexWidth="100% - 2" flexHeight="100% - 40" fx:id="listTable">
             <columns>
-                <FlexTableColumn flexWidth="7%" valueName="logId" text="ID"/>
-                <FlexTableColumn flexWidth="33%" valueName="command" text="%base.cmd"/>
-                <FlexTableColumn flexWidth="20%" valueName="timeStamp" text="%base.time"/>
-                <FlexTableColumn flexWidth="16%" valueName="clientHost" text="%base.clientAddr"/>
-                <FlexTableColumn flexWidth="12%" valueName="clientName" text="%base.clientName"/>
-                <FlexTableColumn flexWidth="12% - 12" valueName="executionTime" text="%redis.slowlog.tip1"/>
+                <FXTableColumn flexWidth="7%" valueName="logId" text="ID"/>
+                <FXTableColumn flexWidth="33%" valueName="command" text="%base.cmd"/>
+                <FXTableColumn flexWidth="20%" valueName="timeStamp" text="%base.time"/>
+                <FXTableColumn flexWidth="16%" valueName="clientHost" text="%base.clientAddr"/>
+                <FXTableColumn flexWidth="12%" valueName="clientName" text="%base.clientName"/>
+                <FXTableColumn flexWidth="12% - 12" valueName="executionTime" text="%redis.slowlog.tip1"/>
             </columns>
-        </FlexTableView>
-    </FlexVBox>
+        </FXTableView>
+    </FXVBox>
 </FXTab>

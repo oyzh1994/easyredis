@@ -4,9 +4,9 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.text.FlexText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/08/03
  */
-public class RedisKeyInfoController extends DynamicTabController {
+public class RedisKeyInfoController extends RichTabController {
 
     /**
      * 根节点
@@ -48,19 +48,19 @@ public class RedisKeyInfoController extends DynamicTabController {
      * 编码
      */
     @FXML
-    private FlexText objectEncoding;
+    private FXLabel objectEncoding;
 
     /**
      * 空闲时间
      */
     @FXML
-    private FlexText objectIdletime;
+    private FXLabel objectIdletime;
 
     /**
      * 引用数量
      */
     @FXML
-    private FlexText objectRefcount;
+    private FXLabel objectRefcount;
 
     /**
      * 复制信息
@@ -108,9 +108,9 @@ public class RedisKeyInfoController extends DynamicTabController {
                 String key = this.treeItem.key();
                 int dbIndex = this.treeItem.dbIndex();
                 RedisKeyUtil.keyObject(this.redisKey, dbIndex, key, this.client);
-                this.objectIdletime.setText(I18nHelper.idleTime() + " : " + this.redisKey.objectIdletimeString());
-                this.objectRefcount.setText(I18nHelper.refcount() + " : " + this.redisKey.objectRefcountString());
-                this.objectEncoding.setText(I18nHelper.encoding() + " : " + this.redisKey.objectedEncodingString());
+                this.objectIdletime.text(I18nHelper.idleTime() + " : " + this.redisKey.objectIdletimeString());
+                this.objectRefcount.text(I18nHelper.refcount() + " : " + this.redisKey.objectRefcountString());
+                this.objectEncoding.text(I18nHelper.encoding() + " : " + this.redisKey.objectedEncodingString());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);

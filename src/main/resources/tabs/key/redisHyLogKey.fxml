@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisHylogKeyController">
-    <FlexHBox realHeight="30" flexWidth="100%">
+    <FXHBox realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadData">
             <HBox.margin>
                 <Insets left="5"/>
@@ -48,12 +48,12 @@
         <padding>
             <Insets top="7"/>
         </padding>
-    </FlexHBox>
-    <RedisDataTextArea editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
-                       flexHeight="100% - 30" flexWidth="100% - 4">
+    </FXHBox>
+    <RedisDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
+                           flexHeight="100% - 30" flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextArea>
+    </RedisDataTextAreaPane>
 <!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
-</FlexVBox>
+</FXVBox>

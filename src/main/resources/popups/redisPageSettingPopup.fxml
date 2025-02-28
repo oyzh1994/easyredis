@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.ApplySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CancelSVGGlyph?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.popups.RedisPageSettingPopupController" realWidth="280"
           realHeight="110">
     <InfoLabel text="%base.pageLimit">
-        <FlexVBox.margin>
+        <FXVBox.margin>
             <Insets left="15" top="5"/>
-        </FlexVBox.margin>
+        </FXVBox.margin>
     </InfoLabel>
     <NumberTextField fx:id="limit" minVal="1" step="100" realHeight="25" flexWidth="100% - 65"
                      styleClass="popover-item">
-        <FlexVBox.margin>
+        <FXVBox.margin>
             <Insets left="15" top="5"/>
-        </FlexVBox.margin>
+        </FXVBox.margin>
     </NumberTextField>
-    <FlexHBox flexWidth="100%">
+    <FXHBox flexWidth="100%">
         <ApplySVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
                 <Insets left="15" top="15"/>
@@ -32,5 +32,5 @@
                 <Insets left="15" top="15"/>
             </HBox.margin>
         </CancelSVGGlyph>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

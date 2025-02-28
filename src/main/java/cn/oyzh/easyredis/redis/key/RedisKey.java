@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.redis.key;
 
-import cn.oyzh.common.util.ObjectCopier;
+import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import lombok.Getter;

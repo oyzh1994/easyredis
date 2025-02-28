@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.query;
 
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.property.KeyValueProperty;
 import javafx.fxml.FXML;
 import redis.clients.jedis.util.KeyValue;
@@ -15,10 +15,10 @@ import java.util.List;
  * @author oyzh
  * @since 2025/02/07
  */
-public class RedisQueryDataTabController extends DynamicTabController {
+public class RedisQueryDataTabController extends RichTabController {
 
     @FXML
-    private FlexTableView<KeyValueProperty<Integer, Object>> dataTable;
+    private FXTableView<KeyValueProperty<Integer, Object>> dataTable;
 
     public void init(Collection<?> list) {
         List<KeyValueProperty<Integer, Object>> data = new ArrayList<>();

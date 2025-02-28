@@ -85,6 +85,9 @@ public class RedisKeyFilterTextField extends LimitTextField {
         if (filterParam.isSearchData()) {
             return 1;
         }
-        return 0;
+        if (filterParam.isSearchKey()) {
+            return 0;
+        }
+        return -1;
     }
 }

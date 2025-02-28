@@ -4,7 +4,7 @@ import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.tabs.SubTabController;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.NonNull;
@@ -32,7 +32,7 @@ public class RedisPubsubTabController extends SubTabController {
      * 表格组件
      */
     @FXML
-    private FlexTableView<RedisPubsubItem> listTable;
+    private FXTableView<RedisPubsubItem> listTable;
 
     /**
      * 执行初始化

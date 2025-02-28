@@ -15,7 +15,7 @@ import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -57,55 +57,55 @@ public class RedisKeyAddController extends StageController {
      * 位图组件
      */
     @FXML
-    private FlexVBox bitBox;
+    private FXVBox bitBox;
 
     /**
      * stream组件
      */
     @FXML
-    private FlexVBox streamBox;
+    private FXVBox streamBox;
 
     /**
      * string组件
      */
     @FXML
-    private FlexVBox stringBox;
+    private FXVBox stringBox;
 
     /**
      * list组件
      */
     @FXML
-    private FlexVBox listBox;
+    private FXVBox listBox;
 
     /**
      * set组件
      */
     @FXML
-    private FlexVBox setBox;
+    private FXVBox setBox;
 
     /**
      * zSet组件
      */
     @FXML
-    private FlexVBox zSetBox;
+    private FXVBox zSetBox;
 
     /**
      * set组件
      */
     @FXML
-    private FlexVBox hashBox;
+    private FXVBox hashBox;
 
     /**
      * hylog组件
      */
     @FXML
-    private FlexVBox hylogBox;
+    private FXVBox hylogBox;
 
     /**
      * coordinate组件
      */
     @FXML
-    private FlexVBox coordinateBox;
+    private FXVBox coordinateBox;
 
     /**
      * 字段名
@@ -153,7 +153,7 @@ public class RedisKeyAddController extends StageController {
      * 消息id组件
      */
     @FXML
-    private FlexVBox root;
+    private FXVBox root;
 
     /**
      * 消息id值
@@ -540,6 +540,7 @@ public class RedisKeyAddController extends StageController {
     @Override
     public void onWindowHidden(WindowEvent event) {
         super.onWindowHidden(event);
+        this.mutexes.destroy();
     }
 
     @Override

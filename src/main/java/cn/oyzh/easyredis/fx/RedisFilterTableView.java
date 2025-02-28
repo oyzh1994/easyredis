@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.fx;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024-12-31
  */
-public class RedisFilterTableView extends FlexTableView<RedisFilterVO> {
+public class RedisFilterTableView extends FXTableView<RedisFilterVO> {
 
     /**
      * 当前过滤列表

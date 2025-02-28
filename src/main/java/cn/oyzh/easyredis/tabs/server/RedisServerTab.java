@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.server;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.svg.glyph.ServerSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.Event;
@@ -15,7 +15,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2023/08/01
  */
-public class RedisServerTab extends DynamicTab {
+public class RedisServerTab extends RichTab {
 
     @Override
     public RedisServerTabController controller() {

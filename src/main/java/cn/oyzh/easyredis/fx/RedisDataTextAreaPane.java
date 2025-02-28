@@ -12,7 +12,7 @@ import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
  * @author oyzh
  * @since 2023/07/28
  */
-public class RedisDataTextArea extends RichDataTextAreaPane {
+public class RedisDataTextAreaPane extends RichDataTextAreaPane {
 
     @Override
     protected void initTextArea() {

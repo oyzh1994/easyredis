@@ -1,6 +1,7 @@
 package cn.oyzh.easyredis.store;
 
 import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.easyredis.domain.RedisCollect;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisSSHConfig;
@@ -44,6 +45,21 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
     }
 
     /**
+     * 加载列表，完整信息，给导出用
+     *
+     * @return redis连接列表
+     */
+    public List<RedisConnect> loadFull() {
+        List<RedisConnect> connects = super.selectList();
+        for (RedisConnect connect : connects) {
+            connect.setFilters(this.filterStore.loadByIid(connect.getId()));
+            connect.setCollects(this.collectStore.loadByIid(connect.getId()));
+            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+        }
+        return connects;
+    }
+
+    /**
      * 替换
      *
      * @param model 模型
@@ -67,13 +83,14 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
                 this.sshConfigStore.deleteByIid(model.getId());
             }
 
-            // // 收藏处理
-            // List<String> collects = model.getCollects();
-            // if (CollectionUtil.isNotEmpty(collects)) {
-            //     for (String collect : collects) {
-            //         this.collectStore.replace(model.getId(), collect);
-            //     }
-            // }
+            // 收藏处理
+            List<RedisCollect> collects = model.getCollects();
+            if (CollectionUtil.isNotEmpty(collects)) {
+                this.collectStore.deleteByIid(model.getId());
+                for (RedisCollect collect : collects) {
+                    this.collectStore.replace(collect);
+                }
+            }
 
             // 过滤处理
             List<RedisFilter> filters = model.getFilters();

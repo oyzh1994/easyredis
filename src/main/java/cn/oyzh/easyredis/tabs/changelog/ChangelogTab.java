@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.changelog;
 
 import cn.oyzh.fx.gui.svg.glyph.ChangelogSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import javafx.scene.Cursor;
 
@@ -11,7 +11,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2024/05/08
  */
-public class ChangelogTab extends DynamicTab {
+public class ChangelogTab extends RichTab {
 
     public ChangelogTab() {
         super();

@@ -1,11 +1,10 @@
 package cn.oyzh.easyredis.test;
 
-import cn.oyzh.common.util.OSUtil;
+import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.fx.pkg.Packer;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -7,13 +7,13 @@
 <!-- <?import cn.oyzh.fx.gui.svg.label.QuitSVGLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.SettingSVGLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.TransportSVGLabel?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
 <!-- <?import javafx.geometry.Insets?> -->
 <!-- <?import javafx.scene.layout.HBox?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout1SVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.glyph.layout.Layout2SVGGlyph?> -->
 <!-- <?import cn.oyzh.fx.gui.svg.label.ToolsSVGLabel?> -->
-<!-- <FlexHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXHBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyredis.controller.HeaderController" flexWidth="100%" realHeight="30"> -->
 <!--     <FilterSVGLabel text="%base.filter" onMousePrimaryClicked="#filter" size="12"> -->
 <!--         <HBox.margin> -->
@@ -75,4 +75,4 @@
 <!--             <Insets top="7" left="10"/> -->
 <!--         </HBox.margin> -->
 <!--     </Layout2SVGGlyph> -->
-<!-- </FlexHBox> -->
+<!-- </FXHBox> -->

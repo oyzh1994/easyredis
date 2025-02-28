@@ -72,8 +72,8 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     }
 
     @Override
-    public RedisKeyRootTreeItem getRoot() {
-        return (RedisKeyRootTreeItem) super.getRoot();
+    public RedisKeyRootTreeItem root() {
+        return (RedisKeyRootTreeItem) super.root();
     }
 
     /**
@@ -84,7 +84,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void keyAdded(RedisKeyAddedEvent event) {
         if (event.data() == this.redisConnect() && event.dbIndex() == this.dbIndex()) {
-            this.getRoot().keyAdded(event.key());
+            this.root().keyAdded(event.key());
         }
     }
 
@@ -96,7 +96,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void keyDeleted(RedisKeyDeletedEvent event) {
         if (event.data() == this.redisConnect() && event.dbIndex() == this.dbIndex()) {
-            this.getRoot().keyDeleted(event.key());
+            this.root().keyDeleted(event.key());
         }
     }
 
@@ -120,8 +120,8 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @EventSubscribe
     private void keyFiltered(RedisKeyFilteredEvent event) {
         if (event.data() == this.dbItem) {
-            this.getRoot().unloadChild();
-            this.getRoot().loadChild();
+            this.root().unloadChild();
+            this.root().loadChild();
         }
     }
 
@@ -180,7 +180,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     public void loadItems() {
         this.disable();
         try {
-            this.getRoot().loadChild();
+            this.root().loadChild();
         } finally {
             this.enable();
         }
@@ -189,7 +189,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @Override
     public synchronized void sortAsc() {
         RichTreeItem<?> item = this.getSelectedItem();
-        this.getRoot().sortAsc();
+        this.root().sortAsc();
         if (item != null) {
             this.select(item);
         }
@@ -199,7 +199,7 @@ public class RedisKeyTreeView extends RichTreeView implements FXEventListener {
     @Override
     public synchronized void sortDesc() {
         RichTreeItem<?> item = this.getSelectedItem();
-        this.getRoot().sortDesc();
+        this.root().sortDesc();
         if (item != null) {
             this.select(item);
         }

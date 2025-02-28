@@ -1,9 +1,9 @@
 package cn.oyzh.easyredis.controller.data;
 
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.DownLatch;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.fx.RedisConnectComboBox;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
@@ -16,11 +16,10 @@ import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.controls.label.FlexLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -47,33 +46,33 @@ import java.util.Set;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "data/redisDataTransport.fxml"
+        value = FXConst.FXML_PATH + "data/redisTransportData.fxml"
 )
-public class RedisDataTransportController extends StageController {
+public class RedisTransportDataController extends StageController {
 
     /**
      * 第一步
      */
     @FXML
-    private FlexVBox step1;
+    private FXVBox step1;
 
     /**
      * 第二步
      */
     @FXML
-    private FlexVBox step2;
+    private FXVBox step2;
 
     /**
      * 第三步
      */
     @FXML
-    private FlexVBox step3;
+    private FXVBox step3;
 
     /**
      * 第四步
      */
     @FXML
-    private FlexVBox step4;
+    private FXVBox step4;
 
     /**
      * 来源信息名称
@@ -103,7 +102,7 @@ public class RedisDataTransportController extends StageController {
      * 来源数据库名称
      */
     @FXML
-    private FlexLabel sourceDatabaseName;
+    private FXLabel sourceDatabaseName;
 
     /**
      * 目标信息
@@ -121,19 +120,19 @@ public class RedisDataTransportController extends StageController {
      * 目标数据库名称
      */
     @FXML
-    private FlexLabel targetDatabaseName;
+    private FXLabel targetDatabaseName;
 
     /**
      * 来源主机
      */
     @FXML
-    private FlexLabel sourceHost;
+    private FXLabel sourceHost;
 
     /**
      * 目标主机
      */
     @FXML
-    private FlexLabel targetHost;
+    private FXLabel targetHost;
 
     /**
      * 来源客户端
@@ -149,7 +148,7 @@ public class RedisDataTransportController extends StageController {
      * 结束传输按钮
      */
     @FXML
-    private FlexButton stopTransportBtn;
+    private FXButton stopTransportBtn;
 
     /**
      * 传输状态
@@ -409,9 +408,9 @@ public class RedisDataTransportController extends StageController {
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         // 来源连接不为null，则禁用来源选项
-        RedisConnect sourceInfo = this.stage.getProp("sourceInfo");
+        RedisConnect sourceConnect = this.stage.getProp("sourceConnect");
         if (sourceInfo != null) {
-            this.sourceInfo.select(sourceInfo);
+            this.sourceInfo.select(sourceConnect);
             this.sourceInfo.disable();
         }
         // 预选的db

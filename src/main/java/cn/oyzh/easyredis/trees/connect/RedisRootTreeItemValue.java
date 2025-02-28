@@ -11,7 +11,7 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/11/21
  */
-public class RedisConnectRootTreeItemValue extends RichTreeItemValue {
+public class RedisRootTreeItemValue extends RichTreeItemValue {
 
     @Override
     public String name() {

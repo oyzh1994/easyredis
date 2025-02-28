@@ -1,14 +1,10 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.oyzh.common.file.FileNameUtil;
-import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
-import cn.oyzh.easyredis.dto.RedisInfoExport;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
@@ -16,12 +12,8 @@ import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -39,7 +31,7 @@ import java.util.Optional;
  * @author oyzh
  * @since 2023/06/16
  */
-public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeItemValue> implements RedisConnectManager {
+public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> implements RedisConnectManager {
 
     /**
      * redis分组储存
@@ -51,16 +43,11 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisConnectRootTreeItem(@NonNull RedisConnectTreeView treeView) {
+    public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
         super(treeView);
-        this.setValue(new RedisConnectRootTreeItemValue());
+        this.setValue(new RedisRootTreeItemValue());
         // 加载子节点
         this.loadChild();
-    }
-
-    @Override
-    public RedisConnectTreeView getTreeView() {
-        return (RedisConnectTreeView) super.getTreeView();
     }
 
     @Override
@@ -83,23 +70,24 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
     /**
      * 导出连接
      */
-    public void exportConnect() {
-        List<RedisConnect> infos = this.connectStore.load();
-        if (infos.isEmpty()) {
-            MessageBox.warn(I18nHelper.connectionIsEmpty());
-            return;
-        }
-        RedisInfoExport export = RedisInfoExport.fromConnects(infos);
-        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
-        File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.redis", "base.connect", "base._json"), extensionFilter);
-        if (file != null) {
-            try {
-                FileUtil.writeUtf8String(export.toJSONString(), file);
-                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
-            } catch (Exception ex) {
-                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
-            }
-        }
+    private void exportConnect() {
+//        List<ZKConnect> infos = this.connectStore.load();
+//        if (infos.isEmpty()) {
+//            MessageBox.warn(I18nHelper.connectionIsEmpty());
+//            return;
+//        }
+//        ZKConnectExport export = ZKConnectExport.fromConnects(infos);
+//        FileExtensionFilter extensionFilter = FileChooserHelper.jsonExtensionFilter();
+//        File file = FileChooserHelper.save(I18nHelper.saveConnection(), I18nResourceBundle.i18nString("base.zk", "base.connect", "base._json"), extensionFilter);
+//        if (file != null) {
+//            try {
+//                FileUtil.writeUtf8String(export.toJSONString(), file);
+//                MessageBox.okToast(I18nHelper.exportConnectionSuccess());
+//            } catch (Exception ex) {
+//                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
+//            }
+//        }
+        RedisEventUtil.showExportConnect();
     }
 
     /**
@@ -116,71 +104,74 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
             return;
         }
         File file = CollectionUtil.getFirst(files);
-        // 解析文件
-        this.parseConnect(file);
+//        // 解析文件
+//        this.parseConnect(file);
+        RedisEventUtil.showImportConnect(file);
     }
 
     /**
      * 导入连接
      */
-    public void importConnect() {
-        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
-        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
-        // 解析文件
-        this.parseConnect(file);
+    private void importConnect() {
+//        FileExtensionFilter filter1 = FileChooserHelper.jsonExtensionFilter();
+//        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
+//        // 解析文件
+//        this.parseConnect(file);
+        RedisEventUtil.showImportConnect(null);
     }
 
-    /**
-     * 解析连接文件
-     *
-     * @param file 文件
-     */
-    private void parseConnect(File file) {
-        if (file == null) {
-            return;
-        }
-        if (!file.exists()) {
-            MessageBox.warn(I18nHelper.fileNotExists());
-            return;
-        }
-        if (file.isDirectory()) {
-            MessageBox.warn(I18nHelper.notSupportFolder());
-            return;
-        }
-        if (!FileNameUtil.isJsonType(FileNameUtil.extName(file.getName()))) {
-            MessageBox.warn(I18nHelper.invalidFormat());
-            return;
-        }
-        if (file.length() == 0) {
-            MessageBox.warn(I18nHelper.contentCanNotEmpty());
-            return;
-        }
-        try {
-            String text = FileUtil.readUtf8String(file);
-            RedisInfoExport export = RedisInfoExport.fromJSON(text);
-            List<RedisConnect> connects = export.getConnects();
-            if (CollectionUtil.isNotEmpty(connects)) {
-                for (RedisConnect connect : connects) {
-                    if (!this.connectStore.replace(connect)) {
-                        MessageBox.warn(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.importFail());
-                    }
-                }
-                // 重新加载节点
-                this.loadChild();
-                // 提示成功
-                MessageBox.okToast(I18nHelper.importConnectionSuccess());
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex, I18nHelper.importConnectionFail());
-        }
-    }
+//    /**
+//     * 解析连接文件
+//     *
+//     * @param file 文件
+//     */
+//    private void parseConnect(File file) {
+//        if (file == null) {
+//            return;
+//        }
+//        if (!file.exists()) {
+//            MessageBox.warn(I18nHelper.fileNotExists());
+//            return;
+//        }
+//        if (file.isDirectory()) {
+//            MessageBox.warn(I18nHelper.notSupportFolder());
+//            return;
+//        }
+//        if (!FileNameUtil.isJsonType(FileNameUtil.extName(file.getName()))) {
+//            MessageBox.warn(I18nHelper.invalidFormat());
+//            return;
+//        }
+//        if (file.length() == 0) {
+//            MessageBox.warn(I18nHelper.contentCanNotEmpty());
+//            return;
+//        }
+//        try {
+//            String text = FileUtil.readUtf8String(file);
+//            ZKConnectExport export = ZKConnectExport.fromJSON(text);
+//            List<ZKConnect> connects = export.getConnects();
+//            if (CollectionUtil.isNotEmpty(connects)) {
+//                for (ZKConnect connect : connects) {
+//                    if (!this.connectStore.replace(connect)) {
+//                        MessageBox.warn(I18nHelper.connect() + " : " + connect.getName() + " " + I18nHelper.importFail());
+//                    }
+//                }
+//                // 重新加载节点
+//                this.reloadChild();
+//                // 提示成功
+//                MessageBox.okToast(I18nHelper.importConnectionSuccess());
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            MessageBox.exception(ex, I18nHelper.importConnectionFail());
+//        }
+//    }
 
     /**
      * 添加连接
      */
     private void addConnect() {
-        StageManager.showStage(RedisConnectAddController.class, this.window());
+//        StageManager.showStage(RedisAddConnectController.class, this.window());
+        RedisEventUtil.showAddConnect();
     }
 
     /**
@@ -362,8 +353,19 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
     }
 
     @Override
-    public void loadChild() {
+    public void reloadChild() {
+        super.reloadChild();
         this.clearChild();
+        this.loadChild();
+    }
+
+    @Override
+    public void loadChild() {
+        // 关闭连接
+        List<RedisConnectTreeItem> connectedItems = this.getConnectedItems();
+        for (RedisConnectTreeItem item : connectedItems) {
+            item.closeConnect();
+        }
         // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
         // List<RedisGroupTreeItem> groupItems = this.getGroupItems();
@@ -382,37 +384,37 @@ public class RedisConnectRootTreeItem extends RichTreeItem<RedisConnectRootTreeI
         }
         // 初始化连接
         List<RedisConnect> connects = this.connectStore.load();
-        List<RedisGroupTreeItem> groupItems = this.getGroupItems();
+//        List<RedisGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(connects)) {
-            List<RedisConnectTreeItem> connectItems = this.getConnectItems();
             // List<RedisConnect> list = new ArrayList<>();
             f1:
             for (RedisConnect connect : connects) {
-                for (RedisConnectTreeItem connectItem : connectItems) {
-                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
-                        continue f1;
-                    }
-                }
-                Optional<RedisGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
-                if (optional.isPresent()) {
-                    optional.get().addConnect(connect);
-                } else {
-                    this.addConnect(connect);
-                    // list.add(connect);
-                }
+//                for (RedisConnectTreeItem connectItem : connectItems) {
+//                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
+//                        continue f1;
+//                    }
+//                }
+//                Optional<RedisGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
+//                if (optional.isPresent()) {
+//                    optional.get().addConnect(connect);
+//                } else {
+                this.addConnect(connect);
+                // list.add(connect);
+//                }
             }
             // this.addConnects(list);
         }
+        this.refresh();
     }
 
     public void queryAdded(RedisQuery query) {
-            List<RedisConnectTreeItem> items = this.getConnectItems();
-            if (items != null) {
-                for (RedisConnectTreeItem item : items) {
-                    if (StringUtil.equals(item.getId(), query.getIid())) {
-                        item.queriesItem().add(query);
-                    }
+        List<RedisConnectTreeItem> items = this.getConnectItems();
+        if (items != null) {
+            for (RedisConnectTreeItem item : items) {
+                if (StringUtil.equals(item.getId(), query.getIid())) {
+                    item.queriesItem().add(query);
                 }
             }
         }
+    }
 }

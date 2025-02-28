@@ -16,8 +16,8 @@ import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.text.area.FlexTextArea;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
+import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroup;
@@ -52,7 +52,7 @@ public class RedisKeyBatchOperationController extends StageController {
      * 根节点
      */
     @FXML
-    private FlexTabPane root;
+    private FXTabPane root;
 
     /**
      * ttl值
@@ -434,7 +434,7 @@ public class RedisKeyBatchOperationController extends StageController {
      * @param keys 键列表
      * @param area 文本域组件
      */
-    private void showKeys(Collection<String> keys, FlexTextArea area) {
+    private void showKeys(Collection<String> keys, FXTextArea area) {
         area.clear();
         if (CollectionUtil.isNotEmpty(keys)) {
             List<String> texts = new ArrayList<>(keys.size());
@@ -453,7 +453,7 @@ public class RedisKeyBatchOperationController extends StageController {
      * @param pattern 模式
      * @return 键列表
      */
-    private List<String> findKeys(FlexTextArea area, String pattern) {
+    private List<String> findKeys(FXTextArea area, String pattern) {
         List<String> keys = new ArrayList<>(1000);
         String cursor = null;
         while (!ThreadUtil.isInterrupted()) {

@@ -1,9 +1,8 @@
 package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.thread.ThreadUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
-import cn.oyzh.easyredis.event.connect.RedisAddConnectEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectImportedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
 import cn.oyzh.easyredis.event.group.RedisAddGroupEvent;
 import cn.oyzh.easyredis.event.key.RedisKeyAddedEvent;
@@ -14,7 +13,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeCell;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.event.FXEventListener;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -38,8 +36,8 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
 
     @Override
     protected void initRoot() {
-        super.setRoot(new RedisConnectRootTreeItem(this));
-        this.getRoot().expend();
+        super.setRoot(new RedisRootTreeItem(this));
+        this.root().expend();
         super.initRoot();
     }
 
@@ -56,15 +54,15 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     }
 
     @Override
-    public RedisConnectRootTreeItem getRoot() {
-        return (RedisConnectRootTreeItem) super.getRoot();
+    public RedisRootTreeItem root() {
+        return (RedisRootTreeItem) super.root();
     }
 
     /**
      * 关闭连接
      */
     public void closeConnects() {
-        for (RedisConnectTreeItem treeItem : this.getRoot().getConnectedItems()) {
+        for (RedisConnectTreeItem treeItem : this.root().getConnectedItems()) {
             ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
         }
     }
@@ -76,7 +74,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void keyAdded(RedisKeyAddedEvent event) {
-        for (RedisConnectTreeItem connectItem : this.getRoot().getConnectItems()) {
+        for (RedisConnectTreeItem connectItem : this.root().getConnectItems()) {
             if (connectItem.value() == event.data()) {
                 RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.dbIndex());
                 if (dbItem != null) {
@@ -94,7 +92,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void keyDeleted(RedisKeyDeletedEvent event) {
-        for (RedisConnectTreeItem connectItem : this.getRoot().getConnectItems()) {
+        for (RedisConnectTreeItem connectItem : this.root().getConnectItems()) {
             if (connectItem.value() == event.data()) {
                 RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.dbIndex());
                 if (dbItem != null) {
@@ -105,15 +103,15 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
         }
     }
 
-    /**
-     * 添加连接事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void addConnect(RedisAddConnectEvent event) {
-        StageManager.showStage(RedisConnectAddController.class, this.window());
-    }
+//    /**
+//     * 添加连接事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void addConnect(RedisAddConnectEvent event) {
+//        StageManager.showStage(RedisAddConnectController.class, this.window());
+//    }
 
     /**
      * 添加分组事件
@@ -122,7 +120,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     public void addGroup(RedisAddGroupEvent event) {
-        this.getRoot().addGroup();
+        this.root().addGroup();
     }
 
     /**
@@ -132,7 +130,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void connectAdded(RedisConnectAddedEvent event) {
-        this.getRoot().addConnect(event.data());
+        this.root().addConnect(event.data());
     }
 
     /**
@@ -142,7 +140,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void connectUpdate(RedisConnectUpdatedEvent event) {
-        this.getRoot().connectUpdate(event.data());
+        this.root().connectUpdate(event.data());
     }
 
     /**
@@ -150,6 +148,14 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     @EventSubscribe
     private void queryAdded(RedisQueryAddedEvent event) {
-        this.getRoot().queryAdded(event.data());
+        this.root().queryAdded(event.data());
+    }
+
+    /**
+     * 连接已导入事件
+     */
+    @EventSubscribe
+    private void connectImported(RedisConnectImportedEvent event) {
+        this.root().reloadChild();
     }
 }

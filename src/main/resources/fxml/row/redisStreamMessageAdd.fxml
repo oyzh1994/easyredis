@@ -7,15 +7,13 @@
 <?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
+<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextArea?>
-<?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController" realWidth="750"
           realHeight="550">
     <InfoLabel text="%base.messageId">
@@ -28,20 +26,20 @@
             <Insets left="30" top="5"/>
         </VBox.margin>
     </ClearableTextField>
-    <FlexVBox flexWidth="100%" flexHeight="100% - 145">
+    <FXVBox flexWidth="100%" flexHeight="100% - 145">
         <InfoLabel text="%base.content">
             <VBox.margin>
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <FlexHBox flexHeight="100% - 45" flexWidth="100%">
+        <FXHBox flexHeight="100% - 45" flexWidth="100%">
             <RichDataTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.row.tip1"
                               flexWidth="100% - 180">
                 <HBox.margin>
                     <Insets left="30" top="5"/>
                 </HBox.margin>
             </RichDataTextArea>
-            <FlexVBox flexHeight="100%">
+            <FXVBox flexHeight="100%">
                 <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
@@ -57,10 +55,10 @@
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </JSONSVGGlyph>
-            </FlexVBox>
-        </FlexHBox>
-    </FlexVBox>
-    <FlexHBox flexWidth="100%" realHeight="50">
+            </FXVBox>
+        </FXHBox>
+    </FXVBox>
+    <FXHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">
             <HBox.margin>
                 <Insets left="30" top="20"/>
@@ -71,5 +69,5 @@
                 <Insets left="15" top="20"/>
             </HBox.margin>
         </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

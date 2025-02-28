@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.query;
 
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
  * @author oyzh
  * @since 2025/01/20
  */
-public class RedisQueryMsgTabController extends DynamicTabController {
+public class RedisQueryMsgTabController extends RichTabController {
 
     @FXML
     private ReadOnlyTextArea msg;

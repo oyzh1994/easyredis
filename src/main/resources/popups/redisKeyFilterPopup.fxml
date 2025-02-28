@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import cn.oyzh.fx.gui.text.field.SearchTextField?>
 <?import cn.oyzh.fx.gui.svg.glyph.ApplySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CancelSVGGlyph?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.popups.RedisKeyFilterPopupController" realWidth="280" realHeight="90">
     <SearchTextField fx:id="keyFilter" onSearch="#apply" realHeight="30.0" flexWidth="100% - 65"
                      tipText="%redis.filter.tip1" require="true" text="*">
-        <FlexVBox.margin>
+        <FXVBox.margin>
             <Insets left="15" top="10"/>
-        </FlexVBox.margin>
+        </FXVBox.margin>
     </SearchTextField>
-    <FlexHBox flexWidth="100%">
+    <FXHBox flexWidth="100%">
         <ApplySVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
                 <Insets left="15" top="15"/>
@@ -26,5 +26,5 @@
                 <Insets left="15" top="15"/>
             </HBox.margin>
         </CancelSVGGlyph>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

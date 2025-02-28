@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class RedisQueryTextArea extends RichDataTextAreaPane {
+public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
 
     /**
      * db索引

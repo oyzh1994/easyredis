@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.trees.connect;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.connect.RedisConnectAddController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -11,11 +10,10 @@ import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
+import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
@@ -53,7 +51,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RedisConnectTreeView treeView) {
+    public RedisGroupTreeItem(@NonNull RedisGroup group, @NonNull RichTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new RedisGroupTreeItemValue(this));
@@ -151,15 +149,16 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
      * 添加连接
      */
     private void addConnect() {
-        StageAdapter fxView = StageManager.parseStage(RedisConnectAddController.class, this.window());
-        fxView.setProp("group", this.value);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisAddConnectController.class, this.window());
+//        fxView.setProp("group", this.value);
+//        fxView.display();
+        RedisEventUtil.showAddConnect(this.value);
     }
 
     @Override
-    public RedisConnectRootTreeItem parent() {
+    public RedisRootTreeItem parent() {
         TreeItem<?> treeItem = this.getParent();
-        return (RedisConnectRootTreeItem) treeItem;
+        return (RedisRootTreeItem) treeItem;
     }
 
     @Override

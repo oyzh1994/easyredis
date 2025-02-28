@@ -12,7 +12,7 @@ import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import cn.oyzh.fx.terminal.TerminalTextArea;
+import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTextTextArea extends TerminalTextArea {
+public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
 
     {
         this.keyHandler(RedisTerminalKeyHandler.INSTANCE);

@@ -8,19 +8,19 @@
 <?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.ReadOnlyTextField?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableView?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableView?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
-<FlexVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="cn.oyzh.easyredis.tabs.key.RedisStreamKeyController">
-    <FlexHBox groupId="stream_list" realHeight="30" flexWidth="100%">
+    <FXHBox groupId="stream_list" realHeight="30" flexWidth="100%">
         <RefreshSVGGlyph tipText="%base.refreshTip1" size="15" onMousePrimaryClicked="#reloadKey">
             <HBox.margin>
                 <Insets left="5"/>
@@ -44,18 +44,18 @@
         <padding>
             <Insets top="7"/>
         </padding>
-    </FlexHBox>
-    <FlexTableView groupId="stream_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
+    </FXHBox>
+    <FXTableView groupId="stream_list" flexWidth="100% - 4" realHeight="295" fx:id="listTable"
                    fixedCellSize="25">
         <columns>
-            <FlexTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
-            <FlexTableColumn flexWidth="70% - 12" text="%base.content" valueName="value"/>
+            <FXTableColumn flexWidth="30%" text="%base.id" valueName="id"/>
+            <FXTableColumn flexWidth="70% - 12" text="%base.content" valueName="value"/>
         </columns>
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </FlexTableView>
-    <FlexHBox realHeight="24">
+    </FXTableView>
+    <FXHBox realHeight="24">
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
@@ -82,7 +82,7 @@
                 <Insets left="5" top="4"/>
             </HBox.margin>
         </PageBox>
-    </FlexHBox>
+    </FXHBox>
     <FXText text="%base.content">
         <VBox.margin>
             <Insets left="5"/>
@@ -105,4 +105,4 @@
             <Insets left="2"/>
         </VBox.margin>
     </ReadOnlyTextField>
-</FlexVBox>
+</FXVBox>

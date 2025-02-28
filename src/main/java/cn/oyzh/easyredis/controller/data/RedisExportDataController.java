@@ -16,10 +16,9 @@ import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
@@ -52,33 +51,33 @@ import java.util.Set;
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
-        value = FXConst.FXML_PATH + "data/redisDataExport.fxml"
+        value = FXConst.FXML_PATH + "data/redisExportData.fxml"
 )
-public class RedisDataExportController extends StageController {
+public class RedisExportDataController extends StageController {
 
     /**
      * 第一步
      */
     @FXML
-    private FlexVBox step1;
+    private FXVBox step1;
 
     /**
      * 第二步
      */
     @FXML
-    private FlexVBox step2;
+    private FXVBox step2;
 
     /**
      * 第三步
      */
     @FXML
-    private FlexVBox step3;
+    private FXVBox step3;
 
     /**
      * 第四步
      */
     @FXML
-    private FlexVBox step4;
+    private FXVBox step4;
 
     /**
      * 导出文件
@@ -185,7 +184,7 @@ public class RedisDataExportController extends StageController {
      * 结束导出按钮
      */
     @FXML
-    private FlexButton stopExportBtn;
+    private FXButton stopExportBtn;
 
     /**
      * 导出状态

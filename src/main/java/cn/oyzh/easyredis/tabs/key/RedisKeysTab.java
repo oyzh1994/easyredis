@@ -5,14 +5,14 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 
 /**
  * @author oyzh
  * @since 2024-12-03
  */
-public class RedisKeysTab extends DynamicTab {
+public class RedisKeysTab extends RichTab {
 
     public RedisKeysTab(RedisDatabaseTreeItem treeItem) {
         super();

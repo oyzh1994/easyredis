@@ -1,7 +1,7 @@
 // package cn.oyzh.easyredis.fx;
 //
 //
-// import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+// import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 // import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 // import cn.oyzh.fx.plus.node.NodeManager;
 // import cn.oyzh.i18n.I18nHelper;
@@ -15,7 +15,7 @@
 //  * @author oyzh
 //  * @since 2023/8/14
 //  */
-// public class RedisFormatComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+// public class RedisFormatComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 //
 //     {
 //         NodeManager.init(this);

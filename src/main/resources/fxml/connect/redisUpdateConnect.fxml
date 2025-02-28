@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import cn.oyzh.easyredis.fx.RedisFilterTableView?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.button.TestButton?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
+<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
 <?import cn.oyzh.fx.gui.text.field.ClearableTextField?>
 <?import cn.oyzh.fx.gui.text.field.NumberTextField?>
 <?import cn.oyzh.fx.gui.text.field.PortTextField?>
 <?import cn.oyzh.fx.gui.toggle.SwitchToggleSwitch?>
-<?import cn.oyzh.fx.plus.controls.box.FlexHBox?>
-<?import cn.oyzh.fx.plus.controls.box.FlexVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXVBox?>
+<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.button.FXCheckBox?>
 <?import cn.oyzh.fx.plus.controls.label.FXLabel?>
-<?import cn.oyzh.fx.plus.controls.tab.FlexTabPane?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
-<?import cn.oyzh.fx.plus.controls.text.area.FlexTextArea?>
+<?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
+<?import cn.oyzh.fx.plus.controls.text.area.FXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.plus.controls.box.FXHBox?>
-<?import cn.oyzh.easyredis.fx.RedisFilterTableView?>
-<?import cn.oyzh.fx.plus.controls.table.FlexTableColumn?>
-<?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
-<FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.connect.RedisConnectAddController" realWidth="750" realHeight="400">
-    <FlexTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
+<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController" realWidth="750"
+        realHeight="400">
+    <FXTabPane fx:id="tabPane" flexWidth="100%" flexHeight="100% - 60">
         <FXTab text="%base.base">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.name">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -69,10 +70,10 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </FXCheckBox>
-            </FlexVBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.extra">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -114,16 +115,16 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip"
+                <FXTextArea fx:id="remark" realHeight="80" flexWidth="100% - 180" tipText="%base.remarkTip"
                               maxLen="100">
                     <VBox.margin>
                         <Insets left="30" top="5"/>
                     </VBox.margin>
-                </FlexTextArea>
-            </FlexVBox>
+                </FXTextArea>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.auth">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.userName">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -147,10 +148,10 @@
                         <Insets left="30" top="5"/>
                     </VBox.margin>
                 </ClearableTextField>
-            </FlexVBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.ssh" fx:id="sshTab">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
                 <InfoLabel text="%base.enableSSHChannel">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -166,7 +167,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexHBox disable="true" groupId="ssh">
+                <FXHBox disable="true" groupId="ssh">
                     <ClearableTextField fx:id="sshHost" tipText="%base.hostTip" require="true" realHeight="30"
                                         flexWidth="100% - 285" maxLen="1024">
                         <HBox.margin>
@@ -178,7 +179,7 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </PortTextField>
-                </FlexHBox>
+                </FXHBox>
                 <InfoLabel text="%base.connectTimeout">
                     <VBox.margin>
                         <Insets left="30" top="10"/>
@@ -196,7 +197,7 @@
                         <Insets left="30" top="10"/>
                     </VBox.margin>
                 </InfoLabel>
-                <FlexHBox disable="true" groupId="ssh">
+                <FXHBox disable="true" groupId="ssh">
                     <ClearableTextField fx:id="sshUser" tipText="%base.sshUserTip" require="true" realHeight="30"
                                         flexWidth="50% - 93" text="root">
                         <HBox.margin>
@@ -209,12 +210,12 @@
                             <Insets left="5" top="5"/>
                         </HBox.margin>
                     </ClearableTextField>
-                </FlexHBox>
-            </FlexVBox>
+                </FXHBox>
+            </FXVBox>
         </FXTab>
         <FXTab text="%base.filter">
-            <FlexVBox flexWidth="100%" flexHeight="100%">
-                <FlexHBox realHeight="50" flexWidth="100%">
+            <FXVBox flexWidth="100%" flexHeight="100%">
+                <FXHBox realHeight="50" flexWidth="100%">
                     <ClearableTextField realHeight="26" fx:id="filterSearchKW" realWidth="280"
                                         tipText="%base.searchKWTip">
                         <HBox.margin>
@@ -231,30 +232,30 @@
                             <Insets left="5" top="18"/>
                         </HBox.margin>
                     </DeleteSVGGlyph>
-                </FlexHBox>
+                </FXHBox>
                 <RedisFilterTableView flexHeight="100% - 50" flexWidth="100% - 50" fx:id="filterTable"
                                       copyCellDataOnDoubleClicked="true">
                     <columns>
-                        <FlexTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
-                        <FlexTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
-                                         sortable="false"/>
-                        <FlexTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
-                                         sortable="false"/>
+                        <FXTableColumn flexWidth="60%" text="%base.kw" valueName="kwControl"/>
+                        <FXTableColumn flexWidth="20%" text="%base.matchMode" valueName="matchModeControl"
+                                       sortable="false"/>
+                        <FXTableColumn flexWidth="20% - 12" text="%base.status" valueName="statusControl"
+                                       sortable="false"/>
                     </columns>
                     <VBox.margin>
                         <Insets left="30"/>
                     </VBox.margin>
                 </RedisFilterTableView>
-            </FlexVBox>
+            </FXVBox>
         </FXTab>
-    </FlexTabPane>
-    <FlexHBox flexWidth="100%" realHeight="50">
+    </FXTabPane>
+    <FXHBox flexWidth="100%" realHeight="50">
         <TestButton onAction="#testConnect" iconSizePercent="0.8">
             <HBox.margin>
                 <Insets left="30" top="10"/>
             </HBox.margin>
         </TestButton>
-        <SubmitButton onAction="#add">
+        <SubmitButton onAction="#update">
             <HBox.margin>
                 <Insets left="15" top="10"/>
             </HBox.margin>
@@ -264,5 +265,5 @@
                 <Insets left="15" top="10"/>
             </HBox.margin>
         </CancelButton>
-    </FlexHBox>
-</FlexVBox>
+    </FXHBox>
+</FXVBox>

@@ -6,9 +6,9 @@ import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.dto.RedisInfoPropItem;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
-import cn.oyzh.fx.plus.controls.table.FlexTableColumn;
-import cn.oyzh.fx.plus.controls.table.FlexTableView;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
+import cn.oyzh.fx.plus.controls.table.FXTableColumn;
+import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.util.TableViewUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -33,7 +33,7 @@ public class RedisServerInfoTabController extends SubTabController {
      * tab面板
      */
     @FXML
-    private FlexTabPane tabPane;
+    private FXTabPane tabPane;
 
     /**
      * 执行初始化
@@ -65,21 +65,21 @@ public class RedisServerInfoTabController extends SubTabController {
             return;
         }
         Optional<Tab> tabOptional = this.tabPane.getTabs().stream().filter(t -> StringUtil.equals(t.getId(), "prop-" + group)).findFirst();
-        FlexTableView<RedisInfoPropItem> tableView;
+        FXTableView<RedisInfoPropItem> tableView;
         if (tabOptional.isEmpty()) {
             FXTab fxTab = new FXTab();
             fxTab.setText(group);
             fxTab.setId("prop-" + group);
-            tableView = new FlexTableView<>();
+            tableView = new FXTableView<>();
             tableView.setFlexWidth("100%");
             tableView.setFlexHeight("100%");
 
-            FlexTableColumn<RedisInfoPropItem, String> name = new FlexTableColumn<>();
+            FXTableColumn<RedisInfoPropItem, String> name = new FXTableColumn<>();
             name.setText(I18nHelper.name());
             name.setFlexWidth("30%");
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-            FlexTableColumn<RedisInfoPropItem, String> value = new FlexTableColumn<>();
+            FXTableColumn<RedisInfoPropItem, String> value = new FXTableColumn<>();
             value.setText(I18nHelper.value());
             value.setFlexWidth("70% - 20");
             value.setCellValueFactory(new PropertyValueFactory<>("value"));
@@ -95,7 +95,7 @@ public class RedisServerInfoTabController extends SubTabController {
             fxTab.setContent(tableView);
             this.tabPane.addTab(fxTab);
         } else {
-            tableView = (FlexTableView<RedisInfoPropItem>) tabOptional.get().getContent();
+            tableView = (FXTableView<RedisInfoPropItem>) tabOptional.get().getContent();
         }
         for (String key : object.keySet()) {
             this.initPropItem(tableView, key, object.getString(key));

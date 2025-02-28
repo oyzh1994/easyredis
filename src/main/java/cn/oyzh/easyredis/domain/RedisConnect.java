@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.domain;
 
+import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.util.BooleanUtil;
-import cn.oyzh.common.util.ObjectComparator;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
@@ -83,7 +83,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * 收藏的键
      */
     @Getter
-    private List<String> collects;
+    private List<RedisCollect> collects;
 
     /**
      * 过滤列表

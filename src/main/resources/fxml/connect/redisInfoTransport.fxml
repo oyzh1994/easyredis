@@ -7,8 +7,8 @@
 <!-- <?import cn.oyzh.fx.plus.controls.button.FXRadioButton?> -->
 <!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
 <!-- <?import cn.oyzh.fx.gui.button.TransportButton?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexHBox?> -->
-<!-- <?import cn.oyzh.fx.plus.controls.box.FlexVBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXHBox?> -->
+<!-- <?import cn.oyzh.fx.plus.controls.box.FXVBox?> -->
 <!-- <?import cn.oyzh.fx.gui.text.field.ClearableTextField?> -->
 <!-- <?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?> -->
 <!-- <?import javafx.geometry.Insets?> -->
@@ -19,10 +19,10 @@
 <!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?> -->
 <!-- <?import cn.oyzh.fx.gui.text.area.MsgTextArea?> -->
-<!-- <FlexVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850" -->
 <!--           realHeight="700"> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.source" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -48,8 +48,8 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXCheckBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" managedBindVisible="true" visible="false"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50" fx:id="keysBox1" disable="true" managedBindVisible="true" visible="false"> -->
 <!--         <AccentLabel text="%redis.key.tip3" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -66,8 +66,8 @@
 <!--                 <Insets left="3" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" managedBindVisible="true" visible="false"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="150" fx:id="keysBox2" disable="true" managedBindVisible="true" visible="false"> -->
 <!--         <AccentLabel text="%redis.key.tip1" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -78,8 +78,8 @@
 <!--                 <Insets left="10" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </ReadOnlyTextArea> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.target" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -100,8 +100,8 @@
 <!--                 <Insets left="5" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </RedisDatabaseComboBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.keyExists" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -128,8 +128,8 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXRadioButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.options" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -146,8 +146,8 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXCheckBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.keyType" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
@@ -183,22 +183,22 @@
 <!--                 <Insets left="10" top="18"/> -->
 <!--             </HBox.margin> -->
 <!--         </FXCheckBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox"> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" flexHeight="100% - 400" fx:id="msgBox"> -->
 <!--         <AccentLabel text="%base.process" realHeight="30" realWidth="80"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="20" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </AccentLabel> -->
-<!--         <FlexVBox flexWidth="100% - 180" flexHeight="100%"> -->
+<!--         <FXVBox flexWidth="100% - 180" flexHeight="100%"> -->
 <!--             <HBox.margin> -->
 <!--                 <Insets left="10" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--             <MsgTextArea lineLimit="300" fx:id="transportMsg" flexWidth="100%" flexHeight="100% - 20"/> -->
 <!--             <FXLabel fx:id="transportStatus"/> -->
-<!--         </FlexVBox> -->
-<!--     </FlexHBox> -->
-<!--     <FlexHBox flexWidth="100%" realHeight="50"> -->
+<!--         </FXVBox> -->
+<!--     </FXHBox> -->
+<!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <TransportButton fx:id="transportBtn" onAction="#doTransport" realHeight="30" -->
 <!--                          iconSizePercent="0.75" groupId="exec"> -->
 <!--             <HBox.margin> -->
@@ -216,8 +216,8 @@
 <!--                 <Insets left="15" top="10"/> -->
 <!--             </HBox.margin> -->
 <!--         </CloseButton> -->
-<!--     </FlexHBox> -->
-<!--     <FlexVBox flexWidth="100%" fontSize="12"> -->
+<!--     </FXHBox> -->
+<!--     <FXVBox flexWidth="100%" fontSize="12"> -->
 <!--         <FXLabel text="%base.tip" textFill="#666"> -->
 <!--             <VBox.margin> -->
 <!--                 <Insets top="20"/> -->
@@ -231,5 +231,5 @@
 <!--         <VBox.margin> -->
 <!--             <Insets left="110"/> -->
 <!--         </VBox.margin> -->
-<!--     </FlexVBox> -->
-<!-- </FlexVBox> -->
+<!--     </FXVBox> -->
+<!-- </FXVBox> -->

@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.tabs.terminal;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.svg.glyph.TerminalSVGGlyph;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
+import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.Cursor;
 
@@ -13,7 +13,7 @@ import javafx.scene.Cursor;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTab extends DynamicTab {
+public class RedisTerminalTab extends RichTab {
 
 //    {
 //        this.setClosable(true);

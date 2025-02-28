@@ -2,11 +2,11 @@ package cn.oyzh.easyredis.controller.key;
 
 import cn.oyzh.common.file.FileNameUtil;
 import cn.oyzh.common.log.JulLog;
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.common.util.SystemUtil;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -25,9 +25,9 @@ import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.button.FXRadioButton;
-import cn.oyzh.fx.plus.controls.button.FlexButton;
+import cn.oyzh.fx.plus.controls.button.FXButton;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
-import cn.oyzh.fx.plus.controls.text.FlexText;
+import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -83,7 +83,7 @@ public class RedisKeyImportController extends StageController {
      * 脚本信息
      */
     @FXML
-    private FlexText scriptInfo;
+    private FXText scriptInfo;
 
     /**
      * 存在时跳过
@@ -113,13 +113,13 @@ public class RedisKeyImportController extends StageController {
      * 导入按钮
      */
     @FXML
-    private FlexButton importBtn;
+    private FXButton importBtn;
 
     /**
      * 结束导入按钮
      */
     @FXML
-    private FlexButton stopImportBtn;
+    private FXButton stopImportBtn;
 
     /**
      * 导入状态

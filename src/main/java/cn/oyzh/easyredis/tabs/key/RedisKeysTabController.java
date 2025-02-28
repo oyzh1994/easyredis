@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
 import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
@@ -14,18 +13,16 @@ import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeView;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
-import cn.oyzh.fx.plus.controls.box.FlexHBox;
-import cn.oyzh.fx.plus.controls.box.FlexVBox;
+import cn.oyzh.fx.plus.controls.box.FXHBox;
+import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeResizeHelper;
+import cn.oyzh.fx.plus.node.NodeResizer;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -45,13 +42,13 @@ public class RedisKeysTabController extends ParentTabController {
      * 根节点
      */
     @FXML
-    private FlexHBox root;
+    private FXHBox root;
 
     /**
      * tab节点
      */
     @FXML
-    private FlexTabPane tabPane;
+    private FXTabPane tabPane;
 
     /**
      * 键数据
@@ -69,7 +66,7 @@ public class RedisKeysTabController extends ParentTabController {
      * 左侧节点
      */
     @FXML
-    private FlexVBox leftBox;
+    private FXVBox leftBox;
 
     /**
      * redis客户端
@@ -152,7 +149,7 @@ public class RedisKeysTabController extends ParentTabController {
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
         this.treeView.highlightMatchCase(mode == 3 || mode == 1);
-        // 仅在过滤路径的情况下设置节点高亮
+        // 仅在过滤键的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
             this.treeView.highlightText(kw);
         } else {
@@ -173,9 +170,10 @@ public class RedisKeysTabController extends ParentTabController {
 
     @FXML
     private void addKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
-        fxView.setProp("dbItem", this.treeItem);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
+//        fxView.setProp("dbItem", this.treeItem);
+//        fxView.display();
+        RedisEventUtil.showAddKey(this.treeItem);
     }
 
     @FXML
@@ -216,9 +214,9 @@ public class RedisKeysTabController extends ParentTabController {
         // 过滤处理
         this.filterType.selectedIndexChanged((observable, oldValue, newValue) -> this.doFilter());
         // 拉伸辅助
-        NodeResizeHelper resizeHelper = new NodeResizeHelper(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
-        resizeHelper.widthLimit(240f, 750f);
-        resizeHelper.initResizeEvent();
+        NodeResizer resizer = new NodeResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        resizer.widthLimit(240f, 750f);
+        resizer.initResizeEvent();
     }
 
     /**
@@ -299,7 +297,7 @@ public class RedisKeysTabController extends ParentTabController {
     }
 
     @Override
-    public List<? extends DynamicTabController> getSubControllers() {
+    public List<? extends RichTabController> getSubControllers() {
         return List.of(this.keyDataController, this.keyInfoController);
     }
 

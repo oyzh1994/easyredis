@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.util;
 
-import cn.oyzh.common.util.ProcessUtil;
+import cn.oyzh.common.system.ProcessUtil;
 import cn.oyzh.fx.plus.window.StageManager;
 import lombok.experimental.UtilityClass;
 
@@ -18,7 +18,7 @@ public class RedisProcessUtil {
      */
     public static void restartApplication() {
         try {
-            ProcessUtil.restartApplication(100, StageManager::exit);
+            ProcessUtil.restartApplication2(100, StageManager::exit);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

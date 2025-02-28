@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.domain;
 
 
-import cn.oyzh.fx.plus.domain.Setting;
+import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Data;
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table("t_setting")
 @EqualsAndHashCode(callSuper = true)
-public class RedisSetting extends Setting {
+public class RedisSetting extends AppSetting {
 
     /**
      * 键加载上限

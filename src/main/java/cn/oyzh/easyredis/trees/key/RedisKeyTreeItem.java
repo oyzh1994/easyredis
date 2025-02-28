@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.trees.key;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
 import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
-import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -132,9 +131,10 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 修改ttl
      */
     private void updateTtl() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.display();
+//        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.window());
+//        fxView.setProp("treeItem", this);
+//        fxView.display();
+        RedisEventUtil.showTTLKey(this);
     }
 
     /**

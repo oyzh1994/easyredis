@@ -7,12 +7,12 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisDatabaseComboBox;
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
-import cn.oyzh.easyredis.query.RedisQueryTextArea;
+import cn.oyzh.easyredis.query.RedisQueryTextAreaPane;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisQueryStore;
-import cn.oyzh.fx.gui.tabs.DynamicTab;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
-import cn.oyzh.fx.plus.controls.tab.FlexTabPane;
+import cn.oyzh.fx.gui.tabs.RichTab;
+import cn.oyzh.fx.gui.tabs.RichTabController;
+import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.i18n.I18nHelper;
@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author oyzh
  * @since 2025/02/06
  */
-public class RedisQueryTabController extends DynamicTabController {
+public class RedisQueryTabController extends RichTabController {
 
     /**
      * 查询对象
@@ -48,7 +48,7 @@ public class RedisQueryTabController extends DynamicTabController {
      * 当前内容
      */
     @FXML
-    private RedisQueryTextArea content;
+    private RedisQueryTextAreaPane content;
 
     /**
      * 数据库
@@ -60,7 +60,7 @@ public class RedisQueryTabController extends DynamicTabController {
      * 结果面板
      */
     @FXML
-    private FlexTabPane resultTabPane;
+    private FXTabPane resultTabPane;
 
     /**
      * 查询存储
@@ -168,11 +168,11 @@ public class RedisQueryTabController extends DynamicTabController {
     }
 
     @Override
-    public void onCloseRequest(DynamicTab tab, Event event) {
+    public void onTabCloseRequest(Event event) {
         if (this.unsaved && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             event.consume();
         } else {
-            super.onCloseRequest(tab, event);
+            super.onTabCloseRequest(event);
         }
     }
 }

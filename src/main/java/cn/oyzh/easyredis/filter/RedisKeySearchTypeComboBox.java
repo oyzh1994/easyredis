@@ -1,6 +1,6 @@
 package cn.oyzh.easyredis.filter;
 
-import cn.oyzh.fx.plus.controls.combo.FlexComboBox;
+import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
 import cn.oyzh.fx.plus.node.NodeManager;
 import cn.oyzh.i18n.I18nHelper;
@@ -12,7 +12,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2024/4/19
  */
-public class RedisKeySearchTypeComboBox extends FlexComboBox<String> implements I18nSelectAdapter<String> {
+public class RedisKeySearchTypeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);

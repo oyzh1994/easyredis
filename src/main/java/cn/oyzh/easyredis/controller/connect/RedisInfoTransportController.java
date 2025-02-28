@@ -2,7 +2,7 @@
 //
 // import cn.oyzh.common.thread.ThreadUtil;
 // import cn.oyzh.common.util.CollectionUtil;
-// import cn.oyzh.common.util.SystemUtil;
+// import cn.oyzh.common.system.SystemUtil;
 // import cn.oyzh.easyredis.RedisConst;
 // import cn.oyzh.easyredis.domain.RedisConnect;
 // import cn.oyzh.easyredis.domain.RedisFilter;
@@ -20,9 +20,9 @@
 // import cn.oyzh.easyredis.util.RedisKeyUtil;
 // import cn.oyzh.fx.gui.text.field.ClearableTextField;
 // import cn.oyzh.fx.plus.controller.StageController;
-// import cn.oyzh.fx.plus.controls.box.FlexHBox;
+// import cn.oyzh.fx.plus.controls.box.FXHBox;
 // import cn.oyzh.fx.plus.controls.button.FXRadioButton;
-// import cn.oyzh.fx.plus.controls.button.FlexButton;
+// import cn.oyzh.fx.plus.controls.button.FXButton;
 // import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 // import cn.oyzh.fx.plus.controls.label.FXLabel;
 // import cn.oyzh.fx.gui.text.area.MsgTextArea;
@@ -97,13 +97,13 @@
 //      * 传输按钮
 //      */
 //     @FXML
-//     private FlexButton transportBtn;
+//     private FXButton transportBtn;
 //
 //     /**
 //      * 结束传输按钮
 //      */
 //     @FXML
-//     private FlexButton stopTransportBtn;
+//     private FXButton stopTransportBtn;
 //
 //     /**
 //      * 传输状态
@@ -230,19 +230,19 @@
 //      * 消息组件
 //      */
 //     @FXML
-//     private FlexHBox msgBox;
+//     private FXHBox msgBox;
 //
 //     /**
 //      * 键相关组件1
 //      */
 //     @FXML
-//     private FlexHBox keysBox1;
+//     private FXHBox keysBox1;
 //
 //     /**
 //      * 键相关组件2
 //      */
 //     @FXML
-//     private FlexHBox keysBox2;
+//     private FXHBox keysBox2;
 //
 //     /**
 //      * 键过滤

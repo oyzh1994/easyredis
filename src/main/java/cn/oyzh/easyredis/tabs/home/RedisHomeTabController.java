@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.home;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.event.RedisEventUtil;
-import cn.oyzh.fx.gui.tabs.DynamicTabController;
+import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * @author oyzh
  * @since 2023/6/24
  */
-public class RedisHomeTabController extends DynamicTabController {
+public class RedisHomeTabController extends RichTabController {
 
     /**
      * 软件信息
@@ -54,7 +54,8 @@ public class RedisHomeTabController extends DynamicTabController {
      */
     @FXML
     private void addConnect() {
-        RedisEventUtil.addConnect();
+//        RedisEventUtil.addConnect();
+        RedisEventUtil.showAddConnect();
     }
 
     /**
