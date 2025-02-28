@@ -16,7 +16,7 @@ cn.oyzh.easyredis.EasyRedisBootstrap.main
 3. jdk版本要求23
 
 ###### 结构说明 
-docker -> docker配置文件等  
+docker -> docker配置文件  
 package -> 打包相关配置  
 resource -> 项目相关资源文件  
 src -> 项目相关代码
@@ -37,31 +37,33 @@ https://www.freeconvert.com/zh/png-to-ico
 
 ###### windows x64
 ###### exe、msi打包依赖
-https://github.com/wixtoolset/wix3/releases
-###### (推荐)exe打包
-配置 -> package -> win -> win_amd64_exe.json
-入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_exe
-###### msi打包
-配置 -> package -> win -> win_amd64_msi.json
-入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_msi
-###### app-image打包 
-配置 -> package -> win -> win_amd64_image.json
-入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_image
+https://github.com/wixtoolset/wix3/releases  
+###### (推荐)exe打包 
+配置 -> package -> win -> win_amd64_exe.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_exe  
+###### msi打包 
+配置 -> package -> win -> win_amd64_msi.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_msi  
+###### app-image打包
+配置 -> package -> win -> win_amd64_image.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_win_amd64_image  
 ###### 注意事项
 exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示程序图标的问题
 
 ###### macos arm64
-###### (推荐)dmg打包
-配置 -> package -> macos -> macos_arm64_dmg.json
-入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_dmg
+###### (推荐)pkg打包
+配置 -> package -> macos -> macos_arm64_pkg.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_pkg
+###### dmg打包 
+配置 -> package -> macos -> macos_arm64_dmg.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_dmg  
 ###### app-image打包
-配置 -> package -> macos -> macos_arm64_image.json
-入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_image
+配置 -> package -> macos -> macos_arm64_image.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_macos_arm64_image  
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
 # Docker
-# docker启动实例
 ###### docker启动redis(单个)
 docker run -itd -p 6379:6379 redis
 docker run -itd -p 6379:6379 redis --requirepass 123456
