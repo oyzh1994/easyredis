@@ -101,7 +101,7 @@
             ".*.processors",
             ".*.kotlin_module",
             ".*.dll",
-            ".*.so",
+            ".*.dylib",
             "data.zip",
             "git.properties",
             "native-image.properties",
