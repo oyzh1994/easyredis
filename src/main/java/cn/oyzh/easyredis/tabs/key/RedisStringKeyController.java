@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.text.FXText;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -169,7 +170,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @FXML
     private void saveBinaryFile() {
         try {
-            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FileChooserHelper.allExtensionFilter());
+            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FXChooser.allExtensionFilter());
             if (file != null) {
                 Object data = this.treeItem.rawValue();
                 byte[] bytes = new byte[0];

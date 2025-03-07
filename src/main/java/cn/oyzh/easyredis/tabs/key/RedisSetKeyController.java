@@ -12,6 +12,7 @@ import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -274,7 +275,7 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
     @FXML
     private void saveBinaryFile() {
         try {
-            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FileChooserHelper.allExtensionFilter());
+            File file = FileChooserHelper.save(I18nHelper.saveFile(), this.treeItem.key(), FXChooser.allExtensionFilter());
             if (file != null) {
                 RedisSetValue.RedisSetRow row = this.treeItem.rawValue();
                 byte[] bytes = row.getValue().getBytes();

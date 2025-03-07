@@ -22,6 +22,7 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -475,7 +476,7 @@ public class RedisExportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         String fileName = "Redis-" + this.connect.getName();
         if (this.dbIndex != null) {
             fileName += "-db" + this.dbIndex;

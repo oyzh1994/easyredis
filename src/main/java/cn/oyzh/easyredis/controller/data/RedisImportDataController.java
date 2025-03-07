@@ -18,6 +18,7 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
+import cn.oyzh.fx.plus.file.FXChooser;
 import cn.oyzh.fx.plus.file.FileChooserHelper;
 import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -340,7 +341,7 @@ public class RedisImportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         this.importFile = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), filter);
         if (this.importFile != null) {
             this.fileName.setText(this.importFile.getPath());
