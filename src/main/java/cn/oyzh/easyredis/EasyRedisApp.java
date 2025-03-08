@@ -85,7 +85,11 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             // 储存初始化
             RedisStoreUtil.init();
             SysConst.cacheDir(RedisConst.CACHE_PATH);
-            FXConst.appIcon(RedisConst.ICON_PATH);
+            if (OSUtil.isWindows()) {
+                FXConst.appIcon(RedisConst.ICON_32_PATH);
+            } else {
+                FXConst.appIcon(RedisConst.ICON_PATH);
+            }
             EventFactory.registerEventBus(FxEventBus.class);
             EventFactory.syncEventConfig(FxEventConfig.SYNC);
             EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
@@ -178,7 +182,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             }
             // 初始化
             if (OSUtil.isWindows()) {
-                TrayManager.init(RedisConst.TRAY_ICON_PATH);
+                TrayManager.init(RedisConst.ICON_24_PATH);
             } else {
                 TrayManager.init(RedisConst.ICON_PATH);
             }
