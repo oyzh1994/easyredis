@@ -13,7 +13,7 @@
             <Insets left="5" top="1.5"/>
         </HBox.margin>
     </FXLabel>
-    <FXText tipText="%base.memoryUsage" fx:id="memoryUsage"
+    <FXText tipText="%base.memoryUsed" fx:id="memoryUsage"
             style="-fx-fill: #AD0EB5B2;"
             realHeight="22">
         <HBox.margin>
