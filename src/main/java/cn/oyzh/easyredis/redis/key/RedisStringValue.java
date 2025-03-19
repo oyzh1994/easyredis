@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author oyzh
@@ -14,15 +12,27 @@ public class RedisStringValue implements RedisKeyValue<Object> {
     /**
      * 统计值
      */
-    @Getter
-    @Setter
     private Long count;
+
+    public Boolean getHyLog() {
+        return hyLog;
+    }
+
+    public void setHyLog(Boolean hyLog) {
+        this.hyLog = hyLog;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
 
     /**
      * 统计值标志位
      */
-    @Setter
-    @Getter
     private Boolean hyLog;
 
     public RedisStringValue() {

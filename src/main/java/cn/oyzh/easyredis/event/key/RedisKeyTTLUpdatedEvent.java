@@ -4,20 +4,38 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/12/11
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisKeyTTLUpdatedEvent extends Event<RedisConnect> implements  EventFormatter {
 
     private Long ttl;
+
+    public Long getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(Long ttl) {
+        this.ttl = ttl;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
 
     private String key;
 

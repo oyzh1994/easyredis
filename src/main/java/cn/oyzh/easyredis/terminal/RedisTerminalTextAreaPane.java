@@ -15,8 +15,6 @@ import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 /**
  * redis终端文本域
@@ -54,9 +52,11 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
 
     /**
      * redis连接
@@ -71,9 +71,11 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     /**
      * db索引
      */
-    @Getter
-    @Accessors(fluent = true, chain = false)
     private Integer dbIndex;
+
+    public Integer getDbIndex() {
+        return dbIndex;
+    }
 
     @Override
     public void flushPrompt() {
@@ -270,7 +272,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
                 }
                 JulLog.info("connState={}", t1);
             };
-            this.client().addStateListener(this.stateChangeListener);
+            this.getClient().addStateListener(this.stateChangeListener);
         }
     }
 
@@ -285,6 +287,6 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     public RedisConnect redisConnect() {
-        return this.client().redisConnect();
+        return this.getClient().redisConnect();
     }
 }

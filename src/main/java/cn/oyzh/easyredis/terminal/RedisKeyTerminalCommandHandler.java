@@ -29,7 +29,7 @@ public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> 
                 pattern = key;
             }
             pattern = pattern.trim();
-            Set<String> keys = terminal.client().keys(null, pattern, this.getKeyType());
+            Set<String> keys = terminal.getClient().keys(null, pattern, this.getKeyType());
             if (CollectionUtil.isNotEmpty(keys)) {
                 if (keys.size() == 1) {
                     terminal.coverInput(words[0] + " " + CollectionUtil.getFirst(keys));

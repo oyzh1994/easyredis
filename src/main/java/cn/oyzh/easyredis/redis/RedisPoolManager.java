@@ -4,8 +4,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.thread.ThreadLocalUtil;
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CollectionUtil;
-import lombok.Getter;
-import lombok.Setter;
 import redis.clients.jedis.ConnectionPool;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -24,40 +22,79 @@ import java.util.stream.Collectors;
  */
 public class RedisPoolManager {
 
+    public String getConnectName() {
+        return connectName;
+    }
+
+    public void setConnectName(String connectName) {
+        this.connectName = connectName;
+    }
+
+    public JedisPool getJedisPool() {
+        return jedisPool;
+    }
+
+    public void setJedisPool(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
+
+    public JedisCluster getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(JedisCluster cluster) {
+        this.cluster = cluster;
+    }
+
+    public byte getMaxPoolSize() {
+        return maxPoolSize;
+    }
+
+    public void setMaxPoolSize(byte maxPoolSize) {
+        this.maxPoolSize = maxPoolSize;
+    }
+
+    public byte getInitPoolSize() {
+        return initPoolSize;
+    }
+
+    public void setInitPoolSize(byte initPoolSize) {
+        this.initPoolSize = initPoolSize;
+    }
+
+    public List<ConnectionPool> getClusterPools() {
+        return clusterPools;
+    }
+
+    public void setClusterPools(List<ConnectionPool> clusterPools) {
+        this.clusterPools = clusterPools;
+    }
+
     /**
      * 连接名称
      */
-    @Setter
     private String connectName;
 
     /**
      * 连接池
      */
-    @Getter
-    @Setter
     private JedisPool jedisPool;
 
     /**
      * redis集群操作对象
      */
-    @Getter
-    @Setter
     private JedisCluster cluster;
 
     /**
      * 最大池上限
      * 默认16
      */
-    @Getter
-    @Setter
     private byte maxPoolSize = 16;
 
     /**
      * 最大池上限
      * 默认16
      */
-    @Getter
-    @Setter
     private byte initPoolSize = 3;
 
     /**
@@ -68,7 +105,6 @@ public class RedisPoolManager {
     /**
      * cluster集群的主节点连接
      */
-    @Getter
     private List<ConnectionPool> clusterPools;
 
     /**

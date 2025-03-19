@@ -27,8 +27,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -71,21 +69,40 @@ public class RedisKeysTabController extends ParentTabController {
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(fluent = true, chain = false)
     private RedisClient client;
 
     /**
      * db树节点
      */
-    @Getter
-    @Accessors(fluent = true, chain = false)
     private RedisDatabaseTreeItem treeItem;
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
+
+    public RedisDatabaseTreeItem getTreeItem() {
+        return treeItem;
+    }
+
+    public void setTreeItem(RedisDatabaseTreeItem treeItem) {
+        this.treeItem = treeItem;
+    }
+
+    public RedisKeyTreeItem getActiveItem() {
+        return activeItem;
+    }
+
+    public void setActiveItem(RedisKeyTreeItem activeItem) {
+        this.activeItem = activeItem;
+    }
 
     /**
      * 当前激活的节点
      */
-    @Getter
     private RedisKeyTreeItem activeItem;
 
     /**
@@ -148,12 +165,12 @@ public class RedisKeysTabController extends ParentTabController {
         // 过滤类型
         int type = this.filterType.getSelectedIndex();
         // 设置高亮是否匹配大小写
-        this.treeView.highlightMatchCase(mode == 3 || mode == 1);
+        this.treeView.setHighlightMatchCase(mode == 3 || mode == 1);
         // 仅在过滤键的情况下设置节点高亮
         if (scope == 2 || scope == 0) {
-            this.treeView.highlightText(kw);
+            this.treeView.setHighlightText(kw);
         } else {
-            this.treeView.highlightText(null);
+            this.treeView.setHighlightText(null);
         }
 //        // 仅在过滤数据的情况下设置内容高亮
 //        if (scope == 2 || scope == 1&&this.keyDataController) {
@@ -161,10 +178,10 @@ public class RedisKeysTabController extends ParentTabController {
 //        } else {
 //            this.nodeData.setHighlightText(this.dataSearch.getTextTrim());
 //        }
-        this.treeView.itemFilter().setKw(kw);
-        this.treeView.itemFilter().setScope(scope);
-        this.treeView.itemFilter().setMatchMode(mode);
-        this.treeView.itemFilter().setType((byte) type);
+        this.treeView.getItemFilter().setKw(kw);
+        this.treeView.getItemFilter().setScope(scope);
+        this.treeView.getItemFilter().setMatchMode(mode);
+        this.treeView.getItemFilter().setType((byte) type);
         this.treeView.filter();
     }
 

@@ -14,8 +14,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,8 +113,6 @@ public class RedisQueryPromptPopup extends FXPopup {
     /**
      * 选中事件
      */
-    @Getter
-    @Setter
     protected Consumer<RedisQueryPromptItem> onItemSelected;
 
     public RedisQueryPromptPopup() {
@@ -189,6 +185,22 @@ public class RedisQueryPromptPopup extends FXPopup {
      * 提示词标志位
      */
     private final AtomicInteger promptFlag = new AtomicInteger();
+
+    public Consumer<RedisQueryPromptItem> getOnItemSelected() {
+        return onItemSelected;
+    }
+
+    public void setOnItemSelected(Consumer<RedisQueryPromptItem> onItemSelected) {
+        this.onItemSelected = onItemSelected;
+    }
+
+    public RedisQueryToken getToken() {
+        return token;
+    }
+
+    public void setToken(RedisQueryToken token) {
+        this.token = token;
+    }
 
     /**
      * 执行提示

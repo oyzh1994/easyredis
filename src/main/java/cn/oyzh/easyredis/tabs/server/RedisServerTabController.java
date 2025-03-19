@@ -14,8 +14,6 @@ import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -31,9 +29,15 @@ public class RedisServerTabController extends ParentTabController {
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
 
     /**
      * 发布及订阅tab

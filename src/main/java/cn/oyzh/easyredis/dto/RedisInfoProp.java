@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.dto;
 import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
-import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +16,16 @@ import java.util.stream.Stream;
  * @author oyzh
  * @since 2023/08/01
  */
-@Getter
 public class RedisInfoProp {
 
     /**
      * 属性列表
      */
     private Map<String, JSONObject> props;
+
+    public Map<String, JSONObject> getProps() {
+        return props;
+    }
 
     /**
      * 解析数据

@@ -19,7 +19,7 @@ public class RedisClientUtil {
      * @param user     用户
      * @param password 密码
      */
-    public DefaultJedisClientConfig newConfig(String user, String password, int connectTimeout, int socketTimeout) {
+    public static DefaultJedisClientConfig newConfig(String user, String password, int connectTimeout, int socketTimeout) {
         // master配置处理
         DefaultJedisClientConfig.Builder builder = DefaultJedisClientConfig.builder();
         // socket超时

@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.redis.batch;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.Collections;
@@ -16,8 +15,23 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/6/28
  */
-@Data
 public class RedisScanResult {
+
+    public String getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(String cursor) {
+        this.cursor = cursor;
+    }
+
+    public List<RedisKey> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<RedisKey> keys) {
+        this.keys = keys;
+    }
 
     /**
      * 光标
@@ -38,6 +52,6 @@ public class RedisScanResult {
     }
 
     public List<String> keys() {
-        return this.keys == null ? Collections.emptyList() : this.keys.parallelStream().map(RedisKey::key).collect(Collectors.toList());
+        return this.keys == null ? Collections.emptyList() : this.keys.parallelStream().map(RedisKey::getKey).collect(Collectors.toList());
     }
 }

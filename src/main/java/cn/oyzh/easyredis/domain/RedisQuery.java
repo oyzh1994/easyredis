@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.domain;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Data;
 
 import java.io.Serializable;
 
@@ -13,9 +12,47 @@ import java.io.Serializable;
  * @author oyzh
  * @since 2025-01-20
  */
-@Data
 @Table("t_query")
 public class RedisQuery implements Serializable {
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
 
     /**
      * 连接id

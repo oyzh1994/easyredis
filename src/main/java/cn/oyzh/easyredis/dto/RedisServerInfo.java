@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.util.StringUtil;
-import lombok.Data;
 
 import java.util.stream.Stream;
 
@@ -9,10 +8,17 @@ import java.util.stream.Stream;
  * @author oyzh
  * @since 2023/7/05
  */
-@Data
 public class RedisServerInfo {
 
     private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public static RedisServerInfo parse(String str) {
         RedisServerInfo serverInfo = new RedisServerInfo();

@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.redis;
 
-import lombok.Getter;
-import lombok.Setter;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -9,8 +7,6 @@ import redis.clients.jedis.Jedis;
  * @author oyzh
  * @since 2025/01/02
  */
-@Getter
-@Setter
 public class RedisConn {
 
     private Jedis jedis;
@@ -28,5 +24,21 @@ public class RedisConn {
 
     public int getDB() {
         return this.jedis.getDB();
+    }
+
+    public Jedis getJedis() {
+        return jedis;
+    }
+
+    public void setJedis(Jedis jedis) {
+        this.jedis = jedis;
+    }
+
+    public boolean isUsing() {
+        return using;
+    }
+
+    public void setUsing(boolean using) {
+        this.using = using;
     }
 }

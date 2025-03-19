@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.redis.batch;
 
-import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.Objects;
@@ -11,8 +10,23 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/28
  */
-@Data
 public class RedisDeleteResult {
+
+    public String getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(String cursor) {
+        this.cursor = cursor;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 
     /**
      * 光标

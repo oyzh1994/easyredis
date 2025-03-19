@@ -31,7 +31,7 @@ public class RedisServerInfoTreeItem extends RichTreeItem<RedisServerInfoTreeIte
     }
 
     public RedisClient client() {
-        return this.parent().client();
+        return this.parent().getClient();
     }
 
     @Override

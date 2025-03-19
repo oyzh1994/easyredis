@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Getter;
-import lombok.Setter;
 import redis.clients.jedis.GeoCoordinate;
 
 import java.util.ArrayList;
@@ -15,11 +13,26 @@ import java.util.List;
  */
 public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZSetRow>> {
 
-    @Getter
-    @Setter
     private List<RedisZSetRow> value;
 
-    @Getter
+    public RedisZSetRow getUnSavedRow() {
+        return unSavedRow;
+    }
+
+    public void setUnSavedRow(RedisZSetRow unSavedRow) {
+        this.unSavedRow = unSavedRow;
+    }
+
+    @Override
+    public List<RedisZSetRow> getValue() {
+        return value;
+    }
+
+    @Override
+    public void setValue(List<RedisZSetRow> value) {
+        this.value = value;
+    }
+
     private RedisZSetRow unSavedRow;
 
     public RedisZSetValue(List<RedisZSetRow> value) {
@@ -81,17 +94,35 @@ public class RedisZSetValue implements RedisKeyValue<List<RedisZSetValue.RedisZS
 
     public static class RedisZSetRow implements RedisKeyRow {
 
-        @Getter
-        @Setter
         private double score;
 
-        @Getter
-        @Setter
         private double latitude;
 
-        @Getter
-        @Setter
         private double longitude;
+
+        public double getScore() {
+            return score;
+        }
+
+        public void setScore(double score) {
+            this.score = score;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
 
         public RedisZSetRow() {
         }

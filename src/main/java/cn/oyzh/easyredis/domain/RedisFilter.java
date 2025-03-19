@@ -4,9 +4,6 @@ import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,9 +15,6 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/06/20
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table("t_filter")
 public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable {
 
@@ -79,6 +73,46 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
             return true;
         }
         return Objects.equals(filter.kw, this.kw);
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
+    }
+
+    public boolean isPartMatch() {
+        return partMatch;
+    }
+
+    public void setPartMatch(boolean partMatch) {
+        this.partMatch = partMatch;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     /**

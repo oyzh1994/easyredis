@@ -36,7 +36,7 @@ public class RedisQueriesTreeItem extends RichTreeItem<RedisQueriesTreeItemValue
     }
 
     public RedisClient client() {
-        return this.parent().client();
+        return this.parent().getClient();
     }
 
     public RedisConnect redisConnect() {
@@ -52,7 +52,7 @@ public class RedisQueriesTreeItem extends RichTreeItem<RedisQueriesTreeItemValue
     }
 
     private void addQuery() {
-        RedisEventUtil.addQuery(this.parent().client());
+        RedisEventUtil.addQuery(this.parent().getClient());
     }
 
     @Override

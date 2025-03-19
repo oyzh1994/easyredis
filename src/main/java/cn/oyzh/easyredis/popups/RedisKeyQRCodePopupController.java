@@ -54,9 +54,9 @@ public class RedisKeyQRCodePopupController extends PopupController {
             String keyData = this.getWindowProp("keyData");
             StringBuilder builder = new StringBuilder();
             builder.append(I18nHelper.key()).append(": ")
-                    .append(key.key()).append("\n")
+                    .append(key.getKey()).append("\n")
                     .append(I18nHelper.database()).append(": ")
-                    .append(key.dbIndex()).append("\n")
+                    .append(key.getDbIndex()).append("\n")
                     .append(I18nHelper.data()).append(": ")
                     .append(keyData);
             JulLog.info("generate qrcode begin.");

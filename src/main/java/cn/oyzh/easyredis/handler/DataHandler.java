@@ -1,8 +1,5 @@
 package cn.oyzh.easyredis.handler;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -21,17 +18,27 @@ public class DataHandler {
     /**
      * 消息处理
      */
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = true)
     private Consumer<String> messageHandler;
+
+    public Consumer<String> getMessageHandler() {
+        return messageHandler;
+    }
+
+    public void setMessageHandler(Consumer<String> messageHandler) {
+        this.messageHandler = messageHandler;
+    }
+
+    public Consumer<Integer> getProcessedHandler() {
+        return processedHandler;
+    }
+
+    public void setProcessedHandler(Consumer<Integer> processedHandler) {
+        this.processedHandler = processedHandler;
+    }
 
     /**
      * 进度处理
      */
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = true)
     private Consumer<Integer> processedHandler;
 
     /**

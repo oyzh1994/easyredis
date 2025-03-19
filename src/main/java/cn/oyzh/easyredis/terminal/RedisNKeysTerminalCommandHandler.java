@@ -21,7 +21,7 @@ public abstract class RedisNKeysTerminalCommandHandler<C extends TerminalCommand
         if (words.length >= 1) {
             String key = line.substring(this.commandFullName().length());
             String pattern = StringUtil.isBlank(key) ? "*" : key + "*";
-            Set<String> keys = terminal.client().keys(null, pattern, this.getKeyType());
+            Set<String> keys = terminal.getClient().keys(null, pattern, this.getKeyType());
             if (CollectionUtil.isEmpty(keys)) {
                 return false;
             }

@@ -4,8 +4,6 @@ import cn.oyzh.common.util.NumberUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * redis信息属性项目
@@ -18,14 +16,23 @@ public class RedisServerItem {
     /**
      * 服务角色
      */
-    @Getter
     private String role;
+
+    public String getServerVersion() {
+        return serverVersion;
+    }
+
+    public void setServerVersion(String serverVersion) {
+        this.serverVersion = serverVersion;
+    }
+
+    public String getRole() {
+        return role;
+    }
 
     /**
      * 服务版本
      */
-    @Getter
-    @Setter
     private String serverVersion;
 
     /**

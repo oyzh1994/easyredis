@@ -76,7 +76,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     private void keyAdded(RedisKeyAddedEvent event) {
         for (RedisConnectTreeItem connectItem : this.root().getConnectItems()) {
             if (connectItem.value() == event.data()) {
-                RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.dbIndex());
+                RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.getDbIndex());
                 if (dbItem != null) {
                     dbItem.onKeyAdded();
                 }
@@ -94,7 +94,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     private void keyDeleted(RedisKeyDeletedEvent event) {
         for (RedisConnectTreeItem connectItem : this.root().getConnectItems()) {
             if (connectItem.value() == event.data()) {
-                RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.dbIndex());
+                RedisDatabaseTreeItem dbItem = connectItem.getDatabaseItem(event.getDbIndex());
                 if (dbItem != null) {
                     dbItem.onKeyDeleted();
                 }

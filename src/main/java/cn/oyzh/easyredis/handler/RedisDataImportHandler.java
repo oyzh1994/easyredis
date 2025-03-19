@@ -18,8 +18,6 @@ import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileReadConfig;
 import cn.oyzh.store.file.FileRecord;
 import cn.oyzh.store.file.TypeFileReader;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -31,9 +29,55 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2024/11/26
  */
-@Setter
-@Accessors(fluent = true, chain = false)
 public class RedisDataImportHandler extends DataHandler {
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
+
+    public boolean isRetainTTL() {
+        return retainTTL;
+    }
+
+    public void setRetainTTL(boolean retainTTL) {
+        this.retainTTL = retainTTL;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
+
+    public boolean isIgnoreExist() {
+        return ignoreExist;
+    }
+
+    public void setIgnoreExist(boolean ignoreExist) {
+        this.ignoreExist = ignoreExist;
+    }
+
+    public FileReadConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(FileReadConfig config) {
+        this.config = config;
+    }
 
     /**
      * 文件格式

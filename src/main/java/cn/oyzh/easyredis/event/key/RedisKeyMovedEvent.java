@@ -5,18 +5,19 @@ import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/12/12
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisKeyMovedEvent extends Event<RedisKeyTreeItem> implements EventFormatter {
+    public int getTargetDB() {
+        return targetDB;
+    }
+
+    public void setTargetDB(int targetDB) {
+        this.targetDB = targetDB;
+    }
 
     private int targetDB;
 

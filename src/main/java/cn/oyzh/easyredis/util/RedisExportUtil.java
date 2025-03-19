@@ -49,11 +49,11 @@ public class RedisExportUtil {
         // 拼接数据
         for (RedisKey n : nodes) {
             Map<String, Object> node = new HashMap<>();
-            node.put("key", n.key());
-            node.put("type", n.type().toString());
-            node.put("dbIndex", n.dbIndex());
-            if (n.ttl() != null) {
-                node.put("ttl", n.ttl());
+            node.put("key", n.getKey());
+            node.put("type", n.getType().toString());
+            node.put("dbIndex", n.getDbIndex());
+            if (n.getTtl() != null) {
+                node.put("ttl", n.getTtl());
             }
             String value = RedisKeyUtil.serializeNode(n);
             if (value != null) {

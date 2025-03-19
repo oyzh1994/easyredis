@@ -5,7 +5,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.paint.Color;
-import lombok.experimental.Accessors;
 
 /**
  * redis树节点值
@@ -13,7 +12,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/08/10
  */
-@Accessors(chain = true, fluent = true)
 public class RedisConnectTreeItemValue extends RichTreeItemValue {
 
     public RedisConnectTreeItemValue(RedisConnectTreeItem item) {

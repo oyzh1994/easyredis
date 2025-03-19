@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.util.CollectionUtil;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +12,25 @@ import java.util.stream.Stream;
  * @author oyzh
  * @since 2023/6/30
  */
-@Data
 public class RedisRemoteInfo {
 
     private RedisServerInfo server;
+
+    public RedisServerInfo getServer() {
+        return server;
+    }
+
+    public void setServer(RedisServerInfo server) {
+        this.server = server;
+    }
+
+    public List<RedisDBInfo> getKeyspace() {
+        return keyspace;
+    }
+
+    public void setKeyspace(List<RedisDBInfo> keyspace) {
+        this.keyspace = keyspace;
+    }
 
     private List<RedisDBInfo> keyspace;
 

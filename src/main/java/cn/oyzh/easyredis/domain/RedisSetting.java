@@ -4,8 +4,6 @@ package cn.oyzh.easyredis.domain;
 import cn.oyzh.fx.plus.domain.AppSetting;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * redis设置
@@ -13,10 +11,16 @@ import lombok.EqualsAndHashCode;
  * @author oyzh
  * @since 2023/6/16
  */
-@Data
 @Table("t_setting")
-@EqualsAndHashCode(callSuper = true)
 public class RedisSetting extends AppSetting {
+
+    public Integer getKeyLoadLimit() {
+        return keyLoadLimit;
+    }
+
+    public void setKeyLoadLimit(Integer keyLoadLimit) {
+        this.keyLoadLimit = keyLoadLimit;
+    }
 
     /**
      * 键加载上限

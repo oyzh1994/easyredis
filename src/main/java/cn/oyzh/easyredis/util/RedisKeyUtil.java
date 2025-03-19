@@ -284,7 +284,7 @@ public class RedisKeyUtil {
         if (node == null || client == null) {
             return;
         }
-        String key = node.key();
+        String key = node.getKey();
         // string
         if (node.isStringKey()) {
             client.set(dbIndex, key, (String) node.asStringValue().getValue());
@@ -390,9 +390,9 @@ public class RedisKeyUtil {
         Long objectRefcount = client.objectRefcount(dbIndex, key);
         Long objectIdletime = client.objectIdletime(dbIndex, key);
         String objectEncoding = client.objectEncoding(dbIndex, key);
-        node.objectIdletime(objectIdletime);
-        node.objectRefcount(objectRefcount);
-        node.objectedEncoding(objectEncoding);
+        node.setObjectIdletime(objectIdletime);
+        node.setObjectRefcount(objectRefcount);
+        node.setObjectedEncoding(objectEncoding);
     }
 
     /**
@@ -430,7 +430,7 @@ public class RedisKeyUtil {
         List<RedisKey> redisKeys = new ArrayList<>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
             RedisKey redisKey = initKey(dbIndex, keys.get(i), types.get(i));
-            redisKey.loadTime(loadTime);
+            redisKey.setLoadTime(loadTime);
             redisKeys.add(redisKey);
         }
         scanResult.setKeys(redisKeys);
@@ -549,7 +549,7 @@ public class RedisKeyUtil {
         List<RedisKey> redisKeys = new ArrayList<>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
             RedisKey redisKey = initKey(dbIndex, CollectionUtil.get(keys, i), types.get(i));
-            redisKey.loadTime(loadTime);
+            redisKey.setLoadTime(loadTime);
             redisKeys.add(redisKey);
         }
         return redisKeys;
@@ -590,11 +590,11 @@ public class RedisKeyUtil {
         }
         // ttl
         if (ttl) {
-            redisKey.ttl(client.ttl(dbIndex, key));
+            redisKey.setTtl(client.ttl(dbIndex, key));
         }
         // 对象编码
         if (objectEncoding) {
-            redisKey.objectedEncoding(client.objectEncoding(dbIndex, key));
+            redisKey.setObjectedEncoding(client.objectEncoding(dbIndex, key));
         }
         // 值
         if (loadValue) {
@@ -604,7 +604,7 @@ public class RedisKeyUtil {
         long end = System.currentTimeMillis();
         // 加载耗时
         long loadTime = end - start;
-        redisKey.loadTime((short) loadTime);
+        redisKey.setLoadTime((short) loadTime);
         return redisKey;
     }
 
@@ -626,9 +626,9 @@ public class RedisKeyUtil {
         }
         // 处理键
         if (redisKey != null) {
-            redisKey.key(key);
+            redisKey.setKey(key);
             redisKey.type(type);
-            redisKey.dbIndex(dbIndex);
+            redisKey.setDbIndex(dbIndex);
         }
         return redisKey;
     }
@@ -752,7 +752,7 @@ public class RedisKeyUtil {
                     count += keys.size();
                 } else {
                     for (RedisKey key : keys) {
-                        if (!existingKeys.contains(key.key())) {
+                        if (!existingKeys.contains(key.getKey())) {
                             allKeys.add(key);
                             count++;
                         }

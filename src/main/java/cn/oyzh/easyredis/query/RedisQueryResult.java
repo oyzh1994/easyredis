@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.query;
 
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
 
 /**
  * zk查询结果
@@ -9,13 +8,44 @@ import lombok.Data;
  * @author oyzh
  * @since 2025/01/20
  */
-@Data
 public class RedisQueryResult {
 
     /**
      * 耗时
      */
     private long cost;
+
+    public long getCost() {
+        return cost;
+    }
+
+    public void setCost(long cost) {
+        this.cost = cost;
+    }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
     /**
      * 结果

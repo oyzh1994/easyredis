@@ -266,8 +266,8 @@ public class RedisTransportDataController extends StageController {
         // 生成传输处理器
         if (this.transportHandler == null) {
             this.transportHandler = new RedisDataTransportHandler();
-            this.transportHandler.messageHandler(str -> this.transportMsg.appendLine(str))
-                    .processedHandler(count -> {
+            this.transportHandler.setMessageHandler(str -> this.transportMsg.appendLine(str));
+            this.transportHandler.setProcessedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
                         } else if (count < 0) {
@@ -281,20 +281,20 @@ public class RedisTransportDataController extends StageController {
             this.transportHandler.interrupt(false);
         }
         // 来源客户端
-        this.transportHandler.sourceClient(this.sourceClient);
+        this.transportHandler.setSourceClient(this.sourceClient);
         // 目标客户端
-        this.transportHandler.targetClient(this.targetClient);
+        this.transportHandler.setTargetClient(this.targetClient);
         // 来源字符集
-        this.transportHandler.sourceDatabase(this.sourceDatabase.getDB());
+        this.transportHandler.setSourceDatabase(this.sourceDatabase.getDB());
         // 目标字符集
-        this.transportHandler.targetDatabase(this.targetDatabase.getDB());
+        this.transportHandler.setTargetDatabase(this.targetDatabase.getDB());
         // 节点存在时处理策略
-        this.transportHandler.existsPolicy(this.existsPolicy.selectedUserData());
+        this.transportHandler.setExistsPolicy(this.existsPolicy.selectedUserData());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.transportHandler.filters(this.filterStore.loadEnable(this.sourceClient.iid()));
+            this.transportHandler.setFilters(this.filterStore.loadEnable(this.sourceClient.iid()));
         } else {
-            this.transportHandler.filters(null);
+            this.transportHandler.setFilters(null);
         }
         // 键类型
         List<String> keyTypes = new ArrayList<>();
@@ -316,11 +316,11 @@ public class RedisTransportDataController extends StageController {
         if (this.stringType.isSelected()) {
             keyTypes.add("string");
         }
-        this.transportHandler.keyTypes(keyTypes);
+        this.transportHandler.setKeyTypes(keyTypes);
         // 查询模式
-        this.transportHandler.pattern(this.pattern.getText());
+        this.transportHandler.setPattern(this.pattern.getText());
         // 保留ttl
-        this.transportHandler.retainTTL(this.retainTTL.isSelected());
+        this.transportHandler.setRetainTTL(this.retainTTL.isSelected());
         // 开始处理
         NodeGroupUtil.disable(this.stage, "exec");
         this.stage.appendTitle("===" + I18nHelper.transportInProgress() + "===");

@@ -3,8 +3,6 @@ package cn.oyzh.easyredis.redis.key;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Getter;
-import lombok.Setter;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.resps.StreamEntry;
 
@@ -18,11 +16,26 @@ import java.util.Map;
  */
 public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.RedisStreamRow>> {
 
-    @Getter
-    @Setter
     private List<RedisStreamRow> value;
 
-    @Getter
+    public RedisStreamRow getUnSavedRow() {
+        return unSavedRow;
+    }
+
+    public void setUnSavedRow(RedisStreamRow unSavedRow) {
+        this.unSavedRow = unSavedRow;
+    }
+
+    @Override
+    public List<RedisStreamRow> getValue() {
+        return value;
+    }
+
+    @Override
+    public void setValue(List<RedisStreamRow> value) {
+        this.value = value;
+    }
+
     private RedisStreamRow unSavedRow;
 
     public RedisStreamValue(List<RedisStreamRow> value) {

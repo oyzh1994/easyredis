@@ -5,18 +5,27 @@ import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/11/20
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisHyLogElementsAddedEvent extends Event<RedisStringKeyTreeItem> implements EventFormatter {
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String[] getElements() {
+        return elements;
+    }
+
+    public void setElements(String[] elements) {
+        this.elements = elements;
+    }
 
     private String key;
 

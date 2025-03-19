@@ -7,8 +7,6 @@ import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemFilter;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -30,15 +28,11 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
      * 6. hash
      * 7. stream
      */
-    @Setter
-    @Getter
     private byte type;
 
     /**
      * 关键字
      */
-    @Getter
-    @Setter
     private String kw;
 
     /**
@@ -47,17 +41,53 @@ public class RedisKeyTreeItemFilter implements RichTreeItemFilter {
      * 2. 全字匹配
      * 3. 全字匹配 + 大小写符合
      */
-    @Getter
-    @Setter
     private byte matchMode;
+
+    public byte getType() {
+        return type;
+    }
+
+    public void setType(byte type) {
+        this.type = type;
+    }
+
+    public String getKw() {
+        return kw;
+    }
+
+    public void setKw(String kw) {
+        this.kw = kw;
+    }
+
+    public byte getMatchMode() {
+        return matchMode;
+    }
+
+    public void setMatchMode(byte matchMode) {
+        this.matchMode = matchMode;
+    }
+
+    public byte getScope() {
+        return scope;
+    }
+
+    public void setScope(byte scope) {
+        this.scope = scope;
+    }
+
+    public List<RedisFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<RedisFilter> filters) {
+        this.filters = filters;
+    }
 
     /**
      * 0: 键
      * 1: 数据
      * 2: 键+数据
      */
-    @Setter
-    @Getter
     private byte scope;
 
     /**

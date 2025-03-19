@@ -41,11 +41,11 @@ public class RedisTerminalTabController extends RichTabController {
     }
 
     public Integer dbIndex() {
-        return this.terminal.dbIndex();
+        return this.terminal.getDbIndex();
     }
 
     public RedisClient client() {
-        return this.terminal.client();
+        return this.terminal.getClient();
     }
 
     @Override

@@ -4,18 +4,35 @@ import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/11/20
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisHashFieldAddedEvent extends Event<RedisHashKeyTreeItem> implements EventFormatter {
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 
     private String key;
 

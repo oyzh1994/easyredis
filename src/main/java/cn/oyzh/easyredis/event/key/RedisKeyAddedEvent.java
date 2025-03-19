@@ -4,18 +4,35 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/11/20
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisKeyAddedEvent extends Event<RedisConnect> implements EventFormatter {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
 
     private String type;
 

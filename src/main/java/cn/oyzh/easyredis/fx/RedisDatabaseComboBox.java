@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
-import lombok.Getter;
 
 /**
  * redis数据库选择框
@@ -11,7 +10,10 @@ import lombok.Getter;
  */
 public class RedisDatabaseComboBox extends FXComboBox<String> {
 
-    @Getter
+    public int getDbCount() {
+        return dbCount;
+    }
+
     private int dbCount;
 
     public void setDbCount(int dbCount) {

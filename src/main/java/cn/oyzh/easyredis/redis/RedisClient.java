@@ -27,8 +27,6 @@ import cn.oyzh.ssh.SSHForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.BuilderFactory;
 import redis.clients.jedis.ClusterPipeline;
@@ -121,8 +119,11 @@ public class RedisClient {
     /**
      * 当前连接角色
      */
-    @Getter
     private String role;
+
+    public String getRole() {
+        return role;
+    }
 
     /**
      * 当前db索引
@@ -147,9 +148,11 @@ public class RedisClient {
     /**
      * redis信息
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private final RedisConnect redisConnect;
+
+    public RedisConnect redisConnect() {
+        return redisConnect;
+    }
 
     // /**
     //  * cluster集群的主节点连接
@@ -4833,7 +4836,7 @@ public class RedisClient {
             TerminalCommandHandler<?, ?> handler = TerminalManager.findHandler(param.getContent());
             if (handler instanceof RedisTerminalCommandHandler<?> commandHandler) {
                 TerminalCommand command = commandHandler.parseCommand(param.getContent());
-                CommandObject<Object> object = RedisTerminalUtil.getCommand(commandHandler.getCommandType(), command.args());
+                CommandObject<Object> object = RedisTerminalUtil.getCommand(commandHandler.getCommandType(), command.getArgs());
                 Object execResult = this.execCommand(param.getDbIndex(), object);
                 result.setResult(execResult);
             }

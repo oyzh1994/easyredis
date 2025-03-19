@@ -124,7 +124,7 @@ public class RedisEventUtil {
     public static void terminalClose(RedisConnect redisConnect, Integer dbIndex) {
         RedisTerminalCloseEvent event = new RedisTerminalCloseEvent();
         event.data(redisConnect);
-        event.dbIndex(dbIndex);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -138,8 +138,8 @@ public class RedisEventUtil {
     public static void listRowAdded(RedisListKeyTreeItem item, String key, String member) {
         RedisListRowAddedEvent event = new RedisListRowAddedEvent();
         event.data(item);
-        event.key(key);
-        event.member(member);
+        event.setKey(key);
+        event.setMember(member);
         EventUtil.post(event);
     }
 
@@ -153,8 +153,8 @@ public class RedisEventUtil {
     public static void setMemberAdded(RedisSetKeyTreeItem item, String key, String member) {
         RedisSetMemberAddedEvent event = new RedisSetMemberAddedEvent();
         event.data(item);
-        event.key(key);
-        event.member(member);
+        event.setKey(key);
+        event.setMember(member);
         EventUtil.post(event);
     }
 
@@ -169,9 +169,9 @@ public class RedisEventUtil {
     public static void zSetMemberAdded(RedisZSetKeyTreeItem item, String key, String member, Double score) {
         RedisZSetMemberAddedEvent event = new RedisZSetMemberAddedEvent();
         event.data(item);
-        event.key(key);
-        event.score(score);
-        event.member(member);
+        event.setKey(key);
+        event.setScore(score);
+        event.setMember(member);
         EventUtil.post(event);
     }
 
@@ -187,10 +187,10 @@ public class RedisEventUtil {
     public static void zSetCoordinateAdded(RedisZSetKeyTreeItem item, String key, String member, double longitude, double latitude) {
         RedisZSetCoordinateAddedEvent event = new RedisZSetCoordinateAddedEvent();
         event.data(item);
-        event.key(key);
-        event.member(member);
-        event.latitude(latitude);
-        event.longitude(longitude);
+        event.setKey(key);
+        event.setMember(member);
+        event.setLatitude(latitude);
+        event.setLongitude(longitude);
         EventUtil.post(event);
     }
 
@@ -204,8 +204,8 @@ public class RedisEventUtil {
     public static void streamMessageAdded(RedisStreamKeyTreeItem item, String key, String message) {
         RedisStreamMessageAddedEvent event = new RedisStreamMessageAddedEvent();
         event.data(item);
-        event.key(key);
-        event.message(message);
+        event.setKey(key);
+        event.setMessage(message);
         EventUtil.post(event);
     }
 
@@ -220,9 +220,9 @@ public class RedisEventUtil {
     public static void hashFieldAdded(RedisHashKeyTreeItem item, String key, String field, String value) {
         RedisHashFieldAddedEvent event = new RedisHashFieldAddedEvent();
         event.data(item);
-        event.key(key);
-        event.field(field);
-        event.value(value);
+        event.setKey(key);
+        event.setField(field);
+        event.setValue(value);
         EventUtil.post(event);
     }
 
@@ -236,8 +236,8 @@ public class RedisEventUtil {
     public static void hyLogElementsAdded(RedisStringKeyTreeItem item, String key, String[] elements) {
         RedisHyLogElementsAddedEvent event = new RedisHyLogElementsAddedEvent();
         event.data(item);
-        event.key(key);
-        event.elements(elements);
+        event.setKey(key);
+        event.setElements(elements);
         EventUtil.post(event);
     }
 
@@ -265,9 +265,9 @@ public class RedisEventUtil {
     public static void keyAdded(RedisConnect connect, String type, String key, int dbIndex) {
         RedisKeyAddedEvent event = new RedisKeyAddedEvent();
         event.data(connect);
-        event.key(key);
-        event.type(type);
-        event.dbIndex(dbIndex);
+        event.setKey(key);
+        event.setType(type);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -281,8 +281,8 @@ public class RedisEventUtil {
     public static void keyDeleted(RedisConnect connect, String key, int dbIndex) {
         RedisKeyDeletedEvent event = new RedisKeyDeletedEvent();
         event.data(connect);
-        event.key(key);
-        event.dbIndex(dbIndex);
+        event.setKey(key);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -346,7 +346,7 @@ public class RedisEventUtil {
     public static void terminalOpen(RedisClient client, Integer dbIndex) {
         RedisTerminalOpenEvent event = new RedisTerminalOpenEvent();
         event.data(client);
-        event.dbIndex(dbIndex);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -403,9 +403,9 @@ public class RedisEventUtil {
     public static void keyTTLUpdated(RedisConnect connect, Long ttl, String key, int dbIndex) {
         RedisKeyTTLUpdatedEvent event = new RedisKeyTTLUpdatedEvent();
         event.data(connect);
-        event.ttl(ttl);
-        event.key(key);
-        event.dbIndex(dbIndex);
+        event.setTtl(ttl);
+        event.setKey(key);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -418,7 +418,7 @@ public class RedisEventUtil {
     public static void keyRenamed(RedisKeyTreeItem item, String oldKey) {
         RedisKeyRenamedEvent event = new RedisKeyRenamedEvent();
         event.data(item);
-        event.oldKey(oldKey);
+        event.setOldKey(oldKey);
         EventUtil.post(event);
     }
 
@@ -431,7 +431,7 @@ public class RedisEventUtil {
     public static void keyCopied(TreeItem<?> item, int targetDB) {
         RedisKeyCopiedEvent event = new RedisKeyCopiedEvent();
         event.data(item);
-        event.targetDB(targetDB);
+        event.setTargetDB(targetDB);
         EventUtil.post(event);
     }
 
@@ -444,7 +444,7 @@ public class RedisEventUtil {
     public static void keyMoved(RedisKeyTreeItem item, int targetDB) {
         RedisKeyMovedEvent event = new RedisKeyMovedEvent();
         event.data(item);
-        event.targetDB(targetDB);
+        event.setTargetDB(targetDB);
         EventUtil.post(event);
     }
 
@@ -457,7 +457,7 @@ public class RedisEventUtil {
     public static void keysMoved(RedisDatabaseTreeItem item, int targetDB) {
         RedisKeysMovedEvent event = new RedisKeysMovedEvent();
         event.data(item);
-        event.targetDB(targetDB);
+        event.setTargetDB(targetDB);
         EventUtil.post(event);
     }
 
@@ -601,7 +601,7 @@ public class RedisEventUtil {
     public static void groupRenamed(String group, String oldName) {
         RedisGroupRenamedEvent event = new RedisGroupRenamedEvent();
         event.data(group);
-        event.oldName(oldName);
+        event.setOldName(oldName);
         EventUtil.post(event);
     }
 
@@ -611,7 +611,7 @@ public class RedisEventUtil {
     public static void clientAction(String connectName, CommandArguments arguments) {
         RedisClientActionEvent event = new RedisClientActionEvent();
         event.data(connectName);
-        event.arguments(arguments);
+        event.setArguments(arguments);
         EventUtil.postAsync(event);
     }
 
@@ -712,7 +712,7 @@ public class RedisEventUtil {
     public static void showTransportData(RedisConnect connect, Integer dbIndex) {
         RedisShowTransportDataEvent event = new RedisShowTransportDataEvent();
         event.data(connect);
-        event.dbIndex(dbIndex);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 
@@ -724,7 +724,7 @@ public class RedisEventUtil {
     public static void showExportData(RedisConnect connect, Integer dbIndex) {
         RedisShowExportDataEvent event = new RedisShowExportDataEvent();
         event.data(connect);
-        event.dbIndex(dbIndex);
+        event.setDbIndex(dbIndex);
         EventUtil.post(event);
     }
 

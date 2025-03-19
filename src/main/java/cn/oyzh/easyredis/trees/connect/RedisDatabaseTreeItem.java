@@ -13,9 +13,6 @@ import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,33 +29,48 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
     /**
      * 当前db索引
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private final int dbIndex;
+
+    public int dbIndex() {
+        return dbIndex;
+    }
 
     /**
      * 当前值
      */
-    @Getter
-    @Accessors(chain = false, fluent = true)
     private final String value;
+
+    public String value() {
+        return value;
+    }
 
     /**
      * 键过滤模式
      */
-    @Getter
-    @Setter
     private String filterPattern;
 
-    @Getter
-    @Accessors(chain = true, fluent = true)
+    public String getFilterPattern() {
+        return filterPattern;
+    }
+
+    public void setFilterPattern(String filterPattern) {
+        this.filterPattern = filterPattern;
+    }
+
     private Long dbSize;
+
+    public Long dbSize() {
+        return dbSize;
+    }
 
     /**
      * 当前内部db索引
      */
-    @Getter
     private final Integer innerDbIndex;
+
+    public Integer getInnerDbIndex() {
+        return innerDbIndex;
+    }
 
     public RedisDatabaseTreeItem(Integer dbIndex, RedisConnectTreeView treeView) {
         super(treeView);
@@ -208,7 +220,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
             return item.client();
         }
         if (this.parent() instanceof RedisConnectTreeItem item) {
-            return item.client();
+            return item.getClient();
         }
         return null;
     }

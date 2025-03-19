@@ -6,8 +6,6 @@ import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +22,54 @@ public class RedisConnectExport {
     /**
      * 导出程序版本号
      */
-    @Getter
     private String version;
 
     /**
      * 平台
      */
-    @Getter
     private String platform;
 
     /**
      * 分组
      */
-    @Setter
-    @Getter
     private List<RedisGroup> groups;
 
     /**
      * 连接
      */
-    @Getter
     private List<RedisConnect> connects;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public List<RedisGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<RedisGroup> groups) {
+        this.groups = groups;
+    }
+
+    public List<RedisConnect> getConnects() {
+        return connects;
+    }
+
+    public void setConnects(List<RedisConnect> connects) {
+        this.connects = connects;
+    }
 
     /**
      * 从redis连接数据生成
