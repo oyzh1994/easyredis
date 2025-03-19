@@ -4,11 +4,9 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
-import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.NonNull;
 
 /**
  * redis命令行tab内容组件
@@ -29,7 +27,7 @@ public class RedisTerminalTabController extends RichTabController {
      *
      * @param client redis客户端
      */
-    public void init(@NonNull RedisClient client, Integer dbIndex) {
+    public void init( RedisClient client, Integer dbIndex) {
         this.terminal.init(client, dbIndex);
     }
 

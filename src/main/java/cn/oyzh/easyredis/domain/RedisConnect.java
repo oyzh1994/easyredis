@@ -7,7 +7,6 @@ import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -122,7 +121,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @param redisConnect redis连接
      * @return 当前对象
      */
-    public RedisConnect copy(@NonNull RedisConnect redisConnect) {
+    public RedisConnect copy( RedisConnect redisConnect) {
 //        this.id = redisConnect.id;
         this.name = redisConnect.name;
         this.host = redisConnect.host;
@@ -149,7 +148,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param key     键
     //  * @return 结果
     //  */
-    // public boolean isCollect(int dbIndex, @NonNull String key) {
+    // public boolean isCollect(int dbIndex,  String key) {
     //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
     // }
 
@@ -159,7 +158,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param dbIndex 数据库索引
     //  * @param key     键
     //  */
-    // public void addCollect(int dbIndex, @NonNull String key) {
+    // public void addCollect(int dbIndex,  String key) {
     //     if (this.collects == null) {
     //         this.collects = new ArrayList<>();
     //     }
@@ -176,7 +175,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param key     键
     //  * @return 结果
     //  */
-    // public boolean removeCollect(int dbIndex, @NonNull String key) {
+    // public boolean removeCollect(int dbIndex,  String key) {
     //     if (this.collects != null) {
     //         return this.collects.remove(this.getCollectName(dbIndex, key));
     //     }

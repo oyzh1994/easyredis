@@ -20,7 +20,6 @@ import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
@@ -57,7 +56,6 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
 

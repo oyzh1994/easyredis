@@ -21,7 +21,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -104,7 +103,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         return keyValue != null && keyValue.hasUnSavedValue();
     }
 
-    public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(treeView);
         this.value = value;
         super.setFilterable(true);

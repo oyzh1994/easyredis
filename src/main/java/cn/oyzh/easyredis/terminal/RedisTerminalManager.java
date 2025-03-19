@@ -338,13 +338,12 @@ import cn.oyzh.easyredis.terminal.zset.RedisZunionstoreTerminalCommandHandler;
 import cn.oyzh.fx.terminal.standard.ClearTerminalCommandHandler;
 import cn.oyzh.fx.terminal.standard.HelpTerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import lombok.experimental.UtilityClass;
 
 /**
  * @author oyzh
  * @since 2024-12-30
  */
-@UtilityClass
+
 public class RedisTerminalManager {
 
     /**

@@ -17,13 +17,10 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
@@ -63,7 +60,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RichTreeView treeView) {
+    public RedisConnectTreeItem( RedisConnect value,  RichTreeView treeView) {
         super(treeView);
         this.value(value);
     }
@@ -415,7 +412,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      *
      * @param value redis信息
      */
-    public void value(@NonNull RedisConnect value) {
+    public void value( RedisConnect value) {
         this.value = value;
         this.client = new RedisClient(value);
         this.client.stateProperty().addListener((observable, o, n) -> {

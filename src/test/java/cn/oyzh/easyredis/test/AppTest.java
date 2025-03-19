@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.test;
 
-import java.io.IOException;
-
 /**
  * @author oyzh
  * @since 2022/5/18

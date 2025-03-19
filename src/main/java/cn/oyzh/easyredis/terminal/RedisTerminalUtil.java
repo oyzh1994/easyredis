@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.terminal;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.BuilderFactory;
 import redis.clients.jedis.CommandArguments;
 import redis.clients.jedis.CommandObject;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/7/26
  */
-@UtilityClass
+
 public class RedisTerminalUtil {
 
     /**

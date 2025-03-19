@@ -3,8 +3,6 @@ package cn.oyzh.easyredis.test;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author oyzh
  * @since 2024-12-20

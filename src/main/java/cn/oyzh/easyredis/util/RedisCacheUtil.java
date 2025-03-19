@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.util;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.easyredis.RedisConst;
-import lombok.experimental.UtilityClass;
 
 import java.nio.charset.StandardCharsets;
 
@@ -13,7 +12,7 @@ import java.nio.charset.StandardCharsets;
  * @author oyzh
  * @since 2024-11-25
  */
-@UtilityClass
+
 public class RedisCacheUtil {
 
     private static String baseDir(int hashCode) {

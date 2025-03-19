@@ -13,8 +13,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
-          realHeight="550">
+        fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
+        realHeight="550">
     <InfoLabel text="%base.fieldName">
         <VBox.margin>
             <Insets left="30" top="10"/>

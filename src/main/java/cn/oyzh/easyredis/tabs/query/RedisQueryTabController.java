@@ -10,7 +10,6 @@ import cn.oyzh.easyredis.query.RedisQueryResult;
 import cn.oyzh.easyredis.query.RedisQueryTextAreaPane;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisQueryStore;
-import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;

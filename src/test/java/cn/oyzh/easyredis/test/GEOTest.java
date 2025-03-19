@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.test;
 
 import org.junit.Test;
-import redis.clients.jedis.search.querybuilder.GeoValue;
 
 import java.util.Arrays;
 import java.util.HashMap;

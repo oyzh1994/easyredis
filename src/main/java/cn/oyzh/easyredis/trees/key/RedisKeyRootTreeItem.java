@@ -16,11 +16,8 @@ import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
 
-    public RedisKeyRootTreeItem(@NonNull RedisKeyTreeView treeView) {
+    public RedisKeyRootTreeItem( RedisKeyTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
         this.setValue(new RedisKeyRootTreeItemValue(this));

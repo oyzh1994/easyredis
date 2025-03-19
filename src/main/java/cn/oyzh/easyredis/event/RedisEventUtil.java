@@ -1,15 +1,15 @@
 package cn.oyzh.easyredis.event;
 
-import cn.oyzh.easyredis.event.connect.RedisConnectImportedEvent;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisQuery;
 import cn.oyzh.easyredis.dto.RedisPubsubItem;
 import cn.oyzh.easyredis.event.client.RedisClientActionEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectAddedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectDeletedEvent;
+import cn.oyzh.easyredis.event.connect.RedisConnectImportedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectOpenedEvent;
 import cn.oyzh.easyredis.event.connect.RedisConnectUpdatedEvent;
-import cn.oyzh.easyredis.event.connect.RedisConnectDeletedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionClosedEvent;
 import cn.oyzh.easyredis.event.connection.RedisConnectionConnectedEvent;
 import cn.oyzh.easyredis.event.connection.RedisServerEvent;
@@ -70,7 +70,6 @@ import cn.oyzh.fx.gui.event.Layout1Event;
 import cn.oyzh.fx.gui.event.Layout2Event;
 import cn.oyzh.fx.plus.changelog.ChangelogEvent;
 import javafx.scene.control.TreeItem;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.CommandArguments;
 
 import java.io.File;
@@ -81,7 +80,7 @@ import java.io.File;
  * @author oyzh
  * @since 2023/11/20
  */
-@UtilityClass
+
 public class RedisEventUtil {
 
     // /**

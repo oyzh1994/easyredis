@@ -17,7 +17,6 @@ import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import lombok.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisRootTreeItem(@NonNull RedisConnectTreeView treeView) {
+    public RedisRootTreeItem( RedisConnectTreeView treeView) {
         super(treeView);
         this.setValue(new RedisRootTreeItemValue());
         // 加载子节点
@@ -266,7 +265,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
     }
 
     @Override
-    public void addConnect(@NonNull RedisConnect redisConnect) {
+    public void addConnect( RedisConnect redisConnect) {
         RedisGroupTreeItem groupItem = this.getGroupItem(redisConnect.getGroupId());
         if (groupItem == null) {
             super.addChild(new RedisConnectTreeItem(redisConnect, this.getTreeView()));
@@ -277,7 +276,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
     }
 
     @Override
-    public void addConnectItem(@NonNull RedisConnectTreeItem item) {
+    public void addConnectItem( RedisConnectTreeItem item) {
         if (!this.containsChild(item)) {
             if (item.value().getGroupId() != null) {
                 item.value().setGroupId(null);
@@ -289,7 +288,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
     }
 
     @Override
-    public void addConnectItems(@NonNull List<RedisConnectTreeItem> items) {
+    public void addConnectItems( List<RedisConnectTreeItem> items) {
         if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
             this.expend();
@@ -297,7 +296,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
     }
 
     @Override
-    public boolean delConnectItem(@NonNull RedisConnectTreeItem item) {
+    public boolean delConnectItem( RedisConnectTreeItem item) {
         // 删除连接
         if (this.connectStore.delete(item.value())) {
             this.removeChild(item);

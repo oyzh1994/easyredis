@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.redis;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.DefaultJedisClientConfig;
 
 /**
@@ -11,7 +10,7 @@ import redis.clients.jedis.DefaultJedisClientConfig;
  * @author oyzh
  * @since 2024/12/10
  */
-@UtilityClass
+
 public class RedisClientUtil {
 
     /**

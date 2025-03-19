@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.trees.key;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.NonNull;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class RedisListKeyTreeItem extends RedisRowKeyTreeItem<RedisListValue.RedisListRow> {
 
-    public RedisListKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisListKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

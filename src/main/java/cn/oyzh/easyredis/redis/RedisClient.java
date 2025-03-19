@@ -28,7 +28,6 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.BuilderFactory;
@@ -176,7 +175,7 @@ public class RedisClient {
         return this.stateProperty().get();
     }
 
-    public RedisClient(@NonNull RedisConnect redisConnect) {
+    public RedisClient( RedisConnect redisConnect) {
         this.redisConnect = redisConnect;
         // if (redisConnect.isSSHForward() && redisConnect.getSshConfig() != null) {
         //     this.sshForwarder = new SSHForwarder(redisConnect.getSshConfig());
@@ -3661,7 +3660,7 @@ public class RedisClient {
      * @param type    键类型
      * @return 键列表
      */
-    public Set<String> keys(Integer dbIndex, @NonNull String pattern, RedisKeyType type) {
+    public Set<String> keys(Integer dbIndex,  String pattern, RedisKeyType type) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "keys");
         Set<String> keys;
@@ -3701,7 +3700,7 @@ public class RedisClient {
      * @param newKey  新键名称
      * @return 结果
      */
-    public String rename(Integer dbIndex, @NonNull String key, @NonNull String newKey) {
+    public String rename(Integer dbIndex,  String key,  String newKey) {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rename");

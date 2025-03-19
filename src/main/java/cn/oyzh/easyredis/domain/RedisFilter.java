@@ -7,7 +7,6 @@ import cn.oyzh.store.jdbc.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -66,7 +65,7 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
      * @param filter 过滤信息
      * @return 当前对象
      */
-    public RedisFilter copy(@NonNull RedisFilter filter) {
+    public RedisFilter copy( RedisFilter filter) {
         this.kw = filter.kw;
         this.iid = filter.iid;
         this.enable = filter.enable;

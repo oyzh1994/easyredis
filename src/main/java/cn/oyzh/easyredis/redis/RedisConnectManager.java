@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.redis;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeItem;
-import lombok.NonNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public interface RedisConnectManager {
      *
      * @param redisConnect 连接信息
      */
-    void addConnect(@NonNull RedisConnect redisConnect);
+    void addConnect( RedisConnect redisConnect);
 
     /**
      * 删除多个连接
@@ -41,14 +40,14 @@ public interface RedisConnectManager {
      *
      * @param item 连接键
      */
-    void addConnectItem(@NonNull RedisConnectTreeItem item);
+    void addConnectItem( RedisConnectTreeItem item);
 
     /**
      * 添加多个连接键
      *
      * @param items 连接键列表
      */
-    void addConnectItems(@NonNull List<RedisConnectTreeItem> items);
+    void addConnectItems( List<RedisConnectTreeItem> items);
 
     /**
      * 删除连接键
@@ -56,7 +55,7 @@ public interface RedisConnectManager {
      * @param item 连接键
      * @return 结果
      */
-    boolean delConnectItem(@NonNull RedisConnectTreeItem item);
+    boolean delConnectItem( RedisConnectTreeItem item);
 
     /**
      * 获取连接键

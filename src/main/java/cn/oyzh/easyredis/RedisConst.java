@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis;
 
-import lombok.experimental.UtilityClass;
-
 import java.io.File;
 
 /**
@@ -10,7 +8,7 @@ import java.io.File;
  * @author oyzh
  * @since 2023/06/16
  */
-@UtilityClass
+
 public class RedisConst {
 
     /**

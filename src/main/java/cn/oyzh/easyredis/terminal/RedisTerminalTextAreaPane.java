@@ -16,7 +16,6 @@ import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 /**
@@ -111,7 +110,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
      * @param client  redis客户端
      * @param dbIndex db索引
      */
-    public void init(@NonNull RedisClient client, Integer dbIndex) {
+    public void init( RedisClient client, Integer dbIndex) {
         this.client = client;
         this.dbIndex = dbIndex;
         this.disableInput();

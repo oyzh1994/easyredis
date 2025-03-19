@@ -4,7 +4,6 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.fx.plus.information.MessageBox;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -28,7 +27,7 @@ public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKe
     @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisRowKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

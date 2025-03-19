@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.Protocol;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import static redis.clients.jedis.Protocol.Command.*;
  * @author oyzh
  * @since 2025/01/21
  */
-@UtilityClass
+
 public class RedisQueryUtil {
 
     /**

@@ -22,8 +22,6 @@ import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.params.ScanParams;
 import redis.clients.jedis.resps.ScanResult;
@@ -45,7 +43,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-@UtilityClass
+
 public class RedisKeyUtil {
 
     /**
@@ -357,7 +355,7 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void keyValue(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyValue(RedisKey node, Integer dbIndex,  String key, RedisClient client) {
         // string
         if (node.isStringKey()) {
             String value = client.get(dbIndex, key);
@@ -388,7 +386,7 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void keyObject(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyObject(RedisKey node, Integer dbIndex,  String key, RedisClient client) {
         Long objectRefcount = client.objectRefcount(dbIndex, key);
         Long objectIdletime = client.objectIdletime(dbIndex, key);
         String objectEncoding = client.objectEncoding(dbIndex, key);
@@ -567,7 +565,7 @@ public class RedisKeyUtil {
      * @param client    redis客户端
      * @return redis键
      */
-    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
+    public static RedisKey getKey(int dbIndex,  String key, boolean ttl, boolean loadValue, RedisClient client) {
         return getKey(dbIndex, key, ttl, false, loadValue, client);
     }
 
@@ -582,7 +580,7 @@ public class RedisKeyUtil {
      * @param client         redis客户端
      * @return redis键
      */
-    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean objectEncoding, boolean loadValue, RedisClient client) {
+    public static RedisKey getKey(int dbIndex,  String key, boolean ttl, boolean objectEncoding, boolean loadValue, RedisClient client) {
         // 开始时间
         long start = System.currentTimeMillis();
         // 初始化键
@@ -618,7 +616,7 @@ public class RedisKeyUtil {
      * @param type    键类型
      * @return redis键
      */
-    public static RedisKey initKey(int dbIndex, @NonNull String key, RedisKeyType type) {
+    public static RedisKey initKey(int dbIndex,  String key, RedisKeyType type) {
         // 创建键
         RedisKey redisKey = null;
         switch (type) {

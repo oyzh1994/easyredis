@@ -7,7 +7,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class RedisConnectExport {
      * @param redisConnects 连接列表
      * @return RedisInfoExport
      */
-    public static RedisConnectExport fromConnects(@NonNull List<RedisConnect> redisConnects) {
+    public static RedisConnectExport fromConnects( List<RedisConnect> redisConnects) {
         RedisConnectExport export = new RedisConnectExport();
         Project project = Project.load();
         export.version = project.getVersion();
@@ -68,7 +67,7 @@ public class RedisConnectExport {
      * @param json json字符串
      * @return RedisInfoExport
      */
-    public static RedisConnectExport fromJSON(@NonNull String json) {
+    public static RedisConnectExport fromJSON( String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         RedisConnectExport export = new RedisConnectExport();
