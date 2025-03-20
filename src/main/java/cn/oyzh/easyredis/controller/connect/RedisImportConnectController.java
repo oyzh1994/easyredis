@@ -101,9 +101,9 @@ public class RedisImportConnectController extends StageController {
                 }
             }
             if (success) {
-                MessageBox.okToast(I18nHelper.importConnectionSuccess());
                 RedisEventUtil.connectImported();
                 this.closeWindow();
+                MessageBox.okToast(I18nHelper.importConnectionSuccess());
             } else {
                 MessageBox.warn(I18nHelper.importConnectionFail());
             }
