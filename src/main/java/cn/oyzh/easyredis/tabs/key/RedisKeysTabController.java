@@ -20,7 +20,7 @@ import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeResizer;
+import cn.oyzh.fx.plus.node.NodeWidthResizer;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
 import javafx.fxml.FXML;
@@ -231,7 +231,7 @@ public class RedisKeysTabController extends ParentTabController {
         // 过滤处理
         this.filterType.selectedIndexChanged((observable, oldValue, newValue) -> this.doFilter());
         // 拉伸辅助
-        NodeResizer resizer = new NodeResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
+        NodeWidthResizer resizer = new NodeWidthResizer(this.leftBox, Cursor.DEFAULT, this::resizeLeft);
         resizer.widthLimit(240f, 750f);
         resizer.initResizeEvent();
     }
