@@ -9,10 +9,14 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisFilterTableView;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
+import cn.oyzh.fx.gui.combobox.SSHAuthMethodCombobox;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
+import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
@@ -28,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -146,6 +151,18 @@ public class RedisAddConnectController extends StageController {
     private ClearableTextField sshPassword;
 
     /**
+     * ssh认证方式
+     */
+    @FXML
+    private SSHAuthMethodCombobox sshAuthMethod;
+
+    /**
+     * ssh证书
+     */
+    @FXML
+    private ReadOnlyTextField sshCertificate;
+
+    /**
      * 分组
      */
     private RedisGroup group;
@@ -199,7 +216,9 @@ public class RedisAddConnectController extends StageController {
         sshConfig.setUser(this.sshUser.getText());
         sshConfig.setPort(this.sshPort.getIntValue());
         sshConfig.setPassword(this.sshPassword.getText());
-        sshConfig.setTimeout(this.sshTimeout.getIntValue());
+        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
+        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
+        sshConfig.setCertificatePath(this.sshCertificate.getText());
         return sshConfig;
     }
 
@@ -286,6 +305,16 @@ public class RedisAddConnectController extends StageController {
         });
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
+        // ssh认证方式
+        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
+            if (this.sshAuthMethod.isPasswordAuth()) {
+                this.sshPassword.display();
+                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
+            } else {
+                this.sshPassword.disappear();
+                NodeGroupUtil.display(this.tabPane, "sshCertificate");
+            }
+        });
     }
 
     @Override
@@ -336,6 +365,17 @@ public class RedisAddConnectController extends StageController {
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             this.filterTable.removeItem(filter);
+        }
+    }
+
+    /**
+     * 选择ssh证书
+     */
+    @FXML
+    private void chooseSSHCertificate() {
+        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
+        if (file != null) {
+            this.sshCertificate.setText(file.getPath());
         }
     }
 }
