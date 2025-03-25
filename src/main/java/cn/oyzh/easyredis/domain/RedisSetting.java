@@ -28,6 +28,14 @@ public class RedisSetting extends AppSetting {
     @Column
     private Integer keyLoadLimit;
 
+    @Override
+    public void copy(Object o) {
+        super.copy(o);
+        if (o instanceof RedisSetting setting) {
+            this.keyLoadLimit = setting.keyLoadLimit;
+        }
+    }
+
     // /**
     //  * 搜索-更多-展开状态
     //  * 0|null 不展开
