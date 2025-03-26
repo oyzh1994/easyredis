@@ -11,10 +11,12 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.text.Font;
 
 /**
  * redis终端文本域
@@ -33,20 +35,21 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     @Override
-    protected void initTextArea() {
-        super.initTextArea();
+    public void initNode() {
+        super.initNode();
         super.initContentPrompts();
     }
 
     @Override
-    protected void initFont() {
-        // 禁用字体管理
-        super.disableFont();
+    protected Font initFont() {
+//        // 禁用字体管理
+//        super.disableFont();
         // 初始化字体
         RedisSetting setting = RedisSettingStore.SETTING;
-        this.setFontSize(setting.getTerminalFontSize());
-        this.setFontFamily(setting.getTerminalFontFamily());
-        this.setFontWeight2(setting.getTerminalFontWeight());
+//        this.setFontSize(setting.getTerminalFontSize());
+//        this.setFontFamily(setting.getTerminalFontFamily());
+//        this.setFontWeight2(setting.getTerminalFontWeight());
+        return FontManager.toFont(setting.terminalFontConfig());
     }
 
     /**
