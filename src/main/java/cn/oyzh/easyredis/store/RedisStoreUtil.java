@@ -40,7 +40,7 @@ public class RedisStoreUtil {
         JdbcConst.dbCacheSize(65535);
         JdbcConst.dbPageSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
-        JdbcConst.dbFile(RedisConst.STORE_PATH + "db");
+        JdbcConst.dbFile(RedisConst.getStorePath() + "db");
         try {
             JdbcManager.takeoff();
         } catch (Exception ex) {

@@ -78,11 +78,11 @@ public class EasyRedisApp extends FXApplication implements EventListener {
     public static void main(String[] args) {
         try {
             SysConst.projectName(PROJECT.getName());
-            SysConst.storeDir(RedisConst.STORE_PATH);
+            SysConst.storeDir(RedisConst.getStorePath());
+            SysConst.cacheDir(RedisConst.getCachePath());
             JulLog.info("项目启动中...");
             // 储存初始化
             RedisStoreUtil.init();
-            SysConst.cacheDir(RedisConst.CACHE_PATH);
             if (OSUtil.isWindows()) {
                 FXConst.appIcon(RedisConst.ICON_32_PATH);
             } else {

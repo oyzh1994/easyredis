@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class RedisCacheUtil {
 
     private static String baseDir(int hashCode) {
-        return RedisConst.KEY_CACHE_PATH + hashCode;
+        return RedisConst.getKeyCachePath() + hashCode;
     }
 
     /**
@@ -63,7 +63,7 @@ public class RedisCacheUtil {
      */
     public static Object loadValue(int hashCode, String suffix) {
         try {
-            String baseDir = RedisConst.KEY_CACHE_PATH + hashCode;
+            String baseDir = RedisConst.getKeyCachePath() + hashCode;
             String fileName = baseDir + "." + suffix;
             if (FileUtil.exist(fileName)) {
                 byte[] bytes = FileUtil.readBytes(fileName);
