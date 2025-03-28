@@ -20,7 +20,6 @@ import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
@@ -57,7 +56,6 @@ import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
 
@@ -80,12 +78,16 @@ public class EasyRedisApp extends FXApplication implements EventListener {
     public static void main(String[] args) {
         try {
             SysConst.projectName(PROJECT.getName());
-            SysConst.storeDir(RedisConst.STORE_PATH);
+            SysConst.storeDir(RedisConst.getStorePath());
+            SysConst.cacheDir(RedisConst.getCachePath());
             JulLog.info("项目启动中...");
             // 储存初始化
             RedisStoreUtil.init();
-            SysConst.cacheDir(RedisConst.CACHE_PATH);
-            FXConst.appIcon(RedisConst.ICON_PATH);
+            if (OSUtil.isWindows()) {
+                FXConst.appIcon(RedisConst.ICON_32_PATH);
+            } else {
+                FXConst.appIcon(RedisConst.ICON_PATH);
+            }
             EventFactory.registerEventBus(FxEventBus.class);
             EventFactory.syncEventConfig(FxEventConfig.SYNC);
             EventFactory.asyncEventConfig(FxEventConfig.ASYNC);
@@ -178,7 +180,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             }
             // 初始化
             if (OSUtil.isWindows()) {
-                TrayManager.init(RedisConst.TRAY_ICON_PATH);
+                TrayManager.init(RedisConst.ICON_24_PATH);
             } else {
                 TrayManager.init(RedisConst.ICON_PATH);
             }

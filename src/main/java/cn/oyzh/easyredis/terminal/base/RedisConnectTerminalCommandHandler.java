@@ -16,8 +16,8 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     @Override
     protected TerminalCommand parseCommand(String line, String[] args) {
         TerminalCommand terminalCommand = new TerminalCommand();
-        terminalCommand.args(args);
-        terminalCommand.command(line);
+        terminalCommand.setArgs(args);
+        terminalCommand.setCommand(line);
         return terminalCommand;
     }
 
@@ -40,9 +40,9 @@ public class RedisConnectTerminalCommandHandler extends RedisTerminalCommandHand
     public TerminalExecuteResult execute(TerminalCommand command, RedisTerminalTextAreaPane terminal) {
         if (terminal.isTemporary()) {
             if (terminal.isConnected()) {
-                terminal.client().closeQuiet();
+                terminal.getClient().closeQuiet();
             }
-            terminal.connect(command.command());
+            terminal.connect(command.getCommand());
         } else {
             terminal.outputByPrompt(I18nHelper.operationNotSupport());
         }

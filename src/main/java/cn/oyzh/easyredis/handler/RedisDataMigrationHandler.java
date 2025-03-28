@@ -15,8 +15,6 @@ import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistoryStore;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -24,52 +22,92 @@ import java.util.List;
  * @author oyzh
  * @since 2024/10/15
  */
-@Setter
 public class RedisDataMigrationHandler extends DataHandler {
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean groups;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean filters;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean keyFilters;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean connections;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean terminalHistory;
 
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private boolean applicationSetting;
 
     /**
      * 1: 合并 2: 覆盖
      */
-    @Setter
-    @Accessors(chain = false, fluent = true)
     private String dataPolicy;
 
+    private final RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
 
-    private RedisConnectStore infoStore = RedisConnectStore.INSTANCE;
+    private final RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
 
-    private RedisGroupStore groupStore = RedisGroupStore.INSTANCE;
+    private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
-    private RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
+    private final RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
 
-    private RedisSettingStore settingStore = RedisSettingStore.INSTANCE;
+    private final RedisTerminalHistoryStore terminalHistoryStore = RedisTerminalHistoryStore.INSTANCE;
 
-    private RedisTerminalHistoryStore terminalHistoryStore = RedisTerminalHistoryStore.INSTANCE;
+    public boolean isGroups() {
+        return groups;
+    }
 
-    private RedisKeyFilterHistoryStore keyFilterHistoryJdbcStore = RedisKeyFilterHistoryStore.INSTANCE;
+    public void setGroups(boolean groups) {
+        this.groups = groups;
+    }
+
+    public boolean isFilters() {
+        return filters;
+    }
+
+    public void setFilters(boolean filters) {
+        this.filters = filters;
+    }
+
+    public boolean isKeyFilters() {
+        return keyFilters;
+    }
+
+    public void setKeyFilters(boolean keyFilters) {
+        this.keyFilters = keyFilters;
+    }
+
+    public boolean isConnections() {
+        return connections;
+    }
+
+    public void setConnections(boolean connections) {
+        this.connections = connections;
+    }
+
+    public boolean isTerminalHistory() {
+        return terminalHistory;
+    }
+
+    public void setTerminalHistory(boolean terminalHistory) {
+        this.terminalHistory = terminalHistory;
+    }
+
+    public boolean isApplicationSetting() {
+        return applicationSetting;
+    }
+
+    public void setApplicationSetting(boolean applicationSetting) {
+        this.applicationSetting = applicationSetting;
+    }
+
+    public String getDataPolicy() {
+        return dataPolicy;
+    }
+
+    public void setDataPolicy(String dataPolicy) {
+        this.dataPolicy = dataPolicy;
+    }
+
+    private final RedisKeyFilterHistoryStore keyFilterHistoryJdbcStore = RedisKeyFilterHistoryStore.INSTANCE;
 
     /**
      * 执行传输

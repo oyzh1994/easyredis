@@ -4,20 +4,22 @@ import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
 import cn.oyzh.i18n.I18nHelper;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * @author oyzh
  * @since 2023/12/11
  */
-@Data
-@Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
 public class RedisKeyRenamedEvent extends Event<RedisKeyTreeItem> implements EventFormatter {
 
     private String oldKey;
+
+    public String getOldKey() {
+        return oldKey;
+    }
+
+    public void setOldKey(String oldKey) {
+        this.oldKey = oldKey;
+    }
 
     @Override
     public String eventFormat() {

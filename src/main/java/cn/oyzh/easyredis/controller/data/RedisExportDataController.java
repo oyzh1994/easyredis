@@ -15,6 +15,9 @@ import cn.oyzh.fx.gui.text.area.MsgTextArea;
 import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
+import cn.oyzh.fx.plus.chooser.FileExtensionFilter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.box.FXVBox;
 import cn.oyzh.fx.plus.controls.button.FXButton;
@@ -22,8 +25,6 @@ import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.Counter;
@@ -248,8 +249,8 @@ public class RedisExportDataController extends StageController {
         // 生成迁移处理器
         if (this.exportHandler == null) {
             this.exportHandler = new RedisDataExportHandler();
-            this.exportHandler.messageHandler(str -> this.exportMsg.appendLine(str))
-                    .processedHandler(count -> {
+            this.exportHandler.setMessageHandler(str -> this.exportMsg.appendLine(str));
+            this.exportHandler.setProcessedHandler(count -> {
                         if (count == 0) {
                             this.counter.updateIgnore();
                         } else if (count < 0) {
@@ -264,23 +265,23 @@ public class RedisExportDataController extends StageController {
         }
         String fileType = this.format.selectedUserData();
         // 文件类型
-        this.exportHandler.fileType(fileType);
+        this.exportHandler.setFileType(fileType);
         // 客户端
-        this.exportHandler.client(this.client);
+        this.exportHandler.setClient(this.client);
         // 数据库
         if (this.dbIndex != null) {
-            this.exportHandler.database(this.dbIndex);
+            this.exportHandler.setDatabase(this.dbIndex);
         } else {
             int index = this.db.getSelectedIndex();
-            this.exportHandler.database(index == 0 ? null : index - 1);
+            this.exportHandler.setDatabase(index == 0 ? null : index - 1);
         }
         // 导出文件
         this.exportHandler.filePath(this.exportFile.getPath());
         // 适用过滤
         if (this.applyFilter.isSelected()) {
-            this.exportHandler.filters(this.filterStore.loadEnable(this.client.iid()));
+            this.exportHandler.setFilters(this.filterStore.loadEnable(this.client.iid()));
         } else {
-            this.exportHandler.filters(null);
+            this.exportHandler.setFilters(null);
         }
         // 键类型
         List<String> keyTypes = new ArrayList<>();
@@ -302,11 +303,11 @@ public class RedisExportDataController extends StageController {
         if (this.stringType.isSelected()) {
             keyTypes.add("string");
         }
-        this.exportHandler.keyTypes(keyTypes);
+        this.exportHandler.setKeyTypes(keyTypes);
         // 查询模式
-        this.exportHandler.pattern(this.pattern.getText());
+        this.exportHandler.setPattern(this.pattern.getText());
         // 保留ttl
-        this.exportHandler.retainTTL(this.retainTTL.isSelected());
+        this.exportHandler.setRetainTTL(this.retainTTL.isSelected());
         // 压缩
         this.exportHandler.compress(this.compress.isEnable() && this.compress.isSelected());
         // 包含标题
@@ -475,7 +476,7 @@ public class RedisExportDataController extends StageController {
     @FXML
     private void selectFile() {
         String fileType = this.format.selectedUserData();
-        FileExtensionFilter filter = FileChooserHelper.extensionFilter(fileType);
+        FileExtensionFilter filter = FXChooser.extensionFilter(fileType);
         String fileName = "Redis-" + this.connect.getName();
         if (this.dbIndex != null) {
             fileName += "-db" + this.dbIndex;

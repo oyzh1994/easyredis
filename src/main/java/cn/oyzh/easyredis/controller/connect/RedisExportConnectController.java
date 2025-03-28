@@ -7,11 +7,12 @@ import cn.oyzh.easyredis.dto.RedisConnectExport;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
 import cn.oyzh.fx.plus.FXConst;
+import cn.oyzh.fx.plus.chooser.FXChooser;
+import cn.oyzh.fx.plus.chooser.FileChooserHelper;
+import cn.oyzh.fx.plus.chooser.FileExtensionFilter;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.file.FileChooserHelper;
-import cn.oyzh.fx.plus.file.FileExtensionFilter;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
@@ -84,8 +85,8 @@ public class RedisExportConnectController extends StageController {
         }
         try {
             FileUtil.writeUtf8String(export.toJSONString(), this.exportFile);
-            MessageBox.okToast(I18nHelper.exportConnectionSuccess());
             this.closeWindow();
+            MessageBox.okToast(I18nHelper.exportConnectionSuccess());
         } catch (Exception ex) {
             MessageBox.exception(ex, I18nHelper.exportConnectionFail());
         }
@@ -101,7 +102,7 @@ public class RedisExportConnectController extends StageController {
      */
     @FXML
     private void selectFile() {
-        FileExtensionFilter filter = FileChooserHelper.jsonExtensionFilter();
+        FileExtensionFilter filter = FXChooser.jsonExtensionFilter();
         String fileName = "Redis-" + I18nHelper.connect() + ".json";
         this.exportFile = FileChooserHelper.save(fileName, fileName, filter);
         if (this.exportFile != null) {

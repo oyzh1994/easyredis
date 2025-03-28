@@ -1,8 +1,6 @@
 package cn.oyzh.easyredis.query;
 
 import cn.oyzh.common.util.StringUtil;
-import lombok.Data;
-import lombok.ToString;
 import redis.clients.jedis.Protocol;
 
 import java.util.List;
@@ -11,9 +9,46 @@ import java.util.List;
  * @author oyzh
  * @since 2025/01/21
  */
-@Data
-@ToString
 public class RedisQueryToken {
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+    public void setEndIndex(int endIndex) {
+        this.endIndex = endIndex;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Character getToken() {
+        return token;
+    }
+
+    public void setToken(Character token) {
+        this.token = token;
+    }
 
     /**
      * 结束位置

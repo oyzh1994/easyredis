@@ -5,13 +5,13 @@
 <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
-<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import cn.oyzh.fx.plus.controls.tab.FXTab?>
+<?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-             fx:controller="cn.oyzh.easyredis.controller.tool.RedisToolController" realWidth="850" realHeight="600">
+           fx:controller="cn.oyzh.easyredis.controller.tool.RedisToolController" realWidth="850" realHeight="600">
     <FXTab text="%base.cache">
         <FXVBox flexHeight="100%" flexWidth="100%">
             <InfoLabel text="%base.info">

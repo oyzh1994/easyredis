@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.easyredis.redis.RedisClient;
-import lombok.Data;
 
 /**
  * 订阅发布项目
@@ -9,8 +8,31 @@ import lombok.Data;
  * @author oyzh
  * @since 2023/8/02
  */
-@Data
 public class RedisPubsubItem {
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
 
     /**
      * 编号

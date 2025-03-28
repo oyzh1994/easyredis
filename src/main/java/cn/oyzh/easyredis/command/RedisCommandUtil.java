@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.command;
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
-import lombok.experimental.UtilityClass;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +15,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024/05/29
  */
-@UtilityClass
+
 public class RedisCommandUtil {
 
     /**

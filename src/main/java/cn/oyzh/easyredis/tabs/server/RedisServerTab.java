@@ -68,7 +68,7 @@ public class RedisServerTab extends RichTab {
      * @return redis信息
      */
     public RedisConnect redisConnect() {
-        return this.controller().client().redisConnect();
+        return this.controller().getClient().redisConnect();
     }
 
     /**
@@ -77,7 +77,7 @@ public class RedisServerTab extends RichTab {
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.controller().client();
+        return this.controller().getClient();
     }
 
     @Override

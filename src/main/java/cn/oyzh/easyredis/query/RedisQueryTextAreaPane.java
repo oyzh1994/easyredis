@@ -3,9 +3,9 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import lombok.Getter;
-import lombok.Setter;
+import javafx.scene.text.Font;
 
 import java.util.Set;
 
@@ -18,16 +18,28 @@ public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
     /**
      * db索引
      */
-    @Setter
-    @Getter
     private int dbIndex;
 
     /**
      * redis客户端
      */
-    @Getter
-    @Setter
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
+
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
 
     /**
      * 提示词组件
@@ -51,14 +63,16 @@ public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
         this.initContentPrompts();
     }
 
-    protected void initFont() {
-        // 禁用字体管理
-        super.disableFont();
+    @Override
+    protected Font initFont() {
+//        // 禁用字体管理
+//        super.disableFont();
         // 初始化字体
         RedisSetting setting = RedisSettingStore.SETTING;
-        this.setFontSize(setting.getQueryFontSize());
-        this.setFontFamily(setting.getQueryFontFamily());
-        this.setFontWeight2(setting.getQueryFontWeight());
+//        this.setFontSize(setting.getQueryFontSize());
+//        this.setFontFamily(setting.getQueryFontFamily());
+//        this.setFontWeight2(setting.getQueryFontWeight());
+        return FontManager.toFont(setting.queryFontConfig());
     }
 
     @Override

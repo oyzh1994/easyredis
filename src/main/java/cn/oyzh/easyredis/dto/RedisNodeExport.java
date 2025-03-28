@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -22,29 +20,53 @@ public class RedisNodeExport {
     /**
      * 导出程序版本号
      */
-    @Getter
-    @Setter
     private String version;
 
     /**
      * 平台
      */
-    @Getter
-    @Setter
     private String platform;
 
     /**
      * 字符集
      */
-    @Getter
-    @Setter
     private String charset;
+
+    public List<Map<String, Object>> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Map<String, Object>> nodes) {
+        this.nodes = nodes;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     /**
      * 导出键数据
      */
-    @Getter
-    @Setter
     private List<Map<String, Object>> nodes;
 
     /**

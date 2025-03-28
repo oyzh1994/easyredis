@@ -4,7 +4,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.NonNull;
 
 import java.util.Map;
 import java.util.Objects;
@@ -15,7 +14,7 @@ import java.util.Objects;
  */
 public class RedisHashKeyTreeItem extends RedisRowKeyTreeItem<RedisHashValue.RedisHashRow> {
 
-    public RedisHashKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisHashKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

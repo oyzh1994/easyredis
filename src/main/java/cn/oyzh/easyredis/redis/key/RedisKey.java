@@ -3,9 +3,6 @@ package cn.oyzh.easyredis.redis.key;
 import cn.oyzh.common.object.ObjectCopier;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.RedisKeyType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import redis.clients.jedis.GeoCoordinate;
 import redis.clients.jedis.resps.StreamEntry;
 
@@ -19,70 +16,46 @@ import java.util.Set;
  * @author oyzh
  * @since 2023/6/16
  */
-
 public class RedisKey implements Comparable<RedisKey>, ObjectCopier<RedisKey> {
 
     /**
      * db索引
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private int dbIndex;
 
     /**
      * 加载耗时
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private short loadTime;
 
     /**
      * ttl值
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private Long ttl;
 
     /**
      * key名称
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private String key;
 
     /**
      * 键类型
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisKeyType type;
 
     /**
      * 空闲时间
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private Long objectIdletime;
 
     /**
      * 引用数量
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private Long objectRefcount;
 
     /**
      * 编码值
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private String objectedEncoding;
 
     /**
@@ -148,12 +121,84 @@ public class RedisKey implements Comparable<RedisKey>, ObjectCopier<RedisKey> {
         return RedisKeyType.STREAM == this.type;
     }
 
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
+
+    public short getLoadTime() {
+        return loadTime;
+    }
+
+    public void setLoadTime(short loadTime) {
+        this.loadTime = loadTime;
+    }
+
+    public Long getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(Long ttl) {
+        this.ttl = ttl;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public RedisKeyType getType() {
+        return type;
+    }
+
+    public void setType(RedisKeyType type) {
+        this.type = type;
+    }
+
+    public Long getObjectIdletime() {
+        return objectIdletime;
+    }
+
+    public void setObjectIdletime(Long objectIdletime) {
+        this.objectIdletime = objectIdletime;
+    }
+
+    public Long getObjectRefcount() {
+        return objectRefcount;
+    }
+
+    public void setObjectRefcount(Long objectRefcount) {
+        this.objectRefcount = objectRefcount;
+    }
+
+    public String getObjectedEncoding() {
+        return objectedEncoding;
+    }
+
+    public void setObjectedEncoding(String objectedEncoding) {
+        this.objectedEncoding = objectedEncoding;
+    }
+
+    public RedisKeyValue<?> getValue() {
+        return value;
+    }
+
+    public void setValue(RedisKeyValue<?> value) {
+        this.value = value;
+    }
+
     @Override
     public int compareTo(RedisKey node) {
-        if (node == null || node.key() == null) {
+        if (node == null || node.getKey() == null) {
             return -1;
         }
-        return this.key().compareToIgnoreCase(node.key());
+        return this.getKey().compareToIgnoreCase(node.getKey());
     }
 
     /**
@@ -201,70 +246,67 @@ public class RedisKey implements Comparable<RedisKey>, ObjectCopier<RedisKey> {
         return this.key == null ? null : this.key.getBytes();
     }
 
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisKeyValue<?> value;
 
     public void valueOfSet(Set<String> members) {
-        this.value(RedisSetValue.valueOf(members));
+        this.setValue(RedisSetValue.valueOf(members));
     }
 
     public void valueOfZSet(List<String> members, List<Double> scores) {
-        this.value(RedisZSetValue.valueOf(members, scores));
+        this.setValue(RedisZSetValue.valueOf(members, scores));
     }
 
     public void valueOfCoordinates(List<String> members, List<GeoCoordinate> coordinates) {
-        this.value(RedisZSetValue.valueOfCoordinates(members, coordinates));
+        this.setValue(RedisZSetValue.valueOfCoordinates(members, coordinates));
     }
 
     public void valueOfHash(Map<String, String> values) {
-        this.value(RedisHashValue.valueOf(values));
+        this.setValue(RedisHashValue.valueOf(values));
     }
 
     public void valueOfList(List<String> elements) {
-        this.value(RedisListValue.valueOf(elements));
+        this.setValue(RedisListValue.valueOf(elements));
     }
 
     public void valueOfStream(List<StreamEntry> entries) {
-        this.value(RedisStreamValue.valueOf(entries));
+        this.setValue(RedisStreamValue.valueOf(entries));
     }
 
     public void valueOfString(String value) {
-        this.value(RedisStringValue.valueOf(value));
+        this.setValue(RedisStringValue.valueOf(value));
     }
 
     public void valueOfBytes(byte[] value) {
-        this.value(RedisStringValue.valueOf(value));
+        this.setValue(RedisStringValue.valueOf(value));
     }
 
     public RedisSetValue asSetValue() {
-        return (RedisSetValue) this.value();
+        return (RedisSetValue) this.getValue();
     }
 
     public RedisZSetValue asZSetValue() {
-        return (RedisZSetValue) this.value();
+        return (RedisZSetValue) this.getValue();
     }
 
     public RedisListValue asListValue() {
-        return (RedisListValue) this.value();
+        return (RedisListValue) this.getValue();
     }
 
     public RedisHashValue asHashValue() {
-        return (RedisHashValue) this.value();
+        return (RedisHashValue) this.getValue();
     }
 
     public RedisStringValue asStringValue() {
-        RedisKeyValue<?> value = this.value();
+        RedisKeyValue<?> value = this.getValue();
         if (value == null) {
             value = new RedisStringValue();
-            this.value(value);
+            this.setValue(value);
         }
         return (RedisStringValue) value;
     }
 
     public RedisStreamValue asStreamValue() {
-        return (RedisStreamValue) this.value();
+        return (RedisStreamValue) this.getValue();
     }
 
     public String typeName() {
@@ -273,13 +315,13 @@ public class RedisKey implements Comparable<RedisKey>, ObjectCopier<RedisKey> {
 
     @Override
     public void copy(RedisKey t1) {
-        this.key(t1.key());
-        this.ttl(t1.ttl());
-        this.type(t1.type());
-        this.value(t1.value());
-        this.dbIndex(t1.dbIndex());
-        this.objectIdletime(t1.objectIdletime());
-        this.objectRefcount(t1.objectRefcount());
-        this.objectedEncoding(t1.objectedEncoding());
+        this.setKey(t1.getKey());
+        this.setTtl(t1.getTtl());
+        this.setType(t1.getType());
+        this.setValue(t1.getValue());
+        this.setDbIndex(t1.getDbIndex());
+        this.setObjectIdletime(t1.getObjectIdletime());
+        this.setObjectRefcount(t1.getObjectRefcount());
+        this.setObjectedEncoding(t1.getObjectedEncoding());
     }
 }

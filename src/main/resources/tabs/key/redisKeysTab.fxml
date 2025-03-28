@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import cn.oyzh.easyredis.filter.RedisKeyFilterTextField?>
 <?import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox?>
 <?import cn.oyzh.easyredis.trees.key.RedisKeyTreeView?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.DeleteSVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PositioningSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.pane.CollectSVGPane?>
@@ -13,10 +15,8 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import cn.oyzh.easyredis.filter.RedisKeyFilterTextField?>
-<?import cn.oyzh.fx.gui.svg.glyph.FilterSVGGlyph?>
 <FXHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
-          fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
+        fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
     <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FXHBox realHeight="30" flexWidth="100%">
             <RedisKeySearchTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">

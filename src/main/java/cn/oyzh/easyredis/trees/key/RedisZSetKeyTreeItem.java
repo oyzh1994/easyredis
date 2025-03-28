@@ -6,7 +6,6 @@ import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.NonNull;
 import redis.clients.jedis.GeoCoordinate;
 
 import java.util.List;
@@ -123,7 +122,7 @@ public class RedisZSetKeyTreeItem extends RedisRowKeyTreeItem<RedisZSetValue.Red
         return this;
     }
 
-    public RedisZSetKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisZSetKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

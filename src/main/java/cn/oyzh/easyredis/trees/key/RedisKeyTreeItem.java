@@ -20,9 +20,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.MenuItem;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +44,11 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     /**
      * redis键
      */
-    @Getter
-    @Accessors(fluent = true, chain = true)
     protected RedisKey value;
+
+    public RedisKey value() {
+        return value;
+    }
 
     /**
      * 设置键数据
@@ -104,7 +103,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         return keyValue != null && keyValue.hasUnSavedValue();
     }
 
-    public RedisKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(treeView);
         this.value = value;
         super.setFilterable(true);
@@ -193,7 +192,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 键名称
      */
     public String key() {
-        return this.value.key();
+        return this.value.getKey();
     }
 
     /**
@@ -281,9 +280,9 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
 
     @Override
     public void rename() {
-        String newKey = MessageBox.prompt(I18nHelper.contentTip1(), this.value.key());
+        String newKey = MessageBox.prompt(I18nHelper.contentTip1(), this.value.getKey());
         // 名称为空或者跟当前名称相同，则忽略
-        if (StringUtil.isBlank(newKey) || Objects.equals(newKey, this.value.key())) {
+        if (StringUtil.isBlank(newKey) || Objects.equals(newKey, this.value.getKey())) {
             return;
         }
         // 键已存在
@@ -295,7 +294,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
             String oldKey = this.key();
             String result = this.client().rename(this.dbIndex(), this.key(), newKey);
             if (StringUtil.equalsIgnoreCase(result, "OK")) {
-                this.value.key(newKey);
+                this.value.setKey(newKey);
                 this.refresh();
                 RedisEventUtil.keyRenamed(this, oldKey);
             } else {
@@ -314,8 +313,8 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      */
     public Long ttl() {
         try {
-            this.value.ttl(this.client().ttl(this.dbIndex(), this.key()));
-            return this.value.ttl();
+            this.value.setTtl(this.client().ttl(this.dbIndex(), this.key()));
+            return this.value.getTtl();
         } catch (Exception ex) {
             ex.printStackTrace();
             MessageBox.exception(ex);
@@ -329,13 +328,13 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 结果
      */
     public boolean isExpire() {
-        if (this.value.ttl() == null) {
+        if (this.value.getTtl() == null) {
             this.ttl();
         }
-        if (this.value.ttl() == null) {
+        if (this.value.getTtl() == null) {
             return false;
         }
-        return this.value.ttl() == -2;
+        return this.value.getTtl() == -2;
     }
 
     /**
@@ -351,7 +350,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 键类型
      */
     public RedisKeyType type() {
-        return this.value.type();
+        return this.value.getType();
     }
 
     /**
@@ -360,7 +359,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 加载耗时
      */
     public short loadTime() {
-        return this.value.loadTime() == 0 ? 1 : this.value.loadTime();
+        return this.value.getLoadTime() == 0 ? 1 : this.value.getLoadTime();
     }
 
     /**
@@ -440,14 +439,14 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return 结果
      */
     public boolean isRawEncoding(boolean flushEncoding) {
-        if (this.value.objectedEncoding() == null || flushEncoding) {
-            this.value.objectedEncoding(this.client().objectEncoding(this.dbIndex(), this.key()));
+        if (this.value.getObjectedEncoding() == null || flushEncoding) {
+            this.value.setObjectedEncoding(this.client().objectEncoding(this.dbIndex(), this.key()));
         }
         return this.value.isRawEncoding();
     }
 
     public RedisKeyValue<?> keyValue() {
-        return this.value.value();
+        return this.value.getValue();
     }
 
     public abstract Object rawData();

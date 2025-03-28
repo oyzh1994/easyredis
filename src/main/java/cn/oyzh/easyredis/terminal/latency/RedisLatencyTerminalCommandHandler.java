@@ -22,7 +22,7 @@ public class RedisLatencyTerminalCommandHandler extends RedisTerminalCommandHand
     @Override
     public String commandHelp(RedisTerminalTextAreaPane terminal) {
         CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
-        Object obj = terminal.client().execCommand(object);
+        Object obj = terminal.getClient().execCommand(object);
         return RedisTerminalUtil.formatOut(obj);
     }
 }

@@ -21,7 +21,6 @@ import cn.oyzh.i18n.I18nHelper;
 import cn.oyzh.store.jdbc.JdbcConst;
 import cn.oyzh.store.jdbc.JdbcDialect;
 import cn.oyzh.store.jdbc.JdbcManager;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import java.util.List;
  * @author oyzh
  * @since 2024-09-23
  */
-@UtilityClass
+
 public class RedisStoreUtil {
 
     /**
@@ -41,7 +40,7 @@ public class RedisStoreUtil {
         JdbcConst.dbCacheSize(65535);
         JdbcConst.dbPageSize(1024);
         JdbcConst.dbDialect(JdbcDialect.H2);
-        JdbcConst.dbFile(RedisConst.STORE_PATH + "db");
+        JdbcConst.dbFile(RedisConst.getStorePath() + "db");
         try {
             JdbcManager.takeoff();
         } catch (Exception ex) {

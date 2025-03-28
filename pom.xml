@@ -31,24 +31,6 @@
             </exclusions>
         </dependency>
 
-        <!-- 存储模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>store</artifactId>
-        </dependency>
-
-        <!-- 事件模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>event</artifactId>
-        </dependency>
-
-        <!-- i18n模块 -->
-        <dependency>
-            <groupId>cn.oyzh</groupId>
-            <artifactId>i18n</artifactId>
-        </dependency>
-
         <!-- ssh模块 -->
         <dependency>
             <groupId>cn.oyzh</groupId>
@@ -73,12 +55,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
-        </dependency>
-
-        <!-- ssh类库 -->
-        <dependency>
-            <groupId>com.github.mwiede</groupId>
-            <artifactId>jsch</artifactId>
         </dependency>
 
         <!-- json类库 -->
@@ -147,10 +123,10 @@
                 <configuration>
                     <mainClass>cn.oyzh.easyredis.EasyRedisApp</mainClass>
                     <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
+<!--                        <exclude>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                        </exclude>-->
                         <exclude>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-jarmode-layertools</artifactId>

@@ -4,8 +4,7 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.toggle.EnabledToggleSwitch;
 import cn.oyzh.fx.gui.toggle.MatchToggleSwitch;
-import cn.oyzh.fx.plus.util.TableViewUtil;
-import lombok.NonNull;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class RedisFilterVO extends RedisFilter {
      * @param list redis过滤列表
      * @return redis过滤vo列表
      */
-    public static List<RedisFilterVO> convert(@NonNull List<RedisFilter> list) {
+    public static List<RedisFilterVO> convert( List<RedisFilter> list) {
         List<RedisFilterVO> voList = new ArrayList<>(list.size());
         for (RedisFilter filter : list) {
             voList.add(convert(filter));

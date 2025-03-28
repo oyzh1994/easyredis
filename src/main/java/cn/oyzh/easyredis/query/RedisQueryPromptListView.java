@@ -12,8 +12,6 @@ import cn.oyzh.fx.plus.util.ControlUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.paint.Color;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +36,23 @@ public class RedisQueryPromptListView extends FXListView<FXHBox> {
     /**
      * 节点选中事件
      */
-    @Getter
-    @Setter
     private Runnable onItemPicked;
+
+    public int getCurrentPickIndex() {
+        return currentPickIndex;
+    }
+
+    public void setCurrentPickIndex(int currentPickIndex) {
+        this.currentPickIndex = currentPickIndex;
+    }
+
+    public Runnable getOnItemPicked() {
+        return onItemPicked;
+    }
+
+    public void setOnItemPicked(Runnable onItemPicked) {
+        this.onItemPicked = onItemPicked;
+    }
 
     @Override
     public void select(int index) {

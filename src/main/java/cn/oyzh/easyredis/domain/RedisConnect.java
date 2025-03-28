@@ -6,9 +6,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,14 +15,12 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/16
  */
-@Setter
 @Table("t_connect")
 public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<RedisConnect>, Serializable {
 
     /**
      * 数据id
      */
-    @Getter
     @Column
     @PrimaryKey
     private String id;
@@ -33,62 +28,53 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     /**
      * 连接地址
      */
-    @Getter
     @Column
     private String host;
 
     /**
      * 名称
      */
-    @Getter
     @Column
     private String name;
 
     /**
      * 备注信息
      */
-    @Getter
     @Column
     private String remark;
 
     /**
      * 分组id
      */
-    @Getter
     @Column
     private String groupId;
 
     /**
      * 认证用户
      */
-    @Getter
     @Column
     private String user;
 
     /**
      * 认证密码
      */
-    @Getter
     @Column
     private String password;
 
     /**
      * 只读模式
      */
-    @Setter
     @Column
     private Boolean readonly;
 
     /**
      * 收藏的键
      */
-    @Getter
     private List<RedisCollect> collects;
 
     /**
      * 过滤列表
      */
-    @Getter
     private List<RedisFilter> filters;
 
     /**
@@ -106,14 +92,12 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     /**
      * 是否开启ssh转发
      */
-    @Getter
     @Column
     private Boolean sshForward;
 
     /**
      * ssh信息
      */
-    @Getter
     private RedisSSHConfig sshConfig;
 
     /**
@@ -122,7 +106,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @param redisConnect redis连接
      * @return 当前对象
      */
-    public RedisConnect copy(@NonNull RedisConnect redisConnect) {
+    public RedisConnect copy( RedisConnect redisConnect) {
 //        this.id = redisConnect.id;
         this.name = redisConnect.name;
         this.host = redisConnect.host;
@@ -149,7 +133,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param key     键
     //  * @return 结果
     //  */
-    // public boolean isCollect(int dbIndex, @NonNull String key) {
+    // public boolean isCollect(int dbIndex,  String key) {
     //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
     // }
 
@@ -159,7 +143,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param dbIndex 数据库索引
     //  * @param key     键
     //  */
-    // public void addCollect(int dbIndex, @NonNull String key) {
+    // public void addCollect(int dbIndex,  String key) {
     //     if (this.collects == null) {
     //         this.collects = new ArrayList<>();
     //     }
@@ -176,7 +160,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     //  * @param key     键
     //  * @return 结果
     //  */
-    // public boolean removeCollect(int dbIndex, @NonNull String key) {
+    // public boolean removeCollect(int dbIndex,  String key) {
     //     if (this.collects != null) {
     //         return this.collects.remove(this.getCollectName(dbIndex, key));
     //     }
@@ -246,6 +230,110 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     public int executeTimeOutMs() {
         return this.getExecuteTimeOut() * 1000;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getReadonly() {
+        return readonly;
+    }
+
+    public void setReadonly(Boolean readonly) {
+        this.readonly = readonly;
+    }
+
+    public List<RedisCollect> getCollects() {
+        return collects;
+    }
+
+    public void setCollects(List<RedisCollect> collects) {
+        this.collects = collects;
+    }
+
+    public List<RedisFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<RedisFilter> filters) {
+        this.filters = filters;
+    }
+
+    public void setConnectTimeOut(Integer connectTimeOut) {
+        this.connectTimeOut = connectTimeOut;
+    }
+
+    public void setExecuteTimeOut(Integer executeTimeOut) {
+        this.executeTimeOut = executeTimeOut;
+    }
+
+    public Boolean getSshForward() {
+        return sshForward;
+    }
+
+    public void setSshForward(Boolean sshForward) {
+        this.sshForward = sshForward;
+    }
+
+    public RedisSSHConfig getSshConfig() {
+        return sshConfig;
+    }
+
+    public void setSshConfig(RedisSSHConfig sshConfig) {
+        this.sshConfig = sshConfig;
     }
 
     @Override

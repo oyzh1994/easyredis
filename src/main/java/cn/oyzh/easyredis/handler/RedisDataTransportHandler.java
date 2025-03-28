@@ -6,8 +6,6 @@ import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.Set;
@@ -16,9 +14,78 @@ import java.util.Set;
  * @author oyzh
  * @since 2024/10/15
  */
-@Setter
-@Accessors(fluent = true, chain = true)
 public class RedisDataTransportHandler extends DataHandler {
+    public RedisClient getSourceClient() {
+        return sourceClient;
+    }
+
+    public void setSourceClient(RedisClient sourceClient) {
+        this.sourceClient = sourceClient;
+    }
+
+    public RedisClient getTargetClient() {
+        return targetClient;
+    }
+
+    public void setTargetClient(RedisClient targetClient) {
+        this.targetClient = targetClient;
+    }
+
+    public String getExistsPolicy() {
+        return existsPolicy;
+    }
+
+    public void setExistsPolicy(String existsPolicy) {
+        this.existsPolicy = existsPolicy;
+    }
+
+    public List<RedisFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<RedisFilter> filters) {
+        this.filters = filters;
+    }
+
+    public int getSourceDatabase() {
+        return sourceDatabase;
+    }
+
+    public void setSourceDatabase(int sourceDatabase) {
+        this.sourceDatabase = sourceDatabase;
+    }
+
+    public int getTargetDatabase() {
+        return targetDatabase;
+    }
+
+    public void setTargetDatabase(int targetDatabase) {
+        this.targetDatabase = targetDatabase;
+    }
+
+    public List<String> getKeyTypes() {
+        return keyTypes;
+    }
+
+    public void setKeyTypes(List<String> keyTypes) {
+        this.keyTypes = keyTypes;
+    }
+
+    public boolean isRetainTTL() {
+        return retainTTL;
+    }
+
+    public void setRetainTTL(boolean retainTTL) {
+        this.retainTTL = retainTTL;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
 
     /**
      * 来源客户端
@@ -166,8 +233,8 @@ public class RedisDataTransportHandler extends DataHandler {
     private void createKey(RedisKey redisKey, int targetDBIndex) {
         if (redisKey != null) {
             RedisKeyUtil.createKey(redisKey, targetDBIndex, this.targetClient);
-            String key = redisKey.key();
-            Long ttl = redisKey.ttl();
+            String key = redisKey.getKey();
+            Long ttl = redisKey.getTtl();
             if (ttl != null && this.retainTTL) {
                 if (ttl >= 0) {
                     this.targetClient.expire(targetDBIndex, key, ttl, null);

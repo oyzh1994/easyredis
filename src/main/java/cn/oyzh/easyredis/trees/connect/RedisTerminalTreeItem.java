@@ -35,7 +35,7 @@ public class RedisTerminalTreeItem extends RichTreeItem<RedisTerminalTreeItemVal
             return item.client();
         }
         if (this.parent() instanceof RedisConnectTreeItem item) {
-            return item.client();
+            return item.getClient();
         }
         return null;
     }

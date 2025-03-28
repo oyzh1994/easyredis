@@ -17,14 +17,9 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,16 +37,20 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
     /**
      * redis信息
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisConnect value;
+
+    public RedisConnect value() {
+        return value;
+    }
 
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
 
     /**
      * 已取消操作标志位
@@ -63,7 +62,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisConnectTreeItem(@NonNull RedisConnect value, @NonNull RichTreeView treeView) {
+    public RedisConnectTreeItem( RedisConnect value,  RichTreeView treeView) {
         super(treeView);
         this.value(value);
     }
@@ -244,7 +243,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
         }
         try {
             // 清空数据
-            this.client().flushAll();
+            this.getClient().flushAll();
             for (TreeItem<?> child : this.unfilteredChildren()) {
                 if (child instanceof RedisDatabaseTreeItem treeItem) {
                     treeItem.clearChild();
@@ -415,7 +414,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      *
      * @param value redis信息
      */
-    public void value(@NonNull RedisConnect value) {
+    public void value( RedisConnect value) {
         this.value = value;
         this.client = new RedisClient(value);
         this.client.stateProperty().addListener((observable, o, n) -> {

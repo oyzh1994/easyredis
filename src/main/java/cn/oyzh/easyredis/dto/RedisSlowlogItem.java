@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.Const;
 import cn.oyzh.common.util.StringUtil;
-import lombok.Data;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.resps.Slowlog;
 
@@ -12,8 +11,51 @@ import redis.clients.jedis.resps.Slowlog;
  * @author oyzh
  * @since 2023/8/1
  */
-@Data
 public class RedisSlowlogItem {
+
+    public long getLogId() {
+        return logId;
+    }
+
+    public void setLogId(long logId) {
+        this.logId = logId;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getClientHost() {
+        return clientHost;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public long getExecutionTime() {
+        return executionTime;
+    }
+
+    public void setExecutionTime(long executionTime) {
+        this.executionTime = executionTime;
+    }
 
     /**
      * id

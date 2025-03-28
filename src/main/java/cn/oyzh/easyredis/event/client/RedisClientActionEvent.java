@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.event.client;
 
 import cn.oyzh.event.Event;
 import cn.oyzh.event.EventFormatter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import redis.clients.jedis.CommandArguments;
 import redis.clients.jedis.args.Rawable;
 
@@ -13,9 +11,15 @@ import redis.clients.jedis.args.Rawable;
  */
 public class RedisClientActionEvent extends Event<String> implements EventFormatter {
 
-    @Setter
-    @Accessors(fluent = true, chain = false)
     private CommandArguments arguments;
+
+    public CommandArguments getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(CommandArguments arguments) {
+        this.arguments = arguments;
+    }
 
     @Override
     public String eventFormat() {

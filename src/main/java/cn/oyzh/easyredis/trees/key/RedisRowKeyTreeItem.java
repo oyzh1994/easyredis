@@ -3,10 +3,6 @@ package cn.oyzh.easyredis.trees.key;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,15 +16,21 @@ import java.util.List;
 //@Slf4j
 public abstract class RedisRowKeyTreeItem<R extends RedisKeyRow> extends RedisKeyTreeItem {
 
+    public R currentRow() {
+        return currentRow;
+    }
+
+    public RedisRowKeyTreeItem<R> currentRow(R currentRow) {
+        this.currentRow = currentRow;
+        return this;
+    }
+
     /**
      * 当前行
      */
-    @Setter
-    @Getter
-    @Accessors(chain = true, fluent = true)
     protected R currentRow;
 
-    public RedisRowKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisRowKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

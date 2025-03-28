@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.trees.connect;
 import cn.oyzh.easyredis.fx.svg.glyph.DatabaseSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItemValue;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
-import lombok.experimental.Accessors;
 
 /**
  * Redis DB值
@@ -11,7 +10,6 @@ import lombok.experimental.Accessors;
  * @author oyzh
  * @since 2023/06/22
  */
-@Accessors(chain = true, fluent = true)
 public class RedisDatabaseTreeItemValue extends RichTreeItemValue {
 
     public RedisDatabaseTreeItemValue(RedisDatabaseTreeItem item) {

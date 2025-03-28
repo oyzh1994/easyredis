@@ -1,14 +1,43 @@
 package cn.oyzh.easyredis.filter;
 
-import lombok.Data;
 
 
 /**
  * @author oyzh
  * @since 2025/01/24
  */
-@Data
 public class RedisKeyFilterParam {
+    public boolean isMatchCase() {
+        return matchCase;
+    }
+
+    public void setMatchCase(boolean matchCase) {
+        this.matchCase = matchCase;
+    }
+
+    public boolean isMatchFull() {
+        return matchFull;
+    }
+
+    public void setMatchFull(boolean matchFull) {
+        this.matchFull = matchFull;
+    }
+
+    public boolean isSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(boolean searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public boolean isSearchData() {
+        return searchData;
+    }
+
+    public void setSearchData(boolean searchData) {
+        this.searchData = searchData;
+    }
 
     /**
      * 匹配大小写

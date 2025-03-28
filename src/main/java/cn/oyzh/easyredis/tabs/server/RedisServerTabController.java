@@ -6,17 +6,14 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.dto.RedisServerItem;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import cn.oyzh.fx.gui.tabs.RichTabController;
-import cn.oyzh.fx.gui.tabs.ParentTabController;
 import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -32,9 +29,15 @@ public class RedisServerTabController extends ParentTabController {
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
 
     /**
      * 发布及订阅tab
@@ -106,7 +109,7 @@ public class RedisServerTabController extends ParentTabController {
      *
      * @param client redis客户端
      */
-    public void init(@NonNull RedisClient client) {
+    public void init( RedisClient client) {
         this.client = client;
         if (!client.isSentinelMode()) {
             this.pubsubController.init(client);

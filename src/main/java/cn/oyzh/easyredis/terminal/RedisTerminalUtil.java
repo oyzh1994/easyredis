@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.terminal;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.BuilderFactory;
 import redis.clients.jedis.CommandArguments;
 import redis.clients.jedis.CommandObject;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/7/26
  */
-@UtilityClass
+
 public class RedisTerminalUtil {
 
     /**
@@ -133,7 +132,7 @@ public class RedisTerminalUtil {
      * @param terminalCommand 终端命令
      * @return 命令对象
      */
-    public CommandObject<Object> getCommand(Protocol.Command command, TerminalCommand terminalCommand) {
+    public static CommandObject<Object> getCommand(Protocol.Command command, TerminalCommand terminalCommand) {
         CommandArguments arguments = new CommandArguments(command);
         arguments.addObjects(terminalCommand.argsList());
         return new CommandObject<>(arguments, BuilderFactory.RAW_OBJECT);
@@ -146,7 +145,7 @@ public class RedisTerminalUtil {
      * @param args    参数
      * @return 命令对象
      */
-    public CommandObject<Object> getCommand(Protocol.Command command, String[] args) {
+    public static CommandObject<Object> getCommand(Protocol.Command command, String[] args) {
         CommandArguments arguments = new CommandArguments(command);
         if (args != null) {
             for (String arg : args) {
@@ -163,7 +162,7 @@ public class RedisTerminalUtil {
      * @param arg    参数
      * @return 命令对象
      */
-    public CommandObject<Object> getCommand(Protocol.Command command, String arg) {
+    public static CommandObject<Object> getCommand(Protocol.Command command, String arg) {
         CommandArguments arguments = new CommandArguments(command);
         if (arg != null) {
             arguments.add(arg);

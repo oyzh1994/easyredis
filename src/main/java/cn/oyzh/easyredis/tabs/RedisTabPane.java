@@ -112,9 +112,9 @@ public class RedisTabPane extends RichTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void terminalOpen(RedisTerminalOpenEvent event) {
-        RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.dbIndex());
+        RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.getDbIndex());
         if (terminalTab == null) {
-            terminalTab = new RedisTerminalTab(event.data(), event.dbIndex());
+            terminalTab = new RedisTerminalTab(event.data(), event.getDbIndex());
             super.addTab(terminalTab);
         } else {
             terminalTab.flushGraphic();
@@ -133,7 +133,7 @@ public class RedisTabPane extends RichTabPane implements FXEventListener {
     private void terminalClose(RedisTerminalCloseEvent event) {
         try {
             // 寻找节点
-            RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.dbIndex());
+            RedisTerminalTab terminalTab = this.getTerminalTab(event.data(), event.getDbIndex());
             // 移除节点
             if (terminalTab != null) {
                 terminalTab.closeTab();
@@ -208,7 +208,7 @@ public class RedisTabPane extends RichTabPane implements FXEventListener {
     private RedisPubsubTab getPubsubTab(RedisPubsubItem item) {
         if (item != null) {
             for (Tab tab : this.getTabs()) {
-                if (tab instanceof RedisPubsubTab cmdTab && cmdTab.item() == item) {
+                if (tab instanceof RedisPubsubTab cmdTab && cmdTab.getItem() == item) {
                     return cmdTab;
                 }
             }
@@ -342,7 +342,7 @@ public class RedisTabPane extends RichTabPane implements FXEventListener {
      */
     @EventSubscribe
     private void ttlUpdated(RedisKeyTTLUpdatedEvent event) {
-        RedisKeysTab tab = this.getKeysTab(event.data(), event.dbIndex());
+        RedisKeysTab tab = this.getKeysTab(event.data(), event.getDbIndex());
         if (tab != null) {
             tab.flushTTL();
         }

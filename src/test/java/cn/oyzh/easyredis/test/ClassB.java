@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.test;
 
-import cn.hutool.core.util.ArrayUtil;
-
 import java.lang.reflect.Method;
 
 /**

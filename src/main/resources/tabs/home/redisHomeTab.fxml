@@ -13,8 +13,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXPane styleClass="root" flexHeight="100%" flexWidth="100%" xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="cn.oyzh.easyredis.tabs.home.RedisHomeTabController">
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="cn.oyzh.easyredis.tabs.home.RedisHomeTabController">
     <ImageView fitWidth="200" fitHeight="200" layoutX="35" layoutY="95">
         <Image url="/image/redis_no_bg.png"/>
     </ImageView>

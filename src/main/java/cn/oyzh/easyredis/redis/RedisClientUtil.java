@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.redis;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.DefaultJedisClientConfig;
 
 /**
@@ -11,7 +10,7 @@ import redis.clients.jedis.DefaultJedisClientConfig;
  * @author oyzh
  * @since 2024/12/10
  */
-@UtilityClass
+
 public class RedisClientUtil {
 
     /**
@@ -20,7 +19,7 @@ public class RedisClientUtil {
      * @param user     用户
      * @param password 密码
      */
-    public DefaultJedisClientConfig newConfig(String user, String password, int connectTimeout, int socketTimeout) {
+    public static DefaultJedisClientConfig newConfig(String user, String password, int connectTimeout, int socketTimeout) {
         // master配置处理
         DefaultJedisClientConfig.Builder builder = DefaultJedisClientConfig.builder();
         // socket超时

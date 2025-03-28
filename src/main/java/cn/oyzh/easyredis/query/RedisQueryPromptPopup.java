@@ -14,9 +14,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +113,6 @@ public class RedisQueryPromptPopup extends FXPopup {
     /**
      * 选中事件
      */
-    @Getter
-    @Setter
     protected Consumer<RedisQueryPromptItem> onItemSelected;
 
     public RedisQueryPromptPopup() {
@@ -191,13 +186,29 @@ public class RedisQueryPromptPopup extends FXPopup {
      */
     private final AtomicInteger promptFlag = new AtomicInteger();
 
+    public Consumer<RedisQueryPromptItem> getOnItemSelected() {
+        return onItemSelected;
+    }
+
+    public void setOnItemSelected(Consumer<RedisQueryPromptItem> onItemSelected) {
+        this.onItemSelected = onItemSelected;
+    }
+
+    public RedisQueryToken getToken() {
+        return token;
+    }
+
+    public void setToken(RedisQueryToken token) {
+        this.token = token;
+    }
+
     /**
      * 执行提示
      *
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(@NonNull RedisQueryTextAreaPane area, @NonNull KeyEvent event) {
+    public void prompt( RedisQueryTextAreaPane area,  KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();

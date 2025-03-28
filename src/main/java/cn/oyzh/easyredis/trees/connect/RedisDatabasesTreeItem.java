@@ -55,7 +55,7 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItemV
      * @return redis客户端
      */
     public RedisClient client() {
-        return this.parent().client();
+        return this.parent().getClient();
     }
 
     public int databases() {

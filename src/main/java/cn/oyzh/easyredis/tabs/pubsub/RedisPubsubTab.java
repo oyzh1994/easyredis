@@ -6,9 +6,6 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.tabs.RichTab;
 import javafx.event.Event;
 import javafx.scene.Cursor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * redis发布订阅tab
@@ -24,12 +21,17 @@ public class RedisPubsubTab extends RichTab {
         this.loadContent();
     }
 
+    public RedisPubsubItem getItem() {
+        return item;
+    }
+
+    public void setItem(RedisPubsubItem item) {
+        this.item = item;
+    }
+
     /**
      * redis发布及订阅节点
      */
-    @Getter
-    @Setter
-    @Accessors(fluent = true, chain = true)
     private RedisPubsubItem item;
 
     @Override

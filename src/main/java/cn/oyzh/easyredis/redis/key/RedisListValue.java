@@ -2,8 +2,6 @@ package cn.oyzh.easyredis.redis.key;
 
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.util.RedisCacheUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +12,26 @@ import java.util.List;
  */
 public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisListRow>> {
 
-    @Getter
-    @Setter
     private List<RedisListRow> value;
 
-    @Getter
+    public RedisListRow getUnSavedRow() {
+        return unSavedRow;
+    }
+
+    public void setUnSavedRow(RedisListRow unSavedRow) {
+        this.unSavedRow = unSavedRow;
+    }
+
+    @Override
+    public List<RedisListRow> getValue() {
+        return value;
+    }
+
+    @Override
+    public void setValue(List<RedisListRow> value) {
+        this.value = value;
+    }
+
     private RedisListRow unSavedRow;
 
     public RedisListValue(List<RedisListRow> value) {
@@ -68,8 +81,11 @@ public class RedisListValue implements RedisKeyValue<List<RedisListValue.RedisLi
 
     public static class RedisListRow implements RedisKeyRow {
 
-        @Getter
         private final int index;
+
+        public int getIndex() {
+            return index;
+        }
 
         public RedisListRow(int index, String value) {
             this.index = index;

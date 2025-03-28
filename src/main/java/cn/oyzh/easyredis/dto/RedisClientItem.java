@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.dto;
 
-import lombok.Data;
 
 /**
  * 客户端项目
@@ -8,8 +7,54 @@ import lombok.Data;
  * @author oyzh
  * @since 2023/8/1
  */
-@Data
 public class RedisClientItem {
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public String getFlags() {
+        return flags;
+    }
+
+    public void setFlags(String flags) {
+        this.flags = flags;
+    }
+
+    public String getDb() {
+        return db;
+    }
+
+    public void setDb(String db) {
+        this.db = db;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getIdle() {
+        return idle;
+    }
+
+    public void setIdle(String idle) {
+        this.idle = idle;
+    }
 
     /**
      * 编号

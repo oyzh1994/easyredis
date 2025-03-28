@@ -4,7 +4,6 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.fx.plus.information.MessageBox;
-import lombok.NonNull;
 
 /**
  * @author oyzh
@@ -12,7 +11,7 @@ import lombok.NonNull;
  */
 public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
 
-    public RedisStringKeyTreeItem(@NonNull RedisKey value, @NonNull RedisKeyTreeView treeView) {
+    public RedisStringKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
         super(value, treeView);
     }
 

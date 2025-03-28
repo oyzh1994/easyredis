@@ -1,7 +1,5 @@
 package cn.oyzh.easyredis.query;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +15,37 @@ public class RedisQueryParam {
     /**
      * db索引
      */
-    @Getter
-    @Setter
     private int dbIndex;
 
     /**
      * 内容
      */
-    @Getter
     private String content;
 
     /**
      * 参数
      */
     private List<String> params;
+
+    public int getDbIndex() {
+        return dbIndex;
+    }
+
+    public void setDbIndex(int dbIndex) {
+        this.dbIndex = dbIndex;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public List<String> getParams() {
+        return params;
+    }
+
+    public void setParams(List<String> params) {
+        this.params = params;
+    }
 
     /**
      * 设置内容

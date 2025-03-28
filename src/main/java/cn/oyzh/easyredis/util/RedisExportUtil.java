@@ -10,8 +10,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.dto.RedisNodeExport;
 import cn.oyzh.easyredis.redis.key.RedisKey;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.Map;
  * @since 2023/07/07
  */
 //@Slf4j
-@UtilityClass
+
 public class RedisExportUtil {
 
     /**
@@ -38,7 +36,7 @@ public class RedisExportUtil {
      * @param prettyFormat 美化
      * @return 数据json字符串
      */
-    public static String nodesToJSON(@NonNull List<RedisKey> nodes, String charset, boolean prettyFormat) {
+    public static String nodesToJSON( List<RedisKey> nodes, String charset, boolean prettyFormat) {
         Project project = Project.load();
         String version = project.getVersion();
         String platform = OSUtil.getOSType();
@@ -51,11 +49,11 @@ public class RedisExportUtil {
         // 拼接数据
         for (RedisKey n : nodes) {
             Map<String, Object> node = new HashMap<>();
-            node.put("key", n.key());
-            node.put("type", n.type().toString());
-            node.put("dbIndex", n.dbIndex());
-            if (n.ttl() != null) {
-                node.put("ttl", n.ttl());
+            node.put("key", n.getKey());
+            node.put("type", n.getType().toString());
+            node.put("dbIndex", n.getDbIndex());
+            if (n.getTtl() != null) {
+                node.put("ttl", n.getTtl());
             }
             String value = RedisKeyUtil.serializeNode(n);
             if (value != null) {
@@ -72,7 +70,7 @@ public class RedisExportUtil {
      * @param file 文件
      * @return RedisNodeExport
      */
-    public static RedisNodeExport fromFile(@NonNull File file) {
+    public static RedisNodeExport fromFile( File file) {
         String text = FileUtil.readUtf8String(file);
         return fromJSON(text);
     }
@@ -83,7 +81,7 @@ public class RedisExportUtil {
      * @param json json字符串
      * @return RedisNodeExport
      */
-    public static RedisNodeExport fromJSON(@NonNull String json) {
+    public static RedisNodeExport fromJSON( String json) {
         JulLog.info("json: {}", json);
         JSONObject object = JSONUtil.parseObject(json);
         RedisNodeExport export = new RedisNodeExport();

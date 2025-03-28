@@ -95,7 +95,7 @@ public class RedisKeysTab extends RichTab {
     }
 
     public RedisDatabaseTreeItem treeItem() {
-        return this.controller().treeItem();
+        return this.controller().getTreeItem();
     }
 
     public int dbIndex() {
@@ -104,7 +104,7 @@ public class RedisKeysTab extends RichTab {
     }
 
     public RedisClient client() {
-        return this.controller().client();
+        return this.controller().getClient();
     }
 
     public RedisConnect redisConnect() {

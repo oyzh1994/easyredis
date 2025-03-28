@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.event.window;
 
-import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.event.Event;
 

@@ -1,7 +1,6 @@
 package cn.oyzh.easyredis.redis.batch;
 
 import cn.oyzh.common.util.CollectionUtil;
-import lombok.Data;
 import redis.clients.jedis.params.ScanParams;
 
 import java.util.List;
@@ -13,8 +12,23 @@ import java.util.Objects;
  * @author oyzh
  * @since 2023/6/28
  */
-@Data
 public class RedisScanSimpleResult {
+
+    public String getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(String cursor) {
+        this.cursor = cursor;
+    }
+
+    public List<String> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<String> keys) {
+        this.keys = keys;
+    }
 
     /**
      * 光标

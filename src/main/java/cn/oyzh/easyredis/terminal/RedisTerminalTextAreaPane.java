@@ -11,13 +11,12 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnState;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
+import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
+import javafx.scene.text.Font;
 
 /**
  * redis终端文本域
@@ -36,28 +35,31 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     @Override
-    protected void initTextArea() {
-        super.initTextArea();
+    public void initNode() {
+        super.initNode();
         super.initContentPrompts();
     }
 
     @Override
-    protected void initFont() {
-        // 禁用字体管理
-        super.disableFont();
+    protected Font initFont() {
+//        // 禁用字体管理
+//        super.disableFont();
         // 初始化字体
         RedisSetting setting = RedisSettingStore.SETTING;
-        this.setFontSize(setting.getTerminalFontSize());
-        this.setFontFamily(setting.getTerminalFontFamily());
-        this.setFontWeight2(setting.getTerminalFontWeight());
+//        this.setFontSize(setting.getTerminalFontSize());
+//        this.setFontFamily(setting.getTerminalFontFamily());
+//        this.setFontWeight2(setting.getTerminalFontWeight());
+        return FontManager.toFont(setting.terminalFontConfig());
     }
 
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
 
     /**
      * redis连接
@@ -72,9 +74,11 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     /**
      * db索引
      */
-    @Getter
-    @Accessors(fluent = true, chain = false)
     private Integer dbIndex;
+
+    public Integer getDbIndex() {
+        return dbIndex;
+    }
 
     @Override
     public void flushPrompt() {
@@ -111,7 +115,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
      * @param client  redis客户端
      * @param dbIndex db索引
      */
-    public void init(@NonNull RedisClient client, Integer dbIndex) {
+    public void init( RedisClient client, Integer dbIndex) {
         this.client = client;
         this.dbIndex = dbIndex;
         this.disableInput();
@@ -271,7 +275,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
                 }
                 JulLog.info("connState={}", t1);
             };
-            this.client().addStateListener(this.stateChangeListener);
+            this.getClient().addStateListener(this.stateChangeListener);
         }
     }
 
@@ -286,6 +290,6 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     }
 
     public RedisConnect redisConnect() {
-        return this.client().redisConnect();
+        return this.getClient().redisConnect();
     }
 }

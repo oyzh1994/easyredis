@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.util;
 import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
-import lombok.experimental.UtilityClass;
 
 /**
  * redis版本工具类
@@ -11,7 +10,7 @@ import lombok.experimental.UtilityClass;
  * @author oyzh
  * @since 2023/07/31
  */
-@UtilityClass
+
 public class RedisVersionUtil {
 
     /**

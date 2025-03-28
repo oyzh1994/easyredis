@@ -65,7 +65,7 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
     @FXML
     protected void copyKey() {
         String builder = I18nHelper.database() + ": " + this.treeItem.dbIndex() + System.lineSeparator() +
-                I18nHelper.keyType() + ": " + this.treeItem.value().type() + System.lineSeparator() +
+                I18nHelper.keyType() + ": " + this.treeItem.value().getType() + System.lineSeparator() +
                 I18nHelper.keyName() + ": " + this.treeItem.key();
         ClipboardUtil.setStringAndTip(builder);
     }

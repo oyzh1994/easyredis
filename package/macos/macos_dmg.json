@@ -1,27 +1,19 @@
 {
     "packMode": "jpackage",
-    "platform": "macos_arm64",
-    "dest": "/Volumes/Files/Package/EasyRedis/${appVersion}/EasyRedis_${appVersion}.app",
+    "platform": "macos",
+    "dest": "/Volumes/Files/Package/EasyRedis/${appVersion}",
     "appIcon": "${projectPath}/resource/redis.icns",
     "mainJar": "${projectPath}/target/easyredis-${appVersion}.jar",
     "jdkPath": "$SYSTEM",
-    "packr": {
-        "verbose": true,
-        "bundleIdentifier": "cn.oyzh.EasyRedis",
-        "mainClass": "org.springframework.boot.loader.JarLauncher",
-        "classpath": []
-    },
     "jpackage": {
         "verbose": true,
         "vendor": "oyzh",
-        "type": "app-image",
+        "type": "dmg",
+        "mac-package-identifier": "cn.oyzh.easyredis",
         "description": "这是一个Redis管理工具，提供导入、导出、传输、终端、可视化操作等功能."
     },
-    "compress": {
-        "type": "zip"
-    },
     "jdeps": {
-        "multi-release": 23,
+        "multi-release": 24,
         "summary": true,
         "skips": [
             "javafx-.*.jar"
@@ -34,22 +26,10 @@
         "exclude-files": [
             "**.md",
             "**LICENSE",
-            "**jvm.lib",
-            "**jawt.lib",
-            "**jawt.dll",
             "**COPYRIGHT",
-            "**prefs.dll",
-            "**j2gss.dll",
             "**classlist",
-            "**jsound.dll",
             "**README.txt",
-            "**javajpeg.dll",
-            "**mlib_image.dll",
-            "**jrunscript.exe",
-            "**sspi_bridge.dll",
             "**sound.properties",
-            "**splashscreen.dll",
-            "**w2k_lsa_auth.dll",
             "**ASSEMBLY_EXCEPTION",
             "**ADDITIONAL_LICENSE_INFO"
         ],
@@ -123,10 +103,7 @@
             "data.zip",
             "git.properties",
             "native-image.properties",
-            "spring-boot-jarmode-layertools-.*.jar",
-            "javafx-graphics.*-win.jar",
-            "javafx-graphics.*-mac.jar",
-            "javafx-graphics.*-linux.*.jar"
+            "spring-boot-jarmode-layertools-.*.jar"
         ]
     }
 }

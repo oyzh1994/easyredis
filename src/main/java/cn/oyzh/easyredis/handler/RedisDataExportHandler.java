@@ -13,8 +13,6 @@ import cn.oyzh.store.file.FileHelper;
 import cn.oyzh.store.file.FileRecord;
 import cn.oyzh.store.file.FileWriteConfig;
 import cn.oyzh.store.file.TypeFileWriter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -28,14 +26,84 @@ import java.util.function.Consumer;
  * @author oyzh
  * @since 2024/11/26
  */
-@Setter
-@Accessors(fluent = true, chain = false)
 public class RedisDataExportHandler extends DataHandler {
 
     /**
      * 文件格式
      */
     private String fileType;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public RedisClient getClient() {
+        return client;
+    }
+
+    public void setClient(RedisClient client) {
+        this.client = client;
+    }
+
+    public Integer getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(Integer database) {
+        this.database = database;
+    }
+
+    public List<RedisFilter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<RedisFilter> filters) {
+        this.filters = filters;
+    }
+
+    public List<String> getKeyTypes() {
+        return keyTypes;
+    }
+
+    public void setKeyTypes(List<String> keyTypes) {
+        this.keyTypes = keyTypes;
+    }
+
+    public boolean isRetainTTL() {
+        return retainTTL;
+    }
+
+    public void setRetainTTL(boolean retainTTL) {
+        this.retainTTL = retainTTL;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public void setBatchSize(int batchSize) {
+        this.batchSize = batchSize;
+    }
+
+    public FileWriteConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(FileWriteConfig config) {
+        this.config = config;
+    }
 
     /**
      * 客户端
@@ -140,17 +208,17 @@ public class RedisDataExportHandler extends DataHandler {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    String key = redisKey.key();
+                    String key = redisKey.getKey();
                     // 记录
                     FileRecord record = new FileRecord();
                     // 序列化键值
                     String value = RedisKeyUtil.serializeNode(redisKey);
                     record.put(0, key);
                     record.put(1, value);
-                    record.put(2, redisKey.dbIndex());
+                    record.put(2, redisKey.getDbIndex());
                     record.put(3, redisKey.typeName());
-                    if (redisKey.ttl() != null) {
-                        record.put(4, redisKey.ttl());
+                    if (redisKey.getTtl() != null) {
+                        record.put(4, redisKey.getTtl());
                     }
                     // 添加到集合
                     batchList.add(record);

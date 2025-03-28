@@ -22,8 +22,6 @@ import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.redis.key.RedisStringValue;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
-import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.params.ScanParams;
 import redis.clients.jedis.resps.ScanResult;
@@ -45,7 +43,7 @@ import java.util.stream.Collectors;
  * @author oyzh
  * @since 2023/06/30
  */
-@UtilityClass
+
 public class RedisKeyUtil {
 
     /**
@@ -286,7 +284,7 @@ public class RedisKeyUtil {
         if (node == null || client == null) {
             return;
         }
-        String key = node.key();
+        String key = node.getKey();
         // string
         if (node.isStringKey()) {
             client.set(dbIndex, key, (String) node.asStringValue().getValue());
@@ -357,7 +355,7 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void keyValue(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyValue(RedisKey node, Integer dbIndex,  String key, RedisClient client) {
         // string
         if (node.isStringKey()) {
             String value = client.get(dbIndex, key);
@@ -388,13 +386,13 @@ public class RedisKeyUtil {
      * @param key     键
      * @param client  redis客户端
      */
-    public static void keyObject(RedisKey node, Integer dbIndex, @NonNull String key, RedisClient client) {
+    public static void keyObject(RedisKey node, Integer dbIndex,  String key, RedisClient client) {
         Long objectRefcount = client.objectRefcount(dbIndex, key);
         Long objectIdletime = client.objectIdletime(dbIndex, key);
         String objectEncoding = client.objectEncoding(dbIndex, key);
-        node.objectIdletime(objectIdletime);
-        node.objectRefcount(objectRefcount);
-        node.objectedEncoding(objectEncoding);
+        node.setObjectIdletime(objectIdletime);
+        node.setObjectRefcount(objectRefcount);
+        node.setObjectedEncoding(objectEncoding);
     }
 
     /**
@@ -432,7 +430,7 @@ public class RedisKeyUtil {
         List<RedisKey> redisKeys = new ArrayList<>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
             RedisKey redisKey = initKey(dbIndex, keys.get(i), types.get(i));
-            redisKey.loadTime(loadTime);
+            redisKey.setLoadTime(loadTime);
             redisKeys.add(redisKey);
         }
         scanResult.setKeys(redisKeys);
@@ -551,7 +549,7 @@ public class RedisKeyUtil {
         List<RedisKey> redisKeys = new ArrayList<>(keys.size());
         for (int i = 0; i < keys.size(); i++) {
             RedisKey redisKey = initKey(dbIndex, CollectionUtil.get(keys, i), types.get(i));
-            redisKey.loadTime(loadTime);
+            redisKey.setLoadTime(loadTime);
             redisKeys.add(redisKey);
         }
         return redisKeys;
@@ -567,7 +565,7 @@ public class RedisKeyUtil {
      * @param client    redis客户端
      * @return redis键
      */
-    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean loadValue, RedisClient client) {
+    public static RedisKey getKey(int dbIndex,  String key, boolean ttl, boolean loadValue, RedisClient client) {
         return getKey(dbIndex, key, ttl, false, loadValue, client);
     }
 
@@ -582,7 +580,7 @@ public class RedisKeyUtil {
      * @param client         redis客户端
      * @return redis键
      */
-    public static RedisKey getKey(int dbIndex, @NonNull String key, boolean ttl, boolean objectEncoding, boolean loadValue, RedisClient client) {
+    public static RedisKey getKey(int dbIndex,  String key, boolean ttl, boolean objectEncoding, boolean loadValue, RedisClient client) {
         // 开始时间
         long start = System.currentTimeMillis();
         // 初始化键
@@ -592,11 +590,11 @@ public class RedisKeyUtil {
         }
         // ttl
         if (ttl) {
-            redisKey.ttl(client.ttl(dbIndex, key));
+            redisKey.setTtl(client.ttl(dbIndex, key));
         }
         // 对象编码
         if (objectEncoding) {
-            redisKey.objectedEncoding(client.objectEncoding(dbIndex, key));
+            redisKey.setObjectedEncoding(client.objectEncoding(dbIndex, key));
         }
         // 值
         if (loadValue) {
@@ -606,7 +604,7 @@ public class RedisKeyUtil {
         long end = System.currentTimeMillis();
         // 加载耗时
         long loadTime = end - start;
-        redisKey.loadTime((short) loadTime);
+        redisKey.setLoadTime((short) loadTime);
         return redisKey;
     }
 
@@ -618,7 +616,7 @@ public class RedisKeyUtil {
      * @param type    键类型
      * @return redis键
      */
-    public static RedisKey initKey(int dbIndex, @NonNull String key, RedisKeyType type) {
+    public static RedisKey initKey(int dbIndex,  String key, RedisKeyType type) {
         // 创建键
         RedisKey redisKey = null;
         switch (type) {
@@ -628,9 +626,9 @@ public class RedisKeyUtil {
         }
         // 处理键
         if (redisKey != null) {
-            redisKey.key(key);
+            redisKey.setKey(key);
             redisKey.type(type);
-            redisKey.dbIndex(dbIndex);
+            redisKey.setDbIndex(dbIndex);
         }
         return redisKey;
     }
@@ -754,7 +752,7 @@ public class RedisKeyUtil {
                     count += keys.size();
                 } else {
                     for (RedisKey key : keys) {
-                        if (!existingKeys.contains(key.key())) {
+                        if (!existingKeys.contains(key.getKey())) {
                             allKeys.add(key);
                             count++;
                         }

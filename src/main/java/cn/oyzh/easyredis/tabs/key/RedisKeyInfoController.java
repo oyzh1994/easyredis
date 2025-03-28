@@ -69,9 +69,9 @@ public class RedisKeyInfoController extends RichTabController {
     private void copy() {
         String builder = I18nHelper.keyName() + " : " + this.treeItem.key() + System.lineSeparator() +
                 I18nHelper.database() + " : " + this.treeItem.dbIndex() + System.lineSeparator() +
-                I18nHelper.encoding() + " : " + this.redisKey.objectedEncoding() + System.lineSeparator() +
-                I18nHelper.idleTime() + " : " + this.redisKey.objectIdletime() + System.lineSeparator() +
-                I18nHelper.refcount() + " : " + this.redisKey.objectRefcount() + System.lineSeparator();
+                I18nHelper.encoding() + " : " + this.redisKey.getObjectedEncoding() + System.lineSeparator() +
+                I18nHelper.idleTime() + " : " + this.redisKey.getObjectIdletime() + System.lineSeparator() +
+                I18nHelper.refcount() + " : " + this.redisKey.getObjectRefcount() + System.lineSeparator();
         ClipboardUtil.setStringAndTip(builder);
     }
 

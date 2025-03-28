@@ -5,9 +5,6 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.table.FXTableView;
 import javafx.fxml.FXML;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +21,11 @@ public class RedisClientInfoTabController extends SubTabController {
     /**
      * redis客户端
      */
-    @Getter
-    @Accessors(chain = true, fluent = true)
     private RedisClient client;
+
+    public RedisClient getClient() {
+        return client;
+    }
 
     /**
      * 表格组件
@@ -40,7 +39,7 @@ public class RedisClientInfoTabController extends SubTabController {
      *
      * @param client redis客户端
      */
-    public void init(@NonNull RedisClient client) {
+    public void init( RedisClient client) {
         this.client = client;
         this.initClientList();
     }
