@@ -38,8 +38,8 @@ public class RedisQueryDataTabController extends RichTabController {
     private void parseObject(Object o, int index, List<KeyValueProperty<Integer, Object>> data) {
         switch (o) {
             case byte[] bytes -> data.add(KeyValueProperty.of(index, SafeEncoder.encode(bytes)));
-            case Collection<?> _ -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
-            case KeyValue<?, ?> _ -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+            case Collection<?> c -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
+            case KeyValue<?, ?> c -> data.add(KeyValueProperty.of(index, SafeEncoder.encodeObject(o)));
             case null -> data.add(KeyValueProperty.of(index, ""));
             default -> data.add(KeyValueProperty.of(index, o.toString()));
         }
