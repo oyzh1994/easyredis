@@ -11,7 +11,7 @@ import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisFilterStore;
 import cn.oyzh.easyredis.store.RedisSSHConfigStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
-import cn.oyzh.fx.gui.combobox.SSHAuthMethodCombobox;
+import cn.oyzh.fx.gui.combobox.SSHAuthTypeCombobox;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
@@ -161,7 +161,7 @@ public class RedisUpdateConnectController extends StageController {
      * ssh认证方式
      */
     @FXML
-    private SSHAuthMethodCombobox sshAuthMethod;
+    private SSHAuthTypeCombobox sshAuthMethod;
 
     /**
      * ssh证书
