@@ -123,7 +123,6 @@ public class RedisKeyCopyController extends StageController {
         this.targetDB.requestFocus();
     }
 
-
     @Override
     public String getViewTitle() {
         return I18nResourceBundle.i18nString("redis.title.key.copy");

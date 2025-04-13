@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
+import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -557,13 +558,15 @@ public class RedisTransportDataController extends StageController {
         RedisConnect sourceInfo = this.sourceInfo.getSelectedItem();
         RedisConnect targetInfo = this.targetInfo.getSelectedItem();
         if (sourceInfo == null) {
-            this.sourceInfo.requestFocus();
-            MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
+//            this.sourceInfo.requestFocus();
+//            MessageBox.warn(I18nHelper.pleaseSelectSourceConnect());
+            ControlUtil.validFail(this.sourceInfo);
             return;
         }
         if (targetInfo == null) {
-            this.targetInfo.requestFocus();
-            MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
+//            this.targetInfo.requestFocus();
+//            MessageBox.warn(I18nHelper.pleaseSelectTargetConnect());
+            ControlUtil.validFail(this.targetInfo);
             return;
         }
 
