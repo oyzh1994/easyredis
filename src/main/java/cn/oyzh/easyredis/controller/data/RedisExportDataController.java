@@ -30,6 +30,7 @@ import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ControlUtil;
 import cn.oyzh.fx.plus.util.Counter;
 import cn.oyzh.fx.plus.util.FXUtil;
+import cn.oyzh.fx.plus.validator.ValidatorUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
@@ -463,7 +464,7 @@ public class RedisExportDataController extends StageController {
         if (this.exportFile == null) {
 //            this.selectFile.requestFocus();
 //            MessageBox.warn(I18nHelper.pleaseSelectFile());
-            ControlUtil.validFail(this.selectFile);
+            ValidatorUtil.validFail(this.selectFile);
             return;
         }
         this.step1.disappear();
