@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.test;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.ssh.domain.SSHConnect;
-import cn.oyzh.ssh.domain.SSHForwardConfig;
+import cn.oyzh.ssh.domain.SSHJumpConfig;
 import cn.oyzh.ssh.jump.SSHJumper;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -63,12 +63,12 @@ public class SSHTest {
         connectInfo.setUser("root");
         connectInfo.setPassword("123456");
 
-        SSHForwardConfig forwardInfo = new SSHForwardConfig();
-        forwardInfo.setPort(6379);
-        forwardInfo.setHost("192.168.189.134");
+        SSHJumpConfig forwardInfo = new SSHJumpConfig();
+        forwardInfo.setRemotePort(6379);
+        forwardInfo.setRemoteHost("192.168.189.134");
 
-        SSHJumper forwarder = new SSHJumper(connectInfo);
-        int localPort = forwarder.forward(forwardInfo);
+        SSHJumper forwarder = new SSHJumper();
+        int localPort = forwarder.forward(null, null);
 
         RedisConnect info = new RedisConnect();
         info.setHost("127.0.0.1:" + localPort);

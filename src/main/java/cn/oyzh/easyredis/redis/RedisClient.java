@@ -22,7 +22,7 @@ import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
-import cn.oyzh.ssh.domain.SSHForwardConfig;
+import cn.oyzh.ssh.domain.SSHJumpConfig;
 import cn.oyzh.ssh.jump.SSHJumper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -234,14 +234,11 @@ public class RedisClient {
             }
             if (sshConfig != null) {
                 if (this.sshJumper == null) {
-                    this.sshJumper = new SSHJumper(sshConfig);
+                    this.sshJumper = new SSHJumper();
                 }
                 // ssh配置
-                SSHForwardConfig forwardConfig = new SSHForwardConfig();
-                forwardConfig.setHost(this.redisConnect.hostIp());
-                forwardConfig.setPort(this.redisConnect.hostPort());
                 // 执行连接
-                int localPort = this.sshJumper.forward(forwardConfig);
+                int localPort = this.sshJumper.forward(null, null);
                 // 连接信息
                 host = new HostAndPort("127.0.0.1", localPort);
             } else {
