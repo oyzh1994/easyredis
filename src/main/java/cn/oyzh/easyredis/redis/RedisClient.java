@@ -23,7 +23,7 @@ import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.ssh.domain.SSHForwardConfig;
-import cn.oyzh.ssh.jump.SSHForwarder;
+import cn.oyzh.ssh.jump.SSHJumper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -143,7 +143,7 @@ public class RedisClient {
     /**
      * ssh端口转发器
      */
-    private SSHForwarder sshForwarder;
+    private SSHJumper sshJumper;
 
     /**
      * redis信息
@@ -233,15 +233,15 @@ public class RedisClient {
                 sshConfig = this.sshConfigStore.getByIid(this.redisConnect.getId());
             }
             if (sshConfig != null) {
-                if (this.sshForwarder == null) {
-                    this.sshForwarder = new SSHForwarder(sshConfig);
+                if (this.sshJumper == null) {
+                    this.sshJumper = new SSHJumper(sshConfig);
                 }
                 // ssh配置
                 SSHForwardConfig forwardConfig = new SSHForwardConfig();
                 forwardConfig.setHost(this.redisConnect.hostIp());
                 forwardConfig.setPort(this.redisConnect.hostPort());
                 // 执行连接
-                int localPort = this.sshForwarder.forward(forwardConfig);
+                int localPort = this.sshJumper.forward(forwardConfig);
                 // 连接信息
                 host = new HostAndPort("127.0.0.1", localPort);
             } else {
@@ -546,8 +546,8 @@ public class RedisClient {
 //            }
             // 销毁端口转发
             if (this.redisConnect.isSSHForward()) {
-                if (this.sshForwarder != null) {
-                    this.sshForwarder.destroy();
+                if (this.sshJumper != null) {
+                    this.sshJumper.destroy();
                 }
             }
             this.poolManager.destroy();
