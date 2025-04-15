@@ -2,9 +2,9 @@ package cn.oyzh.easyredis.test;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.ssh.SSHConnect;
-import cn.oyzh.ssh.SSHForwardConfig;
-import cn.oyzh.ssh.SSHForwarder;
+import cn.oyzh.ssh.domain.SSHConnect;
+import cn.oyzh.ssh.domain.SSHForwardConfig;
+import cn.oyzh.ssh.jump.SSHForwarder;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.junit.Test;
