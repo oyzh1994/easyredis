@@ -423,9 +423,9 @@ public class RedisKeyImportController extends StageController {
 
     @Override
     public void onWindowShown(WindowEvent event) {
-        // this.treeItem = this.getWindowProp("treeItem");
+        // this.treeItem = this.getProp("treeItem");
         // this.client = treeItem.client();
-        this.client = this.getWindowProp("client");
+        this.client = this.getProp("client");
         this.scriptInfo.managedProperty().bind(this.scriptInfo.visibleProperty());
         this.scriptInfo.addTextChangeListener((observableValue, s, t1) -> this.scriptInfo.setVisible(StringUtil.isNotBlank(t1)));
         this.stage.hideOnEscape();

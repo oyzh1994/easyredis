@@ -53,8 +53,8 @@
 ////        EventUtil.register(this);
 //        this.stage.hideOnEscape();
 //        super.onWindowShown(event);
-//        this.treeItem = this.getWindowProp("treeItem");
-//        String pattern = this.getWindowProp("pattern");
+//        this.treeItem = this.getProp("treeItem");
+//        String pattern = this.getProp("pattern");
 //        if (!StringUtil.isBlank(pattern)) {
 //            this.keyFilter.setText(pattern);
 //        }

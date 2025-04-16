@@ -115,7 +115,7 @@ public class RedisKeyCopyController extends StageController {
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         super.onWindowShown(event);
-        this.treeItem = this.getWindowProp("treeItem");
+        this.treeItem = this.getProp("treeItem");
         this.client = this.treeItem.client();
         this.key.setText(this.treeItem.key() + "（db" + this.treeItem.dbIndex() + "）");
         this.targetDB.setDbCount(this.client.databases());

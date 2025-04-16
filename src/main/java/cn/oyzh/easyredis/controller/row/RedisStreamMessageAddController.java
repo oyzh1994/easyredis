@@ -140,7 +140,7 @@ public class RedisStreamMessageAddController extends StageController {
 
     @Override
     public void onWindowShown(WindowEvent event) {
-        this.treeItem = this.getWindowProp("treeItem");
+        this.treeItem = this.getProp("treeItem");
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
         this.rowValue.requestFocus();

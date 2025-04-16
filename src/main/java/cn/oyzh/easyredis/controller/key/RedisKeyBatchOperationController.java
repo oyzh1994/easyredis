@@ -528,7 +528,7 @@ public class RedisKeyBatchOperationController extends StageController {
         super.onWindowShown(event);
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        this.treeItem = this.getWindowProp("treeItem");
+        this.treeItem = this.getProp("treeItem");
         this.client = this.treeItem.client();
         this.dbIndex = this.treeItem.dbIndex();
         this.moveTargetDB.setDbCount(this.client.databases());

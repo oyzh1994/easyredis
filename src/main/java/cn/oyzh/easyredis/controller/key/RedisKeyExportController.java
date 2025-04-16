@@ -380,7 +380,7 @@
 //     @Override
 //     public void onWindowShown(WindowEvent event) {
 //         super.onWindowShown(event);
-//         TreeItem<?> treeItem = this.getWindowProp("treeItem");
+//         TreeItem<?> treeItem = this.getProp("treeItem");
 //         if (treeItem instanceof RedisConnectTreeItem connectTreeItem) {
 //             this.client = connectTreeItem.client();
 //             this.db.addItem(I18nHelper.allDatabase());

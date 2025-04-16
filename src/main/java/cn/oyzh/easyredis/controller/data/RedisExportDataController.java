@@ -502,8 +502,8 @@ public class RedisExportDataController extends StageController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        this.connect = this.getWindowProp("connect");
-        this.dbIndex = this.getWindowProp("dbIndex");
+        this.connect = this.getProp("connect");
+        this.dbIndex = this.getProp("dbIndex");
     }
 
     /**

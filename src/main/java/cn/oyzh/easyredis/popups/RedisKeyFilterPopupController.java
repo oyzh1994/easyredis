@@ -42,7 +42,7 @@ public class RedisKeyFilterPopupController extends PopupController {
     @Override
     public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
-        String pattern = this.getWindowProp("pattern");
+        String pattern = this.getProp("pattern");
         if (!StringUtil.isBlank(pattern)) {
             this.keyFilter.setText(pattern);
         }

@@ -50,8 +50,8 @@ public class RedisKeyQRCodePopupController extends PopupController {
      */
     private void initQRCode() {
         try {
-            RedisKey key = this.getWindowProp("key");
-            String keyData = this.getWindowProp("keyData");
+            RedisKey key = this.getProp("key");
+            String keyData = this.getProp("keyData");
             StringBuilder builder = new StringBuilder();
             builder.append(I18nHelper.key()).append(": ")
                     .append(key.getKey()).append("\n")

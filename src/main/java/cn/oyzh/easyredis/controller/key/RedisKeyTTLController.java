@@ -159,7 +159,7 @@ public class RedisKeyTTLController extends StageController {
         this.showTime = System.currentTimeMillis();
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
-        this.treeItem = this.getWindowProp("treeItem");
+        this.treeItem = this.getProp("treeItem");
         this.client = this.treeItem.client();
         Long ttl = this.treeItem.ttl();
         if (ttl == null || ttl <= -1) {

@@ -530,8 +530,8 @@ public class RedisKeyAddController extends StageController {
         this.mutexes.addNodes(this.bitBox, this.hashBox, this.listBox, this.coordinateBox, this.setBox, this.zSetBox, this.streamBox, this.stringBox, this.hylogBox);
         this.stage.hideOnEscape();
         super.onWindowShown(event);
-        this.dbItem = this.getWindowProp("dbItem");
-        RedisKeyType type = this.getWindowProp("type");
+        this.dbItem = this.getProp("dbItem");
+        RedisKeyType type = this.getProp("type");
         this.type.select(type);
         this.client = this.dbItem.client();
         this.key.requestFocus();
