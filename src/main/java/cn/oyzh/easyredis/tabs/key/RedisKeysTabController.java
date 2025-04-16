@@ -187,9 +187,9 @@ public class RedisKeysTabController extends ParentTabController {
 
     @FXML
     private void addKey() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class);
-//        fxView.setProp("dbItem", this.treeItem);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class);
+//        adapter.setProp("dbItem", this.treeItem);
+//        adapter.display();
         RedisEventUtil.showAddKey(this.treeItem);
     }
 

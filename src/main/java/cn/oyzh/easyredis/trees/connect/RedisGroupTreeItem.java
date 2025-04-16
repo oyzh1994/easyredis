@@ -148,9 +148,9 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
      * 添加连接
      */
     private void addConnect() {
-//        StageAdapter fxView = StageManager.parseStage(RedisAddConnectController.class, this.window());
-//        fxView.setProp("group", this.value);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisAddConnectController.class, this.window());
+//        adapter.setProp("group", this.value);
+//        adapter.display();
         RedisEventUtil.showAddConnect(this.value);
     }
 

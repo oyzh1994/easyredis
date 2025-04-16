@@ -173,9 +173,9 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter fxView = StageManager.parseStage(RedisZSetMemberAddController.class);
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class);
+        adapter.setProp("treeItem", this.treeItem);
+        adapter.display();
     }
 
     @Override

@@ -365,9 +365,9 @@ public class RedisImportDataController extends StageController {
     private void openOld() {
         if (this.doConnect()) {
             this.closeWindow();
-            StageAdapter fxView = StageManager.parseStage(RedisKeyImportController.class);
-            fxView.setProp("client", this.client);
-            fxView.display();
+            StageAdapter adapter = StageManager.parseStage(RedisKeyImportController.class);
+            adapter.setProp("client", this.client);
+            adapter.display();
         }
     }
 }

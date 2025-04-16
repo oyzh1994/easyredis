@@ -72,9 +72,9 @@ public class RedisKeyExtraController extends SubTabController {
      */
     @FXML
     protected void ttlUpdate() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
-//        fxView.setProp("treeItem", this.treeItem);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
         RedisEventUtil.showTTLKey(this.treeItem);
     }
 }

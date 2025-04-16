@@ -64,9 +64,9 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      * 添加键
      */
     public void addKey() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
-//        fxView.setProp("dbItem", this.dbItem());
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, this.window());
+//        adapter.setProp("dbItem", this.dbItem());
+//        adapter.display();
         RedisEventUtil.showAddKey(this.dbItem());
     }
 
@@ -74,10 +74,10 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      * 导出redis键
      */
     public void exportData() {
-//        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class, this.window());
-//        fxView.setProp("connect", this.redisConnect());
-//        fxView.setProp("dbIndex", this.dbIndex());
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class, this.window());
+//        adapter.setProp("connect", this.redisConnect());
+//        adapter.setProp("dbIndex", this.dbIndex());
+//        adapter.display();
         RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex());
     }
 

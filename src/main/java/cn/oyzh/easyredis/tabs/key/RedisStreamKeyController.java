@@ -72,9 +72,9 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter fxView = StageManager.parseStage(RedisStreamMessageAddController.class);
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class);
+        adapter.setProp("treeItem", this.treeItem);
+        adapter.display();
     }
 
     @Override

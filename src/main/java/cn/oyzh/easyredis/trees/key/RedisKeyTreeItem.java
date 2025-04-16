@@ -130,9 +130,9 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 修改ttl
      */
     private void updateTtl() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyTTLController.class, this.window());
-//        fxView.setProp("treeItem", this);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.display();
         RedisEventUtil.showTTLKey(this);
     }
 
@@ -140,18 +140,18 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 移动键
      */
     private void moveKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyMoveController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisKeyMoveController.class, this.window());
+        adapter.setProp("treeItem", this);
+        adapter.display();
     }
 
     /**
      * 复制键
      */
     private void copyKey() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyCopyController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisKeyCopyController.class, this.window());
+        adapter.setProp("treeItem", this);
+        adapter.display();
     }
 
     @Override

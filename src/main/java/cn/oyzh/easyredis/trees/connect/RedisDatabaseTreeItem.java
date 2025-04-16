@@ -121,9 +121,9 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      */
     @FXML
     private void batchOperation() {
-        StageAdapter fxView = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
-        fxView.setProp("treeItem", this);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
+        adapter.setProp("treeItem", this);
+        adapter.display();
     }
 
     /**
@@ -142,10 +142,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //     * 键过滤
 //     */
 //    private void keyFilter() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyFilterController.class, this.window());
-//        fxView.setProp("treeItem", this);
-//        fxView.setProp("pattern", this.filterPattern);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyFilterController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.setProp("pattern", this.filterPattern);
+//        adapter.display();
 //    }
 
 //    /**
@@ -165,10 +165,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      * 导出键
      */
     public void exportData() {
-//        StageAdapter fxView = StageManager.parseStage(RedisExportDataController.class);
-//        fxView.setProp("connect", this.redisConnect());
-//        fxView.setProp("dbIndex", this.dbIndex);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class);
+//        adapter.setProp("connect", this.redisConnect());
+//        adapter.setProp("dbIndex", this.dbIndex);
+//        adapter.display();
         RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex);
     }
 
@@ -238,9 +238,9 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      * 添加键
      */
     public void addKey() {
-//        StageAdapter fxView = StageManager.parseStage(RedisKeyAddController.class, this.window());
-//        fxView.setProp("dbItem", this);
-//        fxView.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, this.window());
+//        adapter.setProp("dbItem", this);
+//        adapter.display();
         RedisEventUtil.showAddKey(this);
     }
 

@@ -230,9 +230,9 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter fxView = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
+        adapter.setProp("treeItem", this.treeItem);
+        adapter.display();
     }
 
     /**

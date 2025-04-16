@@ -188,9 +188,9 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter fxView = StageManager.parseStage(RedisZSetCoordinateAddController.class);
-        fxView.setProp("treeItem", this.treeItem);
-        fxView.display();
+        StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class);
+        adapter.setProp("treeItem", this.treeItem);
+        adapter.display();
     }
 
     @Override
