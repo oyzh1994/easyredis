@@ -17,7 +17,7 @@
         </FXVBox.margin>
     </SearchTextField>
     <FXHBox flexWidth="100%">
-        <ApplySVGGlyph onMousePrimaryClicked="#apply" sizeStr="15,11">
+        <ApplySVGGlyph tipText="%base.apply" onMousePrimaryClicked="#apply" sizeStr="15,11">
             <HBox.margin>
                 <Insets left="15" top="15"/>
             </HBox.margin>
