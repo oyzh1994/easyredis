@@ -152,8 +152,8 @@ public class EasyRedisApp extends FXApplication implements EventListener {
 
     @Override
     public void stop() {
-        super.stop();
         EventListener.super.unregister();
+        super.stop();
     }
 
     @Override
