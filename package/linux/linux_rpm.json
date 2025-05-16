@@ -8,11 +8,8 @@
     "jpackage": {
         "verbose": true,
         "vendor": "oyzh",
-        "type": "app-image",
+        "type": "rpm",
         "description": "这是一个Redis管理工具，提供导入、导出、传输、终端、可视化操作等功能."
-    },
-    "compress": {
-        "type": "zip"
     },
     "jdeps": {
         "multi-release": 24,
