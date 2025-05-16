@@ -6,9 +6,9 @@
 https://gitee.com/oyzh1994/easyredis/releases
 
 ###### 启动入口
-cn.oyzh.easyredis.EasyRedisBootstrap.main
+cn.oyzh.easyredis.EasyRedisBootstrap.main  
 注意，如果要运行项目，最好切换到最新分支，不然可能启动不了，主分支master代码是定期合并进去  
-ide建议idea社区版或者专业版，另外需要安装lombok插件(后续考虑去掉)
+ide建议idea社区版或者专业版
 
 ###### 依赖说明
 1. base工程  
@@ -36,9 +36,13 @@ mvn -X clean package -DskipTests
 另外建议国内使用阿里镜像加速地址  
 
 # 程序打包
+###### png去背景
+https://www.iloveimg.com/zh-cn/remove-background
 ###### 图标转换
-###### png转icns
+###### png转icns(地址1)
 https://anyconv.com/png-to-icns-converter/
+###### png转icns(地址2)
+https://www.aconvert.com/cn/image/png-to-icns/
 ###### png转ico
 https://www.freeconvert.com/zh/png-to-ico
 
@@ -70,12 +74,17 @@ exe、msi打包需要设置win-menu、win-shortcut参数，避免桌面不显示
 ###### 注意事项
 dmg、pkg打包需要设置mac-package-identifier参数，避免因为app同名，启动台不显示程序图标的问题
 
-###### linux(以uos为例，debian系列通用)
+###### linux(以uos、ubuntu、centos为例)
 ###### deb打包依赖
 sudo apt install fakeroot
+###### rpm打包依赖
+yum install rpm-build
 ###### (推荐)deb打包
 配置 -> package -> linux -> linux_deb.json  
 入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_linux_deb
+###### rpm打包
+配置 -> package -> linux -> linux_rpm.json  
+入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_linux_rpm
 ###### app-image打包
 配置 -> package -> linux -> linux_image.json  
 入口 -> cn.oyzh.easyredis.test.RedisPack.easyredis_linux_image
@@ -94,6 +103,15 @@ docker-compose -f .\redis-master-compose.yml up -d
 docker compose -f ./redis-cluster-compose.yml up -d
 docker compose -f ./redis-example-compose.yml up -d
 docker compose -f ./redis-master-compose.yml up -d
+
+# Linux系统
+###### 执行deb安装提示安装失败
+如果错误详情发现这个错误
+xdg-desktop-menu: No writable system menu directory found.  
+执行以下操作，然后重新执行安装  
+sudo mkdir /usr/share/desktop-directories/  
+###### 双击安装rpm包提示出现问题
+rpm -ivh xx.rpm
 
 # Macos系统
 ###### mac执行dmg安装后，启动台不显示程序图标解决方案
