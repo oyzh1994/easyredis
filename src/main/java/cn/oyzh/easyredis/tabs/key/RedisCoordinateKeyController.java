@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
@@ -14,6 +13,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
@@ -227,15 +227,15 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
             return;
         }
         if (this.treeItem.isDataUnsaved()) {
-            this.disableTab();
-            TaskManager.start(() -> {
+            StageManager.showMask(() -> {
                 try {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
                     this.treeItem.flushMemoryUsage();
-                } finally {
-                    this.enableTab();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }

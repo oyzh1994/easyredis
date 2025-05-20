@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
@@ -68,17 +69,19 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        // 刷新数据
-        try {
-            this.treeItem.refreshKeyValue();
-            // 数据变更
-            this.initKey();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(()->{
+            // 刷新数据
+            try {
+                this.treeItem.refreshKeyValue();
+                // 数据变更
+                this.initKey();
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     /**

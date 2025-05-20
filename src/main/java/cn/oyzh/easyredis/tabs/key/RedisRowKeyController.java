@@ -112,17 +112,20 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        try {
-            // 刷新数据
-            this.treeItem.refreshKeyValue();
-            // 跳转到首页
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            try {
+                // 刷新数据
+                this.treeItem.refreshKeyValue();
+                // 跳转到首页
+                this.firstPage();
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
+
     }
 
     /**
