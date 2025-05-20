@@ -165,7 +165,6 @@ public class RedisUpdateConnectController extends StageController {
 //    @FXML
 //    private ReadOnlyTextField sshCertificate;
 
-
     /**
      * redis连接储存对象
      */
@@ -296,6 +295,8 @@ public class RedisUpdateConnectController extends StageController {
 //            // ssh配置
 //            this.redisConnect.setSshForward(this.sshForward.isSelected());
 //            this.redisConnect.setSshConfig(this.getSSHConfig());
+            // 跳板机配置
+            this.redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             // 过滤列表
             this.redisConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
@@ -436,7 +437,6 @@ public class RedisUpdateConnectController extends StageController {
 //            this.sshCertificate.setText(file.getPath());
 //        }
 //    }
-
 
     /**
      * 添加跳板

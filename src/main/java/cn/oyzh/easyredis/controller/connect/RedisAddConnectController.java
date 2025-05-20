@@ -3,35 +3,32 @@ package cn.oyzh.easyredis.controller.connect;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
+import cn.oyzh.easyredis.domain.RedisJumpConfig;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisFilterTableView;
+import cn.oyzh.easyredis.fx.RedisJumpTableView;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
-import cn.oyzh.fx.gui.combobox.SSHAuthTypeCombobox;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
 import cn.oyzh.fx.gui.text.field.PortTextField;
-import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.FXConst;
-import cn.oyzh.fx.plus.chooser.FXChooser;
-import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
-import cn.oyzh.fx.plus.controls.tab.FXTab;
 import cn.oyzh.fx.plus.controls.tab.FXTabPane;
 import cn.oyzh.fx.plus.controls.text.area.FXTextArea;
-import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.fx.plus.information.MessageBox;
-import cn.oyzh.fx.plus.node.NodeGroupUtil;
+import cn.oyzh.fx.plus.tableview.TableViewUtil;
 import cn.oyzh.fx.plus.window.FXStageStyle;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -66,6 +63,12 @@ public class RedisAddConnectController extends StageController {
     private ClearableTextField name;
 
     /**
+     * 备注
+     */
+    @FXML
+    private FXTextArea remark;
+
+    /**
      * 用户名
      */
     @FXML
@@ -76,12 +79,6 @@ public class RedisAddConnectController extends StageController {
      */
     @FXML
     private ClearableTextField password;
-
-    /**
-     * 备注
-     */
-    @FXML
-    private FXTextArea remark;
 
     /**
      * 连接ip
@@ -96,7 +93,7 @@ public class RedisAddConnectController extends StageController {
     private PortTextField hostPort;
 
     /**
-     * 连接超时
+     * 超时时间
      */
     @FXML
     private NumberTextField connectTimeOut;
@@ -107,59 +104,59 @@ public class RedisAddConnectController extends StageController {
     @FXML
     private NumberTextField executeTimeOut;
 
-    /**
-     * ssh面板
-     */
-    @FXML
-    private FXTab sshTab;
-
-    /**
-     * 开启ssh
-     */
-    @FXML
-    private FXToggleSwitch sshForward;
-
-    /**
-     * ssh主机地址
-     */
-    @FXML
-    private ClearableTextField sshHost;
-
-    /**
-     * ssh主机端口
-     */
-    @FXML
-    private PortTextField sshPort;
-
-    /**
-     * ssh主机端口
-     */
-    @FXML
-    private NumberTextField sshTimeout;
-
-    /**
-     * ssh主机用户
-     */
-    @FXML
-    private ClearableTextField sshUser;
-
-    /**
-     * ssh主机密码
-     */
-    @FXML
-    private ClearableTextField sshPassword;
-
-    /**
-     * ssh认证方式
-     */
-    @FXML
-    private SSHAuthTypeCombobox sshAuthMethod;
-
-    /**
-     * ssh证书
-     */
-    @FXML
-    private ReadOnlyTextField sshCertificate;
+//    /**
+//     * ssh面板
+//     */
+//    @FXML
+//    private FXTab sshTab;
+//
+//    /**
+//     * 开启ssh
+//     */
+//    @FXML
+//    private FXToggleSwitch sshForward;
+//
+//    /**
+//     * ssh主机地址
+//     */
+//    @FXML
+//    private ClearableTextField sshHost;
+//
+//    /**
+//     * ssh主机端口
+//     */
+//    @FXML
+//    private PortTextField sshPort;
+//
+//    /**
+//     * ssh主机端口
+//     */
+//    @FXML
+//    private NumberTextField sshTimeout;
+//
+//    /**
+//     * ssh主机用户
+//     */
+//    @FXML
+//    private ClearableTextField sshUser;
+//
+//    /**
+//     * ssh主机密码
+//     */
+//    @FXML
+//    private ClearableTextField sshPassword;
+//
+//    /**
+//     * ssh认证方式
+//     */
+//    @FXML
+//    private SSHAuthTypeCombobox sshAuthMethod;
+//
+//    /**
+//     * ssh证书
+//     */
+//    @FXML
+//    private ReadOnlyTextField sshCertificate;
 
     /**
      * 分组
@@ -182,6 +179,12 @@ public class RedisAddConnectController extends StageController {
      */
     @FXML
     private ClearableTextField filterSearchKW;
+
+    /**
+     * 跳板机配置
+     */
+    @FXML
+    private RedisJumpTableView jumpTableView;
 
     /**
      * 获取连接地址
@@ -231,7 +234,6 @@ public class RedisAddConnectController extends StageController {
         if (StringUtil.isBlank(host) || StringUtil.isBlank(host.split(":")[0])) {
             MessageBox.warn(I18nHelper.contentCanNotEmpty());
         } else {
-            // 创建redis连接
             RedisConnect redisConnect = new RedisConnect();
             redisConnect.setHost(host);
             redisConnect.setExecuteTimeOut(3);
@@ -260,22 +262,25 @@ public class RedisAddConnectController extends StageController {
             this.name.setText(host.replace(":", "_"));
         }
         try {
-            String name = this.name.getTextTrim();
             RedisConnect redisConnect = new RedisConnect();
+            String name = this.name.getTextTrim();
             redisConnect.setName(name);
             Number connectTimeOut = this.connectTimeOut.getValue();
             Number executeTimeOut = this.executeTimeOut.getValue();
 
             redisConnect.setHost(host);
             redisConnect.setUser(this.user.getText());
-//            redisConnect.setSshConfig(this.getSSHConfig());
-//            redisConnect.setSshForward(this.sshForward.isSelected());
             redisConnect.setRemark(this.remark.getTextTrim());
             redisConnect.setPassword(this.password.getText());
             redisConnect.setReadonly(this.readonly.isSelected());
             redisConnect.setGroupId(this.group == null ? null : this.group.getGid());
             redisConnect.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             redisConnect.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
+//            // ssh配置
+//            redisConnect.setSshConfig(this.getSSHConfig());
+//            redisConnect.setSshForward(this.sshForward.isSelected());
+            // 跳板机配置
+            redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             // 过滤列表
             redisConnect.setFilters(this.filterTable.getFilters());
             // 保存数据
@@ -294,26 +299,26 @@ public class RedisAddConnectController extends StageController {
 
     @Override
     protected void bindListeners() {
-        // ssh配置
-        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
-            if (newValue) {
-                NodeGroupUtil.enable(this.sshTab, "ssh");
-            } else {
-                NodeGroupUtil.disable(this.sshTab, "ssh");
-            }
-        });
+//        // ssh配置
+//        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
+//            if (newValue) {
+//                NodeGroupUtil.enable(this.sshTab, "ssh");
+//            } else {
+//                NodeGroupUtil.disable(this.sshTab, "ssh");
+//            }
+//        });
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
-        // ssh认证方式
-        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
-            if (this.sshAuthMethod.isPasswordAuth()) {
-                this.sshPassword.display();
-                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
-            } else {
-                this.sshPassword.disappear();
-                NodeGroupUtil.display(this.tabPane, "sshCertificate");
-            }
-        });
+//        // ssh认证方式
+//        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
+//            if (this.sshAuthMethod.isPasswordAuth()) {
+//                this.sshPassword.display();
+//                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
+//            } else {
+//                this.sshPassword.disappear();
+//                NodeGroupUtil.display(this.tabPane, "sshCertificate");
+//            }
+//        });
     }
 
     @Override
@@ -367,14 +372,73 @@ public class RedisAddConnectController extends StageController {
         }
     }
 
+//    /**
+//     * 选择ssh证书
+//     */
+//    @FXML
+//    private void chooseSSHCertificate() {
+//        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
+//        if (file != null) {
+//            this.sshCertificate.setText(file.getPath());
+//        }
+//    }
+
     /**
-     * 选择ssh证书
+     * 添加跳板
      */
     @FXML
-    private void chooseSSHCertificate() {
-        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
-        if (file != null) {
-            this.sshCertificate.setText(file.getPath());
+    private void addJump() {
+        StageAdapter adapter= RedisViewFactory.addJump();
+        RedisJumpConfig jumpConfig = adapter.getProp("jumpConfig");
+        if (jumpConfig != null) {
+            this.jumpTableView.addItem(jumpConfig);
+            this.jumpTableView.updateOrder();
         }
+    }
+
+    /**
+     * 编辑跳板
+     */
+    @FXML
+    private void updateJump() {
+        RedisJumpConfig config = this.jumpTableView.getSelectedItem();
+        if (config == null) {
+            return;
+        }
+        StageAdapter adapter= RedisViewFactory.updateJump(config);
+        RedisJumpConfig jumpConfig = adapter.getProp("jumpConfig");
+        if (jumpConfig != null) {
+            this.jumpTableView.refresh();
+            this.jumpTableView.updateOrder();
+        }
+    }
+
+    /**
+     * 删除跳板
+     */
+    @FXML
+    private void deleteJump() {
+        this.jumpTableView.removeSelectedItem();
+        this.jumpTableView.updateOrder();
+    }
+
+    /**
+     * 上移跳板
+     */
+    @FXML
+    private void moveJumpUp() {
+        TableViewUtil.moveUp(this.jumpTableView);
+        this.jumpTableView.refresh();
+        this.jumpTableView.updateOrder();
+    }
+
+    /**
+     * 下移跳板
+     */
+    @FXML
+    private void moveJumpDown() {
+        TableViewUtil.moveDown(this.jumpTableView);
+        this.jumpTableView.refresh();
+        this.jumpTableView.updateOrder();
     }
 }
