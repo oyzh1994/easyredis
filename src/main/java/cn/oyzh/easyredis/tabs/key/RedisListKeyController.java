@@ -267,13 +267,13 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         // 数据太大
         if (this.treeItem.isDataTooBig()) {
             // 状态处理
-            this.nodeData.clear();
             this.nodeData.disable();
             this.ignoreDataChange = true;
+            this.nodeData.clear();
             NodeGroupUtil.disable(this.getTab(), "dataToBig");
             // 异步处理，避免阻塞主程序
             TaskManager.startDelay(() -> {
-                if (MessageBox.confirm(RedisI18nHelper.keyTip9())) {
+                if (MessageBox.confirm(I18nHelper.tips(), RedisI18nHelper.keyTip9(), null, StageManager.getPrimaryStage())) {
                     this.saveBinaryFile();
                 }
             }, 10);
