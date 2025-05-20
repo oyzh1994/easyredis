@@ -262,6 +262,8 @@ public class RedisUpdateConnectController extends StageController {
 //            if (redisConnect.isSSHForward()) {
 //                redisConnect.setSshConfig(this.getSSHConfig());
 //            }
+            // 跳板机配置
+            redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             RedisConnectUtil.testConnect(this.stage, redisConnect);
         }
     }
