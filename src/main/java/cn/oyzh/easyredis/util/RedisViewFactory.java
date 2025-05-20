@@ -15,6 +15,9 @@ import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.controller.jump.RedisAddJumpController;
 import cn.oyzh.easyredis.controller.jump.RedisUpdateJumpController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
+import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
+import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
+import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.controller.row.RedisHylogElementsAddController;
@@ -310,7 +313,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter zSetCoordinateAdd(RedisZSetKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -328,7 +331,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter zSetMemberAdd(RedisZSetKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -346,7 +349,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter setMemberAdd(RedisSetKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisSetMemberAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisSetMemberAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -364,7 +367,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter hashFieldAdd(RedisHashKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -382,7 +385,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter listElementAdd(RedisListKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisListElementAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisListElementAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -400,7 +403,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter streamMessageAdd(RedisStreamKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -418,7 +421,7 @@ public class RedisViewFactory {
      */
     public static StageAdapter hylogElementsAdd(RedisStringKeyTreeItem treeItem) {
         try {
-            StageAdapter adapter = StageManager.parseStage(RedisHylogElementsAddController.class);
+            StageAdapter adapter = StageManager.parseStage(RedisHylogElementsAddController.class, StageManager.getPrimaryStage());
             adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
@@ -427,6 +430,54 @@ public class RedisViewFactory {
             MessageBox.exception(ex);
         }
         return null;
+    }
+
+    /**
+     * 批量操作
+     *
+     * @param treeItem db树节点
+     */
+    public static void batchOperation(RedisDatabaseTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, StageManager.getPrimaryStage());
+            adapter.setProp("treeItem", treeItem);
+            adapter.display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 移动键
+     *
+     * @param treeItem 键节点
+     */
+    public static void moveKey(RedisKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisKeyMoveController.class, StageManager.getPrimaryStage());
+            adapter.setProp("treeItem", treeItem);
+            adapter.display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 复制键
+     *
+     * @param treeItem 键节点
+     */
+    public static void copyKey(RedisKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisKeyCopyController.class, StageManager.getPrimaryStage());
+            adapter.setProp("treeItem", treeItem);
+            adapter.display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
     }
 
 }

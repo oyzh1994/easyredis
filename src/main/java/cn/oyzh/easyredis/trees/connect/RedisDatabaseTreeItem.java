@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -9,8 +8,6 @@ import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -122,9 +119,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      */
     @FXML
     private void batchOperation() {
-        StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
-        adapter.setProp("treeItem", this);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.display();
+        RedisViewFactory.batchOperation(this);
     }
 
     /**

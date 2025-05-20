@@ -1,8 +1,6 @@
 package cn.oyzh.easyredis.trees.key;
 
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.key.RedisKeyCopyController;
-import cn.oyzh.easyredis.controller.key.RedisKeyMoveController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
@@ -15,8 +13,6 @@ import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -141,18 +137,20 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * 移动键
      */
     private void moveKey() {
-        StageAdapter adapter = StageManager.parseStage(RedisKeyMoveController.class, this.window());
-        adapter.setProp("treeItem", this);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyMoveController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.display();
+        RedisViewFactory.moveKey(this);
     }
 
     /**
      * 复制键
      */
     private void copyKey() {
-        StageAdapter adapter = StageManager.parseStage(RedisKeyCopyController.class, this.window());
-        adapter.setProp("treeItem", this);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyCopyController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.display();
+        RedisViewFactory.copyKey(this);
     }
 
     @Override
