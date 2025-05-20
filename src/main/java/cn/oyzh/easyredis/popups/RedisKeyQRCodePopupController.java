@@ -16,9 +16,6 @@ import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;
 
-import static atlantafx.base.controls.Popover.ArrowLocation.TOP_CENTER;
-import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
-
 
 /**
  * redis键值二维码业务
@@ -27,9 +24,7 @@ import static javafx.stage.PopupWindow.AnchorLocation.CONTENT_BOTTOM_LEFT;
  * @since 2025/02/51
  */
 @PopupAttribute(
-        value = FXConst.POPUP_PATH + "redisKeyQRCodePopup.fxml",
-        arrowLocation = TOP_CENTER,
-        anchorLocation = CONTENT_BOTTOM_LEFT
+        value = FXConst.POPUP_PATH + "redisKeyQRCodePopup.fxml"
 )
 public class RedisKeyQRCodePopupController extends PopupController {
 
