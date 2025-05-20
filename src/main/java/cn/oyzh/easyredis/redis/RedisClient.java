@@ -10,7 +10,6 @@ import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
 import cn.oyzh.easyredis.exception.ReadonlyOperationException;
-import cn.oyzh.easyredis.exception.RedisException;
 import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.query.RedisQueryParam;
@@ -643,6 +642,15 @@ public class RedisClient {
     }
 
     /**
+     * 错误信息
+     */
+    private String errorMsg;
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    /**
      * 开始连接客户端
      *
      * @param dbIndex        默认db索引
@@ -653,6 +661,7 @@ public class RedisClient {
             return;
         }
         try {
+            this.errorMsg = null;
             // 初始化连接池
             this.state.set(RedisConnState.CONNECTING);
             // 初始化客户端
@@ -666,6 +675,7 @@ public class RedisClient {
             ex.printStackTrace();
             this.state.set(RedisConnState.FAILED);
             JulLog.warn("redisClient start error", ex);
+            this.errorMsg = ex.getMessage();
 //            throw new RedisException(ex);
         }
     }

@@ -277,7 +277,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                         this.client.start();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
+                                MessageBox.warn("[" + this.value.getName() + "] " + this.client.getErrorMsg());
                             }
                             this.canceled = false;
                             this.closeConnect(false);

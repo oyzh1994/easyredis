@@ -378,6 +378,8 @@ public class RedisUpdateConnectController extends StageController {
 //                this.sshAuthMethod.select(1);
 //            }
 //        }
+        // 跳板机配置
+        this.jumpTableView.init(this.redisConnect.getId());
         // 初始化数据
         this.initFilterDataList();
         this.stage.switchOnTab();

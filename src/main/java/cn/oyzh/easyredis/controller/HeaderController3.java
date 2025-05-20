@@ -1,16 +1,13 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.stage.WindowEvent;
 
 /**
  * 主页头部业务
@@ -101,17 +98,17 @@ public class HeaderController3 extends StageController {
         RedisViewFactory.migrationData();
     }
 
-    /**
-     * 分割面板
-     */
-    @FXML
-    private FXPane splitPane;
-
-    @Override
-    public void onWindowShowing(WindowEvent event) {
-        super.onWindowShowing(event);
-        if (OSUtil.isWindows() || OSUtil.isLinux()) {
-            this.splitPane.setFlexHeight("100% - 280");
-        }
-    }
+//    /**
+//     * 分割面板
+//     */
+//    @FXML
+//    private FXPane splitPane;
+//
+//    @Override
+//    public void onWindowShowing(WindowEvent event) {
+//        super.onWindowShowing(event);
+//        if (OSUtil.isWindows() || OSUtil.isLinux()) {
+//            this.splitPane.setFlexHeight("100% - 280");
+//        }
+//    }
 }
