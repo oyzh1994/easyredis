@@ -14,10 +14,28 @@ import cn.oyzh.easyredis.controller.data.RedisMigrationDataController;
 import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.controller.jump.RedisAddJumpController;
 import cn.oyzh.easyredis.controller.jump.RedisUpdateJumpController;
+import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
+import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
+import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
+import cn.oyzh.easyredis.controller.row.RedisHylogElementsAddController;
+import cn.oyzh.easyredis.controller.row.RedisListElementAddController;
+import cn.oyzh.easyredis.controller.row.RedisSetMemberAddController;
+import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
+import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
+import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
 import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisJumpConfig;
+import cn.oyzh.easyredis.redis.RedisKeyType;
+import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
@@ -242,6 +260,166 @@ public class RedisViewFactory {
         try {
             StageAdapter adapter = StageManager.parseStage(RedisUpdateJumpController.class, StageManager.getPrimaryStage());
             adapter.setProp("config", config);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加键
+     *
+     * @param dbItem db库节点
+     * @param type   键类型
+     */
+    public static void addKey(RedisDatabaseTreeItem dbItem, RedisKeyType type) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, StageManager.getPrimaryStage());
+            adapter.setProp("dbItem", dbItem);
+            adapter.setProp("type", type);
+            adapter.display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 键ttl
+     *
+     * @param treeItem 键节点
+     */
+    public static void ttlKey(RedisKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class, StageManager.getPrimaryStage());
+            adapter.setProp("treeItem", treeItem);
+            adapter.display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+    }
+
+    /**
+     * 添加zset坐标
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter zSetCoordinateAdd(RedisZSetKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加zset成员
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter zSetMemberAdd(RedisZSetKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加set成员
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter setMemberAdd(RedisSetKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisSetMemberAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加hash字段
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter hashFieldAdd(RedisHashKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加list元素
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter listElementAdd(RedisListKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisListElementAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加stream消息
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter streamMessageAdd(RedisStreamKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class);
+            adapter.setProp("treeItem", treeItem);
+            adapter.showAndWait();
+            return adapter;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            MessageBox.exception(ex);
+        }
+        return null;
+    }
+
+    /**
+     * 添加hylog元素
+     *
+     * @param treeItem 键节点
+     */
+    public static StageAdapter hylogElementsAdd(RedisStringKeyTreeItem treeItem) {
+        try {
+            StageAdapter adapter = StageManager.parseStage(RedisHylogElementsAddController.class);
+            adapter.setProp("treeItem", treeItem);
             adapter.showAndWait();
             return adapter;
         } catch (Exception ex) {

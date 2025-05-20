@@ -1,14 +1,13 @@
 package cn.oyzh.easyredis.controller.row;
 
-import cn.oyzh.common.util.ArrayUtil;
-import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
-import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.FXStageStyle;
@@ -19,22 +18,19 @@ import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 /**
- * redis添加hyLog元素
+ * redis添加list行
  *
  * @author oyzh
- * @since 2023/06/27
+ * @since 2023/06/25
  */
 @StageAttribute(
         stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.WINDOW_MODAL,
-        value = FXConst.FXML_PATH + "row/redisHyLogElementsAdd.fxml"
+        value = FXConst.FXML_PATH + "row/redisListElementAdd.fxml"
 )
-public class RedisHyLogElementsAddController extends StageController {
+public class RedisListElementAddController extends StageController {
 
     /**
      * 行数据
@@ -43,9 +39,15 @@ public class RedisHyLogElementsAddController extends StageController {
     private RichDataTextArea rowValue;
 
     /**
+     * 插入模式
+     */
+    @FXML
+    private FXToggleGroup insertMode;
+
+    /**
      * redis键
      */
-    private RedisStringKeyTreeItem treeItem;
+    private RedisListKeyTreeItem treeItem;
 
     /**
      * 添加行
@@ -55,13 +57,7 @@ public class RedisHyLogElementsAddController extends StageController {
         try {
             // 行数据
             String rowValue = this.rowValue.getText();
-            if (StringUtil.isEmpty(rowValue) || StringUtil.isBlank(rowValue)) {
-                MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
-                return;
-            }
-            List<String> elements = rowValue.lines().collect(Collectors.toList());
-            elements = CollectionUtil.removeBlank(elements);
-            if (elements.isEmpty()) {
+            if (StringUtil.isEmpty(rowValue)) {
                 MessageBox.tipMsg(I18nHelper.contentCanNotEmpty(), this.rowValue);
                 return;
             }
@@ -71,13 +67,16 @@ public class RedisHyLogElementsAddController extends StageController {
             int dbIndex = this.treeItem.dbIndex();
             // redis客户端
             RedisClient client = this.treeItem.client();
-            String[] array = ArrayUtil.toArray(elements, String.class);
-            if (client.pfadd(dbIndex, key, array) <= 0) {
-                MessageBox.warn(RedisI18nHelper.addTip3());
-                return;
+            // 添加行
+            if (this.insertMode.selectedUserData().equals("0")) {
+                client.lpushx(dbIndex, key, rowValue);
+            } else if (this.insertMode.selectedUserData().equals("1")) {
+                client.rpushx(dbIndex, key, rowValue);
             }
+            // 结果
+            this.setProp("result", true);
             // 发送事件
-            RedisEventUtil.hyLogElementsAdded(this.treeItem, key, array);
+            RedisEventUtil.listRowAdded(this.treeItem, key, rowValue);
             this.closeWindow();
         } catch (Exception ex) {
             MessageBox.exception(ex);
@@ -102,6 +101,26 @@ public class RedisHyLogElementsAddController extends StageController {
         this.rowValue.requestFocus();
     }
 
+    /**
+     * 解析为json
+     */
+    @FXML
+    private void parseToJson() {
+        String text = this.rowValue.getTextTrim();
+        try {
+            if ("json".equals(this.rowValue.getUserData())) {
+                String jsonStr = JSONUtil.toJson(this.rowValue);
+                this.rowValue.setText(jsonStr);
+                this.rowValue.setUserData("text");
+            } else if (text.contains("{") || text.contains("[") || "text".equals(this.rowValue.getUserData())) {
+                String jsonStr = JSONUtil.toPretty(this.rowValue);
+                this.rowValue.setText(jsonStr);
+                this.rowValue.setUserData("json");
+            }
+        } catch (Exception ignore) {
+        }
+    }
+
     @Override
     public void onWindowShown(WindowEvent event) {
         this.treeItem = this.getProp("treeItem");
@@ -112,6 +131,6 @@ public class RedisHyLogElementsAddController extends StageController {
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("redis.title.hyLogElementsAdd");
+        return I18nResourceBundle.i18nString("redis.title.listRowAdd");
     }
 }

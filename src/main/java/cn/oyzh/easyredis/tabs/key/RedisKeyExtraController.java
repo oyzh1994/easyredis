@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.controls.label.FXLabel;
 import cn.oyzh.fx.plus.controls.text.FXText;
@@ -75,6 +75,6 @@ public class RedisKeyExtraController extends SubTabController {
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class, this.treeItem.window());
 //        adapter.setProp("treeItem", this.treeItem);
 //        adapter.display();
-        RedisEventUtil.showTTLKey(this.treeItem);
+        RedisViewFactory.ttlKey(this.treeItem);
     }
 }

@@ -42,8 +42,6 @@ import cn.oyzh.easyredis.event.query.RedisQueryRenamedEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalCloseEvent;
 import cn.oyzh.easyredis.event.terminal.RedisTerminalOpenEvent;
 import cn.oyzh.easyredis.event.tree.RedisTreeItemChangedEvent;
-import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
-import cn.oyzh.easyredis.event.window.RedisShowTTLKeyEvent;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
@@ -782,27 +780,27 @@ public class RedisEventUtil {
 //        EventUtil.post(new RedisShowMigrationTipsEvent());
 //    }
 
-    /**
-     * 显示添加键页面
-     *
-     * @param dbItem db库
-     */
-    public static void showAddKey(RedisDatabaseTreeItem dbItem) {
-        RedisShowAddKeyEvent event = new RedisShowAddKeyEvent();
-        event.data(dbItem);
-        EventUtil.post(event);
-    }
-
-    /**
-     * 显示键ttl页面
-     *
-     * @param item 键
-     */
-    public static void showTTLKey(RedisKeyTreeItem item) {
-        RedisShowTTLKeyEvent event = new RedisShowTTLKeyEvent();
-        event.data(item);
-        EventUtil.post(event);
-    }
+//    /**
+//     * 显示添加键页面
+//     *
+//     * @param dbItem db库
+//     */
+//    public static void showAddKey(RedisDatabaseTreeItem dbItem) {
+//        RedisShowAddKeyEvent event = new RedisShowAddKeyEvent();
+//        event.data(dbItem);
+//        EventUtil.post(event);
+//    }
+//
+//    /**
+//     * 显示键ttl页面
+//     *
+//     * @param item 键
+//     */
+//    public static void showTTLKey(RedisKeyTreeItem item) {
+//        RedisShowTTLKeyEvent event = new RedisShowTTLKeyEvent();
+//        event.data(item);
+//        EventUtil.post(event);
+//    }
 
     /**
      * 连接已导入事件

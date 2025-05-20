@@ -90,6 +90,8 @@ public class RedisZSetCoordinateAddController extends StageController {
             double latitude = latitudeValue.doubleValue();
             // 添加元素
             client.geoadd(dbIndex, key, longitude, latitude, rowValue);
+            // 结果
+            this.setProp("result", true);
             // 发送事件
             RedisEventUtil.zSetCoordinateAdded(this.treeItem, key, rowValue, longitude, latitude);
             this.closeWindow();

@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.popups.RedisPageSettingPopupController;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
@@ -17,6 +16,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
@@ -148,18 +148,18 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * @param pageNo 页码
      */
     protected void initPage(long pageNo) {
-        this.disableTab();
-        ThreadUtil.start(() -> {
-            try {
-                List<R> rows = this.getRows();
-                this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
-                List<R> pageRows = this.pageData.page(pageNo);
-                this.listTable.setItem(pageRows);
-                this.pagePane.setPaging(this.pageData);
-            } finally {
-                this.enableTab();
-            }
-        }, 20);
+//        this.disableTab();
+        StageManager.showMask(() -> {
+//            try {
+            List<R> rows = this.getRows();
+            this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
+            List<R> pageRows = this.pageData.page(pageNo);
+            this.listTable.setItem(pageRows);
+            this.pagePane.setPaging(this.pageData);
+//            } finally {
+//                this.enableTab();
+//            }
+        });
     }
 
     /**

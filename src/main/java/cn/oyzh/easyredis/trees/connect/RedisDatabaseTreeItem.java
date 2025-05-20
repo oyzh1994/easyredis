@@ -242,7 +242,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, this.window());
 //        adapter.setProp("dbItem", this);
 //        adapter.display();
-        RedisEventUtil.showAddKey(this);
+        RedisViewFactory.addKey(this, null);
     }
 
     /**

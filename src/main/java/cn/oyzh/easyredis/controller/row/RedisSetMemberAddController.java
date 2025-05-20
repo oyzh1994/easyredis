@@ -66,6 +66,8 @@ public class RedisSetMemberAddController extends StageController {
             }
             // 添加元素
             client.sadd(dbIndex, key, rowValue);
+            // 结果
+            this.setProp("result", true);
             // 发送事件
             RedisEventUtil.setMemberAdded(this.treeItem, key, rowValue);
             this.closeWindow();

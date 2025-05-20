@@ -5,11 +5,7 @@ import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
-import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
-import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
-import cn.oyzh.easyredis.event.window.RedisShowTTLKeyEvent;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
@@ -17,7 +13,6 @@ import cn.oyzh.easyredis.terminal.RedisTerminalManager;
 import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.event.EventListener;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.tray.DesktopTrayItem;
 import cn.oyzh.fx.gui.tray.QuitTrayItem;
 import cn.oyzh.fx.gui.tray.SettingTrayItem;
@@ -31,7 +26,6 @@ import cn.oyzh.fx.plus.opacity.OpacityManager;
 import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
-import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.terminal.util.TerminalManager;
 import cn.oyzh.i18n.I18nManager;
@@ -374,39 +368,39 @@ public class EasyRedisApp extends FXApplication implements EventListener {
         });
     }
 
-    /**
-     * 显示添加键页面
-     */
-    @EventSubscribe
-    private void addKey(RedisShowAddKeyEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class);
-                adapter.setProp("dbItem", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
-
-    /**
-     * 显示键ttl页面
-     */
-    @EventSubscribe
-    private void ttlKey(RedisShowTTLKeyEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class);
-                adapter.setProp("treeItem", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示添加键页面
+//     */
+//    @EventSubscribe
+//    private void addKey(RedisShowAddKeyEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class);
+//                adapter.setProp("dbItem", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 显示键ttl页面
+//     */
+//    @EventSubscribe
+//    private void ttlKey(RedisShowTTLKeyEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class);
+//                adapter.setProp("treeItem", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
 //    /**
 //     * 显示导出连接页面

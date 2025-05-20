@@ -1,21 +1,19 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisZSetMemberAddController;
-import cn.oyzh.easyredis.event.key.RedisZSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
@@ -109,7 +107,7 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     private final ChangeListener<String> scoreValListener = (observable, oldValue, newValue) -> {
         Number value = this.scoreVal.getValue();
         RedisZSetValue.RedisZSetRow row = this.treeItem.rawValue();
-        if (!this.ignoreDataChange && !Objects.equals(row.getScore(), value.doubleValue())) {
+        if (!this.ignoreDataChange && row != null && !Objects.equals(row.getScore(), value.doubleValue())) {
             this.saveNodeData.enable();
             if (this.treeItem.unsavedValue() == null) {
                 this.treeItem.data(this.treeItem.currentRow());
@@ -173,9 +171,16 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class);
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisZSetMemberAddController.class);
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.zSetMemberAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     @Override
@@ -319,19 +324,24 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMember() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+            return;
         }
+        RedisKeyRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteMember() + ":" + row.getValue())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override
@@ -359,19 +369,19 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * zset成员添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * zset成员添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onZSetMemberAdded(RedisZSetMemberAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

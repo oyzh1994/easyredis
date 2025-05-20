@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
 import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
-import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -15,7 +15,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
@@ -230,9 +229,16 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.hashFieldAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     /**
@@ -406,19 +412,25 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteField() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+
+            return;
         }
+        RedisHashValue.RedisHashRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteField() + ":" + row.getField())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override

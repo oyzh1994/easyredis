@@ -1,13 +1,13 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.easyredis.event.key.RedisHyLogElementsAddedEvent;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
@@ -88,9 +88,19 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
      */
     @FXML
     private void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisHylogElementsAddController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.hylogElementsAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            // 刷新统计值
+            this.treeItem.flushCount();
+            // 初始化键
+            this.initKey();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     @Override

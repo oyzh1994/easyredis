@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.redis.key.RedisKeyValue;
 import cn.oyzh.easyredis.store.RedisCollectStore;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -133,7 +134,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyTTLController.class, this.window());
 //        adapter.setProp("treeItem", this);
 //        adapter.display();
-        RedisEventUtil.showTTLKey(this);
+        RedisViewFactory.ttlKey(this);
     }
 
     /**

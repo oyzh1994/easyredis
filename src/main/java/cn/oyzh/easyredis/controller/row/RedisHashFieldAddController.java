@@ -77,6 +77,8 @@ public class RedisHashFieldAddController extends StageController {
             }
             // 添加元素
             client.hset(dbIndex, key, fieldValue, rowValue);
+            // 结果
+            this.setProp("result", true);
             // 发送事件
             RedisEventUtil.hashFieldAdded(this.treeItem, key, fieldValue, rowValue);
             this.closeWindow();

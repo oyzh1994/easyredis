@@ -11,6 +11,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeView;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
@@ -190,7 +191,7 @@ public class RedisKeysTabController extends ParentTabController {
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class);
 //        adapter.setProp("dbItem", this.treeItem);
 //        adapter.display();
-        RedisEventUtil.showAddKey(this.treeItem);
+        RedisViewFactory.addKey(this.treeItem, null);
     }
 
     @FXML

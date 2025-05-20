@@ -1,19 +1,19 @@
 package cn.oyzh.easyredis.tabs.key;
 
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisStreamMessageAddController;
 import cn.oyzh.easyredis.event.key.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
@@ -72,9 +72,16 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class);
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisStreamMessageAddController.class);
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.streamMessageAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     @Override
@@ -123,19 +130,24 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteMessage() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+            return;
         }
+        RedisKeyRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteMessage() + ":" + row.getValue())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override
