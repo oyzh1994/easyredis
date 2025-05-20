@@ -4900,4 +4900,36 @@ public class RedisClient {
         result.setCost(end - start);
         return result;
     }
+
+//
+//    public List<RedisScript> listScripts() {
+//        List<RedisScript> result = new ArrayList<>();
+//        try (Jedis jedis = this.getResource()) {
+//            List<Object> response = (List<Object>) jedis.sendCommand(Protocol.Command.SCRIPT, "LIST");
+//            // 解析返回结果
+//            for (Object scriptObj : response) {
+//                List<Object> scriptInfo = (List<Object>) scriptObj;
+//                String sha1 = SafeEncoder.encode((byte[]) scriptInfo.getFirst());
+//                RedisScript script = new RedisScript();
+//                script.setSha1(sha1);
+//                System.out.println("---------------------------");
+//                System.out.println("SHA1: " + sha1);
+//                // Redis 6.2+ 可能返回脚本内容（索引 1）
+//                if (scriptInfo.size() > 1) {
+//                    String content = SafeEncoder.encode((byte[]) scriptInfo.get(1));
+//                    script.setScript(content);
+//                    System.out.println("Script Content:\n" + content);
+//                } else {
+//                    System.out.println("Script content not available (Redis < 6.2).");
+//                }
+//                result.add(script);
+//            }
+//        }
+//        return result;
+//
+//    }
+//
+//    public boolean deleteScript(String sha1) {
+//        return false;
+//    }
 }

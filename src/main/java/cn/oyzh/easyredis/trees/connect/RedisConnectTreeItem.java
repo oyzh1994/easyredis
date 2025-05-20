@@ -150,7 +150,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisQueriesTreeItem item3 = new RedisQueriesTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item4 = new RedisTerminalTreeItem(this.getTreeView(), null);
-//                    this.setChild(List.of(item1, item2, item3));
+//                    RedisScriptsTreeItem item5 = new RedisScriptsTreeItem(this.getTreeView());
                     this.setChild(List.of(item1, item2, item3, item4));
                 }
                 this.expend();
