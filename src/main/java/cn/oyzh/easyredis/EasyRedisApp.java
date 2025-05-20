@@ -4,39 +4,17 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.OSUtil;
-import cn.oyzh.easyredis.controller.AboutController;
-import cn.oyzh.easyredis.controller.MainController;
-import cn.oyzh.easyredis.controller.SettingController2;
-import cn.oyzh.easyredis.controller.connect.RedisAddConnectController;
-import cn.oyzh.easyredis.controller.connect.RedisExportConnectController;
-import cn.oyzh.easyredis.controller.connect.RedisImportConnectController;
-import cn.oyzh.easyredis.controller.connect.RedisUpdateConnectController;
-import cn.oyzh.easyredis.controller.data.RedisExportDataController;
-import cn.oyzh.easyredis.controller.data.RedisImportDataController;
-import cn.oyzh.easyredis.controller.data.RedisMigrationDataController;
 import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
-import cn.oyzh.easyredis.controller.data.RedisTransportDataController;
 import cn.oyzh.easyredis.controller.key.RedisKeyAddController;
 import cn.oyzh.easyredis.controller.key.RedisKeyTTLController;
-import cn.oyzh.easyredis.controller.tool.RedisToolController;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.window.RedisShowAboutEvent;
-import cn.oyzh.easyredis.event.window.RedisShowAddConnectEvent;
 import cn.oyzh.easyredis.event.window.RedisShowAddKeyEvent;
-import cn.oyzh.easyredis.event.window.RedisShowExportConnectEvent;
-import cn.oyzh.easyredis.event.window.RedisShowExportDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowImportConnectEvent;
-import cn.oyzh.easyredis.event.window.RedisShowImportDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowMigrationDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowSettingEvent;
 import cn.oyzh.easyredis.event.window.RedisShowTTLKeyEvent;
-import cn.oyzh.easyredis.event.window.RedisShowToolEvent;
-import cn.oyzh.easyredis.event.window.RedisShowTransportDataEvent;
-import cn.oyzh.easyredis.event.window.RedisShowUpdateConnectEvent;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalManager;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.event.EventFactory;
 import cn.oyzh.event.EventListener;
 import cn.oyzh.event.EventSubscribe;
@@ -165,7 +143,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
 //            ex.printStackTrace();
 //            JulLog.warn("showMainView error", ex);
 //        }
-        this.showMain();
+        RedisViewFactory.main();
     }
 
     @Override
@@ -187,9 +165,9 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             // 设置标题
             TrayManager.setTitle(PROJECT.getName() + " v" + PROJECT.getVersion());
             // 打开主页
-            TrayManager.addMenuItem(new DesktopTrayItem("12", this::showMain));
+            TrayManager.addMenuItem(new DesktopTrayItem("12", RedisViewFactory::main));
             // 打开设置
-            TrayManager.addMenuItem(new SettingTrayItem("12", () -> this.showSetting(null)));
+            TrayManager.addMenuItem(new SettingTrayItem("12", RedisViewFactory::setting));
             // 退出程序
             TrayManager.addMenuItem(new QuitTrayItem("12", () -> {
                 JulLog.warn("exit app by tray.");
@@ -199,7 +177,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
             TrayManager.onMouseClicked(e -> {
                 // 单击鼠标主键，显示主页
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    this.showMain();
+                    RedisViewFactory.main();
                 }
             });
             // 显示托盘
@@ -209,178 +187,178 @@ public class EasyRedisApp extends FXApplication implements EventListener {
         }
     }
 
-    /**
-     * 显示主页
-     */
-    private void showMain() {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.getStage(MainController.class);
-                if (adapter != null) {
-                    JulLog.info("front main.");
-                    adapter.toFront();
-                } else {
-                    JulLog.info("show main.");
-                    StageManager.showStage(MainController.class);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示主页
+//     */
+//    private void showMain() {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.getStage(MainController.class);
+//                if (adapter != null) {
+//                    JulLog.info("front main.");
+//                    adapter.toFront();
+//                } else {
+//                    JulLog.info("show main.");
+//                    StageManager.showStage(MainController.class);
+//                }
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示设置
-     */
-    @EventSubscribe
-    private void showSetting(RedisShowSettingEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.getStage(SettingController2.class);
-                if (adapter != null) {
-                    JulLog.info("front setting.");
-                    adapter.toFront();
-                } else {
-                    JulLog.info("show setting.");
-                    StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示设置
+//     */
+//    @EventSubscribe
+//    private void showSetting(RedisShowSettingEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.getStage(SettingController2.class);
+//                if (adapter != null) {
+//                    JulLog.info("front setting.");
+//                    adapter.toFront();
+//                } else {
+//                    JulLog.info("show setting.");
+//                    StageManager.showStage(SettingController2.class, StageManager.getPrimaryStage());
+//                }
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示传输数据
-     */
-    @EventSubscribe
-    private void transportData(RedisShowTransportDataEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
-                adapter.setProp("sourceConnect", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示传输数据
+//     */
+//    @EventSubscribe
+//    private void transportData(RedisShowTransportDataEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
+//                adapter.setProp("sourceConnect", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示导出数据
-     */
-    @EventSubscribe
-    private void exportData(RedisShowExportDataEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class);
-                adapter.setProp("connect", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示导出数据
+//     */
+//    @EventSubscribe
+//    private void exportData(RedisShowExportDataEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class);
+//                adapter.setProp("connect", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示导入数据
-     */
-    @EventSubscribe
-    private void importData(RedisShowImportDataEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisImportDataController.class);
-                adapter.setProp("connect", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示导入数据
+//     */
+//    @EventSubscribe
+//    private void importData(RedisShowImportDataEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisImportDataController.class);
+//                adapter.setProp("connect", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示添加连接
-     */
-    @EventSubscribe
-    private void addConnect(RedisShowAddConnectEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisAddConnectController.class);
-                adapter.setProp("group", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示添加连接
+//     */
+//    @EventSubscribe
+//    private void addConnect(RedisShowAddConnectEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisAddConnectController.class);
+//                adapter.setProp("group", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示修改连接
-     */
-    @EventSubscribe
-    private void updateConnect(RedisShowUpdateConnectEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisUpdateConnectController.class);
-                adapter.setProp("redisConnect", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示修改连接
+//     */
+//    @EventSubscribe
+//    private void updateConnect(RedisShowUpdateConnectEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisUpdateConnectController.class);
+//                adapter.setProp("redisConnect", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示工具页面
-     */
-    @EventSubscribe
-    private void tool(RedisShowToolEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageManager.showStage(RedisToolController.class, StageManager.getPrimaryStage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示工具页面
+//     */
+//    @EventSubscribe
+//    private void tool(RedisShowToolEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageManager.showStage(RedisToolController.class, StageManager.getPrimaryStage());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示关于页面
-     */
-    @EventSubscribe
-    private void about(RedisShowAboutEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageManager.showStage(AboutController.class, StageManager.getPrimaryStage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示关于页面
+//     */
+//    @EventSubscribe
+//    private void about(RedisShowAboutEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageManager.showStage(AboutController.class, StageManager.getPrimaryStage());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示迁移数据页面
-     */
-    @EventSubscribe
-    private void migrationData(RedisShowMigrationDataEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageManager.showStage(RedisMigrationDataController.class, StageManager.getPrimaryStage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示迁移数据页面
+//     */
+//    @EventSubscribe
+//    private void migrationData(RedisShowMigrationDataEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageManager.showStage(RedisMigrationDataController.class, StageManager.getPrimaryStage());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
     /**
      * 显示迁移提示页面
@@ -430,35 +408,35 @@ public class EasyRedisApp extends FXApplication implements EventListener {
         });
     }
 
-    /**
-     * 显示导出连接页面
-     */
-    @EventSubscribe
-    private void exportConnect(RedisShowExportConnectEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageManager.showStage(RedisExportConnectController.class, StageManager.getPrimaryStage());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示导出连接页面
+//     */
+//    @EventSubscribe
+//    private void exportConnect(RedisShowExportConnectEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageManager.showStage(RedisExportConnectController.class, StageManager.getPrimaryStage());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 
-    /**
-     * 显示导入连接页面
-     */
-    @EventSubscribe
-    private void importConnect(RedisShowImportConnectEvent event) {
-        FXUtil.runLater(() -> {
-            try {
-                StageAdapter adapter = StageManager.parseStage(RedisImportConnectController.class, StageManager.getPrimaryStage());
-                adapter.setProp("file", event.data());
-                adapter.display();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageBox.exception(ex);
-            }
-        });
-    }
+//    /**
+//     * 显示导入连接页面
+//     */
+//    @EventSubscribe
+//    private void importConnect(RedisShowImportConnectEvent event) {
+//        FXUtil.runLater(() -> {
+//            try {
+//                StageAdapter adapter = StageManager.parseStage(RedisImportConnectController.class, StageManager.getPrimaryStage());
+//                adapter.setProp("file", event.data());
+//                adapter.display();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                MessageBox.exception(ex);
+//            }
+//        });
+//    }
 }

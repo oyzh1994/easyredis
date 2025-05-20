@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.controller.data;
 
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.store.RedisStoreUtil;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.button.FXCheckBox;
@@ -57,6 +57,6 @@ public class RedisMigrationTipsController extends StageController {
     private void migration( ) {
         this.close();
 //        StageManager.showStage(RedisMigrationDataController.class);
-        RedisEventUtil.showMigrationData();
+        RedisViewFactory.migrationData();
     }
 }

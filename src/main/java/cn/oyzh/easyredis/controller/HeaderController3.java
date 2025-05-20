@@ -3,6 +3,7 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.SysConst;
 import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -30,7 +31,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(SettingController2.class, this.stage);
 //        }
-        RedisEventUtil.showSetting();
+        RedisViewFactory.setting();
     }
 
     /**
@@ -39,7 +40,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void about() {
 //        StageManager.showStage(AboutController.class, this.stage);
-        RedisEventUtil.showAbout();
+        RedisViewFactory.about();
     }
 
     /**
@@ -63,7 +64,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(RedisTransportDataController.class, this.stage);
 //        }
-        RedisEventUtil.showTransportData();
+        RedisViewFactory.transportData(null, null);
     }
 
     /**
@@ -72,7 +73,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void tool() {
 //        StageManager.showStage(RedisToolController.class, this.stage);
-        RedisEventUtil.showTool();
+        RedisViewFactory.tool();
     }
 
     /**
@@ -97,7 +98,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void migration() {
 //        StageManager.showStage(RedisMigrationDataController.class, this.stage);
-        RedisEventUtil.showMigrationData();
+        RedisViewFactory.migrationData();
     }
 
     /**

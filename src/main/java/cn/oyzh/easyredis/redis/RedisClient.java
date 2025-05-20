@@ -5,7 +5,7 @@ import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.domain.RedisSSHConfig;
+import cn.oyzh.easyredis.domain.RedisJumpConfig;
 import cn.oyzh.easyredis.dto.RedisInfoProp;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.exception.ClusterOperationException;
@@ -15,13 +15,14 @@ import cn.oyzh.easyredis.exception.SentinelOperationException;
 import cn.oyzh.easyredis.exception.UnsupportedCommandException;
 import cn.oyzh.easyredis.query.RedisQueryParam;
 import cn.oyzh.easyredis.query.RedisQueryResult;
-import cn.oyzh.easyredis.store.RedisSSHConfigStore;
+import cn.oyzh.easyredis.store.RedisJumpConfigStore;
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -76,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * redis终端
@@ -142,7 +144,7 @@ public class RedisClient {
     /**
      * ssh端口转发器
      */
-    private SSHJumpForwarder sshJumper;
+    private SSHJumpForwarder jumpForwarder;
 
     /**
      * redis信息
@@ -163,10 +165,15 @@ public class RedisClient {
      */
     private final ReadOnlyObjectWrapper<RedisConnState> state = new ReadOnlyObjectWrapper<>(RedisConnState.NOT_INITIALIZED);
 
+//    /**
+//     * ssh配置储存
+//     */
+//    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+
     /**
-     * ssh配置储存
+     * 跳板配置存储
      */
-    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+    private final RedisJumpConfigStore jumpConfigStore = RedisJumpConfigStore.INSTANCE;
 
     /**
      * 获取连接状态
@@ -177,7 +184,7 @@ public class RedisClient {
         return this.stateProperty().get();
     }
 
-    public RedisClient( RedisConnect redisConnect) {
+    public RedisClient(RedisConnect redisConnect) {
         this.redisConnect = redisConnect;
         // if (redisConnect.isSSHForward() && redisConnect.getSshConfig() != null) {
         //     this.sshForwarder = new SSHForwarder(redisConnect.getSshConfig());
@@ -219,41 +226,80 @@ public class RedisClient {
     }
 
     /**
+     * 初始化连接
+     *
+     * @return 连接
+     */
+    private String initHost() {
+        // 连接地址
+        String host;
+        // 初始化跳板配置
+        List<RedisJumpConfig> jumpConfigs = this.redisConnect.getJumpConfigs();
+        // 从数据库获取
+        if (jumpConfigs == null) {
+            jumpConfigs = this.jumpConfigStore.listByIid(this.redisConnect.getId());
+        }
+        // 过滤配置
+        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).collect(Collectors.toList());
+        // 初始化跳板转发
+        if (CollectionUtil.isNotEmpty(jumpConfigs)) {
+            if (this.jumpForwarder == null) {
+                this.jumpForwarder = new SSHJumpForwarder();
+            }
+            // 转换为目标连接
+            SSHConnect target = new SSHConnect();
+            target.setHost(this.redisConnect.hostIp());
+            target.setPort(this.redisConnect.hostPort());
+            // 执行连接
+            int localPort = this.jumpForwarder.forward(jumpConfigs, target);
+            // 连接信息
+            host = "127.0.0.1:" + localPort;
+        } else {// 直连
+            // 连接信息
+            host = this.redisConnect.hostIp() + ":" + this.redisConnect.hostPort();
+        }
+        return host;
+    }
+
+    /**
      * 初始化客户端
      */
     private void initClient(int connectTimeout) {
-        HostAndPort host;
-        // ssh端口转发
-        if (this.redisConnect.isSSHForward()) {
-            // 初始化ssh转发器
-            RedisSSHConfig sshConfig = this.redisConnect.getSshConfig();
-            // 从数据库获取
-            if (sshConfig == null) {
-                sshConfig = this.sshConfigStore.getByIid(this.redisConnect.getId());
-            }
-            if (sshConfig != null) {
-                if (this.sshJumper == null) {
-                    this.sshJumper = new SSHJumpForwarder();
-                }
-                // ssh配置
-                // 执行连接
-                int localPort = this.sshJumper.forward(null, null);
-                // 连接信息
-                host = new HostAndPort("127.0.0.1", localPort);
-            } else {
-                JulLog.warn("ssh forward is enable but ssh config is null");
-                throw new RedisException("ssh forward is enable but ssh config is null");
-            }
-            // SSHForwardConfig forwardInfo = new SSHForwardConfig();
-            // forwardInfo.setHost(this.redisConnect.hostIp());
-            // forwardInfo.setPort(this.redisConnect.hostPort());
-            // int localPort = this.sshForwarder.forward(forwardInfo);
-            // // 连接信息
-            // host = new HostAndPort("127.0.0.1", localPort);
-        } else {// 直连
-            // 连接信息
-            host = new HostAndPort(this.redisConnect.hostIp(), this.redisConnect.hostPort());
-        }
+        String hostAddr = this.initHost();
+        String hostIp = hostAddr.split(":")[0];
+        int port = Integer.parseInt(hostAddr.split(":")[1]);
+        HostAndPort host = new HostAndPort(hostIp, port);
+//        // ssh端口转发
+//        if (this.redisConnect.isSSHForward()) {
+//            // 初始化ssh转发器
+//            RedisSSHConfig sshConfig = this.redisConnect.getSshConfig();
+//            // 从数据库获取
+//            if (sshConfig == null) {
+//                sshConfig = this.sshConfigStore.getByIid(this.redisConnect.getId());
+//            }
+//            if (sshConfig != null) {
+//                if (this.sshJumper == null) {
+//                    this.sshJumper = new SSHJumpForwarder();
+//                }
+//                // ssh配置
+//                // 执行连接
+//                int localPort = this.sshJumper.forward(null, null);
+//                // 连接信息
+//                host = new HostAndPort("127.0.0.1", localPort);
+//            } else {
+//                JulLog.warn("ssh forward is enable but ssh config is null");
+//                throw new RedisException("ssh forward is enable but ssh config is null");
+//            }
+//            // SSHForwardConfig forwardInfo = new SSHForwardConfig();
+//            // forwardInfo.setHost(this.redisConnect.hostIp());
+//            // forwardInfo.setPort(this.redisConnect.hostPort());
+//            // int localPort = this.sshForwarder.forward(forwardInfo);
+//            // // 连接信息
+//            // host = new HostAndPort("127.0.0.1", localPort);
+//        } else {// 直连
+//            // 连接信息
+//            host = new HostAndPort(this.redisConnect.hostIp(), this.redisConnect.hostPort());
+//        }
         // 客户端配置
         DefaultJedisClientConfig clientConfig = RedisClientUtil.newConfig(this.redisConnect.getUser(), this.redisConnect.getPassword(), connectTimeout, this.redisConnect.executeTimeOutMs());
         // 初始化连接池
@@ -541,10 +587,8 @@ public class RedisClient {
 //                isClosed = true;
 //            }
             // 销毁端口转发
-            if (this.redisConnect.isSSHForward()) {
-                if (this.sshJumper != null) {
-                    this.sshJumper.destroy();
-                }
+            if (this.jumpForwarder != null) {
+                this.jumpForwarder.destroy();
             }
             this.poolManager.destroy();
             // 已关闭
@@ -3659,7 +3703,7 @@ public class RedisClient {
      * @param type    键类型
      * @return 键列表
      */
-    public Set<String> keys(Integer dbIndex,  String pattern, RedisKeyType type) {
+    public Set<String> keys(Integer dbIndex, String pattern, RedisKeyType type) {
         this.throwSentinelException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "keys");
         Set<String> keys;
@@ -3699,7 +3743,7 @@ public class RedisClient {
      * @param newKey  新键名称
      * @return 结果
      */
-    public String rename(Integer dbIndex,  String key,  String newKey) {
+    public String rename(Integer dbIndex, String key, String newKey) {
         this.throwSentinelException();
         this.throwReadonlyException();
         RedisVersionUtil.checkSupported(this.getServerVersion(), "rename");

@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
@@ -86,7 +87,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
 //                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
 //            }
 //        }
-        RedisEventUtil.showExportConnect();
+        RedisViewFactory.exportConnect();
     }
 
     /**
@@ -105,7 +106,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
         File file = CollectionUtil.getFirst(files);
 //        // 解析文件
 //        this.parseConnect(file);
-        RedisEventUtil.showImportConnect(file);
+        RedisViewFactory.importConnect(file);
     }
 
     /**
@@ -116,7 +117,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
 //        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
 //        // 解析文件
 //        this.parseConnect(file);
-        RedisEventUtil.showImportConnect(null);
+        RedisViewFactory.importConnect(null);
     }
 
 //    /**
@@ -170,7 +171,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
      */
     private void addConnect() {
 //        StageManager.showStage(RedisAddConnectController.class, this.window());
-        RedisEventUtil.showAddConnect();
+        RedisViewFactory.addConnect(null);
     }
 
     /**

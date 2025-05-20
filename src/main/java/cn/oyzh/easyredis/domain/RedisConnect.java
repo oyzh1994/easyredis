@@ -89,16 +89,21 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     @Column
     private Integer executeTimeOut;
 
-    /**
-     * 是否开启ssh转发
-     */
-    @Column
-    private Boolean sshForward;
+//    /**
+//     * 是否开启ssh转发
+//     */
+//    @Column
+//    private Boolean sshForward;
+//
+//    /**
+//     * ssh信息
+//     */
+//    private RedisSSHConfig sshConfig;
 
     /**
-     * ssh信息
+     * 跳板信息
      */
-    private RedisSSHConfig sshConfig;
+    private List<RedisJumpConfig> jumpConfigs;
 
     /**
      * 复制对象
@@ -116,9 +121,11 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.readonly = redisConnect.readonly;
         this.password = redisConnect.password;
         this.connectTimeOut = redisConnect.connectTimeOut;
-        // ssh配置
-        this.sshConfig = redisConnect.sshConfig;
-        this.sshForward = redisConnect.sshForward;
+//        // ssh配置
+//        this.sshConfig = redisConnect.sshConfig;
+//        this.sshForward = redisConnect.sshForward;
+        // 跳板机
+        this.jumpConfigs = redisConnect.jumpConfigs;
         // 过滤
         this.filters = redisConnect.filters;
         // 收藏
@@ -187,14 +194,14 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         return BooleanUtil.isTrue(this.readonly);
     }
 
-    /**
-     * 是否ssh转发
-     *
-     * @return 结果
-     */
-    public boolean isSSHForward() {
-        return BooleanUtil.isTrue(this.sshForward);
-    }
+//    /**
+//     * 是否ssh转发
+//     *
+//     * @return 结果
+//     */
+//    public boolean isSSHForward() {
+//        return BooleanUtil.isTrue(this.sshForward);
+//    }
 
     /**
      * 获取连接超时
@@ -320,21 +327,21 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.executeTimeOut = executeTimeOut;
     }
 
-    public Boolean getSshForward() {
-        return sshForward;
-    }
+//    public Boolean getSshForward() {
+//        return sshForward;
+//    }
+//
+//    public void setSshForward(Boolean sshForward) {
+//        this.sshForward = sshForward;
+//    }
 
-    public void setSshForward(Boolean sshForward) {
-        this.sshForward = sshForward;
-    }
-
-    public RedisSSHConfig getSshConfig() {
-        return sshConfig;
-    }
-
-    public void setSshConfig(RedisSSHConfig sshConfig) {
-        this.sshConfig = sshConfig;
-    }
+//    public RedisSSHConfig getSshConfig() {
+//        return sshConfig;
+//    }
+//
+//    public void setSshConfig(RedisSSHConfig sshConfig) {
+//        this.sshConfig = sshConfig;
+//    }
 
     @Override
     public int compareTo(RedisConnect o) {
@@ -395,4 +402,13 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         }
         return 0;
     }
+
+    public List<RedisJumpConfig> getJumpConfigs() {
+        return jumpConfigs;
+    }
+
+    public void setJumpConfigs(List<RedisJumpConfig> jumpConfigs) {
+        this.jumpConfigs = jumpConfigs;
+    }
+
 }

@@ -4,7 +4,7 @@ import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.easyredis.domain.RedisCollect;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
-import cn.oyzh.easyredis.domain.RedisSSHConfig;
+import cn.oyzh.easyredis.domain.RedisJumpConfig;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
 
 import java.util.List;
@@ -30,10 +30,15 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
      */
     private final RedisCollectStore collectStore = RedisCollectStore.INSTANCE;
 
+//    /**
+//     * ssh配置存储
+//     */
+//    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+
     /**
-     * ssh配置存储
+     * 跳板配置存储
      */
-    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+    private final RedisJumpConfigStore jumpConfigStore = RedisJumpConfigStore.INSTANCE;
 
     /**
      * 加载列表
@@ -54,7 +59,8 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
         for (RedisConnect connect : connects) {
             connect.setFilters(this.filterStore.loadByIid(connect.getId()));
             connect.setCollects(this.collectStore.loadByIid(connect.getId()));
-            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+//            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
+            connect.setJumpConfigs(this.jumpConfigStore.listByIid(connect.getId()));
         }
         return connects;
     }
@@ -74,13 +80,25 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
                 result = this.insert(model);
             }
 
-            // ssh处理
-            RedisSSHConfig sshConfig = model.getSshConfig();
-            if (sshConfig != null) {
-                sshConfig.setIid(model.getId());
-                this.sshConfigStore.replace(sshConfig);
-            } else {
-                this.sshConfigStore.deleteByIid(model.getId());
+//            // ssh处理
+//            RedisSSHConfig sshConfig = model.getSshConfig();
+//            if (sshConfig != null) {
+//                sshConfig.setIid(model.getId());
+//                this.sshConfigStore.replace(sshConfig);
+//            } else {
+//                this.sshConfigStore.deleteByIid(model.getId());
+//            }
+
+            // 跳板机处理
+            List<RedisJumpConfig> jumpConfigs = model.getJumpConfigs();
+            if (CollectionUtil.isNotEmpty(jumpConfigs)) {
+                for (RedisJumpConfig jumpConfig : jumpConfigs) {
+                    jumpConfig.setIid(model.getId());
+                }
+                this.jumpConfigStore.deleteByIid(model.getId());
+                this.jumpConfigStore.replace(jumpConfigs);
+            } else if (jumpConfigs != null) {
+                this.jumpConfigStore.deleteByIid(model.getId());
             }
 
             // 收藏处理
@@ -112,7 +130,8 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
         if (result) {
             this.filterStore.deleteByIid(model.getId());
             this.collectStore.deleteByIid(model.getId());
-            this.sshConfigStore.deleteByIid(model.getId());
+//            this.sshConfigStore.deleteByIid(model.getId());
+            this.jumpConfigStore.deleteByIid(model.getId());
         }
         return result;
     }

@@ -4,6 +4,7 @@ import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
@@ -135,7 +136,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        adapter.setProp("sourceInfo", this.redisConnect());
 //        adapter.setProp("dbIndex", this.dbIndex);
 //        adapter.display();
-        RedisEventUtil.showTransportData(this.redisConnect(),this.dbIndex);
+        RedisViewFactory.transportData(this.redisConnect(), this.dbIndex);
     }
 
 //    /**
@@ -169,7 +170,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        adapter.setProp("connect", this.redisConnect());
 //        adapter.setProp("dbIndex", this.dbIndex);
 //        adapter.display();
-        RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex);
+        RedisViewFactory.exportData(this.redisConnect(), this.dbIndex);
     }
 
     /**

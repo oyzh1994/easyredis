@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
@@ -151,7 +152,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
 //        StageAdapter adapter = StageManager.parseStage(RedisAddConnectController.class, this.window());
 //        adapter.setProp("group", this.value);
 //        adapter.display();
-        RedisEventUtil.showAddConnect(this.value);
+        RedisViewFactory.addConnect(this.value);
     }
 
     @Override

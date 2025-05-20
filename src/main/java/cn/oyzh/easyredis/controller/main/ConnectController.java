@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.controller.main;
 
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
@@ -101,7 +102,7 @@ public class ConnectController extends SubStageController {
     @FXML
     private void addConnect() {
 //        RedisEventUtil.addConnect();
-        RedisEventUtil.showAddConnect();
+        RedisViewFactory.addConnect(null);
     }
 
     @FXML
@@ -118,12 +119,12 @@ public class ConnectController extends SubStageController {
     @FXML
     private void importConnect() {
 //        this.tree.getRoot().importConnect();
-        RedisEventUtil.showImportConnect(null);
+        RedisViewFactory.importConnect(null);
     }
 
     @FXML
     private void exportConnect() {
 //        this.tree.getRoot().exportConnect();
-        RedisEventUtil.showExportConnect();
+        RedisViewFactory.exportConnect();
     }
 }

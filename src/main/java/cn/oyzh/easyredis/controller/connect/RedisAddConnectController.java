@@ -3,7 +3,6 @@ package cn.oyzh.easyredis.controller.connect;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
-import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisFilterTableView;
@@ -205,22 +204,22 @@ public class RedisAddConnectController extends StageController {
         return hostText;
     }
 
-    /**
-     * 获取ssh信息
-     *
-     * @return ssh连接信息
-     */
-    private RedisSSHConfig getSSHConfig() {
-        RedisSSHConfig sshConfig = new RedisSSHConfig();
-        sshConfig.setHost(this.sshHost.getText());
-        sshConfig.setUser(this.sshUser.getText());
-        sshConfig.setPort(this.sshPort.getIntValue());
-        sshConfig.setPassword(this.sshPassword.getText());
-        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
-        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
-        sshConfig.setCertificatePath(this.sshCertificate.getText());
-        return sshConfig;
-    }
+//    /**
+//     * 获取ssh信息
+//     *
+//     * @return ssh连接信息
+//     */
+//    private RedisSSHConfig getSSHConfig() {
+//        RedisSSHConfig sshConfig = new RedisSSHConfig();
+//        sshConfig.setHost(this.sshHost.getText());
+//        sshConfig.setUser(this.sshUser.getText());
+//        sshConfig.setPort(this.sshPort.getIntValue());
+//        sshConfig.setPassword(this.sshPassword.getText());
+//        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
+//        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
+//        sshConfig.setCertificatePath(this.sshCertificate.getText());
+//        return sshConfig;
+//    }
 
     /**
      * 测试连接
@@ -239,10 +238,10 @@ public class RedisAddConnectController extends StageController {
             redisConnect.setConnectTimeOut(3);
             redisConnect.setUser(this.user.getText());
             redisConnect.setPassword(this.password.getText());
-            redisConnect.setSshForward(this.sshForward.isSelected());
-            if (redisConnect.isSSHForward()) {
-                redisConnect.setSshConfig(this.getSSHConfig());
-            }
+//            redisConnect.setSshForward(this.sshForward.isSelected());
+//            if (redisConnect.isSSHForward()) {
+//                redisConnect.setSshConfig(this.getSSHConfig());
+//            }
             RedisConnectUtil.testConnect(this.stage, redisConnect);
         }
     }
@@ -269,11 +268,11 @@ public class RedisAddConnectController extends StageController {
 
             redisConnect.setHost(host);
             redisConnect.setUser(this.user.getText());
-            redisConnect.setSshConfig(this.getSSHConfig());
+//            redisConnect.setSshConfig(this.getSSHConfig());
+//            redisConnect.setSshForward(this.sshForward.isSelected());
             redisConnect.setRemark(this.remark.getTextTrim());
             redisConnect.setPassword(this.password.getText());
             redisConnect.setReadonly(this.readonly.isSelected());
-            redisConnect.setSshForward(this.sshForward.isSelected());
             redisConnect.setGroupId(this.group == null ? null : this.group.getGid());
             redisConnect.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             redisConnect.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
