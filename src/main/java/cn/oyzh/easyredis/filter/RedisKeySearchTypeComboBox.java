@@ -23,12 +23,12 @@ public class RedisKeySearchTypeComboBox extends FXComboBox<String> implements I1
         this.clearItems();
         this.addItem(I18nHelper.allKeys());
         this.addItem(I18nHelper.collectKeys());
-        this.addItem("string");
-        this.addItem("list");
-        this.addItem("set");
-        this.addItem("zset");
-        this.addItem("hash");
-        this.addItem("stream");
+        this.addItem("STRING");
+        this.addItem("LIST");
+        this.addItem("SET");
+        this.addItem("ZSET");
+        this.addItem("HASH");
+        this.addItem("STREAM");
         return this.getItems();
     }
 }

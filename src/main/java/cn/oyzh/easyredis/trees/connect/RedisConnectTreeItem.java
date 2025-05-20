@@ -4,7 +4,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -18,6 +17,7 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -261,7 +261,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      */
     public void cancelConnect() {
         this.canceled = true;
-        ThreadUtil.startVirtual(() -> {
+        StageManager.showMask(() -> {
             this.client.close();
             this.setLoaded(false);
         });

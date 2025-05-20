@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.LatitudeField?>
-<?import cn.oyzh.easyredis.fx.LongitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisLatitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisLongitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisKeyTypeComboBox?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
@@ -129,23 +129,23 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <LongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitudeValue" tipText="%base.contentTip1"
-                        value="0" step="5">
+        <RedisLongitudeField realHeight="30" flexWidth="100% - 140" fx:id="longitudeValue" tipText="%base.contentTip1"
+                             value="0" step="5">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </LongitudeField>
+        </RedisLongitudeField>
         <InfoLabel text="%base.latitude">
             <VBox.margin>
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <LatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitudeValue" tipText="%base.contentTip1"
-                       value="0" step="5">
+        <RedisLatitudeField realHeight="30" flexWidth="100% - 140" fx:id="latitudeValue" tipText="%base.contentTip1"
+                            value="0" step="5">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </LatitudeField>
+        </RedisLatitudeField>
         <FXVBox flexWidth="100%" flexHeight="100% - 140">
             <InfoLabel text="%base.coordinates">
                 <VBox.margin>

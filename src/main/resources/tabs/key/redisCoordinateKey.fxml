@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.key.RedisKeyRowTableView?>
-<?import cn.oyzh.easyredis.fx.LatitudeField?>
-<?import cn.oyzh.easyredis.fx.LongitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisLatitudeField?>
+<?import cn.oyzh.easyredis.fx.RedisLongitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
@@ -154,21 +154,21 @@
             <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
-    <LongitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
-                    tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
+    <RedisLongitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="longitudeVal"
+                         tipText="%base.longitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </LongitudeField>
+    </RedisLongitudeField>
     <FXText text="%base.latitude">
         <VBox.margin>
             <Insets top="5" left="5"/>
         </VBox.margin>
     </FXText>
-    <LatitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
-                   tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
+    <RedisLatitudeField groupId="dataToBig" scaleLen="5" realHeight="24" flexWidth="100% - 4" fx:id="latitudeVal"
+                        tipText="%base.latitude" value="0" step="5" onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </LatitudeField>
+    </RedisLatitudeField>
 </FXVBox>

@@ -100,7 +100,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
         return keyValue != null && keyValue.hasUnSavedValue();
     }
 
-    public RedisKeyTreeItem( RedisKey value,  RedisKeyTreeView treeView) {
+    public RedisKeyTreeItem(RedisKey value, RedisKeyTreeView treeView) {
         super(treeView);
         this.value = value;
         super.setFilterable(true);
@@ -209,6 +209,9 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
      * @return redis客户端
      */
     public RedisClient client() {
+        if (this.getTreeView() == null) {
+            return null;
+        }
         return this.getTreeView().client();
     }
 

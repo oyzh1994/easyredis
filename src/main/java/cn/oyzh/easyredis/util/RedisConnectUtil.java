@@ -56,18 +56,12 @@ public class RedisConnectUtil {
     public static void testConnect(StageAdapter adapter, RedisConnect redisConnect) {
         StageManager.showMask(adapter,() -> {
             try {
-//                view.disable();
-//                view.waitCursor();
-//                view.appendTitle("===" + I18nHelper.connectTesting() + "===");
                 if (redisConnect.getName() == null) {
                     redisConnect.setName(I18nHelper.testConnection());
                 }
                 RedisClient client = new RedisClient(redisConnect);
                 // 开始连接
                 client.start(3_000);
-//                view.enable();
-//                view.defaultCursor();
-//                view.restoreTitle();
                 if (client.isConnected()) {
                     client.close();
                     MessageBox.okToast(I18nHelper.connectSuccess());
@@ -77,10 +71,6 @@ public class RedisConnectUtil {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 MessageBox.exception(ex);
-//            } finally {
-//                view.enable();
-//                view.defaultCursor();
-//                view.restoreTitle();
             }
         });
     }

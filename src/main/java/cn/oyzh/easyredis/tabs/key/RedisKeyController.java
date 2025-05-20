@@ -1,10 +1,10 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -97,7 +97,7 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
     @FXML
     protected void saveKeyValue() {
         if (this.treeItem.isDataUnsaved()) {
-            ThreadUtil.startVirtual(this.treeItem::saveKeyValue);
+            StageManager.showMask(this.treeItem::saveKeyValue);
         }
     }
 
