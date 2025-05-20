@@ -4,14 +4,12 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.event.key.RedisSetMemberAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
 import cn.oyzh.easyredis.trees.key.RedisSetKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisViewFactory;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -356,17 +354,17 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
         }
     }
 
-    /**
-     * set成员添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * set成员添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onSetMemberAdded(RedisSetMemberAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 }

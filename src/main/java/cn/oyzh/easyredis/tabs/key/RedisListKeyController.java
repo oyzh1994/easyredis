@@ -4,14 +4,12 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.event.key.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisViewFactory;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -321,7 +319,7 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
             return;
         }
         RedisKeyRow row = this.treeItem.currentRow();
-        if (!MessageBox.confirm(I18nHelper.deleteElement() + ":")) {
+        if (!MessageBox.confirm(I18nHelper.deleteElement() + ":" + row.getValue())) {
             return;
         }
         if (!this.treeItem.deleteRow()) {
@@ -356,19 +354,19 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * list行添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onListRowAdded(RedisListRowAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * list行添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onListRowAdded(RedisListRowAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

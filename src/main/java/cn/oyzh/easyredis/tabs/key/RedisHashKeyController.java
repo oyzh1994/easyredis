@@ -3,12 +3,10 @@ package cn.oyzh.easyredis.tabs.key;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -459,19 +457,19 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * hash字段添加事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
-        if (this.treeItem == event.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * hash字段添加事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
+//        if (this.treeItem == event.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

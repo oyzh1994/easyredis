@@ -2,13 +2,11 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.event.key.RedisStreamMessageAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
-import cn.oyzh.event.EventSubscribe;
 import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
@@ -169,17 +167,17 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
         }
     }
 
-    /**
-     * stream消息添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * stream消息添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onStreamMessageAdded(RedisStreamMessageAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 }
