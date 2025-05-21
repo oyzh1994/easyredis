@@ -2,12 +2,14 @@ package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -121,11 +123,11 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.password = redisConnect.password;
         this.connectTimeOut = redisConnect.connectTimeOut;
         // 过滤
-        this.filters = RedisFilter.copy(redisConnect.filters);
+        this.filters = RedisFilter.clone(redisConnect.filters);
         // 收藏
-        this.collects = RedisCollect.copy(redisConnect.collects);
+        this.collects = RedisCollect.clone(redisConnect.collects);
         // 跳板机
-        this.jumpConfigs = RedisJumpConfig.copy(redisConnect.jumpConfigs);
+        this.jumpConfigs = RedisJumpConfig.clone(redisConnect.jumpConfigs);
         return this;
     }
 
@@ -330,4 +332,16 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.jumpConfigs = jumpConfigs;
     }
 
+    /**
+     * 是否开启跳板
+     *
+     * @return 结果
+     */
+    public boolean isEnableJump() {
+        // 初始化跳板配置
+        List<RedisJumpConfig> jumpConfigs = this.getJumpConfigs();
+        // 过滤配置
+        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).toList();
+        return CollectionUtil.isNotEmpty(jumpConfigs);
+    }
 }

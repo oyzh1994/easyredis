@@ -76,7 +76,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * redis终端
@@ -232,19 +231,21 @@ public class RedisClient {
     private String initHost() {
         // 连接地址
         String host;
-        // 初始化跳板配置
-        List<RedisJumpConfig> jumpConfigs = this.redisConnect.getJumpConfigs();
-        // 从数据库获取
-        if (jumpConfigs == null) {
-            jumpConfigs = this.jumpConfigStore.loadByIid(this.redisConnect.getId());
-        }
-        // 过滤配置
-        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).collect(Collectors.toList());
+//        // 初始化跳板配置
+//        List<RedisJumpConfig> jumpConfigs = this.redisConnect.getJumpConfigs();
+//        // 从数据库获取
+//        if (jumpConfigs == null) {
+//            jumpConfigs = this.jumpConfigStore.loadByIid(this.redisConnect.getId());
+//        }
+//        // 过滤配置
+//        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).collect(Collectors.toList());
         // 初始化跳板转发
-        if (CollectionUtil.isNotEmpty(jumpConfigs)) {
+        if (this.redisConnect.isEnableJump()) {
             if (this.jumpForwarder == null) {
                 this.jumpForwarder = new SSHJumpForwarder();
             }
+            // 初始化跳板配置
+            List<RedisJumpConfig> jumpConfigs = this.redisConnect.getJumpConfigs();
             // 转换为目标连接
             SSHConnect target = new SSHConnect();
             target.setHost(this.redisConnect.hostIp());
@@ -254,6 +255,10 @@ public class RedisClient {
             // 连接信息
             host = "127.0.0.1:" + localPort;
         } else {// 直连
+            if (this.jumpForwarder != null) {
+                this.jumpForwarder.destroy();
+                this.jumpForwarder = null;
+            }
             // 连接信息
             host = this.redisConnect.hostIp() + ":" + this.redisConnect.hostPort();
         }

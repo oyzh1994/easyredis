@@ -129,7 +129,7 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
         return Objects.equals(kw, this.kw);
     }
 
-    public static List<RedisFilter> copy(List<RedisFilter> filters) {
+    public static List<RedisFilter> clone(List<RedisFilter> filters) {
         if (CollectionUtil.isEmpty(filters)) {
             return Collections.emptyList();
         }

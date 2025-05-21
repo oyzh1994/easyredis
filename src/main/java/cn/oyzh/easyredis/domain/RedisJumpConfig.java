@@ -75,7 +75,7 @@ public class RedisJumpConfig extends SSHConnect implements Serializable {
         return toggleSwitch;
     }
 
-    public static List<RedisJumpConfig> copy(List<RedisJumpConfig> configs) {
+    public static List<RedisJumpConfig> clone(List<RedisJumpConfig> configs) {
         if (CollectionUtil.isEmpty(configs)) {
             return Collections.emptyList();
         }

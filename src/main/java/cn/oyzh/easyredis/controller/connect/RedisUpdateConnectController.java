@@ -2,7 +2,6 @@ package cn.oyzh.easyredis.controller.connect;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
-import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisJumpConfig;
 import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -30,8 +29,6 @@ import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
-
-import java.util.List;
 
 /**
  * redis信息修改业务
@@ -281,8 +278,7 @@ public class RedisUpdateConnectController extends StageController {
      */
     private void initFilterDataList() {
         if (!this.filterTable.hasData()) {
-            List<RedisFilter> list = this.filterStore.loadByIid(this.redisConnect.getId());
-            this.filterTable.setFilters(list);
+            this.filterTable.setFilters(this.redisConnect.getFilters());
         } else {
             this.filterTable.setKw(this.filterSearchKW.getText());
         }

@@ -75,7 +75,7 @@ public class RedisCollect implements Serializable, ObjectCopier<RedisCollect> {
         this.dbIndex = t1.getDbIndex();
     }
 
-    public static List<RedisCollect> copy(List<RedisCollect> collects) {
+    public static List<RedisCollect> clone(List<RedisCollect> collects) {
         if (CollectionUtil.isEmpty(collects)) {
             return Collections.emptyList();
         }
