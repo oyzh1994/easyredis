@@ -23,7 +23,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -369,7 +368,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
         RedisConnect redisConnect = new RedisConnect();
         redisConnect.copy(this.value);
         redisConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
-        redisConnect.setCollects(Collections.emptyList());
         if (this.connectStore.replace(redisConnect)) {
             this.connectManager().addConnect(redisConnect);
         } else {

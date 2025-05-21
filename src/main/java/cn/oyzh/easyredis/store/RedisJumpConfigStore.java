@@ -69,7 +69,7 @@ public class RedisJumpConfigStore extends JdbcStandardStore<RedisJumpConfig> {
      * @param iid shell连接id
      * @return ssh跳板配置
      */
-    public List<RedisJumpConfig> listByIid(String iid) {
+    public List<RedisJumpConfig> loadByIid(String iid) {
         if (StringUtil.isEmpty(iid)) {
             return null;
         }

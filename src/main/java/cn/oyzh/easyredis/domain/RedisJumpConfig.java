@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis.domain;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
 import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.store.jdbc.Column;
@@ -7,6 +8,9 @@ import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * redis跳板配置
@@ -19,7 +23,6 @@ public class RedisJumpConfig extends SSHConnect implements Serializable {
 
     /**
      * id
-     *
      */
     @Column
     @PrimaryKey
@@ -70,5 +73,18 @@ public class RedisJumpConfig extends SSHConnect implements Serializable {
             this.setEnabled(newValue);
         });
         return toggleSwitch;
+    }
+
+    public static List<RedisJumpConfig> copy(List<RedisJumpConfig> configs) {
+        if (CollectionUtil.isEmpty(configs)) {
+            return Collections.emptyList();
+        }
+        List<RedisJumpConfig> list = new ArrayList<>();
+        for (RedisJumpConfig config : configs) {
+            RedisJumpConfig jumpConfig = new RedisJumpConfig();
+            jumpConfig.copy(config);
+            list.add(jumpConfig);
+        }
+        return list;
     }
 }

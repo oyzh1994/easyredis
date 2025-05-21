@@ -111,65 +111,6 @@ public class RedisUpdateConnectController extends StageController {
     @FXML
     private NumberTextField executeTimeOut;
 
-//    /**
-//     * ssh面板
-//     */
-//    @FXML
-//    private FXTab sshTab;
-//
-//    /**
-//     * 开启ssh
-//     */
-//    @FXML
-//    private FXToggleSwitch sshForward;
-//
-//    /**
-//     * ssh主机地址
-//     */
-//    @FXML
-//    private ClearableTextField sshHost;
-//
-//    /**
-//     * ssh主机端口
-//     */
-//    @FXML
-//    private PortTextField sshPort;
-//
-//    /**
-//     * ssh主机端口
-//     */
-//    @FXML
-//    private NumberTextField sshTimeout;
-//
-//    /**
-//     * ssh主机用户
-//     */
-//    @FXML
-//    private ClearableTextField sshUser;
-//
-//    /**
-//     * ssh主机密码
-//     */
-//    @FXML
-//    private ClearableTextField sshPassword;
-//
-//    /**
-//     * ssh认证方式
-//     */
-//    @FXML
-//    private SSHAuthTypeCombobox sshAuthMethod;
-//
-//    /**
-//     * ssh证书
-//     */
-//    @FXML
-//    private ReadOnlyTextField sshCertificate;
-
-    /**
-     * redis连接储存对象
-     */
-    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
-
     /**
      * 过滤列表
      */
@@ -193,10 +134,10 @@ public class RedisUpdateConnectController extends StageController {
      */
     private final RedisFilterStore filterStore = RedisFilterStore.INSTANCE;
 
-//    /**
-//     * ssh配置储存
-//     */
-//    private final RedisSSHConfigStore sshConfigStore = RedisSSHConfigStore.INSTANCE;
+    /**
+     * redis连接储存对象
+     */
+    private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
     /**
      * 跳板机配置储存
@@ -224,23 +165,6 @@ public class RedisUpdateConnectController extends StageController {
         return hostText;
     }
 
-//    /**
-//     * 获取ssh信息
-//     *
-//     * @return ssh连接信息
-//     */
-//    private RedisSSHConfig getSSHConfig() {
-//        RedisSSHConfig sshConfig = new RedisSSHConfig();
-//        sshConfig.setHost(this.sshHost.getText());
-//        sshConfig.setUser(this.sshUser.getText());
-//        sshConfig.setPort(this.sshPort.getIntValue());
-//        sshConfig.setPassword(this.sshPassword.getText());
-//        sshConfig.setAuthMethod(this.sshAuthMethod.getAuthType());
-//        sshConfig.setTimeout(this.sshTimeout.getIntValue() * 1000);
-//        sshConfig.setCertificatePath(this.sshCertificate.getText());
-//        return sshConfig;
-//    }
-
     /**
      * 测试连接
      */
@@ -258,10 +182,6 @@ public class RedisUpdateConnectController extends StageController {
             redisConnect.setId(this.redisConnect.getId());
             redisConnect.setUser(this.user.getText());
             redisConnect.setPassword(this.password.getText());
-//            redisConnect.setSshForward(this.sshForward.isSelected());
-//            if (redisConnect.isSSHForward()) {
-//                redisConnect.setSshConfig(this.getSSHConfig());
-//            }
             // 跳板机配置
             redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             RedisConnectUtil.testConnect(this.stage, redisConnect);
@@ -294,13 +214,10 @@ public class RedisUpdateConnectController extends StageController {
             this.redisConnect.setReadonly(this.readonly.isSelected());
             this.redisConnect.setConnectTimeOut(connectTimeOut == null ? 5 : connectTimeOut.intValue());
             this.redisConnect.setExecuteTimeOut(executeTimeOut == null ? 5 : executeTimeOut.intValue());
-//            // ssh配置
-//            this.redisConnect.setSshForward(this.sshForward.isSelected());
-//            this.redisConnect.setSshConfig(this.getSSHConfig());
-            // 跳板机配置
-            this.redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             // 过滤列表
             this.redisConnect.setFilters(this.filterTable.getFilters());
+            // 跳板机配置
+            this.redisConnect.setJumpConfigs(this.jumpTableView.getItems());
             // 保存数据
             if (this.connectStore.replace(this.redisConnect)) {
                 RedisEventUtil.connectUpdated(this.redisConnect);
@@ -329,30 +246,12 @@ public class RedisUpdateConnectController extends StageController {
                 }
             }
         });
-//        // ssh配置
-//        this.sshForward.selectedChanged((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                NodeGroupUtil.enable(this.sshTab, "ssh");
-//            } else {
-//                NodeGroupUtil.disable(this.sshTab, "ssh");
-//            }
-//        });
         // 过滤监听
         this.filterSearchKW.addTextChangeListener((observableValue, s, t1) -> this.initFilterDataList());
-//        // ssh认证方式
-//        this.sshAuthMethod.selectedIndexChanged((observable, oldValue, newValue) -> {
-//            if (this.sshAuthMethod.isPasswordAuth()) {
-//                this.sshPassword.display();
-//                NodeGroupUtil.disappear(this.tabPane, "sshCertificate");
-//            } else {
-//                this.sshPassword.disappear();
-//                NodeGroupUtil.display(this.tabPane, "sshCertificate");
-//            }
-//        });
     }
 
     @Override
-    public void onWindowShown( WindowEvent event) {
+    public void onWindowShown(WindowEvent event) {
         super.onWindowShown(event);
         this.redisConnect = this.getProp("redisConnect");
         this.name.setText(this.redisConnect.getName());
@@ -364,24 +263,8 @@ public class RedisUpdateConnectController extends StageController {
         this.readonly.setSelected(this.redisConnect.isReadonly());
         this.connectTimeOut.setValue(this.redisConnect.getConnectTimeOut());
         this.executeTimeOut.setValue(this.redisConnect.getExecuteTimeOut());
-//        // ssh配置
-//        this.sshForward.setSelected(this.redisConnect.isSSHForward());
-//        RedisSSHConfig sshConfig = this.sshConfigStore.getByIid(this.redisConnect.getId());
-//        if (sshConfig != null) {
-//            this.sshHost.setText(sshConfig.getHost());
-//            this.sshUser.setText(sshConfig.getUser());
-//            this.sshPort.setValue(sshConfig.getPort());
-//            this.sshPassword.setText(sshConfig.getPassword());
-//            this.sshTimeout.setValue(sshConfig.getTimeoutSecond());
-//            this.sshCertificate.setText(sshConfig.getCertificatePath());
-//            if (sshConfig.isPasswordAuth()) {
-//                this.sshAuthMethod.selectFirst();
-//            } else {
-//                this.sshAuthMethod.select(1);
-//            }
-//        }
         // 跳板机配置
-        this.jumpTableView.init(this.redisConnect.getId());
+        this.jumpTableView.setItem(this.redisConnect.getJumpConfigs());
         // 初始化数据
         this.initFilterDataList();
         this.stage.switchOnTab();
@@ -428,27 +311,20 @@ public class RedisUpdateConnectController extends StageController {
         }
         if (MessageBox.confirm(I18nHelper.deleteData())) {
             this.filterTable.removeItem(filter);
+            this.filterStore.delete(filter.getUid());
         }
     }
-
-//    /**
-//     * 选择ssh证书
-//     */
-//    @FXML
-//    private void chooseSSHCertificate() {
-//        File file = FileChooserHelper.choose(I18nHelper.pleaseSelectFile(), FXChooser.allExtensionFilter());
-//        if (file != null) {
-//            this.sshCertificate.setText(file.getPath());
-//        }
-//    }
 
     /**
      * 添加跳板
      */
     @FXML
     private void addJump() {
-        StageAdapter adapter= RedisViewFactory.addJump();
+        StageAdapter adapter = RedisViewFactory.addJump();
         RedisJumpConfig jumpConfig = adapter.getProp("jumpConfig");
+        if (adapter == null) {
+            return;
+        }
         if (jumpConfig != null) {
             this.jumpTableView.addItem(jumpConfig);
             this.jumpTableView.updateOrder();
@@ -464,7 +340,10 @@ public class RedisUpdateConnectController extends StageController {
         if (config == null) {
             return;
         }
-        StageAdapter adapter= RedisViewFactory.updateJump(config);
+        StageAdapter adapter = RedisViewFactory.updateJump(config);
+        if (adapter == null) {
+            return;
+        }
         RedisJumpConfig jumpConfig = adapter.getProp("jumpConfig");
         if (jumpConfig != null) {
             this.jumpTableView.refresh();
@@ -477,7 +356,8 @@ public class RedisUpdateConnectController extends StageController {
      */
     @FXML
     private void deleteJump() {
-        this.jumpTableView.removeSelectedItem();
+        RedisJumpConfig config = this.jumpTableView.removeSelectedItem();
+        this.jumpConfigStore.delete(config.getId());
         this.jumpTableView.updateOrder();
     }
 

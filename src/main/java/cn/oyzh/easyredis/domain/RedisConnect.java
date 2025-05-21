@@ -112,7 +112,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 当前对象
      */
     public RedisConnect copy( RedisConnect redisConnect) {
-//        this.id = redisConnect.id;
         this.name = redisConnect.name;
         this.host = redisConnect.host;
         this.user = redisConnect.user;
@@ -121,69 +120,14 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.readonly = redisConnect.readonly;
         this.password = redisConnect.password;
         this.connectTimeOut = redisConnect.connectTimeOut;
-//        // ssh配置
-//        this.sshConfig = redisConnect.sshConfig;
-//        this.sshForward = redisConnect.sshForward;
-        // 跳板机
-        this.jumpConfigs = redisConnect.jumpConfigs;
         // 过滤
-        this.filters = redisConnect.filters;
+        this.filters = RedisFilter.copy(redisConnect.filters);
         // 收藏
-        this.collects = redisConnect.collects;
+        this.collects = RedisCollect.copy(redisConnect.collects);
+        // 跳板机
+        this.jumpConfigs = RedisJumpConfig.copy(redisConnect.jumpConfigs);
         return this;
     }
-
-    // /**
-    //  * 是否被收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  * @return 结果
-    //  */
-    // public boolean isCollect(int dbIndex,  String key) {
-    //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
-    // }
-
-    // /**
-    //  * 添加收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  */
-    // public void addCollect(int dbIndex,  String key) {
-    //     if (this.collects == null) {
-    //         this.collects = new ArrayList<>();
-    //     }
-    //     String name = this.getCollectName(dbIndex, key);
-    //     if (!this.collects.contains(name)) {
-    //         this.collects.add(name);
-    //     }
-    // }
-    //
-    // /**
-    //  * 取消收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  * @return 结果
-    //  */
-    // public boolean removeCollect(int dbIndex,  String key) {
-    //     if (this.collects != null) {
-    //         return this.collects.remove(this.getCollectName(dbIndex, key));
-    //     }
-    //     return false;
-    // }
-
-    // /**
-    //  * 获取收藏名称
-    //  *
-    //  * @param dbIndex db索引
-    //  * @param key     键名称
-    //  * @return 收藏名称
-    //  */
-    // private String getCollectName(int dbIndex, String key) {
-    //     return dbIndex + "_@coll@_" + key;
-    // }
 
     /**
      * 是否只读模式
@@ -193,15 +137,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     public boolean isReadonly() {
         return BooleanUtil.isTrue(this.readonly);
     }
-
-//    /**
-//     * 是否ssh转发
-//     *
-//     * @return 结果
-//     */
-//    public boolean isSSHForward() {
-//        return BooleanUtil.isTrue(this.sshForward);
-//    }
 
     /**
      * 获取连接超时
@@ -326,22 +261,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     public void setExecuteTimeOut(Integer executeTimeOut) {
         this.executeTimeOut = executeTimeOut;
     }
-
-//    public Boolean getSshForward() {
-//        return sshForward;
-//    }
-//
-//    public void setSshForward(Boolean sshForward) {
-//        this.sshForward = sshForward;
-//    }
-
-//    public RedisSSHConfig getSshConfig() {
-//        return sshConfig;
-//    }
-//
-//    public void setSshConfig(RedisSSHConfig sshConfig) {
-//        this.sshConfig = sshConfig;
-//    }
 
     @Override
     public int compareTo(RedisConnect o) {

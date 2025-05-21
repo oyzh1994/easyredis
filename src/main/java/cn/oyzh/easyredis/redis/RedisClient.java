@@ -236,7 +236,7 @@ public class RedisClient {
         List<RedisJumpConfig> jumpConfigs = this.redisConnect.getJumpConfigs();
         // 从数据库获取
         if (jumpConfigs == null) {
-            jumpConfigs = this.jumpConfigStore.listByIid(this.redisConnect.getId());
+            jumpConfigs = this.jumpConfigStore.loadByIid(this.redisConnect.getId());
         }
         // 过滤配置
         jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).collect(Collectors.toList());

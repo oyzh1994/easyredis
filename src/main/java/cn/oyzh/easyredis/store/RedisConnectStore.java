@@ -59,11 +59,11 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
         for (RedisConnect connect : connects) {
             connect.setFilters(this.filterStore.loadByIid(connect.getId()));
             connect.setCollects(this.collectStore.loadByIid(connect.getId()));
-//            connect.setSshConfig(this.sshConfigStore.getByIid(connect.getId()));
-            connect.setJumpConfigs(this.jumpConfigStore.listByIid(connect.getId()));
+            connect.setJumpConfigs(this.jumpConfigStore.loadByIid(connect.getId()));
         }
         return connects;
     }
+
 
     /**
      * 替换
@@ -80,32 +80,20 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
                 result = this.insert(model);
             }
 
-//            // ssh处理
-//            RedisSSHConfig sshConfig = model.getSshConfig();
-//            if (sshConfig != null) {
-//                sshConfig.setIid(model.getId());
-//                this.sshConfigStore.replace(sshConfig);
-//            } else {
-//                this.sshConfigStore.deleteByIid(model.getId());
-//            }
-
             // 跳板机处理
             List<RedisJumpConfig> jumpConfigs = model.getJumpConfigs();
             if (CollectionUtil.isNotEmpty(jumpConfigs)) {
                 for (RedisJumpConfig jumpConfig : jumpConfigs) {
                     jumpConfig.setIid(model.getId());
+                    this.jumpConfigStore.replace(jumpConfig);
                 }
-                this.jumpConfigStore.deleteByIid(model.getId());
-                this.jumpConfigStore.replace(jumpConfigs);
-            } else if (jumpConfigs != null) {
-                this.jumpConfigStore.deleteByIid(model.getId());
             }
 
             // 收藏处理
             List<RedisCollect> collects = model.getCollects();
             if (CollectionUtil.isNotEmpty(collects)) {
-                this.collectStore.deleteByIid(model.getId());
                 for (RedisCollect collect : collects) {
+                    collect.setIid(model.getId());
                     this.collectStore.replace(collect);
                 }
             }
@@ -113,7 +101,6 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
             // 过滤处理
             List<RedisFilter> filters = model.getFilters();
             if (CollectionUtil.isNotEmpty(filters)) {
-                this.filterStore.deleteByIid(model.getId());
                 for (RedisFilter filter : filters) {
                     filter.setIid(model.getId());
                     this.filterStore.replace(filter);
@@ -130,7 +117,6 @@ public class RedisConnectStore extends JdbcStandardStore<RedisConnect> {
         if (result) {
             this.filterStore.deleteByIid(model.getId());
             this.collectStore.deleteByIid(model.getId());
-//            this.sshConfigStore.deleteByIid(model.getId());
             this.jumpConfigStore.deleteByIid(model.getId());
         }
         return result;
