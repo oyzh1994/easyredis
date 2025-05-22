@@ -2,7 +2,7 @@
   "packMode": "jpackage",
   "platform": "linux",
   "dest": "/home/oyzh/Documents/Package/EasyRedis/${appVersion}/",
-  "appIcon": "${projectPath}/resource/redis.png",
+  "appIcon": "${projectPath}/resource/app.png",
   "mainJar": "${projectPath}/target/easyredis-${appVersion}.jar",
   "jdkPath": "$SYSTEM",
   "jpackage": {

@@ -2,7 +2,7 @@
   "packMode": "jpackage",
   "platform": "macos",
   "dest": "/Volumes/Files/Package/EasyRedis/${appVersion}",
-  "appIcon": "${projectPath}/resource/redis.icns",
+  "appIcon": "${projectPath}/resource/app.icns",
   "mainJar": "${projectPath}/target/easyredis-${appVersion}.jar",
   "jdkPath": "$SYSTEM",
   "jpackage": {
