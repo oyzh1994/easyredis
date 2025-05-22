@@ -111,7 +111,7 @@ public class RedisStreamValue implements RedisKeyValue<List<RedisStreamValue.Red
         }
 
         public Map<String, String> getFields() {
-            return JSONUtil.parseObject(this.getValue()).toBean(Map.class);
+            return JSONUtil.parseObject(this.getValue()).toJavaObject(Map.class);
         }
     }
 }

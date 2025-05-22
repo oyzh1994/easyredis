@@ -1,11 +1,11 @@
 package cn.oyzh.easyredis.dto;
 
 import cn.oyzh.common.dto.Project;
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisGroup;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,8 +99,8 @@ public class RedisConnectExport {
         export.connects = new ArrayList<>(4);
         export.version = object.getString("version");
         export.platform = object.getString("platform");
-        export.groups = object.getBeanList("groups", RedisGroup.class);
-        export.connects = object.getBeanList("connects", RedisConnect.class);
+        export.groups = object.getList("groups", RedisGroup.class);
+        export.connects = object.getList("connects", RedisConnect.class);
         return export;
     }
 

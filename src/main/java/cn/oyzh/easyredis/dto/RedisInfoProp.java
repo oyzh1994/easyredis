@@ -1,8 +1,8 @@
 package cn.oyzh.easyredis.dto;
 
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +106,7 @@ public class RedisInfoProp {
         if (propName != null) {
             JSONObject object = this.getProps(group);
             if (CollectionUtil.isNotEmpty(object)) {
-                return object.getInt(propName);
+                return object.getIntValue(propName);
             }
         }
         return -1;
@@ -123,7 +123,7 @@ public class RedisInfoProp {
         if (propName != null) {
             JSONObject object = this.getProps(group);
             if (CollectionUtil.isNotEmpty(object)) {
-                return object.getInt(propName);
+                return object.getIntValue(propName);
             }
         }
         return null;

@@ -1,10 +1,11 @@
 package cn.oyzh.easyredis.controller.connect;
 
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
+import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisJumpConfig;
-import cn.oyzh.easyredis.dto.RedisFilterVO;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.fx.RedisFilterTableView;
 import cn.oyzh.easyredis.fx.RedisJumpTableView;
@@ -30,6 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 添加redis信息业务
@@ -257,7 +259,7 @@ public class RedisAddConnectController extends StageController {
      */
     @FXML
     private void addFilter() {
-        RedisFilterVO filter = new RedisFilterVO();
+        RedisFilter filter = new RedisFilter();
         filter.setEnable(true);
         filter.setPartMatch(true);
         this.filterTable.addFilter(filter);
@@ -269,12 +271,16 @@ public class RedisAddConnectController extends StageController {
      */
     @FXML
     private void deleteFilter() {
-        RedisFilterVO filter = this.filterTable.getSelectedItem();
-        if (filter == null) {
-            return;
-        }
-        if (MessageBox.confirm(I18nHelper.deleteData())) {
-            this.filterTable.removeItem(filter);
+        try {
+            List<RedisFilter> filters = this.filterTable.getSelectedItems();
+            if (CollectionUtil.isEmpty(filters)) {
+                return;
+            }
+            if (MessageBox.confirm(I18nHelper.deleteData())) {
+                this.filterTable.removeItem(filters);
+            }
+        } catch (Exception ex) {
+            MessageBox.exception(ex);
         }
     }
 

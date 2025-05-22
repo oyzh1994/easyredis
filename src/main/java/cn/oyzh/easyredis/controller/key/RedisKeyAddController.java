@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.controller.key;
 
-import cn.oyzh.common.json.JSONObject;
 import cn.oyzh.common.json.JSONUtil;
 import cn.oyzh.common.util.ArrayUtil;
 import cn.oyzh.common.util.CollectionUtil;
@@ -24,6 +23,7 @@ import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
