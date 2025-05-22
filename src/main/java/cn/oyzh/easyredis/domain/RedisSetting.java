@@ -36,33 +36,9 @@ public class RedisSetting extends AppSetting {
         }
     }
 
-    // /**
-    //  * 搜索-更多-展开状态
-    //  * 0|null 不展开
-    //  * 1 展开
-    //  */
-    // private Byte searchMoreExpand;
-    //
-    // /**
-    //  * 是否展开搜索-更多
-    //  *
-    //  * @return 结果
-    //  */
-    // public boolean isSearchMoreExpand() {
-    //     return this.searchMoreExpand != null && this.searchMoreExpand == 1;
-    // }
-
     public int keyLoadLimit() {
         return this.keyLoadLimit == null ? 0 : this.keyLoadLimit;
     }
-
-//    public int calcLimit(int limit, int count) {
-//        if (this.keyLoadLimit() == 0) {
-//            return limit;
-//        }
-//        int size = this.keyLoadLimit() - count;
-//        return Math.min(size, limit);
-//    }
 
     /**
      * 行页码限制

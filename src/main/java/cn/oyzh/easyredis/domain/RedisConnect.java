@@ -7,6 +7,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
+import com.alibaba.fastjson2.annotation.JSONField;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -90,17 +91,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     @Column
     private Integer executeTimeOut;
-
-//    /**
-//     * 是否开启ssh转发
-//     */
-//    @Column
-//    private Boolean sshForward;
-//
-//    /**
-//     * ssh信息
-//     */
-//    private RedisSSHConfig sshConfig;
 
     /**
      * 跳板信息
@@ -314,6 +304,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      *
      * @return 0:无需认证 1:密码认证 2:用户密码认证
      */
+    @JSONField(serialize = false, deserialize = false)
     public int getAuthType() {
         if (StringUtil.isNotBlank(this.user) && StringUtil.isNotBlank(this.password)) {
             return 2;
@@ -337,6 +328,7 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      *
      * @return 结果
      */
+    @JSONField(serialize = false, deserialize = false)
     public boolean isEnableJump() {
         // 初始化跳板配置
         List<RedisJumpConfig> jumpConfigs = this.getJumpConfigs();
