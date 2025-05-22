@@ -26,7 +26,6 @@
 // */
 //@StageAttribute(
 //        resizable = false,
-//        stageStyle = FXStageStyle.UTILITY,
 //        modality = Modality.WINDOW_MODAL,
 //        value = FXConst.FXML_PATH + "key/redisKeyFilter.fxml"
 //)
