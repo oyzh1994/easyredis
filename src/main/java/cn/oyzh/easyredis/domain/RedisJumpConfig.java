@@ -1,0 +1,90 @@
+package cn.oyzh.easyredis.domain;
+
+import cn.oyzh.common.util.CollectionUtil;
+import cn.oyzh.fx.plus.controls.toggle.FXToggleSwitch;
+import cn.oyzh.ssh.domain.SSHConnect;
+import cn.oyzh.store.jdbc.Column;
+import cn.oyzh.store.jdbc.PrimaryKey;
+import cn.oyzh.store.jdbc.Table;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * redis跳板配置
+ *
+ * @author oyzh
+ * @since 2025-05-20
+ */
+@Table("t_jump_config")
+public class RedisJumpConfig extends SSHConnect implements Serializable {
+
+    /**
+     * id
+     */
+    @Column
+    @PrimaryKey
+    private String id;
+
+    /**
+     * 连接id
+     *
+     * @see RedisConnect
+     */
+    @Column
+    private String iid;
+
+    /**
+     * 是否启用
+     */
+    @Column
+    private Boolean enabled;
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled == null || this.enabled;
+    }
+
+    public FXToggleSwitch getEnabledStatus() {
+        FXToggleSwitch toggleSwitch = new FXToggleSwitch();
+        toggleSwitch.setSelected(this.isEnabled());
+        toggleSwitch.selectedChanged((observable, oldValue, newValue) -> {
+            this.setEnabled(newValue);
+        });
+        return toggleSwitch;
+    }
+
+    public static List<RedisJumpConfig> clone(List<RedisJumpConfig> configs) {
+        if (CollectionUtil.isEmpty(configs)) {
+            return Collections.emptyList();
+        }
+        List<RedisJumpConfig> list = new ArrayList<>();
+        for (RedisJumpConfig config : configs) {
+            RedisJumpConfig jumpConfig = new RedisJumpConfig();
+            jumpConfig.copy(config);
+            list.add(jumpConfig);
+        }
+        return list;
+    }
+}

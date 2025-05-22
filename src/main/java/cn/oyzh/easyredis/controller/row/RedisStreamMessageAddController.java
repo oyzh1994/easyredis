@@ -91,6 +91,8 @@ public class RedisStreamMessageAddController extends StageController {
             params.id(streamIDText);
             // 添加流
             client.xadd(dbIndex, key, (Map) fields, params);
+            // 结果
+            this.setProp("result", true);
             // 发送事件
             RedisEventUtil.streamMessageAdded(this.treeItem, key, rowValue);
             this.closeWindow();

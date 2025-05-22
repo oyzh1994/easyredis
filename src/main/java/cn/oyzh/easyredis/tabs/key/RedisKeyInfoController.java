@@ -89,6 +89,9 @@ public class RedisKeyInfoController extends RichTabController {
      * @param treeItem redis树键
      */
     public void init(RedisKeyTreeItem treeItem) {
+        if (treeItem == null || treeItem.getTreeView() == null) {
+            return;
+        }
         // 重置渲染标志位
         this.treeItem = treeItem;
         this.redisKey = treeItem.value();

@@ -6,12 +6,12 @@ import cn.oyzh.common.thread.TaskBuilder;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisSetting;
-import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.key.RedisKey;
 import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisKeyUtil;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -33,7 +33,7 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
      */
     private final RedisSetting setting = RedisSettingStore.SETTING;
 
-    public RedisKeyRootTreeItem( RedisKeyTreeView treeView) {
+    public RedisKeyRootTreeItem(RedisKeyTreeView treeView) {
         super(treeView);
         super.setFilterable(true);
         this.setValue(new RedisKeyRootTreeItemValue(this));
@@ -67,7 +67,7 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, this.window());
 //        adapter.setProp("dbItem", this.dbItem());
 //        adapter.display();
-        RedisEventUtil.showAddKey(this.dbItem());
+        RedisViewFactory.addKey(this.dbItem(), null);
     }
 
     /**
@@ -78,7 +78,7 @@ public class RedisKeyRootTreeItem extends RichTreeItem<RedisKeyRootTreeItemValue
 //        adapter.setProp("connect", this.redisConnect());
 //        adapter.setProp("dbIndex", this.dbIndex());
 //        adapter.display();
-        RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex());
+        RedisViewFactory.exportData(this.redisConnect(), this.dbIndex());
     }
 
     @Override

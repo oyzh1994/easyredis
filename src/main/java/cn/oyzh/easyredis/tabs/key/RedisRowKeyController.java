@@ -2,8 +2,8 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.easyredis.domain.RedisSetting;
+import cn.oyzh.easyredis.fx.key.RedisKeyRowTableView;
 import cn.oyzh.easyredis.popups.RedisPageSettingPopupController;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.store.RedisSettingStore;
@@ -12,11 +12,11 @@ import cn.oyzh.fx.gui.page.PageBox;
 import cn.oyzh.fx.gui.page.PageEvent;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
-import cn.oyzh.fx.plus.controls.table.FXTableView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
@@ -51,7 +51,7 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * 数据列表
      */
     @FXML
-    protected FXTableView<R> listTable;
+    protected RedisKeyRowTableView<R> listTable;
 
     /**
      * 数据操作面板
@@ -69,6 +69,10 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
         if (super.init(treeItem)) {
             // 过滤处理
             this.filter.addTextChangeListener((t3, t2, t1) -> TaskManager.startDelay("redis:row:filter", this::firstPage, 50));
+            // 设置操作
+            this.listTable.setAddAction(this::addRow);
+            this.listTable.setCopyAction(this::copyRow);
+            this.listTable.setDeleteAction(this::deleteRow);
             return true;
         }
         return false;
@@ -112,28 +116,30 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        try {
-            // 刷新数据
-            this.treeItem.refreshKeyValue();
-            // 跳转到首页
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            try {
+                // 刷新数据
+                this.treeItem.refreshKeyValue();
+                // 跳转到首页
+                this.firstPage();
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
-
-    /**
-     * 删除行
-     */
-    protected abstract void deleteRow();
 
     /**
      * 添加行
      */
     protected abstract void addRow();
+
+    /**
+     * 删除行
+     */
+    protected abstract void deleteRow();
 
     /**
      * 获取行列表
@@ -148,18 +154,13 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      * @param pageNo 页码
      */
     protected void initPage(long pageNo) {
-        this.disableTab();
-        ThreadUtil.start(() -> {
-            try {
-                List<R> rows = this.getRows();
-                this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
-                List<R> pageRows = this.pageData.page(pageNo);
-                this.listTable.setItem(pageRows);
-                this.pagePane.setPaging(this.pageData);
-            } finally {
-                this.enableTab();
-            }
-        }, 20);
+        StageManager.showMask(() -> {
+            List<R> rows = this.getRows();
+            this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
+            List<R> pageRows = this.pageData.page(pageNo);
+            this.listTable.setItem(pageRows);
+            this.pagePane.setPaging(this.pageData);
+        });
     }
 
     /**

@@ -8,12 +8,12 @@ import cn.oyzh.i18n.I18nHelper;
  * @author oyzh
  * @since 2023/7/5
  */
-public class LongitudeField extends DecimalTextField {
+public class RedisLatitudeField extends DecimalTextField {
 
     {
-        this.setMax(180D);
-        this.setMin(-180D);
         this.setRequire(true);
-        this.setTipText(I18nHelper.longitude());
+        this.setMax(85.05112878);
+        this.setMin(-85.05112878);
+        this.setTipText(I18nHelper.latitude());
     }
 }

@@ -4,7 +4,6 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -12,17 +11,18 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +62,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisConnectTreeItem( RedisConnect value,  RichTreeView treeView) {
+    public RedisConnectTreeItem(RedisConnect value, RichTreeView treeView) {
         super(treeView);
         this.value(value);
     }
@@ -149,7 +149,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                     RedisServerInfoTreeItem item2 = new RedisServerInfoTreeItem(this.getTreeView());
                     RedisQueriesTreeItem item3 = new RedisQueriesTreeItem(this.getTreeView());
                     RedisTerminalTreeItem item4 = new RedisTerminalTreeItem(this.getTreeView(), null);
-//                    this.setChild(List.of(item1, item2, item3));
+//                    RedisScriptsTreeItem item5 = new RedisScriptsTreeItem(this.getTreeView());
                     this.setChild(List.of(item1, item2, item3, item4));
                 }
                 this.expend();
@@ -218,7 +218,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
 //        StageAdapter adapter = StageManager.parseStage(RedisExportDataController.class);
 //        adapter.setProp("connect", this.value);
 //        adapter.display();
-        RedisEventUtil.showExportData(this.value, null);
+        RedisViewFactory.exportData(this.value, null);
     }
 
     /**
@@ -260,7 +260,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      */
     public void cancelConnect() {
         this.canceled = true;
-        ThreadUtil.startVirtual(() -> {
+        StageManager.showMask(() -> {
             this.client.close();
             this.setLoaded(false);
         });
@@ -276,7 +276,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
                         this.client.start();
                         if (!this.isConnected()) {
                             if (!this.canceled) {
-                                MessageBox.warn("[" + this.value.getName() + "] " + I18nHelper.connectFail());
+                                MessageBox.warn("[" + this.value.getName() + "] " + this.client.getErrorMsg());
                             }
                             this.canceled = false;
                             this.closeConnect(false);
@@ -299,7 +299,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
 //        StageAdapter adapter = StageManager.parseStage(RedisImportDataController.class);
 //        adapter.setProp("connect", this.client.redisConnect());
 //        adapter.display();
-        RedisEventUtil.showImportData(this.client.redisConnect());
+        RedisViewFactory.importData(this.client.redisConnect());
     }
 
     /**
@@ -309,7 +309,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
 //        StageAdapter adapter = StageManager.parseStage(RedisTransportDataController.class);
 //        adapter.setProp("sourceInfo", this.value);
 //        adapter.display();
-        RedisEventUtil.showTransportData(this.client.redisConnect(), null);
+        RedisViewFactory.transportData(this.client.redisConnect(), null);
     }
 
     /**
@@ -358,7 +358,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
 //        StageAdapter adapter = StageManager.parseStage(RedisUpdateConnectController.class, this.window());
 //        adapter.setProp("redisInfo", this.value());
 //        adapter.display();
-        RedisEventUtil.showUpdateConnect(this.value);
+        RedisViewFactory.updateConnect(this.value);
     }
 
     /**
@@ -368,7 +368,6 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
         RedisConnect redisConnect = new RedisConnect();
         redisConnect.copy(this.value);
         redisConnect.setName(this.value.getName() + "-" + I18nHelper.clone1());
-        redisConnect.setCollects(Collections.emptyList());
         if (this.connectStore.replace(redisConnect)) {
             this.connectManager().addConnect(redisConnect);
         } else {
@@ -414,7 +413,7 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
      *
      * @param value redis信息
      */
-    public void value( RedisConnect value) {
+    public void value(RedisConnect value) {
         this.value = value;
         this.client = new RedisClient(value);
         this.client.stateProperty().addListener((observable, o, n) -> {

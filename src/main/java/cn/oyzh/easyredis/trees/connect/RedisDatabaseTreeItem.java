@@ -1,15 +1,13 @@
 package cn.oyzh.easyredis.trees.connect;
 
-import cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
-import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -121,9 +119,10 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
      */
     @FXML
     private void batchOperation() {
-        StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
-        adapter.setProp("treeItem", this);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisKeyBatchOperationController.class, this.window());
+//        adapter.setProp("treeItem", this);
+//        adapter.display();
+        RedisViewFactory.batchOperation(this);
     }
 
     /**
@@ -135,7 +134,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        adapter.setProp("sourceInfo", this.redisConnect());
 //        adapter.setProp("dbIndex", this.dbIndex);
 //        adapter.display();
-        RedisEventUtil.showTransportData(this.redisConnect(),this.dbIndex);
+        RedisViewFactory.transportData(this.redisConnect(), this.dbIndex);
     }
 
 //    /**
@@ -169,7 +168,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        adapter.setProp("connect", this.redisConnect());
 //        adapter.setProp("dbIndex", this.dbIndex);
 //        adapter.display();
-        RedisEventUtil.showExportData(this.redisConnect(), this.dbIndex);
+        RedisViewFactory.exportData(this.redisConnect(), this.dbIndex);
     }
 
     /**
@@ -241,7 +240,7 @@ public class RedisDatabaseTreeItem extends RichTreeItem<RedisDatabaseTreeItemVal
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class, this.window());
 //        adapter.setProp("dbItem", this);
 //        adapter.display();
-        RedisEventUtil.showAddKey(this);
+        RedisViewFactory.addKey(this, null);
     }
 
     /**

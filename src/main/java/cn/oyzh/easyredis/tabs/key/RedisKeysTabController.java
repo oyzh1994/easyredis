@@ -1,6 +1,5 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.common.thread.ThreadUtil;
 import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -11,6 +10,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeView;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.svg.pane.CollectSVGPane;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
 import cn.oyzh.fx.gui.tabs.ParentTabController;
@@ -23,6 +23,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeWidthResizer;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.TreeItem;
@@ -141,18 +142,18 @@ public class RedisKeysTabController extends ParentTabController {
      * @param treeItem db节点
      */
     public void init(RedisDatabaseTreeItem treeItem) {
-        try {
-            this.root.disable();
-            this.treeItem = treeItem;
-            this.treeView.dbItem(this.treeItem);
-            this.client = treeItem.client();
-            // 加载根节点
-            this.treeView.loadItems();
-        } catch (Exception ex) {
-            MessageBox.exception(ex);
-        } finally {
-            this.root.enable();
-        }
+        this.treeItem = treeItem;
+        this.treeView.dbItem(this.treeItem);
+        this.client = treeItem.client();
+        // 加载根节点
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadItems();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     @FXML
@@ -190,7 +191,7 @@ public class RedisKeysTabController extends ParentTabController {
 //        StageAdapter adapter = StageManager.parseStage(RedisKeyAddController.class);
 //        adapter.setProp("dbItem", this.treeItem);
 //        adapter.display();
-        RedisEventUtil.showAddKey(this.treeItem);
+        RedisViewFactory.addKey(this.treeItem, null);
     }
 
     @FXML
@@ -215,7 +216,14 @@ public class RedisKeysTabController extends ParentTabController {
 
     @FXML
     private void refreshKey() {
-        this.treeView.loadItems();
+        StageManager.showMask(() -> {
+            try {
+                this.treeView.loadItems();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     @FXML
@@ -257,9 +265,8 @@ public class RedisKeysTabController extends ParentTabController {
      * @param treeItem 节点
      */
     private void initItem(TreeItem<?> treeItem) {
-        ThreadUtil.start(() -> {
+        StageManager.showMask(() -> {
             CostUtil.record();
-            this.root.disable();
             try {
                 if (treeItem instanceof RedisKeyTreeItem keyTreeItem) {
                     // 设置激活节点
@@ -276,12 +283,12 @@ public class RedisKeysTabController extends ParentTabController {
                     this.tabPane.disable();
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 MessageBox.exception(ex);
             } finally {
-                this.root.enable();
                 CostUtil.printCost();
             }
-        }, 50);
+        });
     }
 
     /**

@@ -1,9 +1,8 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.easyredis.controller.row.RedisHyLogElementsAddController;
-import cn.oyzh.easyredis.event.key.RedisHyLogElementsAddedEvent;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
@@ -70,17 +69,19 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        // 刷新数据
-        try {
-            this.treeItem.refreshKeyValue();
-            // 数据变更
-            this.initKey();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(()->{
+            // 刷新数据
+            try {
+                this.treeItem.refreshKeyValue();
+                // 数据变更
+                this.initKey();
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     /**
@@ -88,9 +89,21 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
      */
     @FXML
     private void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisHyLogElementsAddController.class, this.treeItem.window());
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisHylogElementsAddController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.hylogElementsAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            // 刷新键值
+            this.treeItem.refreshKeyValue();
+            // 刷新统计值
+            this.treeItem.flushCount();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+            // 初始化键
+            this.initKey();
+        }
     }
 
     @Override
@@ -105,20 +118,20 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         this.nodeData.showData(dataType, this.treeItem.rawValue());
     }
 
-    /**
-     * hyLog元素添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            // 刷新统计值
-            this.treeItem.flushCount();
-            // 初始化键
-            this.initKey();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * hyLog元素添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onHyLogElementAdded(RedisHyLogElementsAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            // 刷新统计值
+//            this.treeItem.flushCount();
+//            // 初始化键
+//            this.initKey();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 }

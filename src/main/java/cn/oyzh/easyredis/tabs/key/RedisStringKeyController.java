@@ -15,6 +15,7 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
+import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataType;
 import cn.oyzh.fx.rich.richtextfx.data.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
@@ -107,7 +108,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
      * redis数据监听器
      */
     private final ChangeListener<String> dataListener = (observable, oldValue, newValue) -> {
-        if (!this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
+        if (!this.nodeData.isDisable() && !this.ignoreDataChange && !Objects.equals(this.treeItem.rawData(), newValue)) {
             this.saveNodeData.enable();
             this.treeItem.data(newValue);
         }
@@ -129,13 +130,13 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         // 检测数据是否太大
         if (this.treeItem.isDataTooBig()) {
             // 状态处理
-            this.nodeData.clear();
             this.nodeData.disable();
             this.ignoreDataChange = true;
+            this.nodeData.clear();
             NodeGroupUtil.disable(this.getTab(), "dataToBig");
             // 异步处理，避免阻塞主程序
             TaskManager.startDelay(() -> {
-                if (MessageBox.confirm(RedisI18nHelper.keyTip9())) {
+                if (MessageBox.confirm(I18nHelper.tips(), RedisI18nHelper.keyTip9(), null, StageManager.getPrimaryStage())) {
                     this.saveBinaryFile();
                 }
             }, 10);
@@ -207,17 +208,19 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        try {
-            // 刷新数据
-            this.treeItem.refreshKeyValue();
-            // 初始化数据
-            this.initKey();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        StageManager.showMask(() -> {
+            try {
+                // 刷新数据
+                this.treeItem.refreshKeyValue();
+                // 初始化数据
+                this.initKey();
+                // 刷新内存占用
+                this.treeItem.flushMemoryUsage();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
+            }
+        });
     }
 
     @FXML
@@ -228,8 +231,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
             return;
         }
         if (this.treeItem.isDataUnsaved()) {
-            this.disableTab();
-            TaskManager.start(() -> {
+            StageManager.showMask(() -> {
                 try {
                     // 保存数据
                     this.treeItem.saveKeyValue();
@@ -239,8 +241,9 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
                     this.saveNodeData.disable();
                     // 刷新内存占用
                     this.treeItem.flushMemoryUsage();
-                } finally {
-                    this.enableTab();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }
@@ -310,7 +313,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @FXML
     private void key2QRCode(MouseEvent event) {
         try {
-            PopupAdapter adapter= PopupManager.parsePopup(RedisKeyQRCodePopupController.class);
+            PopupAdapter adapter = PopupManager.parsePopup(RedisKeyQRCodePopupController.class);
             adapter.setProp("key", this.treeItem.value());
             adapter.setProp("keyData", this.nodeData.getTextTrim());
             adapter.showPopup((Node) event.getSource());

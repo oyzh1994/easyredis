@@ -447,15 +447,10 @@ public class RedisKeyAddController extends StageController {
      * @return 结果
      */
     private boolean addBitNode(int dbIndex, String key) {
-        try {
-            Number bitIndex = this.bitIndex.getValue();
-            // 设置bit值
-            this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        Number bitIndex = this.bitIndex.getValue();
+        // 设置bit值
+        this.client.setbit(dbIndex, key, bitIndex.intValue(), this.bitValue.isSelected());
+        return true;
     }
 
     /**

@@ -1,16 +1,21 @@
 package cn.oyzh.easyredis.domain;
 
+import cn.oyzh.common.object.ObjectCopier;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author oyzh
  * @since 2024-09-26
  */
 @Table("t_collect")
-public class RedisCollect implements Serializable {
+public class RedisCollect implements Serializable, ObjectCopier<RedisCollect> {
 
     /**
      * 信息id
@@ -63,4 +68,24 @@ public class RedisCollect implements Serializable {
     public void setKey(String key) {
         this.key = key;
     }
+
+    @Override
+    public void copy(RedisCollect t1) {
+        this.key = t1.getKey();
+        this.dbIndex = t1.getDbIndex();
+    }
+
+    public static List<RedisCollect> clone(List<RedisCollect> collects) {
+        if (CollectionUtil.isEmpty(collects)) {
+            return Collections.emptyList();
+        }
+        List<RedisCollect> list = new ArrayList<>();
+        for (RedisCollect collect : collects) {
+            RedisCollect redisCollect = new RedisCollect();
+            redisCollect.copy(collect);
+            list.add(redisCollect);
+        }
+        return list;
+    }
+
 }

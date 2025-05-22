@@ -50,9 +50,9 @@ public class RedisConst {
      */
     public static String getStorePath() {
         if (JarUtil.isInJar()) {
-            return System.getProperty("user.home") + File.separator + ".easyshell" + File.separator;
+            return System.getProperty("user.home") + File.separator + ".easyredis" + File.separator;
         }
-        return System.getProperty("user.home") + File.separator + ".easyshell_dev" + File.separator;
+        return System.getProperty("user.home") + File.separator + ".easyredis_dev" + File.separator;
     }
 
     /**

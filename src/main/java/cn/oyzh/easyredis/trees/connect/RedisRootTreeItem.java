@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisConnectManager;
 import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.store.RedisGroupStore;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.drag.DragNodeItem;
@@ -86,7 +87,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
 //                MessageBox.exception(ex, I18nHelper.exportConnectionFail());
 //            }
 //        }
-        RedisEventUtil.showExportConnect();
+        RedisViewFactory.exportConnect();
     }
 
     /**
@@ -105,7 +106,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
         File file = CollectionUtil.getFirst(files);
 //        // 解析文件
 //        this.parseConnect(file);
-        RedisEventUtil.showImportConnect(file);
+        RedisViewFactory.importConnect(file);
     }
 
     /**
@@ -116,7 +117,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
 //        File file = FileChooserHelper.choose(I18nHelper.chooseFile(), filter1);
 //        // 解析文件
 //        this.parseConnect(file);
-        RedisEventUtil.showImportConnect(null);
+        RedisViewFactory.importConnect(null);
     }
 
 //    /**
@@ -170,7 +171,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
      */
     private void addConnect() {
 //        StageManager.showStage(RedisAddConnectController.class, this.window());
-        RedisEventUtil.showAddConnect();
+        RedisViewFactory.addConnect(null);
     }
 
     /**
@@ -367,41 +368,19 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
         }
         // 初始化分组
         List<RedisGroup> groups = this.groupStore.load();
-        // List<RedisGroupTreeItem> groupItems = this.getGroupItems();
         if (CollectionUtil.isNotEmpty(groups)) {
             List<TreeItem<?>> list = new ArrayList<>(groups.size());
-            // f1:
             for (RedisGroup group : groups) {
-                // for (RedisGroupTreeItem groupItem : groupItems) {
-                //     if (StringUtil.equals(groupItem.getGid(), group.getGid())) {
-                //         continue f1;
-                //     }
-                // }
                 list.add(new RedisGroupTreeItem(group, this.getTreeView()));
             }
             this.addChild(list);
         }
         // 初始化连接
-        List<RedisConnect> connects = this.connectStore.load();
-//        List<RedisGroupTreeItem> groupItems = this.getGroupItems();
+        List<RedisConnect> connects = this.connectStore.loadFull();
         if (CollectionUtil.isNotEmpty(connects)) {
-            // List<RedisConnect> list = new ArrayList<>();
-            f1:
             for (RedisConnect connect : connects) {
-//                for (RedisConnectTreeItem connectItem : connectItems) {
-//                    if (StringUtil.equals(connectItem.getId(), connect.getId())) {
-//                        continue f1;
-//                    }
-//                }
-//                Optional<RedisGroupTreeItem> optional = groupItems.parallelStream().filter(g -> StringUtil.equals(g.getGid(), connect.getGroupId())).findAny();
-//                if (optional.isPresent()) {
-//                    optional.get().addConnect(connect);
-//                } else {
                 this.addConnect(connect);
-                // list.add(connect);
-//                }
             }
-            // this.addConnects(list);
         }
         this.refresh();
     }

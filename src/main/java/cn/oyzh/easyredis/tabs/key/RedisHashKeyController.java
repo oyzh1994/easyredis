@@ -1,14 +1,11 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisHashFieldAddController;
-import cn.oyzh.easyredis.event.key.RedisHashFieldAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
-import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -230,9 +227,16 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisHashFieldAddController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.hashFieldAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     /**
@@ -244,15 +248,17 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        try {
-            // 刷新数据
-            if (this.treeItem.reloadRow()) {
-                this.initRow(this.treeItem.currentRow());
+        StageManager.showMask(() -> {
+            try {
+                // 刷新数据
+                if (this.treeItem.reloadRow()) {
+                    this.initRow(this.treeItem.currentRow());
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        });
     }
 
     @FXML
@@ -278,15 +284,15 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
             return;
         }
         if (this.treeItem.isDataUnsaved()) {
-            this.disableTab();
-            TaskManager.start(() -> {
+            StageManager.showMask(() -> {
                 try {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
                     this.treeItem.flushMemoryUsage();
-                } finally {
-                    this.enableTab();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }
@@ -406,19 +412,25 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteField() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+
+            return;
         }
+        RedisHashValue.RedisHashRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteField() + ":" + row.getField())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override
@@ -447,19 +459,19 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * hash字段添加事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
-        if (this.treeItem == event.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * hash字段添加事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void onHashFieldAdded(RedisHashFieldAddedEvent event) {
+//        if (this.treeItem == event.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

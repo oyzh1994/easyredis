@@ -4,25 +4,23 @@
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
 <?import cn.oyzh.fx.gui.svg.glyph.ClearSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.JSONSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
-<?import cn.oyzh.fx.plus.controls.button.FXRadioButton?>
-<?import cn.oyzh.fx.plus.controls.toggle.FXToggleGroup?>
 <?import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="cn.oyzh.easyredis.controller.row.RedisListRowAddController" realWidth="750" realHeight="550">
-    <InfoLabel text="%base.data">
+        fx:controller="cn.oyzh.easyredis.controller.row.RedisHylogElementsAddController" realWidth="750"
+        realHeight="550">
+    <InfoLabel text="%base.element">
         <VBox.margin>
             <Insets left="30" top="10"/>
         </VBox.margin>
     </InfoLabel>
-    <FXHBox flexWidth="100%" flexHeight="100% - 180">
-        <RichDataTextArea fx:id="rowValue" flexHeight="100%" tipText="%base.contentTip1"
+    <FXHBox flexWidth="100%" flexHeight="100% - 120">
+        <RichDataTextArea fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
                           flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
@@ -39,32 +37,7 @@
                     <Insets left="5" top="10"/>
                 </VBox.margin>
             </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
-                <VBox.margin>
-                    <Insets left="5" top="10"/>
-                </VBox.margin>
-            </JSONSVGGlyph>
         </FXVBox>
-    </FXHBox>
-    <InfoLabel text="%base.method">
-        <VBox.margin>
-            <Insets left="30" top="10"/>
-        </VBox.margin>
-    </InfoLabel>
-    <FXHBox flexWidth="100%">
-        <fx:define>
-            <FXToggleGroup fx:id="insertMode"/>
-        </fx:define>
-        <FXRadioButton text="lpush" toggleGroup="$insertMode" userData="0" selected="true">
-            <HBox.margin>
-                <Insets left="30" top="5"/>
-            </HBox.margin>
-        </FXRadioButton>
-        <FXRadioButton text="rpush" toggleGroup="$insertMode" userData="1">
-            <HBox.margin>
-                <Insets left="10" top="5"/>
-            </HBox.margin>
-        </FXRadioButton>
     </FXHBox>
     <FXHBox flexWidth="100%" realHeight="50">
         <SubmitButton onAction="#addRow">

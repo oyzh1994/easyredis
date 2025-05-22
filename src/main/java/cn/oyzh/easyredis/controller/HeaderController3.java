@@ -1,15 +1,17 @@
 package cn.oyzh.easyredis.controller;
 
 import cn.oyzh.common.SysConst;
-import cn.oyzh.common.system.OSUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.util.RedisViewFactory;
+import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.fx.gui.event.Layout1Event;
+import cn.oyzh.fx.gui.event.Layout2Event;
+import cn.oyzh.fx.gui.svg.pane.LayoutSVGPane;
 import cn.oyzh.fx.plus.controller.StageController;
-import cn.oyzh.fx.plus.controls.pane.FXPane;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
-import javafx.stage.WindowEvent;
 
 /**
  * 主页头部业务
@@ -18,6 +20,12 @@ import javafx.stage.WindowEvent;
  * @since 2023/06/16
  */
 public class HeaderController3 extends StageController {
+
+    /**
+     * 布局组件
+     */
+    @FXML
+    private LayoutSVGPane layoutPane;
 
     /**
      * 设置
@@ -30,7 +38,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(SettingController2.class, this.stage);
 //        }
-        RedisEventUtil.showSetting();
+        RedisViewFactory.setting();
     }
 
     /**
@@ -39,7 +47,7 @@ public class HeaderController3 extends StageController {
     @FXML
     private void about() {
 //        StageManager.showStage(AboutController.class, this.stage);
-        RedisEventUtil.showAbout();
+        RedisViewFactory.about();
     }
 
     /**
@@ -63,7 +71,7 @@ public class HeaderController3 extends StageController {
 //        } else {
 //            StageManager.showStage(RedisTransportDataController.class, this.stage);
 //        }
-        RedisEventUtil.showTransportData();
+        RedisViewFactory.transportData(null, null);
     }
 
     /**
@@ -72,23 +80,55 @@ public class HeaderController3 extends StageController {
     @FXML
     private void tool() {
 //        StageManager.showStage(RedisToolController.class, this.stage);
-        RedisEventUtil.showTool();
+        RedisViewFactory.tool();
+    }
+
+//    /**
+//     * 布局1
+//     */
+//    @FXML
+//    private void layout1() {
+//        RedisEventUtil.layout1();
+//    }
+//
+//    /**
+//     * 布局2
+//     */
+//    @FXML
+//    private void layout2() {
+//        RedisEventUtil.layout2();
+//    }
+
+    /**
+     * 布局1事件
+     *
+     * @param event 事件
+     */
+    @EventSubscribe
+    private void layout1(Layout1Event event) {
+        this.layoutPane.layout2();
     }
 
     /**
-     * 布局1
+     * 布局2事件
+     *
+     * @param event 事件
      */
-    @FXML
-    private void layout1() {
-        RedisEventUtil.layout1();
+    @EventSubscribe
+    private void layout2(Layout2Event event) {
+        this.layoutPane.layout1();
     }
 
     /**
-     * 布局2
+     * 布局
      */
     @FXML
-    private void layout2() {
-        RedisEventUtil.layout2();
+    private void layout() {
+        if (!this.layoutPane.isLayout1()) {
+            RedisEventUtil.layout2();
+        } else {
+            RedisEventUtil.layout1();
+        }
     }
 
     /**
@@ -97,20 +137,20 @@ public class HeaderController3 extends StageController {
     @FXML
     private void migration() {
 //        StageManager.showStage(RedisMigrationDataController.class, this.stage);
-        RedisEventUtil.showMigrationData();
+        RedisViewFactory.migrationData();
     }
 
-    /**
-     * 分割面板
-     */
-    @FXML
-    private FXPane splitPane;
-
-    @Override
-    public void onWindowShowing(WindowEvent event) {
-        super.onWindowShowing(event);
-        if (OSUtil.isWindows() || OSUtil.isLinux()) {
-            this.splitPane.setFlexHeight("100% - 280");
-        }
-    }
+//    /**
+//     * 分割面板
+//     */
+//    @FXML
+//    private FXPane splitPane;
+//
+//    @Override
+//    public void onWindowShowing(WindowEvent event) {
+//        super.onWindowShowing(event);
+//        if (OSUtil.isWindows() || OSUtil.isLinux()) {
+//            this.splitPane.setFlexHeight("100% - 280");
+//        }
+//    }
 }

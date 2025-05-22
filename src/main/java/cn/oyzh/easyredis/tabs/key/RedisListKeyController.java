@@ -2,15 +2,14 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisListRowAddController;
-import cn.oyzh.easyredis.event.key.RedisListRowAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisListValue;
 import cn.oyzh.easyredis.trees.key.RedisListKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -140,15 +139,17 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        try {
-            // 刷新数据
-            if (this.treeItem.reloadRow()) {
-                this.initRow(this.treeItem.currentRow());
+        StageManager.showMask(() -> {
+            try {
+                // 刷新数据
+                if (this.treeItem.reloadRow()) {
+                    this.initRow(this.treeItem.currentRow());
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                MessageBox.exception(ex);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MessageBox.exception(ex);
-        }
+        });
     }
 
     @Override
@@ -166,9 +167,16 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisListRowAddController.class, this.treeItem.window());
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisListElementAddController.class, this.treeItem.window());
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.listElementAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
 //    @Override
@@ -190,15 +198,15 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
             return;
         }
         if (this.treeItem.isDataUnsaved()) {
-            this.disableTab();
-            TaskManager.start(() -> {
+            StageManager.showMask(() -> {
                 try {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
                     this.treeItem.flushMemoryUsage();
-                } finally {
-                    this.enableTab();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }
@@ -259,13 +267,13 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         // 数据太大
         if (this.treeItem.isDataTooBig()) {
             // 状态处理
-            this.nodeData.clear();
             this.nodeData.disable();
             this.ignoreDataChange = true;
+            this.nodeData.clear();
             NodeGroupUtil.disable(this.getTab(), "dataToBig");
             // 异步处理，避免阻塞主程序
             TaskManager.startDelay(() -> {
-                if (MessageBox.confirm(RedisI18nHelper.keyTip9())) {
+                if (MessageBox.confirm(I18nHelper.tips(), RedisI18nHelper.keyTip9(), null, StageManager.getPrimaryStage())) {
                     this.saveBinaryFile();
                 }
             }, 10);
@@ -310,19 +318,24 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteElement() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+            return;
         }
+        RedisKeyRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteElement() + ":" + row.getValue())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override
@@ -344,19 +357,19 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * list行添加事件
-     *
-     * @param msg 消息
-     */
-    @EventSubscribe
-    private void onListRowAdded(RedisListRowAddedEvent msg) {
-        if (this.treeItem == msg.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * list行添加事件
+//     *
+//     * @param msg 消息
+//     */
+//    @EventSubscribe
+//    private void onListRowAdded(RedisListRowAddedEvent msg) {
+//        if (this.treeItem == msg.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

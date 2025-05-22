@@ -2,12 +2,14 @@ package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
 import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,16 +91,21 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
     @Column
     private Integer executeTimeOut;
 
-    /**
-     * 是否开启ssh转发
-     */
-    @Column
-    private Boolean sshForward;
+//    /**
+//     * 是否开启ssh转发
+//     */
+//    @Column
+//    private Boolean sshForward;
+//
+//    /**
+//     * ssh信息
+//     */
+//    private RedisSSHConfig sshConfig;
 
     /**
-     * ssh信息
+     * 跳板信息
      */
-    private RedisSSHConfig sshConfig;
+    private List<RedisJumpConfig> jumpConfigs;
 
     /**
      * 复制对象
@@ -107,7 +114,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      * @return 当前对象
      */
     public RedisConnect copy( RedisConnect redisConnect) {
-//        this.id = redisConnect.id;
         this.name = redisConnect.name;
         this.host = redisConnect.host;
         this.user = redisConnect.user;
@@ -116,67 +122,14 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.readonly = redisConnect.readonly;
         this.password = redisConnect.password;
         this.connectTimeOut = redisConnect.connectTimeOut;
-        // ssh配置
-        this.sshConfig = redisConnect.sshConfig;
-        this.sshForward = redisConnect.sshForward;
         // 过滤
-        this.filters = redisConnect.filters;
+        this.filters = RedisFilter.clone(redisConnect.filters);
         // 收藏
-        this.collects = redisConnect.collects;
+        this.collects = RedisCollect.clone(redisConnect.collects);
+        // 跳板机
+        this.jumpConfigs = RedisJumpConfig.clone(redisConnect.jumpConfigs);
         return this;
     }
-
-    // /**
-    //  * 是否被收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  * @return 结果
-    //  */
-    // public boolean isCollect(int dbIndex,  String key) {
-    //     return CollectionUtil.isNotEmpty(this.collects) && this.collects.contains(this.getCollectName(dbIndex, key));
-    // }
-
-    // /**
-    //  * 添加收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  */
-    // public void addCollect(int dbIndex,  String key) {
-    //     if (this.collects == null) {
-    //         this.collects = new ArrayList<>();
-    //     }
-    //     String name = this.getCollectName(dbIndex, key);
-    //     if (!this.collects.contains(name)) {
-    //         this.collects.add(name);
-    //     }
-    // }
-    //
-    // /**
-    //  * 取消收藏
-    //  *
-    //  * @param dbIndex 数据库索引
-    //  * @param key     键
-    //  * @return 结果
-    //  */
-    // public boolean removeCollect(int dbIndex,  String key) {
-    //     if (this.collects != null) {
-    //         return this.collects.remove(this.getCollectName(dbIndex, key));
-    //     }
-    //     return false;
-    // }
-
-    // /**
-    //  * 获取收藏名称
-    //  *
-    //  * @param dbIndex db索引
-    //  * @param key     键名称
-    //  * @return 收藏名称
-    //  */
-    // private String getCollectName(int dbIndex, String key) {
-    //     return dbIndex + "_@coll@_" + key;
-    // }
 
     /**
      * 是否只读模式
@@ -185,15 +138,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
      */
     public boolean isReadonly() {
         return BooleanUtil.isTrue(this.readonly);
-    }
-
-    /**
-     * 是否ssh转发
-     *
-     * @return 结果
-     */
-    public boolean isSSHForward() {
-        return BooleanUtil.isTrue(this.sshForward);
     }
 
     /**
@@ -320,22 +264,6 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
         this.executeTimeOut = executeTimeOut;
     }
 
-    public Boolean getSshForward() {
-        return sshForward;
-    }
-
-    public void setSshForward(Boolean sshForward) {
-        this.sshForward = sshForward;
-    }
-
-    public RedisSSHConfig getSshConfig() {
-        return sshConfig;
-    }
-
-    public void setSshConfig(RedisSSHConfig sshConfig) {
-        this.sshConfig = sshConfig;
-    }
-
     @Override
     public int compareTo(RedisConnect o) {
         if (o == null) {
@@ -394,5 +322,26 @@ public class RedisConnect implements Comparable<RedisConnect>, ObjectComparator<
             return 1;
         }
         return 0;
+    }
+
+    public List<RedisJumpConfig> getJumpConfigs() {
+        return jumpConfigs;
+    }
+
+    public void setJumpConfigs(List<RedisJumpConfig> jumpConfigs) {
+        this.jumpConfigs = jumpConfigs;
+    }
+
+    /**
+     * 是否开启跳板
+     *
+     * @return 结果
+     */
+    public boolean isEnableJump() {
+        // 初始化跳板配置
+        List<RedisJumpConfig> jumpConfigs = this.getJumpConfigs();
+        // 过滤配置
+        jumpConfigs = jumpConfigs == null ? Collections.emptyList() : jumpConfigs.stream().filter(RedisJumpConfig::isEnabled).toList();
+        return CollectionUtil.isNotEmpty(jumpConfigs);
     }
 }

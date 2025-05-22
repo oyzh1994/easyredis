@@ -1,11 +1,15 @@
 package cn.oyzh.easyredis.domain;
 
 import cn.oyzh.common.object.ObjectComparator;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.store.jdbc.Column;
 import cn.oyzh.store.jdbc.PrimaryKey;
 import cn.oyzh.store.jdbc.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -59,7 +63,7 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
      * @param filter 过滤信息
      * @return 当前对象
      */
-    public RedisFilter copy( RedisFilter filter) {
+    public RedisFilter copy(RedisFilter filter) {
         this.kw = filter.kw;
         this.iid = filter.iid;
         this.enable = filter.enable;
@@ -123,5 +127,18 @@ public class RedisFilter implements ObjectComparator<RedisFilter>, Serializable 
      */
     public boolean compare(String kw) {
         return Objects.equals(kw, this.kw);
+    }
+
+    public static List<RedisFilter> clone(List<RedisFilter> filters) {
+        if (CollectionUtil.isEmpty(filters)) {
+            return Collections.emptyList();
+        }
+        List<RedisFilter> list = new ArrayList<>();
+        for (RedisFilter filter : filters) {
+            RedisFilter redisFilter = new RedisFilter();
+            redisFilter.copy(filter);
+            list.add(redisFilter);
+        }
+        return list;
     }
 }

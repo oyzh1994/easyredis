@@ -2,6 +2,7 @@ package cn.oyzh.easyredis.tabs.home;
 
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.easyredis.event.RedisEventUtil;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.i18n.I18nHelper;
@@ -55,7 +56,7 @@ public class RedisHomeTabController extends RichTabController {
     @FXML
     private void addConnect() {
 //        RedisEventUtil.addConnect();
-        RedisEventUtil.showAddConnect();
+        RedisViewFactory.addConnect(null);
     }
 
     /**

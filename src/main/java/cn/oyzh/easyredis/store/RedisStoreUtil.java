@@ -13,7 +13,6 @@ import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.domain.RedisFilter;
 import cn.oyzh.easyredis.domain.RedisGroup;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
-import cn.oyzh.easyredis.domain.RedisSSHConfig;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.terminal.RedisTerminalHistory;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -109,9 +108,9 @@ public class RedisStoreUtil {
                     if (obj.containsKey("host")) {
                         connect.setHost(obj.getString("host"));
                     }
-                    if (obj.containsKey("sshForward")) {
-                        connect.setSshForward(obj.getBooleanValue("sshForward"));
-                    }
+//                    if (obj.containsKey("sshForward")) {
+//                        connect.setSshForward(obj.getBooleanValue("sshForward"));
+//                    }
                     if (obj.containsKey("collects")) {
                         List<String> collects = obj.getBeanList("collects", String.class);
                         if (CollectionUtil.isNotEmpty(collects)) {
@@ -135,26 +134,26 @@ public class RedisStoreUtil {
                     if (obj.containsKey("connectTimeOut")) {
                         connect.setConnectTimeOut(obj.getIntValue("connectTimeOut"));
                     }
-                    if (obj.containsKey("sshInfo")) {
-                        JSONObject object = obj.getJSONObject("sshInfo");
-                        RedisSSHConfig sshConfig = new RedisSSHConfig();
-                        if (object.containsKey("port")) {
-                            sshConfig.setPort(object.getInt("port"));
-                        }
-                        if (object.containsKey("host")) {
-                            sshConfig.setHost(object.getString("host"));
-                        }
-                        if (object.containsKey("user")) {
-                            sshConfig.setUser(object.getString("user"));
-                        }
-                        if (object.containsKey("timeout")) {
-                            sshConfig.setTimeout(object.getInt("timeout"));
-                        }
-                        if (object.containsKey("password")) {
-                            sshConfig.setPassword(object.getString("password"));
-                        }
-                        connect.setSshConfig(sshConfig);
-                    }
+//                    if (obj.containsKey("sshInfo")) {
+//                        JSONObject object = obj.getJSONObject("sshInfo");
+//                        RedisSSHConfig sshConfig = new RedisSSHConfig();
+//                        if (object.containsKey("port")) {
+//                            sshConfig.setPort(object.getInt("port"));
+//                        }
+//                        if (object.containsKey("host")) {
+//                            sshConfig.setHost(object.getString("host"));
+//                        }
+//                        if (object.containsKey("user")) {
+//                            sshConfig.setUser(object.getString("user"));
+//                        }
+//                        if (object.containsKey("timeout")) {
+//                            sshConfig.setTimeout(object.getInt("timeout"));
+//                        }
+//                        if (object.containsKey("password")) {
+//                            sshConfig.setPassword(object.getString("password"));
+//                        }
+//                        connect.setSshConfig(sshConfig);
+//                    }
                     connects.add(connect);
                 }
             }

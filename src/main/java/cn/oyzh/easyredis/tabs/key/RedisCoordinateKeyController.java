@@ -1,14 +1,12 @@
 package cn.oyzh.easyredis.tabs.key;
 
-import cn.oyzh.common.thread.TaskManager;
+import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController;
-import cn.oyzh.easyredis.event.key.RedisZSetCoordinateAddedEvent;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisZSetValue;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
-import cn.oyzh.event.EventSubscribe;
+import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -188,9 +186,16 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     @FXML
     @Override
     protected void addRow() {
-        StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class);
-        adapter.setProp("treeItem", this.treeItem);
-        adapter.display();
+//        StageAdapter adapter = StageManager.parseStage(RedisZSetCoordinateAddController.class);
+//        adapter.setProp("treeItem", this.treeItem);
+//        adapter.display();
+        StageAdapter adapter = RedisViewFactory.zSetCoordinateAdd(this.treeItem);
+        // 操作成功
+        if (adapter != null && BooleanUtil.isTrue(adapter.getProp("result"))) {
+            this.firstPage();
+            // 刷新内存占用
+            this.treeItem.flushMemoryUsage();
+        }
     }
 
     @Override
@@ -222,15 +227,15 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
             return;
         }
         if (this.treeItem.isDataUnsaved()) {
-            this.disableTab();
-            TaskManager.start(() -> {
+            StageManager.showMask(() -> {
                 try {
                     this.treeItem.saveKeyValue();
                     this.listTable.refresh();
                     this.saveNodeData.disable();
                     this.treeItem.flushMemoryUsage();
-                } finally {
-                    this.enableTab();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    MessageBox.exception(ex);
                 }
             });
         }
@@ -329,19 +334,24 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
     @FXML
     @Override
     protected void deleteRow() {
-        if (this.treeItem.isSelectRow() && MessageBox.confirm(I18nHelper.deleteCoordinate() + "?")) {
-            RedisKeyRow row = this.treeItem.currentRow();
-            if (this.treeItem.deleteRow()) {
-                // 移除
-                if (this.listTable.getItemSize() > 1) {
-                    this.listTable.removeItem(row);
-                } else {// 刷新
-                    this.firstPage();
-                }
-                // 刷新内存占用
-                this.treeItem.flushMemoryUsage();
-            }
+        if (!this.treeItem.isSelectRow()) {
+            return;
         }
+        RedisKeyRow row = this.treeItem.currentRow();
+        if (!MessageBox.confirm(I18nHelper.deleteCoordinate() + ":" + row.getValue())) {
+            return;
+        }
+        if (!this.treeItem.deleteRow()) {
+            return;
+        }
+        // 移除
+        if (this.listTable.getItemSize() > 1) {
+            this.listTable.removeItem(row);
+        } else {// 刷新
+            this.firstPage();
+        }
+        // 刷新内存占用
+        this.treeItem.flushMemoryUsage();
     }
 
     @Override
@@ -371,19 +381,19 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
         this.dataAction.disableProperty().bind(this.nodeData.disableProperty());
     }
 
-    /**
-     * zset坐标添加事件
-     *
-     * @param event 事件
-     */
-    @EventSubscribe
-    private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
-        if (this.treeItem == event.data()) {
-            this.firstPage();
-            // 刷新内存占用
-            this.treeItem.flushMemoryUsage();
-        }
-    }
+//    /**
+//     * zset坐标添加事件
+//     *
+//     * @param event 事件
+//     */
+//    @EventSubscribe
+//    private void zSetCoordinateAdded(RedisZSetCoordinateAddedEvent event) {
+//        if (this.treeItem == event.data()) {
+//            this.firstPage();
+//            // 刷新内存占用
+//            this.treeItem.flushMemoryUsage();
+//        }
+//    }
 
     @FXML
     private void expendList() {

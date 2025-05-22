@@ -79,6 +79,8 @@ public class RedisZSetMemberAddController extends StageController {
             double score = scoreValue.doubleValue();
             // 添加元素
             client.zadd(dbIndex, key, score, rowValue);
+            // 结果
+            this.setProp("result", true);
             // 发送事件
             RedisEventUtil.zSetMemberAdded(this.treeItem, key, rowValue, score);
             this.closeWindow();
