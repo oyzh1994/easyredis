@@ -3,13 +3,13 @@ package cn.oyzh.easyredis.test;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalManager;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
 import cn.oyzh.fx.terminal.util.TerminalManager;
+import com.alibaba.fastjson2.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -95,7 +95,7 @@ public class RedisCmdSpider {
                 list2.add(command);
             }
         }
-        String json = JSONUtil.toJsonStr(list2);
+        String json = JSONObject.toJSONString(list2);
         FileUtil.writeString(json, filePath, CharsetUtil.UTF_8);
         System.out.println("fetch finish---------->");
     }

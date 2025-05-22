@@ -11,7 +11,7 @@ import java.util.Map;
  * @author oyzh
  * @since 2023/3/8
  */
-public class RedisPack {
+public class Pack {
 
     private String getProjectPath() {
         String projectPath = getClass().getResource("").getPath();
@@ -28,9 +28,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_win_exe() throws Exception {
+    public void win_exe() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_exe.json";
+        String win_pack_config = packagePath + "/win_exe.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -42,9 +42,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_win_msi() throws Exception {
+    public void win_msi() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_msi.json";
+        String win_pack_config = packagePath + "/win_msi.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -56,9 +56,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_win_image() throws Exception {
+    public void win_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String win_pack_config = packagePath + "/win/win_image.json";
+        String win_pack_config = packagePath + "/win_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -69,34 +69,10 @@ public class RedisPack {
         packer.pack(win_pack_config, properties);
     }
 
-//    @Test
-//    public void easyredis_win_amd64_pack() throws Exception {
-//        String packagePath = this.getPackagePath();
-//        String win_pack_config = packagePath + "win_amd64_pack_config.json";
-//        String getProjectPath = this.getProjectPath();
-//        Map<String, Object> properties = new HashMap<>();
-//        properties.put("projectPath", getProjectPath);
-//
-//        Packer packer = new Packer();
-//        packer.registerProjectHandler();
-//        packer.registerJdepsHandler();
-//        packer.pack(win_pack_config, properties);
-//    }
-
-    //    @Test
-//    public void easyredis_linux_amd64_pack() throws Exception {
-//        String packagePath = this.getPackagePath();
-//        String linux_pack_config = packagePath + "linux_amd64_pack_config.json";
-//
-//        Packer packer = new Packer();
-//        packer.registerProjectHandler();
-//        packer.pack(linux_pack_config);
-//    }
-//
     @Test
-    public void easyredis_linux_deb() throws Exception {
+    public void linux_deb() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_deb.json";
+        String linux_pack_config = packagePath + "/linux_deb.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -107,9 +83,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_linux_image() throws Exception {
+    public void linux_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String linux_pack_config = packagePath + "/linux/linux_image.json";
+        String linux_pack_config = packagePath + "/linux_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -118,21 +94,11 @@ public class RedisPack {
         packer.registerProjectHandler();
         packer.pack(linux_pack_config, properties);
     }
-//
-//    @Test
-//    public void easyredis_macos_amd64_pack() throws Exception {
-//        String packagePath = this.getPackagePath();
-//        String macos_pack_config = packagePath + "macos_amd64_pack_config.json";
-//
-//        Packer packer = new Packer();
-//        packer.registerProjectHandler();
-//        packer.pack(macos_pack_config);
-//    }
 
     @Test
-    public void easyredis_macos_dmg() throws Exception {
+    public void macos_dmg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_arm64_pack_config = packagePath + "/macos/macos_dmg.json";
+        String macos_arm64_pack_config = packagePath + "/macos_dmg.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -144,9 +110,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_macos_pkg() throws Exception {
+    public void macos_pkg() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_arm64_pack_config = packagePath + "/macos/macos_pkg.json";
+        String macos_arm64_pack_config = packagePath + "/macos_pkg.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -158,9 +124,9 @@ public class RedisPack {
     }
 
     @Test
-    public void easyredis_macos_image() throws Exception {
+    public void macos_image() throws Exception {
         String packagePath = this.getPackagePath();
-        String macos_arm64_pack_config = packagePath + "/macos/macos_image.json";
+        String macos_arm64_pack_config = packagePath + "/macos_image.yaml";
         String getProjectPath = this.getProjectPath();
         Map<String, Object> properties = new HashMap<>();
         properties.put("projectPath", getProjectPath);
@@ -170,27 +136,4 @@ public class RedisPack {
         packer.registerJdepsHandler();
         packer.pack(macos_arm64_pack_config, properties);
     }
-
-//    @Test
-//    public void easyredis_all_pack() throws Exception {
-//        String packagePath = this.getPackagePath();
-//        String win_amd64_pack_config = packagePath + "win_amd64_pack_config.json";
-//        String linux_amd64_pack_config = packagePath + "linux_amd64_pack_config.json";
-//        String linux_arm64_pack_config = packagePath + "linux_arm64_pack_config.json";
-//        String macos_amd64_pack_config = packagePath + "macos_amd64_pack_config.json";
-//        String macos_arm64_pack_config = packagePath + "macos_arm64_pack_config.json";
-//
-//        String baseDir = "D:\\Workspaces\\OYZH\\fx-base\\";
-//        String projectDir = "D:\\Workspaces\\OYZH\\easyredis\\";
-//
-//        Packer packer = new Packer();
-//        packer.registerProjectHandler();
-//        packer.registerMvnHandler(projectDir, List.of(baseDir));
-//        packer.pack(win_amd64_pack_config);
-//        packer.pack(linux_amd64_pack_config);
-//        packer.pack(linux_arm64_pack_config);
-//        packer.pack(macos_amd64_pack_config);
-//        packer.pack(macos_arm64_pack_config);
-//    }
-
 }
