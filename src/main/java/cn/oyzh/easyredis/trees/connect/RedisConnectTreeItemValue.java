@@ -16,6 +16,7 @@ public class RedisConnectTreeItemValue extends RichTreeItemValue {
 
     public RedisConnectTreeItemValue(RedisConnectTreeItem item) {
         super(item);
+        super.setRichMode(true);
     }
 
     @Override

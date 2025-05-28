@@ -158,4 +158,19 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     private void connectImported(RedisConnectImportedEvent event) {
         this.root().reloadChild();
     }
+
+    @Override
+    public RedisConnectTreeItemFilter getItemFilter() {
+        // 初始化过滤器
+        if (this.itemFilter == null) {
+            this.itemFilter = new RedisConnectTreeItemFilter();
+        }
+        return (RedisConnectTreeItemFilter) this.itemFilter;
+    }
+
+    @Override
+    public void setHighlightText(String highlightText) {
+        super.setHighlightText(highlightText);
+        this.getItemFilter().setKw(highlightText);
+    }
 }

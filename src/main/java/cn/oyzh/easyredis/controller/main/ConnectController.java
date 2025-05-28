@@ -4,8 +4,10 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.trees.connect.RedisConnectTreeView;
 import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.svg.pane.SortSVGPane;
+import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.controller.SubStageController;
 import cn.oyzh.fx.plus.keyboard.KeyListener;
+import cn.oyzh.fx.plus.window.StageAdapter;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
@@ -30,6 +32,12 @@ public class ConnectController extends SubStageController {
      */
     @FXML
     private SortSVGPane sortPane;
+
+    /**
+     * 连接过滤
+     */
+    @FXML
+    private ClearableTextField filter;
 
     // /**
     //  * 节点排序(正序)
@@ -126,5 +134,14 @@ public class ConnectController extends SubStageController {
     private void exportConnect() {
 //        this.tree.getRoot().exportConnect();
         RedisViewFactory.exportConnect();
+    }
+
+    @Override
+    public void onStageInitialize(StageAdapter stage) {
+        super.onStageInitialize(stage);
+        this.filter.addTextChangeListener((observableValue, s, t1) -> {
+            this.tree.setHighlightText(t1);
+            this.tree.filter();
+        });
     }
 }
