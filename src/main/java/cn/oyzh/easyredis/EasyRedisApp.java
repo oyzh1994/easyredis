@@ -4,6 +4,7 @@ import cn.oyzh.common.SysConst;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.OSUtil;
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.easyredis.controller.data.RedisMigrationTipsController;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.exception.RedisExceptionParser;
@@ -116,6 +117,8 @@ public class EasyRedisApp extends FXApplication implements EventListener {
 //                FXUtil.runWait(() -> StageManager.showStage(RedisMigrationTipsController.class), 1000);
                 this.migrationTips();
             }
+            // 开启定期gc
+            SystemUtil.gcInterval(60_000);
         } catch (Exception ex) {
             ex.printStackTrace();
             JulLog.warn("start error", ex);
