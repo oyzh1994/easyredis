@@ -16,6 +16,53 @@ import java.util.Objects;
  */
 @Table("t_key_filter_history")
 public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHistory>, Serializable {
+
+    /**
+     * 数据id
+     */
+    @Column
+    @PrimaryKey
+    private String uid;
+
+    /**
+     * 连接id
+     * @see RedisConnect
+     */
+    @Column
+    @PrimaryKey
+    private String iid;
+
+    /**
+     * 模式
+     */
+    @Column
+    private String pattern;
+
+    /**
+     * 保存时间
+     */
+    @Column
+    private long saveTime = System.currentTimeMillis();
+
+//    public RedisKeyFilterHistory() {
+//    }
+//
+//    public RedisKeyFilterHistory(String uid, String pattern) {
+//        this.uid = uid;
+//        this.pattern = pattern;
+//    }
+
+    @Override
+    public boolean compare(RedisKeyFilterHistory t1) {
+        if (t1 == null) {
+            return false;
+        }
+        if (Objects.equals(this, t1)) {
+            return true;
+        }
+        return Objects.equals(this.pattern, t1.pattern);
+    }
+
     public String getUid() {
         return uid;
     }
@@ -32,35 +79,19 @@ public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHis
         this.pattern = pattern;
     }
 
-    /**
-     * 数据id
-     */
-    @Column
-    @PrimaryKey
-    private String uid;
-
-    public RedisKeyFilterHistory() {
+    public long getSaveTime() {
+        return saveTime;
     }
 
-    public RedisKeyFilterHistory(String uid, String pattern) {
-        this.uid = uid;
-        this.pattern = pattern;
+    public void setSaveTime(long saveTime) {
+        this.saveTime = saveTime;
     }
 
-    /**
-     * 模式
-     */
-    @Column
-    private String pattern;
+    public String getIid() {
+        return iid;
+    }
 
-    @Override
-    public boolean compare(RedisKeyFilterHistory t1) {
-        if (t1 == null) {
-            return false;
-        }
-        if (Objects.equals(this, t1)) {
-            return true;
-        }
-        return Objects.equals(this.pattern, t1.pattern);
+    public void setIid(String iid) {
+        this.iid = iid;
     }
 }

@@ -4,11 +4,11 @@ import cn.oyzh.common.dto.Paging;
 import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisKeyFilterHistory;
-import cn.oyzh.store.jdbc.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
+import cn.oyzh.store.jdbc.OrderByParam;
 import cn.oyzh.store.jdbc.PageParam;
 import cn.oyzh.store.jdbc.QueryParam;
-import cn.oyzh.store.jdbc.QueryParams;
+import cn.oyzh.store.jdbc.SelectParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
     /**
      * 最大历史数量
      */
-    public static int His_Max_Size = 50;
+    public static int Max_Size = 50;
 
     /**
      * 当前实例
@@ -38,30 +38,37 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
     }
 
     public boolean replace(RedisKeyFilterHistory model) {
-        boolean result = false;
-        if (model != null) {
-            result = this.insert(model);
-            QueryParams queryParams = new QueryParams();
-            long count = super.selectCount(queryParams);
-            // 删除超出限制的节点
-            if (count > His_Max_Size) {
-                DeleteParam deleteParam = new DeleteParam();
-                deleteParam.addQueryParams(queryParams);
-                deleteParam.setLimit(1L);
-                super.delete(deleteParam);
+        if (model == null) {
+            return false;
+        }
+        boolean result = this.insert(model);
+        if (result) {
+            // 查询超出部分
+            SelectParam selectParam = new SelectParam();
+            selectParam.setLimit(1L);
+            selectParam.setOffset((long) Max_Size);
+            selectParam.addQueryColumn("uid,saveTime");
+            selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
+            selectParam.addQueryParam(new QueryParam("pattern", model.getPattern()));
+            selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
+            RedisKeyFilterHistory data = super.selectOne(selectParam);
+            // 删除超出限制的数据
+            if (data != null) {
+                this.delete(data.getUid());
             }
         }
         return result;
     }
-
-    public boolean delete(String kw) {
-        if (StringUtil.isNotBlank(kw)) {
-            DeleteParam param = new DeleteParam();
-            param.addQueryParam(new QueryParam("pattern", kw));
-            return this.delete(param);
-        }
-        return false;
-    }
+//
+//    public boolean delete(String iid, String kw) {
+//        if (StringUtil.isNotBlank(kw) && StringUtil.isNotBlank(iid)) {
+//            DeleteParam param = new DeleteParam();
+//            param.addQueryParam(new QueryParam("iid", iid));
+//            param.addQueryParam(new QueryParam("pattern", kw));
+//            return this.delete(param);
+//        }
+//        return false;
+//    }
 
     public Paging<RedisKeyFilterHistory> getPage(long pageNo, int limit, String kw) {
         PageParam pageParam = new PageParam(limit, pageNo * limit);
