@@ -47,7 +47,7 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
             SelectParam selectParam = new SelectParam();
             selectParam.setLimit(1L);
             selectParam.setOffset((long) Max_Size);
-            selectParam.addQueryColumn("uid,saveTime");
+            selectParam.addQueryColumn("uid");
             selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
             selectParam.addQueryParam(new QueryParam("pattern", model.getPattern()));
             selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
