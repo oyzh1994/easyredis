@@ -46,11 +46,11 @@ public class RedisKeyFilterHistoryStore extends JdbcStandardStore<RedisKeyFilter
             // 查询超出部分
             SelectParam selectParam = new SelectParam();
             selectParam.setLimit(1L);
-            selectParam.setOffset((long) Max_Size);
+            selectParam.setOffset((long) Max_Size - 1);
             selectParam.addQueryColumn("uid");
             selectParam.addQueryParam(new QueryParam("iid", model.getIid()));
             selectParam.addQueryParam(new QueryParam("pattern", model.getPattern()));
-            selectParam.addOrderByParam(new OrderByParam("saveTime", "desc"));
+            selectParam.addOrderByParam(new OrderByParam("saveTime", "asc"));
             RedisKeyFilterHistory data = super.selectOne(selectParam);
             // 删除超出限制的数据
             if (data != null) {
