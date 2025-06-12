@@ -1,5 +1,6 @@
 package cn.oyzh.easyredis;
 
+import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.util.JarUtil;
 
 import java.io.File;
@@ -50,9 +51,9 @@ public class RedisConst {
      */
     public static String getStorePath() {
         if (JarUtil.isInJar()) {
-            return System.getProperty("user.home") + File.separator + ".easyredis" + File.separator;
+            return SystemUtil.userHome() + File.separator + ".easyredis" + File.separator;
         }
-        return System.getProperty("user.home") + File.separator + ".easyredis_dev" + File.separator;
+        return SystemUtil.userHome() + File.separator + ".easyredis_dev" + File.separator;
     }
 
     /**
