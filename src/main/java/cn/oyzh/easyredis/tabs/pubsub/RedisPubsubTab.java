@@ -82,8 +82,8 @@ public class RedisPubsubTab extends RichTab {
 
     @Override
     protected void onTabClosed(Event event) {
-        super.onTabClosed(event);
         this.unsubscribe();
+        super.onTabClosed(event);
     }
 
     @Override
