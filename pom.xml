@@ -129,6 +129,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ssh库 -->
+        <!-- https://mvnrepository.com/artifact/com.github.mwiede/jsch -->
+        <dependency>
+            <groupId>com.github.mwiede</groupId>
+            <artifactId>jsch</artifactId>
+            <version>${jsch.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
