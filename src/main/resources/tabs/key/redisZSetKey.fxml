@@ -38,7 +38,7 @@
                 <Insets left="5"/>
             </HBox.margin>
         </RenameSVGGlyph>
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKey">
+        <CopySVGGlyph tipText="%base.copy" size="16" onMousePrimaryClicked="#copyKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
@@ -69,17 +69,17 @@
         </VBox.margin>
     </RedisKeyRowTableView>
     <FXHBox realHeight="24">
-        <CopySVGGlyph size="16" onMousePrimaryClicked="#copyRow">
+        <CopySVGGlyph tipText="%base.copy" size="16" onMousePrimaryClicked="#copyRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
             </HBox.margin>
         </CopySVGGlyph>
-        <AddSVGGlyph size="16" onMousePrimaryClicked="#addRow">
+        <AddSVGGlyph tipText="%base.add" size="16" onMousePrimaryClicked="#addRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
             </HBox.margin>
         </AddSVGGlyph>
-        <DeleteSVGGlyph size="16" onMousePrimaryClicked="#deleteRow">
+        <DeleteSVGGlyph tipText="%base.delete" size="16" onMousePrimaryClicked="#deleteRow">
             <HBox.margin>
                 <Insets left="5" top="5"/>
             </HBox.margin>

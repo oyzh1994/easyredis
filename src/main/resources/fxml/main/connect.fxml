@@ -20,12 +20,12 @@
     </graphic>
     <FXVBox flexHeight="100%" flexWidth="100%">
         <FXHBox realHeight="30" flexWidth="100%">
-            <AddSVGGlyph tipText="%base.add" size="15" onMousePrimaryClicked="#addConnect">
+            <AddSVGGlyph tipText="%base.addConnect" size="15" onMousePrimaryClicked="#addConnect">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
             </AddSVGGlyph>
-            <TerminalSVGGlyph tipText="%base.terminal" size="15" onMousePrimaryClicked="#openTerminal">
+            <TerminalSVGGlyph tipText="%base.openTerminal" size="15" onMousePrimaryClicked="#openTerminal">
                 <HBox.margin>
                     <Insets left="5" top="10"/>
                 </HBox.margin>
