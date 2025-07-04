@@ -4,7 +4,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.RenameSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.text.FXText?>
@@ -19,11 +19,11 @@
                 <Insets left="5"/>
             </HBox.margin>
         </RefreshSVGGlyph>
-        <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
+        <RenameSVGGlyph tipText="%base.rename" size="16" onMousePrimaryClicked="#renameKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </RenameKeySVGGlyph>
+        </RenameSVGGlyph>
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKey">
             <HBox.margin>
                 <Insets left="5"/>

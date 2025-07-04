@@ -22,7 +22,7 @@
                     <Insets left="5"/>
                 </HBox.margin>
             </CopySVGGlyph>
-            <RefreshSVGGlyph size="15" onMousePrimaryClicked="#refresh">
+            <RefreshSVGGlyph tipText="%base.refresh" size="15" onMousePrimaryClicked="#refresh">
                 <HBox.margin>
                     <Insets left="5"/>
                 </HBox.margin>

@@ -81,17 +81,17 @@
                     </HBox.margin>
                 </RichDataTextArea>
                 <FXVBox>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </PasteSVGGlyph>
-                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </ClearSVGGlyph>
-                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
@@ -159,17 +159,17 @@
                     </HBox.margin>
                 </RichDataTextArea>
                 <FXVBox>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </PasteSVGGlyph>
-                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </ClearSVGGlyph>
-                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
@@ -203,17 +203,17 @@
                     </HBox.margin>
                 </RichDataTextArea>
                 <FXVBox>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </PasteSVGGlyph>
-                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </ClearSVGGlyph>
-                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
@@ -248,17 +248,17 @@
                     </HBox.margin>
                 </RichDataTextArea>
                 <FXVBox>
-                    <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                    <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </PasteSVGGlyph>
-                    <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                    <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
                     </ClearSVGGlyph>
-                    <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                    <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                         <VBox.margin>
                             <Insets left="5" top="10"/>
                         </VBox.margin>
@@ -280,17 +280,17 @@
                 </HBox.margin>
             </RichDataTextArea>
             <FXVBox>
-                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </PasteSVGGlyph>
-                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </ClearSVGGlyph>
-                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
@@ -311,17 +311,17 @@
                 </HBox.margin>
             </RichDataTextArea>
             <FXVBox>
-                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </PasteSVGGlyph>
-                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </ClearSVGGlyph>
-                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
@@ -343,17 +343,17 @@
                 </HBox.margin>
             </RichDataTextArea>
             <FXVBox>
-                <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+                <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </PasteSVGGlyph>
-                <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+                <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>
                 </ClearSVGGlyph>
-                <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+                <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                     <VBox.margin>
                         <Insets left="5" top="10"/>
                     </VBox.margin>

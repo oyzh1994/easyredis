@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.key.RedisKeyRowTableView?>
+<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.RedisLatitudeField?>
 <?import cn.oyzh.easyredis.fx.RedisLongitudeField?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
@@ -13,7 +13,7 @@
 <?import cn.oyzh.fx.gui.svg.glyph.PasteSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RedoSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
-<?import cn.oyzh.fx.gui.svg.glyph.RenameKeySVGGlyph?>
+<?import cn.oyzh.fx.gui.svg.glyph.RenameSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.ReverseSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.UndoSVGGlyph?>
@@ -34,11 +34,11 @@
                 <Insets left="5"/>
             </HBox.margin>
         </RefreshSVGGlyph>
-        <RenameKeySVGGlyph size="16" onMousePrimaryClicked="#renameKey">
+        <RenameSVGGlyph tipText="%base.rename" size="16" onMousePrimaryClicked="#renameKey">
             <HBox.margin>
                 <Insets left="5"/>
             </HBox.margin>
-        </RenameKeySVGGlyph>
+        </RenameSVGGlyph>
         <CopySVGGlyph size="16" onMousePrimaryClicked="#copyKey">
             <HBox.margin>
                 <Insets left="5"/>

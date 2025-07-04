@@ -33,23 +33,23 @@
     </InfoLabel>
     <FXHBox flexWidth="100%" flexHeight="50% - 70">
         <RichDataTextArea fx:id="rowValue" flexHeight="100% " tipText="%base.contentTip1"
-                      flexWidth="100% - 180">
+                          flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
             </HBox.margin>
         </RichDataTextArea>
         <FXVBox>
-            <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
+            <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
             </PasteSVGGlyph>
-            <ClearSVGGlyph size="16" onMousePrimaryClicked="#clearData">
+            <ClearSVGGlyph tipText="%base.clear" size="16" onMousePrimaryClicked="#clearData">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
             </ClearSVGGlyph>
-            <JSONSVGGlyph onMousePrimaryClicked="#parseToJson">
+            <JSONSVGGlyph tipText="%base.json" onMousePrimaryClicked="#parseToJson">
                 <VBox.margin>
                     <Insets left="5" top="10"/>
                 </VBox.margin>
