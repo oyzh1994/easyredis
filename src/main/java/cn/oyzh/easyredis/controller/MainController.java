@@ -40,11 +40,11 @@ public class MainController extends ParentStageController {
      */
     private final Project project = Project.load();
 
-     /**
-      * 头部页面
-      */
-     @FXML
-     private HeaderController3 headerController;
+    /**
+     * 头部页面
+     */
+    @FXML
+    private HeaderController3 headerController;
 
     /**
      * redis主页业务
@@ -142,7 +142,7 @@ public class MainController extends ParentStageController {
 
     @Override
     public List<? extends StageController> getSubControllers() {
-         return Arrays.asList(this.redisMainController, this.headerController);
+        return Arrays.asList(this.redisMainController, this.headerController);
 //        return Collections.singletonList(this.redisMainController);
     }
 
@@ -171,11 +171,12 @@ public class MainController extends ParentStageController {
             if (TrayManager.exist()) {
                 JulLog.info("show tray.");
                 TrayManager.show();
-//            } else {
+            } else {
 ////                JulLog.error("tray not support!");
 //                JulLog.error("tray not support, iconified window");
 //                this.stage.setIconified(true);
                 // MessageBox.warn(I18nHelper.trayNotSupport());
+                StageManager.exit();
             }
         }
     }
