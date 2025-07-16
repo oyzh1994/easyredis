@@ -378,4 +378,11 @@ public class RedisStoreUtil {
         String ignore = storePath + File.separator + "ignore.data";
         return (FileUtil.exist(file) || FileUtil.exist(file1)) && !(FileUtil.exist(done) || FileUtil.exist(ignore));
     }
+
+    /**
+     * 销毁
+     */
+    public static void destroy() {
+        JdbcManager.destroy();
+    }
 }

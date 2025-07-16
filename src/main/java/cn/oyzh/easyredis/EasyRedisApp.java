@@ -127,6 +127,8 @@ public class EasyRedisApp extends FXApplication implements EventListener {
 
     @Override
     public void stop() {
+        // 储存销毁
+        RedisStoreUtil.destroy();
         EventListener.super.unregister();
         super.stop();
     }
