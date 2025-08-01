@@ -9,6 +9,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.fx.editor.Editor;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
@@ -21,7 +22,6 @@ import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeMutexes;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import com.alibaba.fastjson2.JSONObject;
 import javafx.fxml.FXML;
@@ -111,7 +111,7 @@ public class RedisKeyAddController extends StageController {
      * 字段名
      */
     @FXML
-    private RichDataTextArea fieldValue;
+    private Editor fieldValue;
 
     /**
      * bit值
@@ -187,24 +187,24 @@ public class RedisKeyAddController extends StageController {
      *
      * @return 值文本组件
      */
-    private RichDataTextArea valueTextArea() {
-        RichDataTextArea textArea;
+    private Editor valueTextArea() {
+        Editor textArea;
         if (this.stringBox.isVisible()) {
-            textArea = (RichDataTextArea) this.stringBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.stringBox.lookup("Editor");
         } else if (this.listBox.isVisible()) {
-            textArea = (RichDataTextArea) this.listBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.listBox.lookup("Editor");
         } else if (this.hylogBox.isVisible()) {
-            textArea = (RichDataTextArea) this.hylogBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.hylogBox.lookup("Editor");
         } else if (this.zSetBox.isVisible()) {
-            textArea = (RichDataTextArea) this.zSetBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.zSetBox.lookup("Editor");
         } else if (this.setBox.isVisible()) {
-            textArea = (RichDataTextArea) this.setBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.setBox.lookup("Editor");
         } else if (this.hashBox.isVisible()) {
-            textArea = (RichDataTextArea) this.hashBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.hashBox.lookup("Editor");
         } else if (this.coordinateBox.isVisible()) {
-            textArea = (RichDataTextArea) this.coordinateBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.coordinateBox.lookup("Editor");
         } else {
-            textArea = (RichDataTextArea) this.streamBox.lookup("RichDataTextArea");
+            textArea = (Editor) this.streamBox.lookup("Editor");
         }
         return textArea;
     }

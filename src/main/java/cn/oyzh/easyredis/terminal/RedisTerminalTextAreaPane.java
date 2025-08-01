@@ -37,7 +37,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
     @Override
     public void initNode() {
         super.initNode();
-        super.initContentPrompts();
+        super.initPrompts();
     }
 
     @Override

@@ -3,8 +3,8 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
 import javafx.scene.text.Font;
 
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
+public class RedisQueryTextAreaPane extends EditorPane {
 
     /**
      * db索引
@@ -60,7 +60,7 @@ public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
     @Override
     public void initNode() {
         this.initFont();
-        this.initContentPrompts();
+        this.initPrompts();
     }
 
     @Override
@@ -76,10 +76,10 @@ public class RedisQueryTextAreaPane extends RichDataTextAreaPane {
     }
 
     @Override
-    public void initContentPrompts() {
+    public void initPrompts() {
         // 设置内容提示符
         Set<String> set = RedisQueryUtil.getKeywords();
         set.addAll(RedisQueryUtil.getParams());
-        this.setContentPrompts(set);
+        this.setPrompts(set);
     }
 }

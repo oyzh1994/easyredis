@@ -1,14 +1,14 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
+import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
+import cn.oyzh.fx.editor.EditorFormatType;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
@@ -36,7 +36,7 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
      * 数据
      */
     @FXML
-    private RichDataTextAreaPane nodeData;
+    private RedisDataTextAreaPane nodeData;
 
     @Override
     protected void initKey() {
@@ -69,7 +69,7 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         if (this.treeItem.isDataUnsaved() && !MessageBox.confirm(I18nHelper.unsavedAndContinue())) {
             return;
         }
-        StageManager.showMask(()->{
+        StageManager.showMask(() -> {
             // 刷新数据
             try {
                 this.treeItem.refreshKeyValue();
@@ -114,8 +114,8 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
     }
 
     @Override
-    protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.treeItem.rawValue());
+    protected void showData(EditorFormatType formatType) {
+        this.nodeData.showData(this.treeItem.rawValue(), formatType);
     }
 
 //    /**

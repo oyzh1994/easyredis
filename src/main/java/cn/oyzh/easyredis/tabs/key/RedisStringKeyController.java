@@ -7,6 +7,8 @@ import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
 import cn.oyzh.easyredis.popups.RedisKeyQRCodePopupController;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.fx.editor.EditorFormatType;
+import cn.oyzh.fx.editor.EditorFormatTypeComboBox;
 import cn.oyzh.fx.plus.chooser.FXChooser;
 import cn.oyzh.fx.plus.chooser.FileChooserHelper;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
@@ -16,8 +18,6 @@ import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.window.PopupAdapter;
 import cn.oyzh.fx.plus.window.PopupManager;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.rich.RichDataType;
-import cn.oyzh.fx.rich.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -63,7 +63,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
      * 格式
      */
     @FXML
-    private RichDataTypeComboBox format;
+    private EditorFormatTypeComboBox format;
 
     /**
      * 数据组件
@@ -71,33 +71,33 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @FXML
     private RedisDataTextAreaPane nodeData;
 
-    /**
-     * 格式监听器
-     */
-    private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
-        if (this.format.isStringFormat()) {
-            this.showData(RichDataType.STRING);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isJsonFormat()) {
-            this.showData(RichDataType.JSON);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isXmlFormat()) {
-            this.showData(RichDataType.XML);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isHtmlFormat()) {
-            this.showData(RichDataType.HTML);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isBinaryFormat()) {
-            this.showData(RichDataType.BINARY);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isHexFormat()) {
-            this.showData(RichDataType.HEX);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isRawFormat()) {
-            this.showData(RichDataType.RAW);
-            this.nodeData.setEditable(true);
-        }
-    };
+    // /**
+    //  * 格式监听器
+    //  */
+    // private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
+    //     if (this.format.isStringFormat()) {
+    //         this.showData(RichDataType.STRING);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isJsonFormat()) {
+    //         this.showData(RichDataType.JSON);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isXmlFormat()) {
+    //         this.showData(RichDataType.XML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isHtmlFormat()) {
+    //         this.showData(RichDataType.HTML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isBinaryFormat()) {
+    //         this.showData(RichDataType.BINARY);
+    //         this.nodeData.setEditable(false);
+    //     } else if (this.format.isHexFormat()) {
+    //         this.showData(RichDataType.HEX);
+    //         this.nodeData.setEditable(false);
+    //     } else if (this.format.isRawFormat()) {
+    //         this.showData(RichDataType.RAW);
+    //         this.nodeData.setEditable(true);
+    //     }
+    // };
 
     /**
      * 忽略数据变化
@@ -149,20 +149,21 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         // 数据处理
         this.firstShowData();
         Object rawData = this.treeItem.data();
-        byte detectType = TextUtil.detectType(rawData);
-        if (detectType == 1) {
-//            this.nodeData.showJsonData(rawData);
-            this.format.selectObj(RichDataType.JSON);
-        } else if (detectType == 2) {
-//            this.nodeData.showXmlData(rawData);
-            this.format.selectObj(RichDataType.XML);
-        } else if (detectType == 3) {
-//            this.nodeData.showHtmlData(rawData);
-            this.format.selectObj(RichDataType.HTML);
-        } else {
-//            this.nodeData.showStringData(rawData);
-            this.format.selectObj(RichDataType.STRING);
-        }
+        this.nodeData.showDetectData(rawData);
+//         byte detectType = TextUtil.detectType(rawData);
+//         if (detectType == 1) {
+// //            this.nodeData.showJsonData(rawData);
+//             this.format.selectObj(RichDataType.JSON);
+//         } else if (detectType == 2) {
+// //            this.nodeData.showXmlData(rawData);
+//             this.format.selectObj(RichDataType.XML);
+//         } else if (detectType == 3) {
+// //            this.nodeData.showHtmlData(rawData);
+//             this.format.selectObj(RichDataType.HTML);
+//         } else {
+// //            this.nodeData.showStringData(rawData);
+//             this.format.selectObj(RichDataType.STRING);
+//         }
     }
 
     /**
@@ -292,15 +293,15 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     }
 
     @Override
-    protected void showData(RichDataType dataType) {
-        this.nodeData.showData(dataType, this.treeItem.data());
+    protected void showData(EditorFormatType formatType) {
+        this.nodeData.showData(this.treeItem.data(), formatType);
     }
 
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // 格式监听
-        this.format.selectedItemChanged(this.formatListener);
+        // // 格式监听
+        // this.format.selectedItemChanged(this.formatListener);
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

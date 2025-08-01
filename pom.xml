@@ -76,6 +76,12 @@
             <artifactId>fx-terminal</artifactId>
         </dependency>
 
+        <!-- fx-编辑器模块 -->
+        <dependency>
+            <groupId>io.github.oyzh1994</groupId>
+            <artifactId>fx-editor</artifactId>
+        </dependency>
+
         <!-- redis客户端 -->
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>

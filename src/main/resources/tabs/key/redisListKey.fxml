@@ -19,10 +19,10 @@
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
 <?import cn.oyzh.fx.plus.controls.box.FXVBox?>
 <?import cn.oyzh.fx.plus.controls.table.FXTableColumn?>
-<?import cn.oyzh.fx.rich.RichDataTypeComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import cn.oyzh.fx.editor.EditorFormatTypeComboBox?>
 <FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.tabs.key.RedisListKeyController">
     <FXHBox groupId="list_list" realHeight="30" flexWidth="100%">
@@ -90,11 +90,11 @@
         </PageBox>
     </FXHBox>
     <FXHBox groupId="dataToBig" disable="true" realHeight="30" flexWidth="100%" fx:id="dataAction">
-        <RichDataTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
+        <EditorFormatTypeComboBox prefHeight="22" tipText="%base.format" fx:id="format">
             <HBox.margin>
                 <Insets left="5" top="5"/>
             </HBox.margin>
-        </RichDataTypeComboBox>
+        </EditorFormatTypeComboBox>
         <SaveSVGGlyph fx:id="saveNodeData" disable="true" tipText="%base.saveTip1" size="16"
                       onMousePrimaryClicked="#saveKeyValue">
             <HBox.margin>

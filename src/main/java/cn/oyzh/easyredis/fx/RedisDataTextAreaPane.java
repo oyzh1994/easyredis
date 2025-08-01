@@ -2,10 +2,8 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
 import javafx.scene.text.Font;
 
 /**
@@ -14,19 +12,19 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2023/07/28
  */
-public class RedisDataTextAreaPane extends RichDataTextAreaPane {
-
-    @Override
-    public void initNode() {
-        RichDataTextArea textArea = super.getContent();
-        // 200k
-        textArea.setStyleBound(RichDataType.HEX, 200 * 1024);
-        // 500k
-        textArea.setStyleBound(RichDataType.JSON, 500 * 1024);
-        // 100k
-        textArea.setStyleBound(RichDataType.BINARY, 100 * 1024);
-        super.initNode();
-    }
+public class RedisDataTextAreaPane extends EditorPane {
+    //
+    // @Override
+    // public void initNode() {
+    //     RichDataTextArea textArea = super.getContent();
+    //     // 200k
+    //     textArea.setStyleBound(RichDataType.HEX, 200 * 1024);
+    //     // 500k
+    //     textArea.setStyleBound(RichDataType.JSON, 500 * 1024);
+    //     // 100k
+    //     textArea.setStyleBound(RichDataType.BINARY, 100 * 1024);
+    //     super.initNode();
+    // }
 
     @Override
     protected Font initFont() {

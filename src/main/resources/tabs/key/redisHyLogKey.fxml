@@ -49,11 +49,10 @@
             <Insets top="7"/>
         </padding>
     </FXHBox>
-    <RedisDataTextAreaPane editable="false" dataType="STRING" fontSize="11" fx:id="nodeData"
+    <RedisDataTextAreaPane editable="false" formatType="RAW" fontSize="11" fx:id="nodeData"
                            flexHeight="100% - 30" flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
     </RedisDataTextAreaPane>
-<!--    <fx:include fx:id="keyExtra" source="redisKeyExtra.fxml"/>-->
 </FXVBox>

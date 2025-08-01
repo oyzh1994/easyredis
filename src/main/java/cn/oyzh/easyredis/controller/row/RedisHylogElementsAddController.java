@@ -7,13 +7,13 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
+import cn.oyzh.fx.editor.Editor;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.FXStageStyle;
 import cn.oyzh.fx.plus.window.StageAttribute;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextArea;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.stage.Modality;
@@ -40,7 +40,7 @@ public class RedisHylogElementsAddController extends StageController {
      * 行数据
      */
     @FXML
-    private RichDataTextArea rowValue;
+    private Editor rowValue;
 
     /**
      * redis键

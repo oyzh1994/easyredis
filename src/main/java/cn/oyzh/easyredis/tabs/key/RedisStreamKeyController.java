@@ -2,18 +2,18 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
+import cn.oyzh.fx.editor.EditorFormatType;
 import cn.oyzh.fx.gui.text.field.ReadOnlyTextField;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 
@@ -38,7 +38,7 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
      * 数据
      */
     @FXML
-    private RichDataTextAreaPane nodeData;
+    private RedisDataTextAreaPane nodeData;
 
     /**
      * 展开列表面板
@@ -118,10 +118,10 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
     }
 
     @Override
-    protected void showData(RichDataType dataType) {
+    protected void showData(EditorFormatType formatType) {
         RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
         if (row != null) {
-            this.nodeData.showData(dataType, row.getValue());
+            this.nodeData.showData(row.getValue(), formatType);
         }
     }
 

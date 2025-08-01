@@ -2,10 +2,13 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
+import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
+import cn.oyzh.fx.editor.EditorFormatType;
+import cn.oyzh.fx.editor.EditorFormatTypeComboBox;
 import cn.oyzh.fx.plus.controls.box.FXHBox;
 import cn.oyzh.fx.plus.controls.svg.SVGGlyph;
 import cn.oyzh.fx.plus.information.MessageBox;
@@ -13,9 +16,6 @@ import cn.oyzh.fx.plus.node.NodeGroupUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageAdapter;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.rich.richtextfx.data.RichDataTextAreaPane;
-import cn.oyzh.fx.rich.RichDataType;
-import cn.oyzh.fx.rich.RichDataTypeComboBox;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -66,25 +66,25 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      * 字段名
      */
     @FXML
-    private RichDataTextAreaPane hashField;
+    private RedisDataTextAreaPane hashField;
 
     /**
      * 数据组件
      */
     @FXML
-    private RichDataTextAreaPane nodeData;
+    private RedisDataTextAreaPane nodeData;
 
     /**
      * 格式
      */
     @FXML
-    private RichDataTypeComboBox format;
+    private EditorFormatTypeComboBox format;
 
     /**
      * 字段格式
      */
     @FXML
-    private RichDataTypeComboBox fieldFormat;
+    private EditorFormatTypeComboBox fieldFormat;
 
     /**
      * 字段操作
@@ -98,61 +98,61 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @FXML
     private ExpandListSVGPane expandPane;
 
-    /**
-     * 格式监听器
-     */
-    private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
-        if (this.format.isStringFormat()) {
-            this.showData(RichDataType.STRING);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isJsonFormat()) {
-            this.showData(RichDataType.JSON);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isXmlFormat()) {
-            this.showData(RichDataType.XML);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isHtmlFormat()) {
-            this.showData(RichDataType.HTML);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isBinaryFormat()) {
-            this.showData(RichDataType.BINARY);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isHexFormat()) {
-            this.showData(RichDataType.HEX);
-            this.nodeData.setEditable(false);
-        } else if (this.format.isRawFormat()) {
-            this.showData(RichDataType.RAW);
-            this.nodeData.setEditable(true);
-        }
-    };
-
-    /**
-     * 字段格式监听器
-     */
-    private final ChangeListener<RichDataType> fieldFormatListener = (t1, t2, t3) -> {
-        if (this.fieldFormat.isStringFormat()) {
-            this.hashField.showData(RichDataType.STRING);
-            this.hashField.setEditable(true);
-        } else if (this.fieldFormat.isJsonFormat()) {
-            this.hashField.showData(RichDataType.JSON);
-            this.hashField.setEditable(true);
-        } else if (this.format.isXmlFormat()) {
-            this.showData(RichDataType.XML);
-            this.nodeData.setEditable(true);
-        } else if (this.format.isHtmlFormat()) {
-            this.showData(RichDataType.HTML);
-            this.nodeData.setEditable(true);
-        } else if (this.fieldFormat.isBinaryFormat()) {
-            this.hashField.showData(RichDataType.BINARY);
-            this.hashField.setEditable(false);
-        } else if (this.fieldFormat.isHexFormat()) {
-            this.hashField.showData(RichDataType.HEX);
-            this.hashField.setEditable(false);
-        } else if (this.fieldFormat.isRawFormat()) {
-            this.hashField.showData(RichDataType.RAW);
-            this.hashField.setEditable(true);
-        }
-    };
+    // /**
+    //  * 格式监听器
+    //  */
+    // private final ChangeListener<RichDataType> formatListener = (t1, t2, t3) -> {
+    //     if (this.format.isStringFormat()) {
+    //         this.showData(RichDataType.STRING);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isJsonFormat()) {
+    //         this.showData(RichDataType.JSON);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isXmlFormat()) {
+    //         this.showData(RichDataType.XML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isHtmlFormat()) {
+    //         this.showData(RichDataType.HTML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isBinaryFormat()) {
+    //         this.showData(RichDataType.BINARY);
+    //         this.nodeData.setEditable(false);
+    //     } else if (this.format.isHexFormat()) {
+    //         this.showData(RichDataType.HEX);
+    //         this.nodeData.setEditable(false);
+    //     } else if (this.format.isRawFormat()) {
+    //         this.showData(RichDataType.RAW);
+    //         this.nodeData.setEditable(true);
+    //     }
+    // };
+    //
+    // /**
+    //  * 字段格式监听器
+    //  */
+    // private final ChangeListener<RichDataType> fieldFormatListener = (t1, t2, t3) -> {
+    //     if (this.fieldFormat.isStringFormat()) {
+    //         this.hashField.showData(RichDataType.STRING);
+    //         this.hashField.setEditable(true);
+    //     } else if (this.fieldFormat.isJsonFormat()) {
+    //         this.hashField.showData(RichDataType.JSON);
+    //         this.hashField.setEditable(true);
+    //     } else if (this.format.isXmlFormat()) {
+    //         this.showData(RichDataType.XML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.format.isHtmlFormat()) {
+    //         this.showData(RichDataType.HTML);
+    //         this.nodeData.setEditable(true);
+    //     } else if (this.fieldFormat.isBinaryFormat()) {
+    //         this.hashField.showData(RichDataType.BINARY);
+    //         this.hashField.setEditable(false);
+    //     } else if (this.fieldFormat.isHexFormat()) {
+    //         this.hashField.showData(RichDataType.HEX);
+    //         this.hashField.setEditable(false);
+    //     } else if (this.fieldFormat.isRawFormat()) {
+    //         this.hashField.showData(RichDataType.RAW);
+    //         this.hashField.setEditable(true);
+    //     }
+    // };
 
     /**
      * 忽略数据变化
@@ -391,21 +391,23 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
-        RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-        this.format.setValue(dataType);
+        // RichDataType dataType = this.nodeData.showDetectData(row.getValue());
+        // this.format.setValue(dataType);
+        this.nodeData.showDetectData(row.getValue());
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
 
         // 字段格式
-        RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
-        this.fieldFormat.setValue(fieldDataType);
+        // RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
+        // this.fieldFormat.setValue(fieldDataType);
+        this.hashField.showDetectData(row.getField());
     }
 
     @Override
-    protected void showData(RichDataType dataType) {
+    protected void showData(EditorFormatType formatType) {
         RedisHashValue.RedisHashRow row = this.treeItem.data();
         if (row != null) {
-            this.nodeData.showData(dataType, row.getValue());
+            this.nodeData.showData(row.getValue(), formatType);
         }
     }
 
@@ -443,8 +445,8 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     protected void bindListeners() {
         super.bindListeners();
         // 格式监听
-        this.format.selectedItemChanged(this.formatListener);
-        this.fieldFormat.selectedItemChanged(this.fieldFormatListener);
+        // this.format.selectedItemChanged(this.formatListener);
+        // this.fieldFormat.selectedItemChanged(this.fieldFormatListener);
         // 值处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

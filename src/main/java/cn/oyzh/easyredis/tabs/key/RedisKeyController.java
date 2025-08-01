@@ -1,11 +1,11 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
+import cn.oyzh.fx.editor.EditorFormatType;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.rich.RichDataType;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
@@ -123,9 +123,9 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
     /**
      * 显示数据
      *
-     * @param dataType 数据类型
+     * @param formatType 格式化类型
      */
-    protected abstract void showData(RichDataType dataType);
+    protected abstract void showData(EditorFormatType formatType);
 
 //    @Override
 //    public void onTabInit(DynamicTab tab) {
