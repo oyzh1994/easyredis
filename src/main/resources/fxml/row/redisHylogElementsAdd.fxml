@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.editor.Editor?>
+<?import cn.oyzh.fx.editor.EditorPane?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.row.RedisHylogElementsAddController" realWidth="750"
         realHeight="550">
@@ -20,12 +21,12 @@
         </VBox.margin>
     </InfoLabel>
     <FXHBox flexWidth="100%" flexHeight="100% - 120">
-        <Editor fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
-                flexWidth="100% - 180">
+        <EditorPane fx:id="rowValue" flexHeight="100%" tipText="%redis.key.tip6"
+                    flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
             </HBox.margin>
-        </Editor>
+        </EditorPane>
         <FXVBox>
             <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>

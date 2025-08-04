@@ -10,6 +10,7 @@ import cn.oyzh.easyredis.redis.RedisKeyType;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.editor.Editor;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.gui.text.field.NumberTextField;
@@ -111,7 +112,7 @@ public class RedisKeyAddController extends StageController {
      * 字段名
      */
     @FXML
-    private Editor fieldValue;
+    private EditorPane fieldValue;
 
     /**
      * bit值
@@ -187,24 +188,24 @@ public class RedisKeyAddController extends StageController {
      *
      * @return 值文本组件
      */
-    private Editor valueTextArea() {
-        Editor textArea;
+    private EditorPane valueTextArea() {
+        EditorPane textArea;
         if (this.stringBox.isVisible()) {
-            textArea = (Editor) this.stringBox.lookup("Editor");
+            textArea = (EditorPane) this.stringBox.lookup("EditorPane");
         } else if (this.listBox.isVisible()) {
-            textArea = (Editor) this.listBox.lookup("Editor");
+            textArea = (EditorPane) this.listBox.lookup("EditorPane");
         } else if (this.hylogBox.isVisible()) {
-            textArea = (Editor) this.hylogBox.lookup("Editor");
+            textArea = (EditorPane) this.hylogBox.lookup("EditorPane");
         } else if (this.zSetBox.isVisible()) {
-            textArea = (Editor) this.zSetBox.lookup("Editor");
+            textArea = (EditorPane) this.zSetBox.lookup("EditorPane");
         } else if (this.setBox.isVisible()) {
-            textArea = (Editor) this.setBox.lookup("Editor");
+            textArea = (EditorPane) this.setBox.lookup("EditorPane");
         } else if (this.hashBox.isVisible()) {
-            textArea = (Editor) this.hashBox.lookup("Editor");
+            textArea = (EditorPane) this.hashBox.lookup("EditorPane");
         } else if (this.coordinateBox.isVisible()) {
-            textArea = (Editor) this.coordinateBox.lookup("Editor");
+            textArea = (EditorPane) this.coordinateBox.lookup("EditorPane");
         } else {
-            textArea = (Editor) this.streamBox.lookup("Editor");
+            textArea = (EditorPane) this.streamBox.lookup("EditorPane");
         }
         return textArea;
     }

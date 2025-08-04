@@ -33,12 +33,12 @@
             </VBox.margin>
         </InfoLabel>
         <FXHBox flexHeight="100% - 45" flexWidth="100%">
-            <Editor fx:id="rowValue" flexHeight="100%" tipText="%redis.row.tip1"
+            <EditorPane fx:id="rowValue" flexHeight="100%" tipText="%redis.row.tip1"
                     flexWidth="100% - 180">
                 <HBox.margin>
                     <Insets left="30" top="5"/>
                 </HBox.margin>
-            </Editor>
+            </EditorPane>
             <FXVBox flexHeight="100%">
                 <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                     <VBox.margin>

@@ -5,6 +5,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisZSetKeyTreeItem;
 import cn.oyzh.fx.editor.Editor;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.gui.text.field.DecimalTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -35,7 +36,7 @@ public class RedisZSetCoordinateAddController extends StageController {
      * 坐标名称
      */
     @FXML
-    private Editor rowValue;
+    private EditorPane rowValue;
 
     /**
      * 经度

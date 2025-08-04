@@ -8,6 +8,7 @@ import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.fx.editor.Editor;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -40,7 +41,7 @@ public class RedisHylogElementsAddController extends StageController {
      * 行数据
      */
     @FXML
-    private Editor rowValue;
+    private EditorPane rowValue;
 
     /**
      * redis键

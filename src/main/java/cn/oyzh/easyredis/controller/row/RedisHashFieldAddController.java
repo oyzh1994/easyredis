@@ -6,6 +6,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
 import cn.oyzh.fx.editor.Editor;
+import cn.oyzh.fx.editor.EditorPane;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -35,13 +36,13 @@ public class RedisHashFieldAddController extends StageController {
      * 字段
      */
     @FXML
-    private Editor fieldValue;
+    private EditorPane fieldValue;
 
     /**
      * 行数据
      */
     @FXML
-    private Editor rowValue;
+    private EditorPane rowValue;
 
     /**
      * redis键
