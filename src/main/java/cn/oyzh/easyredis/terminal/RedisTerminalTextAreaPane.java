@@ -34,22 +34,29 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
         this.completeHandler(RedisTerminalCompleteHandler.INSTANCE);
     }
 
-    @Override
-    public void initNode() {
-        super.initNode();
-        super.initPrompts();
-    }
+//     @Override
+//     public void initNode() {
+//         super.initNode();
+//         super.initPrompts();
+//     }
+//
+//     @Override
+//     protected Font initFont() {
+// //        // 禁用字体管理
+// //        super.disableFont();
+//         // 初始化字体
+//         RedisSetting setting = RedisSettingStore.SETTING;
+// //        this.setFontSize(setting.getTerminalFontSize());
+// //        this.setFontFamily(setting.getTerminalFontFamily());
+// //        this.setFontWeight2(setting.getTerminalFontWeight());
+//         return FontManager.toFont(setting.terminalFontConfig());
+//     }
 
     @Override
-    protected Font initFont() {
-//        // 禁用字体管理
-//        super.disableFont();
-        // 初始化字体
+    public void changeFont(Font font) {
         RedisSetting setting = RedisSettingStore.SETTING;
-//        this.setFontSize(setting.getTerminalFontSize());
-//        this.setFontFamily(setting.getTerminalFontFamily());
-//        this.setFontWeight2(setting.getTerminalFontWeight());
-        return FontManager.toFont(setting.terminalFontConfig());
+        Font font1 = FontManager.toFont(setting.terminalFontConfig());
+        super.changeFont(font1);
     }
 
     /**
@@ -115,7 +122,7 @@ public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
      * @param client  redis客户端
      * @param dbIndex db索引
      */
-    public void init( RedisClient client, Integer dbIndex) {
+    public void init(RedisClient client, Integer dbIndex) {
         this.client = client;
         this.dbIndex = dbIndex;
         this.disableInput();
