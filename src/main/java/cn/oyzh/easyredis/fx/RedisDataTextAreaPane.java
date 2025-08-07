@@ -26,12 +26,20 @@ public class RedisDataTextAreaPane extends EditorPane {
     //     super.initNode();
     // }
 
+//     @Override
+//     protected Font initFont() {
+// //        // 禁用字体管理
+// //        super.disableFont();
+//         // 初始化字体
+//         RedisSetting setting = RedisSettingStore.SETTING;
+//         return FontManager.toFont(setting.editorFontConfig());
+//     }
+
     @Override
-    protected Font initFont() {
-//        // 禁用字体管理
-//        super.disableFont();
+    public void changeFont(Font font) {
         // 初始化字体
         RedisSetting setting = RedisSettingStore.SETTING;
-        return FontManager.toFont(setting.editorFontConfig());
+        Font font1 = FontManager.toFont(setting.editorFontConfig());
+        super.changeFont(font1);
     }
 }

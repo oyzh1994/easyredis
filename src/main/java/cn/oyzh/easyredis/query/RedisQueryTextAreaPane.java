@@ -57,29 +57,39 @@ public class RedisQueryTextAreaPane extends EditorPane {
         this.setOnKeyReleased(event -> this.promptPopup.prompt(this, event));
     }
 
-    @Override
-    public void initNode() {
-        this.initFont();
-        this.initPrompts();
-    }
+    // @Override
+    // public void initNode() {
+    //     this.initFont();
+    //     this.initPrompts();
+    // }
+
+//     @Override
+//     protected Font initFont() {
+// //        // 禁用字体管理
+// //        super.disableFont();
+//         // 初始化字体
+//         RedisSetting setting = RedisSettingStore.SETTING;
+// //        this.setFontSize(setting.getQueryFontSize());
+// //        this.setFontFamily(setting.getQueryFontFamily());
+// //        this.setFontWeight2(setting.getQueryFontWeight());
+//         return FontManager.toFont(setting.queryFontConfig());
+//     }
 
     @Override
-    protected Font initFont() {
-//        // 禁用字体管理
-//        super.disableFont();
-        // 初始化字体
+    public void changeFont(Font font) {
         RedisSetting setting = RedisSettingStore.SETTING;
-//        this.setFontSize(setting.getQueryFontSize());
-//        this.setFontFamily(setting.getQueryFontFamily());
-//        this.setFontWeight2(setting.getQueryFontWeight());
-        return FontManager.toFont(setting.queryFontConfig());
+        Font font1 = FontManager.toFont(setting.queryFontConfig());
+        super.changeFont(font1);
     }
 
     @Override
-    public void initPrompts() {
-        // 设置内容提示符
-        Set<String> set = RedisQueryUtil.getKeywords();
-        set.addAll(RedisQueryUtil.getParams());
-        this.setPrompts(set);
+    public Set<String> getPrompts() {
+        if (super.getPrompts() == null) {
+            // 设置内容提示符
+            Set<String> set = RedisQueryUtil.getKeywords();
+            set.addAll(RedisQueryUtil.getParams());
+            this.setPrompts(set);
+        }
+        return super.getPrompts();
     }
 }
