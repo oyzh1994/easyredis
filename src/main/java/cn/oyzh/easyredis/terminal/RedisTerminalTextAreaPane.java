@@ -13,6 +13,7 @@ import cn.oyzh.easyredis.store.RedisSettingStore;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.plus.font.FontManager;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
+import cn.oyzh.fx.terminal.TerminalPane;
 import cn.oyzh.fx.terminal.TerminalTextAreaPane;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.beans.value.ChangeListener;
@@ -24,7 +25,7 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2023/7/21
  */
-public class RedisTerminalTextAreaPane extends TerminalTextAreaPane {
+public class RedisTerminalTextAreaPane extends TerminalPane {
 
     {
         this.keyHandler(RedisTerminalKeyHandler.INSTANCE);
