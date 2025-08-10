@@ -34,6 +34,7 @@ public class RedisToolController extends StageController {
 
     @Override
     public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         this.stage.switchOnTab();
         this.stage.hideOnEscape();
     }

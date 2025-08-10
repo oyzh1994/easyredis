@@ -446,6 +446,7 @@ public class RedisKeyImportController extends StageController {
             event1.setDropCompleted(true);
             event1.consume();
         });
+        super.onWindowShown(event);
     }
 
     @Override
