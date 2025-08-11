@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.fx.RedisDatabaseComboBox?>
-<?import cn.oyzh.easyredis.query.RedisQueryTextAreaPane?>
+<?import cn.oyzh.easyredis.query.RedisQueryEditorPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.RunSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.SaveSVGGlyph?>
 <?import cn.oyzh.fx.plus.controls.box.FXHBox?>
@@ -28,12 +28,12 @@
             </HBox.margin>
         </RunSVGGlyph>
     </FXHBox>
-    <RedisQueryTextAreaPane onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
-                            flexWidth="100% - 30" flexHeight="100% - 60">
+    <RedisQueryEditorPane onKeyPressed="#onContentKeyPressed" fx:id="content" promptText="%base.contentTip1"
+                          flexWidth="100% - 30" flexHeight="100% - 60">
         <VBox.margin>
             <Insets left="5"/>
         </VBox.margin>
-    </RedisQueryTextAreaPane>
+    </RedisQueryEditorPane>
     <FXTabPane tabClosingPolicy="UNAVAILABLE" fx:id="resultTabPane" flexHeight="70%" managedBindVisible="true"
                  visible="false">
     </FXTabPane>

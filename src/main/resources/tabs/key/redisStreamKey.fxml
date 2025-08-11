@@ -17,7 +17,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
+<?import cn.oyzh.easyredis.fx.RedisDataEditorPane?>
 <FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.tabs.key.RedisStreamKeyController">
     <FXHBox groupId="stream_list" realHeight="30" flexWidth="100%">
@@ -88,13 +88,13 @@
             <Insets left="5"/>
         </VBox.margin>
     </FXText>
-    <RedisDataTextAreaPane editable="false" formatType="JSON" disable="true" fontSize="11" fx:id="nodeData"
-                           flexHeight="100% - 408"
-                           flexWidth="100% - 4">
+    <RedisDataEditorPane editable="false" formatType="JSON" disable="true" fontSize="11" fx:id="nodeData"
+                         flexHeight="100% - 408"
+                         flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextAreaPane>
+    </RedisDataEditorPane>
     <FXText text="%base.id">
         <VBox.margin>
             <Insets top="5" left="5"/>

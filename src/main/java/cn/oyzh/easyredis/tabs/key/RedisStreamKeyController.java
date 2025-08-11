@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
+import cn.oyzh.easyredis.fx.RedisDataEditorPane;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisStreamValue;
@@ -38,7 +38,7 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
      * 数据
      */
     @FXML
-    private RedisDataTextAreaPane nodeData;
+    private RedisDataEditorPane nodeData;
 
     /**
      * 展开列表面板

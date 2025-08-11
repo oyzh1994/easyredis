@@ -11,7 +11,6 @@ import cn.oyzh.fx.plus.thread.RenderService;
 import cn.oyzh.fx.plus.util.FXUtil;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -208,7 +207,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(RedisQueryTextAreaPane area, KeyEvent event) {
+    public void prompt(RedisQueryEditorPane area, KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();
@@ -279,7 +278,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      *
      * @param area 文本域
      */
-    private void showPrompt(RedisQueryTextAreaPane area) {
+    private void showPrompt(RedisQueryEditorPane area) {
         RenderService.submitFXLater(() -> {
             Optional<Bounds> optional = area.getCaretBounds();
             // 显示提示词
@@ -301,7 +300,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      * @param area 文本域
      * @param item 提示内容
      */
-    public void autoComplete(RedisQueryTextAreaPane area, RedisQueryPromptItem item) {
+    public void autoComplete(RedisQueryEditorPane area, RedisQueryPromptItem item) {
         try {
             if (this.token != null) {
                 area.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());

@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2023/07/28
  */
-public class RedisDataTextAreaPane extends EditorPane {
+public class RedisDataEditorPane extends EditorPane {
     //
     // @Override
     // public void initNode() {

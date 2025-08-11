@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
+<?import cn.oyzh.easyredis.fx.RedisDataEditorPane?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.CopySVGGlyph?>
 <?import cn.oyzh.fx.gui.svg.glyph.RefreshSVGGlyph?>
@@ -49,10 +49,10 @@
             <Insets top="7"/>
         </padding>
     </FXHBox>
-    <RedisDataTextAreaPane editable="false" formatType="RAW" fontSize="11" fx:id="nodeData"
-                           flexHeight="100% - 30" flexWidth="100% - 4">
+    <RedisDataEditorPane editable="false" formatType="RAW" fontSize="11" fx:id="nodeData"
+                         flexHeight="100% - 30" flexWidth="100% - 4">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextAreaPane>
+    </RedisDataEditorPane>
 </FXVBox>

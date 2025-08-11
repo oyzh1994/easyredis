@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.terminal.acl;
 
 import cn.oyzh.easyredis.terminal.RedisTerminalCommandHandler;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
+import cn.oyzh.easyredis.terminal.RedisTerminalPane;
 import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import redis.clients.jedis.CommandObject;
@@ -20,7 +20,7 @@ public class RedisAclTerminalCommandHandler extends RedisTerminalCommandHandler<
     }
 
     @Override
-    public String commandHelp(RedisTerminalTextAreaPane terminal) {
+    public String commandHelp(RedisTerminalPane terminal) {
         CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), "HELP");
         Object obj = terminal.getClient().execCommand(object);
         return RedisTerminalUtil.formatOut(obj);

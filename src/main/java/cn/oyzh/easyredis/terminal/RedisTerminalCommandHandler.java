@@ -12,10 +12,10 @@ import redis.clients.jedis.Protocol;
  * @author oyzh
  * @since 2023/7/31
  */
-public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, RedisTerminalTextAreaPane> {
+public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> extends BaseTerminalCommandHandler<C, RedisTerminalPane> {
 
     @Override
-    public TerminalExecuteResult execute(C command, RedisTerminalTextAreaPane terminal) {
+    public TerminalExecuteResult execute(C command, RedisTerminalPane terminal) {
         TerminalExecuteResult result = new TerminalExecuteResult();
         try {
             CommandObject<Object> object = RedisTerminalUtil.getCommand(this.getCommandType(), command);
@@ -37,7 +37,7 @@ public abstract class RedisTerminalCommandHandler<C extends TerminalCommand> ext
     }
 
     @Override
-    public String commandHelp(RedisTerminalTextAreaPane terminal) {
+    public String commandHelp(RedisTerminalPane terminal) {
         StringBuilder builder = new StringBuilder();
         if (StringUtil.isNotBlank(this.commandArg())) {
             builder.append(" ").append(this.commandArg());

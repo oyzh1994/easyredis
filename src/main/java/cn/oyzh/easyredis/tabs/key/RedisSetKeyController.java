@@ -4,7 +4,7 @@ import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
+import cn.oyzh.easyredis.fx.RedisDataEditorPane;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisKeyRow;
 import cn.oyzh.easyredis.redis.key.RedisSetValue;
@@ -66,7 +66,7 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
      * 数据组件
      */
     @FXML
-    private RedisDataTextAreaPane nodeData;
+    private RedisDataEditorPane nodeData;
 
     /**
      * 展开列表面板

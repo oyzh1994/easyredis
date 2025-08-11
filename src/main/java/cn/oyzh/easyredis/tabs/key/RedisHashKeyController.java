@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.common.util.StringUtil;
-import cn.oyzh.easyredis.fx.RedisDataTextAreaPane;
+import cn.oyzh.easyredis.fx.RedisDataEditorPane;
 import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane;
 import cn.oyzh.easyredis.redis.key.RedisHashValue;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
@@ -66,13 +66,13 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
      * 字段名
      */
     @FXML
-    private RedisDataTextAreaPane hashField;
+    private RedisDataEditorPane hashField;
 
     /**
      * 数据组件
      */
     @FXML
-    private RedisDataTextAreaPane nodeData;
+    private RedisDataEditorPane nodeData;
 
     /**
      * 格式

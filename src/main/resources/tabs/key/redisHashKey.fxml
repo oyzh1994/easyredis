@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import cn.oyzh.easyredis.fx.key.RedisKeyRowTableView?>
-<?import cn.oyzh.easyredis.fx.RedisDataTextAreaPane?>
+<?import cn.oyzh.easyredis.fx.RedisDataEditorPane?>
 <?import cn.oyzh.easyredis.fx.svg.pane.ExpandListSVGPane?>
 <?import cn.oyzh.fx.gui.page.PageBox?>
 <?import cn.oyzh.fx.gui.svg.glyph.AddSVGGlyph?>
@@ -132,13 +132,13 @@
             </HBox.margin>
         </RefreshSVGGlyph>
     </FXHBox>
-    <RedisDataTextAreaPane groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11"
-                           fx:id="hashField"
-                           onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataEditorPane groupId="dataToBig" disable="true" realHeight="100" flexWidth="100% - 4" fontSize="11"
+                         fx:id="hashField"
+                         onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextAreaPane>
+    </RedisDataEditorPane>
     <FXText text="%base.value">
         <VBox.margin>
             <Insets top="5" left="5"/>
@@ -173,11 +173,11 @@
             </HBox.margin>
         </ClearSVGGlyph>
     </FXHBox>
-    <RedisDataTextAreaPane groupId="dataToBig" disable="true" flexHeight="100% - 536" flexWidth="100% - 4" fontSize="11"
-                           fx:id="nodeData"
-                           onKeyPressed="#onKeyDataKeyPressed">
+    <RedisDataEditorPane groupId="dataToBig" disable="true" flexHeight="100% - 536" flexWidth="100% - 4" fontSize="11"
+                         fx:id="nodeData"
+                         onKeyPressed="#onKeyDataKeyPressed">
         <VBox.margin>
             <Insets left="2"/>
         </VBox.margin>
-    </RedisDataTextAreaPane>
+    </RedisDataEditorPane>
 </FXVBox>

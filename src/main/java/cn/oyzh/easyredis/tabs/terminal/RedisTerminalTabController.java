@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.terminal;
 
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.redis.RedisClient;
-import cn.oyzh.easyredis.terminal.RedisTerminalTextAreaPane;
+import cn.oyzh.easyredis.terminal.RedisTerminalPane;
 import cn.oyzh.easyredis.util.RedisConnectUtil;
 import cn.oyzh.fx.gui.tabs.RichTabController;
 import javafx.event.Event;
@@ -20,7 +20,7 @@ public class RedisTerminalTabController extends RichTabController {
      * redis命令行文本域
      */
     @FXML
-    private RedisTerminalTextAreaPane terminal;
+    private RedisTerminalPane terminal;
 
     /**
      * 初始化

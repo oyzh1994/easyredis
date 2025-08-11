@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class RedisQueryTextAreaPane extends EditorPane {
+public class RedisQueryEditorPane extends EditorPane {
 
     /**
      * db索引
