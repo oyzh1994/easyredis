@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.easyredis.trees.key.RedisKeyTreeItem;
-import cn.oyzh.fx.editor.EditorFormatType;
+import cn.oyzh.fx.editor.rsyntaxtextarea.EditorFormatType;
 import cn.oyzh.fx.gui.tabs.SubTabController;
 import cn.oyzh.fx.plus.keyboard.KeyboardUtil;
 import cn.oyzh.fx.plus.util.ClipboardUtil;

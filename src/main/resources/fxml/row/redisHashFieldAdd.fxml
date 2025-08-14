@@ -11,8 +11,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.editor.Editor?>
-<?import cn.oyzh.fx.editor.EditorPane?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.Editor?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.row.RedisHashFieldAddController" realWidth="750"
         realHeight="550">
@@ -34,7 +34,7 @@
     </InfoLabel>
     <FXHBox flexWidth="100%" flexHeight="50% - 70">
         <EditorPane fx:id="rowValue" flexHeight="100% " tipText="%base.contentTip1"
-                          flexWidth="100% - 180">
+                    flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
             </HBox.margin>

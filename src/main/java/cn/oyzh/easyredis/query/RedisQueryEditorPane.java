@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.fx.editor.EditorPane;
+import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 

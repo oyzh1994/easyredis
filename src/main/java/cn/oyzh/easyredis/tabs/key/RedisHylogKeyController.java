@@ -4,7 +4,7 @@ import cn.oyzh.common.util.BooleanUtil;
 import cn.oyzh.easyredis.fx.RedisDataEditorPane;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
-import cn.oyzh.fx.editor.EditorFormatType;
+import cn.oyzh.fx.editor.rsyntaxtextarea.EditorFormatType;
 import cn.oyzh.fx.plus.controls.text.FXText;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.window.StageAdapter;

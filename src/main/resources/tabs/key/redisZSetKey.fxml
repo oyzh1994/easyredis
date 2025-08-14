@@ -24,7 +24,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.editor.EditorFormatTypeComboBox?>
+<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorFormatTypeComboBox?>
 <FXVBox flexWidth="100%" flexHeight="100% - 30" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.tabs.key.RedisZSetKeyController">
     <FXHBox groupId="zset_list" realHeight="30" flexWidth="100%">
