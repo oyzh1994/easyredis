@@ -3,7 +3,7 @@ package cn.oyzh.easyredis.query;
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * @author oyzh
  * @since 2025/01/21
  */
-public class RedisQueryEditorPane extends EditorPane {
+public class RedisQueryEditorPane extends Editor {
 
     /**
      * db索引

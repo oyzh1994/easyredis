@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cn.oyzh.fx.editor.rsyntaxtextarea.Editor?>
+<?import cn.oyzh.fx.editor.tm4javafx.Editor?>
 <?import cn.oyzh.fx.gui.button.CancelButton?>
 <?import cn.oyzh.fx.gui.button.SubmitButton?>
 <?import cn.oyzh.fx.gui.label.InfoLabel?>
@@ -12,7 +12,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane?>
+<?import cn.oyzh.fx.editor.tm4javafx.Editor?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.row.RedisSetMemberAddController" realWidth="750" realHeight="550">
     <InfoLabel text="%base.member">
@@ -21,12 +21,12 @@
         </VBox.margin>
     </InfoLabel>
     <FXHBox flexWidth="100%" flexHeight="100% - 110">
-        <EditorPane fx:id="rowValue" flexHeight="100%" tipText="%base.contentTip1"
+        <Editor fx:id="rowValue" flexHeight="100%" tipText="%base.contentTip1"
                     flexWidth="100% - 180">
             <HBox.margin>
                 <Insets left="30" top="5"/>
             </HBox.margin>
-        </EditorPane>
+        </Editor>
         <FXVBox>
             <PasteSVGGlyph sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                 <VBox.margin>

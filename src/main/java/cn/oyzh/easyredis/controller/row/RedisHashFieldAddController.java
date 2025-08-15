@@ -5,7 +5,7 @@ import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisHashKeyTreeItem;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
@@ -35,13 +35,13 @@ public class RedisHashFieldAddController extends StageController {
      * 字段
      */
     @FXML
-    private EditorPane fieldValue;
+    private Editor fieldValue;
 
     /**
      * 行数据
      */
     @FXML
-    private EditorPane rowValue;
+    private Editor rowValue;
 
     /**
      * redis键

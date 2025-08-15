@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.fx;
 
 import cn.oyzh.easyredis.domain.RedisSetting;
 import cn.oyzh.easyredis.store.RedisSettingStore;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.plus.font.FontManager;
 import javafx.scene.text.Font;
 
@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
  * @author oyzh
  * @since 2023/07/28
  */
-public class RedisDataEditorPane extends EditorPane {
+public class RedisDataEditorPane extends Editor {
     //
     // @Override
     // public void initNode() {

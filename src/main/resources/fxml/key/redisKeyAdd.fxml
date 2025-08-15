@@ -18,8 +18,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import cn.oyzh.fx.editor.rsyntaxtextarea.Editor?>
-<?import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane?>
+<?import cn.oyzh.fx.editor.tm4javafx.Editor?>
+<?import cn.oyzh.fx.editor.tm4javafx.Editor?>
 <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="750"
         fx:id="root">
@@ -185,12 +185,12 @@
                 <Insets left="30" top="10"/>
             </VBox.margin>
         </InfoLabel>
-        <EditorPane fx:id="fieldValue" flexHeight="50% - 50" tipText="%base.contentTip1"
+        <Editor fx:id="fieldValue" flexHeight="50% - 50" tipText="%base.contentTip1"
                     flexWidth="100% - 140">
             <VBox.margin>
                 <Insets left="30" top="5"/>
             </VBox.margin>
-        </EditorPane>
+        </Editor>
         <FXVBox flexWidth="100%" flexHeight="50%">
             <InfoLabel text="%base.fieldValue">
                 <VBox.margin>
@@ -198,11 +198,11 @@
                 </VBox.margin>
             </InfoLabel>
             <FXHBox flexHeight="100% - 45">
-                <EditorPane flexHeight="100%" tipText="%base.contentTip1" flexWidth="100% - 140">
+                <Editor flexHeight="100%" tipText="%base.contentTip1" flexWidth="100% - 140">
                     <HBox.margin>
                         <Insets left="30" top="5"/>
                     </HBox.margin>
-                </EditorPane>
+                </Editor>
                 <FXVBox>
                     <PasteSVGGlyph tipText="%base.paste" sizeStr="14,16" onMousePrimaryClicked="#pasteData">
                         <VBox.margin>

@@ -6,7 +6,7 @@ import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.key.RedisStreamKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
-import cn.oyzh.fx.editor.rsyntaxtextarea.EditorPane;
+import cn.oyzh.fx.editor.tm4javafx.Editor;
 import cn.oyzh.fx.gui.text.field.ClearableTextField;
 import cn.oyzh.fx.plus.FXConst;
 import cn.oyzh.fx.plus.controller.StageController;
@@ -41,7 +41,7 @@ public class RedisStreamMessageAddController extends StageController {
      * 消息内容
      */
     @FXML
-    private EditorPane rowValue;
+    private Editor rowValue;
 
     /**
      * 消息id
