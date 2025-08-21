@@ -183,7 +183,7 @@ public class RedisServerTabController extends ParentTabController {
     }
 
     @Override
-    public void onTabInit(RichTab tab) {
+    public void onTabInit(FXTab tab) {
         super.onTabInit(tab);
         this.initRefreshTask();
     }
