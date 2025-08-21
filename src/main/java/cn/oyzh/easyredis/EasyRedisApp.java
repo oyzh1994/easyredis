@@ -50,6 +50,9 @@ public class EasyRedisApp extends FXApplication implements EventListener {
 
     public static void main(String[] args) {
         try {
+            // 开启fx的预览功能
+            System.setProperty("javafx.enablePreview", "true");
+            System.setProperty("javafx.suppressPreviewWarning", "true");
             SysConst.projectName(PROJECT.getName());
             SysConst.storeDir(RedisConst.getStorePath());
             SysConst.cacheDir(RedisConst.getCachePath());
