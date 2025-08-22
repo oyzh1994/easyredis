@@ -14,7 +14,9 @@
     <modelVersion>4.0.0</modelVersion>
     <version>2.0.1</version>
     <artifactId>easyredis</artifactId>
-    <description>redis的可视化操作、导入导出、传输、命令行功能</description>
+    <description>
+        功能强大、现代化、跨平台的redis客户端.
+    </description>
 
     <properties>
         <jedis.version>5.2.0</jedis.version>
