@@ -155,11 +155,15 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
      */
     protected void initPage(long pageNo) {
         StageManager.showMask(() -> {
-            List<R> rows = this.getRows();
-            this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
-            List<R> pageRows = this.pageData.page(pageNo);
-            this.listTable.setItem(pageRows);
-            this.pagePane.setPaging(this.pageData);
+            try {
+                List<R> rows = this.getRows();
+                this.pageData = new Paging<>(rows, this.setting.getRowPageLimit());
+                List<R> pageRows = this.pageData.page(pageNo);
+                this.listTable.setItem(pageRows);
+                this.pagePane.setPaging(this.pageData);
+            } catch (Exception ex) {
+                MessageBox.exception(ex);
+            }
         });
     }
 
