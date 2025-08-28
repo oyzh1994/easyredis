@@ -295,10 +295,10 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         this.nodeData.forgetHistory();
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        this.nodeData.showData(this.treeItem.data(), formatType);
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     this.nodeData.showData(this.treeItem.data(), formatType);
+    // }
 
     @Override
     protected void bindListeners() {

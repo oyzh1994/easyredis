@@ -313,13 +313,13 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
         this.saveNodeData.disable();
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        RedisZSetValue.RedisZSetRow row = this.treeItem.data();
-        if (row != null) {
-            this.nodeData.showData(row.getValue(), formatType);
-        }
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     RedisZSetValue.RedisZSetRow row = this.treeItem.data();
+    //     if (row != null) {
+    //         this.nodeData.showData(row.getValue(), formatType);
+    //     }
+    // }
 
     @FXML
     @Override

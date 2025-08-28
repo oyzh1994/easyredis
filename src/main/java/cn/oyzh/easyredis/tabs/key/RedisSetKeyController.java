@@ -292,13 +292,13 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
         }
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        RedisSetValue.RedisSetRow row = this.treeItem.data();
-        if (row != null) {
-            this.nodeData.showData(row.getValue(), formatType);
-        }
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     RedisSetValue.RedisSetRow row = this.treeItem.data();
+    //     if (row != null) {
+    //         this.nodeData.showData(row.getValue(), formatType);
+    //     }
+    // }
 
     @FXML
     @Override

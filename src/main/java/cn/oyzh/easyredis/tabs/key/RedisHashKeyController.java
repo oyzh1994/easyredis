@@ -401,13 +401,13 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.fieldFormat.setValue(fieldType);
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        RedisHashValue.RedisHashRow row = this.treeItem.data();
-        if (row != null) {
-            this.nodeData.showData(row.getValue(), formatType);
-        }
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     RedisHashValue.RedisHashRow row = this.treeItem.data();
+    //     if (row != null) {
+    //         this.nodeData.showData(row.getValue(), formatType);
+    //     }
+    // }
 
     @FXML
     @Override

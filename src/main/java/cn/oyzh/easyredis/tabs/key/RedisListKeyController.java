@@ -307,13 +307,13 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         }
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        RedisListValue.RedisListRow row = this.treeItem.data();
-        if (row != null) {
-            this.nodeData.showData(row.getValue(), formatType);
-        }
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     RedisListValue.RedisListRow row = this.treeItem.data();
+    //     if (row != null) {
+    //         this.nodeData.showData(row.getValue(), formatType);
+    //     }
+    // }
 
     @FXML
     @Override

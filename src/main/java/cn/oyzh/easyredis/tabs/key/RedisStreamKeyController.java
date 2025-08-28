@@ -117,13 +117,13 @@ public class RedisStreamKeyController extends RedisRowKeyController<RedisStreamK
         }
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
-        if (row != null) {
-            this.nodeData.showData(row.getValue(), formatType);
-        }
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     RedisStreamValue.RedisStreamRow row = this.treeItem.rawValue();
+    //     if (row != null) {
+    //         this.nodeData.showData(row.getValue(), formatType);
+    //     }
+    // }
 
     @FXML
     @Override

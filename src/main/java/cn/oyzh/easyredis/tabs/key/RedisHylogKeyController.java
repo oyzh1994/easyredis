@@ -113,10 +113,10 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
         this.nodeData.forgetHistory();
     }
 
-    @Override
-    protected void showData(EditorFormatType formatType) {
-        this.nodeData.showData(this.treeItem.rawValue(), formatType);
-    }
+    // @Override
+    // protected void showData(EditorFormatType formatType) {
+    //     this.nodeData.showData(this.treeItem.rawValue(), formatType);
+    // }
 
 //    /**
 //     * hyLog元素添加事件

@@ -120,12 +120,12 @@ public abstract class RedisKeyController<T extends RedisKeyTreeItem> extends Sub
      */
     protected abstract void firstShowData();
 
-    /**
-     * 显示数据
-     *
-     * @param formatType 格式化类型
-     */
-    protected abstract void showData(EditorFormatType formatType);
+    // /**
+    //  * 显示数据
+    //  *
+    //  * @param formatType 格式化类型
+    //  */
+    // protected abstract void showData(EditorFormatType formatType);
 
 //    @Override
 //    public void onTabInit(DynamicTab tab) {
