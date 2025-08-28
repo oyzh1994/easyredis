@@ -19,13 +19,13 @@
         fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
     <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FXHBox realHeight="30" flexWidth="100%">
-            <RedisKeyFilterTypeComboBox initIndex="0" realHeight="24" realWidth="90" fx:id="filterType">
+            <RedisKeyFilterTypeComboBox initIndex="0" realHeight="24" realWidth="120" fx:id="filterType">
                 <HBox.margin>
                     <Insets left="5" top="3"/>
                 </HBox.margin>
             </RedisKeyFilterTypeComboBox>
             <RedisKeyFilterTextField onAction="#doFilter" onSearch="#doFilter" fx:id="filterKW" realHeight="24"
-                                     flexWidth="100% - 105" tipText="%base.searchKWTip" maxLen="30">
+                                     flexWidth="100% - 135" tipText="%base.searchKWTip" maxLen="30">
                 <HBox.margin>
                     <Insets left="5" top="3"/>
                 </HBox.margin>

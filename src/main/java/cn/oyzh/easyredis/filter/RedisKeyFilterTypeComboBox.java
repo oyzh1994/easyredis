@@ -37,13 +37,9 @@ public class RedisKeyFilterTypeComboBox extends FXComboBox<String> implements I1
     @Override
     public void initNode() {
         super.initNode();
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        this.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             if (MouseUtil.isPrimaryButton(event) && MouseUtil.isSingleClick(event)) {
-                if (this.isShowing()) {
-                    this.hide();
-                } else {
-                    this.show();
-                }
+                this.show();
             } else {
                 this.hide();
             }
