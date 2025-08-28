@@ -2,8 +2,10 @@ package cn.oyzh.easyredis.filter;
 
 import cn.oyzh.fx.plus.controls.combo.FXComboBox;
 import cn.oyzh.fx.plus.i18n.I18nSelectAdapter;
+import cn.oyzh.fx.plus.mouse.MouseUtil;
 import cn.oyzh.fx.plus.node.NodeManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 import java.util.Locale;
@@ -12,7 +14,7 @@ import java.util.Locale;
  * @author oyzh
  * @since 2024/4/19
  */
-public class RedisKeySearchTypeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
+public class RedisKeyFilterTypeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 
     {
         NodeManager.init(this);
@@ -30,5 +32,21 @@ public class RedisKeySearchTypeComboBox extends FXComboBox<String> implements I1
         this.addItem("HASH");
         this.addItem("STREAM");
         return this.getItems();
+    }
+
+    @Override
+    public void initNode() {
+        super.initNode();
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (MouseUtil.isPrimaryButton(event) && MouseUtil.isSingleClick(event)) {
+                if (this.isShowing()) {
+                    this.hide();
+                } else {
+                    this.show();
+                }
+            } else {
+                this.hide();
+            }
+        });
     }
 }

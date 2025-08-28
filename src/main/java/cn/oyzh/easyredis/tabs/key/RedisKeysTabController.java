@@ -4,7 +4,7 @@ import cn.oyzh.common.util.CostUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.event.RedisEventUtil;
 import cn.oyzh.easyredis.filter.RedisKeyFilterTextField;
-import cn.oyzh.easyredis.filter.RedisKeySearchTypeComboBox;
+import cn.oyzh.easyredis.filter.RedisKeyFilterTypeComboBox;
 import cn.oyzh.easyredis.popups.RedisKeyFilterPopupController;
 import cn.oyzh.easyredis.redis.RedisClient;
 import cn.oyzh.easyredis.trees.connect.RedisDatabaseTreeItem;
@@ -122,7 +122,7 @@ public class RedisKeysTabController extends ParentTabController {
      * 过滤类型
      */
     @FXML
-    private RedisKeySearchTypeComboBox filterType;
+    private RedisKeyFilterTypeComboBox filterType;
 
     /**
      * 收藏面板

@@ -16,7 +16,6 @@ import java.util.Locale;
  */
 public class RedisKeyTypeComboBox extends FXComboBox<String> implements I18nSelectAdapter<String> {
 
-
     /**
      * 获取类型
      *

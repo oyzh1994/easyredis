@@ -17,14 +17,14 @@
         </FXVBox.margin>
     </SearchTextField>
     <FXHBox flexWidth="100%">
-        <ApplySVGGlyph tipText="%base.apply" onMousePrimaryClicked="#apply" sizeStr="15,11">
+        <ApplySVGGlyph tipText="%base.apply" onMousePrimaryClicked="#apply" sizeStr="15">
             <HBox.margin>
                 <Insets left="15" top="15"/>
             </HBox.margin>
         </ApplySVGGlyph>
-        <CancelSVGGlyph onMousePrimaryClicked="#close" sizeStr="11">
+        <CancelSVGGlyph onMousePrimaryClicked="#close" sizeStr="13">
             <HBox.margin>
-                <Insets left="15" top="15"/>
+                <Insets left="15" top="17"/>
             </HBox.margin>
         </CancelSVGGlyph>
     </FXHBox>

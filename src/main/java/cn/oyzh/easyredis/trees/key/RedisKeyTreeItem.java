@@ -36,7 +36,7 @@ public abstract class RedisKeyTreeItem extends RichTreeItem<RedisKeyTreeItemValu
     /**
      * 数据最大值
      */
-    public static final int DATA_MAX = 1024 * 1024;
+    public static final int DATA_MAX = 10 * 1024 * 1024;
 
     /**
      * redis键

@@ -29,7 +29,7 @@ public class RedisKeyFilterHistory implements ObjectComparator<RedisKeyFilterHis
      * @see RedisConnect
      */
     @Column
-    @PrimaryKey
+    // @PrimaryKey
     private String iid;
 
     /**

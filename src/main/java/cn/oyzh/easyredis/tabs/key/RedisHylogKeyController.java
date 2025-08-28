@@ -1,7 +1,7 @@
 package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.util.BooleanUtil;
-import cn.oyzh.easyredis.fx.RedisDataEditorPane;
+import cn.oyzh.easyredis.fx.RedisDataEditor;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.editor.tm4javafx.EditorFormatType;
@@ -36,7 +36,7 @@ public class RedisHylogKeyController extends RedisKeyController<RedisStringKeyTr
      * 数据
      */
     @FXML
-    private RedisDataEditorPane nodeData;
+    private RedisDataEditor nodeData;
 
     @Override
     protected void initKey() {

@@ -2,7 +2,7 @@ package cn.oyzh.easyredis.tabs.key;
 
 import cn.oyzh.common.file.FileUtil;
 import cn.oyzh.common.thread.TaskManager;
-import cn.oyzh.easyredis.fx.RedisDataEditorPane;
+import cn.oyzh.easyredis.fx.RedisDataEditor;
 import cn.oyzh.easyredis.popups.RedisKeyQRCodePopupController;
 import cn.oyzh.easyredis.trees.key.RedisStringKeyTreeItem;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
@@ -68,7 +68,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
      * 数据组件
      */
     @FXML
-    private RedisDataEditorPane nodeData;
+    private RedisDataEditor nodeData;
 
     // /**
     //  * 格式监听器
@@ -299,8 +299,11 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // // 格式监听
+        // 格式监听
         // this.format.selectedItemChanged(this.formatListener);
+        this.format.selectedItemChanged((observableValue, old, t1) -> {
+            this.nodeData.setFormatType(t1);
+        });
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));
