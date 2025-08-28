@@ -284,9 +284,8 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
-        // EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
-        // this.format.setValue(dataType);
-        this.nodeData.showDetectData(row.getValue());
+        EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(formatType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
     }
@@ -348,8 +347,10 @@ public class RedisListKeyController extends RedisRowKeyController<RedisListKeyTr
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // // 格式监听
-        // this.format.selectedItemChanged(this.formatListener);
+        // 格式监听
+        this.format.selectedItemChanged((observableValue, formatType, t1) -> {
+            this.nodeData.setFormatType(t1);
+        });
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

@@ -391,16 +391,14 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
-        // RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-        // this.format.setValue(dataType);
-        this.nodeData.showDetectData(row.getValue());
+        EditorFormatType dataType= this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(dataType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
 
         // 字段格式
-        // RichDataType fieldDataType = this.hashField.showDetectData(row.getField());
-        // this.fieldFormat.setValue(fieldDataType);
-        this.hashField.showDetectData(row.getField());
+        EditorFormatType fieldType = this.hashField.showDetectData(row.getField());
+        this.fieldFormat.setValue(fieldType);
     }
 
     @Override
@@ -415,7 +413,6 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     @Override
     protected void deleteRow() {
         if (!this.treeItem.isSelectRow()) {
-
             return;
         }
         RedisHashValue.RedisHashRow row = this.treeItem.currentRow();
@@ -445,8 +442,12 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
     protected void bindListeners() {
         super.bindListeners();
         // 格式监听
-        // this.format.selectedItemChanged(this.formatListener);
-        // this.fieldFormat.selectedItemChanged(this.fieldFormatListener);
+        this.format.selectedItemChanged((observableValue, formatType, t1) -> {
+            this.nodeData.setFormatType(t1);
+        });
+        this.fieldFormat.selectedItemChanged((observableValue, formatType, t1) -> {
+            this.hashField.setFormatType(t1);
+        });
         // 值处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

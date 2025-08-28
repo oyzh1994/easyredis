@@ -317,9 +317,8 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
         this.nodeData.enable();
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
-        // RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-        // this.format.setValue(dataType);
-        this.nodeData.showDetectData(row.getValue());
+        EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(formatType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
     }
@@ -372,8 +371,10 @@ public class RedisCoordinateKeyController extends RedisRowKeyController<RedisZSe
         this.latitudeVal.addTextChangeListener(this.latitudeValListener);
         this.latitudeVal.editableProperty().bind(this.nodeData.editableProperty());
         this.latitudeVal.disableProperty().bind(this.nodeData.disabledProperty());
-        // // 格式监听
-        // this.format.selectedItemChanged(this.formatListener);
+        // 格式监听
+        this.format.selectedItemChanged((observableValue, formatType, t1) -> {
+            this.nodeData.setFormatType(t1);
+        });
         // 键数据处理
         this.nodeData.addTextChangeListener(this.dataListener);
         this.nodeData.undoableProperty().addListener((observableValue, aBoolean, t1) -> this.dataUndo.setDisable(!t1));

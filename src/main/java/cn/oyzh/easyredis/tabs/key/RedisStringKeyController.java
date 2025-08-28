@@ -147,8 +147,12 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
         this.firstShowData();
+        // 获取数据
         Object rawData = this.treeItem.data();
-        this.nodeData.showDetectData(rawData);
+        // 检测类型
+        EditorFormatType formatType = this.nodeData.showDetectData(rawData);
+        // 设置类型
+        this.format.setValue(formatType);
 //         byte detectType = TextUtil.detectType(rawData);
 //         if (detectType == 1) {
 // //            this.nodeData.showJsonData(rawData);
@@ -300,7 +304,6 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
     protected void bindListeners() {
         super.bindListeners();
         // 格式监听
-        // this.format.selectedItemChanged(this.formatListener);
         this.format.selectedItemChanged((observableValue, old, t1) -> {
             this.nodeData.setFormatType(t1);
         });

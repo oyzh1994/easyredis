@@ -108,7 +108,7 @@ public class RedisStringKeyTreeItem extends RedisKeyTreeItem {
         if (stringValue.getHyLog() == null) {
             this.flushCount();
         }
-        return stringValue.getHyLog();
+        return stringValue.isHyLog();
     }
 
     /**

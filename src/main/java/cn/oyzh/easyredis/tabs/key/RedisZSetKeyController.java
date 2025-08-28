@@ -307,9 +307,8 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
         this.nodeData.enable();
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
-        // RichDataType dataType = this.nodeData.showDetectData(row.getValue());
-        // this.format.setValue(dataType);
-        this.nodeData.showDetectData(row.getValue());
+        EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
+        this.format.setValue(formatType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
     }
@@ -354,8 +353,10 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
     @Override
     protected void bindListeners() {
         super.bindListeners();
-        // // 格式监听
-        // this.format.selectedItemChanged(this.formatListener);
+        // 格式监听
+        this.format.selectedItemChanged((observableValue, formatType, t1) -> {
+            this.nodeData.setFormatType(t1);
+        });
         // // 切换视图
         // this.reverseView.managedBindVisible();
         // 分数处理
