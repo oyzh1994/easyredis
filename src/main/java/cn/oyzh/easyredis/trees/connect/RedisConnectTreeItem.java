@@ -4,6 +4,7 @@ import cn.oyzh.common.log.JulLog;
 import cn.oyzh.common.system.SystemUtil;
 import cn.oyzh.common.thread.Task;
 import cn.oyzh.common.thread.TaskBuilder;
+import cn.oyzh.common.util.CollectionUtil;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisConnect;
 import cn.oyzh.easyredis.event.RedisEventUtil;
@@ -13,12 +14,17 @@ import cn.oyzh.easyredis.store.RedisConnectStore;
 import cn.oyzh.easyredis.util.RedisI18nHelper;
 import cn.oyzh.easyredis.util.RedisViewFactory;
 import cn.oyzh.fx.gui.menu.MenuItemHelper;
+import cn.oyzh.fx.gui.svg.glyph.MoveSVGGlyph;
+import cn.oyzh.fx.gui.svg.glyph.UploadSVGGlyph;
 import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.gui.tree.view.RichTreeView;
 import cn.oyzh.fx.plus.information.MessageBox;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
+import cn.oyzh.fx.plus.menu.MenuItemManager;
 import cn.oyzh.fx.plus.window.StageManager;
 import cn.oyzh.i18n.I18nHelper;
+import javafx.print.Collation;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 
@@ -169,26 +175,33 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
         if (this.isWaiting()) {
             FXMenuItem cancelConnect = MenuItemHelper.cancelConnect("12", this::cancelConnect);
             items.add(cancelConnect);
-        } else if (this.isConnected()) {
-            FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
-            FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
-            FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
-            FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
-            FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
-            FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
-            FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
-            FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
-
-            items.add(closeConnect);
-            items.add(editConnect);
-            items.add(cloneConnect);
-            items.add(exportData);
-            items.add(importData);
-            items.add(transportData);
-            items.add(flushAll);
-            items.add(openTerminal);
+        // } else if (this.isConnected()) {
+        //     FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
+        //     FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
+        //     FXMenuItem cloneConnect = MenuItemHelper.cloneConnect("12", this::cloneConnect);
+        //     FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
+        //     FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
+        //     FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+        //     FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
+        //     FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
+        //
+        //     items.add(closeConnect);
+        //     items.add(editConnect);
+        //     items.add(cloneConnect);
+        //     items.add(exportData);
+        //     items.add(importData);
+        //     items.add(transportData);
+        //     items.add(flushAll);
+        //     items.add(openTerminal);
         } else {
-            FXMenuItem connect = MenuItemHelper.startConnect("12", this::connect);
+
+            if (this.isConnected()) {
+                FXMenuItem closeConnect = MenuItemHelper.closeConnect("12", this::closeConnect);
+                items.add(closeConnect);
+            } else {
+                FXMenuItem connect = MenuItemHelper.openConnect("12", this::connect);
+                items.add(connect);
+            }
             FXMenuItem editConnect = MenuItemHelper.editConnect("12", this::editConnect);
             FXMenuItem renameConnect = MenuItemHelper.renameConnect("12", this::rename);
             FXMenuItem deleteConnect = MenuItemHelper.deleteConnect("12", this::delete);
@@ -196,19 +209,48 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
             FXMenuItem exportData = MenuItemHelper.exportData("12", this::exportData);
             FXMenuItem importData = MenuItemHelper.importData("12", this::importData);
             FXMenuItem transportData = MenuItemHelper.transportData("12", this::transportData);
+            FXMenuItem flushAll = MenuItemHelper.clearData("12", this::flushAll);
             FXMenuItem openTerminal = MenuItemHelper.openTerminal("12", this::openTerminal);
 
-            items.add(connect);
+            // 处理分组移动
+            List<RedisGroupTreeItem> groupItems = this.getTreeView().getGroupItems();
+            Menu moveTo = MenuItemHelper.menu(I18nHelper.moveTo(), new MoveSVGGlyph("12"));
+            if (CollectionUtil.isNotEmpty(groupItems)) {
+                for (RedisGroupTreeItem item : groupItems) {
+                    MenuItem menuItem = MenuItemHelper.menuItem(item.getGroupName(), () -> this.moveTo(item));
+                    if (StringUtil.equals(this.getGroupId(), item.getGroupId())) {
+                        menuItem.setDisable(true);
+                    }
+                    moveTo.getItems().add(menuItem);
+                }
+            } else {
+                moveTo.setDisable(true);
+            }
+
             items.add(editConnect);
             items.add(renameConnect);
             items.add(cloneConnect);
+            items.add(deleteConnect);
+            items.add(MenuItemManager.getSeparatorMenuItem());
             items.add(exportData);
             items.add(importData);
             items.add(transportData);
-            items.add(deleteConnect);
+            items.add(flushAll);
+            items.add(MenuItemManager.getSeparatorMenuItem());
             items.add(openTerminal);
+            items.add(moveTo);
         }
         return items;
+    }
+
+    /**
+     * 移动到分组
+     *
+     * @param groupItem 分组节点
+     */
+    private void moveTo(RedisGroupTreeItem groupItem) {
+        this.remove();
+        groupItem.addConnectItem(this);
     }
 
     /**
@@ -492,6 +534,10 @@ public class RedisConnectTreeItem extends RichTreeItem<RedisConnectTreeItemValue
 
     public String getId() {
         return this.value.getId();
+    }
+
+    public String getGroupId() {
+        return this.value.getGroupId();
     }
 
     public RedisQueriesTreeItem queriesItem() {

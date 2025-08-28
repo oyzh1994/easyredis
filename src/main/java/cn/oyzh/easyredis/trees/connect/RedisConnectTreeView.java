@@ -19,6 +19,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 
+import java.util.List;
+
 /**
  * redis树
  *
@@ -172,5 +174,9 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
     public void setHighlightText(String highlightText) {
         super.setHighlightText(highlightText);
         this.getItemFilter().setKw(highlightText);
+    }
+
+    public List<RedisGroupTreeItem> getGroupItems() {
+        return this.root().getGroupItems();
     }
 }

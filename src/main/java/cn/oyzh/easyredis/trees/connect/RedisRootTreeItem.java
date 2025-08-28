@@ -222,7 +222,7 @@ public class RedisRootTreeItem extends RichTreeItem<RedisRootTreeItemValue> impl
      *
      * @return 分组树节点组件
      */
-    private List<RedisGroupTreeItem> getGroupItems() {
+    public List<RedisGroupTreeItem> getGroupItems() {
         List<RedisGroupTreeItem> items = new ArrayList<>(this.getChildrenSize());
         for (TreeItem<?> item : this.unfilteredChildren()) {
             if (item instanceof RedisGroupTreeItem treeItem) {

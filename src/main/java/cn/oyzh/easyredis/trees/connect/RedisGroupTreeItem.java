@@ -226,8 +226,11 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
         }
     }
 
-    public String getGid() {
+    public String getGroupId() {
         return this.value.getGid();
     }
 
+    public String getGroupName() {
+        return this.value.getName();
+    }
 }
