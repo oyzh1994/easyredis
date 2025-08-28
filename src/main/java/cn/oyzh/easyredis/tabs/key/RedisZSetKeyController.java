@@ -308,7 +308,7 @@ public class RedisZSetKeyController extends RedisRowKeyController<RedisZSetKeyTr
         this.ignoreDataChange = false;
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
-        this.format.setValue(formatType);
+        this.format.select(formatType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
     }

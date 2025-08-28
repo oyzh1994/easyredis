@@ -270,7 +270,7 @@ public class RedisSetKeyController extends RedisRowKeyController<RedisSetKeyTree
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
         EditorFormatType formatType = this.nodeData.showDetectData(row.getValue());
-        this.format.setValue(formatType);
+        this.format.select(formatType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
     }

@@ -392,13 +392,13 @@ public class RedisHashKeyController extends RedisRowKeyController<RedisHashKeyTr
         NodeGroupUtil.enable(this.getTab(), "dataToBig");
         // 数据处理
         EditorFormatType dataType= this.nodeData.showDetectData(row.getValue());
-        this.format.setValue(dataType);
+        this.format.select(dataType);
         this.nodeData.forgetHistory();
         this.saveNodeData.disable();
 
         // 字段格式
         EditorFormatType fieldType = this.hashField.showDetectData(row.getField());
-        this.fieldFormat.setValue(fieldType);
+        this.fieldFormat.select(fieldType);
     }
 
     // @Override

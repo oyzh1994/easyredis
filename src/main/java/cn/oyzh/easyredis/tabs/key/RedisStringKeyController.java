@@ -152,7 +152,7 @@ public class RedisStringKeyController extends RedisKeyController<RedisStringKeyT
         // 检测类型
         EditorFormatType formatType = this.nodeData.showDetectData(rawData);
         // 设置类型
-        this.format.setValue(formatType);
+        this.format.select(formatType);
 //         byte detectType = TextUtil.detectType(rawData);
 //         if (detectType == 1) {
 // //            this.nodeData.showJsonData(rawData);
