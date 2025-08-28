@@ -51,7 +51,7 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
      */
     private final RedisConnectStore connectStore = RedisConnectStore.INSTANCE;
 
-    public RedisGroupTreeItem( RedisGroup group,  RichTreeView treeView) {
+    public RedisGroupTreeItem(RedisGroup group, RichTreeView treeView) {
         super(treeView);
         this.value = group;
         this.setValue(new RedisGroupTreeItemValue(this));
@@ -162,30 +162,30 @@ public class RedisGroupTreeItem extends RichTreeItem<RedisGroupTreeItemValue> im
     }
 
     @Override
-    public void addConnect( RedisConnect redisConnect) {
+    public void addConnect(RedisConnect redisConnect) {
         this.addConnectItem(new RedisConnectTreeItem(redisConnect, this.getTreeView()));
     }
 
     @Override
-    public void addConnectItem( RedisConnectTreeItem item) {
+    public void addConnectItem(RedisConnectTreeItem item) {
         if (!this.containsChild(item)) {
             if (!Objects.equals(item.value().getGroupId(), this.value.getGid())) {
                 item.value().setGroupId(this.value.getGid());
-               this.connectStore.replace(item.value());
+                this.connectStore.replace(item.value());
             }
             super.addChild(item);
         }
     }
 
     @Override
-    public void addConnectItems( List<RedisConnectTreeItem> items) {
+    public void addConnectItems(List<RedisConnectTreeItem> items) {
         if (CollectionUtil.isNotEmpty(items)) {
             this.addChild((List) items);
         }
     }
 
     @Override
-    public boolean delConnectItem( RedisConnectTreeItem item) {
+    public boolean delConnectItem(RedisConnectTreeItem item) {
         // 删除连接
         if (this.connectStore.delete(item.value())) {
             this.removeChild(item);
