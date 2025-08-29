@@ -52,11 +52,29 @@ public class RedisTerminalPane extends TerminalPane {
 //         return FontManager.toFont(setting.terminalFontConfig());
 //     }
 
+    //private Font editorFont;
+
+    //@Override
+    //protected Font getEditorFont() {
+    //    if (this.editorFont == null) {
+    //        RedisSetting setting = RedisSettingStore.SETTING;
+    //        this.editorFont = FontManager.toFont(setting.terminalFontConfig());
+    //    }
+    //    return this.editorFont;
+    //}
+    //
+    //@Override
+    //protected void setEditorFont(Font editorFont) {
+    //    this.editorFont = editorFont;
+    //    super.setEditorFont(editorFont);
+    //}
+
     @Override
     public void changeFont(Font font) {
         RedisSetting setting = RedisSettingStore.SETTING;
         Font font1 = FontManager.toFont(setting.terminalFontConfig());
         super.changeFont(font1);
+        //super.applyEditorFont();
     }
 
     /**
@@ -298,5 +316,34 @@ public class RedisTerminalPane extends TerminalPane {
 
     public RedisConnect redisConnect() {
         return this.getClient().redisConnect();
+    }
+
+    @Override
+    public void fontSizeIncr() {
+        super.fontSizeIncr();
+        this.saveFontSize();
+    }
+
+    @Override
+    public void fontSizeDecr() {
+        //double fSize= super.getFontSize();
+        // this.editorFont = this.getEditorFont();
+        // this.getEditorFont();
+        super.fontSizeDecr();
+        this.saveFontSize();
+    }
+
+    /**
+     * 保存字体大小
+     */
+    private void saveFontSize() {
+        //System.out.println(this.getFontSize());
+        RedisSetting setting = RedisSettingStore.SETTING;
+        setting.setTerminalFontSize((byte) this.getFontSize());
+        RedisSettingStore.INSTANCE.replace(setting);
+        ////刷新字体
+        //this.editorFont = null;
+        //this.getEditorFont();
+        //System.out.println(this.getEditorFont());
     }
 }
