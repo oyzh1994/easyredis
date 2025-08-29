@@ -33,6 +33,7 @@ public abstract class RedisNKeysTerminalCommandHandler<C extends TerminalCommand
                 terminal.outputPrompt();
                 terminal.output(line);
             }
+            terminal.moveCaretEnd();
             return true;
         }
         return false;

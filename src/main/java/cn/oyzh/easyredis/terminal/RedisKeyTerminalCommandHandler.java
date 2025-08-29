@@ -39,6 +39,7 @@ public abstract class RedisKeyTerminalCommandHandler<C extends TerminalCommand> 
                     terminal.outputPrompt();
                     terminal.output(line);
                 }
+                terminal.moveCaretEnd();
                 return true;
             }
         }
