@@ -4,9 +4,8 @@ package cn.oyzh.easyredis.controller;
 import cn.oyzh.common.dto.Project;
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.fx.plus.FXConst;
-import cn.oyzh.fx.plus.controller.SubStageController;
+import cn.oyzh.fx.plus.controller.StageController;
 import cn.oyzh.fx.plus.controls.text.FXText;
-import cn.oyzh.fx.plus.i18n.I18nResourceBundle;
 import cn.oyzh.fx.plus.window.StageAttribute;
 import cn.oyzh.i18n.I18nHelper;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ import javafx.stage.WindowEvent;
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "about.fxml"
 )
-public class AboutController extends SubStageController {
+public class AboutController extends StageController {
 
     @FXML
     private FXText name;
@@ -48,6 +47,7 @@ public class AboutController extends SubStageController {
 
     @Override
     public void onWindowShown(WindowEvent event) {
+        super.onWindowShown(event);
         // 当舞台被显示时，设置名称文本框的文本为项目名称
         this.name.setText(this.project.getName());
         // 设置版本文本框的文本为项目版本号
@@ -60,11 +60,10 @@ public class AboutController extends SubStageController {
         // 设置标题
         this.stage.appendTitle(" " + this.project.getName());
         this.stage.hideOnEscape();
-        super.onWindowShown(event);
     }
 
     @Override
     public String getViewTitle() {
-        return I18nResourceBundle.i18nString("base.title.about");
+        return I18nHelper.aboutTitle();
     }
 }
