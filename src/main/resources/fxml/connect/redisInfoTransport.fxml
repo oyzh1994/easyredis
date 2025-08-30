@@ -19,7 +19,7 @@
 <!-- <?import cn.oyzh.fx.plus.controls.label.FXLabel?> -->
 <!-- <?import cn.oyzh.fx.gui.text.area.ReadOnlyTextArea?> -->
 <!-- <?import cn.oyzh.fx.gui.text.area.MsgTextArea?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyredis.controller.info.RedisInfoTransportController" realWidth="850" -->
 <!--           realHeight="700"> -->
 <!--     <FXHBox flexWidth="100%" realHeight="50"> -->

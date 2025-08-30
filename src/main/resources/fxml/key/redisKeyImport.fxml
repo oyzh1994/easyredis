@@ -16,7 +16,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyImportController" realWidth="850" realHeight="650">
     <FXHBox realHeight="50" flexWidth="100%">
         <AccentLabel text="%base.file" realHeight="30" realWidth="80">

@@ -18,7 +18,7 @@
 <!-- <?import cn.oyzh.fx.gui.button.StopButton?> -->
 <!-- <?import cn.oyzh.fx.gui.text.area.MsgTextArea?> -->
 <!-- <?import cn.oyzh.fx.gui.button.CloseButton?> -->
-<!-- <FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" -->
+<!-- <FXVBox  xmlns:fx="http://javafx.com/fxml/1" -->
 <!--           fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyExportController" realWidth="850" realHeight="700"> -->
 <!--     <FXHBox flexWidth="100%" realHeight="50"> -->
 <!--         <AccentLabel text="%base.server" realHeight="30" realWidth="80"> -->

@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.editor.tm4javafx.Editor?>
 <?import cn.oyzh.fx.editor.tm4javafx.Editor?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyAddController" realWidth="750" realHeight="750"
         fx:id="root">
     <InfoLabel text="%base.keyType">

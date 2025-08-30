@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import cn.oyzh.fx.editor.tm4javafx.Editor?>
 <?import cn.oyzh.fx.editor.tm4javafx.Editor?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="cn.oyzh.easyredis.controller.row.RedisZSetCoordinateAddController" realWidth="750"
         realHeight="550">
     <InfoLabel text="%base.coordinates">

@@ -9,7 +9,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXVBox styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FXVBox  xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
         fx:controller="cn.oyzh.easyredis.tabs.query.RedisQueryTabController">
     <FXHBox realHeight="30" flexWidth="100%">
         <RedisDatabaseComboBox fx:id="database">

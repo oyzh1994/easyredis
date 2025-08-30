@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import cn.oyzh.easyredis.terminal.RedisTerminalPane?>
-<RedisTerminalPane styleClass="root" flexHeight="100%" fx:id="terminal" editable="false" flexWidth="100%"
+<RedisTerminalPane  flexHeight="100%" fx:id="terminal" editable="false" flexWidth="100%"
                    xmlns="http://javafx.com/javafx"
                    xmlns:fx="http://javafx.com/fxml"
                    fx:controller="cn.oyzh.easyredis.tabs.terminal.RedisTerminalTabController">

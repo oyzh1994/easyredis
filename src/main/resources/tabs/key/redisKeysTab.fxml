@@ -15,7 +15,7 @@
 <?import cn.oyzh.fx.plus.controls.tab.FXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<FXHBox fx:id="root" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
+<FXHBox fx:id="root"  xmlns:fx="http://javafx.com/fxml/1" flexWidth="100%" flexHeight="100%"
         fx:controller="cn.oyzh.easyredis.tabs.key.RedisKeysTabController">
     <FXVBox prefWidth="300" flexHeight="100%" fx:id="leftBox">
         <FXHBox realHeight="30" flexWidth="100%">

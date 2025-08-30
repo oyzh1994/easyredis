@@ -17,7 +17,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<FXTabPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1"
+<FXTabPane  xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="cn.oyzh.easyredis.controller.key.RedisKeyBatchOperationController" realWidth="750"
            realHeight="600" fx:id="root">
     <FXTab text="%base.deleteKey" groupId="exec">
