@@ -52,33 +52,23 @@ public class RedisTerminalPane extends TerminalPane {
 //         return FontManager.toFont(setting.terminalFontConfig());
 //     }
 
-    /**
-     * 编辑器字体
-     */
-    private Font editorFont;
-
     @Override
     protected Font getEditorFont() {
-        if (this.editorFont == null) {
+        if (super.getEditorFont() == null) {
             RedisSetting setting = RedisSettingStore.SETTING;
-            this.editorFont = FontManager.toFont(setting.terminalFontConfig());
+            Font font = FontManager.toFont(setting.terminalFontConfig());
+            super.setEditorFont(font);
         }
-        return this.editorFont;
+        return super.getEditorFont();
     }
 
-    @Override
-    protected void setEditorFont(Font editorFont) {
-        this.editorFont = editorFont;
-        super.setEditorFont(editorFont);
-    }
-
-    @Override
-    public void changeFont(Font font) {
-        //RedisSetting setting = RedisSettingStore.SETTING;
-        //Font font1 = FontManager.toFont(setting.terminalFontConfig());
-        super.changeFont(font);
-        //super.applyEditorFont();
-    }
+    //@Override
+    //public void changeFont(Font font) {
+    //    //RedisSetting setting = RedisSettingStore.SETTING;
+    //    //Font font1 = FontManager.toFont(setting.terminalFontConfig());
+    //    super.changeFont(font);
+    //    //super.applyEditorFont();
+    //}
 
     /**
      * redis客户端

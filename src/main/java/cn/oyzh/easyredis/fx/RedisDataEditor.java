@@ -36,10 +36,20 @@ public class RedisDataEditor extends Editor {
 //     }
 
     @Override
-    public void changeFont(Font font) {
-        // 初始化字体
-        RedisSetting setting = RedisSettingStore.SETTING;
-        Font font1 = FontManager.toFont(setting.editorFontConfig());
-        super.changeFont(font1);
+    protected Font getEditorFont() {
+        if (super.getEditorFont() == null) {
+            RedisSetting setting = RedisSettingStore.SETTING;
+            Font font = FontManager.toFont(setting.editorFontConfig());
+            super.setEditorFont(font);
+        }
+        return super.getEditorFont();
     }
+
+    //@Override
+    //public void changeFont(Font font) {
+    //    // 初始化字体
+    //    RedisSetting setting = RedisSettingStore.SETTING;
+    //    Font font1 = FontManager.toFont(setting.editorFontConfig());
+    //    super.changeFont(font1);
+    //}
 }

@@ -76,11 +76,21 @@ public class RedisQueryEditorPane extends Editor {
 //     }
 
     @Override
-    public void changeFont(Font font) {
-        RedisSetting setting = RedisSettingStore.SETTING;
-        Font font1 = FontManager.toFont(setting.queryFontConfig());
-        super.changeFont(font1);
+    protected Font getEditorFont() {
+        if (super.getEditorFont() == null) {
+            RedisSetting setting = RedisSettingStore.SETTING;
+            Font font = FontManager.toFont(setting.queryFontConfig());
+            super.setEditorFont(font);
+        }
+        return super.getEditorFont();
     }
+    //
+    //@Override
+    //public void changeFont(Font font) {
+    //    RedisSetting setting = RedisSettingStore.SETTING;
+    //    Font font1 = FontManager.toFont(setting.queryFontConfig());
+    //    super.changeFont(font1);
+    //}
 
     @Override
     public Set<String> getPrompts() {
