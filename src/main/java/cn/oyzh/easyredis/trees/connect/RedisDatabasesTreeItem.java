@@ -8,7 +8,6 @@ import cn.oyzh.fx.gui.tree.view.RichTreeItem;
 import cn.oyzh.fx.plus.menu.FXMenuItem;
 import cn.oyzh.fx.plus.node.NodeLifeCycle;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,11 +77,16 @@ public class RedisDatabasesTreeItem extends RichTreeItem<RedisDatabasesTreeItemV
                     this.setChild(new RedisDatabaseTreeItem(null, this.getTreeView()));
                 } else {// 正常模式
                     int databases = this.databases();
-                    List<TreeItem<?>> items = new ArrayList<>(databases);
+                    //List<TreeItem<?>> items = new ArrayList<>(databases);
+                    //for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
+                    //    items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
+                    //}
+                    //this.setChild(items);
                     for (int dbIndex = 0; dbIndex < databases; dbIndex++) {
-                        items.add(new RedisDatabaseTreeItem(dbIndex, this.getTreeView()));
+                        RedisDatabaseTreeItem dbItem = new RedisDatabaseTreeItem(dbIndex, this.getTreeView());
+                        this.addChild(dbItem);
+                        this.expend();
                     }
-                    this.setChild(items);
                 }
                 this.expend();
             } catch (Exception ex) {
