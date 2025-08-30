@@ -68,7 +68,7 @@ public abstract class RedisRowKeyController<T extends RedisRowKeyTreeItem<R>, R 
     public boolean init(T treeItem) {
         if (super.init(treeItem)) {
             // 过滤处理
-            this.filter.addTextChangeListener((t3, t2, t1) -> TaskManager.startDelay("redis:row:filter", this::firstPage, 50));
+            this.filter.addTextChangeListener((t3, t2, t1) -> TaskManager.startDelay(this::firstPage, 50));
             // 设置操作
             this.listTable.setAddAction(this::addRow);
             this.listTable.setCopyAction(this::copyRow);

@@ -69,7 +69,7 @@ public class RedisTabPane extends RichTabPane implements FXEventListener {
         this.getTabs().addListener((ListChangeListener<? super Tab>) (c) -> {
             while (c.next()) {
                 if (c.wasAdded() || c.wasRemoved()) {
-                    TaskManager.startDelay("redis:homeTab:flush", this::flushHomeTab, 100);
+                    TaskManager.startDelay(this::flushHomeTab, 100);
                 }
             }
         });

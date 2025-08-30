@@ -236,7 +236,7 @@ public class RedisTerminalPane extends TerminalPane {
      * 开始连接
      */
     private void start(int db) {
-        TaskManager.start(() -> {
+        TaskManager.startSync(() -> {
             try {
                 this.initStatListener();
                 this.client.startDatabase(db);
