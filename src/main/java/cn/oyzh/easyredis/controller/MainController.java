@@ -46,7 +46,7 @@ public class MainController extends ParentStageController {
      * 头部页面
      */
     @FXML
-    private HeaderController5 headerController;
+    private HeaderController3 headerController;
 
     /**
      * redis主页业务
