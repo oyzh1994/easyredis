@@ -207,7 +207,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      * @param area  文本域
      * @param event 键盘按键事件
      */
-    public void prompt(RedisQueryEditorPane area, KeyEvent event) {
+    public void prompt(RedisQueryEditor area, KeyEvent event) {
         // 常规按键不处理
         if (this.isGeneralKeyEvent(event)) {
             this.hide();
@@ -278,7 +278,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      *
      * @param area 文本域
      */
-    private void showPrompt(RedisQueryEditorPane area) {
+    private void showPrompt(RedisQueryEditor area) {
         RenderService.submitFXLater(() -> {
             Optional<Bounds> optional = area.getCaretBounds();
             // 显示提示词
@@ -300,7 +300,7 @@ public class RedisQueryPromptPopup extends FXPopup {
      * @param editor 编辑器
      * @param item   提示内容
      */
-    public void autoComplete(RedisQueryEditorPane editor, RedisQueryPromptItem item) {
+    public void autoComplete(RedisQueryEditor editor, RedisQueryPromptItem item) {
         try {
             if (this.token != null) {
                 editor.replaceText(this.token.getStartIndex(), this.token.getEndIndex(), item.getContent());
