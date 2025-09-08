@@ -8,7 +8,7 @@ import cn.oyzh.easyredis.command.RedisCommand;
 import cn.oyzh.easyredis.command.RedisCommandUtil;
 import cn.oyzh.easyredis.terminal.RedisTerminalManager;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.fx.terminal.util.TerminalManager2;
 import com.alibaba.fastjson2.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -48,7 +48,7 @@ public class RedisCmdSpider {
     private void fetch() throws IOException {
         System.out.println("fetch start---------->");
         RedisTerminalManager.registerHandlers();
-        Collection<TerminalCommandHandler<?, ?>> list = TerminalManager.listHandler();
+        Collection<TerminalCommandHandler<?, ?>> list = TerminalManager2.listHandler();
         List<RedisCommand> list1 = new ArrayList<>();
         Document document = Jsoup.connect(descUrl).get();
         Elements articles = document.getElementsByTag("article");

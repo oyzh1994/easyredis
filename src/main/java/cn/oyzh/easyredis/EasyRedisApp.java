@@ -29,7 +29,7 @@ import cn.oyzh.fx.plus.theme.ThemeManager;
 import cn.oyzh.fx.plus.tray.TrayManager;
 import cn.oyzh.fx.plus.util.FXUtil;
 import cn.oyzh.fx.plus.window.StageManager;
-import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.fx.terminal.util.TerminalManager2;
 import cn.oyzh.i18n.I18nManager;
 import javafx.stage.Stage;
 
@@ -122,7 +122,7 @@ public class EasyRedisApp extends FXApplication implements EventListener {
         try {
             super.start(primaryStage);
             // 注册命令
-            TerminalManager.setLoadHandlerAction(RedisTerminalManager::registerHandlers);
+            TerminalManager2.setLoadHandlerAction(RedisTerminalManager::registerHandlers);
             // 显示迁移弹窗
             if (RedisStoreUtil.checkOlder()) {
 //                FXUtil.runWait(() -> StageManager.showStage(RedisMigrationTipsController.class), 1000);

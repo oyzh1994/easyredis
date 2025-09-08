@@ -20,7 +20,7 @@ import cn.oyzh.easyredis.terminal.RedisTerminalUtil;
 import cn.oyzh.easyredis.util.RedisVersionUtil;
 import cn.oyzh.fx.terminal.command.TerminalCommand;
 import cn.oyzh.fx.terminal.command.TerminalCommandHandler;
-import cn.oyzh.fx.terminal.util.TerminalManager;
+import cn.oyzh.fx.terminal.util.TerminalManager2;
 import cn.oyzh.ssh.domain.SSHConnect;
 import cn.oyzh.ssh.jump.SSHJumpForwarder;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -4888,7 +4888,7 @@ public class RedisClient {
         RedisQueryResult result = new RedisQueryResult();
         long start = System.currentTimeMillis();
         try {
-            TerminalCommandHandler<?, ?> handler = TerminalManager.findHandler(param.getContent());
+            TerminalCommandHandler<?, ?> handler = TerminalManager2.findHandler(param.getContent());
             if (handler instanceof RedisTerminalCommandHandler<?> commandHandler) {
                 TerminalCommand command = commandHandler.parseCommand(param.getContent());
                 CommandObject<Object> object = RedisTerminalUtil.getCommand(commandHandler.getCommandType(), command.getArgs());

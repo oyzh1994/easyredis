@@ -123,6 +123,11 @@ public class RedisTerminalPane extends TerminalPane {
         this.prompt(str);
     }
 
+    @Override
+    public String terminalName() {
+        return "";
+    }
+
     private String getDbName() {
         return this.dbIndex == null ? "" : "@db" + this.dbIndex;
     }
