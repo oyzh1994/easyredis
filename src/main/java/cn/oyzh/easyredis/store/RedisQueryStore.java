@@ -2,9 +2,9 @@ package cn.oyzh.easyredis.store;
 
 import cn.oyzh.common.util.StringUtil;
 import cn.oyzh.easyredis.domain.RedisQuery;
-import cn.oyzh.store.jdbc.DeleteParam;
+import cn.oyzh.store.jdbc.sqlite.DeleteParam;
 import cn.oyzh.store.jdbc.JdbcStandardStore;
-import cn.oyzh.store.jdbc.QueryParam;
+import cn.oyzh.store.jdbc.param.QueryParam;
 
 import java.util.List;
 

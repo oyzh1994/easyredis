@@ -1,9 +1,9 @@
 //package cn.oyzh.easyredis.store;
 //
 //import cn.oyzh.easyredis.domain.RedisSSHConfig;
-//import cn.oyzh.store.jdbc.DeleteParam;
+//import cn.oyzh.store.jdbc.sqlite.DeleteParam;
 //import cn.oyzh.store.jdbc.JdbcStandardStore;
-//import cn.oyzh.store.jdbc.QueryParam;
+//import cn.oyzh.store.jdbc.param.QueryParam;
 //
 ///**
 // * @author oyzh
