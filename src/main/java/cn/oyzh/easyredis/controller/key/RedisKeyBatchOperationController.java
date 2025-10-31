@@ -537,7 +537,7 @@ public class RedisKeyBatchOperationController extends StageController {
         this.copyTargetDB.selectFirst();
         this.stage.title(this.stage.title() + "-db" + this.treeItem.dbIndex());
         // this.stage.appendTitle("(" + this.treeItem.info().getName() + "-db" + this.treeItem.dbIndex() + ")");
-        this.root.selectedTabChanged((observableValue, tab, t1) -> {
+        this.root.selectedItemChanged((observableValue, tab, t1) -> {
             if (t1 instanceof NodeGroup group) {
                 group.setGroupId("active");
             }
