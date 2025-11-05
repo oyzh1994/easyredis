@@ -40,7 +40,6 @@ import java.util.List;
  * @since 2023/06/16
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "connect/redisUpdateConnect.fxml"
 )

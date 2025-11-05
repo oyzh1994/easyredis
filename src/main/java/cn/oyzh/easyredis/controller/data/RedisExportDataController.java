@@ -51,7 +51,6 @@ import java.util.Set;
  * @since 2024/11/26
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.APPLICATION_MODAL,
         value = FXConst.FXML_PATH + "data/redisExportData.fxml"
 )

@@ -27,7 +27,6 @@ import javafx.stage.WindowEvent;
  * @since 2023/08/09
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyCopy.fxml"
 )

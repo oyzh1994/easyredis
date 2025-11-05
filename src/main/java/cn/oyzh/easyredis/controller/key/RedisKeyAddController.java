@@ -41,7 +41,6 @@ import java.util.stream.Collectors;
  * @since 2023/06/22
  */
 @StageAttribute(
-        stageStyle = FXStageStyle.UNIFIED,
         modality = Modality.WINDOW_MODAL,
         value = FXConst.FXML_PATH + "key/redisKeyAdd.fxml"
 )
