@@ -65,7 +65,7 @@ public class RedisConnectTreeView extends RichTreeView implements FXEventListene
      */
     public void closeConnects() {
         for (RedisConnectTreeItem treeItem : this.root().getConnectedItems()) {
-            ThreadUtil.startVirtual(() -> treeItem.closeConnect(false));
+            ThreadUtil.start(() -> treeItem.closeConnect(false));
         }
     }
 

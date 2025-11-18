@@ -213,7 +213,7 @@ public class RedisPoolManager {
                 this.resources.remove(conn);
                 // 执行资源返回
                 RedisConn finalConn = conn;
-                ThreadUtil.startVirtual(() -> this.doReturnResource(finalConn.getJedis()));
+                ThreadUtil.start(() -> this.doReturnResource(finalConn.getJedis()));
             }
         }
     }

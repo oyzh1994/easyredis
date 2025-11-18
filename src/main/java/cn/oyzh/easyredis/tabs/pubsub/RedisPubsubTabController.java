@@ -41,7 +41,7 @@ public class RedisPubsubTabController extends RichTabController {
                 textArea.appendLine(I18nHelper.receivedMessage() + " : " + message);
             }
         };
-        ThreadUtil.startVirtual(() -> item.getClient().subscribe(this.pubSub, item.getChannel()));
+        ThreadUtil.start(() -> item.getClient().subscribe(this.pubSub, item.getChannel()));
     }
 
     /**
